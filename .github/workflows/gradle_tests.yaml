@@ -7,10 +7,10 @@ jobs:
     runs-on: ubuntu-latest # Running on this OS, if we need it changed lmk
     steps:
       - uses: actions/checkout@v2 # Checkout repo to remote machine
-      - name: Set up OpenJDK17 
+      - name: Set up OpenJDK21 
         uses: actions/setup-java@v1
         with:
-          java-version: '17'
+          java-version: '21'
 
       - name: Cache Gradle packages # Allows us to reuse packages between runs
         uses: actions/cache@v2 # If the files specified in key change we dump old cache else re-use
