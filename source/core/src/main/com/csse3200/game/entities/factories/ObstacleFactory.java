@@ -47,36 +47,6 @@ public class ObstacleFactory {
     return wall;
   }
 
-   /**
-   * Creates an invisible physics wall.
-   * @param width Station width in world units
-   * @param height Station height in world units
-   * @param type Type of station
-   * @return Station entity of given width and height with relavent behaviors
-   */
-  public static Entity createStation(float width, float height, String type) {
-    Entity station = new Entity()
-        .addComponent(new TextureRenderComponent("images/stations/"+type+".png"))
-        .addComponent(new PhysicsComponent())
-        .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
-        //.addComponent(new StationInventoryComponent());
-
-
-        station.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
-        station.getComponent(TextureRenderComponent.class).scaleEntity();
-        station.scaleHeight(2.5f);
-        PhysicsUtils.setScaledCollider(station, 0.5f, 0.2f);
-
-        //case-switch for enabling specific behaviours
-        switch(type){
-          case "oven":
-          //blahblahblah station .addcomponent for oven behavior
-          break;
-        }
-
-    station.setScale(width, height);
-    return station;
-  }
 
 
 
