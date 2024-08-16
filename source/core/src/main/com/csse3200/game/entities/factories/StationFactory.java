@@ -26,12 +26,12 @@ public class StationFactory {
         //.addComponent(new StationInventoryComponent());
 
 
-        station.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
-        station.getComponent(TextureRenderComponent.class).scaleEntity();
-        station.scaleHeight(2.5f);
-        PhysicsUtils.setScaledCollider(station, 0.5f, 0.2f);
+    station.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
+    station.getComponent(TextureRenderComponent.class).scaleEntity();
+    station.scaleHeight(2.5f);
+    PhysicsUtils.setScaledCollider(station, 0.5f, 0.2f);
 
-    station.setScale(width, height);
+    //station.setScale(width, height);
     return station;
   }
 }
