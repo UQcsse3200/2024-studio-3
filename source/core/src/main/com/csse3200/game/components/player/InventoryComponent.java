@@ -4,6 +4,8 @@ import com.csse3200.game.components.Component;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/* team 1 feature branch, work here */
+
 /**
  * A component intended to be used by the player to track their inventory.
  *
