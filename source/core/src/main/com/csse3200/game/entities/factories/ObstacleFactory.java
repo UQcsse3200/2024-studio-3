@@ -47,6 +47,19 @@ public class ObstacleFactory {
     return wall;
   }
 
+  public static Entity createStation(float x, float y, float width, float height, String type) {
+    Entity station = new Entity()
+        .addComponent(new TextureRenderComponent("images/stations/"+type+".png"))
+        .addComponent(new PhysicsComponent().setBodyType(BodyType.StaticBody))
+        .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
+    station.setScale(width, height);
+    return station;
+  }
+
+
+
+
+
   private ObstacleFactory() {
     throw new IllegalStateException("Instantiating static util class");
   }
