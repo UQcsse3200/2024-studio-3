@@ -58,9 +58,15 @@ public class ObstacleFactory {
   public static Entity createStation(float width, float height, String type) {
     Entity station = new Entity()
         .addComponent(new TextureRenderComponent("images/stations/"+type+".png"))
-        .addComponent(new PhysicsComponent().setBodyType(BodyType.StaticBody))
+        .addComponent(new PhysicsComponent())
         .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
         .addComponent(new StationInventoryComponent());
+
+
+        station.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
+        station.getComponent(TextureRenderComponent.class).scaleEntity();
+        station.scaleHeight(2.5f);
+        PhysicsUtils.setScaledCollider(station, 0.5f, 0.2f);
 
         //case-switch for enabling specific behaviours
         switch(type){
