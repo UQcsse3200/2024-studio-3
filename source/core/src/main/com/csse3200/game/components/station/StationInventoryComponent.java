@@ -15,6 +15,7 @@ public class StationInventoryComponent extends Component {
 
     private HashSet<String> acceptableItems = new HashSet<>();
     private Optional<String> item = Optional.empty();
+    private String type;
 
     @Override
     public void create() {
@@ -22,13 +23,22 @@ public class StationInventoryComponent extends Component {
         entity.getEvents().addListener("remove station item", this::removeCurrentItem);
     }
 
-    /* Used to update the item while it is inside the station inventory
+    // Another initialiser for an inventory component
+    public StationInventoryComponent(String type) {
+        this.type = type;
+    }
+
+    // Used to update the item while it is inside the station inventory
     @Override
     public void update() {
         if(this.isItemPresent()) {
             //item.get().update();
         }
-    }*/
+    }
+
+    public String getType() {
+        return type;
+    }
 
     // Initialises a station inventory component object
     public StationInventoryComponent(ArrayList<String> acceptableItems) {
@@ -36,15 +46,6 @@ public class StationInventoryComponent extends Component {
         for (String acceptedItem : acceptableItems) {
             this.acceptableItems.add(acceptedItem);
         }
-    }
-
-    // Another initialiser for an inventory component
-    public StationInventoryComponent(HashSet<String> acceptableItems) {
-        this.acceptableItems = acceptableItems;
-    }
-
-    // Another initialiser for an inventory component
-    public StationInventoryComponent() {
     }
 
     // Check if the station accepts the item
