@@ -1,6 +1,7 @@
 package com.csse3200.game.entities.factories;
 
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.csse3200.game.components.station.StationInventoryComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.PhysicsUtils;
@@ -47,11 +48,26 @@ public class ObstacleFactory {
     return wall;
   }
 
-  public static Entity createStation(float x, float y, float width, float height, String type) {
+   /**
+   * Creates an invisible physics wall.
+   * @param width Station width in world units
+   * @param height Station height in world units
+   * @return Station entity of given width and height with relavent behaviors
+   */
+  public static Entity createStation(float width, float height, String type) {
     Entity station = new Entity()
         .addComponent(new TextureRenderComponent("images/stations/"+type+".png"))
         .addComponent(new PhysicsComponent().setBodyType(BodyType.StaticBody))
-        .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
+        .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
+        .addComponent(new StationInventoryComponent());
+
+        //case-switch for enabling specific behaviours
+        switch(type){
+          case "oven":
+          //blahblahblah station .addcomponent for oven behavior
+          break;
+        }
+
     station.setScale(width, height);
     return station;
   }
