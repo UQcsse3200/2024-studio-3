@@ -52,6 +52,7 @@ public class ObstacleFactory {
    * Creates an invisible physics wall.
    * @param width Station width in world units
    * @param height Station height in world units
+   * @param type Type of station
    * @return Station entity of given width and height with relavent behaviors
    */
   public static Entity createStation(float width, float height, String type) {
