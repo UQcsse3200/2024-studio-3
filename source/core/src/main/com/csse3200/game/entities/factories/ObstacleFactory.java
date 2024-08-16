@@ -1,7 +1,6 @@
 package com.csse3200.game.entities.factories;
 
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
-import com.csse3200.game.components.station.StationInventoryComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.PhysicsUtils;
@@ -59,8 +58,8 @@ public class ObstacleFactory {
     Entity station = new Entity()
         .addComponent(new TextureRenderComponent("images/stations/"+type+".png"))
         .addComponent(new PhysicsComponent())
-        .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
-        .addComponent(new StationInventoryComponent());
+        .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
+        //.addComponent(new StationInventoryComponent());
 
 
         station.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
