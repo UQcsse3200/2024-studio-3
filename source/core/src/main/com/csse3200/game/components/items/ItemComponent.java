@@ -12,4 +12,12 @@ public class ItemComponent extends Component {
         this.itemName = itemName;
         this.weight = weight;
     }
+
+    public String getItemid() {
+        return this.itemid;
+    }
+
+    public String getItemName() {
+        return this.itemName;
+    }
 }
