@@ -4,55 +4,44 @@ import com.csse3200.game.components.Component;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
+import java.lang.IllegalArgumentException;
+
 /* team 1 feature branch, work here */
 
 /**
- * A component intended to be used by the player to track their inventory.
- *
- * Currently only stores the gold amount but can be extended for more advanced functionality such as storing items.
- * Can also be used as a more generic component for other entities.
+ * A generic inventory component that is used to keep track of stored items
+ * for an entity
  */
 public class InventoryComponent extends Component {
   private static final Logger logger = LoggerFactory.getLogger(InventoryComponent.class);
-  private int gold;
+  private ArrayList<String> items; // String as a placeholder for future ItemComponent class
+  private int size; // maximum number of items that can be stored
+  private boolean isFull;
 
-  public InventoryComponent(int gold) {
-    setGold(gold);
+  public InventoryComponent(int size) {
+      setSize(size);
+      this.isFull = false;
   }
 
   /**
-   * Returns the player's gold.
-   *
+   * Returns the size of this inventory component. I.e. the
+   * maximum number of items it can hold
    * @return entity's health
    */
-  public int getGold() {
-    return this.gold;
+  public int getSize() {
+    return this.size;
   }
 
   /**
-   * Returns if the player has a certain amount of gold.
-   * @param gold required amount of gold
-   * @return player has greater than or equal to the required amount of gold
+   * Sets the size of this item component to the newSize provided
+   * @throws java.lang.IllegalArgumentException if newSize is < 1
+   * @param newSize the size to set this item component's capacity to. Must be a positive, non-zero integer
    */
-  public Boolean hasGold(int gold) {
-    return this.gold >= gold;
-  }
-
-  /**
-   * Sets the player's gold. Gold has a minimum bound of 0.
-   *
-   * @param gold gold
-   */
-  public void setGold(int gold) {
-    this.gold = Math.max(gold, 0);
-    logger.debug("Setting gold to {}", this.gold);
-  }
-
-  /**
-   * Adds to the player's gold. The amount added can be negative.
-   * @param gold gold to add
-   */
-  public void addGold(int gold) {
-    setGold(this.gold + gold);
+  public void setSize(int newSize) {
+      if (newSize < 1) {
+        throw new IllegalArgumentException("Invalid size parameter. Must be an integer > 0");
+      }
+      this.size = newSize;
   }
 }

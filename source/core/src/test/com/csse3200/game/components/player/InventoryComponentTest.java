@@ -10,17 +10,21 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 @ExtendWith(GameExtension.class)
 class InventoryComponentTest {
   @Test
-  void shouldSetGetGold() {
-    InventoryComponent inventory = new InventoryComponent(100);
-    assertEquals(100, inventory.getGold());
+  void shouldSetSize() {
+    InventoryComponent inventory = new InventoryComponent(2);
+    assertEquals(2, inventory.getSize());
 
-    inventory.setGold(150);
-    assertEquals(150, inventory.getGold());
+    inventory.setSize(1);
+    assertEquals(1, inventory.getSize());
 
-    inventory.setGold(-50);
-    assertEquals(0, inventory.getGold());
+    try {
+        inventory.setSize(-1);
+    } catch (IllegalArgumentException e) {
+        assertEquals("Invalid size parameter. Must be an integer > 0", e.getMessage());
+    }
   }
 
+  /*
   @Test
   void shouldCheckHasGold() {
     InventoryComponent inventory = new InventoryComponent(150);
@@ -38,4 +42,6 @@ class InventoryComponentTest {
     inventory.addGold(-20);
     assertEquals(80, inventory.getGold());
   }
+  */
+
 }
