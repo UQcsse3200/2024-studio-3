@@ -1,0 +1,11 @@
+{
+  "hank": {
+    "name": "Hank",
+    "pref": 40,
+    "timer": 30,
+    "patience": 10,
+    "reputation": 5,
+    "spawnTimer": 100,
+    "texture": "images/ghostKing.atlas"
+  }
+}

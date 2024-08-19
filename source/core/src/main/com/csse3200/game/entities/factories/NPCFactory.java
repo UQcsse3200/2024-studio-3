@@ -5,14 +5,13 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.ai.tasks.AITaskComponent;
 import com.csse3200.game.components.CombatStatsComponent;
+import com.csse3200.game.components.npc.CustomerComponent;
 import com.csse3200.game.components.npc.GhostAnimationController;
 import com.csse3200.game.components.TouchAttackComponent;
 import com.csse3200.game.components.tasks.ChaseTask;
 import com.csse3200.game.components.tasks.WanderTask;
 import com.csse3200.game.entities.Entity;
-import com.csse3200.game.entities.configs.BaseEntityConfig;
-import com.csse3200.game.entities.configs.GhostKingConfig;
-import com.csse3200.game.entities.configs.NPCConfigs;
+import com.csse3200.game.entities.configs.*;
 import com.csse3200.game.files.FileLoader;
 import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.PhysicsUtils;
@@ -37,6 +36,8 @@ import com.sun.source.doctree.EntityTree;
 public class NPCFactory {
   private static final NPCConfigs configs =
       FileLoader.readClass(NPCConfigs.class, "configs/NPCs.json");
+  private static final BaseCustomerConfig customerConfig =
+      FileLoader.readClass(BaseCustomerConfig.class, "configs/Customer.json");
 
   /**
    * Creates a ghost entity.
@@ -90,6 +91,46 @@ public class NPCFactory {
     return ghostKing;
   }
 
+  public static Entity createCustomer(CustomerPersonalityConfig config) {
+    Entity customer = createBaseCustomer();
+    // how to use json here???? instead of the config
+    AnimationRenderComponent animator =
+            new AnimationRenderComponent(
+                    ServiceLocator.getResourceService()
+                            .getAsset(config.texture, TextureAtlas.class));
+    animator.addAnimation("float", 0.1f, Animation.PlayMode.LOOP);
+
+
+    customer
+            .addComponent(new CustomerComponent(config))
+            .addComponent(animator);
+    return customer;
+  }
+
+  public static Entity createCustomer() {
+    Entity customer = createBaseCustomer();
+
+    // add customer specific components
+   return customer;
+  }
+
+  public static Entity createBaseCustomer() {
+    // to remove later and start proper movement
+    AITaskComponent aiComponent =
+            new AITaskComponent()
+                    .addTask(new WanderTask(new Vector2(2f, 2f), 2f));
+    Entity npc =
+            new Entity()
+                    .addComponent(new PhysicsComponent())
+                    .addComponent(new PhysicsMovementComponent())
+                    .addComponent(new HitboxComponent().setLayer(PhysicsLayer.NPC))
+                    .addComponent(aiComponent);
+
+    PhysicsUtils.setScaledCollider(npc, 0.9f, 0.4f);
+
+    return npc;
+  }
+
   /**
    * Creates a generic NPC to be used as a base entity by more specific NPC creation methods.
    *
@@ -110,23 +151,6 @@ public class NPCFactory {
             .addComponent(aiComponent);
 
     PhysicsUtils.setScaledCollider(npc, 0.9f, 0.4f);
-    return npc;
-  }
-
-  public static Entity createBaseCustomer() {
-    // to remove later and start proper movement
-    AITaskComponent aiComponent =
-        new AITaskComponent()
-            .addTask(new WanderTask(new Vector2(2f, 2f), 2f));
-    Entity npc =
-        new Entity()
-            .addComponent(new PhysicsComponent())
-            .addComponent(new PhysicsMovementComponent())
-            .addComponent(new HitboxComponent().setLayer(PhysicsLayer.NPC))
-            .addComponent(aiComponent);
-
-    PhysicsUtils.setScaledCollider(npc, 0.9f, 0.4f);
-
     return npc;
   }
 
