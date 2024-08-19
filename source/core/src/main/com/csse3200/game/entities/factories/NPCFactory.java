@@ -22,6 +22,7 @@ import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.physics.components.PhysicsMovementComponent;
 import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
+import com.sun.source.doctree.EntityTree;
 
 /**
  * Factory to create non-playable character (NPC) entities with predefined components.
@@ -109,6 +110,23 @@ public class NPCFactory {
             .addComponent(aiComponent);
 
     PhysicsUtils.setScaledCollider(npc, 0.9f, 0.4f);
+    return npc;
+  }
+
+  public static Entity createBaseCustomer() {
+    // to remove later and start proper movement
+    AITaskComponent aiComponent =
+        new AITaskComponent()
+            .addTask(new WanderTask(new Vector2(2f, 2f), 2f));
+    Entity npc =
+        new Entity()
+            .addComponent(new PhysicsComponent())
+            .addComponent(new PhysicsMovementComponent())
+            .addComponent(new HitboxComponent().setLayer(PhysicsLayer.NPC))
+            .addComponent(aiComponent);
+
+    PhysicsUtils.setScaledCollider(npc, 0.9f, 0.4f);
+
     return npc;
   }
 
