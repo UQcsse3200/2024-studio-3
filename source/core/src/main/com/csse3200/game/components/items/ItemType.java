@@ -4,5 +4,4 @@ public enum ItemType {
     RAWFISH,
     BEEF,
     CHICKEN
-
 }

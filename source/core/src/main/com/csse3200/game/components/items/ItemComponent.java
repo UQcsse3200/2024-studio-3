@@ -28,7 +28,7 @@ public class ItemComponent extends Component {
         return this.weight;
     }
 
-    public String getItemType() {
+    public ItemType getItemType() {
         return this.itemType;
     }
 
