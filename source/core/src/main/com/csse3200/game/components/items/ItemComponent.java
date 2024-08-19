@@ -7,9 +7,9 @@ public class ItemComponent extends Component {
     private final String itemid;
     private final String itemName;
     private final int weight;
-    private final String itemType;
+    private final ItemType itemType;
 
-    public ItemComponent(String itemName, String itemType, int weight) {
+    public ItemComponent(String itemName, ItemType itemType, int weight) {
         this.itemid = UUID.randomUUID().toString();
         this.itemName = itemName;
         this.weight = weight;
