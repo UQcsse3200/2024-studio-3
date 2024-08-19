@@ -140,13 +140,6 @@ public class ForestGameArea extends GameArea {
     }
   }
 
-  private void spawnCustomer() {
-    GridPoint2 minPos = new GridPoint2(0, 0);
-    GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
-
-    Entity hank = NPCFactory.createCustomer();
-  }
-
   private void spawnGhostKing() {
     GridPoint2 minPos = new GridPoint2(0, 0);
     GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
