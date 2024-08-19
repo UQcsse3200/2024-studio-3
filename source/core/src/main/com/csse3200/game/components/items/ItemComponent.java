@@ -1,14 +1,16 @@
 package com.csse3200.game.components.items;
 import com.csse3200.game.components.Component;
 
+import java.util.UUID;
+
 public class ItemComponent extends Component {
     private final String itemid;
     private final String itemName;
     private final int weight;
     private final String itemType;
 
-    public ItemComponent(String itemid, String itemName, String itemType, int weight) {
-        this.itemid = itemid;
+    public ItemComponent(String itemName, String itemType, int weight) {
+        this.itemid = UUID.randomUUID().toString();
         this.itemName = itemName;
         this.weight = weight;
         this.itemType = itemType;
