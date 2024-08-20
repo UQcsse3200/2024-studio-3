@@ -23,8 +23,6 @@ public class MainMenuActions extends Component {
     entity.getEvents().addListener("load", this::onLoad);
     entity.getEvents().addListener("exit", this::onExit);
     entity.getEvents().addListener("settings", this::onSettings);
-    entity.getEvents().addListener("openTicket", this::onOpenTicket);
-    entity.getEvents().addListener("closeTicket", this::onCloseTicket);
   }
 
   /**
@@ -57,13 +55,5 @@ public class MainMenuActions extends Component {
   private void onSettings() {
     logger.info("Launching settings screen");
     game.setScreen(GdxGame.ScreenType.SETTINGS);
-  }
-
-  private void onOpenTicket() {
-    logger.info("Opening ticket");
-  }
-
-  private void onCloseTicket() {
-    logger.info("Closing ticket");
   }
 }
