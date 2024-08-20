@@ -2,6 +2,7 @@ package com.csse3200.game.components.station;
 
 import java.util.HashSet;
 import java.util.ArrayList;
+import java.util.Optional;
 
 import com.csse3200.game.components.Component;
 
@@ -57,16 +58,16 @@ public class StationItemHandlerComponent extends Component {
      */
     public void giveItem(String item) {
         if (this.isItemAccepted(item)) {
-            inventoryComponent.setCurrentItem(item);
+            inventoryComponent.setCurrentItem(item, type);
         }
     }
 
     /**
         Takes the item from the station, and returns the old item
-        @return oldItem - returns the item being taken from station
+        @return oldItem - returns the item being taken from station, empty if no item
      */
-    public String takeItem() {
-        String oldItem = inventoryComponent.removeCurrentItem();
+    public Optional<String> takeItem() {
+        Optional<String> oldItem = inventoryComponent.removeCurrentItem();
         return oldItem;
     }
 
@@ -74,13 +75,12 @@ public class StationItemHandlerComponent extends Component {
         Swaps the old item present in the station with the new item
         @return oldItem - returns the item being swapped away from the station
     */
-    public String swapItem(String newItem) {
+    public Optional<String> swapItem(String newItem) {
         if (!this.isItemAccepted(newItem)) {
             return null;
         }
-
-        String oldItem = inventoryComponent.removeCurrentItem();
-        inventoryComponent.setCurrentItem(newItem);
+        Optional<String> oldItem = inventoryComponent.removeCurrentItem();
+        inventoryComponent.setCurrentItem(newItem, type);
         return oldItem;
     }
 
