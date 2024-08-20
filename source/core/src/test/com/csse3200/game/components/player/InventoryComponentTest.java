@@ -6,6 +6,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import java.util.ArrayList;
 
 @ExtendWith(GameExtension.class)
 class InventoryComponentTest {
@@ -22,6 +23,20 @@ class InventoryComponentTest {
     } catch (IllegalArgumentException e) {
         assertEquals("Invalid size parameter. Must be an integer > 0", e.getMessage());
     }
+  }
+
+  @Test
+  void shouldReturnItems() {
+    InventoryComponent inventory = new InventoryComponent(2);
+    ArrayList<String> items = inventory.getItems();
+    assertEquals(0, items.size());
+
+  }
+
+  @Test
+  void shouldBeNotFull() {
+    InventoryComponent inventory = new InventoryComponent(2);
+    assertEquals(false, inventory.isFull());
   }
 
   /*

@@ -17,11 +17,10 @@ public class InventoryComponent extends Component {
   private static final Logger logger = LoggerFactory.getLogger(InventoryComponent.class);
   private ArrayList<String> items; // String as a placeholder for future ItemComponent class
   private int size; // maximum number of items that can be stored
-  private boolean isFull;
 
   public InventoryComponent(int size) {
       setSize(size);
-      this.isFull = false;
+      items = new ArrayList<String>();
   }
 
   /**
@@ -43,5 +42,23 @@ public class InventoryComponent extends Component {
         throw new IllegalArgumentException("Invalid size parameter. Must be an integer > 0");
       }
       this.size = newSize;
+  }
+
+    /**
+     * Returns an ArrayList containing the items stored in this
+     * InventoryComponent. Currently, these are represented as strings
+     * @return an ArrayList containing items currently stored in the inventory
+     */
+  public ArrayList<String> getItems() {
+      return (ArrayList) items.clone();
+  }
+
+    /**
+     * Returns true if the number items currently stored in the
+     * Inventory is equal to the maximum size of the inventory, false otherwise
+     * @return If the inventory is full or not
+     */
+  public boolean isFull() {
+      return items.size() == this.size;
   }
 }
