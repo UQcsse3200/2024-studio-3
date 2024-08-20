@@ -8,12 +8,16 @@ public class ItemComponent extends Component {
     private final String itemName;
     private final int weight;
     private final ItemType itemType;
+    private final int cookTime;
+    private int itemState;
 
-    public ItemComponent(String itemName, ItemType itemType, int weight) {
+    public ItemComponent(String itemName, ItemType itemType, int weight, int cookTime) {
         this.itemid = UUID.randomUUID().toString();
         this.itemName = itemName;
         this.weight = weight;
         this.itemType = itemType;
+        this.cookTime = cookTime;
+        this.itemState = 0;
     }
 
     public String getItemid() {
@@ -32,5 +36,7 @@ public class ItemComponent extends Component {
         return this.itemType;
     }
 
-
+    public void nextState() {
+        this.itemState += 1;
+    }
 }
