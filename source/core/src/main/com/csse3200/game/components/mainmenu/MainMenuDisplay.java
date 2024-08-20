@@ -38,6 +38,8 @@ public class MainMenuDisplay extends UIComponent {
     TextButton loadBtn = new TextButton("Load", skin);
     TextButton settingsBtn = new TextButton("Settings", skin);
     TextButton exitBtn = new TextButton("Exit", skin);
+    TextButton onTicket = new TextButton("onTicket", skin);
+    TextButton closeTicket = new TextButton("closeTicket", skin);
 
     // Triggers an event when the button is pressed
     startBtn.addListener(
@@ -71,11 +73,28 @@ public class MainMenuDisplay extends UIComponent {
         new ChangeListener() {
           @Override
           public void changed(ChangeEvent changeEvent, Actor actor) {
-
             logger.debug("Exit button clicked");
             entity.getEvents().trigger("exit");
           }
         });
+
+    onTicket.addListener(
+            new ChangeListener() {
+                  @Override
+                  public void changed(ChangeEvent changeEvent, Actor actor) {
+                      logger.debug("Open Ticket button clicked");
+                      entity.getEvents().trigger("openTicket");
+                  }
+              });
+
+    closeTicket.addListener(
+          new ChangeListener() {
+              @Override
+              public void changed(ChangeEvent changeEvent, Actor actor) {
+                  logger.debug("Close Ticket button clicked");
+                  entity.getEvents().trigger("closeTicket");
+              }
+          });
 
     table.add(title);
     table.row();
@@ -86,6 +105,10 @@ public class MainMenuDisplay extends UIComponent {
     table.add(settingsBtn).padTop(15f);
     table.row();
     table.add(exitBtn).padTop(15f);
+    table.row();
+    table.add(onTicket).padTop(15f);
+    table.row();
+    table.add(closeTicket).padTop(15f);
 
     stage.addActor(table);
   }
