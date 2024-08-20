@@ -27,6 +27,10 @@ public class StationItemHandlerComponent extends Component {
         inventoryComponent = entity.getComponent(StationInventoryComponent.class);
     }
 
+    /**
+     * Gets the type of station
+     * @return station type
+     */
     public String getType() {
         return this.type;
     }
@@ -37,6 +41,14 @@ public class StationItemHandlerComponent extends Component {
      */
     public boolean isItemAccepted(String item) {
         return this.acceptableItems.contains(item);
+    }
+
+    /**
+     * Check if the station is storing an item
+     * @return true if the station has an item
+     */
+    public boolean hasItem() {
+        return this.inventoryComponent.isItemPresent();
     }
 
     /**
