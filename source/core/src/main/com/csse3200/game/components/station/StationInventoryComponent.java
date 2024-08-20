@@ -47,16 +47,6 @@ public class StationInventoryComponent extends Component {
     }
 
     /**
-     *  Called on creation of the station to allow outside interaction within the station.
-     *  Adds the listener for set current item and for remove current item.
-     */
-    @Override
-    public void create() {
-        entity.getEvents().addListener("set station item", this::setCurrentItem);
-        entity.getEvents().addListener("remove station item", this::removeCurrentItem);
-    }
-
-    /**
      * When called checks if there is an entity within the station and
      * if so, updates the state of it to reflect changes made due to the
      * station.
@@ -103,26 +93,14 @@ public class StationInventoryComponent extends Component {
     }
 
     /**
-     * Checks wether or not the station is currently holding an item.
-     * @return true is there is an item, false otherwise
+     * Checks whether the station is currently holding an item.
+     * @return true is there is an item, otherwise false
      */
     public boolean isItemPresent() {
         return item.isPresent();
     }
 
-    /**
-     * Gets the current item within the station. If there is one.
-     * @return the item within the station, null otherwise
-     */
-    public String getCurrentItem() {
-        // Check if the item is present and return it if it is
-        if (item.isPresent()) {
-            return item.get();
-        } 
 
-        // Otherwise return null
-        return null;
-    }
 
     /**
      * Set the current item within the station to the item provided. Checks if the 
@@ -185,6 +163,17 @@ public class StationInventoryComponent extends Component {
     }
 
     /**
+     * Gets the current item within the station. If there is one.
+     * @return the item within the station, null otherwise
+     */
+    public String getCurrentItem() {
+        if (item.isPresent()) {
+            return item.get();
+        }
+        return null;
+    }
+
+    /**
      * Removes the item currently within the station and returns it to the
      * caller. 
      * @return oldItem within the station, null if nothing was present.
@@ -192,9 +181,7 @@ public class StationInventoryComponent extends Component {
     public String removeCurrentItem() {
         // Get the old item if present
         String oldItem = this.getCurrentItem();
-
         item = Optional.empty();
-
         return oldItem;
     }
 }
