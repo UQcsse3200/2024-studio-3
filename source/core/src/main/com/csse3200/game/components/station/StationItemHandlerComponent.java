@@ -27,6 +27,10 @@ public class StationItemHandlerComponent extends Component {
         inventoryComponent = entity.getComponent(StationInventoryComponent.class);
     }
 
+    public String getType() {
+        return this.type;
+    }
+
     /**
      * Checks if the item can be accepted
      * @param item to check if can be accepted
