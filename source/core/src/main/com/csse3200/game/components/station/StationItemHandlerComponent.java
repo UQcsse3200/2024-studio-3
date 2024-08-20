@@ -1,11 +1,22 @@
 package com.csse3200.game.components.station;
 
+import java.util.HashSet;
+import java.util.ArrayList;
+
 import com.csse3200.game.components.Component;
 
 public class StationItemHandlerComponent extends Component {
 
-    StationInventoryComponent inventoryComponent;
+    private final String type;
+    private StationInventoryComponent inventoryComponent;
+    private HashSet<String> acceptableItems = new HashSet<>();
 
+    public StationItemHandlerComponent(String type, ArrayList<String> acceptableItems) {
+        this.type = type;
+        for (String acceptedItem : acceptableItems) {
+            this.acceptableItems.add(acceptedItem);
+        }
+    }
 
     /**
      *  Called on creation of the station to allow outside interaction within the station.
@@ -17,19 +28,28 @@ public class StationItemHandlerComponent extends Component {
     }
 
     /**
+     * Checks if the item can be accepted
+     * @param item to check if can be accepted
+     */
+    public boolean isItemAccepted(String item) {
+        return this.acceptableItems.contains(item);
+    }
+
+    /**
         Adds the item to the station
         @param item that is being given to the station
      */
     public void giveItem(String item) {
-        inventoryComponent.setCurrentItem(item); // should i use either of the force functions instead idk
+        if (this.isItemAccepted(item)) {
+            inventoryComponent.setCurrentItem(item);
+        }
     }
 
     /**
         Takes the item from the station, and returns the old item
-        @param item - the item that is being taken from the station
         @return oldItem - returns the item being taken from station
      */
-    public String takeItem(String item) {
+    public String takeItem() {
         String oldItem = inventoryComponent.removeCurrentItem();
         return oldItem;
     }
@@ -39,6 +59,10 @@ public class StationItemHandlerComponent extends Component {
         @return oldItem - returns the item being swapped away from the station
     */
     public String swapItem(String newItem) {
+        if (!this.isItemAccepted(newItem)) {
+            return null;
+        }
+
         String oldItem = inventoryComponent.removeCurrentItem();
         inventoryComponent.setCurrentItem(newItem);
         return oldItem;
