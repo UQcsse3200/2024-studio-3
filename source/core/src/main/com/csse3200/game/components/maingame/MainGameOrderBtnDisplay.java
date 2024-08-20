@@ -10,7 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Displays a button to exit the Main Game screen to the Main Menu screen.
+ * Displays a button to order at Main Game screen to the Main Menu screen.
  */
 
 public class MainGameOrderBtnDisplay extends UIComponent{
@@ -38,6 +38,7 @@ public class MainGameOrderBtnDisplay extends UIComponent{
                     @Override
                     public void changed(ChangeEvent changeEvent, Actor actor) {
                         logger.debug("Create Order button clicked");
+                        entity.getEvents().trigger("createOrder");
                     }
                 });
         table.add(createOrderBtn).padBottom(10f).padRight(10f);
