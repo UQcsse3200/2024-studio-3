@@ -14,9 +14,6 @@ public class StationItemHandlerComponent extends Component {
     @Override
     public void create() {
         inventoryComponent = entity.getComponent(StationInventoryComponent.class);
-        entity.getEvents().addListener("give station item", this::giveItem);
-        entity.getEvents().addListener("remove station item", this::takeItem);
-        entity.getEvents().addListener("swap station item", this::swapItem); // not sure if we're doing this or nah
     }
 
     /**
@@ -43,7 +40,7 @@ public class StationItemHandlerComponent extends Component {
     */
     public String swapItem(String newItem) {
         String oldItem = inventoryComponent.removeCurrentItem();
-        giveItem(newItem);
+        inventoryComponent.setCurrentItem(newItem);
         return oldItem;
     }
 
