@@ -4,24 +4,29 @@ import com.csse3200.game.components.Component;
 import java.util.UUID;
 
 public class ItemComponent extends Component {
-    private final String itemid;
+    private final String itemId;
     private final String itemName;
     private final int weight;
     private final ItemType itemType;
     private final int cookTime;
-    private int itemState;
+    private ItemState itemState;
+    private enum ItemState{
+        RAW,
+        COOKED,
+        BURNED
+    }
 
     public ItemComponent(String itemName, ItemType itemType, int weight, int cookTime) {
-        this.itemid = UUID.randomUUID().toString();
+        this.itemId = UUID.randomUUID().toString();
         this.itemName = itemName;
         this.weight = weight;
         this.itemType = itemType;
         this.cookTime = cookTime;
-        this.itemState = 0;
+        this.itemState = ItemState.RAW;
     }
 
-    public String getItemid() {
-        return this.itemid;
+    public String getItemId() {
+        return this.itemId;
     }
 
     public String getItemName() {
@@ -36,7 +41,15 @@ public class ItemComponent extends Component {
         return this.itemType;
     }
 
-    public void nextState() {
-        this.itemState += 1;
+    public String getItemState() {
+        return this.itemState.name();
+    }
+
+    public void cookItem() {
+        this.itemState = ItemState.COOKED;
+    }
+
+    public void burnItem() {
+        this.itemState = ItemState.BURNED;
     }
 }
