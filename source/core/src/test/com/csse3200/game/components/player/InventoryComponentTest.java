@@ -17,11 +17,14 @@ class InventoryComponentTest {
 
     inventory.setSize(1);
     assertEquals(1, inventory.getSize());
+  }
 
+  @Test
+  void shouldSetIllegalSize() {
     try {
-        inventory.setSize(-1);
+      InventoryComponent inventory = new InventoryComponent(-1);
     } catch (IllegalArgumentException e) {
-        assertEquals("Invalid size parameter. Must be an integer > 0", e.getMessage());
+      assertEquals("Invalid size parameter. Must be an integer > 0", e.getMessage());
     }
   }
 
@@ -39,24 +42,48 @@ class InventoryComponentTest {
     assertEquals(false, inventory.isFull());
   }
 
-  /*
   @Test
-  void shouldCheckHasGold() {
-    InventoryComponent inventory = new InventoryComponent(150);
-    assertTrue(inventory.hasGold(100));
-    assertFalse(inventory.hasGold(200));
+  void shouldBeFull() {
+    InventoryComponent inventory = new InventoryComponent(2);
+    // TODO: needs adding functionality to be implemented
+    // should be similar to shouldNotBeFull() except 2 items should be added to inventory
+    // and then method checks that its full
   }
 
   @Test
-  void shouldAddGold() {
-    InventoryComponent inventory = new InventoryComponent(100);
-    inventory.addGold(-500);
-    assertEquals(0, inventory.getGold());
-
-    inventory.addGold(100);
-    inventory.addGold(-20);
-    assertEquals(80, inventory.getGold());
+  void shouldGetItems() {
+    InventoryComponent inventory = new InventoryComponent(2);
+    // TODO: needs adding functionality to be implemented
   }
-  */
+
+  @Test
+  void shouldAddItems() {
+    //
+  }
+
+  @Test
+  void shouldntAddItems() {
+    // (if inventory is full)
+  }
+
+  @Test
+  void shouldRemoveItems() {
+    //
+  }
+
+  @Test
+  void shouldntRemoveItems() {
+    // (if inventory is empty)
+  }
+
+  @Test
+  void shouldSelectItems() {
+    // idk if we are going to have this method?
+  }
+
+  @Test
+  void shouldAddAndResize() {
+    // (basically resizing with stuff in inventory)
+  }
 
 }
