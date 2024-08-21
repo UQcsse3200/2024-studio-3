@@ -2,136 +2,106 @@ package com.csse3200.game.components.station;
 
 import java.util.Optional;
 import java.util.ArrayList;
-import java.util.HashSet;
 
 import com.csse3200.game.components.Component;
 
+
 /**
- * Class to represent the inventory of a station.
- * Used for storing 'items' and keeping control over a stations inventory
- * Doesn't have knowledge of station type at the moment
+ * Class to represent the inventory of a station and provide some internal logic
+ * for accepting and storing items intended to have some action performed on them.
  */
 public class StationInventoryComponent extends Component {
 
-    private HashSet<String> acceptableItems = new HashSet<>();
-    private Optional<String> item = Optional.empty();
-    private String type;
+    /**
+     * final integer storing max amount of items, 2
+     * item stores the current item within the component, defaults to only one item at a time
+     */
+    private static final int SIZE = 2;
+    private ArrayList<Optional<String>> item;
 
-    @Override
-    public void create() {
-        entity.getEvents().addListener("set station item", this::setCurrentItem);
-        entity.getEvents().addListener("remove station item", this::removeCurrentItem);
+    /**
+     * Creates a station inventory component for the specified type.
+     * Intented to also initialise all of the accepted items based on some
+     * predefined configuration.
+     */
+    public StationInventoryComponent() {
+        this.item = new ArrayList<>(SIZE);
+        this.item.add(Optional.empty());
+        this.item.add(Optional.empty());
     }
 
-    // Another initialiser for an inventory component
-    public StationInventoryComponent(String type) {
-        this.type = type;
-    }
-
-    // Used to update the item while it is inside the station inventory
+    /**
+     * When called checks if there is an entity within the station and
+     * if so, updates the state of it to reflect changes made due to the
+     * station.
+     */
     @Override
     public void update() {
         if(this.isItemPresent()) {
-            //item.get().update();
+            // Processing to be implemented goes here, access this.item
         }
     }
 
-    public String getType() {
-        return type;
+    /**
+     * Checks if an item is allowed to be accepted within the given station.
+     * Should call on data structure containing accepted items
+     * @param item inteneded to be passed in
+     * @return true if the item can be accepted, false otherwise
+     */
+    public boolean isItemAccepted(String item, String type) {
+        //return acceptableItems.contains(item);
+        return true;
     }
 
-    // Initialises a station inventory component object
-    public StationInventoryComponent(ArrayList<String> acceptableItems) {
-        // Add all the items in the list to the HastSet
-        for (String acceptedItem : acceptableItems) {
-            this.acceptableItems.add(acceptedItem);
-        }
-    }
-
-    // Check if the station accepts the item
-    public boolean isItemAccepted(String item) {
-        return acceptableItems.contains(item);
-    }
-
-    // Add an item to the acceptableItems list
-    public void addAcceptedItem(String item) {
-        acceptableItems.add(item);
-    }
-
-    // Remove an item from accpetable items list
-    public void removeAcceptedItem(String item) {
-        acceptableItems.remove(item);
-    }
-
-    // Function to get if an item is present
+    /**
+     * Checks whether the station is currently holding an item.
+     * @return true is there is an item, otherwise false
+     */
     public boolean isItemPresent() {
-        return item.isPresent();
+        return item.getFirst().isPresent();
     }
 
-    // Get the current item if available
-    public String getCurrentItem() {
-        // Check if the item is present and return it if it is
-        if (item.isPresent()) {
-            return item.get();
-        } 
 
-        // Otherwise return null
-        return null;
-    }
-
-    // Set the item if no item is present
-    public boolean setCurrentItem(String newItem) {
+    /**
+     * Set the current item within the station to the item provided. Checks if the 
+     * item can be accepted only, call isItemPresent() in handler.
+     * @param newItem to be put into the station.
+     * @return true if the item has been accepted, false otherwise.
+     */
+    public boolean setCurrentItem(String newItem, String type) {
         // Check if the stations accepts newItem return if it doesnt
-        if (!this.isItemAccepted(newItem)) {
+        if (!this.isItemAccepted(newItem, type)) {
             return false;
         }
+        // No item present, set item
+        this.item.set(0, (Optional.of(newItem)));
+        return true;
 
-        // check if no item is present
-        if (!this.isItemPresent()) {
-            // No item present set item
-            item = Optional.of(newItem);
-            return true;
-        } else {
-            // Failed to set item since one already preseant
-            return false;
-        }    
     }
 
-    // Forces the item to be new item and returns the old item
-    // For this the item must still be allowed to be accepted
-    // and will return null if item not accepted  
-    public String forceSetCurrentItem(String newItem) {
-        // Check if the stations accepts newItem return if it doesnt
-        if (!this.isItemAccepted(newItem)) {
-            return null;
+    /**
+     * Gets the current item within the station. If there is one.
+     * @return the item within the station, Optional.empty() otherwise
+     */
+    public Optional<String> getCurrentItem() {
+        if (this.isItemPresent()) {
+            return item.getFirst();
         }
+        return Optional.empty();
+    }
 
+    /**
+     * Removes the item currently within the station and returns it to the
+     * caller. 
+     * @return oldItem within the station, Optional.empty() if nothing was present.
+     */
+    public Optional<String> removeCurrentItem() {
         // Get the old item if present
-        String oldItem = this.getCurrentItem();
-
-        item = Optional.of(newItem);
-
-        return oldItem;
+        if (this.isItemPresent()) {
+            Optional<String> tmp = item.getFirst();
+            item.remove(tmp);
+            return tmp;
+        }
+        return Optional.empty();
     }
-
-    // Completely forces the item to be newItem
-    // Regardless of whether station accepts said item or not
-    public String forceforceSetCurrentItem(String newItem) {
-        String oldItem = this.getCurrentItem();
-
-        item = Optional.of(newItem);
-
-        return oldItem;
-    }
-
-    // Remove the item if it is present and return it
-    public String removeCurrentItem() {
-        // Get the old item if present
-        String oldItem = this.getCurrentItem();
-
-        item = Optional.empty();
-
-        return oldItem;
-    }
-
 }
