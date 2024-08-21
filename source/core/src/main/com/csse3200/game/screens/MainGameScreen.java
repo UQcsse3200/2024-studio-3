@@ -26,6 +26,7 @@ import com.csse3200.game.components.maingame.MainGameExitDisplay;
 import com.csse3200.game.components.gamearea.PerformanceDisplay;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import com.csse3200.game.components.ordersystem.DocketLine;
 
 /**
  * The game screen containing the main game.
@@ -40,6 +41,7 @@ public class MainGameScreen extends ScreenAdapter {
   private final GdxGame game;
   private final Renderer renderer;
   private final PhysicsEngine physicsEngine;
+  private DocketLine docketLine;
 
   public MainGameScreen(GdxGame game) {
     this.game = game;
@@ -68,6 +70,8 @@ public class MainGameScreen extends ScreenAdapter {
     TerrainFactory terrainFactory = new TerrainFactory(renderer.getCamera());
     ForestGameArea forestGameArea = new ForestGameArea(terrainFactory);
     forestGameArea.create();
+
+    docketLine = new DocketLine();
   }
 
   @Override
