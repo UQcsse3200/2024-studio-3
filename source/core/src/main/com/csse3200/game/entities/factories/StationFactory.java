@@ -18,7 +18,7 @@ public class StationFactory {
    * @param type Type of station
    * @return Station entity of given width and height with relavent behaviors
    */
-  public static Entity createStation(float width, float height, String type) {
+  public static Entity createStation(String type) {
     Entity station = new Entity()
         .addComponent(new TextureRenderComponent("images/stations/" + type + ".png"))
         .addComponent(new PhysicsComponent())
@@ -29,9 +29,10 @@ public class StationFactory {
     station.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
     station.getComponent(TextureRenderComponent.class).scaleEntity();
     station.scaleHeight(2.5f);
-    PhysicsUtils.setScaledCollider(station, 0.5f, 0.2f);
 
-    //station.setScale(width, height);
+    //not entirely sure what this line does
+    PhysicsUtils.setScaledCollider(station, 0.5f, 0.2f);
+    
     return station;
   }
 }
