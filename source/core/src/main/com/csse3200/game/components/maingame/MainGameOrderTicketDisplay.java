@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
 public class MainGameOrderTicketDisplay extends UIComponent {
     private static final Logger logger = LoggerFactory.getLogger(MainGameExitDisplay.class);
     private static final float Z_INDEX = 2f;
-    private static final long DEFAULT_TIMER = 7000;
+    private static final long DEFAULT_TIMER = 99999999;
     private Table table;
     private Label countdownLabel;
     private long startTime;
