@@ -12,6 +12,7 @@ import com.csse3200.game.components.gamearea.GameAreaDisplay;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.factories.NPCFactory;
 import com.csse3200.game.entities.factories.ObstacleFactory;
+import com.csse3200.game.entities.factories.StationFactory;
 import com.csse3200.game.entities.factories.PlayerFactory;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
@@ -75,6 +76,8 @@ public class ForestGameArea extends GameArea {
     spawnGhosts();
     spawnGhostKing();
 
+    spawnStations();
+
     playMusic();
   }
 
@@ -123,6 +126,12 @@ public class ForestGameArea extends GameArea {
       Entity tree = ObstacleFactory.createTree();
       spawnEntityAt(tree, randomPos, true, false);
     }
+  }
+
+  private void spawnStations() {
+    GridPoint2 ovenPos = new GridPoint2(28,24);
+    Entity station2 = StationFactory.createStation("oven");
+    spawnEntityAt(station2, ovenPos, true, false);
   }
 
   private Entity spawnPlayer() {
