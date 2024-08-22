@@ -16,6 +16,7 @@ import java.util.List;
         this.ingredients = ingredients;
     }
 
+
     public List<String> getIngredients() {
         return ingredients;
     }
