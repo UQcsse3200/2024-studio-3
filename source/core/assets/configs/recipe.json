@@ -1,0 +1,29 @@
+{
+  "acai bowl":{
+    "ingredient":["acai","banana"],
+    "cutting board":["acai","banana"],
+    "cooking time":3
+  },
+  "salad":{
+    "ingredient":["tomato","cucumber","lettuce"],
+    "cutting board":["tomato","cucumber"],
+    "cooking time":4
+  },
+  "fruit salad":{
+    "ingredient":["banana","strawberry"],
+    "cutting board":["banana","strawberry"],
+    "cooking time":2
+  },
+  "steak meal":{
+    "ingredient":["beef","tomato","cucumber"],
+    "cutting board":["tomato","cucumber"],
+    "frying pan":["beef"],
+    "oven":["tomato","cucumber"],
+    "cooking time":5
+  },
+  "banana split":{
+    "ingredient":["banana","strawberry","chocolate"],
+    "cutting board":["banana","strawberry","chocolate"],
+    "cooking time":2
+  }
+}
