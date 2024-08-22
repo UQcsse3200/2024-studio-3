@@ -1,9 +1,10 @@
-package com.csse3200.game.components.maingame;
+package com.csse3200.game.components.ordersystem;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.TimeUtils;
+import com.csse3200.game.components.maingame.MainGameExitDisplay;
 import com.csse3200.game.ui.UIComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
