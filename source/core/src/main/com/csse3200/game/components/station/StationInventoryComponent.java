@@ -19,6 +19,9 @@ public class StationInventoryComponent extends Component {
     private static final int SIZE = 2;
     private ArrayList<Optional<String>> item;
 
+    // TODO
+    // Processing for timer, recipe mapping etc
+    // Consider integration of abstract class
     /**
      * Creates a station inventory component for the specified type.
      * Intented to also initialise all of the accepted items based on some
@@ -35,22 +38,11 @@ public class StationInventoryComponent extends Component {
      * if so, updates the state of it to reflect changes made due to the
      * station.
      */
-    @Override
-    public void update() {
+    public void processInventory(String type) {
         if(this.isItemPresent()) {
-            // Processing to be implemented goes here, access this.item
+            // Processing to be implemented goes here, access this.item and
+            // type, map with dictionary hashmap etc, cooking times to come later
         }
-    }
-
-    /**
-     * Checks if an item is allowed to be accepted within the given station.
-     * Should call on data structure containing accepted items
-     * @param item inteneded to be passed in
-     * @return true if the item can be accepted, false otherwise
-     */
-    public boolean isItemAccepted(String item, String type) {
-        //return acceptableItems.contains(item);
-        return true;
     }
 
     /**
@@ -68,11 +60,7 @@ public class StationInventoryComponent extends Component {
      * @param newItem to be put into the station.
      * @return true if the item has been accepted, false otherwise.
      */
-    public boolean setCurrentItem(String newItem, String type) {
-        // Check if the stations accepts newItem return if it doesnt
-        if (!this.isItemAccepted(newItem, type)) {
-            return false;
-        }
+    public boolean setCurrentItem(String newItem) {
         // No item present, set item
         this.item.set(0, (Optional.of(newItem)));
         return true;

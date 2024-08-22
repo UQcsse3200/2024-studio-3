@@ -1,7 +1,6 @@
 package com.csse3200.game.entities.factories;
 
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
-import com.csse3200.game.components.station.StationInventoryComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.PhysicsUtils;
@@ -13,8 +12,6 @@ import com.csse3200.game.components.station.StationItemHandlerComponent;
 import java.util.ArrayList;
 
 public class StationFactory {
-    
-
     /**
    * Creates visible station.
    * @param width Station width in world units
@@ -34,7 +31,6 @@ public class StationFactory {
     station.getComponent(TextureRenderComponent.class).scaleEntity();
     station.scaleHeight(1.5f);
 
-    //not entirely sure what this line does
     PhysicsUtils.setScaledCollider(station, 0.3f, 0.2f);
     
     return station;

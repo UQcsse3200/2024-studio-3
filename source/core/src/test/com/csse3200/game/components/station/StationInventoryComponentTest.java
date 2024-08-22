@@ -14,14 +14,14 @@ public class StationInventoryComponentTest {
     @Test
     void shouldSetCurrentItemTest() {
         StationInventoryComponent inventory = new StationInventoryComponent();
-        inventory.setCurrentItem("meat", "oven");
+        inventory.setCurrentItem("meat");
         assertEquals("meat", inventory.getCurrentItem().orElse("Empty"));
     }
 
     @Test
     void shouldCheckItemPresentTest() {
         StationInventoryComponent inventory = new StationInventoryComponent();
-        inventory.setCurrentItem("meat", "oven");
+        inventory.setCurrentItem("meat");
         assertTrue(inventory.isItemPresent());
     }
 
@@ -41,14 +41,14 @@ public class StationInventoryComponentTest {
     @Test
     void shouldSetItemAccepted() {
         StationInventoryComponent inventory = new StationInventoryComponent();
-        inventory.setCurrentItem("meat", "oven");
+        inventory.setCurrentItem("meat");
         assertTrue(inventory.isItemPresent());
     }
 
     @Test
     void shouldRemoveCurrentItem() {
         StationInventoryComponent inventory = new StationInventoryComponent();
-        inventory.setCurrentItem("meat", "oven");
+        inventory.setCurrentItem("meat");
         String output = inventory.removeCurrentItem().orElse("Empty");
         assertEquals("meat", output);
         assertFalse(inventory.isItemPresent());
