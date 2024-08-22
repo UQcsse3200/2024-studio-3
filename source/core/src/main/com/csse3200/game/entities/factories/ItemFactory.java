@@ -23,6 +23,6 @@ public class ItemFactory {
     public static Entity createFish() {
         return createTemplateItem()
                 .addComponent(new TextureRenderComponent("images/raw_fish.png"))
-                .addComponent(new ItemComponent("Fish", ItemType.RAWFISH, 2, 10));
+                .addComponent(new ItemComponent("Fish", ItemType.RAWFISH, 2));
     }
 }
