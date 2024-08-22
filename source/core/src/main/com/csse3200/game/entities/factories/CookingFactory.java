@@ -1,7 +1,7 @@
 
-package com.csse3200.game.entity.factory;
+package com.csse3200.game.entities.factories;
 
-import com.csse3200.game.entities.config.CookingConfig;
+
 import com.csse3200.game.entities.configs.CookingConfig;
 import com.csse3200.game.entities.configs.NPCConfigs;
 import com.csse3200.game.files.FileLoader;
