@@ -6,7 +6,7 @@
     "spawnTimer": 100,
     "preference": [],
     "reputation": 100,
-    "texture": "test"
+    "texture": "images/animal_images/gorilla.png"
   },
 
   "Goose": {
@@ -16,7 +16,7 @@
     "spawnTimer": 100,
     "preference": [],
     "reputation": 100,
-    "texture": "test"
+    "texture": "images/animal_images/goose.png"
   },
 
   "Wolf": {
@@ -26,7 +26,7 @@
     "spawnTimer": 100,
     "preference": [],
     "reputation": 100,
-    "texture": "test"
+    "texture": "images/animal_images/snow_wolf.png"
   },
 
   "Goat": {
@@ -36,7 +36,7 @@
     "spawnTimer": 100,
     "preference": [],
     "reputation": 100,
-    "texture": "test"
+    "texture": "images/animal_images/goat.png"
   },
 
   "Monkey": {
@@ -46,6 +46,6 @@
     "spawnTimer": 100,
     "preference": [],
     "reputation": 100,
-    "texture": "test"
+    "texture": "images/animal_images/monkey.png"
   }
 }
