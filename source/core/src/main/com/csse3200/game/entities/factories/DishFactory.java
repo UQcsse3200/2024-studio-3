@@ -3,13 +3,9 @@ package com.csse3200.game.entities.factories;
 
 
 import com.csse3200.game.entities.configs.CookingConfig;
-import com.csse3200.game.entities.configs.NPCConfigs;
 import com.csse3200.game.files.FileLoader;
 
-
-import java.io.File;
-import java.io.IOException;
-public class CookingFactory {
+public class DishFactory {
 
     private static final CookingConfig configs =
             FileLoader.readClass(CookingConfig.class, "configs/recipe.json");
