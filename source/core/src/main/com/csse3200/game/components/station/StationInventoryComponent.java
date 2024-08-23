@@ -19,10 +19,12 @@ public class StationInventoryComponent extends Component {
     private static final int SIZE = 2;
     private ArrayList<Optional<String>> item;
 
-    // TODO
-    // Processing for timer, recipe mapping etc
-    // Consider integration of abstract class
+
     /**
+     * TODO
+     * Processing for timer, recipe mapping etc
+     * Consider integration of abstract class
+     * 
      * Creates a station inventory component for the specified type.
      * Intented to also initialise all of the accepted items based on some
      * predefined configuration.
@@ -37,6 +39,7 @@ public class StationInventoryComponent extends Component {
      * When called checks if there is an entity within the station and
      * if so, updates the state of it to reflect changes made due to the
      * station.
+     * @param type the type of station
      */
     public void processInventory(String type) {
         if(this.isItemPresent()) {
