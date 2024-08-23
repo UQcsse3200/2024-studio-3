@@ -1,0 +1,5 @@
+DocketStatusIndicator.png
+size: 400, 150
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
