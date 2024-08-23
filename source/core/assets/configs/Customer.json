@@ -10,8 +10,17 @@
   },
 
   "Goose": {
-    "name": "Hank",
+    "name": "Lewis",
     "countDown": 30,
+    "patience": 100,
+    "spawnTimer": 100,
+    "preference": [],
+    "reputation": 100,
+    "texture": "test"
+  },
+  "Wolf": {
+    "name": "Silver",
+    "countDown": 50,
     "patience": 100,
     "spawnTimer": 100,
     "preference": [],
