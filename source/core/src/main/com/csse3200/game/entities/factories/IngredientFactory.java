@@ -13,7 +13,7 @@ import com.csse3200.game.rendering.TextureRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
 
 public class IngredientFactory {
-    public static Entity createIngridient(String name, ItemType type, int weight,
+    public static Entity createIngredient(String name, ItemType type, int weight,
                                           int cook_time, String url_to_texture) {
         return createTemplateItem()
                 .addComponent(new TextureRenderComponent(url_to_texture))
