@@ -47,6 +47,11 @@ public class ObstacleFactory {
     return wall;
   }
 
+
+
+
+
+
   private ObstacleFactory() {
     throw new IllegalStateException("Instantiating static util class");
   }
