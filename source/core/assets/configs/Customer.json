@@ -18,9 +18,30 @@
     "reputation": 100,
     "texture": "test"
   },
+
   "Wolf": {
     "name": "Silver",
     "countDown": 50,
+    "patience": 100,
+    "spawnTimer": 100,
+    "preference": [],
+    "reputation": 100,
+    "texture": "test"
+  },
+
+  "Goat": {
+    "name": "John",
+    "countDown": 50,
+    "patience": 100,
+    "spawnTimer": 100,
+    "preference": [],
+    "reputation": 100,
+    "texture": "test"
+  },
+
+  "Monkey": {
+    "name": "Moonki",
+    "countDown": 40,
     "patience": 100,
     "spawnTimer": 100,
     "preference": [],
