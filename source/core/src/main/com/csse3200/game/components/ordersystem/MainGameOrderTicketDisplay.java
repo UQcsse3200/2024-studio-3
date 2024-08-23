@@ -91,6 +91,10 @@ public class MainGameOrderTicketDisplay extends UIComponent {
             countdownLabel.setText("Timer: " + (remainingTime / 1000));
             if (remainingTimeSecs <= 3 && remainingTimeSecs >= 2){
                 docket.setDrawable(docketSkin, textureNameArray[1]);
+            } else if (remainingTimeSecs <= 2 && remainingTimeSecs >= 1) {
+                docket.setDrawable(docketSkin, textureNameArray[2]);
+            } else if (remainingTimeSecs <= 1 && remainingTimeSecs >= 0) {
+                docket.setDrawable(docketSkin, textureNameArray[3]);
             }
         } else {
             dispose();
