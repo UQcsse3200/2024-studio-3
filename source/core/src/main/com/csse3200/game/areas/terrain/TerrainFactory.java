@@ -19,7 +19,7 @@ import com.csse3200.game.services.ServiceLocator;
 
 /** Factory for creating game terrains. */
 public class TerrainFactory {
-  private static final GridPoint2 MAP_SIZE = new GridPoint2(30, 30);
+  private static final GridPoint2 MAP_SIZE = new GridPoint2(15, 15);
   private static final int TUFT_TILE_COUNT = 30;
   private static final int ROCK_TILE_COUNT = 30;
 
@@ -58,12 +58,12 @@ public class TerrainFactory {
     switch (terrainType) {
       case FOREST_DEMO:
         TextureRegion orthoGrass =
-            new TextureRegion(resourceService.getAsset("images/grass_1.png", Texture.class));
+            new TextureRegion(resourceService.getAsset("images/new_color.png", Texture.class));
         TextureRegion orthoTuft =
-            new TextureRegion(resourceService.getAsset("images/grass_2.png", Texture.class));
+            new TextureRegion(resourceService.getAsset("images/new_color.png", Texture.class));
         TextureRegion orthoRocks =
-            new TextureRegion(resourceService.getAsset("images/grass_3.png", Texture.class));
-        return createForestDemoTerrain(0.5f, orthoGrass, orthoTuft, orthoRocks);
+            new TextureRegion(resourceService.getAsset("images/new_color.png", Texture.class));
+        return createForestDemoTerrain(1f, orthoGrass, orthoTuft, orthoRocks);
       case FOREST_DEMO_ISO:
         TextureRegion isoGrass =
             new TextureRegion(resourceService.getAsset("images/iso_grass_1.png", Texture.class));
@@ -112,7 +112,7 @@ public class TerrainFactory {
     TerrainTile grassTile = new TerrainTile(grass);
     TerrainTile grassTuftTile = new TerrainTile(grassTuft);
     TerrainTile rockTile = new TerrainTile(rocks);
-    TiledMapTileLayer layer = new TiledMapTileLayer(MAP_SIZE.x, MAP_SIZE.y, tileSize.x, tileSize.y);
+    TiledMapTileLayer layer = new TiledMapTileLayer(MAP_SIZE.x, MAP_SIZE.y, tileSize.x , tileSize.y);
 
     // Create base grass
     fillTiles(layer, MAP_SIZE, grassTile);
