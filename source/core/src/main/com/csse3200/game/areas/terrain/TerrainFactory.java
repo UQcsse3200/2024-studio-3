@@ -59,11 +59,11 @@ public class TerrainFactory {
       case FOREST_DEMO:
         TextureRegion orthoFloor =
             new TextureRegion(resourceService.getAsset("images/new_orange.png", Texture.class));
-        TextureRegion orthoTuft =
-            new TextureRegion(resourceService.getAsset("images/new_orange.png", Texture.class));
+        TextureRegion custTile =
+            new TextureRegion(resourceService.getAsset("images/blue_tile.png", Texture.class));
         TextureRegion orthoRocks =
             new TextureRegion(resourceService.getAsset("images/new_orange.png", Texture.class));
-        return createForestDemoTerrain(2f, orthoFloor, orthoTuft, orthoRocks);
+        return createForestDemoTerrain(2f, orthoFloor, custTile, orthoRocks);
       case FOREST_DEMO_ISO:
         TextureRegion isoGrass =
             new TextureRegion(resourceService.getAsset("images/iso_grass_1.png", Texture.class));
@@ -86,9 +86,9 @@ public class TerrainFactory {
   }
 
   private TerrainComponent createForestDemoTerrain(
-      float tileWorldSize, TextureRegion floor, TextureRegion grassTuft, TextureRegion rocks) {
+      float tileWorldSize, TextureRegion floor, TextureRegion customer, TextureRegion rocks) {
     GridPoint2 tilePixelSize = new GridPoint2(floor.getRegionWidth(), floor.getRegionHeight());
-    TiledMap tiledMap = createForestDemoTiles(tilePixelSize, floor, grassTuft, rocks);
+    TiledMap tiledMap = createForestDemoTiles(tilePixelSize, floor, customer, rocks);
     TiledMapRenderer renderer = createRenderer(tiledMap, tileWorldSize / tilePixelSize.x);
     return new TerrainComponent(camera, tiledMap, renderer, orientation, tileWorldSize);
   }
@@ -107,33 +107,44 @@ public class TerrainFactory {
   }
 
   private TiledMap createForestDemoTiles(
-      GridPoint2 tileSize, TextureRegion floor, TextureRegion grassTuft, TextureRegion rocks) {
+      GridPoint2 tileSize, TextureRegion floor, TextureRegion customer, TextureRegion rocks) {
     TiledMap tiledMap = new TiledMap();
     TerrainTile floorTile= new TerrainTile(floor);
-    TerrainTile grassTuftTile = new TerrainTile(grassTuft);
+    TerrainTile customerTile = new TerrainTile(customer);
+    //TerrainTile grassTuftTile = new TerrainTile(grassTuft);
     TerrainTile rockTile = new TerrainTile(rocks);
     TiledMapTileLayer layer = new TiledMapTileLayer(MAP_SIZE.x, MAP_SIZE.y, tileSize.x , tileSize.y);
+    GridPoint2 modified_size = new GridPoint2(MAP_SIZE.x/8 , MAP_SIZE.y);
+    TiledMapTileLayer layer2 = new TiledMapTileLayer(modified_size.x, modified_size.y,tileSize.x , tileSize.y);
 
     // Create base grass
     fillTiles(layer, MAP_SIZE, floorTile);
+    //fillTiles(layer, MAP_SIZE, customerTile);
 
     // Add some grass and rocks
-    fillTilesAtRandom(layer, MAP_SIZE, grassTuftTile, TUFT_TILE_COUNT);
-    fillTilesAtRandom(layer, MAP_SIZE, rockTile, ROCK_TILE_COUNT);
+    //fillTilesAtRandom(layer, MAP_SIZE, grassTuftTile, TUFT_TILE_COUNT);
+    // create modified map size
+
+    fillTilesAtRandom(layer, modified_size, customerTile, ROCK_TILE_COUNT);
 
     tiledMap.getLayers().add(layer);
     return tiledMap;
   }
 
   private static void fillTilesAtRandom(
-      TiledMapTileLayer layer, GridPoint2 mapSize, TerrainTile tile, int amount) {
-    GridPoint2 min = new GridPoint2(0, 0);
-    GridPoint2 max = new GridPoint2(mapSize.x - 1, mapSize.y - 1);
+      TiledMapTileLayer layer, GridPoint2 map, TerrainTile tile, int amount) {
+    //GridPoint2 min = new GridPoint2(0, 0);
+    //GridPoint2 max = new GridPoint2(mapSize.x - 1, mapSize.y - 1);
 
-    for (int i = 0; i < amount; i++) {
-      GridPoint2 tilePos = RandomUtils.random(min, max);
-      Cell cell = layer.getCell(tilePos.x, tilePos.y);
-      cell.setTile(tile);
+    for (int x = 0; x < map.x; x++) {
+      for (int y = 0; y < map.y; y++) {
+        Cell cell = new Cell();
+        cell.setTile(tile);
+        layer.setCell(x,y,cell);
+      }
+     //GridPoint2 tilePos = RandomUtils.random(min, max);
+      //Cell cell = layer.getCell(tilePos.x, tilePos.y);
+     // cell.setTile(tile);
     }
   }
 
