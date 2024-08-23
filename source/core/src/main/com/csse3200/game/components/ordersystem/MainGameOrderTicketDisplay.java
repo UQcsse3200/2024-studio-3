@@ -29,7 +29,9 @@ public class MainGameOrderTicketDisplay extends UIComponent {
     private static final long DEFAULT_TIMER = 5000;
     private Table table;
     private Label countdownLabel;
-    private TextureRegion[] docketTextures;
+    private Skin docketSkin;
+    private String[] textureNameArray;
+    private Image docket;
     private long startTime;
 
     @Override
@@ -48,17 +50,17 @@ public class MainGameOrderTicketDisplay extends UIComponent {
           new Image(
             ServiceLocator.getResourceService()
               .getAsset("images/ordersystem/docket_background.png", Texture.class));*/
-        docketTextures = new TextureRegion[4];
-        String[] textureNameArray = {"fresh_docket","mild_docket","old_docket","expired_docket"};
+        textureNameArray = new String[4];
+        textureNameArray[0] = "fresh_docket";
+        textureNameArray[1] = "mild_docket";
+        textureNameArray[2] = "old_docket";
+        textureNameArray[3] = "expired_docket";
         TextureAtlas docketAtlas;
         docketAtlas = new TextureAtlas(Gdx.files.internal("images/ordersystem/DocketStatusIndicator.atlas"));
-        Skin docketSkin = new Skin();
+        docketSkin = new Skin();
         docketSkin.addRegions(docketAtlas);
-        for (int i = 0; i < 4; i++) {
-            docketTextures[i] = docketSkin.get(textureNameArray[i], TextureRegion.class);
-        }
 
-        Image docket = new Image(docketTextures[0]);
+        docket = new Image(docketSkin, textureNameArray[0]);
 
         Texture texture = new Texture(Gdx.files.internal("images/ordersystem/docket_background.png"));
         Drawable backgroundDrawable = new TextureRegionDrawable(new TextureRegion(texture));
@@ -87,6 +89,9 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         double remainingTimeSecs = remainingTime / 1000;
         if (remainingTime > 0) {
             countdownLabel.setText("Timer: " + (remainingTime / 1000));
+            if (remainingTimeSecs <= 3 && remainingTimeSecs >= 2){
+                docket.setDrawable(docketSkin, textureNameArray[1]);
+            }
         } else {
             dispose();
         }
