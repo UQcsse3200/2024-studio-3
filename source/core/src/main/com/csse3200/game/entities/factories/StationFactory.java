@@ -14,10 +14,7 @@ import com.csse3200.game.rendering.TextureRenderComponent;
 public class StationFactory {
     /**
    * Creates visible oven.
-   * @param width Station width in world units
-   * @param height Station height in world units
-   * @param type Type of station
-   * @return Station entity of given width and height with relavent behaviors
+   * @return Oven entity with relavent behaviors 
    */
   public static Entity createOven() {
     Entity oven = new Entity()
@@ -39,9 +36,7 @@ public class StationFactory {
 
     /**
    * Creates visible stove.
-   * @param width Station width in world units
-   * @param height Station height in world units
-   * @return Station entity of given width and height with relavent behaviors
+   * @return Stove entity with relavent behaviors 
    */
   public static Entity createStove() {
     Entity stove = new Entity()
