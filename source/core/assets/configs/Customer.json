@@ -1,12 +1,21 @@
 {
-  "hank": {
+  "Gorilla": {
     "name": "Hank",
-    "pref": 40,
-    "timer": 30,
-    "patience": 10,
-    "reputation": 5,
+    "countDown": 20,
+    "patience": 100,
     "spawnTimer": 100,
-    "texture": "images/ghostKing.atlas",
-    "this is a change": 2
+    "preference": [],
+    "reputation": 100,
+    "texture": "test"
+  },
+
+  "Goose": {
+    "name": "Hank",
+    "countDown": 30,
+    "patience": 100,
+    "spawnTimer": 100,
+    "preference": [],
+    "reputation": 100,
+    "texture": "test"
   }
 }
