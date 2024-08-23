@@ -3,6 +3,9 @@ package com.csse3200.game.entities.configs;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Defines the properties stored in cooking config files to be loaded by the Dish Factory.
+ */
 public class CookingConfig {
     public List<String> acai_bowl =new ArrayList<>() {{
             add("acai");
