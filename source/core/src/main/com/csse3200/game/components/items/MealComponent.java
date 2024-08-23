@@ -31,7 +31,7 @@ public class MealComponent extends ItemComponent {
             String itemState = ingredient.getItemState();
 
             if (itemState.equals("BURNED")) {
-                penalty += (1 - (1 / ingredients.size()) / 2);
+                penalty += (1 - (1 / ingredients.size()) / 2) * 100;
             }
         }
 
