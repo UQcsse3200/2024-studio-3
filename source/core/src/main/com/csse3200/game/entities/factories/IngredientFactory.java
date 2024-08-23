@@ -11,6 +11,7 @@ import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.rendering.TextureRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
+import static com.csse3200.game.entities.factories.ItemFactory.createTemplateItem;
 
 public class IngredientFactory {
     public static Entity createIngridient(String name, ItemType type, int weight,
