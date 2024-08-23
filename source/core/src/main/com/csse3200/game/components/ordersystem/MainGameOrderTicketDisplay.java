@@ -29,7 +29,7 @@ public class MainGameOrderTicketDisplay extends UIComponent {
     private static final long DEFAULT_TIMER = 5000;
     private Table table;
     private Label countdownLabel;
-    private Skin docketSkin;
+    private TextureRegion[] docketTextures;
     private long startTime;
 
     @Override
@@ -48,12 +48,17 @@ public class MainGameOrderTicketDisplay extends UIComponent {
           new Image(
             ServiceLocator.getResourceService()
               .getAsset("images/ordersystem/docket_background.png", Texture.class));*/
+        docketTextures = new TextureRegion[4];
+        String[] textureNameArray = {"fresh_docket","mild_docket","old_docket","expired_docket"};
         TextureAtlas docketAtlas;
         docketAtlas = new TextureAtlas(Gdx.files.internal("images/ordersystem/DocketStatusIndicator.atlas"));
-        docketSkin = new Skin();
+        Skin docketSkin = new Skin();
         docketSkin.addRegions(docketAtlas);
-        TextureRegion currentDocketBackground = docketSkin.get("fresh_docket", TextureRegion.class);
-        Image docket = new Image(currentDocketBackground);
+        for (int i = 0; i < 4; i++) {
+            docketTextures[i] = docketSkin.get(textureNameArray[i], TextureRegion.class);
+        }
+
+        Image docket = new Image(docketTextures[0]);
 
         Texture texture = new Texture(Gdx.files.internal("images/ordersystem/docket_background.png"));
         Drawable backgroundDrawable = new TextureRegionDrawable(new TextureRegion(texture));
