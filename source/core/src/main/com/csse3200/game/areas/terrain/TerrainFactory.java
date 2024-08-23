@@ -58,12 +58,12 @@ public class TerrainFactory {
     switch (terrainType) {
       case FOREST_DEMO:
         TextureRegion orthoFloor =
-            new TextureRegion(resourceService.getAsset("images/new_color.png", Texture.class));
+            new TextureRegion(resourceService.getAsset("images/new_orange.png", Texture.class));
         TextureRegion orthoTuft =
-            new TextureRegion(resourceService.getAsset("images/new_color.png", Texture.class));
+            new TextureRegion(resourceService.getAsset("images/new_orange.png", Texture.class));
         TextureRegion orthoRocks =
-            new TextureRegion(resourceService.getAsset("images/new_color.png", Texture.class));
-        return createForestDemoTerrain(1f, orthoFloor, orthoTuft, orthoRocks);
+            new TextureRegion(resourceService.getAsset("images/new_orange.png", Texture.class));
+        return createForestDemoTerrain(2f, orthoFloor, orthoTuft, orthoRocks);
       case FOREST_DEMO_ISO:
         TextureRegion isoGrass =
             new TextureRegion(resourceService.getAsset("images/iso_grass_1.png", Texture.class));
