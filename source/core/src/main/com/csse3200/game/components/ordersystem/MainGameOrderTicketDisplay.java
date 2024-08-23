@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
 public class MainGameOrderTicketDisplay extends UIComponent {
     private static final Logger logger = LoggerFactory.getLogger(MainGameExitDisplay.class);
     private static final float Z_INDEX = 2f;
-    private static final long DEFAULT_TIMER = 99999999;
+    private static final long DEFAULT_TIMER = 5000;
     private Table table;
     private Label countdownLabel;
     private long startTime;
@@ -37,7 +37,7 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         Label ingredient1Label = new Label("Ingredient 1", skin);
         Label ingredient2Label = new Label("Ingredient 2", skin);
         Label ingredient3Label = new Label("Ingredient 3", skin);
-        countdownLabel = new Label("Timer: 7", skin);
+        countdownLabel = new Label("Timer: 5000", skin);
 
         table.add(recipeNameLabel).padTop(90f).padLeft(10f).row();
         table.add(ingredient1Label).padLeft(10f).row();
