@@ -2,7 +2,9 @@ package com.csse3200.game.components.ordersystem;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.TimeUtils;
@@ -41,10 +43,16 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         table.top().left();
         table.setFillParent(true);
 
-        Image docket =
+        /*Image docket =
           new Image(
             ServiceLocator.getResourceService()
-              .getAsset("images/ordersystem/docket_background.png", Texture.class));
+              .getAsset("images/ordersystem/docket_background.png", Texture.class));*/
+        TextureAtlas docketAtlas;
+        docketAtlas = new TextureAtlas(Gdx.files.internal("images/ordersystem/DocketStatusIndicator.atlas"));
+        Skin docketSkin = new Skin();
+        docketSkin.addRegions(docketAtlas);
+        TextureRegion currentDocketBackground = docketSkin.get("fresh_docket", TextureRegion.class);
+        Image docket = new Image(currentDocketBackground);
 
         Texture texture = new Texture(Gdx.files.internal("images/ordersystem/docket_background.png"));
         Drawable backgroundDrawable = new TextureRegionDrawable(new TextureRegion(texture));
@@ -55,7 +63,8 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         Label ingredient3Label = new Label("Ingredient 3", skin);
         countdownLabel = new Label("Timer: 5000", skin);
 
-        table.setBackground(backgroundDrawable);
+        //table.setBackground(backgroundDrawable);
+        table.add(docket);
         table.add(recipeNameLabel).padTop(90f).padLeft(10f).row();
         table.add(ingredient1Label).padLeft(10f).row();
         table.add(ingredient2Label).padLeft(10f).row();
