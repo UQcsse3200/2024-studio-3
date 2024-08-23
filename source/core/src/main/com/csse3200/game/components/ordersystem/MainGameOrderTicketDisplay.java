@@ -29,6 +29,7 @@ public class MainGameOrderTicketDisplay extends UIComponent {
     private static final long DEFAULT_TIMER = 5000;
     private Table table;
     private Label countdownLabel;
+    private Skin docketSkin;
     private long startTime;
 
     @Override
@@ -49,7 +50,7 @@ public class MainGameOrderTicketDisplay extends UIComponent {
               .getAsset("images/ordersystem/docket_background.png", Texture.class));*/
         TextureAtlas docketAtlas;
         docketAtlas = new TextureAtlas(Gdx.files.internal("images/ordersystem/DocketStatusIndicator.atlas"));
-        Skin docketSkin = new Skin();
+        docketSkin = new Skin();
         docketSkin.addRegions(docketAtlas);
         TextureRegion currentDocketBackground = docketSkin.get("fresh_docket", TextureRegion.class);
         Image docket = new Image(currentDocketBackground);
@@ -78,7 +79,7 @@ public class MainGameOrderTicketDisplay extends UIComponent {
     public void update() {
         long elapsedTime = TimeUtils.timeSinceMillis(startTime); //inspired by services/GameTime
         long remainingTime = DEFAULT_TIMER - elapsedTime; //inspired by services/GameTime
-
+        double remainingTimeSecs = remainingTime / 1000;
         if (remainingTime > 0) {
             countdownLabel.setText("Timer: " + (remainingTime / 1000));
         } else {
