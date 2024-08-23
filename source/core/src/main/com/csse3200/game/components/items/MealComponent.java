@@ -41,5 +41,4 @@ public class MealComponent extends ItemComponent {
     public int getQuality() {
         return quality;
     }
-
 }
