@@ -15,9 +15,9 @@ import static com.csse3200.game.entities.factories.ItemFactory.createTemplateIte
 
 public class IngredientFactory {
     public static Entity createIngredient(String name, ItemType type, int weight,
-                                          int cook_time, String url_to_texture) {
+                                          int cook_time, String path_to_texture) {
         return createTemplateItem()
-                .addComponent(new TextureRenderComponent(url_to_texture))
+                .addComponent(new TextureRenderComponent(path_to_texture))
                 .addComponent(new IngredientComponent(name, type, weight, cook_time));
     }
 }
