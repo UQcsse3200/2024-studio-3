@@ -6,6 +6,7 @@
     "patience": 10,
     "reputation": 5,
     "spawnTimer": 100,
-    "texture": "images/ghostKing.atlas"
+    "texture": "images/ghostKing.atlas",
+    "this is a change": 2
   }
 }
