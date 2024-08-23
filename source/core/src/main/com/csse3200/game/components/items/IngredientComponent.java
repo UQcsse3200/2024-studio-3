@@ -1,9 +1,5 @@
 package com.csse3200.game.components.items;
 
-import com.csse3200.game.components.items.ItemComponent;
-
-import java.util.UUID;
-
 public class IngredientComponent extends ItemComponent{
         private final int cookTime;
         private ItemState itemState;
