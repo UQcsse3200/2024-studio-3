@@ -6,7 +6,8 @@ public class IngredientComponent extends ItemComponent{
         private enum ItemState {
             RAW,
             COOKED,
-            BURNED
+            BURNED,
+            CHOPPED
         }
 
     public IngredientComponent(String itemName, ItemType itemType, int weight, int cookTime) {
@@ -30,5 +31,4 @@ public class IngredientComponent extends ItemComponent{
     public void burnItem() {
         this.itemState = ItemState.BURNED;
     }
-
 }
