@@ -19,7 +19,7 @@ import com.csse3200.game.services.ServiceLocator;
 
 /** Factory for creating game terrains. */
 public class TerrainFactory {
-  private static final GridPoint2 MAP_SIZE = new GridPoint2(15, 15);
+  private static final GridPoint2 MAP_SIZE = new GridPoint2(20, 20);
   private static final int TUFT_TILE_COUNT = 30;
   private static final int ROCK_TILE_COUNT = 30;
 
@@ -57,13 +57,13 @@ public class TerrainFactory {
     ResourceService resourceService = ServiceLocator.getResourceService();
     switch (terrainType) {
       case FOREST_DEMO:
-        TextureRegion orthoGrass =
+        TextureRegion orthoFloor =
             new TextureRegion(resourceService.getAsset("images/new_color.png", Texture.class));
         TextureRegion orthoTuft =
             new TextureRegion(resourceService.getAsset("images/new_color.png", Texture.class));
         TextureRegion orthoRocks =
             new TextureRegion(resourceService.getAsset("images/new_color.png", Texture.class));
-        return createForestDemoTerrain(1f, orthoGrass, orthoTuft, orthoRocks);
+        return createForestDemoTerrain(1f, orthoFloor, orthoTuft, orthoRocks);
       case FOREST_DEMO_ISO:
         TextureRegion isoGrass =
             new TextureRegion(resourceService.getAsset("images/iso_grass_1.png", Texture.class));
@@ -86,9 +86,9 @@ public class TerrainFactory {
   }
 
   private TerrainComponent createForestDemoTerrain(
-      float tileWorldSize, TextureRegion grass, TextureRegion grassTuft, TextureRegion rocks) {
-    GridPoint2 tilePixelSize = new GridPoint2(grass.getRegionWidth(), grass.getRegionHeight());
-    TiledMap tiledMap = createForestDemoTiles(tilePixelSize, grass, grassTuft, rocks);
+      float tileWorldSize, TextureRegion floor, TextureRegion grassTuft, TextureRegion rocks) {
+    GridPoint2 tilePixelSize = new GridPoint2(floor.getRegionWidth(), floor.getRegionHeight());
+    TiledMap tiledMap = createForestDemoTiles(tilePixelSize, floor, grassTuft, rocks);
     TiledMapRenderer renderer = createRenderer(tiledMap, tileWorldSize / tilePixelSize.x);
     return new TerrainComponent(camera, tiledMap, renderer, orientation, tileWorldSize);
   }
@@ -107,15 +107,15 @@ public class TerrainFactory {
   }
 
   private TiledMap createForestDemoTiles(
-      GridPoint2 tileSize, TextureRegion grass, TextureRegion grassTuft, TextureRegion rocks) {
+      GridPoint2 tileSize, TextureRegion floor, TextureRegion grassTuft, TextureRegion rocks) {
     TiledMap tiledMap = new TiledMap();
-    TerrainTile grassTile = new TerrainTile(grass);
+    TerrainTile floorTile= new TerrainTile(floor);
     TerrainTile grassTuftTile = new TerrainTile(grassTuft);
     TerrainTile rockTile = new TerrainTile(rocks);
     TiledMapTileLayer layer = new TiledMapTileLayer(MAP_SIZE.x, MAP_SIZE.y, tileSize.x , tileSize.y);
 
     // Create base grass
-    fillTiles(layer, MAP_SIZE, grassTile);
+    fillTiles(layer, MAP_SIZE, floorTile);
 
     // Add some grass and rocks
     fillTilesAtRandom(layer, MAP_SIZE, grassTuftTile, TUFT_TILE_COUNT);
@@ -138,6 +138,8 @@ public class TerrainFactory {
   }
 
   private static void fillTiles(TiledMapTileLayer layer, GridPoint2 mapSize, TerrainTile tile) {
+    // fill the map so that no tiles are cropped, they should all be completely visible
+
     for (int x = 0; x < mapSize.x; x++) {
       for (int y = 0; y < mapSize.y; y++) {
         Cell cell = new Cell();
