@@ -23,7 +23,7 @@ public class CookingComponent extends Component {
     }
 
     /**
-     * Called every frame to incrementally cook items.
+     * Called every frame to incrementally cook items, scaled by time scale.
      */
     @Override
     public void update() {
@@ -48,5 +48,21 @@ public class CookingComponent extends Component {
      */
     private void removeItem() {
         isCooking = false;
+    }
+
+    /**
+     * Checks whether the station is being used.
+     * @return true if the item is being cooked, false otherwise.
+     */
+    public boolean isCooking() {
+        return isCooking;
+    }
+
+    /**
+     * Tells how long the item has been cooked for in seconds, scaled by time scale.
+     * @return time passed since the item was placed on the station in seconds, scaled by time scale.
+     */
+    public long getCookingTime() {
+        return cookingTime;
     }
 }
