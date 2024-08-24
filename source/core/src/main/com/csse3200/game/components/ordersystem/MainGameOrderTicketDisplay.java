@@ -53,20 +53,20 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         Texture texture = new Texture(Gdx.files.internal("images/ordersystem/docket_background.png"));
         Drawable backgroundDrawable = new TextureRegionDrawable(new TextureRegion(texture));
 
-        Label recipeNameLabel = new Label("Recipe name", skin);
+        /*Label recipeNameLabel = new Label("Recipe name", skin);
         Label ingredient1Label = new Label("Ingredient 1", skin);
         Label ingredient2Label = new Label("Ingredient 2", skin);
         Label ingredient3Label = new Label("Ingredient 3", skin);
-        countdownLabel = new Label("Timer: 5000", skin);
+        countdownLabel = new Label("Timer: 5000", skin);*/
         docket = new Docket();
         docket.initialiseDocketSkin();
         //table.setBackground(backgroundDrawable);
         table.add(docket.getImage());
-        table.add(recipeNameLabel).padTop(90f).padLeft(10f).row();
+        /*table.add(recipeNameLabel).padTop(90f).padLeft(10f).row();
         table.add(ingredient1Label).padLeft(10f).row();
         table.add(ingredient2Label).padLeft(10f).row();
         table.add(ingredient3Label).padLeft(10f).row();
-        table.add(countdownLabel).padLeft(10f).row();
+        table.add(countdownLabel).padLeft(10f).row();*/
 
         stage.addActor(table);
     }
@@ -77,7 +77,7 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         long remainingTime = DEFAULT_TIMER - elapsedTime; //inspired by services/GameTime
         double remainingTimeSecs = remainingTime / 1000;
         if (remainingTime > 0) {
-            countdownLabel.setText("Timer: " + (remainingTime / 1000));
+            //countdownLabel.setText("Timer: " + (remainingTime / 1000));
             docket.updateDocketTexture(remainingTimeSecs);
         } else {
             dispose();
