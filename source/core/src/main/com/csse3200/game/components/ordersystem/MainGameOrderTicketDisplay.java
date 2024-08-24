@@ -47,7 +47,6 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         table = new Table();
         table.top().left();
         table.setFillParent(true);
-        instanceCnt++;
         //logger.info("instance Count (just created): {}", instanceCnt);
         //addActors();
         startTime = TimeUtils.millis();
@@ -60,6 +59,7 @@ public class MainGameOrderTicketDisplay extends UIComponent {
     }
 
     private void addActors() {
+        instanceCnt++;
         Docket docket = new Docket();
         docketList.add(docket);
         Table cellTable = new Table();
@@ -135,7 +135,9 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         long remainingTime = DEFAULT_TIMER - elapsedTime; //inspired by services/GameTime
         double remainingTimeSecs = remainingTime / 1000;
         if (remainingTime > 0) {
-            //countdownLabel.setText("Timer: " + (remainingTime / 1000));
+            countdownLabel.setText("Timer: " + (remainingTime / 1000));
+        } else {
+            dispose();
         }
         for (int i = 0; i < docketList.size(); i++) {
             docketList.get(i).update();
