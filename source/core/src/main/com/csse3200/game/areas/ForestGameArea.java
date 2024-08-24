@@ -77,7 +77,7 @@ public class ForestGameArea extends GameArea {
     player = spawnPlayer();
     spawnGhosts();
     spawnGhostKing();
-
+    // Create the cooking stations
     spawnStations();
 
 
