@@ -3,10 +3,7 @@ package com.csse3200.game.components.ordersystem;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.csse3200.game.components.maingame.MainGameExitDisplay;
 import com.csse3200.game.services.DocketService;
@@ -48,7 +45,7 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         startTime = TimeUtils.millis(); //inspired by services/GameTime
         ServiceLocator.registerDocketService(new DocketService());
         ServiceLocator.getDocketService().getEvents().addListener("addNewDocket", this::addActors);
-        ServiceLocator.getDocketService().getEvents().addListener("removeDocket", this::<Docket>removeDocket);
+        ServiceLocator.getDocketService().getEvents().addListener("removeDocket", this::removeDocket);
     }
 
     private void addActors() {
@@ -80,7 +77,10 @@ public class MainGameOrderTicketDisplay extends UIComponent {
     }
 
     public void removeDocket(Docket docket) {
-        logger.debug("Called all g");
+        logger.info("Called all g");
+        logger.info("Docket check {}", docket.toString());
+        logger.info("Image check {}", docket.getImage().toString());
+        table.removeActor(docket.getImage());
     }
 
     @Override
