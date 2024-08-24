@@ -62,12 +62,25 @@ public class MainGameOrderTicketDisplay extends UIComponent {
     private void addActors() {
         Docket docket = new Docket();
         docketList.add(docket);
-        table.add(docket.getImage());
-        Cell<Image> newCell = table.getCell(docket.getImage());
+        Table cellTable = new Table();
+        table.add(cellTable);
+        //cellTable.add(docket.getImage());
+        Label recipeNameLabel = new Label("Recipe name", skin);
+        cellTable.setBackground(docket.getImage().getDrawable());
+        cellTable.add(recipeNameLabel).padLeft(10f).row();
+        Cell<Table> newCell = table.getCell(cellTable);
+        Label ingredient1Label = new Label("Ingredient 1", skin);
+        Label ingredient2Label = new Label("Ingredient 2", skin);
+        Label ingredient3Label = new Label("Ingredient 3", skin);
+        countdownLabel = new Label("Timer: 5", skin);
         newCell.size(DEFAULT_WIDTH, DEFAULT_HEIGHT);
         newCell.padTop(10f);
         newCell.padLeft(10f);
         newCell.padRight(10f);
+        cellTable.add(ingredient1Label).padLeft(10f).row();
+        cellTable.add(ingredient2Label).padLeft(10f).row();
+        cellTable.add(ingredient3Label).padLeft(10f).row();
+        cellTable.add(countdownLabel).padLeft(10f).row();
         docket.setCellHash(newCell.hashCode());
         stage.addActor(table);
     }
