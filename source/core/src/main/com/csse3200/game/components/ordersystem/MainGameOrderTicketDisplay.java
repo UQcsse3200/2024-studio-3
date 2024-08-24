@@ -60,7 +60,7 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         countdownLabel = new Label("Timer: 5000", skin);
         docket = new Docket();
         //table.setBackground(backgroundDrawable);
-        table.add(docket.returnImage());
+        table.add(docket.getImage());
         table.add(recipeNameLabel).padTop(90f).padLeft(10f).row();
         table.add(ingredient1Label).padLeft(10f).row();
         table.add(ingredient2Label).padLeft(10f).row();
@@ -102,11 +102,11 @@ public class MainGameOrderTicketDisplay extends UIComponent {
 
     public void updateDocketTexture(double remainingTimeSecs) {
         if (remainingTimeSecs <= 3 && remainingTimeSecs >= 2){
-            docket.setDrawable(docketSkin, textureNameArray[1]);
+            docket.getImage().setDrawable(docketSkin, textureNameArray[1]);
         } else if (remainingTimeSecs <= 2 && remainingTimeSecs >= 1) {
-            docket.setDrawable(docketSkin, textureNameArray[2]);
+            docket.getImage().setDrawable(docketSkin, textureNameArray[2]);
         } else if (remainingTimeSecs <= 1 && remainingTimeSecs >= 0) {
-            docket.setDrawable(docketSkin, textureNameArray[3]);
+            docket.getImage().setDrawable(docketSkin, textureNameArray[3]);
         }
     }
 }

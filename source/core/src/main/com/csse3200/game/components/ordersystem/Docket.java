@@ -27,8 +27,16 @@ public class Docket extends UIComponent {
         docket = new Image(docketSkin, textureNameArray[0]);
     }
 
-    public Image returnImage() {
+    public Image getImage() {
         return docket;
+    }
+
+    public String[] getTextureNameArray() {
+        return textureNameArray;
+    }
+
+    public Skin getDocketSkin() {
+        return docketSkin;
     }
 
     @Override
