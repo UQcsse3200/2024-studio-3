@@ -19,7 +19,7 @@ public class Docket extends UIComponent {
         super.create();
     }
 
-    public void initialiseDocketSkin() {
+    public Docket() {
         TextureAtlas docketAtlas;
         docketAtlas = new TextureAtlas(Gdx.files.internal("images/ordersystem/DocketStatusIndicator.atlas"));
         docketSkin.addRegions(docketAtlas);
