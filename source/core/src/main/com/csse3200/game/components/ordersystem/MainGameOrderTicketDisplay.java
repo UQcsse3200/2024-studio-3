@@ -29,6 +29,7 @@ public class MainGameOrderTicketDisplay extends UIComponent {
     private static final float DEFAULT_WIDTH = 180f;
     private Table table;
     private Label countdownLabel;
+    private Docket background;
     private long startTime;
     private static int instanceCnt = 0;
     private boolean disposeDone = false;
@@ -52,7 +53,7 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         float xVal = cntXval(instanceCnt);
         float yVal = 565f ;
         table.setPosition(xVal, yVal);
-        Docket backgroundDrawable = new Docket();
+        background = new Docket();
 
         Label recipeNameLabel = new Label("Recipe name", skin);
         Label ingredient1Label = new Label("Ingredient 1", skin);
@@ -60,7 +61,7 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         Label ingredient3Label = new Label("Ingredient 3", skin);
         countdownLabel = new Label("Timer: 5000", skin);
 
-        table.setBackground(backgroundDrawable.getImage().getDrawable()); //resize background
+        table.setBackground(background.getImage().getDrawable()); //resize background
 //        table.add(recipeNameLabel).padTop(90f).padLeft(10f).row();
         table.add(recipeNameLabel).padLeft(10f).row();
         table.add(ingredient1Label).padLeft(10f).row();
@@ -80,9 +81,9 @@ public class MainGameOrderTicketDisplay extends UIComponent {
     public void update() {
         long elapsedTime = TimeUtils.timeSinceMillis(startTime);
         long remainingTime = DEFAULT_TIMER - elapsedTime;
-
         if (remainingTime > 0) {
             countdownLabel.setText("Timer: " + (remainingTime / 1000));
+            background.updateDocketTexture((double) remainingTime/1000);
         } else if (!disposeDone) {
             logger.info("disposing");
             dispose();
