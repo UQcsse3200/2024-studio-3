@@ -84,6 +84,7 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         if (remainingTime > 0) {
             countdownLabel.setText("Timer: " + (remainingTime / 1000));
             background.updateDocketTexture((double) remainingTime/1000);
+            table.setBackground(background.getImage().getDrawable());
         } else if (!disposeDone) {
             logger.info("disposing");
             dispose();
