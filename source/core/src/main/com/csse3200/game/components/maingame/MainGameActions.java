@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
 public class MainGameActions extends Component {
   private static final Logger logger = LoggerFactory.getLogger(MainGameActions.class);
   private GdxGame game;
-  private Entity ui;
+  private Entity ui = new Entity();
 
   public MainGameActions(GdxGame game) {
     this.game = game;
@@ -41,9 +41,8 @@ public class MainGameActions extends Component {
    */
   private void onCreateOrder() {
     logger.info("Creating order");
-    ui = new Entity();
-    ui.addComponent(new MainGameOrderTicketDisplay());
-    ServiceLocator.getEntityService().register(ui);
+    /*ui.addComponent(new MainGameOrderTicketDisplay());
+    ServiceLocator.getEntityService().register(ui);*/
   }
 
 //  /**

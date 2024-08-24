@@ -149,6 +149,7 @@ public class MainGameScreen extends ScreenAdapter {
 			.addComponent(new DocketDisplay())
 			.addComponent(new OrderActions(this.game))
 			.addComponent(new MainGameOrderBtnDisplay())
+			.addComponent(new MainGameOrderTicketDisplay())
 		    .addComponent(new Docket());
 		ServiceLocator.getEntityService().register(ui);
 	}

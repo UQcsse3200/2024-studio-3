@@ -50,8 +50,8 @@ public class MainGameOrderTicketDisplay extends UIComponent {
             ServiceLocator.getResourceService()
               .getAsset("images/ordersystem/docket_background.png", Texture.class));*/
 
-        Texture texture = new Texture(Gdx.files.internal("images/ordersystem/docket_background.png"));
-        Drawable backgroundDrawable = new TextureRegionDrawable(new TextureRegion(texture));
+        /*Texture texture = new Texture(Gdx.files.internal("images/ordersystem/docket_background.png"));
+        Drawable backgroundDrawable = new TextureRegionDrawable(new TextureRegion(texture));*/
 
         /*Label recipeNameLabel = new Label("Recipe name", skin);
         Label ingredient1Label = new Label("Ingredient 1", skin);
