@@ -147,7 +147,7 @@ public class MainGameScreen extends ScreenAdapter {
 			.addComponent(new TerminalDisplay())
 			// order system
 			.addComponent(new DocketLineDisplay())
-			.addComponent(new DocketDisplay())
+			//.addComponent(new DocketDisplay())
 			.addComponent(new OrderActions(this.game))
 			.addComponent(new MainGameOrderBtnDisplay())
 			.addComponent(new MainGameOrderTicketDisplay())
