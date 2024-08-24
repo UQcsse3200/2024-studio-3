@@ -18,6 +18,6 @@ public class IngredientFactory {
                                           int cook_time, String path_to_texture) {
         return createTemplateItem()
                 .addComponent(new TextureRenderComponent(path_to_texture))
-                .addComponent(new IngredientComponent(name, type, weight, cook_time));
+                .addComponent(new IngredientComponent(name, type, weight, cook_time, "raw"));
     }
 }
