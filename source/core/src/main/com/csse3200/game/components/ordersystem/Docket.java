@@ -3,6 +3,7 @@ package com.csse3200.game.components.ordersystem;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.scenes.scene2d.ui.Cell;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.TimeUtils;
@@ -13,6 +14,7 @@ public class Docket extends UIComponent {
     private Skin docketSkin = new Skin();
     private static String[] textureNameArray = {"fresh_docket", "mild_docket", "old_docket", "expired_docket"};
     private Image docket = new Image();
+    private Cell<Image> cell;
     private static final long DEFAULT_TIMER = 5000;
     private long startTime = TimeUtils.millis();
 
@@ -26,6 +28,14 @@ public class Docket extends UIComponent {
     @Override
     public void create() {
         super.create();
+    }
+
+    public void setCell(Cell<Image> cell) {
+        this.cell = cell;
+    }
+
+    public Cell<Image> getCell() {
+        return cell;
     }
 
     public Image getImage() {
