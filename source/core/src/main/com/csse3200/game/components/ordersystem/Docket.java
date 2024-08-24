@@ -5,12 +5,14 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.utils.TimeUtils;
 import com.csse3200.game.ui.UIComponent;
 
 public class Docket extends UIComponent {
     private Skin docketSkin = new Skin();
     private static String[] textureNameArray = {"fresh_docket", "mild_docket", "old_docket", "expired_docket"};
     private Image docket = new Image();
+    private long startTime = TimeUtils.millis();
 
     @Override
     public void create() {
@@ -34,6 +36,10 @@ public class Docket extends UIComponent {
 
     public Skin getDocketSkin() {
         return docketSkin;
+    }
+
+    public long getStartTime() {
+        return startTime;
     }
 
     public void updateDocketTexture(double remainingTimeSecs) {

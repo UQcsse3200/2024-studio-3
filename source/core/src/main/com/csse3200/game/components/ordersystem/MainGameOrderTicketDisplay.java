@@ -73,7 +73,7 @@ public class MainGameOrderTicketDisplay extends UIComponent {
 
     @Override
     public void update() {
-        long elapsedTime = TimeUtils.timeSinceMillis(startTime); //inspired by services/GameTime
+        long elapsedTime = TimeUtils.timeSinceMillis(docket.getStartTime()); //inspired by services/GameTime
         long remainingTime = DEFAULT_TIMER - elapsedTime; //inspired by services/GameTime
         double remainingTimeSecs = remainingTime / 1000;
         if (remainingTime > 0) {
