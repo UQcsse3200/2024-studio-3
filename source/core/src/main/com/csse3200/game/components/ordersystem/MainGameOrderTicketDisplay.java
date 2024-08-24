@@ -83,11 +83,14 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         long elapsedTime = TimeUtils.timeSinceMillis(startTime); //inspired by services/GameTime
         long remainingTime = DEFAULT_TIMER - elapsedTime; //inspired by services/GameTime
         double remainingTimeSecs = remainingTime / 1000;
-        if (remainingTime > 0) {
+        /*if (remainingTime > 0) {
             //countdownLabel.setText("Timer: " + (remainingTime / 1000));
             //docket.updateDocketTexture(remainingTimeSecs);
         } else {
             dispose();
+        }*/
+        for (int i = 0; i < docketList.size(); i++) {
+            docketList.get(i).update();
         }
     }
 
