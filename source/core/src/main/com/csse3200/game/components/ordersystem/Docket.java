@@ -10,7 +10,7 @@ import com.csse3200.game.ui.UIComponent;
 public class Docket extends UIComponent {
     private Skin docketSkin = new Skin();
     private static String[] textureNameArray = {"fresh_docket", "mild_docket", "old_docket", "expired_docket"};
-    private Image docket;
+    private Image docket = new Image();
 
     @Override
     public void create() {
@@ -21,7 +21,7 @@ public class Docket extends UIComponent {
         TextureAtlas docketAtlas;
         docketAtlas = new TextureAtlas(Gdx.files.internal("images/ordersystem/DocketStatusIndicator.atlas"));
         docketSkin.addRegions(docketAtlas);
-        docket = new Image(docketSkin, textureNameArray[0]);
+        docket.setDrawable(docketSkin, textureNameArray[0]);
     }
 
     public Image getImage() {
