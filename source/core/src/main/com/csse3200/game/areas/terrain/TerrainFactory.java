@@ -19,7 +19,7 @@ import com.csse3200.game.services.ServiceLocator;
 
 /** Factory for creating game terrains. */
 public class TerrainFactory {
-  private static final GridPoint2 MAP_SIZE = new GridPoint2(9, 7);
+  private static final GridPoint2 MAP_SIZE = new GridPoint2(8, 6);
   private static final int TUFT_TILE_COUNT = 30;
   private static final int ROCK_TILE_COUNT = 13;
 
@@ -63,7 +63,7 @@ public class TerrainFactory {
             new TextureRegion(resourceService.getAsset("images/blue_tile.png", Texture.class));
         TextureRegion orthoRocks =
             new TextureRegion(resourceService.getAsset("images/new_orange.png", Texture.class));
-        return createForestDemoTerrain(1.7f, orthoFloor, custTile, orthoRocks);
+        return createForestDemoTerrain(2f, orthoFloor, custTile, orthoRocks);
       case FOREST_DEMO_ISO:
         TextureRegion isoGrass =
             new TextureRegion(resourceService.getAsset("images/iso_grass_1.png", Texture.class));

@@ -42,7 +42,7 @@ public class ForestGameArea extends GameArea {
     "images/iso_grass_1.png",
     "images/iso_grass_2.png",
     "images/iso_grass_3.png",
-    "images/stations/oven.png", "images/stations/bench2.png", "images/chef.png"
+    "images/stations/oven.png", "images/stations/bench2.png", "images/chef_player.png"
   };
   private static final String[] forestTextureAtlases = {
     "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/ghostKing.atlas"
@@ -133,7 +133,7 @@ public class ForestGameArea extends GameArea {
   }
 
   private void spawnStations() {
-    GridPoint2 ovenPos = new GridPoint2(1,5);
+    GridPoint2 ovenPos = new GridPoint2(7,5);
     Entity station2 = StationFactory.createStation("oven");
     spawnEntityAt(station2, ovenPos, true, false);
   }
