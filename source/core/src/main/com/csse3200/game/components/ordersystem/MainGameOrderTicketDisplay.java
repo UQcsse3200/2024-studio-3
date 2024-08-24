@@ -19,6 +19,9 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 /**
  * Displays Order Ticket at Main Game screen to the Main Menu screen.
@@ -30,7 +33,8 @@ public class MainGameOrderTicketDisplay extends UIComponent {
     private static final long DEFAULT_TIMER = 5000;
     private Table table;
     private Label countdownLabel;
-    private Docket docket;
+    private List<Docket> docketList;
+    //private Docket docket;
     private long startTime;
 
     @Override
@@ -39,6 +43,7 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         table = new Table();
         table.top().left();
         table.setFillParent(true);
+        docketList = new ArrayList<>();
         addActors();
         startTime = TimeUtils.millis(); //inspired by services/GameTime
         ServiceLocator.registerDocketService(new DocketService());
@@ -59,7 +64,9 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         Label ingredient2Label = new Label("Ingredient 2", skin);
         Label ingredient3Label = new Label("Ingredient 3", skin);
         countdownLabel = new Label("Timer: 5000", skin);*/
-        docket = new Docket();
+        //docket = new Docket();
+        Docket docket = new Docket();
+        docketList.add(docket);
         //table.setBackground(backgroundDrawable);
         table.add(docket.getImage());
         /*table.add(recipeNameLabel).padTop(90f).padLeft(10f).row();
@@ -73,12 +80,12 @@ public class MainGameOrderTicketDisplay extends UIComponent {
 
     @Override
     public void update() {
-        long elapsedTime = TimeUtils.timeSinceMillis(docket.getStartTime()); //inspired by services/GameTime
+        long elapsedTime = TimeUtils.timeSinceMillis(startTime); //inspired by services/GameTime
         long remainingTime = DEFAULT_TIMER - elapsedTime; //inspired by services/GameTime
         double remainingTimeSecs = remainingTime / 1000;
         if (remainingTime > 0) {
             //countdownLabel.setText("Timer: " + (remainingTime / 1000));
-            docket.updateDocketTexture(remainingTimeSecs);
+            //docket.updateDocketTexture(remainingTimeSecs);
         } else {
             dispose();
         }
