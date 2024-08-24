@@ -29,8 +29,6 @@ public class MainGameOrderTicketDisplay extends UIComponent {
     private static final long DEFAULT_TIMER = 5000;
     private Table table;
     private Label countdownLabel;
-    private Skin docketSkin;
-    private String[] textureNameArray;
     private Docket docket;
     private long startTime;
 

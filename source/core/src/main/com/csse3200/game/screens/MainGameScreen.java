@@ -46,6 +46,7 @@ public class MainGameScreen extends ScreenAdapter {
 	private final GdxGame game;
 	private final Renderer renderer;
 	private final PhysicsEngine physicsEngine;
+	private Entity ui;
 
 	public MainGameScreen(GdxGame game) {
 		this.game = game;
@@ -136,7 +137,7 @@ public class MainGameScreen extends ScreenAdapter {
 		InputComponent inputComponent =
 			ServiceLocator.getInputService().getInputFactory().createForTerminal();
 
-		Entity ui = new Entity();
+		ui = new Entity();
 		ui.addComponent(new InputDecorator(stage, 10))
 			.addComponent(new PerformanceDisplay())
 			.addComponent(new MainGameActions(this.game))
