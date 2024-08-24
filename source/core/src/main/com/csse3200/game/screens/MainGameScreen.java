@@ -154,4 +154,8 @@ public class MainGameScreen extends ScreenAdapter {
 		    .addComponent(new Docket());
 		ServiceLocator.getEntityService().register(ui);
 	}
+
+	public Entity getUi() {
+		return ui;
+	}
 }
