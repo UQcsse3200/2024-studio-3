@@ -83,18 +83,17 @@ public class CookingComponent extends Component {
         isCooking = false;
     }
 
-    /**
-     * Checks whether the station is being used.
-     * @return true if the item is being cooked, false otherwise.
-     */
+    /** @return the string station tpye. */
+    public String getStationType() {
+        return stationType.name();
+    }
+
+    /** @return true if the item is being cooked, false otherwise. */
     public boolean isCooking() {
         return isCooking;
     }
 
-    /**
-     * Tells how long the item has been cooked for in seconds, scaled by time scale.
-     * @return time passed since the item was placed on the station in seconds, scaled by time scale.
-     */
+    /** @return time passed since the item was placed on the station in seconds, scaled by time scale. */
     public long getCookingTime() {
         return cookingTime;
     }
