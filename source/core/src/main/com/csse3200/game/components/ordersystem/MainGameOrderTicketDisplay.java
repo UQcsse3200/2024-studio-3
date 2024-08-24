@@ -37,12 +37,6 @@ public class MainGameOrderTicketDisplay extends UIComponent {
     @Override
     public void create() {
         super.create();
-        docketSkin = new Skin();
-        textureNameArray = new String[4];
-        textureNameArray[0] = "fresh_docket";
-        textureNameArray[1] = "mild_docket";
-        textureNameArray[2] = "old_docket";
-        textureNameArray[3] = "expired_docket";
         table = new Table();
         table.top().left();
         table.setFillParent(true);
@@ -55,10 +49,6 @@ public class MainGameOrderTicketDisplay extends UIComponent {
           new Image(
             ServiceLocator.getResourceService()
               .getAsset("images/ordersystem/docket_background.png", Texture.class));*/
-        TextureAtlas docketAtlas;
-        docketAtlas = new TextureAtlas(Gdx.files.internal("images/ordersystem/DocketStatusIndicator.atlas"));
-        docketSkin.addRegions(docketAtlas);
-        docket = new Image(docketSkin, textureNameArray[0]);
 
         Texture texture = new Texture(Gdx.files.internal("images/ordersystem/docket_background.png"));
         Drawable backgroundDrawable = new TextureRegionDrawable(new TextureRegion(texture));
