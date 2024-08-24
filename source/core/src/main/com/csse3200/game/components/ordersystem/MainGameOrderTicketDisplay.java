@@ -77,7 +77,7 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         double remainingTimeSecs = remainingTime / 1000;
         if (remainingTime > 0) {
             countdownLabel.setText("Timer: " + (remainingTime / 1000));
-            updateDocketTexture(remainingTimeSecs);
+            docket.updateDocketTexture(remainingTimeSecs);
         } else {
             dispose();
         }
@@ -98,15 +98,5 @@ public class MainGameOrderTicketDisplay extends UIComponent {
     public void dispose() {
         table.clear();
         super.dispose();
-    }
-
-    public void updateDocketTexture(double remainingTimeSecs) {
-        if (remainingTimeSecs <= 3 && remainingTimeSecs >= 2){
-            docket.getImage().setDrawable(docketSkin, textureNameArray[1]);
-        } else if (remainingTimeSecs <= 2 && remainingTimeSecs >= 1) {
-            docket.getImage().setDrawable(docketSkin, textureNameArray[2]);
-        } else if (remainingTimeSecs <= 1 && remainingTimeSecs >= 0) {
-            docket.getImage().setDrawable(docketSkin, textureNameArray[3]);
-        }
     }
 }

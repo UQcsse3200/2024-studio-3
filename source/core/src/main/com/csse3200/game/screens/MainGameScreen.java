@@ -7,9 +7,7 @@ import com.csse3200.game.GdxGame;
 import com.csse3200.game.areas.ForestGameArea;
 import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.components.maingame.MainGameActions;
-import com.csse3200.game.components.ordersystem.DocketDisplay;
-import com.csse3200.game.components.ordersystem.MainGameOrderBtnDisplay;
-import com.csse3200.game.components.ordersystem.OrderActions;
+import com.csse3200.game.components.ordersystem.*;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.entities.factories.RenderFactory;
@@ -29,7 +27,6 @@ import com.csse3200.game.components.maingame.MainGameExitDisplay;
 import com.csse3200.game.components.gamearea.PerformanceDisplay;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import com.csse3200.game.components.ordersystem.DocketLineDisplay;
 
 /**
  * The game screen containing the main game.
@@ -151,7 +148,8 @@ public class MainGameScreen extends ScreenAdapter {
 			.addComponent(new DocketLineDisplay())
 			.addComponent(new DocketDisplay())
 			.addComponent(new OrderActions(this.game))
-			.addComponent(new MainGameOrderBtnDisplay());
+			.addComponent(new MainGameOrderBtnDisplay())
+		    .addComponent(new Docket());
 		ServiceLocator.getEntityService().register(ui);
 	}
 }
