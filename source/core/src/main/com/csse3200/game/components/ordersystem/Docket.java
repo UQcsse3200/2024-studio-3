@@ -8,14 +8,16 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.csse3200.game.ui.UIComponent;
 
 public class Docket extends UIComponent {
-    private Skin docketSkin;
+    private Skin docketSkin = new Skin();
     private static String[] textureNameArray = {"fresh_docket", "mild_docket", "old_docket", "expired_docket"};
     private Image docket;
 
     @Override
     public void create() {
         super.create();
-        docketSkin = new Skin();
+    }
+
+    public void initialiseDocketSkin() {
         TextureAtlas docketAtlas;
         docketAtlas = new TextureAtlas(Gdx.files.internal("images/ordersystem/DocketStatusIndicator.atlas"));
         docketSkin.addRegions(docketAtlas);
