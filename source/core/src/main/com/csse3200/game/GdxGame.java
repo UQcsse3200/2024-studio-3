@@ -30,9 +30,7 @@ public class GdxGame extends Game {
 
     // Initially set to the main menu screen
     setScreen(ScreenType.MAIN_MENU);
-
-    Gdx.gl.glClearColor(248f/255f, 249/255f, 178/255f, 1);
-
+    Gdx.gl.glClearColor(234f/255f, 221/255f, 202/255f, 1);
     setScreen(ScreenType.MAIN_MENU);
   }
 

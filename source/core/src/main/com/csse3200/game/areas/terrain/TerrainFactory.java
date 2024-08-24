@@ -19,9 +19,9 @@ import com.csse3200.game.services.ServiceLocator;
 
 /** Factory for creating game terrains. */
 public class TerrainFactory {
-  private static final GridPoint2 MAP_SIZE = new GridPoint2(20, 20);
+  private static final GridPoint2 MAP_SIZE = new GridPoint2(9, 7);
   private static final int TUFT_TILE_COUNT = 30;
-  private static final int ROCK_TILE_COUNT = 30;
+  private static final int ROCK_TILE_COUNT = 13;
 
   private final OrthographicCamera camera;
   private final TerrainOrientation orientation;
@@ -63,7 +63,7 @@ public class TerrainFactory {
             new TextureRegion(resourceService.getAsset("images/blue_tile.png", Texture.class));
         TextureRegion orthoRocks =
             new TextureRegion(resourceService.getAsset("images/new_orange.png", Texture.class));
-        return createForestDemoTerrain(2f, orthoFloor, custTile, orthoRocks);
+        return createForestDemoTerrain(1.7f, orthoFloor, custTile, orthoRocks);
       case FOREST_DEMO_ISO:
         TextureRegion isoGrass =
             new TextureRegion(resourceService.getAsset("images/iso_grass_1.png", Texture.class));
@@ -114,7 +114,7 @@ public class TerrainFactory {
     //TerrainTile grassTuftTile = new TerrainTile(grassTuft);
     TerrainTile rockTile = new TerrainTile(rocks);
     TiledMapTileLayer layer = new TiledMapTileLayer(MAP_SIZE.x, MAP_SIZE.y, tileSize.x , tileSize.y);
-    GridPoint2 modified_size = new GridPoint2(MAP_SIZE.x/8 , MAP_SIZE.y);
+    GridPoint2 modified_size = new GridPoint2(MAP_SIZE.x/4 , MAP_SIZE.y);
     TiledMapTileLayer layer2 = new TiledMapTileLayer(modified_size.x, modified_size.y,tileSize.x , tileSize.y);
 
     // Create base grass
