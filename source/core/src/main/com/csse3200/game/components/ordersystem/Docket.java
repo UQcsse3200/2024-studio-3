@@ -12,6 +12,7 @@ public class Docket extends UIComponent {
     private Skin docketSkin = new Skin();
     private static String[] textureNameArray = {"fresh_docket", "mild_docket", "old_docket", "expired_docket"};
     private Image docket = new Image();
+    private static final long DEFAULT_TIMER = 5000;
     private long startTime = TimeUtils.millis();
 
     public Docket() {
@@ -40,6 +41,19 @@ public class Docket extends UIComponent {
 
     public long getStartTime() {
         return startTime;
+    }
+
+    @Override
+    public void update() {
+        long elapsedTime = TimeUtils.timeSinceMillis(getStartTime()); //inspired by services/GameTime
+        long remainingTime = DEFAULT_TIMER - elapsedTime; //inspired by services/GameTime
+        double remainingTimeSecs = remainingTime / 1000;
+        if (remainingTime > 0) {
+            //countdownLabel.setText("Timer: " + (remainingTime / 1000));
+            updateDocketTexture(remainingTimeSecs);
+        } else {
+            dispose();
+        }
     }
 
     public void updateDocketTexture(double remainingTimeSecs) {
