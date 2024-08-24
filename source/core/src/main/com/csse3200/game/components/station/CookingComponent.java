@@ -7,10 +7,43 @@ import com.csse3200.game.services.GameTime;
  * A component used to handle changing the state of an item being passed through a station.
  */
 public class CookingComponent extends Component {
+    enum StationType { // TODO this is a placeholder way of distinguishing station types
+        CUTTING_BOARD,
+        OVEN,
+        FRYING_PAN,
+        TABLE
+    }
+
+    private StationType stationType;
     private StationInventoryComponent inventoryComponent;
     private GameTime gameTime;
     private long cookingTime;
     private boolean isCooking;
+
+    /**
+     * Constructs a station cooking component.
+     * @param stationType the string station tpye.
+     */
+    public CookingComponent(String stationType) {
+        // TODO still not sure if this should be in create() method instead
+        switch (stationType) {
+            case "CUTTING_BOARD":
+                this.stationType = StationType.CUTTING_BOARD;
+                break;
+            case "OVEN":
+                this.stationType = StationType.OVEN;
+                break;
+            case "FRYING_PAN":
+                this.stationType = StationType.FRYING_PAN;
+                break;
+            case "TABLE":
+                this.stationType = StationType.TABLE;
+                break;
+            default:
+                this.stationType = StationType.TABLE;
+                break;
+        }
+    }
 
     /**
      * Called on creation of the station and adds listeners.
