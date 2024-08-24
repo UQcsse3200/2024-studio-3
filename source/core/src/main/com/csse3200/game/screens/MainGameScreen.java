@@ -27,6 +27,7 @@ import com.csse3200.game.ui.terminal.TerminalDisplay;
 import com.csse3200.game.components.maingame.MainGameExitDisplay;
 import com.csse3200.game.components.gamearea.PerformanceDisplay;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -44,12 +45,10 @@ public class MainGameScreen extends ScreenAdapter {
   private static final Logger logger = LoggerFactory.getLogger(MainGameScreen.class);
   private static final String[] mainGameTextures = {"images/heart.png"};
   private static final Vector2 CAMERA_POSITION = new Vector2(7, 6);
-
+  private final ShapeRenderer shapeRenderer;
   private final GdxGame game;
   private final Renderer renderer;
   private final PhysicsEngine physicsEngine;
-  private SpriteBatch spriteBatch = new SpriteBatch();
-  private Texture backgroundTexture;
 
   public MainGameScreen(GdxGame game) {
     this.game = game;
@@ -77,6 +76,7 @@ public class MainGameScreen extends ScreenAdapter {
     logger.debug("Initialising main game screen entities");
     TerrainFactory terrainFactory = new TerrainFactory(renderer.getCamera());
     ForestGameArea forestGameArea = new ForestGameArea(terrainFactory);
+    shapeRenderer = new ShapeRenderer();
     forestGameArea.create();
   }
 
@@ -87,6 +87,28 @@ public class MainGameScreen extends ScreenAdapter {
    // backgroundTexture = new Texture(Gdx.files.internal("images/background.png"));
     //Gdx.gl.glClearColor(10f/255f, 221/255f, 132/255f, 1);
     renderer.render();
+    drawFrame();
+
+  }
+
+  private void drawFrame() {
+    int frameHeight = 1150;
+
+    float x = 291;
+    float y = 24;
+    float width = 1533;
+    float height = frameHeight;
+    float lineWidth = 10;
+
+    shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+    shapeRenderer.setColor(0, 0, 0, 1);
+
+    shapeRenderer.rectLine(new Vector2(x, y + height), new Vector2(x + width, y + height), lineWidth);
+    shapeRenderer.rectLine(new Vector2(x, y), new Vector2(x + width, y), lineWidth);
+    shapeRenderer.rectLine(new Vector2(x, y), new Vector2(x, y + height), lineWidth);
+    shapeRenderer.rectLine(new Vector2(x + width, y), new Vector2(x + width, y + height), lineWidth);
+
+    shapeRenderer.end();
   }
 
   @Override

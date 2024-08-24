@@ -26,6 +26,7 @@ public class TerrainFactory {
   private final OrthographicCamera camera;
   private final TerrainOrientation orientation;
 
+
   /**
    * Create a terrain factory with Orthogonal orientation
    *
@@ -45,6 +46,9 @@ public class TerrainFactory {
     this.camera = (OrthographicCamera) cameraComponent.getCamera();
     this.orientation = orientation;
   }
+
+
+
 
   /**
    * Create a terrain of the given type, using the orientation of the factory. This can be extended
