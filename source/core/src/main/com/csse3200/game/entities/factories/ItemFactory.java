@@ -15,14 +15,18 @@ import com.csse3200.game.services.ServiceLocator;
 public class ItemFactory {
     public static Entity createTemplateItem(){
         return new Entity()
-                .addComponent(new PhysicsComponent())
-                .addComponent(new ColliderComponent())
                 .addComponent(new HitboxComponent().setLayer(PhysicsLayer.PLAYER));
     }
 
-    public static Entity createFish() {
+    /**
+     * Create a fish item
+     * @param cookedLevel - The level the fish is cooked at, can be "raw", "cooked" or "burnt"
+     * @return A fish entity
+     */
+    public static Entity createFish(String cookedLevel) {
         return createTemplateItem()
-                .addComponent(new TextureRenderComponent("images/raw_fish.png"))
-                .addComponent(new ItemComponent("Fish", ItemType.RAWFISH, 2));
+                .addComponent(new ItemComponent("Fish", ItemType.RAWFISH, 2))
+                .addComponent(new IngredientComponent("Fish",ItemType.RAWFISH, 2, 10))
+                .addComponent(new TextureRenderComponent(String.format("images/%s_fish.png", cookedLevel)));
     }
 }
