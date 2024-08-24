@@ -6,9 +6,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.areas.terrain.TerrainFactory.TerrainType;
 import com.csse3200.game.entities.Entity;
-import com.csse3200.game.entities.factories.NPCFactory;
-import com.csse3200.game.entities.factories.ObstacleFactory;
-import com.csse3200.game.entities.factories.PlayerFactory;
+import com.csse3200.game.entities.factories.*;
 import com.csse3200.game.utils.math.GridPoint2Utils;
 import com.csse3200.game.utils.math.RandomUtils;
 import com.csse3200.game.services.ResourceService;
@@ -25,6 +23,8 @@ public class ForestGameArea extends GameArea {
   private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(10, 10);
   private static final float WALL_WIDTH = 0.1f;
   private static final String[] forestTextures = {
+    "images/raw_fish.png",
+    "images/cooked_fish.png",
     "images/box_boy_leaf.png",
     "images/tree.png",
     "images/ghost_king.png",
@@ -70,6 +70,7 @@ public class ForestGameArea extends GameArea {
     spawnTerrain();
     //spawnTrees();
     player = spawnPlayer();
+    spawnFish();
     spawnGhosts();
     spawnGhostKing();
 
@@ -128,6 +129,15 @@ public class ForestGameArea extends GameArea {
     spawnEntityAt(newPlayer, PLAYER_SPAWN, true, true);
     return newPlayer;
   }
+
+
+  // Testing fish spawn
+  private Entity spawnFish() {
+    Entity newFish = ItemFactory.createFish("cooked");
+    spawnEntityAt(newFish, new GridPoint2(15, 15), true, true);
+    return newFish;
+  }
+
 
   private void spawnGhosts() {
     GridPoint2 minPos = new GridPoint2(0, 0);
