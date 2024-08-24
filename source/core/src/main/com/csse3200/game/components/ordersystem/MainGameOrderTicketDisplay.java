@@ -48,6 +48,7 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         startTime = TimeUtils.millis(); //inspired by services/GameTime
         ServiceLocator.registerDocketService(new DocketService());
         ServiceLocator.getDocketService().getEvents().addListener("addNewDocket", this::addActors);
+        ServiceLocator.getDocketService().getEvents().addListener("removeDocket", this::<Docket>removeDocket);
     }
 
     private void addActors() {
@@ -76,6 +77,10 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         table.add(countdownLabel).padLeft(10f).row();*/
 
         stage.addActor(table);
+    }
+
+    public void removeDocket(Docket docket) {
+        logger.debug("Called all g");
     }
 
     @Override
