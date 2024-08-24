@@ -59,7 +59,7 @@ public class MainGameOrderTicketDisplay extends UIComponent {
               .getAsset("images/ordersystem/docket_background.png", Texture.class));
 
         Texture texture = new Texture(Gdx.files.internal("images/ordersystem/docket_background.png"));
-        Drawable backgroundDrawable = new TextureRegionDrawable(new TextureRegion(texture));
+        Docket backgroundDrawable = new Docket();
 
         Label recipeNameLabel = new Label("Recipe name", skin);
         Label ingredient1Label = new Label("Ingredient 1", skin);
@@ -67,7 +67,7 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         Label ingredient3Label = new Label("Ingredient 3", skin);
         countdownLabel = new Label("Timer: 5000", skin);
 
-        table.setBackground(backgroundDrawable); //resize background
+        table.setBackground(backgroundDrawable.getImage().getDrawable()); //resize background
 //        table.add(recipeNameLabel).padTop(90f).padLeft(10f).row();
         table.add(recipeNameLabel).padLeft(10f).row();
         table.add(ingredient1Label).padLeft(10f).row();
