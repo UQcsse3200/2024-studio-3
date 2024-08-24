@@ -63,6 +63,7 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         docketList.add(docket);
         table.add(docket.getImage());
         Cell<Image> newCell = table.getCell(docket.getImage());
+        newCell.size(DEFAULT_WIDTH, DEFAULT_HEIGHT);
         newCell.padTop(10f);
         newCell.padLeft(10f);
         newCell.padRight(10f);
