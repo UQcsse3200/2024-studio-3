@@ -7,7 +7,7 @@ public class IngredientComponent extends ItemComponent{
             RAW,
             COOKED,
             BURNED,
-            CHOPPED
+            PREPARED
         }
 
     public IngredientComponent(String itemName, ItemType itemType, int weight, int cookTime) {
