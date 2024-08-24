@@ -23,7 +23,7 @@ public class MainGameActions extends Component {
   @Override
   public void create() {
     entity.getEvents().addListener("exit", this::onExit);
-    entity.getEvents().addListener("createOrder", this::onCreateOrder);
+    //entity.getEvents().addListener("createOrder", this::onCreateOrder);
 //    entity.getEvents().addListener("orderDone", this::onOrderDone);
   }
 
@@ -38,11 +38,11 @@ public class MainGameActions extends Component {
   /**
    * Create Order Ticket
    */
-  private void onCreateOrder() {
+  /*private void onCreateOrder() {
     logger.info("Creating order");
-    /*ui.addComponent(new MainGameOrderTicketDisplay());
-    ServiceLocator.getEntityService().register(ui);*/
-  }
+    ui.addComponent(new MainGameOrderTicketDisplay());
+    ServiceLocator.getEntityService().register(ui);
+  }*/
 
 //  /**
 //   * Order Done Button

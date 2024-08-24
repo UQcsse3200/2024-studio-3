@@ -6,6 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.csse3200.game.components.maingame.MainGameExitDisplay;
+import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,7 +40,8 @@ public class MainGameOrderBtnDisplay extends UIComponent{
                     @Override
                     public void changed(ChangeEvent changeEvent, Actor actor) {
                         logger.debug("Create Order button clicked");
-                        entity.getEvents().trigger("createOrder");
+                        //entity.getEvents().trigger("createOrder");
+                        ServiceLocator.getDocketService().getEvents().trigger("addNewDocket");
                     }
                 });
         table.add(createOrderBtn).padBottom(10f).padRight(10f);

@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.csse3200.game.components.maingame.MainGameExitDisplay;
+import com.csse3200.game.services.DocketService;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
 import org.slf4j.Logger;
@@ -40,6 +41,8 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         table.setFillParent(true);
         addActors();
         startTime = TimeUtils.millis(); //inspired by services/GameTime
+        ServiceLocator.registerDocketService(new DocketService());
+        ServiceLocator.getDocketService().getEvents().addListener("addNewDocket", this::addActors);
     }
 
     private void addActors() {
