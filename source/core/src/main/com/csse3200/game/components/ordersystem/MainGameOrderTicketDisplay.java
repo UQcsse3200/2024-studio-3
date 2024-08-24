@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.csse3200.game.components.maingame.MainGameExitDisplay;
 import com.csse3200.game.services.DocketService;
@@ -67,6 +68,7 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         newCell.padTop(10f);
         newCell.padLeft(10f);
         newCell.padRight(10f);
+        docket.setCellHash(newCell.hashCode());
         stage.addActor(table);
     }
 
@@ -75,6 +77,13 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         logger.info("Docket check {}", docket.toString());
         logger.info("Image check {}", docket.getImage().toString());
         table.removeActor(docket.getImage());
+        int cellHash = docket.getCellHash();
+        Array<Cell> cellArray = table.getCells();
+        for (int i = 0; i < cellArray.size; i++) {
+            if (cellArray.get(i).hashCode() == cellHash) {
+                cellArray.get(i).reset();
+            }
+        }
     }
 
     /*private void addActors() {

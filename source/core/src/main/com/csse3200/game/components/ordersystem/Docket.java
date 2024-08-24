@@ -14,7 +14,7 @@ public class Docket extends UIComponent {
     private Skin docketSkin = new Skin();
     private static String[] textureNameArray = {"fresh_docket", "mild_docket", "old_docket", "expired_docket"};
     private Image docket = new Image();
-    private Cell<Image> cell;
+    private int cellHash;
     private static final long DEFAULT_TIMER = 5000;
     private long startTime = TimeUtils.millis();
 
@@ -30,12 +30,12 @@ public class Docket extends UIComponent {
         super.create();
     }
 
-    public void setCell(Cell<Image> cell) {
-        this.cell = cell;
+    public void setCellHash(int cellHash) {
+        this.cellHash = cellHash;
     }
 
-    public Cell<Image> getCell() {
-        return cell;
+    public int getCellHash() {
+        return cellHash;
     }
 
     public Image getImage() {
