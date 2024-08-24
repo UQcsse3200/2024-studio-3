@@ -57,7 +57,6 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         Label ingredient3Label = new Label("Ingredient 3", skin);
         countdownLabel = new Label("Timer: 5000", skin);*/
         docket = new Docket();
-        //docket.initialiseDocketSkin();
         //table.setBackground(backgroundDrawable);
         table.add(docket.getImage());
         /*table.add(recipeNameLabel).padTop(90f).padLeft(10f).row();

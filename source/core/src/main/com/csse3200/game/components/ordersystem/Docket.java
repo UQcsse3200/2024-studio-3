@@ -14,16 +14,16 @@ public class Docket extends UIComponent {
     private Image docket = new Image();
     private long startTime = TimeUtils.millis();
 
-    @Override
-    public void create() {
-        super.create();
-    }
-
     public Docket() {
         TextureAtlas docketAtlas;
         docketAtlas = new TextureAtlas(Gdx.files.internal("images/ordersystem/DocketStatusIndicator.atlas"));
         docketSkin.addRegions(docketAtlas);
         docket.setDrawable(docketSkin, textureNameArray[0]);
+    }
+
+    @Override
+    public void create() {
+        super.create();
     }
 
     public Image getImage() {
