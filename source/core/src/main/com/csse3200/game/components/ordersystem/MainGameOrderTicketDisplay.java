@@ -62,6 +62,10 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         Docket docket = new Docket();
         docketList.add(docket);
         table.add(docket.getImage());
+        Cell<Image> newCell = table.getCell(docket.getImage());
+        newCell.padTop(10f);
+        newCell.padLeft(10f);
+        newCell.padRight(10f);
         stage.addActor(table);
     }
 
