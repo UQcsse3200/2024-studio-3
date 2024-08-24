@@ -25,21 +25,33 @@ public class MainGameOrderTicketDisplay extends UIComponent {
     private static final Logger logger = LoggerFactory.getLogger(MainGameExitDisplay.class);
     private static final float Z_INDEX = 2f;
     private static final long DEFAULT_TIMER = 5000;
+    private static final float DEFAULT_HEIGHT = 200f;
+    private static final float DEFAULT_WIDTH = 180f;
     private Table table;
     private Label countdownLabel;
     private long startTime;
+    private static int instanceCnt = 0;
+    private boolean disposeDone = false;
+    private static final int distance= 20;
+
 
     @Override
     public void create() {
         super.create();
+        instanceCnt++;
+        //logger.info("instance Count (just created): {}", instanceCnt);
         addActors();
-        startTime = TimeUtils.millis(); //inspired by services/GameTime
+        startTime = TimeUtils.millis();
     }
 
     private void addActors() {
         table = new Table();
-        table.top().left();
-        table.setFillParent(true);
+        table.setFillParent(false);
+        table.setSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);
+
+        float xVal = cntXval(instanceCnt);
+        float yVal = 565f ;
+        table.setPosition(xVal, yVal);
 
         Image docket =
           new Image(
@@ -55,8 +67,9 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         Label ingredient3Label = new Label("Ingredient 3", skin);
         countdownLabel = new Label("Timer: 5000", skin);
 
-        table.setBackground(backgroundDrawable);
-        table.add(recipeNameLabel).padTop(90f).padLeft(10f).row();
+        table.setBackground(backgroundDrawable); //resize background
+//        table.add(recipeNameLabel).padTop(90f).padLeft(10f).row();
+        table.add(recipeNameLabel).padLeft(10f).row();
         table.add(ingredient1Label).padLeft(10f).row();
         table.add(ingredient2Label).padLeft(10f).row();
         table.add(ingredient3Label).padLeft(10f).row();
@@ -65,15 +78,23 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         stage.addActor(table);
     }
 
+    private float cntXval(int instanceCnt) {
+        float cntXval = 20f + (instanceCnt - 1) * (distance + DEFAULT_WIDTH);
+        return cntXval;
+    }
+
     @Override
     public void update() {
-        long elapsedTime = TimeUtils.timeSinceMillis(startTime); //inspired by services/GameTime
-        long remainingTime = DEFAULT_TIMER - elapsedTime; //inspired by services/GameTime
+        long elapsedTime = TimeUtils.timeSinceMillis(startTime);
+        long remainingTime = DEFAULT_TIMER - elapsedTime;
 
         if (remainingTime > 0) {
             countdownLabel.setText("Timer: " + (remainingTime / 1000));
-        } else {
+        } else if (!disposeDone) {
+            logger.info("disposing");
             dispose();
+        } else {
+            //none
         }
     }
 
@@ -90,7 +111,13 @@ public class MainGameOrderTicketDisplay extends UIComponent {
 
     @Override
     public void dispose() {
+        table.setBackground((Drawable) null);
         table.clear();
+        table.remove();
+        instanceCnt--;
+        disposeDone = true;
+        //logger.info("instance Count (after dispose): {}", instanceCnt);
+
         super.dispose();
     }
 }
