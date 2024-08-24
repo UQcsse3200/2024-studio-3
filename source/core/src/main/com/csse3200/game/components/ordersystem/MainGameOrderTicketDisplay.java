@@ -52,13 +52,6 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         float xVal = cntXval(instanceCnt);
         float yVal = 565f ;
         table.setPosition(xVal, yVal);
-
-        Image docket =
-          new Image(
-            ServiceLocator.getResourceService()
-              .getAsset("images/ordersystem/docket_background.png", Texture.class));
-
-        Texture texture = new Texture(Gdx.files.internal("images/ordersystem/docket_background.png"));
         Docket backgroundDrawable = new Docket();
 
         Label recipeNameLabel = new Label("Recipe name", skin);
@@ -93,8 +86,6 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         } else if (!disposeDone) {
             logger.info("disposing");
             dispose();
-        } else {
-            //none
         }
     }
 
