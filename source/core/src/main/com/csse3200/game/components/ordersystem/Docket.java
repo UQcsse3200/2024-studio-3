@@ -27,6 +27,10 @@ public class Docket extends UIComponent {
         docket = new Image(docketSkin, textureNameArray[0]);
     }
 
+    public Image returnImage() {
+        return docket;
+    }
+
     @Override
     protected void draw(SpriteBatch batch) {
         //Do not need to do anything here :)

@@ -31,7 +31,7 @@ public class MainGameOrderTicketDisplay extends UIComponent {
     private Label countdownLabel;
     private Skin docketSkin;
     private String[] textureNameArray;
-    private Image docket;
+    private Docket docket;
     private long startTime;
 
     @Override
@@ -58,9 +58,9 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         Label ingredient2Label = new Label("Ingredient 2", skin);
         Label ingredient3Label = new Label("Ingredient 3", skin);
         countdownLabel = new Label("Timer: 5000", skin);
-
+        docket = new Docket();
         //table.setBackground(backgroundDrawable);
-        table.add(docket);
+        table.add(docket.returnImage());
         table.add(recipeNameLabel).padTop(90f).padLeft(10f).row();
         table.add(ingredient1Label).padLeft(10f).row();
         table.add(ingredient2Label).padLeft(10f).row();
