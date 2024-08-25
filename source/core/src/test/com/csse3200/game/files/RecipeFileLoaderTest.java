@@ -171,4 +171,19 @@ public class RecipeFileLoaderTest {
         List<String> expected3 = List.of("steakMeal");
         assertEquals(expected3, recipes3);
     }
+
+    @Test
+    void getRecipeGivenOtherIngredient() {
+        List<String> recipes1 = DishFactory.getRecipe(List.of("cheese", "cucumber", "lettuce"));
+        List<String> expected1 = List.of();
+        assertEquals(expected1, recipes1);
+
+        List<String> recipes2 = DishFactory.getRecipe(List.of("fish", "chips"));
+        List<String> expected2 = List.of();
+        assertEquals(expected2, recipes2);
+
+        List<String> recipes3 = DishFactory.getRecipe(List.of("noodle", "soup", "pudding"));
+        List<String> expected3 = List.of();
+        assertEquals(expected3, recipes3);
+    }
 }
