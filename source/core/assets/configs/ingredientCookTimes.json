@@ -1,0 +1,26 @@
+{
+  "acai": {
+    "cookTime": 0
+  },
+  "banana": {
+    "cookTime": 2
+  },
+  "tomato": {
+    "cookTime": 2
+  },
+  "cucumber": {
+    "cookTime": 0
+  },
+  "lettuce": {
+    "cookTime": 0
+  },
+  "strawberry": {
+    "cookTime": 0
+  },
+  "beef": {
+    "cookTime": 20
+  },
+  "chocolate": {
+    "cookTime": 3
+  }
+}
