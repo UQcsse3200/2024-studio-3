@@ -12,8 +12,8 @@ import com.csse3200.game.components.gamearea.GameAreaDisplay;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.factories.NPCFactory;
 import com.csse3200.game.entities.factories.ObstacleFactory;
-import com.csse3200.game.entities.factories.StationFactory;
 import com.csse3200.game.entities.factories.PlayerFactory;
+import com.csse3200.game.entities.factories.StationFactory;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.utils.math.GridPoint2Utils;
@@ -42,13 +42,22 @@ public class ForestGameArea extends GameArea {
     "images/iso_grass_1.png",
     "images/iso_grass_2.png",
     "images/iso_grass_3.png",
-    "images/stations/oven.png", "images/stations/bench.png", "images/chef_player.png", "images/stations/line.png",
-    "images/stations/oven.png", "images/stations/bench2.png", "images/chef_player.png",
-          "images/stations/top_border.png", "images/stations/left_border.png", "images/stations/bottom_border.png", "images/stations/right_border.png",
-          "images/stations/door.png",
-          "images/stations/top_door_left_part.png", "images/stations/top_door_right_part.png",
-          "images/stations/bottom_door_left_part.png", "images/stations/bottom_door_right_part.png",
-          "images/stations/top_border_wall.png", "images/stations/bottom_border_wall.png"
+    "images/stations/oven.png",
+    "images/stations/bench.png",
+    "images/chef_player.png",
+    "images/stations/line.png",
+    "images/stations/bench2.png",
+    "images/stations/top_border.png",
+    "images/stations/left_border.png",
+    "images/stations/bottom_border.png",
+    "images/stations/right_border.png",
+    "images/stations/door.png",
+    "images/stations/top_door_left_part.png",
+    "images/stations/top_door_right_part.png",
+    "images/stations/bottom_door_left_part.png",
+    "images/stations/bottom_door_right_part.png",
+    "images/stations/top_border_wall.png",
+    "images/stations/bottom_border_wall.png"
   };
   private static final String[] forestTextureAtlases = {
     "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/ghostKing.atlas"
@@ -227,9 +236,13 @@ public class ForestGameArea extends GameArea {
   }
 
   private void spawnStations() {
-    GridPoint2 ovenPos = new GridPoint2(3,5);
-    Entity station2 = StationFactory.createStation("oven");
-    spawnEntityAt(station2, ovenPos, true, false);
+    GridPoint2 ovenPos = new GridPoint2(28,24);
+    Entity oven = StationFactory.createOven();
+    spawnEntityAt(oven, ovenPos, true, false);
+
+    GridPoint2 stovePos = new GridPoint2(23,24);
+    Entity stove = StationFactory.createStove();
+    spawnEntityAt(stove, stovePos, true, false);
   }
 
 

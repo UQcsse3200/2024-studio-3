@@ -96,7 +96,6 @@ public class StationItemHandlerComponent extends Component {
 
     /**
         Takes the item from the station, and returns the old item
-        @return oldItem - returns the item being taken from station, empty if no item
      */
     public void takeItem() {
         Optional<String> oldItem = inventoryComponent.removeCurrentItem();
