@@ -28,16 +28,12 @@ public class MainGameOrderTicketDisplay extends UIComponent {
     private static final Logger logger = LoggerFactory.getLogger(MainGameExitDisplay.class);
     private static final float Z_INDEX = 2f;
     private static final long DEFAULT_TIMER = 5000;
-    private static final float DEFAULT_HEIGHT = 200f;
-    private static final float DEFAULT_WIDTH = 180f;
+    private static final float viewportHeight =
+            ServiceLocator.getRenderService().getStage().getViewport().getCamera().viewportHeight;
+    private static final float viewportWidth =
+            ServiceLocator.getRenderService().getStage().getViewport().getCamera().viewportWidth;
     private static final float viewPortHeightMultiplier = 7f/9f;
     private static final float viewPortWidthMultiplier = 3f/32f;
-    private static Table table;
-    private Label countdownLabel;
-    private Docket background;
-    private long startTime;
-    private static int instanceCnt = 0;
-    private boolean disposeDone = false;
     private static final int distance= 20;
     private static ArrayList<Table> tableArrayList;
     private static ArrayList<Docket> backgroundArrayList;
@@ -48,8 +44,6 @@ public class MainGameOrderTicketDisplay extends UIComponent {
     @Override
     public void create() {
         super.create();
-        //logger.info("instance Count (just created): {}", instanceCnt);
-        //addActors();
         tableArrayList = new ArrayList<>();
         backgroundArrayList = new ArrayList<>();
         startTimeArrayList = new ArrayList<>();
@@ -57,25 +51,22 @@ public class MainGameOrderTicketDisplay extends UIComponent {
     }
 
     public void addActors() {
-        instanceCnt++;
-        table = new Table();
-        startTime = TimeUtils.millis();
+        Table table = new Table();
+        long startTime = TimeUtils.millis();
         startTimeArrayList.add(startTime);
         tableArrayList.add(table);
         table.setFillParent(false);
-        float viewportHeight = ServiceLocator.getRenderService().getStage().getViewport().getCamera().viewportHeight;
-        float viewportWidth = ServiceLocator.getRenderService().getStage().getViewport().getCamera().viewportWidth;
         table.setSize(viewportWidth * 3f/32f, 5f/27f * viewportHeight); //DEFAULT_HEIGHT
         float xVal = cntXval(tableArrayList.size());
         float yVal = viewportHeight * viewPortHeightMultiplier;
         table.setPosition(xVal, yVal);
-        background = new Docket();
+        Docket background = new Docket();
         backgroundArrayList.add(background);
         Label recipeNameLabel = new Label("Recipe name", skin);
         Label ingredient1Label = new Label("Ingredient 1", skin);
         Label ingredient2Label = new Label("Ingredient 2", skin);
         Label ingredient3Label = new Label("Ingredient 3", skin);
-        countdownLabel = new Label("Timer: 5000", skin);
+        Label countdownLabel = new Label("Timer: 5000", skin);
         countdownLabelArrayList.add(countdownLabel);
         table.setBackground(background.getImage().getDrawable()); //resize background
 //        table.add(recipeNameLabel).padTop(90f).padLeft(10f).row();
@@ -89,12 +80,10 @@ public class MainGameOrderTicketDisplay extends UIComponent {
     }
 
     private float cntXval(int instanceCnt) {
-        float viewportWidth = ServiceLocator.getRenderService().getStage().getViewport().getCamera().viewportWidth;
         return 20f + (instanceCnt - 1) * (distance + viewportWidth * 3f/32f);
     }
 
     public static void reorderDockets(int index) {
-        float viewportWidth = ServiceLocator.getRenderService().getStage().getViewport().getCamera().viewportWidth;
         for (int i = index + 1; i < tableArrayList.size(); i++) {
             Table currTable = tableArrayList.get(i);
             currTable.setX(currTable.getX() - (distance + viewportWidth * 3f/32f));
@@ -126,7 +115,6 @@ public class MainGameOrderTicketDisplay extends UIComponent {
     @Override
     public void draw(SpriteBatch batch) {
         // draw is handled by the stage
-
     }
 
     @Override
@@ -138,8 +126,8 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         table.setBackground((Drawable) null);
         table.clear();
         table.remove();
-        instanceCnt--;
         ServiceLocator.getDocketService().getEvents().trigger("removeOrder", index);
+        background.dispose();
         //dispose();
     }
 
