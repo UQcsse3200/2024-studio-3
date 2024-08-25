@@ -25,4 +25,9 @@ public class IngredientComponent extends ItemComponent{
     public void burnItem() {
         this.itemState = "burnt";
     }
+
+    public void chopItem() {
+        this.itemState = "chopped";
+    }
+
 }

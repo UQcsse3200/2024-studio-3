@@ -30,7 +30,7 @@ public class MealComponent extends ItemComponent {
         for (IngredientComponent ingredient : ingredients) {
             String itemState = ingredient.getItemState();
 
-            if (itemState.equals("BURNED")) {
+            if (itemState.equals("burnt") || itemState.equals("raw")) {
                 penalty += (1 - (1 / ingredients.size()) / 2) * 100;
             }
         }
