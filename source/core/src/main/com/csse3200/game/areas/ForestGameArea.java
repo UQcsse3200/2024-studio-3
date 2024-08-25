@@ -24,6 +24,8 @@ public class ForestGameArea extends GameArea {
   private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(10, 10);
   private static final float WALL_WIDTH = 0.1f;
   private static final String[] forestTextures = {
+    "images/raw_banana.png",
+    "images/chopped_banana.png",
     "images/raw_fish.png",
     "images/cooked_fish.png",
     "images/raw_beef.png",
@@ -76,6 +78,7 @@ public class ForestGameArea extends GameArea {
     player = spawnPlayer();
     spawnFish("raw");
     spawnBeef("cooked");
+    spawnBanana("chopped");
     spawnGhosts();
     spawnGhostKing();
 
@@ -156,6 +159,18 @@ public class ForestGameArea extends GameArea {
     spawnEntityAt(newBeef, new GridPoint2(12, 12), true, true);
     newBeef.setScale(0.5f,0.5f);
     return newBeef;
+  }
+
+  /**
+   * Spawn a banana item.
+   * @param choppedLevel - The level the banana is chopped at, can be "raw" or "chopped".
+   * @return A banana entity.
+   */
+  private Entity spawnBanana(String choppedLevel) {
+    Entity newBanana = ItemFactory.createBanana(choppedLevel);
+    spawnEntityAt(newBanana, new GridPoint2(18, 18), true, true);
+    newBanana.setScale(0.5f,0.5f);
+    return newBanana;
   }
 
   private void spawnGhosts() {
