@@ -78,8 +78,16 @@ public class MainGameOrderTicketDisplay extends UIComponent {
     }
 
     private float cntXval(int instanceCnt) {
-        float cntXval = 20f + (instanceCnt - 1) * (distance + DEFAULT_WIDTH);
+        float viewportWidth = ServiceLocator.getRenderService().getStage().getViewport().getCamera().viewportWidth;
+        float cntXval = 20f + (instanceCnt - 1) * (distance + viewportWidth * 3f/32f);
         return cntXval;
+    }
+
+    public void reorderDockets(float x, int instanceCnt) {
+        float myX = table.getX();
+        if (myX > x) {
+            table.setX(myX - ((instanceCnt - 1) * (distance + viewPortWidthMultiplier * 3f/32f)));
+        }
     }
 
     @Override
