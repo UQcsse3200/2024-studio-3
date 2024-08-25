@@ -21,7 +21,8 @@ public class OrderActions extends Component {
     @Override
     public void create() {
         entity.getEvents().addListener("addOrder", this::onAddOrder);
-        entity.getEvents().addListener("removeOrder", this::onRemoveOrder);
+
+        ServiceLocator.getDocketService().getEvents().addListener("removeOrder", this::onRemoveOrder);
         ServiceLocator.getDocketService().getEvents().addListener(
                 "reorderDockets", MainGameOrderTicketDisplay::reorderDockets);
         entity.getEvents().addListener("moveOrder", this::onMoveOrder);
@@ -39,9 +40,9 @@ public class OrderActions extends Component {
     /**
      * Removes order from the line
      */
-    private void onRemoveOrder(float x, int instanceCnt) {
+    private void onRemoveOrder(int index) {
         logger.info("Remove order");
-        ServiceLocator.getDocketService().getEvents().trigger("reorderDockets", x, instanceCnt);
+        ServiceLocator.getDocketService().getEvents().trigger("reorderDockets", index);
     }
 
     /**

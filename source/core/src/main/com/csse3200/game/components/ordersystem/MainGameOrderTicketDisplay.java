@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.csse3200.game.components.maingame.MainGameExitDisplay;
 import com.csse3200.game.services.ServiceLocator;
@@ -38,36 +39,44 @@ public class MainGameOrderTicketDisplay extends UIComponent {
     private static int instanceCnt = 0;
     private boolean disposeDone = false;
     private static final int distance= 20;
+    private static ArrayList<Table> tableArrayList;
+    private static ArrayList<Docket> backgroundArrayList;
+    private static ArrayList<Long> startTimeArrayList;
+    private static ArrayList<Label> countdownLabelArrayList;
 
 
     @Override
     public void create() {
         super.create();
         //logger.info("instance Count (just created): {}", instanceCnt);
-        addActors();
-        startTime = TimeUtils.millis();
+        //addActors();
+        tableArrayList = new ArrayList<>();
+        backgroundArrayList = new ArrayList<>();
+        startTimeArrayList = new ArrayList<>();
+        countdownLabelArrayList = new ArrayList<>();
     }
 
     public void addActors() {
         instanceCnt++;
         table = new Table();
+        startTime = TimeUtils.millis();
+        startTimeArrayList.add(startTime);
+        tableArrayList.add(table);
         table.setFillParent(false);
         float viewportHeight = ServiceLocator.getRenderService().getStage().getViewport().getCamera().viewportHeight;
         float viewportWidth = ServiceLocator.getRenderService().getStage().getViewport().getCamera().viewportWidth;
         table.setSize(viewportWidth * 3f/32f, 5f/27f * viewportHeight); //DEFAULT_HEIGHT
-        logger.info("hate {}", viewportHeight);
-        float xVal = cntXval(instanceCnt);
+        float xVal = cntXval(tableArrayList.size());
         float yVal = viewportHeight * viewPortHeightMultiplier;
-        logger.info("hatred the sequel {}", yVal);
         table.setPosition(xVal, yVal);
         background = new Docket();
-
+        backgroundArrayList.add(background);
         Label recipeNameLabel = new Label("Recipe name", skin);
         Label ingredient1Label = new Label("Ingredient 1", skin);
         Label ingredient2Label = new Label("Ingredient 2", skin);
         Label ingredient3Label = new Label("Ingredient 3", skin);
         countdownLabel = new Label("Timer: 5000", skin);
-
+        countdownLabelArrayList.add(countdownLabel);
         table.setBackground(background.getImage().getDrawable()); //resize background
 //        table.add(recipeNameLabel).padTop(90f).padLeft(10f).row();
         table.add(recipeNameLabel).padLeft(10f).row();
@@ -81,28 +90,36 @@ public class MainGameOrderTicketDisplay extends UIComponent {
 
     private float cntXval(int instanceCnt) {
         float viewportWidth = ServiceLocator.getRenderService().getStage().getViewport().getCamera().viewportWidth;
-        float cntXval = 20f + (instanceCnt - 1) * (distance + viewportWidth * 3f/32f);
-        return cntXval;
+        return 20f + (instanceCnt - 1) * (distance + viewportWidth * 3f/32f);
     }
 
-    public static void reorderDockets(float x, int instanceCnt) {
-        float myX = table.getX();
-        if (myX > x) {
-            table.setX(myX - ((instanceCnt - 1) * (distance + viewPortWidthMultiplier * 3f/32f)));
+    public static void reorderDockets(int index) {
+        float viewportWidth = ServiceLocator.getRenderService().getStage().getViewport().getCamera().viewportWidth;
+        for (int i = index + 1; i < tableArrayList.size(); i++) {
+            Table currTable = tableArrayList.get(i);
+            currTable.setX(currTable.getX() - (distance + viewportWidth * 3f/32f));
         }
     }
 
     @Override
     public void update() {
-        long elapsedTime = TimeUtils.timeSinceMillis(startTime);
-        long remainingTime = DEFAULT_TIMER - elapsedTime;
-        if (remainingTime > 0) {
-            countdownLabel.setText("Timer: " + (remainingTime / 1000));
-            background.updateDocketTexture((double) remainingTime/1000);
-            table.setBackground(background.getImage().getDrawable());
-        } else if (!disposeDone) {
-            logger.info("disposing");
-            dispose();
+        for (int i = 0; i < tableArrayList.size(); i++) {
+            Docket currBackground = backgroundArrayList.get(i);
+            Table currTable = tableArrayList.get(i);
+            Label currCountdown = countdownLabelArrayList.get(i);
+            long elapsedTime = TimeUtils.timeSinceMillis(startTimeArrayList.get(i));
+            long remainingTime = DEFAULT_TIMER - elapsedTime;
+            if (remainingTime > 0) {
+                currCountdown.setText("Timer: " + (remainingTime / 1000));
+                currBackground.updateDocketTexture((double) remainingTime/1000);
+                currTable.setBackground(currBackground.getImage().getDrawable());
+            } else {
+                stageDispose(currBackground, currTable, i);
+                tableArrayList.remove(i);
+                backgroundArrayList.remove(i);
+                startTimeArrayList.remove(i);
+                countdownLabelArrayList.remove(i);
+            }
         }
     }
 
@@ -117,14 +134,17 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         return Z_INDEX;
     }
 
-    @Override
-    public void dispose() {
+    public void stageDispose(Docket background, Table table, int index) {
         table.setBackground((Drawable) null);
         table.clear();
         table.remove();
         instanceCnt--;
-        entity.getEvents().trigger("removeOrder");
-        disposeDone = true;
+        ServiceLocator.getDocketService().getEvents().trigger("removeOrder", index);
+        //dispose();
+    }
+
+    @Override
+    public void dispose() {
         //logger.info("instance Count (after dispose): {}", instanceCnt);
         super.dispose();
     }
