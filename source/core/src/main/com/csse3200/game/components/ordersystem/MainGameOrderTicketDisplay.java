@@ -28,6 +28,7 @@ public class MainGameOrderTicketDisplay extends UIComponent {
     private static final float DEFAULT_HEIGHT = 200f;
     private static final float DEFAULT_WIDTH = 180f;
     private static final float viewPortHeightMultiplier = 7f/9f;
+    private static final float viewPortWidthMultiplier = 3f/32f;
     private Table table;
     private Label countdownLabel;
     private Docket background;
@@ -49,10 +50,10 @@ public class MainGameOrderTicketDisplay extends UIComponent {
     private void addActors() {
         table = new Table();
         table.setFillParent(false);
-        table.setSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);
         float viewportHeight = ServiceLocator.getRenderService().getStage().getViewport().getCamera().viewportHeight;
-        logger.info("hate {}", viewportHeight);
         float viewportWidth = ServiceLocator.getRenderService().getStage().getViewport().getCamera().viewportWidth;
+        table.setSize(viewportWidth * 3f/32f, 5f/27f * viewportHeight); //DEFAULT_HEIGHT
+        logger.info("hate {}", viewportHeight);
         float xVal = cntXval(instanceCnt);
         float yVal = viewportHeight * viewPortHeightMultiplier;
         logger.info("hatred the sequel {}", yVal);
