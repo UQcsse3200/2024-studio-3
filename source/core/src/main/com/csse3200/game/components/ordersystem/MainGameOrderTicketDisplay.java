@@ -43,13 +43,13 @@ public class MainGameOrderTicketDisplay extends UIComponent {
     @Override
     public void create() {
         super.create();
-        instanceCnt++;
         //logger.info("instance Count (just created): {}", instanceCnt);
         addActors();
         startTime = TimeUtils.millis();
     }
 
-    private void addActors() {
+    public void addActors() {
+        instanceCnt++;
         table = new Table();
         table.setFillParent(false);
         float viewportHeight = ServiceLocator.getRenderService().getStage().getViewport().getCamera().viewportHeight;
