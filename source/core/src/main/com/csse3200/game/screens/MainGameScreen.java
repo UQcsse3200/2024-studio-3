@@ -87,7 +87,7 @@ public class MainGameScreen extends ScreenAdapter {
    // backgroundTexture = new Texture(Gdx.files.internal("images/background.png"));
     //Gdx.gl.glClearColor(10f/255f, 221/255f, 132/255f, 1);
     renderer.render();
-    drawFrame();
+//    drawFrame();
 
   }
 
