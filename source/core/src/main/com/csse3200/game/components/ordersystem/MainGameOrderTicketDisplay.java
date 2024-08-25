@@ -29,7 +29,7 @@ public class MainGameOrderTicketDisplay extends UIComponent {
     private static final float DEFAULT_WIDTH = 180f;
     private static final float viewPortHeightMultiplier = 7f/9f;
     private static final float viewPortWidthMultiplier = 3f/32f;
-    private Table table;
+    private static Table table;
     private Label countdownLabel;
     private Docket background;
     private long startTime;
@@ -83,7 +83,7 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         return cntXval;
     }
 
-    public void reorderDockets(float x, int instanceCnt) {
+    public static void reorderDockets(float x, int instanceCnt) {
         float myX = table.getX();
         if (myX > x) {
             table.setX(myX - ((instanceCnt - 1) * (distance + viewPortWidthMultiplier * 3f/32f)));

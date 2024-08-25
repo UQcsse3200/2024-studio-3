@@ -2,6 +2,7 @@ package com.csse3200.game.components.ordersystem;
 
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.components.Component;
+import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,6 +22,8 @@ public class OrderActions extends Component {
     public void create() {
         entity.getEvents().addListener("addOrder", this::onAddOrder);
         entity.getEvents().addListener("removeOrder", this::onRemoveOrder);
+        ServiceLocator.getDocketService().getEvents().addListener(
+                "reorderDockets", MainGameOrderTicketDisplay::reorderDockets);
         entity.getEvents().addListener("moveOrder", this::onMoveOrder);
         entity.getEvents().addListener("changeColour", this::onChangeColour);
     }
