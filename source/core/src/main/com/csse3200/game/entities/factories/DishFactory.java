@@ -11,10 +11,7 @@ import com.csse3200.game.files.FileLoader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Factory to create a cooking entity with predefined components.
@@ -41,7 +38,7 @@ public class DishFactory {
         return multiStationRecipes;
     }
 
-    public static List<String> getRecipe (String ingredient) {
+    public static List<String> getRecipe (List<String> ingredient) {
         List<String> recipes = new ArrayList<>();
 
         if (configs == null) {
@@ -52,7 +49,7 @@ public class DishFactory {
             String recipe = entry.getKey();
             SingleStationRecipeConfig recipeConfig = entry.getValue();
 
-            if (recipeConfig.ingredient.contains(ingredient)) {
+            if (new HashSet<>(recipeConfig.ingredient).containsAll(ingredient)) {
                 recipes.add(recipe);
             }
         }
@@ -61,7 +58,7 @@ public class DishFactory {
             String recipe = entry.getKey();
             MultiStationRecipeConfig recipeConfig = entry.getValue();
 
-            if (recipeConfig.ingredient.contains(ingredient)) {
+            if (new HashSet<>(recipeConfig.ingredient).containsAll(ingredient)) {
                 recipes.add(recipe);
             }
         }
