@@ -121,9 +121,9 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         table.clear();
         table.remove();
         instanceCnt--;
+        entity.getEvents().trigger("removeOrder");
         disposeDone = true;
         //logger.info("instance Count (after dispose): {}", instanceCnt);
-
         super.dispose();
     }
 }

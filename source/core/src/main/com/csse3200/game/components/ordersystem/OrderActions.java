@@ -41,7 +41,7 @@ public class OrderActions extends Component {
      */
     private void onRemoveOrder() {
         logger.info("Remove order");
-        // do something
+        //ServiceLocator.getDocketService().getEvents().trigger("reorderDockets");
     }
 
     /**
