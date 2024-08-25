@@ -38,15 +38,11 @@ public class MainGameOrderTicketDisplay extends UIComponent {
     private static int instanceCnt = 0;
     private boolean disposeDone = false;
     private static final int distance= 20;
-    private ArrayList<Table> tableArrayList;
 
 
     @Override
     public void create() {
         super.create();
-        if (tableArrayList == null) {
-            tableArrayList = new ArrayList<>();
-        }
         instanceCnt++;
         //logger.info("instance Count (just created): {}", instanceCnt);
         addActors();
@@ -55,7 +51,6 @@ public class MainGameOrderTicketDisplay extends UIComponent {
 
     private void addActors() {
         table = new Table();
-        tableArrayList.add(table);
         table.setFillParent(false);
         float viewportHeight = ServiceLocator.getRenderService().getStage().getViewport().getCamera().viewportHeight;
         float viewportWidth = ServiceLocator.getRenderService().getStage().getViewport().getCamera().viewportWidth;
