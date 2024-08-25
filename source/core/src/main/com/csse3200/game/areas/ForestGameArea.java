@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.areas.terrain.TerrainFactory.TerrainType;
+import com.csse3200.game.components.items.ItemType;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.factories.*;
 import com.csse3200.game.utils.math.GridPoint2Utils;
@@ -130,14 +131,12 @@ public class ForestGameArea extends GameArea {
     return newPlayer;
   }
 
-
-  // Testing fish spawn
+  // Spawn a fish
   private Entity spawnFish() {
-    Entity newFish = ItemFactory.createFish("cooked");
+    Entity newFish = ItemFactory.createFish("raw");
     spawnEntityAt(newFish, new GridPoint2(15, 15), true, true);
     return newFish;
   }
-
 
   private void spawnGhosts() {
     GridPoint2 minPos = new GridPoint2(0, 0);
