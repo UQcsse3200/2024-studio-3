@@ -75,7 +75,7 @@ public class ForestGameArea extends GameArea {
     //spawnTrees();
     player = spawnPlayer();
     spawnFish("raw");
-    spawnBeef("burnt");
+    spawnBeef("cooked");
     spawnGhosts();
     spawnGhostKing();
 
@@ -154,6 +154,7 @@ public class ForestGameArea extends GameArea {
   private Entity spawnBeef(String cookedLevel) {
     Entity newBeef = ItemFactory.createBeef(cookedLevel);
     spawnEntityAt(newBeef, new GridPoint2(12, 12), true, true);
+    newBeef.setScale(0.5f,0.5f);
     return newBeef;
   }
 
