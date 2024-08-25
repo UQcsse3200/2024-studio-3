@@ -34,4 +34,21 @@ public class ItemFactory {
         fish.getComponent(TextureRenderComponent.class).scaleEntity();
         return fish;
     }
+
+    /**
+     * Create a beef item.
+     * @param cookedLevel - The level the beef is cooked at, can be "raw", "cooked" or "burnt".
+     * @return A beef entity.
+     */
+    public static Entity createBeef(String cookedLevel) {
+        Entity beef = createTemplateItem()
+                .addComponent(new IngredientComponent("Beef",ItemType.BEEF, 2, 10, cookedLevel))
+                .addComponent(new TextureRenderComponent(String.format("images/%s_beef.png", cookedLevel)));
+        PhysicsUtils.setScaledCollider(beef, 0.6f, 0.3f);
+        beef.getComponent(ColliderComponent.class).setDensity(1.5f);
+        beef.getComponent(TextureRenderComponent.class).scaleEntity();
+        return beef;
+
+    }
+
 }

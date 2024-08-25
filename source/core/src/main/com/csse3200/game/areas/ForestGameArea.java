@@ -26,6 +26,9 @@ public class ForestGameArea extends GameArea {
   private static final String[] forestTextures = {
     "images/raw_fish.png",
     "images/cooked_fish.png",
+    "images/raw_beef.png",
+    "images/cooked_beef.png",
+    "images/burnt_beef.png",
     "images/box_boy_leaf.png",
     "images/tree.png",
     "images/ghost_king.png",
@@ -71,7 +74,8 @@ public class ForestGameArea extends GameArea {
     spawnTerrain();
     //spawnTrees();
     player = spawnPlayer();
-    spawnFish();
+    spawnFish("raw");
+    spawnBeef("burnt");
     spawnGhosts();
     spawnGhostKing();
 
@@ -131,11 +135,26 @@ public class ForestGameArea extends GameArea {
     return newPlayer;
   }
 
-  // Spawn a fish
-  private Entity spawnFish() {
-    Entity newFish = ItemFactory.createFish("raw");
+  /**
+   * Spawn a fish item.
+   * @param cookedLevel - The level the fish is cooked at, can be "raw", "cooked" or "burnt".
+   * @return A fish entity.
+   */
+  private Entity spawnFish(String cookedLevel) {
+    Entity newFish = ItemFactory.createFish(cookedLevel);
     spawnEntityAt(newFish, new GridPoint2(15, 15), true, true);
     return newFish;
+  }
+
+  /**
+   * Spawn a beef item.
+   * @param cookedLevel - The level the beef is cooked at, can be "raw", "cooked" or "burnt".
+   * @return A beef entity.
+   */
+  private Entity spawnBeef(String cookedLevel) {
+    Entity newBeef = ItemFactory.createBeef(cookedLevel);
+    spawnEntityAt(newBeef, new GridPoint2(12, 12), true, true);
+    return newBeef;
   }
 
   private void spawnGhosts() {
