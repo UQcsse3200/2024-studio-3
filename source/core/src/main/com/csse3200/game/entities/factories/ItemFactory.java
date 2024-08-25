@@ -13,7 +13,7 @@ import com.csse3200.game.rendering.TextureRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
 
 public class ItemFactory {
-    public static Entity createTemplateItem(){
+    public static Entity createTemplateItem() {
         return new Entity()
                 .addComponent(new PhysicsComponent())
                 .addComponent(new ColliderComponent())
