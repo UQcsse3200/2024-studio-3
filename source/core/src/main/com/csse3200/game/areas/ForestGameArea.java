@@ -54,10 +54,11 @@ public class ForestGameArea extends GameArea {
     "images/stations/door.png",
     "images/stations/top_door_left_part.png",
     "images/stations/top_door_right_part.png",
-    "images/stations/bottom_door_left_part.png",
-    "images/stations/bottom_door_right_part.png",
+    "images/stations/bottom_left_inv.png",
+    "images/stations/bottom_right_inv.png",
     "images/stations/top_border_wall.png",
-    "images/stations/bottom_border_wall.png"
+    "images/stations/bottom_border_wall.png",
+          "images/stations/border.png"
   };
   private static final String[] forestTextureAtlases = {
     "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/ghostKing.atlas"
@@ -158,11 +159,11 @@ public class ForestGameArea extends GameArea {
     spawnEntityAt(door,position,true,false);
 
     position = new GridPoint2(0,0);
-    door = ObstacleFactory.createDoor("bottom_door_left_part",tileSize);
+    door = ObstacleFactory.createDoor("bottom_left_inv",tileSize);
     spawnEntityAt(door,position,true,false);
 
     position = new GridPoint2(1,0);
-    door = ObstacleFactory.createDoor("bottom_door_right_part",tileSize);
+    door = ObstacleFactory.createDoor("bottom_right_inv",tileSize);
     spawnEntityAt(door,position,true,false);
   }
 
@@ -171,10 +172,17 @@ public class ForestGameArea extends GameArea {
     GridPoint2 tileBounds = terrain.getMapBounds(0);
     Vector2 worldBounds = new Vector2(tileBounds.x * tileSize, tileBounds.y * tileSize);
 
+    for(int x=0;x<2;x++){
+      GridPoint2 position = new GridPoint2(x,0);
+      Entity left = ObstacleFactory.createBorder("border",tileSize);
+      spawnEntityAt(left,position,true,false);
+    }
+
     for(int x=2;x<(int)tileBounds.x;x++){
       GridPoint2 position = new GridPoint2(x,(int)tileBounds.y-1);
       Entity top = ObstacleFactory.createBorder("top_border_wall",tileSize);
       spawnEntityAt(top,position,true,false);
+
 
       position = new GridPoint2(x,0);
       Entity bottom = ObstacleFactory.createBorder("bottom_border_wall",tileSize);
