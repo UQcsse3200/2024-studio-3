@@ -39,9 +39,9 @@ public class OrderActions extends Component {
     /**
      * Removes order from the line
      */
-    private void onRemoveOrder() {
+    private void onRemoveOrder(float x, int instanceCnt) {
         logger.info("Remove order");
-        //ServiceLocator.getDocketService().getEvents().trigger("reorderDockets");
+        ServiceLocator.getDocketService().getEvents().trigger("reorderDockets", x, instanceCnt);
     }
 
     /**
