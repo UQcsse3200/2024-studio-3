@@ -1,0 +1,29 @@
+DocketStatusIndicator.png
+size: 400, 150
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+fresh_docket
+  rotate: false
+  xy: 0, 0
+  size: 100, 150
+  orig: 100, 150
+  offset: 0, 0
+mild_docket
+  rotate: false
+  xy: 100, 0
+  size: 100, 150
+  orig: 100, 150
+  offset: 0, 0
+old_docket
+  rotate: false
+  xy: 200, 0
+  size: 100, 150
+  orig: 100, 150
+  offset: 0, 0
+expired_docket
+  rotate: false
+  xy: 300, 0
+  size: 100, 150
+  orig: 100, 150
+  offset: 0, 0
