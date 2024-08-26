@@ -40,6 +40,7 @@ public class DocketDisplay extends UIComponent {
 		table.row();
 
 		stage.addActor(table);
+		stage.addActor(ServiceLocator.getDocketService().getDocketTable());
 	}
 
 	@Override
