@@ -31,7 +31,7 @@ import com.csse3200.game.components.gamearea.PerformanceDisplay;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.csse3200.game.components.ordersystem.DocketLineDisplay;
-
+import com.csse3200.game.components.player.InventoryDisplay;
 /**
  * The game screen containing the main game.
  *
@@ -153,7 +153,9 @@ public class MainGameScreen extends ScreenAdapter {
 			.addComponent(new DocketLineDisplay())
 			//.addComponent(new DocketDisplay())
 			.addComponent(new OrderActions(this.game))
-			.addComponent(new MainGameOrderBtnDisplay());
+			.addComponent(new MainGameOrderBtnDisplay())
+			// player inventory
+					.addComponent(new InventoryDisplay());
 		ServiceLocator.getEntityService().register(ui);
 	}
 }
