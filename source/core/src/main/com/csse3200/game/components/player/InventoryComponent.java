@@ -18,6 +18,7 @@ public class InventoryComponent extends Component {
   private static final Logger logger = LoggerFactory.getLogger(InventoryComponent.class);
   private ArrayList<String> items; // String as a placeholder for future ItemComponent class
   private int size; // maximum number of items that can be stored
+  private int selected; // index of currently selected item
   private final String indexException = "Invalid index parameter. Must be non-negative and within the current size of the inventory.";
   private final String sizeException = "Invalid size parameter. Must be an integer > 0";
 
@@ -47,6 +48,34 @@ public class InventoryComponent extends Component {
         throw new IllegalArgumentException(sizeException);
       }
       this.size = newSize;
+  }
+
+  /**
+   * Sets the currently selected item to the index specified
+   * @param index - the index to set the currently selected item to
+   * @throws java.lang.IllegalArgumentException - if index is not within 0 <= index < this.getSize()
+   */
+  public void setSelected(int index) {
+    if (index < 0 || index >= this.getSize()) {
+      throw new IllegalArgumentException(indexException);
+    }
+    this.selected = index;
+  }
+
+  /**
+   * Returns the index of the currently selected item
+   * @return the index of the currently selected item
+   */
+  public int getSelectedIndex() {
+    return this.selected;
+  }
+
+  /**
+   * Returns the currently selected item of the inventory (N! as a string for now)
+   * @return the item that is currently selected
+   */
+  public String getSelectedItem() {
+    return this.getItemAt(this.getSelectedIndex());
   }
 
     /**
