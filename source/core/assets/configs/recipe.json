@@ -19,7 +19,8 @@
     "cuttingBoard":["tomato","cucumber"],
     "fryingPan":["beef"],
     "oven":["tomato","cucumber"],
-    "makingTime":5
+    "makingTime":5,
+    "burnedTime": 8
   },
   "bananaSplit":{
     "ingredient":["banana","strawberry","chocolate"],
