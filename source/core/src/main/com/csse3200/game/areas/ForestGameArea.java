@@ -77,10 +77,7 @@ public class ForestGameArea extends GameArea {
     spawnTerrain();
     //spawnTrees();
     player = spawnPlayer();
-    spawnFish("raw");
-    spawnBeef("cooked");
-    spawnBanana("chopped");
-    spawnFruitSalad();
+
     spawnGhosts();
     spawnGhostKing();
 
