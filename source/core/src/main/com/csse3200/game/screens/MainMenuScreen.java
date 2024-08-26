@@ -8,6 +8,7 @@ import com.csse3200.game.components.mainmenu.MainMenuDisplay;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.entities.factories.RenderFactory;
+import com.csse3200.game.input.InputComponent;
 import com.csse3200.game.input.InputDecorator;
 import com.csse3200.game.input.InputService;
 import com.csse3200.game.rendering.RenderService;
@@ -95,6 +96,9 @@ public class MainMenuScreen extends ScreenAdapter {
   private void createUI() {
     logger.debug("Creating ui");
     Stage stage = ServiceLocator.getRenderService().getStage();
+    InputComponent inputComponent =
+            ServiceLocator.getInputService().getInputFactory().createForTerminal();
+
     Entity ui = new Entity();
     ui.addComponent(new MainMenuDisplay())
         .addComponent(new InputDecorator(stage, 10))
