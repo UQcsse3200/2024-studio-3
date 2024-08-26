@@ -1,0 +1,67 @@
+{
+  "name": "ingredients",
+  "version": "1.0.0",
+  "acai": {
+    "itemName": "acai",
+    "itemType": "ingredient",
+    "weight": 10,
+    "cookTime": 10,
+    "baseState": "RAW"
+  },
+  "beef": {
+    "itemName": "beef",
+    "itemType": "ingredient",
+    "weight": 10,
+    "cookTime": 10,
+    "baseState": "RAW"
+  },
+  "banana": {
+    "itemName": "banana",
+    "itemType": "ingredient",
+    "weight": 10,
+    "cookTime": 10,
+    "baseState": "RAW"
+  },
+  "lettuce": {
+    "itemName": "lettuce",
+    "itemType": "ingredient",
+    "weight": 10,
+    "cookTime": 10,
+    "baseState": "RAW"
+  },
+  "cucumber": {
+    "itemName": "cucumber",
+    "itemType": "ingredient",
+    "weight": 10,
+    "cookTime": 10,
+    "baseState": "RAW"
+  },
+  "tomato": {
+    "itemName": "tomato",
+    "itemType": "ingredient",
+    "weight": 10,
+    "cookTime": 10,
+    "baseState": "RAW"
+  },
+  "strawberry": {
+    "itemName": "strawberry",
+    "itemType": "ingredient",
+    "weight": 10,
+    "cookTime": 10,
+    "baseState": "RAW"
+  },
+  "chocolate": {
+    "itemName": "chocolate",
+    "itemType": "ingredient",
+    "weight": 10,
+    "cookTime": 10,
+    "baseState": "RAW"
+  },
+  "fish": {
+    "itemName": "fish",
+    "itemType": "ingredient",
+    "weight": 10,
+    "cookTime": 10,
+    "baseState": "RAW"
+  }
+}
