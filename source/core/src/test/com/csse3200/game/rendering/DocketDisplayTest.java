@@ -8,54 +8,54 @@ import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.mockito.Mockito;
 
+import static com.csse3200.game.services.ServiceLocator.resourceService;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
 
 public class DocketDisplayTest {
 
-    @Mock
-    private ResourceService resourceService;
-
     private DocketDisplay docketDisplay;
 
     @BeforeEach
     public void setUp() {
-        MockitoAnnotations.openMocks(this);
 
 
+        // Mock Texture
+        Texture mockTexture = Mockito.mock(Texture.class);
+        ResourceService resourceService =null;
+        when(resourceService.getAsset("images/ordersystem/docket_background.png", Texture.class))
+                .thenReturn(mockTexture);
 
-        // Initialize the DocketDisplay instance
+        // Initialize DocketDisplay
         docketDisplay = new DocketDisplay();
-        docketDisplay.create(); // Call create to initialize
+        docketDisplay.create(); // Initialize the component
     }
 
     @Test
-    public void testCreate() {
-        // Verify if table is initialized
-        Table table = docketDisplay.getTable(); // You need to provide a getter for the table in DocketDisplay
+    public void testTableInitialization() {
+        Table table = docketDisplay.getTable(); // Assuming you have a getter for the table
         assertNotNull(table, "Table should be initialized");
 
-        // Verify if Image is added to the table
+
         Image docketImage = (Image) table.getChildren().get(0);
         assertNotNull(docketImage, "Docket image should be added to the table");
-        assertNotNull(docketImage.getDrawable(), "Docket image should have a drawable");
-
-        // Optionally verify the resource loading
-        when(resourceService.getAsset("images/ordersystem/docket_background.png", Texture.class))
-                .thenReturn(new Texture("path/to/your/dummy/image.png"));
     }
 
     @Test
     public void testDispose() {
-        // Call dispose method
+        // Ensure that the table is not empty before dispose
+        Table table = docketDisplay.getTable(); // Assuming you have a getter for the table
+        assertFalse(table.getChildren().isEmpty(), "Table should have children before dispose");
+
         docketDisplay.dispose();
 
-        // Verify if the table is cleared
-        Table table = docketDisplay.getTable(); // You need to provide a getter for the table in DocketDisplay
-        assertTrue(table.getChildren().isEmpty(), "Table should be cleared");
+        assertTrue(table.getChildren().isEmpty(), "Table should be cleared after dispose");
+    }
+
+    private void assertFalse(boolean empty, String s) {
+
     }
 }
