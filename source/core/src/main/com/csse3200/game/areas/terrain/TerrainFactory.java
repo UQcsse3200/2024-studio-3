@@ -22,10 +22,8 @@ public class TerrainFactory {
   private static final GridPoint2 MAP_SIZE = new GridPoint2(8, 6);
   private static final int TUFT_TILE_COUNT = 30;
   private static final int ROCK_TILE_COUNT = 13;
-
   private final OrthographicCamera camera;
   private final TerrainOrientation orientation;
-
 
   /**
    * Create a terrain factory with Orthogonal orientation
@@ -46,9 +44,6 @@ public class TerrainFactory {
     this.camera = (OrthographicCamera) cameraComponent.getCamera();
     this.orientation = orientation;
   }
-
-
-
 
   /**
    * Create a terrain of the given type, using the orientation of the factory. This can be extended
@@ -115,30 +110,22 @@ public class TerrainFactory {
     TiledMap tiledMap = new TiledMap();
     TerrainTile floorTile= new TerrainTile(floor);
     TerrainTile customerTile = new TerrainTile(customer);
-    //TerrainTile grassTuftTile = new TerrainTile(grassTuft);
     TerrainTile rockTile = new TerrainTile(rocks);
     TiledMapTileLayer layer = new TiledMapTileLayer(MAP_SIZE.x, MAP_SIZE.y, tileSize.x , tileSize.y);
     GridPoint2 modified_size = new GridPoint2(MAP_SIZE.x/4 , MAP_SIZE.y);
     TiledMapTileLayer layer2 = new TiledMapTileLayer(modified_size.x, modified_size.y,tileSize.x , tileSize.y);
 
-    // Create base grass
+    // Create base tiles
     fillTiles(layer, MAP_SIZE, floorTile);
-    //fillTiles(layer, MAP_SIZE, customerTile);
 
-    // Add some grass and rocks
-    //fillTilesAtRandom(layer, MAP_SIZE, grassTuftTile, TUFT_TILE_COUNT);
-    // create modified map size
-
+    // Create modified map size
     fillTilesAtRandom(layer, modified_size, customerTile, ROCK_TILE_COUNT);
-
     tiledMap.getLayers().add(layer);
     return tiledMap;
   }
 
   private static void fillTilesAtRandom(
       TiledMapTileLayer layer, GridPoint2 map, TerrainTile tile, int amount) {
-    //GridPoint2 min = new GridPoint2(0, 0);
-    //GridPoint2 max = new GridPoint2(mapSize.x - 1, mapSize.y - 1);
 
     for (int x = 0; x < map.x; x++) {
       for (int y = 0; y < map.y; y++) {
@@ -146,15 +133,11 @@ public class TerrainFactory {
         cell.setTile(tile);
         layer.setCell(x,y,cell);
       }
-     //GridPoint2 tilePos = RandomUtils.random(min, max);
-      //Cell cell = layer.getCell(tilePos.x, tilePos.y);
-     // cell.setTile(tile);
     }
   }
 
   private static void fillTiles(TiledMapTileLayer layer, GridPoint2 mapSize, TerrainTile tile) {
     // fill the map so that no tiles are cropped, they should all be completely visible
-
     for (int x = 0; x < mapSize.x; x++) {
       for (int y = 0; y < mapSize.y; y++) {
         Cell cell = new Cell();

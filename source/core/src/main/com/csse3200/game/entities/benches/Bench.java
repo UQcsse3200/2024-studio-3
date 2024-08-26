@@ -16,7 +16,7 @@ public class Bench {
      *
      * @param height Station bench in world units
      * @param type   Type of bench
-     * @return Station entity of given width and height with relavent behaviors
+     * @return Station entity of given width and height with relevant behaviors
      */
     public static Entity createBench(String type, float height) {
         Entity bench = new Entity()
