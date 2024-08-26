@@ -52,11 +52,11 @@ public class CookIngredientComponent extends Component {
     /**
      * This starts the cooking process
      */
-    void cookIngredient() {
+    void cookIngredient(int cook_multiplier) {
         isCooking = true;
-//        cookTime = timesource.getTime() + ingredient.getCookTime() * 1000L;
-        cookTime = timesource.getTime() + 20000;
-    }
+//        cookTime = timesource.getTime() + ingredient.getCookTime() * 1000L * x;
+        cookTime = timesource.getTime() * cook_multiplier;
+        }
 
     /**
      * This ends the cooking process

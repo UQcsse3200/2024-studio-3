@@ -94,8 +94,28 @@ public class StationItemHandlerComponent extends Component {
         }
         inventoryComponent.setCurrentItem(item);
         // Hi, from Team 2, as mentioned in the studio
-        // We made the trigger for start cooking here
-        entity.getEvents().trigger("on");
+        // We made the trigger for start cooking/chopping depending on the station
+        int multiplier;
+        if(type == "CUTTING_BOARD") {
+            //trigger cutting component
+            entity.getEvents().trigger("chop");
+
+        }
+        else if(type == "OVEN") {
+            multiplier = 5;
+            entity.getEvents().trigger("on", multiplier);
+
+        }
+        else if (type == "COOK_TOP") {
+            multiplier = 1;
+            entity.getEvents().trigger("on", multiplier);
+
+        }
+        else{
+            return;
+        }
+
+
     }
 
     /**
