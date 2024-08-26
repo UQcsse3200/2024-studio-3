@@ -15,6 +15,7 @@ import com.csse3200.game.entities.factories.NPCFactory;
 import com.csse3200.game.entities.factories.ObstacleFactory;
 import com.csse3200.game.entities.factories.PlayerFactory;
 import com.csse3200.game.entities.factories.StationFactory;
+import com.csse3200.game.entities.factories.ItemFactory;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.utils.math.GridPoint2Utils;
@@ -28,21 +29,22 @@ public class ForestGameArea extends GameArea {
   private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(5, 3);
   private static final float WALL_WIDTH = 0.1f;
   private static final String[] forestTextures = {
-    "images/box_boy_leaf.png",
-    "images/tree.png",
-    "images/ghost_king.png",
-    "images/ghost_1.png",
+    "images/raw_cucumber.png",
+    "images/raw_tomato.png",
+    "images/raw_strawberry.png",
+    "images/raw_lettuce.png",
+    "images/raw_chocolate.png",
+    "images/money.png",
+    "images/fruit_salad.png",
+    "images/raw_banana.png",
+    "images/chopped_banana.png",
+    "images/raw_fish.png",
+    "images/cooked_fish.png",
+    "images/raw_beef.png",
+    "images/cooked_beef.png",
+    "images/burnt_beef.png",
     "images/new_orange.png",
     "images/blue_tile.png",
-    "images/grass_1.png",
-    "images/grass_2.png",
-    "images/grass_3.png",
-    "images/hex_grass_1.png",
-    "images/hex_grass_2.png",
-    "images/hex_grass_3.png",
-    "images/iso_grass_1.png",
-    "images/iso_grass_2.png",
-    "images/iso_grass_3.png",
     "images/stations/oven.png",
     "images/stations/stove.png",
     "images/stations/bench.png",
@@ -104,6 +106,8 @@ public class ForestGameArea extends GameArea {
     make_border();
     spawnBenches();
     spawnStations();
+    // Spawn beef
+    spawnBeef("raw");
 
     // Spawn the player
     player = spawnPlayer();
@@ -308,24 +312,46 @@ public class ForestGameArea extends GameArea {
     return newPlayer;
   }
 
-  private void spawnGhosts() {
-    GridPoint2 minPos = new GridPoint2(0, 0);
-    GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
-
-    for (int i = 0; i < NUM_GHOSTS; i++) {
-      GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
-      Entity ghost = NPCFactory.createGhost(player);
-      spawnEntityAt(ghost, randomPos, true, true);
-    }
+  /**
+   * Spawn a fish item.
+   * @param cookedLevel - The level the fish is cooked at, can be "raw", "cooked" or "burnt".
+   * @return A fish entity.
+   */
+  private Entity spawnFish(String cookedLevel) {
+    Entity newFish = ItemFactory.createFish(cookedLevel);
+    spawnEntityAt(newFish, new GridPoint2(15, 15), true, true);
+    return newFish;
   }
 
-  private void spawnGhostKing() {
-    GridPoint2 minPos = new GridPoint2(0, 0);
-    GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
+  /**
+   * Spawn a beef item.
+   * @param cookedLevel - The level the beef is cooked at, can be "raw", "cooked" or "burnt".
+   * @return A beef entity.
+   */
+  private Entity spawnBeef(String cookedLevel) {
+    Entity newBeef = ItemFactory.createBeef(cookedLevel);
+    spawnEntityAt(newBeef, new GridPoint2(3, 3), true, true);
+    newBeef.setScale(0.5f,0.5f);
+    return newBeef;
+  }
 
-    GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
-    Entity ghostKing = NPCFactory.createGhostKing(player);
-    spawnEntityAt(ghostKing, randomPos, true, true);
+  /**
+   * Spawn a banana item.
+   * @param choppedLevel - The level the banana is chopped at, can be "raw" or "chopped".
+   * @return A banana entity.
+   */
+  private Entity spawnBanana(String choppedLevel) {
+    Entity newBanana = ItemFactory.createBanana(choppedLevel);
+    spawnEntityAt(newBanana, new GridPoint2(3, 3), true, true);
+    newBanana.setScale(0.5f,0.5f);
+    return newBanana;
+  }
+
+  private Entity spawnFruitSalad() {
+    Entity newFruitSalad = ItemFactory.createFruitSalad();
+    spawnEntityAt(newFruitSalad, new GridPoint2(3, 3), true, true);
+    newFruitSalad.setScale(0.5f,0.5f);
+    return newFruitSalad;
   }
 
   private void playMusic() {
