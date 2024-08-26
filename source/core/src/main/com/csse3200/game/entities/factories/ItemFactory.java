@@ -90,7 +90,7 @@ public class ItemFactory {
      */
     public static Entity createTomato(String chopLevel) {
         Entity tomato = createTemplateItem()
-                .addComponent(new IngredientComponent("Banana", ItemType.TOMATO, 1, 6, chopLevel))
+                .addComponent(new IngredientComponent("Tomato", ItemType.TOMATO, 1, 6, chopLevel))
                 .addComponent(new TextureRenderComponent(String.format("images/%s_tomato.png", chopLevel)));
         PhysicsUtils.setScaledCollider(tomato, 0.6f, 0.3f);
         tomato.getComponent(ColliderComponent.class).setDensity(1.5f);
