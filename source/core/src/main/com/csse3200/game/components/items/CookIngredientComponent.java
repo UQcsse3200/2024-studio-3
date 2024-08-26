@@ -21,9 +21,11 @@ public class CookIngredientComponent extends Component {
 
     @Override
     public void create() {
-        //ingredient = entity.getComponent(IngredientComponent.class);
-        ingredient = "fish";
+//        ingredient = entity.getComponent(IngredientComponent.class);
+        //ingredient = "fish";
         // TODO: Add event listeners for cooking and stop cooking here
+        entity.getEvents().addListener("on", this::cookIngredient);
+        entity.getEvents().addListener("off", this::stopCooking);
     }
 
     /**

@@ -64,6 +64,7 @@ public class StationItemHandlerComponent extends Component {
         // This needs to be available outside of handler, again how does interaction want
         // to receive it
         return this.acceptableItems.contains(item);
+
     }
 
     /**
@@ -92,14 +93,22 @@ public class StationItemHandlerComponent extends Component {
             return;
         }
         inventoryComponent.setCurrentItem(item);
+        // Hi, from Team 2, as mentioned in the studio
+        // We made the trigger for start cooking here
+        entity.getEvents().trigger("on");
     }
 
     /**
         Takes the item from the station, and returns the old item
      */
     public void takeItem() {
+        // Hi, from Team 2, as mentioned in the studio
+        // We made the trigger for stop cooking here
+        entity.getEvents().trigger("off");
         Optional<String> oldItem = inventoryComponent.removeCurrentItem();
         // trigger here on player inventory component to send returned item
         // when done
+
+
     }
 }
