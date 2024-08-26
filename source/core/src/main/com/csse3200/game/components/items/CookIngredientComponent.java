@@ -23,8 +23,7 @@ public class CookIngredientComponent extends Component {
     public void create() {
         //ingredient = entity.getComponent(IngredientComponent.class);
         ingredient = "fish";
-        entity.getEvents().addListener("startCooking", this::cookIngredient);
-        entity.getEvents().addListener("stopCooking", this::stopCooking);
+        // TODO: Add event listeners for cooking and stop cooking here
     }
 
     /**
