@@ -33,21 +33,85 @@ class InventoryComponentTest {
     InventoryComponent inventory = new InventoryComponent(2);
     ArrayList<String> items = inventory.getItems();
     assertEquals(0, items.size());
-
   }
 
   @Test
-  void shouldBeNotFull() {
+  void shouldAddItem() {
     InventoryComponent inventory = new InventoryComponent(2);
+    inventory.addItemAt("item", 0);
+    ArrayList<String> items = inventory.getItems();
+    assertEquals(1, items.size());
+  }
+
+  @Test
+  void shouldAddItemValidIndex() {
+    InventoryComponent inventory = new InventoryComponent(2);
+    inventory.addItemAt("item", 1);
+    ArrayList<String> items = inventory.getItems();
+    assertEquals("item", items.get(1));
+  }
+
+  @Test
+  void shouldAddItemInvalidIndex() {
+    InventoryComponent inventory = new InventoryComponent(2);
+    try {
+      inventory.addItemAt("item", 2);
+    } catch (IllegalArgumentException e) {
+      assertEquals("Invalid index parameter. Must be non-negative and within the current size of the inventory.", e.getMessage());
+    }
+  }
+
+  @Test
+  void shouldRemoveItemAt() {
+    InventoryComponent inventory = new InventoryComponent(2);
+    inventory.addItemAt("item", 0);
+    String removedItem = inventory.removeAt(0);
+    assertEquals("item", removedItem);
+  }
+
+  @Test
+  void shouldRemoveItemAtIllegalIndex() {
+    InventoryComponent inventory = new InventoryComponent(2);
+    try {
+      inventory.removeAt(2);
+    } catch (IllegalArgumentException e) {
+      assertEquals("Invalid index parameter. Must be non-negative and within the current size of the inventory.", e.getMessage());
+    }
+  }
+
+  @Test
+  void shouldBeNotFull1() {
+    InventoryComponent inventory = new InventoryComponent(2);
+    assertEquals(false, inventory.isFull());
+  }
+
+  @Test
+  void shouldBeNotFull2() {
+    InventoryComponent inventory = new InventoryComponent(2);
+    inventory.addItemAt("item", 0);
     assertEquals(false, inventory.isFull());
   }
 
   @Test
   void shouldBeFull() {
     InventoryComponent inventory = new InventoryComponent(2);
-    // TODO: needs adding functionality to be implemented
-    // should be similar to shouldNotBeFull() except 2 items should be added to inventory
-    // and then method checks that its full
+    for (int i = 0; i < 2; i++) {
+      inventory.addItemAt("item", 0);
+    }
+    assertEquals(true, inventory.isFull());
+  }
+
+  @Test
+  void shouldBeEmpty() {
+    InventoryComponent inventory = new InventoryComponent(2);
+    assertEquals(true, inventory.isEmpty());
+  }
+
+  @Test
+  void shouldBeNotEmpty() {
+    InventoryComponent inventory = new InventoryComponent(2);
+    inventory.addItemAt("item", 0);
+    assertEquals(false, inventory.isEmpty());
   }
 
   @Test
