@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Optional;
 
 import com.csse3200.game.components.Component;
-import com.csse3200.game.components.player.KeyboardPlayerInputComponent;
 
 public class StationItemHandlerComponent extends Component {
     /**
@@ -16,7 +15,6 @@ public class StationItemHandlerComponent extends Component {
     private final String type;
     private StationInventoryComponent inventoryComponent;
     private HashSet<String> acceptableItems = new HashSet<>();
-    private KeyboardPlayerInputComponent playerInput;
 
     // General TODO:
     // Add trigger calls to external for failed interactions
@@ -44,10 +42,6 @@ public class StationItemHandlerComponent extends Component {
         acceptableItems.add("vegetable");
         acceptableItems.add("cheese");
         inventoryComponent = entity.getComponent(StationInventoryComponent.class);
-
-        // Assuming playerEntity is a reference to the player entity in your game
-        playerInput = playerEntity.getComponent(KeyboardPlayerInputComponent.class);
-
         entity.getEvents().addListener("item exists", this::hasItem);
         entity.getEvents().addListener("give station item", this::giveItem);
         entity.getEvents().addListener("take item", this::takeItem);
@@ -87,48 +81,24 @@ public class StationItemHandlerComponent extends Component {
         @param item that is being given to the station
      */
     public void giveItem(String item) {
-        if (playerInput != null) {
-            playerInput.freezeMovement();
-        }
-
         if (this.hasItem()) {
             // This needs to send a fail trigger to player, plays full animation
             // Doesn't receive item etc
-            if (playerInput != null) {
-                playerInput.unfreezeMovement();
-            }
             return;
         }
         if (!this.isItemAccepted(item)) {
             // This needs to send a different fail trigger to player, plays full animation
             // Doesn't receive item etc
-            if (playerInput != null) {
-                playerInput.unfreezeMovement(); // Unfreeze movement if item is accepted
-            }
             return;
         }
         inventoryComponent.setCurrentItem(item);
-
-        if (playerInput != null) {
-            playerInput.unfreezeMovement();
-        }
     }
 
     /**
         Takes the item from the station, and returns the old item
-        @return oldItem - returns the item being taken from station, empty if no item
      */
     public void takeItem() {
-        if (playerInput != null) {
-            playerInput.freezeMovement();
-        }
-
         Optional<String> oldItem = inventoryComponent.removeCurrentItem();
-
-        if (playerInput != null) {
-            playerInput.unfreezeMovement();
-        }
-
         // trigger here on player inventory component to send returned item
         // when done
     }
