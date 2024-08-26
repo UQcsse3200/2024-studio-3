@@ -4,7 +4,7 @@
     "countDown": 20,
     "patience": 100,
     "spawnTimer": 100,
-    "preference": [],
+    "preference": ["banana_split"]
     "reputation": 100,
     "texture": "images/animal_images/gorilla.png"
   },
@@ -14,17 +14,17 @@
     "countDown": 30,
     "patience": 100,
     "spawnTimer": 100,
-    "preference": [],
+    "preference": ["acai_bowl"]
     "reputation": 100,
     "texture": "images/animal_images/goose.png"
   },
 
-  "Wolf": {
+  "Snow_Fox": {
     "name": "Silver",
     "countDown": 50,
     "patience": 100,
     "spawnTimer": 100,
-    "preference": [],
+    "preference": ["steak"]
     "reputation": 100,
     "texture": "images/animal_images/snow_wolf.png"
   },
@@ -34,7 +34,7 @@
     "countDown": 50,
     "patience": 100,
     "spawnTimer": 100,
-    "preference": [],
+    "preference": ["salad"]
     "reputation": 100,
     "texture": "images/animal_images/goat.png"
   },
@@ -44,7 +44,7 @@
     "countDown": 40,
     "patience": 100,
     "spawnTimer": 100,
-    "preference": [],
+    "preference": ["fruit_salad"]
     "reputation": 100,
     "texture": "images/animal_images/monkey.png"
   }
