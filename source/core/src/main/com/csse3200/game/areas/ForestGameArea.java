@@ -1,5 +1,6 @@
 package com.csse3200.game.areas;
 
+import com.csse3200.game.entities.Benches.Bench;
 import net.dermetfan.gdx.scenes.scene2d.ui.Popup.PositionBehavior.Position;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -262,44 +263,44 @@ public class ForestGameArea extends GameArea {
 
     // Ordering bench
     GridPoint2 benchPos1 = new GridPoint2(2,2);
-    Entity station1 = StationFactory.createStation("bench", 4.5f);
+    Entity station1 = Bench.createBench("bench", 4.5f);
     spawnEntityAt(station1, benchPos1, true, false);
     Vector2 pos1 = station1.getPosition();
 
     // Middle benches
     GridPoint2 benchPos2 = new GridPoint2(5,3);
-    Entity station2 = StationFactory.createStation("bench", 3.5f);
+    Entity station2 = Bench.createBench("bench", 3.5f);
     spawnEntityAt(station2, benchPos2, true, false);
     Vector2 pos2 = station2.getPosition();
 
     GridPoint2 benchPos3 = new GridPoint2(5,1);
-    Entity station3 = StationFactory.createStation("bench", 3.5f);
+    Entity station3 = Bench.createBench("bench", 3.5f);
     spawnEntityAt(station3, benchPos3, true, false);
     Vector2 pos3 = station3.getPosition();
 
     // Long benches
     GridPoint2 benchPos4 = new GridPoint2(8,0);
-    Entity station4 = StationFactory.createStation("bench", 4.0f);
+    Entity station4 = Bench.createBench("bench", 4.0f);
     spawnEntityAt(station4, benchPos4, false, false);
     Vector2 pos4 = station4.getPosition();
 
     GridPoint2 benchPos5 = new GridPoint2(8,1);
-    Entity station5 = StationFactory.createStation("bench", 4.0f);
+    Entity station5 = Bench.createBench("bench", 4.0f);
     spawnEntityAt(station5, benchPos5, false, false);
     Vector2 pos5 = station5.getPosition();
 
     GridPoint2 benchPos6 = new GridPoint2(8,2);
-    Entity station6 = StationFactory.createStation("bench", 4.0f);
+    Entity station6 = Bench.createBench("bench", 4.0f);
     spawnEntityAt(station6, benchPos6, false, false);
     Vector2 pos6 = station6.getPosition();
 
     GridPoint2 benchPos7 = new GridPoint2(8,3);
-    Entity station7 = StationFactory.createStation("bench", 4.0f);
+    Entity station7 = Bench.createBench("bench", 4.0f);
     spawnEntityAt(station7, benchPos7, false, false);
     Vector2 pos7 = station7.getPosition();
 
     GridPoint2 benchPos8 = new GridPoint2(8,4);
-    Entity station8 = StationFactory.createStation("bench", 4.0f);
+    Entity station8 = Bench.createBench("bench", 4.0f);
     spawnEntityAt(station8, benchPos8, false, false);
     Vector2 pos8 = station8.getPosition();
 
