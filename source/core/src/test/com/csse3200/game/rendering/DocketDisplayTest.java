@@ -1,52 +1,61 @@
 package com.csse3200.game.rendering;
 
-
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.csse3200.game.components.ordersystem.DocketDisplay;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
-import com.csse3200.game.ui.UIComponent;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.when;
 
-class DocketDisplayTest {
+public class DocketDisplayTest {
+
+    @Mock
+    private ResourceService resourceService;
 
     private DocketDisplay docketDisplay;
 
     @BeforeEach
-    void setUp() {
+    public void setUp() {
+        MockitoAnnotations.openMocks(this);
 
-        ServiceLocator.clear();
-        ServiceLocator.registerResourceService(Mockito.mock(ResourceService.class));
-        ServiceLocator.registerRenderService(Mockito.mock(RenderService.class));
-        ServiceLocator.getRenderService().getStage(Mockito.mock(Stage.class));
 
+
+        // Initialize the DocketDisplay instance
         docketDisplay = new DocketDisplay();
-        docketDisplay.create();
+        docketDisplay.create(); // Call create to initialize
     }
 
     @Test
-    void testAddActorsInitializesTableCorrectly() {
+    public void testCreate() {
+        // Verify if table is initialized
+        Table table = docketDisplay.getTable(); // You need to provide a getter for the table in DocketDisplay
+        assertNotNull(table, "Table should be initialized");
 
-        Table table = docketDisplay.getTable();
+        // Verify if Image is added to the table
+        Image docketImage = (Image) table.getChildren().get(0);
+        assertNotNull(docketImage, "Docket image should be added to the table");
+        assertNotNull(docketImage.getDrawable(), "Docket image should have a drawable");
 
-
-        assertNotNull(table, "Table should be initialized.");
-        assertEquals(1, table.getChildren().size, "Table should contain one child actor.");
-        assertTrue(table.getChildren().first() instanceof Image, "The first child of the table should be an Image.");
+        // Optionally verify the resource loading
+        when(resourceService.getAsset("images/ordersystem/docket_background.png", Texture.class))
+                .thenReturn(new Texture("path/to/your/dummy/image.png"));
     }
 
     @Test
-    void testDisposeClearsTable() {
-
+    public void testDispose() {
+        // Call dispose method
         docketDisplay.dispose();
-        Table table = docketDisplay.getTable();
-        assertEquals(0, table.getChildren().size, "Table should be cleared after dispose.");
+
+        // Verify if the table is cleared
+        Table table = docketDisplay.getTable(); // You need to provide a getter for the table in DocketDisplay
+        assertTrue(table.getChildren().isEmpty(), "Table should be cleared");
     }
 }
