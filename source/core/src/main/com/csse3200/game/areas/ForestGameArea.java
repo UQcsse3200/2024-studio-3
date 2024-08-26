@@ -60,7 +60,8 @@ public class ForestGameArea extends GameArea {
     "images/stations/bottom_right_inv.png",
     "images/stations/top_border_wall.png",
     "images/stations/bottom_border_wall.png",
-          "images/stations/border.png"
+          "images/stations/border.png",
+          "images/stations/glassdisplay.png"
   };
   private static final String[] forestTextureAtlases = {
     "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/ghostKing.atlas"
@@ -260,6 +261,13 @@ public class ForestGameArea extends GameArea {
 
   // Spawn benches
   private void spawnBenches() {
+    /**
+    //Display Bench
+    GridPoint2 benchPos0 = new GridPoint2(2,1);
+    Entity station0 = Bench.createBench("glassdisplay", 3.3f);
+    spawnEntityAt(station0, benchPos0, true, false);
+    Vector2 pos0 = station0.getPosition();
+    **/
 
     // Ordering bench
     GridPoint2 benchPos1 = new GridPoint2(2,2);
