@@ -54,7 +54,7 @@ public class MainGameScreen extends ScreenAdapter {
 		"images/ordersystem/docket_background.png",
 		"images/ordersystem/pin_line.png"
 	};
-	private static final Vector2 CAMERA_POSITION = new Vector2(7.5f, 7.5f);
+	private static final Vector2 CAMERA_POSITION = new Vector2(7.5f, 6.0f);
   private final ShapeRenderer shapeRenderer;
   private final GdxGame game;
   private final Renderer renderer;

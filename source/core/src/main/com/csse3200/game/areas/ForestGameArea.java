@@ -291,7 +291,7 @@ public class ForestGameArea extends GameArea {
     spawnEntityAt(station1, benchPos1, false, false);
     Vector2 pos1 = station1.getPosition();
     // Bottom bench
-    GridPoint2 benchPos4 = new GridPoint2(5,0);
+    GridPoint2 benchPos4 = new GridPoint2(5,1);
     Entity station4 = StationFactory.createStation("bench7", 1.0f);
     spawnEntityAt(station4, benchPos4, true, false);
     Vector2 pos4 = station4.getPosition();
@@ -312,7 +312,7 @@ public class ForestGameArea extends GameArea {
     // Center bottom bench
     station3.setPosition(pos3.x - (terrain.getTileSize() / 2), pos3.y + (terrain.getTileSize() / 2));
     // Bottom bench
-    station4.setPosition(pos4.x - (terrain.getTileSize() / 2), pos4.y);
+    station4.setPosition(pos4.x - (terrain.getTileSize() / 2), pos4.y - (terrain.getTileSize() / 2));
     // Right bench
     station6.setPosition(pos6.x + (terrain.getTileSize() / 4), pos6.y + (terrain.getTileSize() / 2));
     // Top bench
