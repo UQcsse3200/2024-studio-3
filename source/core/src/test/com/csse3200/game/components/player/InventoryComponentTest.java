@@ -96,7 +96,7 @@ class InventoryComponentTest {
     assertEquals(false, inventory.isFull());
   }
 
-  // add item logic issue
+  // add item logic issue.
   // @Test
   // void shouldBeFull() {
   //   InventoryComponent inventory = new InventoryComponent(2);
