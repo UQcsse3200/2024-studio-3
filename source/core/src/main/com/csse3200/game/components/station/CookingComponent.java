@@ -2,6 +2,9 @@ package com.csse3200.game.components.station;
 
 import com.csse3200.game.components.Component;
 import com.csse3200.game.services.GameTime;
+import com.csse3200.game.entities.factories.DishFactory; // TODO should I??
+
+import java.util.*;
 
 /**
  * A component used to handle changing the state of an item being passed through a station.
@@ -16,9 +19,11 @@ public class CookingComponent extends Component {
 
     private StationType stationType;
     private StationInventoryComponent inventoryComponent;
+    private DishFactory dishFactory;
     private GameTime gameTime;
     private long cookingTime;
     private boolean isCooking;
+    private String targetRecipe;
 
     /**
      * Constructs a station cooking component.
@@ -61,9 +66,11 @@ public class CookingComponent extends Component {
     @Override
     public void update() {
         // Add to cooking timer and cook item
-        if (inventoryComponent.isItemPresent() && isCooking) { // TODO might be redundant
-            // TODO add method to check if overcooked
-            cookingTime += gameTime.getDeltaTime();
+        if (isCooking) {
+            if (cookingTime < 0) { // Recipe is fully cooked
+                inventoryComponent.setCurrentItem(targetRecipe);
+            }
+            cookingTime -= gameTime.getDeltaTime();
         }
     }
 
@@ -71,9 +78,25 @@ public class CookingComponent extends Component {
      * Method triggered when item added to station.
      */
     private void addItem() {
-        // TODO check valid item first - can store invalid but can't cook it
-        cookingTime = 0;
-        isCooking = true;
+        // TODO need access to 2nd item in private "item" attribute in StationInventoryComponent
+        // Therefore, this is a workaround and will inevitably cause issues
+        Optional<String> fstItem = inventoryComponent.removeCurrentItem();
+        Optional<String> sndItem = inventoryComponent.removeCurrentItem();
+
+        List<String> templist=new ArrayList<String>();
+        if (fstItem.isPresent()) templist.add(fstItem.get());
+        if (sndItem.isPresent()) templist.add(sndItem.get());
+
+        List<String> possibleRecipes = DishFactory.getRecipe(templist);
+        if (possibleRecipes.size() == 1) {
+            targetRecipe = possibleRecipes.get(0);
+            cookingTime = 10000; // TODO edit placeholder, get cooking time from recipes?
+            isCooking = true;
+        }
+        else
+        {
+            // TODO
+        }
     }
 
     /**
@@ -93,7 +116,7 @@ public class CookingComponent extends Component {
         return isCooking;
     }
 
-    /** @return time passed since the item was placed on the station in seconds, scaled by time scale. */
+    /** @return time remaining to make the recipe in seconds, scaled by time scale. */
     public long getCookingTime() {
         return cookingTime;
     }
