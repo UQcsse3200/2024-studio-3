@@ -4,5 +4,11 @@ public enum ItemType {
     FISH,
     BANANA,
     BEEF,
-    CHICKEN
+    CHICKEN,
+    ACAI,
+    LETTUCE,
+    CUCUMBER,
+    TOMATO,
+    STRAWBERRY,
+    CHOCOLATE
 }
