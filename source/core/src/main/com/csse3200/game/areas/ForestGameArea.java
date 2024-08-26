@@ -24,6 +24,7 @@ public class ForestGameArea extends GameArea {
   private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(10, 10);
   private static final float WALL_WIDTH = 0.1f;
   private static final String[] forestTextures = {
+    "images/fruit_salad.png",
     "images/raw_banana.png",
     "images/chopped_banana.png",
     "images/raw_fish.png",
@@ -79,6 +80,7 @@ public class ForestGameArea extends GameArea {
     spawnFish("raw");
     spawnBeef("cooked");
     spawnBanana("chopped");
+    spawnFruitSalad();
     spawnGhosts();
     spawnGhostKing();
 
@@ -171,6 +173,13 @@ public class ForestGameArea extends GameArea {
     spawnEntityAt(newBanana, new GridPoint2(18, 18), true, true);
     newBanana.setScale(0.5f,0.5f);
     return newBanana;
+  }
+
+  private Entity spawnFruitSalad() {
+    Entity newFruitSalad = ItemFactory.createFruitSalad();
+    spawnEntityAt(newFruitSalad, new GridPoint2(16, 16), true, true);
+    newFruitSalad.setScale(0.5f,0.5f);
+    return newFruitSalad;
   }
 
   private void spawnGhosts() {

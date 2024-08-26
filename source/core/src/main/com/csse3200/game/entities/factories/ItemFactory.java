@@ -1,5 +1,6 @@
 package com.csse3200.game.entities.factories;
 
+import java.util.Arrays;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.files.FileLoader;
 import com.csse3200.game.components.items.*;
@@ -11,6 +12,8 @@ import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.rendering.TextureRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
+
+import java.util.List;
 
 public class ItemFactory {
     public static Entity createTemplateItem(){
@@ -65,6 +68,24 @@ public class ItemFactory {
         banana.getComponent(TextureRenderComponent.class).scaleEntity();
         return banana;
 
+    }
+
+    /**
+     * Create a fruit salad item.
+     * @param  - The level the banana is chopped at, can be "raw", "chopped".
+     * @return A banana entity.
+     */
+    public static Entity createFruitSalad() {
+        List<IngredientComponent> ingredients = Arrays.asList(new IngredientComponent("Banana", ItemType.BANANA, 1, 3, "chopped"),
+                                                            new IngredientComponent("Strawberry", ItemType.STRAWBERRY, 1, 3, "chopped"));
+
+        Entity fruitSalad = createTemplateItem()
+                .addComponent(new TextureRenderComponent("images/fruit_salad.png"))
+                .addComponent(new MealComponent("Fruit Salad", ItemType.FRUITSALAD, 2, ingredients, 5));
+        PhysicsUtils.setScaledCollider(fruitSalad, 0.6f, 0.3f);
+        fruitSalad.getComponent(ColliderComponent.class).setDensity(1.5f);
+        fruitSalad.getComponent(TextureRenderComponent.class).scaleEntity();
+        return fruitSalad;
     }
 
 }

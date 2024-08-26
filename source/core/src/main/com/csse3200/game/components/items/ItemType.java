@@ -10,5 +10,6 @@ public enum ItemType {
     CUCUMBER,
     TOMATO,
     STRAWBERRY,
-    CHOCOLATE
+    CHOCOLATE,
+    FRUITSALAD
 }
