@@ -13,15 +13,15 @@ import com.csse3200.game.rendering.TextureRenderComponent;
 public class Bench {
 /**
  * Creates visible station.
- * @param height Station height in world units
- * @param type Type of station
+ * @param height bench height in world units
+ * @param type Type of bench
  * @return Station entity of given width and height with relavent behaviors
  */
     /**
-     * Creates visible station.
+     * Creates visible bench.
      *
-     * @param height Station height in world units
-     * @param type   Type of station
+     * @param height Station bench in world units
+     * @param type   Type of bench
      * @return Station entity of given width and height with relavent behaviors
      */
     public static Entity createBench(String type, float height) {
