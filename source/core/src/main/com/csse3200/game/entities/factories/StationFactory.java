@@ -54,4 +54,28 @@ public class StationFactory {
     
     return stove;
   }
+
+  /**
+   * Creates visible station.
+   * @param width Station width in world units
+   * @param height Station height in world units
+   * @param type Type of station
+   * @return Station entity of given width and height with relavent behaviors
+   */
+  public static Entity createStation(String type, float height) {
+    Entity station = new Entity()
+        .addComponent(new TextureRenderComponent("images/stations/"+ type + ".png"))
+        .addComponent(new PhysicsComponent())
+        .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
+        .addComponent(new StationItemHandlerComponent(type, new ArrayList<>()));
+
+
+    station.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
+    station.getComponent(TextureRenderComponent.class).scaleEntity();
+    station.scaleHeight(height);
+
+    PhysicsUtils.setScaledCollider(station, 0.3f, 0.2f);
+
+    return station;
+  }
 }
