@@ -78,14 +78,11 @@ public class CookingComponent extends Component {
      * Method triggered when item added to station.
      */
     private void addItem() {
-        // TODO need access to 2nd item in private "item" attribute in StationInventoryComponent
-        // Therefore, this is a workaround and will inevitably cause issues
-        Optional<String> fstItem = inventoryComponent.removeCurrentItem();
-        Optional<String> sndItem = inventoryComponent.removeCurrentItem();
-
-        List<String> templist=new ArrayList<String>();
-        if (fstItem.isPresent()) templist.add(fstItem.get());
-        if (sndItem.isPresent()) templist.add(sndItem.get());
+        // Converting List<Optional<String>> to List<String>
+        List<String> templist = new ArrayList<String>();
+        for (Optional<String> x : inventoryComponent.getItems()) {
+            templist.add(x.get());
+        }
 
         List<String> possibleRecipes = DishFactory.getRecipe(templist);
         if (possibleRecipes.size() == 1) {
