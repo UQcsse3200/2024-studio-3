@@ -1,21 +1,23 @@
 package com.csse3200.game.areas;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.areas.terrain.TerrainFactory.TerrainType;
+import com.csse3200.game.components.gamearea.GameAreaDisplay;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.factories.NPCFactory;
 import com.csse3200.game.entities.factories.ObstacleFactory;
 import com.csse3200.game.entities.factories.PlayerFactory;
-import com.csse3200.game.utils.math.GridPoint2Utils;
-import com.csse3200.game.utils.math.RandomUtils;
+import com.csse3200.game.entities.factories.StationFactory;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
-import com.csse3200.game.components.gamearea.GameAreaDisplay;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.csse3200.game.utils.math.GridPoint2Utils;
+import com.csse3200.game.utils.math.RandomUtils;
 
 /** Forest area for the demo game with trees, a player, and some enemies. */
 public class ForestGameArea extends GameArea {
@@ -37,7 +39,9 @@ public class ForestGameArea extends GameArea {
     "images/hex_grass_3.png",
     "images/iso_grass_1.png",
     "images/iso_grass_2.png",
-    "images/iso_grass_3.png"
+    "images/iso_grass_3.png",
+    "images/stations/oven.png",
+    "images/stations/stove.png"
   };
   private static final String[] forestTextureAtlases = {
     "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/ghostKing.atlas"
@@ -72,6 +76,8 @@ public class ForestGameArea extends GameArea {
     player = spawnPlayer();
     spawnGhosts();
     spawnGhostKing();
+
+    spawnStations();
 
     playMusic();
   }
@@ -121,6 +127,17 @@ public class ForestGameArea extends GameArea {
       Entity tree = ObstacleFactory.createTree();
       spawnEntityAt(tree, randomPos, true, false);
     }
+  }
+
+  private void spawnStations() {
+    GridPoint2 ovenPos = new GridPoint2(28,24);
+    Entity oven = StationFactory.createOven();
+    spawnEntityAt(oven, ovenPos, true, false);
+
+    GridPoint2 stovePos = new GridPoint2(23,24);
+    Entity stove = StationFactory.createStove();
+    spawnEntityAt(stove, stovePos, true, false);
+    
   }
 
   private Entity spawnPlayer() {
