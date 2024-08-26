@@ -4,16 +4,11 @@ import com.csse3200.game.components.Component;
 import com.csse3200.game.services.GameTime;
 import com.csse3200.game.services.ServiceLocator;
 
-
-/**
- * Waiting for Items team to do PR before integrating their Ingredient part
- */
 public class CookIngredientComponent extends Component {
     //private IngredientComponent ingredient;
-    private String ingredient;
     private final GameTime timesource;
     private boolean isCooking;
-    long cookTime;
+    private long cookEndTime;
 
     public CookIngredientComponent() {
         timesource = ServiceLocator.getTimeSource();
@@ -22,10 +17,8 @@ public class CookIngredientComponent extends Component {
     @Override
     public void create() {
 //        ingredient = entity.getComponent(IngredientComponent.class);
-        //ingredient = "fish";
-        // TODO: Add event listeners for cooking and stop cooking here
-        entity.getEvents().addListener("on", this::cookIngredient);
-        entity.getEvents().addListener("off", this::stopCooking);
+        entity.getEvents().addListener("cookIngredient", this::cookIngredient);
+        entity.getEvents().addListener("stopCookingIngredient", this::stopCookingIngredient);
     }
 
     /**
@@ -37,31 +30,43 @@ public class CookIngredientComponent extends Component {
             long current_time = timesource.getTime();
 
             // If 15 seconds have passed since the item was cooked,
-            // the item gets burned
-            if (current_time >= cookTime + 15000) {
+            // the item gets burnt
+            if (current_time >= cookEndTime + 15 * 1000) {
                 //ingredient.burnItem();
-                System.out.println("Fish is burnt");
-                stopCooking();
-            } else if (current_time >= cookTime) {
+                stopCookingIngredient();
+            } else if (current_time >= cookEndTime) {
 //                ingredient.cookIngredient();
-                System.out.println("Fish is cooked");
             }
         }
     }
 
     /**
-     * This starts the cooking process
+     * This starts the cooking process and calculates the time at which the ingredient
+     * finishes cooking.
+     *
+     * @param stationState - The station state ("Hot", "Warm", "Normal")
+     * @param oven_multiplier - Oven cook times take longer, so we use a multiplier
+     *                        to multiply the cooking type if station is "OVEN".
      */
-    void cookIngredient(int cook_multiplier) {
+    void cookIngredient(String stationState, int oven_multiplier) {
         isCooking = true;
-//        cookTime = timesource.getTime() + ingredient.getCookTime() * 1000L * x;
-        cookTime = timesource.getTime() * cook_multiplier;
+        switch (stationState) {
+            case "Hot" -> {
+                // cookEndTime = timesource.getTime() + ingredient.getCookTime() * 1000L * oven_multiplier * 0.25;
+            }
+            case "Warm" -> {
+                // cookEndTime = timesource.getTime() + ingredient.getCookTime() * 1000L * oven_multiplier * 0.5;
+            }
+            default -> {
+                // cookEndTime = timesource.getTime() + ingredient.getCookTime() * 1000L * oven_multiplier;
+            }
         }
+    }
 
     /**
      * This ends the cooking process
      */
-    void stopCooking() {
+    void stopCookingIngredient() {
         isCooking = false;
     }
 }

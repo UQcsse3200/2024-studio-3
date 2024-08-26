@@ -93,26 +93,22 @@ public class StationItemHandlerComponent extends Component {
             return;
         }
         inventoryComponent.setCurrentItem(item);
+
         // Hi, from Team 2, as mentioned in the studio
         // We made the trigger for start cooking/chopping depending on the station
-        int multiplier;
-        if(type == "CUTTING_BOARD") {
-            //trigger cutting component
-            entity.getEvents().trigger("chop");
-
-        }
-        else if(type == "OVEN") {
-            multiplier = 5;
-            entity.getEvents().trigger("on", multiplier);
-
-        }
-        else if (type == "COOK_TOP") {
-            multiplier = 1;
-            entity.getEvents().trigger("on", multiplier);
-
-        }
-        else{
-            return;
+        // Note: We didn't request a member variable for stationState since not all
+        //      stations would have a state of "Hot". It doesn't make sense in the context
+        //      of a cutting board.
+        String stationState = "Hot";
+        switch (type) {
+            case "COOK_TOP" -> {
+                entity.getEvents().trigger("cookIngredient", "Normal", 1);
+            }
+            case "OVEN" -> {
+                entity.getEvents().trigger("cookIngredient", stationState, 5);
+            }
+            case "CUTTING_BOARD" ->
+                entity.getEvents().trigger("chopIngredient");
         }
 
 
@@ -123,8 +119,13 @@ public class StationItemHandlerComponent extends Component {
      */
     public void takeItem() {
         // Hi, from Team 2, as mentioned in the studio
-        // We made the trigger for stop cooking here
-        entity.getEvents().trigger("off");
+        // We made the trigger for stop cooking/chopping here
+        if (type.equals("COOK_TOP") || type.equals("OVEN")) {
+            entity.getEvents().trigger("stopCookingIngredient");
+        } else {
+            entity.getEvents().trigger("stopChoppingIngredient");
+        }
+
         Optional<String> oldItem = inventoryComponent.removeCurrentItem();
         // trigger here on player inventory component to send returned item
         // when done

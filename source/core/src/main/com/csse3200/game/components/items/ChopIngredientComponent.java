@@ -8,8 +8,7 @@ public class ChopIngredientComponent extends Component {
     private String ingredient;
     private final GameTime timesource;
     private boolean isChopping;
-
-    long chopTime;
+    private long chopEndTime;
 
     public ChopIngredientComponent() {
         timesource = ServiceLocator.getTimeSource();
@@ -17,30 +16,37 @@ public class ChopIngredientComponent extends Component {
     @Override
     public void create() {
 //        ingredient = entity.getComponent(IngredientComponent.class);
-        //ingredient = "fish";
-        // TODO: Add event listeners for cooking and stop cooking here
-        entity.getEvents().addListener("chop", this::chopIngredient);
-        entity.getEvents().addListener("off", this::stopChopping);
+        entity.getEvents().addListener("chopIngredient", this::chopIngredient);
+        entity.getEvents().addListener("stopChoppingIngredient", this::stopChopping);
     }
 
+    /**
+     * This method is called every frame to update ingredient state
+     */
     @Override
     public void update() {
         if (isChopping) {
             long current_time = timesource.getTime();
-
-            if (current_time >= chopTime) {
+            if (current_time >= chopEndTime) {
 //                ingredient.chopIngredient();
-                System.out.println("Salad chopped");
                 stopChopping();
             }
         }
     }
 
+    /**
+     * This starts the chopping process and calculates the time at which the ingredient
+     * finishes chopping.
+     */
     void chopIngredient() {
         isChopping = true;
-//      choptime = timesource.getTime() + ingredient.getChopTime() * 1000L
+//      chopEndTime = timesource.getTime() + ingredient.getChopTime() * 1000L
 
     }
+
+    /**
+     * This ends the chopping process
+     */
     void stopChopping() {
         isChopping = false;
     }
