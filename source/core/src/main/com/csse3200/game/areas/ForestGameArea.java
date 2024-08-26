@@ -253,46 +253,46 @@ public class ForestGameArea extends GameArea {
    */
   private void spawnBenches() {
     // Top bench
-    GridPoint2 benchPos5 = new GridPoint2(5,5);
+    GridPoint2 topBench = new GridPoint2(5,5);
     Entity station5 = StationFactory.createStation("bench7", 1.0f);
-    spawnEntityAt(station5, benchPos5, true, false);
+    spawnEntityAt(station5, topBench, true, false);
     Vector2 pos5 = station5.getPosition();
     station5.setPosition(pos5.x - (terrain.getTileSize() / 2), pos5.y);
 
     // Bottom bench
-    GridPoint2 benchPos4 = new GridPoint2(5,1);
+    GridPoint2 bottomBench = new GridPoint2(5,1);
     Entity station4 = StationFactory.createStation("bench7", 1.0f);
-    spawnEntityAt(station4, benchPos4, true, false);
+    spawnEntityAt(station4, bottomBench, true, false);
     Vector2 pos4 = station4.getPosition();
     station4.setPosition(pos4.x - (terrain.getTileSize() / 2), pos4.y - (terrain.getTileSize() / 2));
 
     // Left bench
-    GridPoint2 benchPos1 = new GridPoint2(2,2);
+    GridPoint2 leftBench = new GridPoint2(2,2);
     Entity station1 = StationFactory.createStation("bench2", 4.5f);
-    spawnEntityAt(station1, benchPos1, false, false);
+    spawnEntityAt(station1, leftBench, false, false);
     Vector2 pos1 = station1.getPosition();
     station1.setPosition(pos1.x, pos1.y);
 
     // Right bench
-    GridPoint2 benchPos6 = new GridPoint2(7,0);
+    GridPoint2 rightBench = new GridPoint2(7,0);
     Entity station6 = StationFactory.createStation("bench6", 10.0f);
-    spawnEntityAt(station6, benchPos6, false, false);
+    spawnEntityAt(station6, rightBench, false, false);
     Vector2 pos6 = station6.getPosition();
     station6.setPosition(pos6.x + (terrain.getTileSize() / 4), pos6.y + (terrain.getTileSize() / 2));
 
     // Center top bench
-    GridPoint2 benchPos2 = new GridPoint2(5,3);
+    GridPoint2 centerTopBench = new GridPoint2(5,3);
     Entity station2 = StationFactory.createStation("bench1", 3.5f);
-    spawnEntityAt(station2, benchPos2, true, false);
+    spawnEntityAt(station2, centerTopBench, true, false);
     Vector2 pos2 = station2.getPosition();
     station2.setPosition(pos2.x - (terrain.getTileSize() / 2), pos2.y + (terrain.getTileSize() / 4));
 
     // Center bottom bench
-    GridPoint2 benchPos3 = new GridPoint2(5,0);
+    GridPoint2 centerBottomBench = new GridPoint2(5,1);
     Entity station3 = StationFactory.createStation("bench1", 3.5f);
-    spawnEntityAt(station3, benchPos3, true, false);
+    spawnEntityAt(station3, centerBottomBench, true, false);
     Vector2 pos3 = station3.getPosition();
-    station3.setPosition(pos3.x - (terrain.getTileSize() / 2), pos3.y + (terrain.getTileSize() / 2));
+    station3.setPosition(pos3.x - (terrain.getTileSize() / 2), pos3.y);
   }
 
   private Entity spawnPlayer() {
