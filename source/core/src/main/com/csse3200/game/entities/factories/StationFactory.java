@@ -64,7 +64,7 @@ public class StationFactory {
    */
   public static Entity createStation(String type, float height) {
     Entity station = new Entity()
-        .addComponent(new TextureRenderComponent("images/stations/"+ type + ".png"))
+        .addComponent(new TextureRenderComponent("images/stations/benches/"+ type + ".png"))
         .addComponent(new PhysicsComponent())
         .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
         .addComponent(new StationItemHandlerComponent(type, new ArrayList<>()));

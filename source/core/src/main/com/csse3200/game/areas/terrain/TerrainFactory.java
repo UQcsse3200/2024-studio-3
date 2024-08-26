@@ -57,11 +57,11 @@ public class TerrainFactory {
     switch (terrainType) {
       case FOREST_DEMO:
         TextureRegion orthoFloor =
-            new TextureRegion(resourceService.getAsset("images/new_orange.png", Texture.class));
+            new TextureRegion(resourceService.getAsset("images/tiles/orange_tile.png", Texture.class));
         TextureRegion custTile =
-            new TextureRegion(resourceService.getAsset("images/blue_tile.png", Texture.class));
+            new TextureRegion(resourceService.getAsset("images/tiles/blue_tile.png", Texture.class));
         TextureRegion orthoRocks =
-            new TextureRegion(resourceService.getAsset("images/new_orange.png", Texture.class));
+            new TextureRegion(resourceService.getAsset("images/tiles/orange_tile.png", Texture.class));
         return createForestDemoTerrain(2f, orthoFloor, custTile, orthoRocks);
       case FOREST_DEMO_ISO:
         TextureRegion isoGrass =
