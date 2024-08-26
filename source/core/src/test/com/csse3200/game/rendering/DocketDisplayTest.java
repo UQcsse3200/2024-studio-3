@@ -20,7 +20,7 @@ public class DocketDisplayTest {
 
     @BeforeEach
     public void setUp() {
-      
+
         mockResourceService = Mockito.mock(ResourceService.class);
 
         Mockito.mockStatic(ServiceLocator.class);
