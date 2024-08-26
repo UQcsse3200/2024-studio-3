@@ -153,9 +153,7 @@ public class MainGameScreen extends ScreenAdapter {
 			.addComponent(new DocketLineDisplay())
 			//.addComponent(new DocketDisplay())
 			.addComponent(new OrderActions(this.game))
-			.addComponent(new MainGameOrderBtnDisplay())
-			// player inventory
-					.addComponent(new InventoryDisplay());
+			.addComponent(new MainGameOrderBtnDisplay());
 		ServiceLocator.getEntityService().register(ui);
 	}
 }
