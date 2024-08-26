@@ -238,17 +238,6 @@ public class ForestGameArea extends GameArea {
     }
   }
 
-  private void spawnTrees() {
-    GridPoint2 minPos = new GridPoint2(0, 0);
-    GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
-
-    for (int i = 0; i < NUM_TREES; i++) {
-      GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
-      Entity tree = ObstacleFactory.createTree();
-      spawnEntityAt(tree, randomPos, true, false);
-    }
-  }
-
   private void spawnStations() {
     GridPoint2 ovenPos = new GridPoint2(5,5);
     Entity oven = StationFactory.createOven();
@@ -305,7 +294,6 @@ public class ForestGameArea extends GameArea {
     Vector2 pos3 = station3.getPosition();
     station3.setPosition(pos3.x - (terrain.getTileSize() / 2), pos3.y + (terrain.getTileSize() / 2));
   }
-
 
   private Entity spawnPlayer() {
     Entity newPlayer = PlayerFactory.createPlayer();
