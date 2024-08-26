@@ -114,6 +114,21 @@ public class ItemFactory {
     }
 
     /**
+     * Create a lettuce item.
+     * @param chopLevel - The level the lettuce is chopped at, can be "raw", "chopped".
+     * @return A lettuce entity.
+     */
+    public static Entity createLettuce(String chopLevel) {
+        Entity lettuce = createTemplateItem()
+                .addComponent(new IngredientComponent("Lettuce", ItemType.LETTUCE, 1, 10, chopLevel))
+                .addComponent(new TextureRenderComponent(String.format("images/%s_tomato.png", chopLevel)));
+        PhysicsUtils.setScaledCollider(lettuce, 0.6f, 0.3f);
+        lettuce.getComponent(ColliderComponent.class).setDensity(1.5f);
+        lettuce.getComponent(TextureRenderComponent.class).scaleEntity();
+        return lettuce;
+    }
+
+    /**
      * Create a fruit salad item.
      * @return A fruitSalad entity.
      */
