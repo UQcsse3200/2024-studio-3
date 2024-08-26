@@ -1,6 +1,7 @@
 package com.csse3200.game.files;
 
 import com.csse3200.game.entities.configs.CookingConfig;
+import com.csse3200.game.entities.factories.DishFactory;
 import com.csse3200.game.extensions.GameExtension;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -91,5 +92,98 @@ public class RecipeFileLoaderTest {
         assertEquals(expectedStation, actualStation);
 
         assertEquals(2, configs.bananaSplit.makingTime);
+    }
+
+    @Test
+     void getRecipeGivenBanana() {
+        List<String> recipes = DishFactory.getRecipe(List.of("banana"));
+        List<String> expected = List.of("acaiBowl", "bananaSplit", "fruitSalad");
+        assertEquals(expected, recipes);
+    }
+
+    @Test
+    void getRecipeGivenAcai() {
+        List<String> recipes = DishFactory.getRecipe(List.of("acai"));
+        List<String> expected = List.of("acaiBowl");
+        assertEquals(expected, recipes);
+    }
+
+    @Test
+    void getRecipeGivenTomato() {
+        List<String> recipes = DishFactory.getRecipe(List.of("tomato"));
+        List<String> expected = List.of("salad", "steakMeal");
+        assertEquals(expected, recipes);
+    }
+    @Test
+    void getRecipeGivenCucumber() {
+        List<String> recipes = DishFactory.getRecipe(List.of("cucumber"));
+        List<String> expected = List.of("salad", "steakMeal");
+        assertEquals(expected, recipes);
+    }
+
+    @Test
+    void getRecipeGivenLettuce() {
+        List<String> recipes = DishFactory.getRecipe(List.of("lettuce"));
+        List<String> expected = List.of("salad");
+        assertEquals(expected, recipes);
+    }
+
+    @Test
+    void getRecipeGivenStrawberry() {
+        List<String> recipes = DishFactory.getRecipe(List.of("strawberry"));
+        List<String> expected = List.of("bananaSplit","fruitSalad");
+        assertEquals(expected, recipes);
+    }
+
+    @Test
+    void getRecipeGivenChocolate() {
+        List<String> recipes = DishFactory.getRecipe(List.of("chocolate"));
+        List<String> expected = List.of("bananaSplit");
+        assertEquals(expected, recipes);
+    }
+
+    @Test
+    void getRecipeGivenTwoIngredient() {
+        List<String> recipes1 = DishFactory.getRecipe(List.of("tomato", "cucumber"));
+        List<String> expected1 = List.of("salad", "steakMeal");
+        assertEquals(expected1, recipes1);
+
+        List<String> recipes2 = DishFactory.getRecipe(List.of("banana", "strawberry"));
+        List<String> expected2 = List.of("bananaSplit", "fruitSalad");
+        assertEquals(expected2, recipes2);
+
+        List<String> recipes3 = DishFactory.getRecipe(List.of("acai", "banana"));
+        List<String> expected3 = List.of("acaiBowl");
+        assertEquals(expected3, recipes3);
+    }
+
+    @Test
+    void getRecipeGivenThreeIngredient() {
+        List<String> recipes1 = DishFactory.getRecipe(List.of("tomato", "cucumber", "lettuce"));
+        List<String> expected1 = List.of("salad");
+        assertEquals(expected1, recipes1);
+
+        List<String> recipes2 = DishFactory.getRecipe(List.of("banana", "strawberry", "chocolate"));
+        List<String> expected2 = List.of("bananaSplit");
+        assertEquals(expected2, recipes2);
+
+        List<String> recipes3 = DishFactory.getRecipe(List.of("beef", "cucumber", "tomato"));
+        List<String> expected3 = List.of("steakMeal");
+        assertEquals(expected3, recipes3);
+    }
+
+    @Test
+    void getRecipeGivenOtherIngredient() {
+        List<String> recipes1 = DishFactory.getRecipe(List.of("cheese", "cucumber", "lettuce"));
+        List<String> expected1 = List.of();
+        assertEquals(expected1, recipes1);
+
+        List<String> recipes2 = DishFactory.getRecipe(List.of("fish", "chips"));
+        List<String> expected2 = List.of();
+        assertEquals(expected2, recipes2);
+
+        List<String> recipes3 = DishFactory.getRecipe(List.of("noodle", "soup", "pudding"));
+        List<String> expected3 = List.of();
+        assertEquals(expected3, recipes3);
     }
 }
