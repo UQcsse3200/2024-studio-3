@@ -51,7 +51,6 @@ public class ItemFactory {
         beef.getComponent(ColliderComponent.class).setDensity(1.5f);
         beef.getComponent(TextureRenderComponent.class).scaleEntity();
         return beef;
-
     }
 
     /**
@@ -67,13 +66,56 @@ public class ItemFactory {
         banana.getComponent(ColliderComponent.class).setDensity(1.5f);
         banana.getComponent(TextureRenderComponent.class).scaleEntity();
         return banana;
+    }
 
+    /**
+     * Create a cucumber item.
+     * @param chopLevel - The level the cucumber is chopped at, can be "raw", "chopped".
+     * @return A cucumber entity.
+     */
+    public static Entity createCucumber(String chopLevel) {
+        Entity cucumber = createTemplateItem()
+                .addComponent(new IngredientComponent("Cucumber", ItemType.CUCUMBER, 1, 5, chopLevel))
+                .addComponent(new TextureRenderComponent(String.format("images/%s_cucumber.png", chopLevel)));
+        PhysicsUtils.setScaledCollider(cucumber, 0.6f, 0.3f);
+        cucumber.getComponent(ColliderComponent.class).setDensity(1.5f);
+        cucumber.getComponent(TextureRenderComponent.class).scaleEntity();
+        return cucumber;
+    }
+
+    /**
+     * Create a tomato item.
+     * @param chopLevel - The level the tomato is chopped at, can be "raw", "chopped".
+     * @return A tomato entity.
+     */
+    public static Entity createTomato(String chopLevel) {
+        Entity tomato = createTemplateItem()
+                .addComponent(new IngredientComponent("Banana", ItemType.TOMATO, 1, 6, chopLevel))
+                .addComponent(new TextureRenderComponent(String.format("images/%s_tomato.png", chopLevel)));
+        PhysicsUtils.setScaledCollider(tomato, 0.6f, 0.3f);
+        tomato.getComponent(ColliderComponent.class).setDensity(1.5f);
+        tomato.getComponent(TextureRenderComponent.class).scaleEntity();
+        return tomato;
+    }
+
+    /**
+     * Create a strawberry item.
+     * @param chopLevel - The level the strawberry is chopped at, can be "raw", "chopped".
+     * @return A strawberry entity.
+     */
+    public static Entity createStrawberry(String chopLevel) {
+        Entity strawberry = createTemplateItem()
+                .addComponent(new IngredientComponent("Strawberry", ItemType.STRAWBERRY, 1, 3, chopLevel))
+                .addComponent(new TextureRenderComponent(String.format("images/%s_tomato.png", chopLevel)));
+        PhysicsUtils.setScaledCollider(strawberry, 0.6f, 0.3f);
+        strawberry.getComponent(ColliderComponent.class).setDensity(1.5f);
+        strawberry.getComponent(TextureRenderComponent.class).scaleEntity();
+        return strawberry;
     }
 
     /**
      * Create a fruit salad item.
-     * @param  - The level the banana is chopped at, can be "raw", "chopped".
-     * @return A banana entity.
+     * @return A fruitSalad entity.
      */
     public static Entity createFruitSalad() {
         List<IngredientComponent> ingredients = Arrays.asList(new IngredientComponent("Banana", ItemType.BANANA, 1, 3, "chopped"),
@@ -87,5 +129,6 @@ public class ItemFactory {
         fruitSalad.getComponent(TextureRenderComponent.class).scaleEntity();
         return fruitSalad;
     }
+
 
 }

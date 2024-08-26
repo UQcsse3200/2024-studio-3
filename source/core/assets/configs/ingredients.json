@@ -56,5 +56,12 @@
     "weight": 10,
     "cookTime": 10,
     "baseState": "RAW"
+  },
+  "fish": {
+    "itemName": "fish",
+    "itemType": "ingredient",
+    "weight": 10,
+    "cookTime": 10,
+    "baseState": "RAW"
   }
 }
