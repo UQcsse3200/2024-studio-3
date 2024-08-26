@@ -8,7 +8,7 @@ import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.npc.CustomerComponent;
 import com.csse3200.game.components.npc.GhostAnimationController;
 import com.csse3200.game.components.TouchAttackComponent;
-import com.csse3200.game.components.tasks.ChaseTask;
+import com.csse3200.game.components.tasks.PathFollowTask;
 import com.csse3200.game.components.tasks.WanderTask;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.configs.*;
@@ -45,51 +45,52 @@ public class NPCFactory {
    * @param target entity to chase
    * @return entity
    */
-  public static Entity createGhost(Entity target) {
-    Entity ghost = createBaseNPC(target);
-    BaseEntityConfig config = configs.ghost;
+  public static Entity createGhost(Entity target, Vector2 targetPosition) {
+      Entity ghost = createBaseNPC(target, targetPosition);
+      BaseEntityConfig config = configs.ghost;
 
-    AnimationRenderComponent animator =
-        new AnimationRenderComponent(
-            ServiceLocator.getResourceService().getAsset("images/ghost.atlas", TextureAtlas.class));
-    animator.addAnimation("angry_float", 0.1f, Animation.PlayMode.LOOP);
-    animator.addAnimation("float", 0.1f, Animation.PlayMode.LOOP);
+      AnimationRenderComponent animator =
+              new AnimationRenderComponent(
+                      ServiceLocator.getResourceService().getAsset("images/ghost.atlas", TextureAtlas.class));
+      animator.addAnimation("angry_float", 0.1f, Animation.PlayMode.LOOP);
+      animator.addAnimation("float", 0.1f, Animation.PlayMode.LOOP);
 
-    ghost
-        .addComponent(new CombatStatsComponent(config.health, config.baseAttack))
-        .addComponent(animator)
-        .addComponent(new GhostAnimationController());
+      ghost
+              .addComponent(new CombatStatsComponent(config.health, config.baseAttack))
+              .addComponent(animator)
+              .addComponent(new GhostAnimationController());
 
-    ghost.getComponent(AnimationRenderComponent.class).scaleEntity();
+      ghost.getComponent(AnimationRenderComponent.class).scaleEntity();
 
-    return ghost;
+      return ghost;
   }
 
-  /**
-   * Creates a ghost king entity.
-   *
-   * @param target entity to chase
-   * @return entity
-   */
-  public static Entity createGhostKing(Entity target) {
-    Entity ghostKing = createBaseNPC(target);
-    GhostKingConfig config = configs.ghostKing;
+    /**
+     * Creates a ghost king entity at a specific target position.
+     *
+     * @param target entity to chase
+     * @param targetPosition the target position on the screen where the ghost king should move
+     * @return entity
+     */
+    public static Entity createGhostKing(Entity target, Vector2 targetPosition) {
+        Entity ghostKing = createBaseNPC(target, targetPosition);
+        GhostKingConfig config = configs.ghostKing;
 
-    AnimationRenderComponent animator =
-        new AnimationRenderComponent(
-            ServiceLocator.getResourceService()
-                .getAsset("images/ghostKing.atlas", TextureAtlas.class));
-    animator.addAnimation("float", 0.1f, Animation.PlayMode.LOOP);
-    animator.addAnimation("angry_float", 0.1f, Animation.PlayMode.LOOP);
+        AnimationRenderComponent animator =
+                new AnimationRenderComponent(
+                        ServiceLocator.getResourceService()
+                                .getAsset("images/ghostKing.atlas", TextureAtlas.class));
+        animator.addAnimation("float", 0.1f, Animation.PlayMode.LOOP);
+        animator.addAnimation("angry_float", 0.1f, Animation.PlayMode.LOOP);
 
-    ghostKing
-        .addComponent(new CombatStatsComponent(config.health, config.baseAttack))
-        .addComponent(animator)
-        .addComponent(new GhostAnimationController());
+        ghostKing
+                .addComponent(new CombatStatsComponent(config.health, config.baseAttack))
+                .addComponent(animator)
+                .addComponent(new GhostAnimationController());
 
-    ghostKing.getComponent(AnimationRenderComponent.class).scaleEntity();
-    return ghostKing;
-  }
+        ghostKing.getComponent(AnimationRenderComponent.class).scaleEntity();
+        return ghostKing;
+    }
 
   public static Entity createCustomer(CustomerPersonalityConfig config) {
     Entity customer = createBaseCustomer();
@@ -136,25 +137,41 @@ public class NPCFactory {
    *
    * @return entity
    */
-  private static Entity createBaseNPC(Entity target) {
-    AITaskComponent aiComponent =
-        new AITaskComponent()
-            .addTask(new WanderTask(new Vector2(2f, 2f), 2f))
-            .addTask(new ChaseTask(target, 10, 3f, 4f));
-    Entity npc =
-        new Entity()
-            .addComponent(new PhysicsComponent())
-            .addComponent(new PhysicsMovementComponent())
-            .addComponent(new ColliderComponent())
-            .addComponent(new HitboxComponent().setLayer(PhysicsLayer.NPC))
-            .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 1.5f))
-            .addComponent(aiComponent);
+  private static Entity createBaseNPC(Entity target, Vector2 targetPosition) {
+      AITaskComponent aiComponent =
+              new AITaskComponent()
+                      .addTask(new PathFollowTask(targetPosition));
 
-    PhysicsUtils.setScaledCollider(npc, 0.9f, 0.4f);
-    return npc;
+      Entity npc =
+              new Entity()
+                      .addComponent(new PhysicsComponent())
+                      .addComponent(new PhysicsMovementComponent())
+                      .addComponent(new ColliderComponent())
+                      .addComponent(new HitboxComponent().setLayer(PhysicsLayer.NPC))
+                      .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 1.5f))
+                      .addComponent(aiComponent);
+
+      PhysicsUtils.setScaledCollider(npc, 0.9f, 0.4f);
+      return npc;
   }
 
   private NPCFactory() {
     throw new IllegalStateException("Instantiating static util class");
   }
+    public static void createMultipleNPCs(Entity target) {
+        // Different target positions for each NPC
+        Vector2 targetPosition1 = new Vector2(5, 5);
+        Vector2 targetPosition2 = new Vector2(10, 8);
+        Vector2 targetPosition3 = new Vector2(3, 2);
+
+        // Create different NPCs
+        Entity ghost1 = createGhost(target, targetPosition1);
+        Entity ghost2 = createGhost(target, targetPosition2);
+        Entity ghostKing = createGhostKing(target, targetPosition3);
+
+        // Add these NPCs to your game world or entity manager here
+        // ServiceLocator.getGameWorld().addEntity(ghost1);
+        // ServiceLocator.getGameWorld().addEntity(ghost2);
+        // ServiceLocator.getGameWorld().addEntity(ghostKing);
+    }
 }
