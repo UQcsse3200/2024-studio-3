@@ -14,6 +14,19 @@ import java.util.ArrayList;
 @ExtendWith(GameExtension.class)
 public class CookingComponentTest {
     private CookingComponent cookingComponent;
+
+    @Test
+    void testStationType() {
+        cookingComponent = new CookingComponent("OVEN");
+        cookingComponent.create();
+        assertEquals(cookingComponent.getStationType(), "OVEN");
+    }
+
+    /**
+    @Test
+    void testAddItem() {
+        // TODO how to create an entity with both CookingComponent and StationInventoryComponent?
+    }*/
 /**
     @BeforeEach
     void init() {
