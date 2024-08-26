@@ -33,7 +33,9 @@ class InteractionComponentTest {
   public void shouldBeInteractable() {
     Entity entity = createEntity();
     InteractionComponent component = entity.getComponent(InteractionComponent.class);
-    assertTrue(component.getTargetLayer() == PhysicsLayer.INTERACTABLE);
+    short interactableLayer = PhysicsLayer.INTERACTABLE;
+    assertTrue(component.getLayer() == interactableLayer);
+    assertTrue(PhysicsLayer.contains(interactableLayer, component.getFixture().getFilterData().categoryBits));
   }
 
   @Test

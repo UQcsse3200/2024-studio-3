@@ -6,20 +6,14 @@ package com.csse3200.game.physics.components;
  */
 public class InteractionComponent extends ColliderComponent {
 
-    private short targetLayer;
-
     public InteractionComponent(short targetLayer) {
         super();
-        this.targetLayer = targetLayer;
+        this.setLayer(targetLayer);
     }
 
     @Override
     public void create() {
         setSensor(true);
         super.create();
-    }
-
-    public short getTargetLayer() {
-        return this.targetLayer;
     }
 }
