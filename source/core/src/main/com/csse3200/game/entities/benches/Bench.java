@@ -1,4 +1,4 @@
-package com.csse3200.game.entities.Benches;
+package com.csse3200.game.entities.benches;
 
 import java.util.ArrayList;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
@@ -11,12 +11,6 @@ import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.rendering.TextureRenderComponent;
 
 public class Bench {
-/**
- * Creates visible station.
- * @param height bench height in world units
- * @param type Type of bench
- * @return Station entity of given width and height with relavent behaviors
- */
     /**
      * Creates visible bench.
      *

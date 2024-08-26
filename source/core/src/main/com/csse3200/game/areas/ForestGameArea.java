@@ -1,7 +1,6 @@
 package com.csse3200.game.areas;
 
-import com.csse3200.game.entities.Benches.Bench;
-import net.dermetfan.gdx.scenes.scene2d.ui.Popup.PositionBehavior.Position;
+import com.csse3200.game.entities.benches.Bench;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -261,13 +260,19 @@ public class ForestGameArea extends GameArea {
 
   // Spawn benches
   private void spawnBenches() {
-    /**
-    //Display Bench
-    GridPoint2 benchPos0 = new GridPoint2(2,1);
-    Entity station0 = Bench.createBench("glassdisplay", 3.3f);
-    spawnEntityAt(station0, benchPos0, true, false);
-    Vector2 pos0 = station0.getPosition();
-    **/
+    /*
+    //Lower Display Bench
+    GridPoint2 displaybench1 = new GridPoint2(1,1);
+    Entity db1 = Bench.createBench("glassdisplay", 3.3f);
+    spawnEntityAt(station0, displaybench1, true, false);
+    Vector2 dbpos1 = station0.getPosition();
+
+    //Upper Display Bench
+    GridPoint2 displaybench1 = new GridPoint2(1,1);
+    Entity db1 = Bench.createBench("glassdisplay", 3.3f);
+    spawnEntityAt(station0, displaybench1, true, false);
+    Vector2 dbpos2 = station0.getPosition();
+    */
 
     // Ordering bench
     GridPoint2 benchPos1 = new GridPoint2(2,2);
