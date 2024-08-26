@@ -97,12 +97,12 @@ public class StationItemHandlerComponent extends Component {
         // Hi, from Team 2, as mentioned in the studio
         // We made the trigger for start cooking/chopping depending on the station
         // Note: We didn't request a member variable for stationState since not all
-        //      stations would have a state of "Hot". It doesn't make sense in the context
+        //      stations would have a state of "HOT". It doesn't make sense in the context
         //      of a cutting board.
-        String stationState = "Hot";
+        String stationState = "HOT";
         switch (type) {
             case "COOK_TOP" -> {
-                entity.getEvents().trigger("cookIngredient", "Normal", 1);
+                entity.getEvents().trigger("cookIngredient", "NORMAL", 1);
             }
             case "OVEN" -> {
                 entity.getEvents().trigger("cookIngredient", stationState, 5);

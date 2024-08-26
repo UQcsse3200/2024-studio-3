@@ -5,7 +5,7 @@ import com.csse3200.game.services.GameTime;
 import com.csse3200.game.services.ServiceLocator;
 
 public class ChopIngredientComponent extends Component {
-    private String ingredient;
+    private IngredientComponent ingredient;
     private final GameTime timesource;
     private boolean isChopping;
     private long chopEndTime;
@@ -15,9 +15,9 @@ public class ChopIngredientComponent extends Component {
     }
     @Override
     public void create() {
-//        ingredient = entity.getComponent(IngredientComponent.class);
+        ingredient = entity.getComponent(IngredientComponent.class);
         entity.getEvents().addListener("chopIngredient", this::chopIngredient);
-        entity.getEvents().addListener("stopChoppingIngredient", this::stopChopping);
+        entity.getEvents().addListener("stopChoppingIngredient", this::stopChoppingIngredient);
     }
 
     /**
@@ -28,8 +28,8 @@ public class ChopIngredientComponent extends Component {
         if (isChopping) {
             long current_time = timesource.getTime();
             if (current_time >= chopEndTime) {
-//                ingredient.chopIngredient();
-                stopChopping();
+                ingredient.chopItem();
+                stopChoppingIngredient();
             }
         }
     }
@@ -40,14 +40,15 @@ public class ChopIngredientComponent extends Component {
      */
     void chopIngredient() {
         isChopping = true;
-//      chopEndTime = timesource.getTime() + ingredient.getChopTime() * 1000L
-
+        // The following needs to be updated with ingredient.getChopTime()
+        // We're waiting for Items team to add it in
+        chopEndTime = timesource.getTime() + ingredient.getCookTime() * 1000L;
     }
 
     /**
      * This ends the chopping process
      */
-    void stopChopping() {
+    void stopChoppingIngredient() {
         isChopping = false;
     }
 
