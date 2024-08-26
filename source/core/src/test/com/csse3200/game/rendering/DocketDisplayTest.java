@@ -10,24 +10,26 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
-import static com.csse3200.game.services.ServiceLocator.resourceService;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
 public class DocketDisplayTest {
 
     private DocketDisplay docketDisplay;
+    private ResourceService mockResourceService;
 
     @BeforeEach
     public void setUp() {
+        // Create a mock ResourceService
+        mockResourceService = Mockito.mock(ResourceService.class);
 
+        // Configure ServiceLocator to return the mock ResourceService
+        Mockito.mockStatic(ServiceLocator.class);
+        when(ServiceLocator.getResourceService()).thenReturn(mockResourceService);
 
-        // Mock Texture
-        Texture mockTexture = Mockito.mock(Texture.class);
-        ResourceService resourceService =null;
-        when(resourceService.getAsset("images/ordersystem/docket_background.png", Texture.class))
-                .thenReturn(mockTexture);
+        // Set up the mock for the asset retrieval
+        when(mockResourceService.getAsset("images/ordersystem/docket_background.png", Texture.class))
+                .thenReturn(new Texture("path/to/your/dummy/image.png"));
 
         // Initialize DocketDisplay
         docketDisplay = new DocketDisplay();
@@ -39,9 +41,10 @@ public class DocketDisplayTest {
         Table table = docketDisplay.getTable(); // Assuming you have a getter for the table
         assertNotNull(table, "Table should be initialized");
 
-
+        // Check if an Image is added to the table
         Image docketImage = (Image) table.getChildren().get(0);
         assertNotNull(docketImage, "Docket image should be added to the table");
+        assertNotNull(docketImage.getDrawable(), "Docket image should have a drawable");
     }
 
     @Test
@@ -50,12 +53,10 @@ public class DocketDisplayTest {
         Table table = docketDisplay.getTable(); // Assuming you have a getter for the table
         assertFalse(table.getChildren().isEmpty(), "Table should have children before dispose");
 
+        // Call dispose
         docketDisplay.dispose();
 
+        // Check if the table is cleared
         assertTrue(table.getChildren().isEmpty(), "Table should be cleared after dispose");
-    }
-
-    private void assertFalse(boolean empty, String s) {
-
     }
 }

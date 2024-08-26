@@ -23,7 +23,7 @@ public class ServiceLocator {
   private static PhysicsService physicsService;
   private static GameTime timeSource;
   private static InputService inputService;
-  private static ResourceService resourceService;
+  public static ResourceService resourceService;
   //Me new stuff :)
   private static DocketService docketService;
 
