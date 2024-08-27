@@ -20,6 +20,10 @@ import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.utils.math.GridPoint2Utils;
 import com.csse3200.game.utils.math.RandomUtils;
 
+import java.sql.Array;
+import java.util.ArrayList;
+import java.util.List;
+
 /** Forest area for the demo game with trees, a player, and some enemies. */
 public class ForestGameArea extends GameArea {
   private static final Logger logger = LoggerFactory.getLogger(ForestGameArea.class);
@@ -68,6 +72,8 @@ public class ForestGameArea extends GameArea {
     "images/stations/benches/bench4.png",
     "images/stations/benches/bench6.png",
     "images/stations/benches/bench1.png",
+    "images/stations/benches/bench6-bottom.png",
+    "images/stations/benches/bench6-top.png"
   };
   private static final String[] forestTextureAtlases = {
     "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/ghostKing.atlas"
@@ -247,51 +253,39 @@ public class ForestGameArea extends GameArea {
     spawnEntityAt(stove, stovePos, true, false);
   }
 
+    /**
+     * spawn a bench
+     * @param type: bench filename
+     * @param x: x coordinate
+     * @param y: y coordinate
+     *         note: coordinates begin at bottom left of screen
+     */
+  private void spawnBench(String type, int x, int y) {
+      GridPoint2 coords = new GridPoint2(x,y);
+      Entity bench = Bench.createBench(type);
+      spawnEntityAt(bench, coords, true, true);
+      Vector2 pos = bench.getPosition();
+
+      // this is very scuffed but it aligns.
+      bench.setPosition((pos.x / (24 * (terrain.getTileSize()))) + 0.02f, pos.y / (24 * (terrain.getTileSize())));
+  }
   /**
    * Render and spawn all benches.
    */
   private void spawnBenches() {
-    // Top bench
-    GridPoint2 topBench = new GridPoint2(5,5);
-    Entity station5 = StationFactory.createStation("bench7", 1.0f);
-    spawnEntityAt(station5, topBench, true, false);
-    Vector2 pos5 = station5.getPosition();
-    station5.setPosition(pos5.x - (terrain.getTileSize() / 2), pos5.y);
+      List<Bench> benches = new ArrayList<Bench>();
+      benches.add(new Bench("bench3-5", 98, 224));
+      benches.add(new Bench("bench7", 98, 25));
+      benches.add(new Bench("bench2", 96, 65));
+      benches.add(new Bench("bench6-bottom", 343,27));
+      benches.add(new Bench("bench6-top", 343,131));
+      benches.add(new Bench("bench4", 217, 160));
+      benches.add(new Bench("bench1", 217, 26));
 
-    // Bottom bench
-    GridPoint2 bottomBench = new GridPoint2(5,1);
-    Entity station4 = StationFactory.createStation("bench7", 1f);
-    spawnEntityAt(station4, bottomBench, true, false);
-    Vector2 pos4 = station4.getPosition();
-    station4.setPosition(pos4.x - (terrain.getTileSize() / 2), pos4.y - (terrain.getTileSize() / 2));
-
-    // Left bench
-    GridPoint2 leftBench = new GridPoint2(2,2);
-    Entity station1 = StationFactory.createStation("bench2", 4.5f);
-    spawnEntityAt(station1, leftBench, true, false);
-    Vector2 pos1 = station1.getPosition();
-    station1.setPosition(pos1.x, pos1.y);
-
-    // Right bench
-    GridPoint2 rightBench = new GridPoint2(7,0);
-    Entity station6 = StationFactory.createStation("bench6", 9.9f);
-    spawnEntityAt(station6, rightBench, true, false);
-    Vector2 pos6 = station6.getPosition();
-    station6.setPosition(pos6.x + (terrain.getTileSize() /10), pos6.y + (terrain.getTileSize() / 2));
-
-    // Center top bench
-    GridPoint2 centerTopBench = new GridPoint2(5,3);
-    Entity station2 = StationFactory.createStation("bench1", 3.5f);
-    spawnEntityAt(station2, centerTopBench, true, false);
-    Vector2 pos2 = station2.getPosition();
-    station2.setPosition(pos2.x - (terrain.getTileSize() / 2), pos2.y + (terrain.getTileSize() / 4));
-
-    // Center bottom bench
-    GridPoint2 centerBottomBench = new GridPoint2(5,1);
-    Entity station3 = StationFactory.createStation("bench1", 3.5f);
-    spawnEntityAt(station3, centerBottomBench, true, false);
-    Vector2 pos3 = station3.getPosition();
-    station3.setPosition(pos3.x - (terrain.getTileSize() / 2), pos3.y);
+      for (int i = 0; i < benches.size(); i++) {
+          Bench bench = benches.get(i);
+          spawnBench(bench.type, bench.x, bench.y);
+      }
   }
 
   private Entity spawnPlayer() {
