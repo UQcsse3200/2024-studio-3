@@ -23,7 +23,6 @@ public class ServiceLocator {
   private static PhysicsService physicsService;
   private static GameTime timeSource;
   private static InputService inputService;
-  private static ResourceService resourceService;
   private static DocketService docketService;
 
 
@@ -33,10 +32,6 @@ public class ServiceLocator {
 
   public static RenderService getRenderService() {
     return renderService;
-  }
-
-  public static DocketService getDocketService() {
-    return docketService;
   }
 
   public static PhysicsService getPhysicsService() {

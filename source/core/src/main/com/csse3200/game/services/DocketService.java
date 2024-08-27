@@ -12,7 +12,6 @@ public class DocketService {
     public EventHandler getEvents() {
         return docketEventHandler;
     }
-<<<<<<< HEAD
 }
 =======
 }
