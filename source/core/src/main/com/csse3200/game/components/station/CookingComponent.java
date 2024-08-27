@@ -11,7 +11,6 @@ import java.util.*;
  */
 public class CookingComponent extends Component {
     private StationInventoryComponent inventoryComponent;
-    private DishFactory dishFactory;
     private GameTime gameTime;
     private long cookingTime;
     private boolean isCooking;
@@ -35,6 +34,7 @@ public class CookingComponent extends Component {
         // Add to cooking timer and cook item
         if (isCooking) {
             if (cookingTime < 0) { // Recipe is fully cooked
+                // TODO remove current items
                 inventoryComponent.setCurrentItem(targetRecipe);
             }
             cookingTime -= gameTime.getDeltaTime();
@@ -52,7 +52,9 @@ public class CookingComponent extends Component {
         }
 
         List<String> possibleRecipes = DishFactory.getRecipe(templist);
-        if (possibleRecipes.size() == 1) {
+        if (possibleRecipes.size() == 1 && !isCooking) {
+            // TODO check that it completely matching the recipe
+            // TODO make sure you arent already cooking
             targetRecipe = possibleRecipes.get(0);
             cookingTime = 10000; // TODO edit placeholder, get cooking time from recipes?
             isCooking = true;
@@ -78,5 +80,10 @@ public class CookingComponent extends Component {
     /** @return time remaining to make the recipe in seconds, scaled by time scale. */
     public long getCookingTime() {
         return cookingTime;
+    }
+
+    /** @return the name of the target recipe */
+    public String getTargetRecipe() {
+        return targetRecipe;
     }
 }
