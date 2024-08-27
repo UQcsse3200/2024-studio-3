@@ -28,6 +28,14 @@ public class ForestGameArea extends GameArea {
   private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(10, 10);
   private static final float WALL_WIDTH = 0.1f;
   private static final String[] forestTextures = {
+          "images/acai_bowl.png",
+          "images/banana_split.png",
+          "images/salad.png",
+          "images/steak_meal.png",
+          "images/chopped_acai.png",
+          "images/raw_acai.png",
+          "images/chopped_chocolate.png",
+          "images/raw_chocolate.png",
           "images/raw_cucumber.png",
           "images/raw_tomato.png",
           "images/raw_strawberry.png",
@@ -96,7 +104,7 @@ public class ForestGameArea extends GameArea {
 
     spawnGhosts();
     spawnGhostKing();
-    spawnBeef("raw");
+    spawnBananaSplit();
     spawnStations();
 
     playMusic();
@@ -201,11 +209,111 @@ public class ForestGameArea extends GameArea {
     return newBanana;
   }
 
+  /**
+   * Spawn a tomato item.
+   * @param choppedLevel - The level the tomato is chopped at, can be "raw" or "chopped".
+   * @return A tomato entity.
+   */
+  private Entity spawnTomato(String choppedLevel) {
+    Entity newTomato = ItemFactory.createTomato(choppedLevel);
+    spawnEntityAt(newTomato, new GridPoint2(8, 8), true, true);
+    newTomato.setScale(0.5f,0.5f);
+    return newTomato;
+  }
+
+  /**
+   * Spawn a cucumber item.
+   * @param choppedLevel - The level the cucumber is chopped at, can be "raw" or "chopped".
+   * @return A cucumber entity.
+   */
+  private Entity spawnCucumber(String choppedLevel) {
+    Entity newCucumber = ItemFactory.createCucumber(choppedLevel);
+    spawnEntityAt(newCucumber, new GridPoint2(9, 9), true, true);
+    newCucumber.setScale(0.5f,0.5f);
+    return newCucumber;
+  }
+
+  /**
+   * Spawn a strawberry item.
+   * @param choppedLevel - The level the strawberry is chopped at, can be "raw" or "chopped".
+   * @return A strawberry entity.
+   */
+  private Entity spawnStrawberry(String choppedLevel) {
+    Entity newStrawberry = ItemFactory.createStrawberry(choppedLevel);
+    spawnEntityAt(newStrawberry, new GridPoint2(5, 5), true, true);
+    newStrawberry.setScale(0.5f,0.5f);
+    return newStrawberry;
+  }
+
+  /**
+   * Spawn a lettuce item.
+   * @param choppedLevel - The level the lettuce is chopped at, can be "raw" or "chopped".
+   * @return A lettuce entity.
+   */
+  private Entity spawnLettuce(String choppedLevel) {
+    Entity newLettuce = ItemFactory.createLettuce(choppedLevel);
+    spawnEntityAt(newLettuce, new GridPoint2(4, 4), true, true);
+    newLettuce.setScale(0.5f,0.5f);
+    return newLettuce;
+  }
+
+  /**
+   * Spawn a chocolate item.
+   * @param choppedLevel - The level the chocolate is chopped at, can be "raw" or "chopped".
+   * @return A chocolate entity.
+   */
+  private Entity spawnChocolate(String choppedLevel) {
+    Entity newChocolate = ItemFactory.createChocolate(choppedLevel);
+    spawnEntityAt(newChocolate, new GridPoint2(4, 8), true, true);
+    newChocolate.setScale(0.5f,0.5f);
+    return newChocolate;
+  }
+
+  /**
+   * Spawn an Açaí item.
+   * @param choppedLevel - The level the Açaí is chopped at, can be "raw" or "chopped".
+   * @return A chocolate entity.
+   */
+  private Entity spawnAcai(String choppedLevel) {
+    Entity newAcai = ItemFactory.createAcai(choppedLevel);
+    spawnEntityAt(newAcai, new GridPoint2(4, 8), true, true);
+    newAcai.setScale(0.65f,0.65f);
+    return newAcai;
+  }
+
   private Entity spawnFruitSalad() {
     Entity newFruitSalad = ItemFactory.createFruitSalad();
     spawnEntityAt(newFruitSalad, new GridPoint2(16, 16), true, true);
     newFruitSalad.setScale(0.5f,0.5f);
     return newFruitSalad;
+  }
+
+  private Entity spawnAcaiBowl() {
+    Entity newAcaiBowl = ItemFactory.createAcaiBowl();
+    spawnEntityAt(newAcaiBowl, new GridPoint2(16, 10), true, true);
+    newAcaiBowl.setScale(0.65f,0.65f);
+    return newAcaiBowl;
+  }
+
+  private Entity spawnSalad() {
+    Entity newSalad = ItemFactory.createSalad();
+    spawnEntityAt(newSalad, new GridPoint2(13, 10), true, true);
+    newSalad.setScale(0.5f,0.5f);
+    return newSalad;
+  }
+
+  private Entity spawnSteakMeal() {
+    Entity newSteakMeal = ItemFactory.createSteakMeal();
+    spawnEntityAt(newSteakMeal, new GridPoint2(10, 9), true, true);
+    newSteakMeal.setScale(0.5f,0.5f);
+    return newSteakMeal;
+  }
+
+  private Entity spawnBananaSplit() {
+    Entity newBananaSplit = ItemFactory.createBananaSplit();
+    spawnEntityAt(newBananaSplit, new GridPoint2(14, 12), true, true);
+    newBananaSplit.setScale(0.5f,0.5f);
+    return newBananaSplit;
   }
 
   private void spawnGhosts() {
