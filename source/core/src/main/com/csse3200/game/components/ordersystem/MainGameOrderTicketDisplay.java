@@ -34,6 +34,7 @@ public class MainGameOrderTicketDisplay extends UIComponent {
     private static ArrayList<Long> startTimeArrayList;
     private static ArrayList<Docket> backgroundArrayList;
     private static ArrayList<Label> countdownLabelArrayList;
+    private static int orderNumb = 0;
 
     @Override
     public void create() {
@@ -59,6 +60,8 @@ public class MainGameOrderTicketDisplay extends UIComponent {
 
         Docket background = new Docket();
         backgroundArrayList.add(background);
+        String orderNumStr = "Order " + ++orderNumb;
+        Label orderNumbLabel = new Label(orderNumStr, skin);
         Label recipeNameLabel = new Label("Recipe name", skin);
         Label ingredient1Label = new Label("Ingredient 1", skin);
         Label ingredient2Label = new Label("Ingredient 2", skin);
@@ -67,6 +70,7 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         countdownLabelArrayList.add(countdownLabel);
 
         table.setBackground(background.getImage().getDrawable());
+        table.add(orderNumbLabel).padLeft(10f).row();
         table.add(recipeNameLabel).padLeft(10f).row();
         table.add(ingredient1Label).padLeft(10f).row();
         table.add(ingredient2Label).padLeft(10f).row();
