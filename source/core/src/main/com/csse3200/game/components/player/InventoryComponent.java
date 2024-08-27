@@ -4,7 +4,7 @@ import com.badlogic.gdx.utils.Null;
 import com.csse3200.game.components.Component;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
+import com.csse3200.game.components.items.ItemComponent;
 import java.util.ArrayList;
 import java.lang.IllegalArgumentException;
 
@@ -17,21 +17,38 @@ import java.lang.IllegalArgumentException;
 public class InventoryComponent extends Component {
   private static final Logger logger = LoggerFactory.getLogger(InventoryComponent.class);
   private ArrayList<String> items; // String as a placeholder for future ItemComponent class
-  private int size; // maximum number of items that can be stored
+  private int capacity; // maximum number of items that can be stored
+  private int size;     // current number of items in the Inventory 
   private int selected; // index of currently selected item
   private final String indexException = "Invalid index parameter. Must be non-negative and within the current size of the inventory.";
-  private final String sizeException = "Invalid size parameter. Must be an integer > 0";
+  private final String sizeException = "Invalid size parameter. Must be an integer > 0.";
+  private final String itemException = "Index in Inventory already occupied by an Item.";
+  private final String nullException = "Index in Inventory does not contain an Item.";
 
-  public InventoryComponent(int size) {
-      setSize(size);
-      items = new ArrayList<String>();
+  public InventoryComponent(int capacity) {
+    setCapacity(capacity);
+    items = new ArrayList<>(capacity);
+    for (int i = 0; i < capacity; i++) {        
+      items.add(null);
+    }
+    size = 0;
   }
+
 
   /**
    * Returns the capacity of this inventory component. I.e. the
    * maximum number of items it can hold.
 
    * @return - the set size of the inventory.
+   */
+  public int getCapacity() {
+    return this.capacity;
+  }
+
+  /**
+   * Returns the current number of items in the inventory component. 
+
+   * @return - the number of items in the inventoru.
    */
   public int getSize() {
     return this.size;
@@ -43,11 +60,11 @@ public class InventoryComponent extends Component {
    * @param newSize - the size to set this item component's capacity to. Must be a positive, non-zero integer.
    * @throws java.lang.IllegalArgumentException - if newSize is < 1.
    */
-  public void setSize(int newSize) {
-      if (newSize < 1) {
+  public void setCapacity(int newCapacity) {
+      if (newCapacity < 1) {
         throw new IllegalArgumentException(sizeException);
       }
-      this.size = newSize;
+      this.capacity = newCapacity;
   }
 
   /**
@@ -56,7 +73,7 @@ public class InventoryComponent extends Component {
    * @throws java.lang.IllegalArgumentException - if index is not within 0 <= index < this.getSize()
    */
   public void setSelected(int index) {
-    if (index < 0 || index >= this.getSize()) {
+    if (index < 0 || index >= this.getCapacity()) {
       throw new IllegalArgumentException(indexException);
     }
     this.selected = index;
@@ -95,7 +112,7 @@ public class InventoryComponent extends Component {
      * @return - true if the ArrayList is full, false otherwise.
      */
   public boolean isFull() {
-      return items.size() == this.size;
+      return size == this.capacity;
   }
 
     /**
@@ -104,7 +121,7 @@ public class InventoryComponent extends Component {
      * @return - true if the ArrayList is empty, true otherwise.
      */
   public boolean isEmpty() {
-    return items.isEmpty();
+    return size > 0;
   }
 
     /**
@@ -115,12 +132,9 @@ public class InventoryComponent extends Component {
      * @throws java.lang.IllegalArgumentException - if the given index is negative or out of bounds.
      */
   public String getItemAt(int index) {
-    if (index < 0 || index > size) {
+    if (index < 0 || index > capacity) {
       // index out of bounds
       throw new IllegalArgumentException(indexException);
-    } else if (index > items.size()) {
-      // index in bounds but nothing is stored there
-      return null;
     } else {
       // item at index
       return items.get(index);
@@ -133,11 +147,10 @@ public class InventoryComponent extends Component {
      * @return - the item at the first index of the Inventory if it exists, null otherwise.
      */
   public String getItemFirst() {
-    if (!items.isEmpty()) {
+    if (capacity > 0) {
       return items.getFirst();
-    } else {
-      return null;
-    }
+    } 
+    return null;
   }
 
     /**
@@ -146,22 +159,24 @@ public class InventoryComponent extends Component {
      * @return - the item at the last index of the Inventory if it exists, null otherwise.
      */
   public String getItemLast() {
-    if (!items.isEmpty()) {
+    if (capacity > 0) {
       return items.getLast();
-    } else {
-      return null;
     }
+    return null;
   }
 
     /**
      * Increases the capacity of the Inventory if the given newSize is larger 
      * than the current size.
      * 
-     * @param newSize the new capacity of the Inventory.
+     * @param newCapacity the new capacity of the Inventory.
      */
-  public void increaseSize(int newSize) {
-    if (newSize > size) {
-      setSize(newSize);
+  public void increaseSize(int newCapacity) {
+    if (newCapacity > capacity) {
+      for (int i = capacity; i < newCapacity; i++) {
+        items.add(null);
+      }
+      setCapacity(newCapacity);
     }
   }
 
@@ -176,13 +191,17 @@ public class InventoryComponent extends Component {
   }
 
     /**
-     * Adds the item to the end of the Inventory, if there is capacity.
+     * Adds the item to the first empty index of the inventory.
      * 
      * @param item - the item to be added to the Inventory.
      */
-  public void appendItem(String item) {
+  public void addItem(String item) {
     if (!this.isFull()) {
-      items.add(item);
+      int i = 0;
+      while (items.get(i) != null) {
+        i++;
+      }
+      items.set(i, item);
       size++;
     } 
   }
@@ -191,13 +210,14 @@ public class InventoryComponent extends Component {
      * Adds the item to the start of the Inventory, if there is capacity.
      * 
      * @param item - the item to be added to the Inventory.
-     */
+     
   public void prependItem(String item) {
     if (!this.isFull()) {
       items.addFirst(item);
       size++;
     }
   }
+    */
 
     /**
      * Adds the item to the Inventory at the given index, if there is capacity.
@@ -207,14 +227,16 @@ public class InventoryComponent extends Component {
      * @throws java.lang.IllegalArgumentException - if the given index is negative or out of bounds.
      */
   public void addItemAt(String item, int index) {
-    if (index > this.getSize() || index < 0) {
+    if (index > capacity || index < 0) {
       // index out of bounds
       throw new IllegalArgumentException(indexException);
-    } 
+    } else if (items.get(index) != null) {
+      throw new IllegalArgumentException(itemException);
+    }
 
     if (!this.isFull()) {
-      items.add(index, item);
-      this.size++;
+      items.set(index, item);
+      size++;
     } 
   }
 
@@ -225,20 +247,21 @@ public class InventoryComponent extends Component {
      * @throws java.lang.IllegalArgumentException - if the given index is negative or out of bounds.
      */
   public String removeAt(int index) {
-    if (index < 0 || index > size) {
+    if (index < 0 || index > capacity) {
       // index out of bounds
       throw new IllegalArgumentException(indexException);
-    } else if (index > items.size()) {
-      // nothing in bounds but nothing is stored there
-      return null;
-    } else {
+    } else if (items.get(index) == null) {
+        throw new IllegalArgumentException(nullException);
+    } 
+  
+    if (!this.isEmpty()) {
       // bingo, we can remove from this index
       String item = items.get(index);
-      items.remove(index);
+      items.set(index, null);
       size--;
 
-      return item;
-    } 
+      return item; 
+    }
+    return null;
   }
-
 }
