@@ -11,6 +11,7 @@ import com.csse3200.game.ui.UIComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.csse3200.game.components.player.InventoryComponent;
+import com.csse3200.game.components.items.ItemComponent;
 
 public class InventoryDisplay extends UIComponent {
     private Table table;
@@ -29,7 +30,7 @@ public class InventoryDisplay extends UIComponent {
         table.padTop(30f).padLeft(10f);
 
         // Add an image
-        String item = entity.getComponent(InventoryComponent.class).getItemFirst();
+        ItemComponent item = entity.getComponent(InventoryComponent.class).getItemFirst();
         CharSequence itemText = String.format("Current Item: %s", item);
         label = new Label(itemText, skin);
         label.setFontScale(2f);

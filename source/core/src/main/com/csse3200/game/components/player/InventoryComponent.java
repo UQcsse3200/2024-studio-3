@@ -91,7 +91,7 @@ public class InventoryComponent extends Component {
    * Returns the currently selected item of the inventory
    * @return the item that is currently selected
    */
-  public String getSelectedItem() {
+  public ItemComponent getSelectedItem() {
     return this.getItemAt(this.getSelectedIndex());
   }
 
