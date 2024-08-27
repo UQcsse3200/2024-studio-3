@@ -42,7 +42,7 @@ public class DocketDisplayTest {
         ResourceService mockResourceService = mock(ResourceService.class);
         when(mockResourceService.getAsset(eq("images/ordersystem/docket_background.png"), eq(Texture.class)))
                 .thenReturn(new Texture("dummy.png"));
-        
+
 
         // Initialize DocketDisplay
         docketDisplay = new DocketDisplay();
