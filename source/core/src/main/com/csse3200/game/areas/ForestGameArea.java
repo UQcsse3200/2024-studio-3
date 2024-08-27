@@ -197,54 +197,6 @@ public class ForestGameArea extends GameArea {
     return newBanana;
   }
 
-  /**
-   * Spawn a cucumber item.
-   * @param choppedLevel - The level the cucumber is chopped at, can be "raw" or "chopped".
-   * @return A cucumber entity.
-   */
-  private Entity spawnCucumber(String choppedLevel) {
-    Entity newCucumber = ItemFactory.createCucumber(choppedLevel);
-    spawnEntityAt(newCucumber, new GridPoint2(18, 18), true, true);
-    newCucumber.setScale(0.5f,0.5f);
-    return newCucumber;
-  }
-
-  /**
-   * Spawn a cucumber item.
-   * @param choppedLevel - The level the cucumber is chopped at, can be "raw" or "chopped".
-   * @return A cucumber entity.
-   */
-  private Entity spawnTomato(String choppedLevel) {
-    Entity newTomato = ItemFactory.createTomato(choppedLevel);
-    spawnEntityAt(newTomato, new GridPoint2(18, 18), true, true);
-    newTomato.setScale(0.5f,0.5f);
-    return newTomato;
-  }
-
-  /**
-   * Spawn a strawberry item.
-   * @param choppedLevel - The level the strawberry is chopped at, can be "raw" or "chopped".
-   * @return A strawberry entity.
-   */
-  private Entity spawnStrawberry(String choppedLevel) {
-    Entity newStrawberry = ItemFactory.createStrawberry(choppedLevel);
-    spawnEntityAt(newStrawberry, new GridPoint2(18, 18), true, true);
-    newStrawberry.setScale(0.5f,0.5f);
-    return newStrawberry;
-  }
-
-  /**
-   * Spawn a lettuce item.
-   * @param choppedLevel - The level the lettuce is chopped at, can be "raw" or "chopped".
-   * @return A lettuce entity.
-   */
-  private Entity spawnLettuce(String choppedLevel) {
-    Entity newLettuce = ItemFactory.createLettuce(choppedLevel);
-    spawnEntityAt(newLettuce, new GridPoint2(18, 18), true, true);
-    newLettuce.setScale(0.5f,0.5f);
-    return newLettuce;
-  }
-
   private Entity spawnFruitSalad() {
     Entity newFruitSalad = ItemFactory.createFruitSalad();
     spawnEntityAt(newFruitSalad, new GridPoint2(16, 16), true, true);

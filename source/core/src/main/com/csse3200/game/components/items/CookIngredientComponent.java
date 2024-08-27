@@ -59,7 +59,7 @@ public class CookIngredientComponent extends Component {
     /**
      * This ends the cooking process
      */
-    void stopCooking() {
+    public void stopCooking() {
         isCooking = false;
     }
 }
