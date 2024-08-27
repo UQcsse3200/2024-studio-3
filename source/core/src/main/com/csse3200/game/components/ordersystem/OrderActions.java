@@ -15,11 +15,13 @@ public class OrderActions extends InputComponent {
     private GdxGame game;
 
     public OrderActions(GdxGame game) {
+        super(5);
         this.game = game;
     }
 
     @Override
     public void create() {
+        ServiceLocator.getInputService().register(this);
         entity.getEvents().addListener("addOrder", this::onAddOrder);
 
         ServiceLocator.getDocketService().getEvents().addListener("removeOrder", this::onRemoveOrder);
@@ -41,6 +43,7 @@ public class OrderActions extends InputComponent {
             orderTicketDisplay.shiftDocketsRight();
             return true;
         }*/
+        logger.info("he he");
         return false;
     }
 
