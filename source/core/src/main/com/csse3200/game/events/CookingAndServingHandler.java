@@ -2,14 +2,13 @@ package com.csse3200.game.events;
 
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.items.IngredientComponent;
-import com.csse3200.game.components.items.ItemComponent;
-import com.csse3200.game.components.items.ItemType;
 import com.csse3200.game.rendering.TextureRenderComponent;
 import com.csse3200.game.services.GameTime;
 
 public class CookingAndServingHandler extends Component {
 
     private IngredientComponent ingredient;
+    private TextureRenderComponent textureRender;
     private final GameTime timeSource;
     private boolean isCooking;
     private long cookStartTime;
@@ -21,10 +20,31 @@ public class CookingAndServingHandler extends Component {
     public void create() {
 
         ingredient = entity.getComponent(IngredientComponent.class);
-        TextureRenderComponent textureRender = entity.getComponent(TextureRenderComponent.class);
+        textureRender = entity.getComponent(TextureRenderComponent.class);
+
+        if (ingredient == null || textureRender == null) {
+            System.out.println("IngredientComponent or TextureRenderComponent is missing on the entity.");
+            return;
+        }
+        updateTexture();
     }
 
-    private void updateImage() {
+    public void startCooking() {
+
+        if (ingredient != null && ingredient.getItemState().equals("raw")) {
+            isCooking = true;
+            cookStartTime = timeSource.getTime();
+        } else {
+            System.out.println("Item is already cooked or burnt.");
+        }
+    }
+
+    public void stopCooking() {
+        isCooking = false;
+        System.out.println("Finished cooking " + ingredient.getItemName());
+    }
+
+    private void updateTexture() {
 
         String texturePath;
 
@@ -39,8 +59,8 @@ public class CookingAndServingHandler extends Component {
                 texturePath = String.format("images/raw_%s.png", ingredient.getItemName().toLowerCase());
                 break;
         }
-    }
 
+    }
     private void deleteMeal() {
         /**
          * Disposes of meals once served to customers.
@@ -62,7 +82,8 @@ public class CookingAndServingHandler extends Component {
                 if (!ingredient.getItemState().equals("burnt")) {
                     ingredient.burnItem();
                     System.out.println(ingredient.getItemName() + " has burnt!");
-                    updateImage();
+                    updateTexture();
+                    stopCooking();
                 }
                 /**
                  * Need to implement a method to stop cooking the item/ingredient.
@@ -74,7 +95,7 @@ public class CookingAndServingHandler extends Component {
                  */
                 if (!ingredient.getItemState().equals("cooked")) {
                     ingredient.cookItem();
-                    updateImage();
+                    updateTexture();
 
                 }
             }
