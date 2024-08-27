@@ -10,9 +10,6 @@ public class GameTime {
   private static Logger logger = LoggerFactory.getLogger(GameTime.class);
   private final long startTime;
   private float timeScale = 1f;
-  private boolean paused = false;
-  private float deltaTime = 0;
-  private long lastTime = 0;
 
   public GameTime() {
     startTime = TimeUtils.millis();
@@ -47,23 +44,4 @@ public class GameTime {
   public long getTimeSince(long lastTime) {
     return getTime() - lastTime;
   }
-
-  public void update(float delta) {
-    if (!paused) {
-      deltaTime = delta * timeScale;
-      lastTime += deltaTime;
-    } else {
-      deltaTime = 0;
-    }
-  }
-
-  public void pause() {
-    paused = true;
-  }
-
-  public void resume() {
-    paused = false;
-  }
-
-  public boolean isPaused() { return paused; }
 }
