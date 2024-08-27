@@ -53,7 +53,7 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         table.setFillParent(false);
         table.setSize(viewPortWidthMultiplier * 3f/32f, 5f/27f * viewPortHeightMultiplier); // DEFAULT_HEIGHT
         float xVal = cntXval(tableArrayList.size());
-        float yVal = viewPortHeightMultiplier * viewPortHeightMultiplier;
+        float yVal = viewportHeight * viewPortHeightMultiplier;
         table.setPosition(xVal, yVal);
 
         Docket background = new Docket();
