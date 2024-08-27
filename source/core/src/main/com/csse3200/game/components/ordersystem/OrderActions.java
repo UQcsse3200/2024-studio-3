@@ -32,7 +32,7 @@ public class OrderActions extends InputComponent {
 
     @Override
     public boolean keyDown(int keycode) {
-        /*if (keyode == Keys.LEFT_BRACKET) {
+        /*if (keycode == Keys.LEFT_BRACKET) {
             logger.info("Shift dockets left");
             orderTicketDisplay.shiftDocketsLeft();
             return true;
@@ -40,8 +40,7 @@ public class OrderActions extends InputComponent {
             logger.info("Shift dockets right");
             orderTicketDisplay.shiftDocketsRight();
             return true;
-        }
-        return false;*/
+        }*/
         return false;
     }
 
