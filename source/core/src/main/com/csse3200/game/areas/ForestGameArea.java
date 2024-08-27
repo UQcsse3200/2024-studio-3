@@ -52,6 +52,7 @@ public class ForestGameArea extends GameArea {
     "images/frame/left_border.png",
     "images/frame/bottom_border.png",
     "images/frame/right_border.png",
+    "images/frame/vert_border.png",
     "images/frame/door.png",
     "images/frame/top_door_left_part.png",
     "images/frame/top_door_right_part.png",
@@ -108,7 +109,7 @@ public class ForestGameArea extends GameArea {
     // Spawn the player
     player = spawnPlayer();
 
-    playMusic();
+//    playMusic();
   }
 
   private void displayUI() {
@@ -240,8 +241,8 @@ public class ForestGameArea extends GameArea {
 
     //separation border
     for(int y=0;y<(int)tileBounds.y;y++) {
-      GridPoint2 position = new GridPoint2(2,y);
-      Entity separate = ObstacleFactory.createBorder("left_border",tileSize);
+      GridPoint2 position = new GridPoint2(1,y);
+      Entity separate = ObstacleFactory.createBorder("right_border",tileSize);
       spawnEntityAt(separate,position,true,false);
     }
   }

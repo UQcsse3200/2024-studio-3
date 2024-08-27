@@ -43,7 +43,7 @@ public class ObstacleFactory {
     Entity wall = new Entity()
         .addComponent(new PhysicsComponent().setBodyType(BodyType.StaticBody))
         .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
-    wall.setScale(width, height);
+    //wall.setScale(width, height);
     return wall;
   }
 
@@ -54,8 +54,15 @@ public class ObstacleFactory {
    */
   public static Entity createBorder(String s,float tileSize) {
     Entity border = new Entity()
-            .addComponent(new TextureRenderComponent("images/frame/"+s+".png"));
+            .addComponent(new TextureRenderComponent("images/frame/"+s+".png"))
+            .addComponent(new PhysicsComponent())
+            .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
+
+    border.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
+    border.getComponent(TextureRenderComponent.class).scaleEntity();
     border.scaleWidth(tileSize);
+
+    PhysicsUtils.setScaledCollider(border, 1f, 1f);
     return border;
   }
 

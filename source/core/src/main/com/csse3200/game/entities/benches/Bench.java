@@ -30,7 +30,7 @@ public class Bench {
         bench.getComponent(TextureRenderComponent.class).scaleEntity();
         bench.scaleHeight(height);
 
-        PhysicsUtils.setScaledCollider(bench, 1.2F, 0.8F);
+        PhysicsUtils.setScaledCollider(bench, 1.0F, 0.8F);
 
         return bench;
     }
