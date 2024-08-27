@@ -48,8 +48,6 @@ public class ForestGameArea extends GameArea {
     "images/stations/stove.png",
     "images/stations/bench.png",
     "images/chef_player.png",
-    "images/stations/line.png",
-    "images/stations/bench2.png",
     "images/frame/top_border.png",
     "images/frame/left_border.png",
     "images/frame/bottom_border.png",
@@ -121,7 +119,7 @@ public class ForestGameArea extends GameArea {
 
   private void spawnTerrain() {
     // Background terrain
-    terrain = terrainFactory.createTerrain(TerrainType.FOREST_DEMO);
+    terrain = terrainFactory.createTerrain(TerrainType.KITCHEN_DEMO);
     spawnEntity(new Entity().addComponent(terrain));
 
     // Terrain walls

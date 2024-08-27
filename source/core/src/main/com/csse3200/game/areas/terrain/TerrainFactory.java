@@ -20,8 +20,7 @@ import com.csse3200.game.services.ServiceLocator;
 /** Factory for creating game terrains. */
 public class TerrainFactory {
   private static final GridPoint2 MAP_SIZE = new GridPoint2(8, 6);
-  private static final int TUFT_TILE_COUNT = 30;
-  private static final int ROCK_TILE_COUNT = 13;
+  private static final int CUST_TILE_COUNT = 13;
   private final OrthographicCamera camera;
   private final TerrainOrientation orientation;
 
@@ -55,39 +54,30 @@ public class TerrainFactory {
   public TerrainComponent createTerrain(TerrainType terrainType) {
     ResourceService resourceService = ServiceLocator.getResourceService();
     switch (terrainType) {
-      case FOREST_DEMO:
+      case KITCHEN_DEMO:
         TextureRegion orthoFloor =
             new TextureRegion(resourceService.getAsset("images/tiles/orange_tile.png", Texture.class));
         TextureRegion custTile =
             new TextureRegion(resourceService.getAsset("images/tiles/blue_tile.png", Texture.class));
-        TextureRegion orthoRocks =
-            new TextureRegion(resourceService.getAsset("images/tiles/orange_tile.png", Texture.class));
-        return createForestDemoTerrain(2f, orthoFloor, custTile, orthoRocks);
-      case FOREST_DEMO_ISO:
+        return createKitchenDemoTerrain(2f, orthoFloor, custTile);
+
+        // leaving this code incase we decide to implement isometric instead
+      case KITCHEN_DEMO_ISO:
         TextureRegion isoGrass =
             new TextureRegion(resourceService.getAsset("images/iso_grass_1.png", Texture.class));
         TextureRegion isoTuft =
             new TextureRegion(resourceService.getAsset("images/iso_grass_2.png", Texture.class));
-        TextureRegion isoRocks =
-            new TextureRegion(resourceService.getAsset("images/iso_grass_3.png", Texture.class));
-        return createForestDemoTerrain(1f, isoGrass, isoTuft, isoRocks);
-      case FOREST_DEMO_HEX:
-        TextureRegion hexGrass =
-            new TextureRegion(resourceService.getAsset("images/hex_grass_1.png", Texture.class));
-        TextureRegion hexTuft =
-            new TextureRegion(resourceService.getAsset("images/hex_grass_2.png", Texture.class));
-        TextureRegion hexRocks =
-            new TextureRegion(resourceService.getAsset("images/hex_grass_3.png", Texture.class));
-        return createForestDemoTerrain(1f, hexGrass, hexTuft, hexRocks);
+        return createKitchenDemoTerrain(1f, isoGrass, isoTuft);
       default:
         return null;
     }
   }
 
-  private TerrainComponent createForestDemoTerrain(
-      float tileWorldSize, TextureRegion floor, TextureRegion customer, TextureRegion rocks) {
+  private TerrainComponent createKitchenDemoTerrain(
+      float tileWorldSize, TextureRegion floor, TextureRegion customer_tiles) {
+    // Customer_tiles are the blue tiles where the customers/animals are going to be
     GridPoint2 tilePixelSize = new GridPoint2(floor.getRegionWidth(), floor.getRegionHeight());
-    TiledMap tiledMap = createForestDemoTiles(tilePixelSize, floor, customer, rocks);
+    TiledMap tiledMap = createKitchenDemoTiles(tilePixelSize, floor, customer_tiles);
     TiledMapRenderer renderer = createRenderer(tiledMap, tileWorldSize / tilePixelSize.x);
     return new TerrainComponent(camera, tiledMap, renderer, orientation, tileWorldSize);
   }
@@ -105,28 +95,25 @@ public class TerrainFactory {
     }
   }
 
-  private TiledMap createForestDemoTiles(
-      GridPoint2 tileSize, TextureRegion floor, TextureRegion customer, TextureRegion rocks) {
+  private TiledMap createKitchenDemoTiles(
+      GridPoint2 tileSize, TextureRegion floor, TextureRegion customer_tiles) {
     TiledMap tiledMap = new TiledMap();
     TerrainTile floorTile= new TerrainTile(floor);
-    TerrainTile customerTile = new TerrainTile(customer);
-    TerrainTile rockTile = new TerrainTile(rocks);
+    TerrainTile customerTile = new TerrainTile(customer_tiles);
     TiledMapTileLayer layer = new TiledMapTileLayer(MAP_SIZE.x, MAP_SIZE.y, tileSize.x , tileSize.y);
+    // Size for blue tiles
     GridPoint2 modified_size = new GridPoint2(MAP_SIZE.x/4 , MAP_SIZE.y);
-    TiledMapTileLayer layer2 = new TiledMapTileLayer(modified_size.x, modified_size.y,tileSize.x , tileSize.y);
 
-    // Create base tiles
+    // Create base orange tiles
     fillTiles(layer, MAP_SIZE, floorTile);
-
-    // Create modified map size
-    fillTilesAtRandom(layer, modified_size, customerTile, ROCK_TILE_COUNT);
+    // Create blue tiles with modified map size
+    fillBlueTiles(layer, modified_size, customerTile, CUST_TILE_COUNT);
     tiledMap.getLayers().add(layer);
     return tiledMap;
   }
 
-  private static void fillTilesAtRandom(
+  private static void fillBlueTiles(
       TiledMapTileLayer layer, GridPoint2 map, TerrainTile tile, int amount) {
-
     for (int x = 0; x < map.x; x++) {
       for (int y = 0; y < map.y; y++) {
         Cell cell = new Cell();
@@ -137,7 +124,6 @@ public class TerrainFactory {
   }
 
   private static void fillTiles(TiledMapTileLayer layer, GridPoint2 mapSize, TerrainTile tile) {
-    // fill the map so that no tiles are cropped, they should all be completely visible
     for (int x = 0; x < mapSize.x; x++) {
       for (int y = 0; y < mapSize.y; y++) {
         Cell cell = new Cell();
@@ -148,13 +134,12 @@ public class TerrainFactory {
   }
 
   /**
-   * This enum should contain the different terrains in your game, e.g. forest, cave, home, all with
+   * This enum should contain the different terrains in your game, e.g. Kitchen, cave, home, all with
    * the same oerientation. But for demonstration purposes, the base code has the same level in 3
    * different orientations.
    */
   public enum TerrainType {
-    FOREST_DEMO,
-    FOREST_DEMO_ISO,
-    FOREST_DEMO_HEX
+    KITCHEN_DEMO,
+    KITCHEN_DEMO_ISO,
   }
 }
