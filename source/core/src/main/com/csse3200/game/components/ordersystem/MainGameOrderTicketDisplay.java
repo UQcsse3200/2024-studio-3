@@ -24,6 +24,10 @@ public class MainGameOrderTicketDisplay extends UIComponent {
     private static final long DEFAULT_TIMER = 5000;
     private static final float viewPortHeightMultiplier = 7f/9f;
     private static final float viewPortWidthMultiplier = 3f/32f;
+    private static final float viewportHeight =
+            ServiceLocator.getRenderService().getStage().getViewport().getCamera().viewportHeight;
+    private static final float viewportWidth =
+            ServiceLocator.getRenderService().getStage().getViewport().getCamera().viewportWidth;
     private static final int distance = 20;
     private static ArrayList<Table> tableArrayList;
     private static ArrayList<Long> startTimeArrayList;
@@ -76,6 +80,13 @@ public class MainGameOrderTicketDisplay extends UIComponent {
 
     private float cntXval(int instanceCnt) {
         return 20f + (instanceCnt - 1) * (distance + viewPortWidthMultiplier * 3f/32f);
+    }
+
+    public static void reorderDockets(int index) {
+        for (int i = index + 1; i < tableArrayList.size(); i++) {
+            Table currTable = tableArrayList.get(i);
+            currTable.setX(currTable.getX() - (distance + viewportWidth * 3f/32f));
+        }
     }
 
     public void shiftDocketsLeft() {

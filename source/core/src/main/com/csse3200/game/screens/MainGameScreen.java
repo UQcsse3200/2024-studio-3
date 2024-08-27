@@ -9,7 +9,6 @@ import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.components.maingame.MainGameActions;
 import com.csse3200.game.components.ordersystem.DocketDisplay;
 import com.csse3200.game.components.ordersystem.MainGameOrderBtnDisplay;
-import com.csse3200.game.components.ordersystem.MainGameOrderTicketDisplay;
 import com.csse3200.game.components.ordersystem.OrderActions;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
@@ -21,9 +20,9 @@ import com.csse3200.game.physics.PhysicsEngine;
 import com.csse3200.game.physics.PhysicsService;
 import com.csse3200.game.rendering.RenderService;
 import com.csse3200.game.rendering.Renderer;
+import com.csse3200.game.services.DocketService;
 import com.csse3200.game.services.GameTime;
 import com.csse3200.game.services.ResourceService;
-import com.csse3200.game.services.DocketService;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.terminal.Terminal;
 import com.csse3200.game.ui.terminal.TerminalDisplay;
@@ -41,10 +40,10 @@ import com.csse3200.game.components.ordersystem.DocketLineDisplay;
 public class MainGameScreen extends ScreenAdapter {
 	private static final Logger logger = LoggerFactory.getLogger(MainGameScreen.class);
 	private static final String[] mainGameTextures = {
-		"images/heart.png",
-		// order system assets
-		"images/ordersystem/docket_background.png",
-		"images/ordersystem/pin_line.png"
+			"images/heart.png",
+			// order system assets
+			"images/ordersystem/docket_background.png",
+			"images/ordersystem/pin_line.png"
 	};
 	private static final Vector2 CAMERA_POSITION = new Vector2(7.5f, 7.5f);
 
@@ -140,29 +139,21 @@ public class MainGameScreen extends ScreenAdapter {
 		logger.debug("Creating ui");
 		Stage stage = ServiceLocator.getRenderService().getStage();
 		InputComponent inputComponent =
-			ServiceLocator.getInputService().getInputFactory().createForTerminal();
-
-		MainGameOrderTicketDisplay orderTicketDisplay = new MainGameOrderTicketDisplay();
-    	OrderActions orderActions = new OrderActions(orderTicketDisplay);
-
-
-    // Set the ticket display in the docket service
-    ServiceLocator.getDocketService().setOrderTicketDisplay(orderTicketDisplay);
+				ServiceLocator.getInputService().getInputFactory().createForTerminal();
 
 		Entity ui = new Entity();
 		ui.addComponent(new InputDecorator(stage, 10))
-			.addComponent(new PerformanceDisplay())
-			.addComponent(new MainGameActions(this.game))
-			.addComponent(new MainGameExitDisplay())
-			.addComponent(new Terminal())
-			.addComponent(inputComponent)
-			.addComponent(new TerminalDisplay())
-			// order system
-			.addComponent(new DocketLineDisplay())
-			//.addComponent(new DocketDisplay())
-			.addComponent(new OrderActions(orderTicketDisplay))
-			.addComponent(new MainGameOrderBtnDisplay())
-			 .addComponent(new MainGameOrderTicketDisplay());
+				.addComponent(new PerformanceDisplay())
+				.addComponent(new MainGameActions(this.game))
+				.addComponent(new MainGameExitDisplay())
+				.addComponent(new Terminal())
+				.addComponent(inputComponent)
+				.addComponent(new TerminalDisplay())
+				// order system
+				.addComponent(new DocketLineDisplay())
+				//.addComponent(new DocketDisplay())
+				.addComponent(new OrderActions(this.game))
+				.addComponent(new MainGameOrderBtnDisplay());
 		ServiceLocator.getEntityService().register(ui);
 	}
 }

@@ -36,15 +36,14 @@ public class DocketLineDisplay extends UIComponent {
 		table.padTop(30f).padLeft(10f);
 
 		Image pineLine =
-			new Image(
-				ServiceLocator.getResourceService()
-					.getAsset("images/ordersystem/pin_line.png", Texture.class));
+				new Image(
+						ServiceLocator.getResourceService()
+								.getAsset("images/ordersystem/pin_line.png", Texture.class));
 
 		table.add(pineLine).pad(5);
 		table.row();
 
 		stage.addActor(table);
-		stage.addActor(ServiceLocator.getDocketService().getDocketTable());
 	}
 
 	@Override

@@ -1,6 +1,7 @@
 package com.csse3200.game.components.ordersystem;
 
 import com.badlogic.gdx.Input.Keys;
+import com.csse3200.game.GdxGame;
 import com.csse3200.game.input.InputComponent;
 import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
@@ -11,17 +12,27 @@ import org.slf4j.LoggerFactory;
  */
 public class OrderActions extends InputComponent {
     private static final Logger logger = LoggerFactory.getLogger(OrderActions.class);
-    private MainGameOrderTicketDisplay orderTicketDisplay;
+    private GdxGame game;
 
-    public OrderActions(MainGameOrderTicketDisplay orderTicketDisplay) {
-        this.orderTicketDisplay = orderTicketDisplay;
+    public OrderActions(GdxGame game) {
+        this.game = game;
     }
 
     @Override
-    public boolean keyDown(int keycode) {
-        MainGameOrderTicketDisplay orderTicketDisplay = ServiceLocator.getDocketService().getOrderTicketDisplay();
+    public void create() {
+        entity.getEvents().addListener("addOrder", this::onAddOrder);
 
-        if (keycode == Keys.LEFT_BRACKET) {
+        ServiceLocator.getDocketService().getEvents().addListener("removeOrder", this::onRemoveOrder);
+        ServiceLocator.getDocketService().getEvents().addListener(
+                "reorderDockets", MainGameOrderTicketDisplay::reorderDockets);
+        entity.getEvents().addListener("moveOrder", this::onMoveOrder);
+        entity.getEvents().addListener("changeColour", this::onChangeColour);
+    }
+
+
+    @Override
+    public boolean keyDown(int keycode) {
+        /*if (keyode == Keys.LEFT_BRACKET) {
             logger.info("Shift dockets left");
             orderTicketDisplay.shiftDocketsLeft();
             return true;
@@ -30,6 +41,7 @@ public class OrderActions extends InputComponent {
             orderTicketDisplay.shiftDocketsRight();
             return true;
         }
+        return false;*/
         return false;
     }
 
@@ -42,4 +54,37 @@ public class OrderActions extends InputComponent {
     public boolean keyTyped(char character) {
         return false;
     }
+
+    /**
+     * Adds order to the line
+     */
+    private void onAddOrder() {
+        logger.info("Add order");
+        // do something
+    }
+
+    /**
+     * Removes order from the line
+     */
+    private void onRemoveOrder(int index) {
+        logger.info("Remove order");
+        ServiceLocator.getDocketService().getEvents().trigger("reorderDockets", index);
+    }
+
+    /**
+     * Moves order
+     */
+    private void onMoveOrder() {
+        logger.info("Move order");
+        // do something
+    }
+
+    /**
+     * Changes order colour based on recipe timer
+     */
+    private void onChangeColour() {
+        logger.info("Move order");
+        // do something
+    }
+
 }
