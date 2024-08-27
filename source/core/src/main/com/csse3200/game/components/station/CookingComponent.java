@@ -44,7 +44,7 @@ public class CookingComponent extends Component {
     /**
      * Method triggered when item added to station.
      */
-    private void addItem() {
+    public void addItem() {
         // Converting List<Optional<String>> to List<String>
         List<String> templist = new ArrayList<String>();
         for (Optional<String> x : inventoryComponent.getItems()) {
@@ -67,7 +67,7 @@ public class CookingComponent extends Component {
     /**
      * Method triggered when item removed from station.
      */
-    private void removeItem() {
+    public void removeItem() {
         isCooking = false;
     }
 
