@@ -346,11 +346,11 @@ public class ForestGameArea extends GameArea {
   }
 
     private void spawnCustomer() {
-        GridPoint2 position = new GridPoint2(6, 23);
+        GridPoint2 position = new GridPoint2(1, 5);
         //System.out.println("1");
 
         //System.out.println("2");
-        Vector2 targetPos3 = new Vector2(10, 10); // Target position for ghost king
+        Vector2 targetPos3 = new Vector2(3, 5); // Target position for ghost king
         Entity customer = NPCFactory.createGhostKing(player, targetPos3);
         spawnEntityAt(customer, position, true, true);
 //    for (int i = 0; i < NUM_CUSTOMERS_BASE; i++) {
