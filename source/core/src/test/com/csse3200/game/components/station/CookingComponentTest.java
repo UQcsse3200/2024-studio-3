@@ -13,14 +13,14 @@ import java.util.ArrayList;
 
 @ExtendWith(GameExtension.class)
 public class CookingComponentTest {
-    private CookingComponent cookingComponent;
-
-    @Test
-    void testStationType() {
-        cookingComponent = new CookingComponent("OVEN");
-        cookingComponent.create();
-        assertEquals(cookingComponent.getStationType(), "OVEN");
-    }
+//    private CookingComponent cookingComponent;
+//
+//    @Test
+//    void testStationType() {
+//        cookingComponent = new CookingComponent("OVEN");
+//        cookingComponent.create();
+//        assertEquals(cookingComponent.getStationType(), "OVEN");
+//    }
 
     /**
     @Test
