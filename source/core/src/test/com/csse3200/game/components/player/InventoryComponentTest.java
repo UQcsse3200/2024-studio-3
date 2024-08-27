@@ -15,7 +15,7 @@ class InventoryComponentTest {
     InventoryComponent inventory = new InventoryComponent(2);
     assertEquals(2, inventory.getSize());
 
-    inventory.setSize(1);
+    inventory.setCapacity(1);
     assertEquals(1, inventory.getSize());
   }
 

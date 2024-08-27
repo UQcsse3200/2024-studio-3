@@ -53,13 +53,13 @@ public class PlayerStatsDisplay extends UIComponent {
     table.add(healthLabel);
     table.row();
 
-    goldImage = new Image(ServiceLocator.getResourceService().getAsset("images/money.png", Texture.class));
-    int gold = entity.getComponent(InventoryComponent.class).getGold();
-    CharSequence goldText = String.format("Cash: %d", gold);
-    goldLabel = new Label(goldText, skin, "large");
+    // goldImage = new Image(ServiceLocator.getResourceService().getAsset("images/money.png", Texture.class));
+    // int gold = entity.getComponent(InventoryComponent.class).getGold(); // InventoryComponent doesn't have a getGold() function.
+    // CharSequence goldText = String.format("Cash: %d", gold);
+    // goldLabel = new Label(goldText, skin, "large");
 
-    table.add(goldImage).size(heartSideLength).pad(5);
-    table.add(goldLabel);
+    // table.add(goldImage).size(heartSideLength).pad(5);
+    // table.add(goldLabel);
     stage.addActor(table);
   }
 

@@ -4,7 +4,7 @@ import com.badlogic.gdx.utils.Null;
 import com.csse3200.game.components.Component;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
+import com.csse3200.game.components.items.ItemComponent;
 import java.util.ArrayList;
 import java.lang.IllegalArgumentException;
 
