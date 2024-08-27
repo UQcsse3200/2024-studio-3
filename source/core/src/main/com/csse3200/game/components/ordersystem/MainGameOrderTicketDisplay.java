@@ -31,10 +31,10 @@ public class MainGameOrderTicketDisplay extends UIComponent {
     private static final float viewportWidth =
             ServiceLocator.getRenderService().getStage().getViewport().getCamera().viewportWidth;
     private static final int distance = 20;
-    private static ArrayList<Table> tableArrayList;
-    private static ArrayList<Long> startTimeArrayList;
-    private static ArrayList<Docket> backgroundArrayList;
-    private static ArrayList<Label> countdownLabelArrayList;
+    public static ArrayList<Table> tableArrayList;
+    public static ArrayList<Long> startTimeArrayList;
+    public static ArrayList<Docket> backgroundArrayList;
+    public static ArrayList<Label> countdownLabelArrayList;
     private static int orderNumb = 0;
 
     @Override
@@ -130,7 +130,7 @@ public class MainGameOrderTicketDisplay extends UIComponent {
     }
 
 
-    private void stageDispose(Docket docket, Table table, int index) {
+    public void stageDispose(Docket docket, Table table, int index) {
         table.setBackground((Drawable) null);
         table.clear();
         table.remove();
