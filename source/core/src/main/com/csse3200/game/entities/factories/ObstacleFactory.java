@@ -47,6 +47,26 @@ public class ObstacleFactory {
     return wall;
   }
 
+  /**
+  * Used for creating a border around the restaurant
+  */
+  public static Entity createBorder(String s,float tileSize) {
+    Entity border = new Entity()
+            .addComponent(new TextureRenderComponent("images/stations/"+s+".png"));
+    border.scaleWidth(tileSize);
+    return border;
+  }
+
+  public static Entity createDoor(String s,float tileSize) {
+    Entity door = new Entity()
+            .addComponent(new TextureRenderComponent("images/stations/"+s+".png"));
+    door.scaleWidth(tileSize);
+    return door;
+  }
+
+
+
+
   private ObstacleFactory() {
     throw new IllegalStateException("Instantiating static util class");
   }

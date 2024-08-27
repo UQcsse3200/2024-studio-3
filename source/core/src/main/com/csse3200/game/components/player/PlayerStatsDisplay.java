@@ -2,6 +2,7 @@ package com.csse3200.game.components.player;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -15,7 +16,9 @@ import com.csse3200.game.ui.UIComponent;
 public class PlayerStatsDisplay extends UIComponent {
   Table table;
   private Image heartImage;
+  private Image goldImage;
   private Label healthLabel;
+  private Label goldLabel;
 
   /**
    * Creates reusable ui styles and adds actors to the stage.
@@ -49,6 +52,15 @@ public class PlayerStatsDisplay extends UIComponent {
 
     table.add(heartImage).size(heartSideLength).pad(5);
     table.add(healthLabel);
+    table.row();
+
+    goldImage = new Image(ServiceLocator.getResourceService().getAsset("images/money.png", Texture.class));
+    int gold = entity.getComponent(InventoryComponent.class).getGold();
+    CharSequence goldText = String.format("Cash: %d", gold);
+    goldLabel = new Label(goldText, skin, "large");
+
+    table.add(goldImage).size(heartSideLength).pad(5);
+    table.add(goldLabel);
     stage.addActor(table);
   }
 
@@ -66,10 +78,20 @@ public class PlayerStatsDisplay extends UIComponent {
     healthLabel.setText(text);
   }
 
+  public void updatePlayerGoldUI(int gold) {
+    CharSequence text = String.format("Gold: %d", gold);
+    healthLabel.setText(text);
+  }
+
   @Override
   public void dispose() {
     super.dispose();
     heartImage.remove();
     healthLabel.remove();
+  }
+
+  @Override
+  public void setStage(Stage mock) {
+
   }
 }

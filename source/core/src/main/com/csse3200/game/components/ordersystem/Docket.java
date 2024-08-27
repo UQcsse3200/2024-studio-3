@@ -3,6 +3,7 @@ package com.csse3200.game.components.ordersystem;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Cell;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -80,5 +81,10 @@ public class Docket extends UIComponent {
     @Override
     protected void draw(SpriteBatch batch) {
         //Do not need to do anything here :)
+    }
+
+    @Override
+    public void setStage(Stage mock) {
+
     }
 }

@@ -2,6 +2,7 @@ package com.csse3200.game.components.ordersystem;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
@@ -33,7 +34,7 @@ public class DocketLineDisplay extends UIComponent {
 		table = new Table();
 		table.top().left();
 		table.setFillParent(true);
-		table.padTop(30f).padLeft(10f);
+		table.padTop(18f).padLeft(10f);
 
 		Image pineLine =
 				new Image(
@@ -54,6 +55,11 @@ public class DocketLineDisplay extends UIComponent {
 	@Override
 	public float getZIndex() {
 		return Z_INDEX;
+	}
+
+	@Override
+	public void setStage(Stage mock) {
+
 	}
 
 	@Override

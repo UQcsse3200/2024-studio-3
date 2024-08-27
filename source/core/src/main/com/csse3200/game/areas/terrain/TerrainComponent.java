@@ -7,6 +7,7 @@ import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.csse3200.game.rendering.RenderComponent;
 
 /**
@@ -87,6 +88,11 @@ public class TerrainComponent extends RenderComponent {
   @Override
   public int getLayer() {
     return TERRAIN_LAYER;
+  }
+
+  @Override
+  public void setStage(Stage mock) {
+
   }
 
   public enum TerrainOrientation {
