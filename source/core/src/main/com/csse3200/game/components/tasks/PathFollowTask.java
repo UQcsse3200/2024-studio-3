@@ -12,12 +12,17 @@ import org.slf4j.LoggerFactory;
  * The NPC will stop once it reaches the destination.
  */
 public class PathFollowTask extends DefaultTask implements PriorityTask {
-    private static final Logger logger = LoggerFactory.getLogger(WanderTask.class);
+    private static final Logger logger = LoggerFactory.getLogger(PathFollowTask.class);
 
-    private final Vector2 targetPos;
+    private Vector2 targetPos;
     private Vector2 currentTarget;
     private MovementTask movementTask;
     private Task currentTask;
+
+    /**
+     * Predefined coordinates where the NPC will move to when triggered.
+     */
+    private Vector2 predefinedTargetPos = new Vector2(15f, 20f); // Example coordinates, change as needed
 
     /**
      * @param targetPos The target position on the screen where the NPC should move.
@@ -75,5 +80,24 @@ public class PathFollowTask extends DefaultTask implements PriorityTask {
         }
         currentTask = newTask;
         currentTask.start();
+    }
+
+    /**
+     * Private function to trigger NPC movement to a predefined position.
+     */
+    private void triggerMoveToPredefinedPosition() {
+        logger.debug("Triggering move to predefined position: {}", predefinedTargetPos);
+        this.targetPos = predefinedTargetPos; // Set target to predefined position
+        this.currentTarget = new Vector2(targetPos.x, owner.getEntity().getPosition().y); // Horizontal movement
+        startMoving(); // Start the movement to predefined position
+    }
+
+    /**
+     * Method to handle custom events for the NPC.
+     */
+    public void handleEvent(String event) {
+        if ("moveToPredefined".equals(event)) {
+            triggerMoveToPredefinedPosition();
+        }
     }
 }
