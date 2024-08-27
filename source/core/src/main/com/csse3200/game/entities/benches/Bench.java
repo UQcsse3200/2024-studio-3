@@ -87,6 +87,9 @@ public class Bench extends Entity{
         }
         bench.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
 
+        PhysicsUtils.setScaledCollider(bench, 1.0F, 0.8F);
+>>>>>>> team7-map
+
         // magic scaling factor (it is about half a pixel off)
         float scalefactor = 8.91F;
         bench.setScale(width/scalefactor, height/scalefactor);
