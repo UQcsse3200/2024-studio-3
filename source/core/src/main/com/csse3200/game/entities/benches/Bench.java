@@ -14,13 +14,6 @@ import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.rendering.TextureRenderComponent;
 
 public class Bench extends Entity{
-    /**
-     * Creates visible bench.
-     *
-     * @param height Station bench in world units
-     * @param type   Type of bench
-     * @return Station entity of given width and height with relevant behaviors
-     */
     public String type;
     public int x;
     public int y;
@@ -38,6 +31,12 @@ public class Bench extends Entity{
         this.y    = y;
     }
 
+    /**
+     * Creates visible bench.
+     *
+     * @param type   Type of bench
+     * @return Station entity of given width and height with relevant behaviors
+     */
     public static Entity createBench(String type) {
         Entity bench = new Entity()
                 .addComponent(new TextureRenderComponent("images/stations/benches/" + type + ".png"))
