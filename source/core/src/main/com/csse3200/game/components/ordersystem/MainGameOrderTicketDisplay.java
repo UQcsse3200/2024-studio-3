@@ -2,6 +2,7 @@ package com.csse3200.game.components.ordersystem;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -120,6 +121,11 @@ public class MainGameOrderTicketDisplay extends UIComponent {
     @Override
     public float getZIndex() {
         return Z_INDEX;
+    }
+
+    @Override
+    public void setStage(Stage mock) {
+
     }
 
     public void stageDispose(Docket background, Table table, int index) {
