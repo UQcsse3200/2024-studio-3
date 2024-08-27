@@ -52,14 +52,14 @@ public class ObstacleFactory {
   */
   public static Entity createBorder(String s,float tileSize) {
     Entity border = new Entity()
-            .addComponent(new TextureRenderComponent("images/stations/"+s+".png"));
+            .addComponent(new TextureRenderComponent("images/frame/"+s+".png"));
     border.scaleWidth(tileSize);
     return border;
   }
 
   public static Entity createDoor(String s,float tileSize) {
     Entity door = new Entity()
-            .addComponent(new TextureRenderComponent("images/stations/"+s+".png"));
+            .addComponent(new TextureRenderComponent("images/frame/"+s+".png"));
     door.scaleWidth(tileSize);
     return door;
   }
