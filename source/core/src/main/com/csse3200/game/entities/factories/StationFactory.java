@@ -57,7 +57,6 @@ public class StationFactory {
 
   /**
    * Creates visible station.
-   * @param width Station width in world units
    * @param height Station height in world units
    * @param type Type of station
    * @return Station entity of given width and height with relavent behaviors
