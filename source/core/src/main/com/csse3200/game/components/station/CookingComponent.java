@@ -54,7 +54,6 @@ public class CookingComponent extends Component {
         List<String> possibleRecipes = DishFactory.getRecipe(templist);
         if (possibleRecipes.size() == 1 && !isCooking) {
             // TODO check that it completely matching the recipe
-            // TODO make sure you arent already cooking
             targetRecipe = possibleRecipes.get(0);
             cookingTime = 10000; // TODO edit placeholder, get cooking time from recipes?
             isCooking = true;
