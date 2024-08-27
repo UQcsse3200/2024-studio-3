@@ -54,8 +54,9 @@ public class MainGameScreen extends ScreenAdapter {
 		"images/ordersystem/docket_background.png",
 		"images/ordersystem/pin_line.png"
 	};
+	// Modified the camera position to fix layout
 	private static final Vector2 CAMERA_POSITION = new Vector2(7.5f, 6.0f);
-  private final ShapeRenderer shapeRenderer;
+
   private final GdxGame game;
   private final Renderer renderer;
   private final PhysicsEngine physicsEngine;
@@ -87,29 +88,9 @@ public class MainGameScreen extends ScreenAdapter {
     logger.debug("Initialising main game screen entities");
     TerrainFactory terrainFactory = new TerrainFactory(renderer.getCamera());
     ForestGameArea forestGameArea = new ForestGameArea(terrainFactory);
-    shapeRenderer = new ShapeRenderer();
     forestGameArea.create();
   }
 
-  private void drawFrame() {
-    int frameHeight = 1150;
-
-    float x = 291;
-    float y = 24;
-    float width = 1533;
-    float height = frameHeight;
-    float lineWidth = 10;
-
-    shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-    shapeRenderer.setColor(0, 0, 0, 1);
-
-    shapeRenderer.rectLine(new Vector2(x, y + height), new Vector2(x + width, y + height), lineWidth);
-    shapeRenderer.rectLine(new Vector2(x, y), new Vector2(x + width, y), lineWidth);
-    shapeRenderer.rectLine(new Vector2(x, y), new Vector2(x, y + height), lineWidth);
-    shapeRenderer.rectLine(new Vector2(x + width, y), new Vector2(x + width, y + height), lineWidth);
-
-    shapeRenderer.end();
-  }
 
 	@Override
 	public void render(float delta) {

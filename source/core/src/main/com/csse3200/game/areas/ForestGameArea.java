@@ -52,20 +52,19 @@ public class ForestGameArea extends GameArea {
     "images/stations/stove.png",
     "images/stations/bench.png",
     "images/chef_player.png",
-    "images/stations/line.png",
-    "images/stations/bench2.png",
-    "images/stations/top_border.png",
-    "images/stations/left_border.png",
-    "images/stations/bottom_border.png",
-    "images/stations/right_border.png",
-    "images/stations/door.png",
-    "images/stations/top_door_left_part.png",
-    "images/stations/top_door_right_part.png",
-    "images/stations/bottom_left_inv.png",
-    "images/stations/bottom_right_inv.png",
-    "images/stations/top_border_wall.png",
-    "images/stations/bottom_border_wall.png",
-    "images/stations/border.png",
+    "images/frame/top_border.png",
+    "images/frame/left_border.png",
+    "images/frame/bottom_border.png",
+    "images/frame/right_border.png",
+    "images/frame/vert_border.png",
+    "images/frame/door.png",
+    "images/frame/top_door_left_part.png",
+    "images/frame/top_door_right_part.png",
+    "images/frame/bottom_left_inv.png",
+    "images/frame/bottom_right_inv.png",
+    "images/frame/top_border_wall.png",
+    "images/frame/bottom_border_wall.png",
+    "images/frame/border.png",
     "images/stations/benches/bench7.png",
     "images/stations/benches/bench2.png",
     "images/stations/benches/bench3-5.png",
@@ -116,7 +115,7 @@ public class ForestGameArea extends GameArea {
     // Spawn the player
     player = spawnPlayer();
 
-    playMusic();
+//    playMusic();
   }
 
   private void displayUI() {
@@ -127,7 +126,7 @@ public class ForestGameArea extends GameArea {
 
   private void spawnTerrain() {
     // Background terrain
-    terrain = terrainFactory.createTerrain(TerrainType.FOREST_DEMO);
+    terrain = terrainFactory.createTerrain(TerrainType.KITCHEN_DEMO);
     spawnEntity(new Entity().addComponent(terrain));
 
     // Terrain walls
@@ -156,11 +155,15 @@ public class ForestGameArea extends GameArea {
 
   }
 
+  /**
+   * Spawns the entry and exit doors of the restaurant
+   */
   private void spawnDoor() {
     float tileSize = terrain.getTileSize();
     GridPoint2 tileBounds = terrain.getMapBounds(0);
     Vector2 worldBounds = new Vector2(tileBounds.x * tileSize, tileBounds.y * tileSize);
 
+    //Entry door
     GridPoint2 position = new GridPoint2(0,(int)tileBounds.y-1);
     Entity door = ObstacleFactory.createDoor("top_door_left_part",tileSize);
     spawnEntityAt(door,position,true,false);
@@ -169,6 +172,7 @@ public class ForestGameArea extends GameArea {
     door = ObstacleFactory.createDoor("top_door_right_part",tileSize);
     spawnEntityAt(door,position,true,false);
 
+    //Exit door
     position = new GridPoint2(0,0);
     door = ObstacleFactory.createDoor("bottom_left_inv",tileSize);
     spawnEntityAt(door,position,true,false);
@@ -178,6 +182,9 @@ public class ForestGameArea extends GameArea {
     spawnEntityAt(door,position,true,false);
   }
 
+  /**
+   * Spawns the wall around the restaurant
+   */
   private void spawnWall() {
     float tileSize = terrain.getTileSize();
     GridPoint2 tileBounds = terrain.getMapBounds(0);
@@ -202,6 +209,9 @@ public class ForestGameArea extends GameArea {
 
   }
 
+  /**
+   * Renders a black border around the restaurant
+   */
   private void make_border(){
     float tileSize = terrain.getTileSize();
     GridPoint2 tileBounds = terrain.getMapBounds(0);
@@ -237,8 +247,8 @@ public class ForestGameArea extends GameArea {
 
     //separation border
     for(int y=0;y<(int)tileBounds.y;y++) {
-      GridPoint2 position = new GridPoint2(2,y);
-      Entity separate = ObstacleFactory.createBorder("left_border",tileSize);
+      GridPoint2 position = new GridPoint2(1,y);
+      Entity separate = ObstacleFactory.createBorder("right_border",tileSize);
       spawnEntityAt(separate,position,true,false);
     }
   }
