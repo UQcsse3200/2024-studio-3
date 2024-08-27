@@ -18,6 +18,8 @@ public class OrderActions extends InputComponent {
     private GdxGame game;
     private Docket draggedDocket;
     private float offsetX, offsetY;
+    private Vector2[] snapPositions;
+    private final float SNAP_DISTANCE = 50f; // Adjust as needed
 
     public OrderActions(GdxGame game) {
         this.game = game;
@@ -34,6 +36,14 @@ public class OrderActions extends InputComponent {
 
         // Register this component as an input handler
         ServiceLocator.getInputService().register(this);
+
+        snapPositions = new Vector2[] {
+            new Vector2(100, 500), // Example positions, adjust to fit your layout
+            new Vector2(200, 500),
+            new Vector2(300, 500),
+            new Vector2(400, 500),
+            new Vector2(500, 500)
+        };
     }
 
     @Override
