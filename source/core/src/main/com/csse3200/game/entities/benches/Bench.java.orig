@@ -86,9 +86,13 @@ public class Bench extends Entity{
                     "Illegal argument: 'type' does not correspond to an existing bench");
         }
         bench.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
+<<<<<<< HEAD
+=======
+        bench.getComponent(TextureRenderComponent.class).scaleEntity();
+        bench.scaleHeight(height);
 
         PhysicsUtils.setScaledCollider(bench, 1.0F, 0.8F);
-
+>>>>>>> team7-map
 
         // magic scaling factor (it is about half a pixel off)
         float scalefactor = 8.91F;
