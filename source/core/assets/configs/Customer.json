@@ -1,11 +1,51 @@
 {
-  "hank": {
+  "Gorilla": {
     "name": "Hank",
-    "pref": 40,
-    "timer": 30,
-    "patience": 10,
-    "reputation": 5,
+    "countDown": 20,
+    "patience": 100,
     "spawnTimer": 100,
-    "texture": "images/ghostKing.atlas"
+    "preference": 0,
+    "reputation": 100,
+    "texture": "images/animal_images/gorilla.png"
+  },
+
+  "Goose": {
+    "name": "Lewis",
+    "countDown": 30,
+    "patience": 100,
+    "spawnTimer": 100,
+    "preference": 0,
+    "reputation": 100,
+    "texture": "images/animal_images/goose.png"
+  },
+
+  "Snow_Fox": {
+    "name": "Silver",
+    "countDown": 50,
+    "patience": 100,
+    "spawnTimer": 100,
+    "preference": 0,
+    "reputation": 100,
+    "texture": "images/animal_images/snow_wolf.png"
+  },
+
+  "Goat": {
+    "name": "John",
+    "countDown": 50,
+    "patience": 100,
+    "spawnTimer": 100,
+    "preference": 0,
+    "reputation": 100,
+    "texture": "images/animal_images/goat.png"
+  },
+
+  "Monkey": {
+    "name": "Moonki",
+    "countDown": 40,
+    "patience": 100,
+    "spawnTimer": 100,
+    "preference": 0,
+    "reputation": 100,
+    "texture": "images/animal_images/monkey.png"
   }
 }

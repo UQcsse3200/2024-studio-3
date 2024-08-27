@@ -45,5 +45,36 @@ public class CustomerComponent extends Component {
     public int getReputation() {
         return this.reputation;
     }
-    // make getter and setter for rest
+
+    public void setPatience(int patience) {
+        this.patience = patience;
+    }
+
+    public int getPatience() {
+        return this.patience;
+    }
+
+    public void setSpawnTimer(int spawnTimer) {
+        this.spawnTimer = spawnTimer;
+    }
+
+    public int getSpawnTimer() {
+        return this.spawnTimer;
+    }
+
+    public void setCountDown(int countDown) {
+        this.countDown = countDown;
+    }
+
+    public int getCountDown() {
+        return this.countDown;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return this.name;
+    }
 }
