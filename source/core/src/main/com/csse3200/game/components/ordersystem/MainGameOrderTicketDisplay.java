@@ -37,6 +37,8 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         startTimeArrayList = new ArrayList<>();
         backgroundArrayList = new ArrayList<>();
         countdownLabelArrayList = new ArrayList<>();
+
+        entity.getEvents().addListener("createOrder", this::addActors);
     }
 
     public void addActors() {
@@ -90,6 +92,19 @@ public class MainGameOrderTicketDisplay extends UIComponent {
     updateDocketSizes();
     }
 
+    private void stageDispose(Docket docket, Table table, int index) {
+    // Clear and remove the table from the stage
+    table.clear();
+    table.remove();
+
+    // Optionally, clear any resources associated with the docket
+    docket.getImage().clear();
+    // Add any additional cleanup logic if needed
+
+    // Log the disposal if necessary
+    logger.info("Disposed docket and table at index: " + index);
+}
+
     public void shiftDocketsRight() {
         if (tableArrayList.isEmpty() || backgroundArrayList.isEmpty()) return;
 
@@ -128,7 +143,26 @@ public class MainGameOrderTicketDisplay extends UIComponent {
     @Override
     public void update() {
         // No additional update logic needed here, shifting is handled by the OrderActions class
+        for (int i = 0; i < tableArrayList.size(); i++) {
+            Docket currBackground = backgroundArrayList.get(i);
+            Table currTable = tableArrayList.get(i);
+            Label currCountdown = countdownLabelArrayList.get(i);
+            long elapsedTime = TimeUtils.timeSinceMillis(startTimeArrayList.get(i));
+            long remainingTime = DEFAULT_TIMER - elapsedTime;
+            if (remainingTime > 0) {
+                currCountdown.setText("Timer: " + (remainingTime / 1000));
+                currBackground.updateDocketTexture((double) remainingTime/1000);
+                currTable.setBackground(currBackground.getImage().getDrawable());
+            } else {
+                stageDispose(currBackground, currTable, i);
+                tableArrayList.remove(i);
+                backgroundArrayList.remove(i);
+                startTimeArrayList.remove(i);
+                countdownLabelArrayList.remove(i);
+            }
+        }
     }
+    
 
     public void updateDocketDisplay() {
         // Implement logic to update the display
