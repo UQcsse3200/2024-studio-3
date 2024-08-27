@@ -150,6 +150,7 @@ public class InventoryComponent extends Component {
     if (capacity > 0) {
       return items.getFirst();
     } 
+    return null;
   }
 
     /**
@@ -161,6 +162,7 @@ public class InventoryComponent extends Component {
     if (capacity > 0) {
       return items.getLast();
     }
+    return null;
   }
 
     /**
@@ -260,8 +262,6 @@ public class InventoryComponent extends Component {
 
       return item; 
     }
-    
     return null;
   }
-
 }
