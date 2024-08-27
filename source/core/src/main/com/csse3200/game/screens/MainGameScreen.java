@@ -9,6 +9,7 @@ import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.components.maingame.MainGameActions;
 import com.csse3200.game.components.ordersystem.DocketDisplay;
 import com.csse3200.game.components.ordersystem.MainGameOrderBtnDisplay;
+import com.csse3200.game.components.ordersystem.MainGameOrderTicketDisplay;
 import com.csse3200.game.components.ordersystem.OrderActions;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
@@ -22,6 +23,7 @@ import com.csse3200.game.rendering.RenderService;
 import com.csse3200.game.rendering.Renderer;
 import com.csse3200.game.services.GameTime;
 import com.csse3200.game.services.ResourceService;
+import com.csse3200.game.services.DocketService;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.terminal.Terminal;
 import com.csse3200.game.ui.terminal.TerminalDisplay;
@@ -65,6 +67,7 @@ public class MainGameScreen extends ScreenAdapter {
 
 		ServiceLocator.registerEntityService(new EntityService());
 		ServiceLocator.registerRenderService(new RenderService());
+		ServiceLocator.registerDocketService(new DocketService());
 
 		renderer = RenderFactory.createRenderer();
 		renderer.getCamera().getEntity().setPosition(CAMERA_POSITION);
@@ -139,6 +142,13 @@ public class MainGameScreen extends ScreenAdapter {
 		InputComponent inputComponent =
 			ServiceLocator.getInputService().getInputFactory().createForTerminal();
 
+		MainGameOrderTicketDisplay orderTicketDisplay = new MainGameOrderTicketDisplay();
+    	OrderActions orderActions = new OrderActions(orderTicketDisplay);
+
+
+    // Set the ticket display in the docket service
+    ServiceLocator.getDocketService().setOrderTicketDisplay(orderTicketDisplay);
+
 		Entity ui = new Entity();
 		ui.addComponent(new InputDecorator(stage, 10))
 			.addComponent(new PerformanceDisplay())
@@ -150,8 +160,9 @@ public class MainGameScreen extends ScreenAdapter {
 			// order system
 			.addComponent(new DocketLineDisplay())
 			//.addComponent(new DocketDisplay())
-			.addComponent(new OrderActions(this.game))
-			.addComponent(new MainGameOrderBtnDisplay());
+			.addComponent(new OrderActions(orderTicketDisplay))
+			.addComponent(new MainGameOrderBtnDisplay())
+			 .addComponent(new MainGameOrderTicketDisplay());
 		ServiceLocator.getEntityService().register(ui);
 	}
 }
