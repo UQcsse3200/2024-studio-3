@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.csse3200.game.components.maingame.MainGameExitDisplay;
 import com.csse3200.game.services.ServiceLocator;
@@ -104,17 +105,12 @@ public class MainGameOrderTicketDisplay extends UIComponent {
     }
 
     private void stageDispose(Docket docket, Table table, int index) {
-    // Clear and remove the table from the stage
-    table.clear();
-    table.remove();
-
-    // Optionally, clear any resources associated with the docket
-    docket.getImage().clear();
-    // Add any additional cleanup logic if needed
-
-    // Log the disposal if necessary
-    logger.info("Disposed docket and table at index: " + index);
-}
+        table.setBackground((Drawable) null);
+        table.clear();
+        table.remove();
+        ServiceLocator.getDocketService().getEvents().trigger("removeOrder", index);
+        docket.dispose();
+    }
 
     public void shiftDocketsRight() {
         if (tableArrayList.isEmpty() || backgroundArrayList.isEmpty()) return;
