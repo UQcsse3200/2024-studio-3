@@ -4,7 +4,7 @@
     "countDown": 20,
     "patience": 100,
     "spawnTimer": 100,
-    "preference": ["banana_split"]
+    "preference": 0,
     "reputation": 100,
     "texture": "images/animal_images/gorilla.png"
   },
@@ -14,7 +14,7 @@
     "countDown": 30,
     "patience": 100,
     "spawnTimer": 100,
-    "preference": ["acai_bowl"]
+    "preference": 0,
     "reputation": 100,
     "texture": "images/animal_images/goose.png"
   },
@@ -24,7 +24,7 @@
     "countDown": 50,
     "patience": 100,
     "spawnTimer": 100,
-    "preference": ["steak"]
+    "preference": 0,
     "reputation": 100,
     "texture": "images/animal_images/snow_wolf.png"
   },
@@ -34,7 +34,7 @@
     "countDown": 50,
     "patience": 100,
     "spawnTimer": 100,
-    "preference": ["salad"]
+    "preference": 0,
     "reputation": 100,
     "texture": "images/animal_images/goat.png"
   },
@@ -44,7 +44,7 @@
     "countDown": 40,
     "patience": 100,
     "spawnTimer": 100,
-    "preference": ["fruit_salad"]
+    "preference": 0,
     "reputation": 100,
     "texture": "images/animal_images/monkey.png"
   }
