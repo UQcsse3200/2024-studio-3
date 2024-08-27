@@ -22,7 +22,7 @@ class BenchTest {
 
     @BeforeEach
     void setUp() {
-        bench = Bench.createBench("bench", 2.0f);
+        bench = Bench.createBench("bench", 2.0f, 2,2);
         player = PlayerFactory.createPlayer();
     }
 
