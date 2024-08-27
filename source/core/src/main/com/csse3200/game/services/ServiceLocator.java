@@ -23,12 +23,7 @@ public class ServiceLocator {
   private static PhysicsService physicsService;
   private static GameTime timeSource;
   private static InputService inputService;
-<<<<<<< HEAD
   private static ResourceService resourceService;
-=======
-  public static ResourceService resourceService;
-  //Me new stuff :)
->>>>>>> 6c5efbd49a60c7bb81758a30745ac8db2d40c97b
   private static DocketService docketService;
 
 
@@ -68,11 +63,6 @@ public class ServiceLocator {
     logger.debug("Registering entity service {}", service);
     entityService = service;
   }
-
-  public static void registerDocketService(DocketService service) {
-    logger.debug("Registering docket service {}", service);
-    docketService = service;
-}
 
   public static void registerRenderService(RenderService service) {
     logger.debug("Registering render service {}", service);
