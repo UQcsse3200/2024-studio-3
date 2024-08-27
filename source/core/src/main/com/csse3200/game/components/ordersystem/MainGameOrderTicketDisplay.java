@@ -133,10 +133,10 @@ public class MainGameOrderTicketDisplay extends UIComponent {
             Docket background = backgroundArrayList.get(i);
             if (i == backgroundArrayList.size() - 1) {
                 // Enlarge the last docket
-                background.getImage().setSize(viewPortWidthMultiplier * 6f/32f, viewPortHeightMultiplier * 10f/27f);
+                background.getImage().setSize(viewportWidth * 6f/32f, viewportHeight * 10f/27f);
             } else {
                 // Set normal size for other dockets
-                background.getImage().setSize(viewPortWidthMultiplier * 3f/32f, viewPortHeightMultiplier * 5f/27f);
+                background.getImage().setSize(viewportWidth * 3f/32f, viewportHeight * 5f/27f);
             }
         }
     }
