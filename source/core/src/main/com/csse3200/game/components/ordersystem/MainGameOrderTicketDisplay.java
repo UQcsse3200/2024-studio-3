@@ -52,7 +52,7 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         startTimeArrayList.add(startTime);
         tableArrayList.add(table);
         table.setFillParent(false);
-        table.setSize(viewPortWidthMultiplier * 3f/32f, 5f/27f * viewPortHeightMultiplier); // DEFAULT_HEIGHT
+        table.setSize(viewportWidth * 3f/32f, 5f/27f * viewportHeight); // DEFAULT_HEIGHT
         float xVal = cntXval(tableArrayList.size());
         float yVal = viewportHeight * viewPortHeightMultiplier;
         table.setPosition(xVal, yVal);
@@ -76,7 +76,7 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         stage.addActor(table);
 
         // Enlarge the last docket in the list
-        updateDocketSizes();
+        //updateDocketSizes();
     }
 
     private float cntXval(int instanceCnt) {
