@@ -22,7 +22,7 @@ import java.util.ArrayList;
 public class MainGameOrderTicketDisplay extends UIComponent {
     private static final Logger logger = LoggerFactory.getLogger(MainGameExitDisplay.class);
     private static final float Z_INDEX = 2f;
-    private static final long DEFAULT_TIMER = 999999;
+    private static final long DEFAULT_TIMER = 10000;
     private static final float viewPortHeightMultiplier = 7f/9f;
     private static final float viewPortWidthMultiplier = 3f/32f;
     private static final float viewportHeight =
@@ -97,8 +97,10 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         logger.info("Order ticket added to stage");
 
         // Enlarge the last docket in the list
-        //updateDocketSizes();
+
+        updateDocketSizes();
     }
+
 
     private float cntXval(int instanceCnt) {
         return 20f + (instanceCnt - 1) * (distance + viewportWidth * 3f/32f);
@@ -124,7 +126,14 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         backgroundArrayList.add(firstDocket);
         logger.info("First docket background moved to the end. New first docket index: {}", backgroundArrayList.get(0));
 
+         Long firstStartTime = startTimeArrayList.remove(0);
+         startTimeArrayList.add(firstStartTime);
+
+         Label firstCountdownLabel = countdownLabelArrayList.remove(0);
+         countdownLabelArrayList.add(firstCountdownLabel);
+
         updateDocketPositions();
+        updateDocketSizes();
         logger.info("Docket positions updated after left shift");
     }
 
@@ -145,9 +154,19 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         }
         Table lastTable = tableArrayList.remove(tableArrayList.size() - 1);
         tableArrayList.add(0, lastTable);
+
         Docket lastDocket = backgroundArrayList.remove(backgroundArrayList.size() - 1);
         backgroundArrayList.add(0, lastDocket);
+
+        Long lastStartTime = startTimeArrayList.remove(startTimeArrayList.size() - 1);
+        startTimeArrayList.add(0, lastStartTime);
+
+        Label lastCountdownLabel = countdownLabelArrayList.remove(countdownLabelArrayList.size() - 1);
+        countdownLabelArrayList.add(0, lastCountdownLabel);
+
         updateDocketPositions();
+        updateDocketSizes();
+
         logger.info("Docket positions updated after right shift");
     }
 
@@ -155,10 +174,31 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         for (int i = 0; i < tableArrayList.size(); i++) {
             Table table = tableArrayList.get(i);
             float xVal = cntXval(i + 1);
+
             table.setPosition(xVal, table.getY());
             logger.info("Updated position of docket {}: ({}, {})", i, xVal, table.getY());
         }
     }
+
+    private void updateDocketSizes() {
+        float xEnlargedArea = viewportWidth - 260f;
+        for (int i = 0; i < tableArrayList.size(); i++) {
+            Table table = tableArrayList.get(i);
+            float xVal = cntXval(i + 1);
+            float yVal = viewportHeight * viewPortHeightMultiplier;
+
+            if (i == tableArrayList.size() - 1) { // Tail docket
+                table.setSize(170f, 200f);
+                // Fixed position for enlarged docket
+                table.setPosition(xEnlargedArea, yVal - 50);
+            } else { // Non-enlarged dockets
+                table.setSize(120f, 150f);
+                table.setPosition(xVal, yVal);
+            }
+        }
+    }
+
+
 
 
     @Override
@@ -182,6 +222,10 @@ public class MainGameOrderTicketDisplay extends UIComponent {
                 countdownLabelArrayList.remove(i);
             }
         }
+
+
+        updateDocketPositions();
+        updateDocketSizes();
     }
     
 
