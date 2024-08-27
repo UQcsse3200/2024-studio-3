@@ -92,16 +92,14 @@ public class MainGameOrderTicketDisplay extends UIComponent {
 
     public void shiftDocketsLeft() {
        if (tableArrayList.isEmpty() || backgroundArrayList.isEmpty()) return;
+            Table firstTable = tableArrayList.remove(0);
+            tableArrayList.add(firstTable);
 
-    // Shift both lists together
-    Table firstTable = tableArrayList.remove(0);
-    tableArrayList.add(firstTable);
+            Docket firstDocket = backgroundArrayList.remove(0);
+            backgroundArrayList.add(firstDocket);
 
-    Docket firstDocket = backgroundArrayList.remove(0);
-    backgroundArrayList.add(firstDocket);
-
-    updateDocketPositions();
-    updateDocketSizes();
+            updateDocketPositions();
+            updateDocketSizes();
     }
 
     private void stageDispose(Docket docket, Table table, int index) {
@@ -114,14 +112,10 @@ public class MainGameOrderTicketDisplay extends UIComponent {
 
     public void shiftDocketsRight() {
         if (tableArrayList.isEmpty() || backgroundArrayList.isEmpty()) return;
-
-        // Shift both lists together
         Table lastTable = tableArrayList.remove(tableArrayList.size() - 1);
         tableArrayList.add(0, lastTable);
-
         Docket lastDocket = backgroundArrayList.remove(backgroundArrayList.size() - 1);
         backgroundArrayList.add(0, lastDocket);
-
         updateDocketPositions();
         updateDocketSizes();
     }
