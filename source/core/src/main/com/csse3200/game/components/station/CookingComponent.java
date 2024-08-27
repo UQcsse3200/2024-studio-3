@@ -23,8 +23,8 @@ public class CookingComponent extends Component {
     @Override
     public void create() {
         inventoryComponent = entity.getComponent(StationInventoryComponent.class);
-        entity.getEvents().addListener("Add Station Item", this::addItem);
-        entity.getEvents().addListener("Remove Station Item", this::removeItem);
+        entity.getEvents().addListener("give station item", this::addItem);
+        entity.getEvents().addListener("take item", this::removeItem);
     }
 
     /**
