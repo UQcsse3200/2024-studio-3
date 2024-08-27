@@ -5,7 +5,8 @@
     "itemName": "acai",
     "itemType": "ingredient",
     "weight": 10,
-    "cookTime": 10,
+    "cookTime": 0,
+    "chopTime": 10,
     "baseState": "RAW"
   },
   "beef": {
@@ -13,20 +14,23 @@
     "itemType": "ingredient",
     "weight": 10,
     "cookTime": 10,
+    "chopTime": 0,
     "baseState": "RAW"
   },
   "banana": {
     "itemName": "banana",
     "itemType": "ingredient",
     "weight": 10,
-    "cookTime": 10,
+    "cookTime": 0,
+    "chopTime": 10,
     "baseState": "RAW"
   },
   "lettuce": {
     "itemName": "lettuce",
     "itemType": "ingredient",
     "weight": 10,
-    "cookTime": 10,
+    "cookTime": 0,
+    "chopTime": 0,
     "baseState": "RAW"
   },
   "cucumber": {
@@ -34,6 +38,7 @@
     "itemType": "ingredient",
     "weight": 10,
     "cookTime": 10,
+    "chopTime": 10,
     "baseState": "RAW"
   },
   "tomato": {
@@ -41,20 +46,23 @@
     "itemType": "ingredient",
     "weight": 10,
     "cookTime": 10,
+    "chopTime": 10,
     "baseState": "RAW"
   },
   "strawberry": {
     "itemName": "strawberry",
     "itemType": "ingredient",
     "weight": 10,
-    "cookTime": 10,
+    "cookTime": 0,
+    "chopTime": 10,
     "baseState": "RAW"
   },
   "chocolate": {
     "itemName": "chocolate",
     "itemType": "ingredient",
     "weight": 10,
-    "cookTime": 10,
+    "cookTime": 0,
+    "chopTime": 10,
     "baseState": "RAW"
   },
   "fish": {
@@ -62,6 +70,7 @@
     "itemType": "ingredient",
     "weight": 10,
     "cookTime": 10,
+    "chopTime": 0,
     "baseState": "RAW"
   }
 }
