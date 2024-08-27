@@ -1,7 +1,6 @@
 package com.csse3200.game.rendering;
 
 import com.badlogic.gdx.ApplicationListener;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.backends.headless.HeadlessApplication;
 import com.badlogic.gdx.backends.headless.HeadlessApplicationConfiguration;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -18,7 +17,7 @@ public class DocketLineDisplayTest {
 
     @BeforeAll
     public static void setUpClass() {
-        // Initialize a headless application for testing
+
         HeadlessApplicationConfiguration config = new HeadlessApplicationConfiguration();
         new HeadlessApplication(new ApplicationListener() {
             @Override public void create() {}
@@ -32,15 +31,15 @@ public class DocketLineDisplayTest {
 
     @BeforeEach
     public void setUp() {
-        // Initialize necessary LibGDX components
+
         batch = Mockito.mock(SpriteBatch.class);
     }
 
     @Test
     public void testBatchIsNotNull() {
-        // Example test to check if batch is properly initialized
+
         assertNotNull(batch, "Batch should be initialized");
     }
 
-    // Add additional test methods as needed
+
 }

@@ -18,10 +18,9 @@ public class DocketTest {
 
     @Test
     public void testUpdateDocketTexture() {
-        // Check initial texture
+
         assertEquals("fresh_docket", getTextureName(docket.getImage()));
 
-        // Update texture with different remaining times
         docket.updateDocketTexture(2.5);
         assertEquals("mild_docket", getTextureName(docket.getImage()));
 
