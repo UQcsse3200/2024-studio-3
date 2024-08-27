@@ -6,7 +6,7 @@
   },
   "salad":{
     "ingredient":["tomato","cucumber","lettuce"],
-    "cuttingBoard":["tomato","cucumber", "lettuce"],
+    "cuttingBoard":["tomato","cucumber"],
     "makingTime":2
   },
   "fruitSalad":{
