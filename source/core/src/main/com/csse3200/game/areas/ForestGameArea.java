@@ -103,11 +103,11 @@ public class ForestGameArea extends GameArea {
     displayUI();
 
     spawnTerrain();
-    spawnBenches();
     // Spawn the restaurant
     spawnDoor();
     spawnWall();
     make_border();
+    spawnBenches();
     spawnStations();
     // Spawn beef
     spawnBeef("raw");
@@ -254,13 +254,15 @@ public class ForestGameArea extends GameArea {
   }
 
   private void spawnStations() {
-    GridPoint2 ovenPos = new GridPoint2(5,5);
+    GridPoint2 ovenPos = new GridPoint2(5,4);
     Entity oven = StationFactory.createOven();
     spawnEntityAt(oven, ovenPos, true, false);
+    oven.setPosition(oven.getPosition().x , oven.getPosition().y + 1.3f);
 
-    GridPoint2 stovePos = new GridPoint2(6,5);
+    GridPoint2 stovePos = new GridPoint2(5,4);
     Entity stove = StationFactory.createStove();
-    spawnEntityAt(stove, stovePos, true, false);
+    spawnEntityAt(stove, stovePos, false, false);
+    stove.setPosition(stove.getPosition().x + 2.7f , stove.getPosition().y + 1.3f);
   }
 
     /**
@@ -286,7 +288,7 @@ public class ForestGameArea extends GameArea {
       List<Bench> benches = new ArrayList<Bench>();
       benches.add(new Bench("bench3-5", 98, 224));
       benches.add(new Bench("bench7", 98, 25));
-      benches.add(new Bench("bench2", 96, 65));
+      benches.add(new Bench("bench2", 96, 72));
       benches.add(new Bench("bench6-bottom", 343,27));
       benches.add(new Bench("bench6-top", 343,131));
       benches.add(new Bench("bench4", 217, 160));
@@ -300,6 +302,8 @@ public class ForestGameArea extends GameArea {
 
   private Entity spawnPlayer() {
     Entity newPlayer = PlayerFactory.createPlayer();
+    // scale it
+    newPlayer.setScale(2.1f, 2.1f);
     spawnEntityAt(newPlayer, PLAYER_SPAWN, true, true);
     return newPlayer;
   }

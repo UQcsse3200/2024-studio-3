@@ -47,39 +47,47 @@ public class Bench extends Entity{
 
         float width  = 0;
         float height = 0;
-
+        float scalefactor = 8.91F;
         switch(type) {
             case "bench1":
                 width  = 15f;
-                height = 40f;
+                height = 44f;
+                scalefactor = 10.3f;
                 break;
             case "bench2":
                 width  = 15f;
                 height = 57f;
+                scalefactor = 11f;
                 break;
             case "bench3-5":
-                width  = 107f;
-                height = 15f;
+                width  = 104f;
+                height = 14f;
+                scalefactor = 8.91f;
                 break;
             case "bench4":
                 width  = 15f;
-                height = 39f;
+                height = 43.8f;
+                scalefactor = 10.3F;
                 break;
             case "bench6":
                 width  = 15f;
                 height = 105f;
+                scalefactor = 8.91F;
                 break;
             case "bench6-top":
-                width  = 15f;
-                height = 50f;
+                width  = 14.1f;
+                height = 48.9f;
+                scalefactor = 8.91F;
                 break;
             case "bench6-bottom":
-                width  = 15f;
-                height = 55f;
+                width  = 14.1f;
+                height = 53f;
+                scalefactor = 8.91F;
                 break;
             case "bench7":
-                width  = 107f;
+                width  = 106f;
                 height = 9f;
+                scalefactor = 8.91F;
         }
         if (width == 0 && height == 0) {
             throw new IllegalArgumentException(
@@ -91,7 +99,7 @@ public class Bench extends Entity{
 
 
         // magic scaling factor (it is about half a pixel off)
-        float scalefactor = 8.91F;
+       // float scalefactor = 8.91F;
         bench.setScale(width/scalefactor, height/scalefactor);
         // scaleY < 1 so that you can walk behind the benches
         PhysicsUtils.setScaledCollider(bench, 1, (height - 5) / height);
