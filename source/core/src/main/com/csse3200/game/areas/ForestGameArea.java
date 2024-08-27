@@ -150,11 +150,15 @@ public class ForestGameArea extends GameArea {
 
   }
 
+  /**
+   * Spawns the entry and exit doors of the restaurant
+   */
   private void spawnDoor() {
     float tileSize = terrain.getTileSize();
     GridPoint2 tileBounds = terrain.getMapBounds(0);
     Vector2 worldBounds = new Vector2(tileBounds.x * tileSize, tileBounds.y * tileSize);
 
+    //Entry door
     GridPoint2 position = new GridPoint2(0,(int)tileBounds.y-1);
     Entity door = ObstacleFactory.createDoor("top_door_left_part",tileSize);
     spawnEntityAt(door,position,true,false);
@@ -163,6 +167,7 @@ public class ForestGameArea extends GameArea {
     door = ObstacleFactory.createDoor("top_door_right_part",tileSize);
     spawnEntityAt(door,position,true,false);
 
+    //Exit door
     position = new GridPoint2(0,0);
     door = ObstacleFactory.createDoor("bottom_left_inv",tileSize);
     spawnEntityAt(door,position,true,false);
@@ -172,6 +177,9 @@ public class ForestGameArea extends GameArea {
     spawnEntityAt(door,position,true,false);
   }
 
+  /**
+   * Spawns the wall around the restaurant
+   */
   private void spawnWall() {
     float tileSize = terrain.getTileSize();
     GridPoint2 tileBounds = terrain.getMapBounds(0);
@@ -196,6 +204,9 @@ public class ForestGameArea extends GameArea {
 
   }
 
+  /**
+   * Renders a black border around the restaurant
+   */
   private void make_border(){
     float tileSize = terrain.getTileSize();
     GridPoint2 tileBounds = terrain.getMapBounds(0);

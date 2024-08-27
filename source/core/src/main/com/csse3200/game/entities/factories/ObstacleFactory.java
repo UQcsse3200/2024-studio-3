@@ -48,8 +48,10 @@ public class ObstacleFactory {
   }
 
   /**
-  * Used for creating a border around the restaurant
-  */
+   * Creates a border around the restaurant
+   * @param s Name of the border to be spawned
+   * @param tileSize Width of border according to the size of the tiles
+   */
   public static Entity createBorder(String s,float tileSize) {
     Entity border = new Entity()
             .addComponent(new TextureRenderComponent("images/frame/"+s+".png"));
@@ -57,6 +59,11 @@ public class ObstacleFactory {
     return border;
   }
 
+  /**
+   * Creats an entry and exit door
+   * @param s Name of door to be spawned
+   * @param tileSize Width of door according to the size of the tiles
+   */
   public static Entity createDoor(String s,float tileSize) {
     Entity door = new Entity()
             .addComponent(new TextureRenderComponent("images/frame/"+s+".png"));
