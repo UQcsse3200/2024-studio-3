@@ -80,7 +80,7 @@ public class MainGameOrderTicketDisplay extends UIComponent {
     }
 
     private float cntXval(int instanceCnt) {
-        return 20f + (instanceCnt - 1) * (distance + viewPortWidthMultiplier * 3f/32f);
+        return 20f + (instanceCnt - 1) * (distance + viewportWidth * 3f/32f);
     }
 
     public static void reorderDockets(int index) {
