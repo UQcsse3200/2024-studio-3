@@ -25,15 +25,18 @@ public class MealComponent extends ItemComponent {
 
     private int calculateQuality() {
         int qualityScore = 100;
-        int penalty = 0;
+        int penalty;
+        int penaltyCount = 0;
 
         for (IngredientComponent ingredient : ingredients) {
             String itemState = ingredient.getItemState();
 
             if (itemState.equals("burnt") || itemState.equals("raw")) {
-                penalty += (1 - (1 / ingredients.size()) / 2) * 100;
+                penaltyCount += 1;
             }
         }
+
+        penalty = (penaltyCount / ingredients.size()) * 100;
 
         return qualityScore - penalty;
     }

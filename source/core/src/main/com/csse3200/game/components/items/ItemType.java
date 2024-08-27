@@ -1,7 +1,15 @@
 package com.csse3200.game.components.items;
 
 public enum ItemType {
-    RAWFISH,
+    FISH,
+    BANANA,
     BEEF,
-    CHICKEN
+    CHICKEN,
+    ACAI,
+    LETTUCE,
+    CUCUMBER,
+    TOMATO,
+    STRAWBERRY,
+    CHOCOLATE,
+    FRUITSALAD
 }

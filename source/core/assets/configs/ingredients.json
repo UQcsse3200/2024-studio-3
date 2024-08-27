@@ -1,8 +1,8 @@
 {
   "name": "ingredients",
   "version": "1.0.0",
-  "fish": {
-    "itemName": "fish",
+  "acai": {
+    "itemName": "acai",
     "itemType": "ingredient",
     "weight": 10,
     "cookTime": 10,
@@ -15,8 +15,8 @@
     "cookTime": 10,
     "baseState": "RAW"
   },
-  "chicken": {
-    "itemName": "chicken",
+  "banana": {
+    "itemName": "banana",
     "itemType": "ingredient",
     "weight": 10,
     "cookTime": 10,
@@ -29,8 +29,8 @@
     "cookTime": 10,
     "baseState": "RAW"
   },
-  "potato": {
-    "itemName": "potato",
+  "cucumber": {
+    "itemName": "cucumber",
     "itemType": "ingredient",
     "weight": 10,
     "cookTime": 10,
@@ -43,15 +43,22 @@
     "cookTime": 10,
     "baseState": "RAW"
   },
-  "noodles": {
-    "itemName": "noodles",
+  "strawberry": {
+    "itemName": "strawberry",
     "itemType": "ingredient",
     "weight": 10,
     "cookTime": 10,
     "baseState": "RAW"
   },
-  "fruit": {
-    "itemName": "fruit",
+  "chocolate": {
+    "itemName": "chocolate",
+    "itemType": "ingredient",
+    "weight": 10,
+    "cookTime": 10,
+    "baseState": "RAW"
+  },
+  "fish": {
+    "itemName": "fish",
     "itemType": "ingredient",
     "weight": 10,
     "cookTime": 10,
