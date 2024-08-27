@@ -14,7 +14,7 @@ public class StationItemHandlerComponent extends Component {
      */
     private final String type;
     private StationInventoryComponent inventoryComponent;
-    private HashSet<String> acceptableItems = new HashSet<>();
+    private ArrayList<String> acceptableItems = new ArrayList<>();
 
     // General TODO:
     // Add trigger calls to external for failed interactions
@@ -30,6 +30,7 @@ public class StationItemHandlerComponent extends Component {
      */
     public StationItemHandlerComponent(String type, ArrayList<String> acceptableItems) {
         this.type = type;
+        this.acceptableItems = acceptableItems;
     }
 
     /**
