@@ -115,8 +115,10 @@ public class MainGameScreen extends ScreenAdapter {
 
 	@Override
 	public void render(float delta) {
+		if (!isPaused) {
 		physicsEngine.update();
 		ServiceLocator.getEntityService().update();
+		}
 		renderer.render();
 	}
 
