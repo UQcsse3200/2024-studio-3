@@ -32,6 +32,10 @@ public class ItemFactory {
         Entity fish = createTemplateItem()
                 .addComponent(new IngredientComponent("Fish", ItemType.FISH, 2, 10, cookedLevel))
                 .addComponent(new TextureRenderComponent(String.format("images/%s_fish.png", cookedLevel)));
+        /**
+         * Added this to allow the fish to change texture while cooking.
+         */
+        fish.addComponent(new CookIngredientComponent());
         PhysicsUtils.setScaledCollider(fish, 0.6f, 0.3f);
         fish.getComponent(ColliderComponent.class).setDensity(1.5f);
         fish.getComponent(TextureRenderComponent.class).scaleEntity();
@@ -47,6 +51,7 @@ public class ItemFactory {
         Entity beef = createTemplateItem()
                 .addComponent(new IngredientComponent("Beef", ItemType.BEEF, 2, 10, cookedLevel))
                 .addComponent(new TextureRenderComponent(String.format("images/%s_beef.png", cookedLevel)));
+        beef.addComponent(new CookIngredientComponent());
         PhysicsUtils.setScaledCollider(beef, 0.6f, 0.3f);
         beef.getComponent(ColliderComponent.class).setDensity(1.5f);
         beef.getComponent(TextureRenderComponent.class).scaleEntity();

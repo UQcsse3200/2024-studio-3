@@ -1,2 +1,83 @@
-package com.csse3200.game.events;public class CookingAndServingHandler {
+package com.csse3200.game.events;
+
+import com.csse3200.game.components.Component;
+import com.csse3200.game.components.items.IngredientComponent;
+import com.csse3200.game.components.items.ItemComponent;
+import com.csse3200.game.components.items.ItemType;
+import com.csse3200.game.rendering.TextureRenderComponent;
+import com.csse3200.game.services.GameTime;
+
+public class CookingAndServingHandler extends Component {
+
+    private IngredientComponent ingredient;
+    private final GameTime timeSource;
+    private boolean isCooking;
+    private long cookStartTime;
+
+    public CookingAndServingHandler(GameTime timeSource) {
+        this.timeSource = timeSource;
+    }
+
+    public void create() {
+
+        ingredient = entity.getComponent(IngredientComponent.class);
+        TextureRenderComponent textureRender = entity.getComponent(TextureRenderComponent.class);
+    }
+
+    private void updateImage() {
+
+        String texturePath;
+
+        switch (ingredient.getItemState()) {
+            case "cooked":
+                texturePath = String.format("images/cooked_%s.png", ingredient.getItemName().toLowerCase());
+                break;
+            case "burnt":
+                texturePath = String.format("images/burnt_%s.png", ingredient.getItemName().toLowerCase());
+            case "raw":
+            default:
+                texturePath = String.format("images/raw_%s.png", ingredient.getItemName().toLowerCase());
+                break;
+        }
+    }
+
+    private void deleteMeal() {
+        /**
+         * Disposes of meals once served to customers.
+         */
+        entity.dispose();
+        System.out.println("Meal Entity has served and removed from the game");
+    }
+
+    public void updateState() {
+
+        if (isCooking && ingredient != null) {
+            long currentTime = timeSource.getTime();
+            long elapsedTime = currentTime - cookStartTime;
+            /**
+             * Check if it's time to change the item's state
+             */
+            if (elapsedTime >= ingredient.getCookTime() * 1000L + 1500) {
+
+                if (!ingredient.getItemState().equals("burnt")) {
+                    ingredient.burnItem();
+                    System.out.println(ingredient.getItemName() + " has burnt!");
+                    updateImage();
+                }
+                /**
+                 * Need to implement a method to stop cooking the item/ingredient.
+                 */
+            } else if (elapsedTime >= ingredient.getCookTime() * 1000L) {
+
+                /**
+                 * Item has been cooked if the cooking time has passed.
+                 */
+                if (!ingredient.getItemState().equals("cooked")) {
+                    ingredient.cookItem();
+                    updateImage();
+
+                }
+            }
+        }
+    }
 }

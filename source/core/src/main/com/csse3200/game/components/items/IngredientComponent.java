@@ -30,4 +30,12 @@ public class IngredientComponent extends ItemComponent{
         this.itemState = "chopped";
     }
 
+    public void setItemState (String itemState) {
+        this.itemState = itemState;
+    }
+
+    public void rawItem() {
+        this.itemState = "raw";
+    }
+
 }
