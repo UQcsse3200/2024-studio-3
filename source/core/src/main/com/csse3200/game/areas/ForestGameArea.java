@@ -115,7 +115,7 @@ public class ForestGameArea extends GameArea {
     // Spawn the player
     player = spawnPlayer();
 
-//    playMusic();
+    playMusic();
   }
 
   private void displayUI() {
