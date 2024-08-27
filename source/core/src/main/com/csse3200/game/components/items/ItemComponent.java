@@ -4,20 +4,20 @@ import com.csse3200.game.components.Component;
 import java.util.UUID;
 
 public class ItemComponent extends Component {
-    private final String itemid;
+    private final String itemId;
     private final String itemName;
     private final int weight;
     private final ItemType itemType;
 
     public ItemComponent(String itemName, ItemType itemType, int weight) {
-        this.itemid = UUID.randomUUID().toString();
+        this.itemId = UUID.randomUUID().toString();
         this.itemName = itemName;
         this.weight = weight;
         this.itemType = itemType;
     }
 
-    public String getItemid() {
-        return this.itemid;
+    public String getItemId() {
+        return this.itemId;
     }
 
     public String getItemName() {
@@ -31,6 +31,5 @@ public class ItemComponent extends Component {
     public ItemType getItemType() {
         return this.itemType;
     }
-
 
 }

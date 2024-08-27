@@ -20,9 +20,18 @@ public class ItemFactory {
                 .addComponent(new HitboxComponent().setLayer(PhysicsLayer.PLAYER));
     }
 
-    public static Entity createRawFish() {
-        return createTemplateItem()
-                .addComponent(new TextureRenderComponent("images/raw_fish.png"))
-                .addComponent(new ItemComponent("Raw Fish", ItemType.RAWFISH, 2));
+    /**
+     * Create a fish item.
+     * @param cookedLevel - The level the fish is cooked at, can be "raw", "cooked" or "burnt".
+     * @return A fish entity.
+     */
+    public static Entity createFish(String cookedLevel) {
+        Entity fish = createTemplateItem()
+                .addComponent(new IngredientComponent("Fish",ItemType.RAWFISH, 2, 10, cookedLevel))
+                .addComponent(new TextureRenderComponent(String.format("images/%s_fish.png", cookedLevel)));
+        PhysicsUtils.setScaledCollider(fish, 0.6f, 0.3f);
+        fish.getComponent(ColliderComponent.class).setDensity(1.5f);
+        fish.getComponent(TextureRenderComponent.class).scaleEntity();
+        return fish;
     }
 }

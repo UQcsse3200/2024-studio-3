@@ -1,0 +1,60 @@
+{
+  "name": "ingredients",
+  "version": "1.0.0",
+  "fish": {
+    "itemName": "fish",
+    "itemType": "ingredient",
+    "weight": 10,
+    "cookTime": 10,
+    "baseState": "RAW"
+  },
+  "beef": {
+    "itemName": "beef",
+    "itemType": "ingredient",
+    "weight": 10,
+    "cookTime": 10,
+    "baseState": "RAW"
+  },
+  "chicken": {
+    "itemName": "chicken",
+    "itemType": "ingredient",
+    "weight": 10,
+    "cookTime": 10,
+    "baseState": "RAW"
+  },
+  "lettuce": {
+    "itemName": "lettuce",
+    "itemType": "ingredient",
+    "weight": 10,
+    "cookTime": 10,
+    "baseState": "RAW"
+  },
+  "potato": {
+    "itemName": "potato",
+    "itemType": "ingredient",
+    "weight": 10,
+    "cookTime": 10,
+    "baseState": "RAW"
+  },
+  "tomato": {
+    "itemName": "tomato",
+    "itemType": "ingredient",
+    "weight": 10,
+    "cookTime": 10,
+    "baseState": "RAW"
+  },
+  "noodles": {
+    "itemName": "noodles",
+    "itemType": "ingredient",
+    "weight": 10,
+    "cookTime": 10,
+    "baseState": "RAW"
+  },
+  "fruit": {
+    "itemName": "fruit",
+    "itemType": "ingredient",
+    "weight": 10,
+    "cookTime": 10,
+    "baseState": "RAW"
+  }
+}
