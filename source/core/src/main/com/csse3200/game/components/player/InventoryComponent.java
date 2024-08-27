@@ -16,7 +16,7 @@ import java.lang.IllegalArgumentException;
  */
 public class InventoryComponent extends Component {
   private static final Logger logger = LoggerFactory.getLogger(InventoryComponent.class);
-  private ArrayList<String> items; // String as a placeholder for future ItemComponent class
+  private ArrayList<ItemComponent> items;
   private int capacity; // maximum number of items that can be stored
   private int size;     // current number of items in the Inventory 
   private int selected; // index of currently selected item
@@ -39,7 +39,7 @@ public class InventoryComponent extends Component {
    * Returns the capacity of this inventory component. I.e. the
    * maximum number of items it can hold.
 
-   * @return - the set size of the inventory.
+   * @return - the set capacity of the inventory.
    */
   public int getCapacity() {
     return this.capacity;
@@ -88,7 +88,7 @@ public class InventoryComponent extends Component {
   }
 
   /**
-   * Returns the currently selected item of the inventory (N! as a string for now)
+   * Returns the currently selected item of the inventory
    * @return the item that is currently selected
    */
   public String getSelectedItem() {
@@ -97,11 +97,11 @@ public class InventoryComponent extends Component {
 
     /**
      * Returns an ArrayList containing the items stored in this
-     * InventoryComponent. Currently, these are represented as strings.
+     * InventoryComponent.
      * 
      * @return - an ArrayList containing items currently stored in the inventory.
      */
-  public ArrayList<String> getItems() {
+  public ArrayList<ItemComponent> getItems() {
       return (ArrayList) items.clone();
   }
 
@@ -131,7 +131,7 @@ public class InventoryComponent extends Component {
      * @return the item at index if it exists in the current inventory, null if there is nothing there.
      * @throws java.lang.IllegalArgumentException - if the given index is negative or out of bounds.
      */
-  public String getItemAt(int index) {
+  public ItemComponent getItemAt(int index) {
     if (index < 0 || index > capacity) {
       // index out of bounds
       throw new IllegalArgumentException(indexException);
@@ -146,7 +146,7 @@ public class InventoryComponent extends Component {
      * 
      * @return - the item at the first index of the Inventory if it exists, null otherwise.
      */
-  public String getItemFirst() {
+  public ItemComponent getItemFirst() {
     if (capacity > 0) {
       return items.getFirst();
     } 
@@ -158,7 +158,7 @@ public class InventoryComponent extends Component {
      * 
      * @return - the item at the last index of the Inventory if it exists, null otherwise.
      */
-  public String getItemLast() {
+  public ItemComponent getItemLast() {
     if (capacity > 0) {
       return items.getLast();
     }
@@ -171,7 +171,7 @@ public class InventoryComponent extends Component {
      * 
      * @param newCapacity the new capacity of the Inventory.
      */
-  public void increaseSize(int newCapacity) {
+  public void increaseCapacity(int newCapacity) {
     if (newCapacity > capacity) {
       for (int i = capacity; i < newCapacity; i++) {
         items.add(null);
@@ -186,7 +186,7 @@ public class InventoryComponent extends Component {
      * @param item - the item to search the Inventory for.
      * @return - true if there is at least one instance of item, false otherwise.
      */
-  public boolean find(String item) {
+  public boolean find(ItemComponent item) {
     return items.contains(item);
   }
 
@@ -195,7 +195,7 @@ public class InventoryComponent extends Component {
      * 
      * @param item - the item to be added to the Inventory.
      */
-  public void addItem(String item) {
+  public void addItem(ItemComponent item) {
     if (!this.isFull()) {
       int i = 0;
       while (items.get(i) != null) {
@@ -226,7 +226,7 @@ public class InventoryComponent extends Component {
      * @param index - the index where the item will be inserted.
      * @throws java.lang.IllegalArgumentException - if the given index is negative or out of bounds.
      */
-  public void addItemAt(String item, int index) {
+  public void addItemAt(ItemComponent item, int index) {
     if (index > capacity || index < 0) {
       // index out of bounds
       throw new IllegalArgumentException(indexException);
@@ -246,7 +246,7 @@ public class InventoryComponent extends Component {
      * @param index - the index where an item will be removed.
      * @throws java.lang.IllegalArgumentException - if the given index is negative or out of bounds.
      */
-  public String removeAt(int index) {
+  public ItemComponent removeAt(int index) {
     if (index < 0 || index > capacity) {
       // index out of bounds
       throw new IllegalArgumentException(indexException);
@@ -256,7 +256,7 @@ public class InventoryComponent extends Component {
   
     if (!this.isEmpty()) {
       // bingo, we can remove from this index
-      String item = items.get(index);
+      ItemComponent item = items.get(index);
       items.set(index, null);
       size--;
 
