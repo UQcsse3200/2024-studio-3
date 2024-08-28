@@ -54,6 +54,7 @@ public class CookIngredientComponentTest {
         cookIngredientComponent.cookIngredient("NORMAL", 1);
 
         verify(mockTimesource).getTime();
+        verify(mockIngredient).getCookTime();
         assertTrue(cookIngredientComponent.getIsCooking());
     }
 
@@ -64,9 +65,16 @@ public class CookIngredientComponentTest {
      */
     @Test
     public void testIngredientBecomesCooked() {
-        when(mockTimesource.getTime()).thenReturn(1000L, 2000L); // Simulate passage of time
+        when(mockTimesource.getTime()).thenReturn(1000L, 10000L); // Simulate passage of time
+        when(mockIngredient.getCookTime()).thenReturn(1); // Setting some cook time: 1 seconds
+
         cookIngredientComponent.cookIngredient("NORMAL", 1);
+        // cookEndTime = 1000L + 1 * 1000L * 1 = 2000
+
         cookIngredientComponent.update(); // This should trigger cooking
+        // 10000L return from timesource > cookEndTime
+
+        // ingredient is cooked
         verify(mockIngredient).cookItem();
     }
 
@@ -88,9 +96,19 @@ public class CookIngredientComponentTest {
      */
     @Test
     public void testIngredientBecomesBurnt() {
-        when(mockTimesource.getTime()).thenReturn(1000L, 16000L); // Simulate item being cooked and then overcooked
+        when(mockTimesource.getTime()).thenReturn(1000L, 20000L); // Simulate item being cooked and then overcooked
+        when(mockIngredient.getCookTime()).thenReturn(1);
+
         cookIngredientComponent.cookIngredient("NORMAL", 1);
-        cookIngredientComponent.update(); // This should trigger burning the item
+        // cookEndTime = 1000L + 1 * 1000L * 1 = 2000L = 2 seconds
+
+        cookIngredientComponent.update();
+        // This should trigger burning the item since
+        // current_time = 20000L, i.e., 20 seconds
+        // current_time - cookEndTime = 18 seconds
+        // More than 15 seconds have passed since ingredient was cooked
+        // So item is burnt
+
         verify(mockIngredient).burnItem();
         assertFalse(cookIngredientComponent.getIsCooking());
     }
