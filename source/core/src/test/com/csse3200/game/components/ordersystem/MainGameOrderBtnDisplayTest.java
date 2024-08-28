@@ -43,9 +43,6 @@ class MainGameOrderBtnDisplayTest {
     @Test
     void shouldCreateMainGameOrderBtnDisplayComponent() {
         when(ServiceLocator.getRenderService().getStage()).thenReturn(stage);
-        //when(ServiceLocator.getRenderService().getStage().getViewport()).thenReturn(viewport);
-        //when(ServiceLocator.getRenderService().getStage().getViewport().getCamera()).thenReturn(camera);
-        //when(ServiceLocator.getDocketService().getEvents()).thenReturn(eventHandler);
         MainGameOrderBtnDisplay createOrderBtn = new MainGameOrderBtnDisplay();
 
         Entity entity = new Entity();
