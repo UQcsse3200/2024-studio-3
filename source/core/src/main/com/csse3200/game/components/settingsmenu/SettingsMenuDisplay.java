@@ -6,6 +6,7 @@ import com.badlogic.gdx.Graphics.Monitor;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Event;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Array;
@@ -267,5 +268,10 @@ public class SettingsMenuDisplay extends UIComponent {
   public void dispose() {
     rootTable.clear();
     super.dispose();
+  }
+
+  @Override
+  public void setStage(Stage mock) {
+
   }
 }

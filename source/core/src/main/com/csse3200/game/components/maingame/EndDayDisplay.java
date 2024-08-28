@@ -3,6 +3,7 @@ package com.csse3200.game.components.maingame;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -85,5 +86,10 @@ public class EndDayDisplay extends UIComponent {
     @Override
     public void draw(SpriteBatch spriteBatch) {
         // Drawing logic if needed
+    }
+
+    @Override
+    public void setStage(Stage mock) {
+
     }
 }
