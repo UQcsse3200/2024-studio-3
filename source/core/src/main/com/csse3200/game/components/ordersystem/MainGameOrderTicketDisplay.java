@@ -2,11 +2,14 @@ package com.csse3200.game.components.ordersystem;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Cell;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.csse3200.game.components.maingame.MainGameExitDisplay;
 import com.csse3200.game.services.ServiceLocator;
@@ -227,16 +230,23 @@ public class MainGameOrderTicketDisplay extends UIComponent {
             Table table = tableArrayList.get(i);
             float xVal = cntXval(i + 1);
             float yVal = viewportHeight * viewPortHeightMultiplier;
-
+            Array<Cell> cells = table.getCells();
             if (i == tableArrayList.size() - 1) { // Tail docket
                 table.setSize(170f, 200f);
                 // Fixed position for enlarged docket
                 table.setPosition(xEnlargedArea, yVal + (viewPortHeightMultiplier * 19.28f)); // - (40 * viewPortHeightMultiplier)
                 // Apply enlarged font size
-
+                for (int j = 0; j < cells.size; j++) {
+                    Label label = (Label)cells.get(j).getActor();
+                    label.setFontScale(1f);
+                }
             } else { // Non-enlarged dockets
                 table.setSize(120f, 150f);
                 table.setPosition(xVal, yVal + (77.14f * viewPortHeightMultiplier));
+                for (int j = 0; j < cells.size; j++) {
+                    Label label = (Label)cells.get(j).getActor();
+                    label.setFontScale(0.7f);
+                }
             }
         }
     }
