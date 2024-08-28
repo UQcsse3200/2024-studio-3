@@ -59,7 +59,6 @@ public class OrderActions extends InputComponent {
      */
     @Override
     public boolean keyDown(int keycode) {
-        
     if (keycode == Keys.LEFT_BRACKET) {
         logger.info("Shift dockets left");
         ServiceLocator.getDocketService().getEvents().trigger("shiftDocketsLeft");
@@ -69,7 +68,6 @@ public class OrderActions extends InputComponent {
         ServiceLocator.getDocketService().getEvents().trigger("shiftDocketsRight");
         return true;
     }
-
     logger.info("pls work");
     return false;
     }

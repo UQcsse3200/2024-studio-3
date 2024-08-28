@@ -56,8 +56,6 @@ public class MainGameOrderTicketDisplay extends UIComponent {
 
         entity.getEvents().addListener("createOrder", this::addActors);
         logger.info("Listener added for createOrder event");
-        entity.getEvents().addListener("shiftDocketsLeft", this::shiftDocketsLeft);
-        entity.getEvents().addListener("shiftDocketsRight", this::shiftDocketsRight);
 
         ServiceLocator.getDocketService().getEvents().addListener("shiftDocketsLeft", this::shiftDocketsLeft);
         ServiceLocator.getDocketService().getEvents().addListener("shiftDocketsRight", this::shiftDocketsRight);
