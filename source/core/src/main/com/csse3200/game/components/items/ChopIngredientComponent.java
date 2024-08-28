@@ -68,6 +68,10 @@ public class ChopIngredientComponent extends Component {
         isChopping = false;
     }
 
+    public boolean getIsChopping() {
+        return isChopping;
+    }
+
 }
 
 
