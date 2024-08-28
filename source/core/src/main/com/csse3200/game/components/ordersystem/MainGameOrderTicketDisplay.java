@@ -6,6 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
+
 import com.badlogic.gdx.utils.TimeUtils;
 import com.csse3200.game.components.maingame.MainGameExitDisplay;
 import com.csse3200.game.services.ServiceLocator;
@@ -25,6 +26,7 @@ public class MainGameOrderTicketDisplay extends UIComponent {
     private static final long DEFAULT_TIMER = 10000;
     private static final float viewPortHeightMultiplier = 7f/9f;
     private static final float viewPortWidthMultiplier = 3f/32f;
+
     private static final float viewportHeight =
             ServiceLocator.getRenderService().getStage().getViewport().getCamera().viewportHeight;
     private static final float viewportWidth =
@@ -57,6 +59,13 @@ public class MainGameOrderTicketDisplay extends UIComponent {
 
     public void addActors() {
         logger.info("Adding a new order ticket");
+//        tableArrayList = new ArrayList<>();
+//        backgroundArrayList = new ArrayList<>();
+//        startTimeArrayList = new ArrayList<>();
+//        countdownLabelArrayList = new ArrayList<>();
+//    }
+//
+//    public void addActors() {
         Table table = new Table();
         long startTime = TimeUtils.millis();
         startTimeArrayList.add(startTime);
@@ -77,6 +86,13 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         Label orderNumbLabel = new Label(orderNumStr, skin);
         logger.info("New docket background added. Total backgrounds: {}", backgroundArrayList.size());
 
+//        table.setFillParent(false);
+//        table.setSize(viewportWidth * 3f/32f, 5f/27f * viewportHeight); //DEFAULT_HEIGHT
+//        float xVal = cntXval(tableArrayList.size());
+//        float yVal = viewportHeight * viewPortHeightMultiplier;
+//        table.setPosition(xVal, yVal);
+//        Docket background = new Docket();
+//        backgroundArrayList.add(background);
         Label recipeNameLabel = new Label("Recipe name", skin);
         Label ingredient1Label = new Label("Ingredient 1", skin);
         Label ingredient2Label = new Label("Ingredient 2", skin);
@@ -195,7 +211,7 @@ public class MainGameOrderTicketDisplay extends UIComponent {
                 // Fixed position for enlarged docket
                 table.setPosition(xEnlargedArea, yVal - 50);
                 // Apply enlarged font size
-            
+
             } else { // Non-enlarged dockets
                 table.setSize(120f, 150f);
                 table.setPosition(xVal, yVal);
@@ -229,7 +245,7 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         updateDocketPositions();
         updateDocketSizes();
     }
-    
+
 
     public void updateDocketDisplay() {
         // Implement logic to update the display
@@ -259,4 +275,12 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         countdownLabelArrayList.clear();
         super.dispose();
     }
+//    public void stageDispose(Docket background, Table table, int index) {
+//        table.setBackground((Drawable) null);
+//        table.clear();
+//        table.remove();
+//        ServiceLocator.getDocketService().getEvents().trigger("removeOrder", index);
+//        background.dispose();
+//        //dispose();
+//    }
 }

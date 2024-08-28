@@ -21,7 +21,6 @@ public class MainGameActions extends Component {
   private Entity ui;
   private MainGameOrderTicketDisplay docketDisplayer;
 
-
   public MainGameActions(GdxGame game) {
     this.game = game;
    
@@ -35,7 +34,6 @@ public class MainGameActions extends Component {
     docketDisplayer = new MainGameOrderTicketDisplay();
     ui.addComponent(docketDisplayer);
     ServiceLocator.getEntityService().register(ui);
-
   }
 
   /**
