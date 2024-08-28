@@ -33,6 +33,9 @@ public class SettingsMenuDisplay extends UIComponent {
   private CheckBox vsyncCheck;
   private Slider uiScaleSlider;
   private SelectBox<StringDecorator<DisplayMode>> displayModeSelect;
+  private TextField interactText;
+  private TextField recipeNavLeftText;
+  private TextField recipeNavRightText;
 
   public SettingsMenuDisplay(GdxGame game) {
     super();
@@ -91,6 +94,15 @@ public class SettingsMenuDisplay extends UIComponent {
     displayModeSelect.setItems(getDisplayModes(selectedMonitor));
     displayModeSelect.setSelected(getActiveMode(displayModeSelect.getItems()));
 
+    Label interactLabel = new Label("Interact:", skin);
+    interactText = new TextField(settings.interact, skin);
+
+    Label recipeNavLeftLabel = new Label("Recipe Navigate Left:", skin);
+    recipeNavLeftText = new TextField(settings.recipeNavLeft, skin);
+
+    Label recipleNavRightLabel = new Label("Recipe Navigate Right:", skin);
+    recipeNavRightText = new TextField(settings.recipeNavRight, skin);
+
     // Position Components on table
     Table table = new Table();
 
@@ -116,6 +128,18 @@ public class SettingsMenuDisplay extends UIComponent {
     table.row().padTop(10f);
     table.add(displayModeLabel).right().padRight(15f);
     table.add(displayModeSelect).left();
+
+    table.row().padTop(10f);
+    table.add(interactLabel).right().padRight(15f);
+    table.add(interactText).width(30).left();
+
+    table.row().padTop(10f);
+    table.add(recipeNavLeftLabel).right().padRight(15f);
+    table.add(recipeNavLeftText).width(30).left();
+
+    table.row().padTop(10f);
+    table.add(recipleNavRightLabel).right().padRight(15f);
+    table.add(recipeNavRightText).width(30).left();
 
     // Events on inputs
     uiScaleSlider.addListener(
