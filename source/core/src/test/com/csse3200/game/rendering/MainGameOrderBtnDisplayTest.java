@@ -48,7 +48,6 @@ public class MainGameOrderBtnDisplayTest {
 
     @Test
     public void testButtonCreation() {
-
         verify(mockStage).addActor(any(TextButton.class));
     }
 

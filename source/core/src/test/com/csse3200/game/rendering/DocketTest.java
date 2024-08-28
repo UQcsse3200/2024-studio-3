@@ -1,3 +1,5 @@
+package com.csse3200.game.rendering;
+
 import static org.junit.jupiter.api.Assertions.*;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -17,7 +19,7 @@ class DocketTest {
     void setUp() {
         Skin mockSkin = new Skin();
         Image mockImage = new Image();
-        docket = new Docket(mockSkin, mockImage);
+        //docket = new Docket(mockSkin, mockImage);
         docket2 = new Docket();
     }
 
