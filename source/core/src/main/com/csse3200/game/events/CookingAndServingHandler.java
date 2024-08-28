@@ -60,6 +60,10 @@ public class CookingAndServingHandler extends Component {
                 break;
         }
 
+        /**
+         * Dynamically updates textures for items based on their cooking state.
+         */
+        textureRender.setTexture(texturePath);
     }
     private void deleteMeal() {
         /**
