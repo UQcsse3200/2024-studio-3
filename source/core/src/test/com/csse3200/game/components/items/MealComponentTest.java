@@ -103,4 +103,75 @@ public class MealComponentTest {
         assertEquals(50, meal.getQuality());
     }
 
+    @Test
+    void setIngredientsTest() {
+        List<IngredientComponent> ingredients = new ArrayList<>();
+        ingredients.add(ingredient1);
+        ingredients.add(ingredient2);
+        ingredients.add(ingredient3);
+        MealComponent meal = new MealComponent("steakMeal", ItemType.STEAKMEAL, 32, ingredients,
+                25);
+        assertEquals(33, meal.getQuality());
+
+        List<IngredientComponent> newIngredients = new ArrayList<>();
+        newIngredients.add(ingredient7);
+        newIngredients.add(ingredient8);
+        meal.setIngredients(newIngredients);
+
+        assertEquals(2, meal.getIngredients().size());
+        assertEquals(50, meal.getQuality());
+    }
+
+    @Test
+    void addIngredientTest() {
+        List<IngredientComponent> ingredients = new ArrayList<>();
+        ingredients.add(ingredient9);
+        ingredients.add(ingredient8);
+
+        MealComponent meal = new MealComponent("fruitSalad", ItemType.FRUITSALAD, 20, ingredients,
+                15);
+        assertEquals(100, meal.getQuality());
+
+        meal.addIngredient(ingredient7);
+        assertEquals(3, meal.getIngredients().size());
+        assertEquals(67, meal.getQuality());
+    }
+
+    @Test
+    void deleteIngredientTest() {
+        List<IngredientComponent> ingredients = new ArrayList<>();
+        ingredients.add(ingredient7);
+        ingredients.add(ingredient8);
+        ingredients.add(ingredient9);
+
+        MealComponent meal = new MealComponent("bananaSplit", ItemType.BANANASPLIT, 32, ingredients,
+                18);
+        assertEquals(67, meal.getQuality());
+
+        meal.deleteIngredient(ingredient9);
+        assertEquals(2, meal.getIngredients().size());
+        assertEquals(50, meal.getQuality());
+    }
+
+    @Test
+    void emptyIngredientsTest() {
+        List<IngredientComponent> ingredients = new ArrayList<>();
+        MealComponent meal = new MealComponent("EmptyMealTester", ItemType.STEAKMEAL, 0, ingredients,
+                0);
+
+        assertEquals(0, meal.getQuality());
+    }
+
+    @Test
+    void setPriceTest() {
+        List<IngredientComponent> ingredients = new ArrayList<>();
+        ingredients.add(ingredient9);
+        ingredients.add(ingredient8);
+        MealComponent meal = new MealComponent("fruitSalad", ItemType.FRUITSALAD, 20, ingredients,
+                15);
+
+        meal.setPrice(25);
+        assertEquals(25, meal.getPrice());
+    }
+
 }
