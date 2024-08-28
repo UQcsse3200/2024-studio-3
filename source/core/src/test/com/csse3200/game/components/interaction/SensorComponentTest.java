@@ -152,6 +152,7 @@ class SensorComponentTest {
          assertNull(closestFixture, "Closest fixture should be null");
      }
 
+     @Test
      void shouldRemoveTargetAfterCollisionEnded() {
          Entity entity = createEntity(0, 0);
          Entity target = createTarget(0, 0);
