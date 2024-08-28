@@ -146,13 +146,13 @@ public class MainGameOrderTicketDisplay extends UIComponent {
             logger.warn("No dockets to shift left");
             return;
         }
-        Table firstTable = tableArrayList.remove(0);
-        tableArrayList.add(firstTable);
-        logger.info("First table moved to the end. New first table index: {}", tableArrayList.get(0));
+         Table firstTable = tableArrayList.remove(0);
+         tableArrayList.add(firstTable);
+         logger.info("First table moved to the end. New first table index: {}", tableArrayList.get(0));
 
-        Docket firstDocket = backgroundArrayList.remove(0);
-        backgroundArrayList.add(firstDocket);
-        logger.info("First docket background moved to the end. New first docket index: {}", backgroundArrayList.get(0));
+         Docket firstDocket = backgroundArrayList.remove(0);
+         backgroundArrayList.add(firstDocket);
+         logger.info("First docket background moved to the end. New first docket index: {}", backgroundArrayList.get(0));
 
          Long firstStartTime = startTimeArrayList.remove(0);
          startTimeArrayList.add(firstStartTime);
