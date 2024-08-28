@@ -19,7 +19,6 @@ import static org.mockito.Mockito.*;
 @ExtendWith(GameExtension.class)
 public class CookingComponentTest {
     private Entity testEntity;
-    private EventHandler testEvents;
     private StationInventoryComponent inventoryComponent;
     private StationItemHandlerComponent handlerComponent;
     private CookingComponent cookingComponent;
@@ -32,7 +31,6 @@ public class CookingComponentTest {
         MockitoAnnotations.openMocks(this);
 
         testEntity = new Entity();
-        // testEvents = mock(EventHandler.class);
 
         inventoryComponent = new StationInventoryComponent();
         testEntity.addComponent(inventoryComponent);
@@ -53,17 +51,14 @@ public class CookingComponentTest {
 
     @Test
     void testAddOneItem() {
-        handlerComponent.giveItem("banana");
-        cookingComponent.addItem();
+        testEntity.getEvents().trigger("give station item", "banana");
         assertFalse(cookingComponent.isCooking());
     }
 
     @Test
     void testRemoveItem() {
-        handlerComponent.giveItem("acai");
-        cookingComponent.addItem();
-        handlerComponent.giveItem("banana");
-        cookingComponent.addItem();
+        testEntity.getEvents().trigger("give station item", "acai");
+        testEntity.getEvents().trigger("give station item", "banana");
         assertTrue(cookingComponent.isCooking());
         cookingComponent.removeItem();
         assertFalse(cookingComponent.isCooking());
