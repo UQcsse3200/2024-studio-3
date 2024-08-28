@@ -12,8 +12,11 @@ public class CookingAndServingHandler extends Component {
     private final GameTime timeSource;
     private boolean isCooking;
     private long cookStartTime;
-
     private boolean isServed;
+
+    public boolean isCooking() {
+        return isCooking;
+    }
 
     public CookingAndServingHandler(GameTime timeSource) {
         this.timeSource = timeSource;
@@ -77,7 +80,6 @@ public class CookingAndServingHandler extends Component {
             System.out.println("Meal cannot be served yet. It is not ready.");
 
         }
-        
     }
     private void deleteMeal() {
         /**

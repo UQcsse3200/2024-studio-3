@@ -73,7 +73,6 @@ public class IngredientComponent extends ItemComponent{
             throw new UnsupportedOperationException("This item is not choppable.");
         }
     }
-
     public void setItemState (String itemState) {
         this.itemState = itemState;
     }

@@ -4,7 +4,6 @@ public enum ItemType {
     FISH,
     BANANA,
     BEEF,
-    CHICKEN,
     ACAI,
     LETTUCE,
     CUCUMBER,
@@ -16,5 +15,4 @@ public enum ItemType {
     SALAD,
     STEAKMEAL,
     BANANASPLIT,
-    RAW_FOOD
 }
