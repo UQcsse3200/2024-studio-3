@@ -21,6 +21,10 @@ public class CookIngredientComponentTest {
     private Entity mockEntity;
     private EventHandler mockEvents;
 
+    /**
+     * Sets up the test environment by initializing the necessary mock objects and
+     * registering the time source, executed before each test.
+     */
     @BeforeEach
     public void setUp() {
         mockEntity = mock(Entity.class);
@@ -38,6 +42,11 @@ public class CookIngredientComponentTest {
         cookIngredientComponent.create();
     }
 
+    /**
+     * Tests that cooking starts when the `cookIngredient` method is called with the "NORMAL"
+     * station state and an oven multiplier of 1. The test verifies that the cooking process
+     * is initiated by checking that `getIsCooking()` returns true.
+     */
     @Test
     public void testCookingStarts() {
         when(mockTimesource.getTime()).thenReturn(1000L); // Simulate game time
@@ -48,6 +57,11 @@ public class CookIngredientComponentTest {
         assertTrue(cookIngredientComponent.getIsCooking());
     }
 
+    /**
+     * Tests that the ingredient becomes cooked after the appropriate cooking time has passed.
+     * The test simulates the passage of time and verifies that the `cookItem` method on the
+     * ingredient component is called.
+     */
     @Test
     public void testIngredientBecomesCooked() {
         when(mockTimesource.getTime()).thenReturn(1000L, 2000L); // Simulate passage of time
@@ -56,6 +70,10 @@ public class CookIngredientComponentTest {
         verify(mockIngredient).cookItem();
     }
 
+    /**
+     * Tests that the cooking process stops when the `stopCookingIngredient` method is called.
+     * The test verifies that `getIsCooking()` returns false after stopping the cooking process.
+     */
     @Test
     public void testStopCooking() {
         cookIngredientComponent.cookIngredient("NORMAL", 1);
@@ -63,6 +81,11 @@ public class CookIngredientComponentTest {
         assertFalse(cookIngredientComponent.getIsCooking());
     }
 
+    /**
+     * Tests that the ingredient becomes burnt if sufficient time has passed after cooking.
+     * The test simulates the passage of time and verifies that the `burnItem` method on the
+     * ingredient component is called and that the cooking process is stopped.
+     */
     @Test
     public void testIngredientBecomesBurnt() {
         when(mockTimesource.getTime()).thenReturn(1000L, 16000L); // Simulate item being cooked and then overcooked
