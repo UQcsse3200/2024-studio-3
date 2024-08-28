@@ -97,7 +97,7 @@ public class IngredientComponentTest {
         IngredientComponent ingredient = new IngredientComponent("Banana", ItemType.BANANA, 1, 0,
                 5, "raw");
         try {
-            ingredient.cookItem();
+            ingredient.burnItem();
             fail("Expected UnsupportedOperationException to be thrown");
         } catch (UnsupportedOperationException e) {
             assertEquals("This item is not able to be burnt.", e.getMessage());
@@ -105,7 +105,7 @@ public class IngredientComponentTest {
     }
 
     @Test
-    void chopItemTest() {
+    void chopItemUnsupportedOperationExceptionTest() {
         IngredientComponent ingredient = new IngredientComponent("Beef", ItemType.BEEF, 10, 5,
                 0, "raw");
         try {
@@ -117,7 +117,7 @@ public class IngredientComponentTest {
     }
 
     @Test
-    void chopItemUnsupportedOperationExceptionTest() {
+    void chopItemTest() {
         IngredientComponent ingredient = new IngredientComponent("Banana", ItemType.BANANA, 1, 0,
                 5, "raw");
         ingredient.chopItem();
