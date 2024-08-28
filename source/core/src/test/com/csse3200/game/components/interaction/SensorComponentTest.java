@@ -152,6 +152,27 @@ class SensorComponentTest {
          assertNull(closestFixture, "Closest fixture should be null");
      }
 
+     void shouldRemoveTargetAfterCollisionEnded() {
+         Entity entity = createEntity(0, 0);
+         Entity target = createTarget(0, 0);
+
+         Fixture entityFixture = entity.getComponent(InteractionComponent.class).getFixture();
+         Fixture targetFixture = target.getComponent(InteractionComponent.class).getFixture();
+
+         sensorComponent.onCollisionStart(entityFixture, targetFixture);
+
+         Fixture closestFixture = sensorComponent.getClosestFixture();
+         assertNotNull(closestFixture, "Closest fixture should not be null");
+         assertEquals(targetFixture, closestFixture, "The closest fixture should be the target's fixture");
+
+         // Move the entity out of collision box
+         entity.setPosition(20, 20);
+         sensorComponent.onCollisionEnd(entityFixture, targetFixture);
+
+         closestFixture = sensorComponent.getClosestFixture();
+         assertNull(closestFixture, "Closest fixture should now be null");
+     }
+
     private Entity createEntity(float x, float y) {
         Entity entity = new Entity();
         entity.setPosition(x, y);
