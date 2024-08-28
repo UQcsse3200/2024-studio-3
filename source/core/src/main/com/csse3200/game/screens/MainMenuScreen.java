@@ -18,6 +18,8 @@ import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Arrays;
+
 /**
  * The game screen containing the main menu.
  */
@@ -79,7 +81,7 @@ public class MainMenuScreen extends ScreenAdapter {
   private void loadAssets() {
     logger.debug("Loading assets");
     ResourceService resourceService = ServiceLocator.getResourceService();
-    resourceService.loadTextures(mainMenuTextures);
+    resourceService.loadTextures(Arrays.toString(mainMenuTextures));
     ServiceLocator.getResourceService().loadAll();
   }
 

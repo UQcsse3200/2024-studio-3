@@ -41,6 +41,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.csse3200.game.components.ordersystem.DocketLineDisplay;
 
+import java.util.Arrays;
+
 /**
  * The game screen containing the main game.
  *
@@ -132,7 +134,7 @@ public class MainGameScreen extends ScreenAdapter {
 	private void loadAssets() {
 		logger.debug("Loading assets");
 		ResourceService resourceService = ServiceLocator.getResourceService();
-		resourceService.loadTextures(mainGameTextures);
+		resourceService.loadTextures(Arrays.toString(mainGameTextures));
 		ServiceLocator.getResourceService().loadAll();
 	}
 

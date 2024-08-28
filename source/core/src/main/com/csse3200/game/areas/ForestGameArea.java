@@ -20,13 +20,9 @@ import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.utils.math.GridPoint2Utils;
 import com.csse3200.game.utils.math.RandomUtils;
 
-<<<<<<< HEAD
-import java.util.Arrays;
-=======
-import java.sql.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
->>>>>>> 2a6e38c0049543d80f6ee1e926d903ad7702ecd9
 
 /** Forest area for the demo game with trees, a player, and some enemies. */
 public class ForestGameArea extends GameArea {
