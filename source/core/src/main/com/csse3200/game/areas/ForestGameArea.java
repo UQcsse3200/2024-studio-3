@@ -281,6 +281,10 @@ public class ForestGameArea extends GameArea {
     return newAcai;
   }
 
+  /**
+   * Spawn a FruitSalad item.
+   * @return A FruitSalad entity.
+   */
   private Entity spawnFruitSalad() {
     Entity newFruitSalad = ItemFactory.createFruitSalad();
     spawnEntityAt(newFruitSalad, new GridPoint2(16, 16), true, true);
@@ -288,6 +292,10 @@ public class ForestGameArea extends GameArea {
     return newFruitSalad;
   }
 
+  /**
+   * Spawn an AcaiBowl item.
+   * @return An AcaiBowl entity.
+   */
   private Entity spawnAcaiBowl() {
     Entity newAcaiBowl = ItemFactory.createAcaiBowl();
     spawnEntityAt(newAcaiBowl, new GridPoint2(16, 10), true, true);
@@ -295,6 +303,10 @@ public class ForestGameArea extends GameArea {
     return newAcaiBowl;
   }
 
+  /**
+   * Spawn a Salad item.
+   * @return A Salad entity.
+   */
   private Entity spawnSalad() {
     Entity newSalad = ItemFactory.createSalad();
     spawnEntityAt(newSalad, new GridPoint2(13, 10), true, true);
@@ -302,6 +314,10 @@ public class ForestGameArea extends GameArea {
     return newSalad;
   }
 
+  /**
+   * Spawn a SteakMeal item.
+   * @return A SteakMeal entity.
+   */
   private Entity spawnSteakMeal() {
     Entity newSteakMeal = ItemFactory.createSteakMeal();
     spawnEntityAt(newSteakMeal, new GridPoint2(10, 9), true, true);
@@ -309,6 +325,10 @@ public class ForestGameArea extends GameArea {
     return newSteakMeal;
   }
 
+  /**
+   * Spawn a BananaSplit item.
+   * @return A BananaSplit entity.
+   */
   private Entity spawnBananaSplit() {
     Entity newBananaSplit = ItemFactory.createBananaSplit();
     spawnEntityAt(newBananaSplit, new GridPoint2(14, 12), true, true);
