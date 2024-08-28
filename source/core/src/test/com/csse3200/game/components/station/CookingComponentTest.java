@@ -4,6 +4,7 @@ import com.csse3200.game.events.EventHandler;
 import com.csse3200.game.extensions.GameExtension;
 import com.csse3200.game.services.GameTime;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.services.ServiceLocator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -18,17 +19,19 @@ import static org.mockito.Mockito.*;
 
 @ExtendWith(GameExtension.class)
 public class CookingComponentTest {
+    private GameTime mockTime;
     private Entity testEntity;
     private StationInventoryComponent inventoryComponent;
     private StationItemHandlerComponent handlerComponent;
     private CookingComponent cookingComponent;
 
-    private GameTime mockTime;
-
 
     @BeforeEach
     void init() {
         MockitoAnnotations.openMocks(this);
+
+        mockTime = mock(GameTime.class);
+        ServiceLocator.registerTimeSource(mockTime);
 
         testEntity = new Entity();
 
@@ -45,8 +48,6 @@ public class CookingComponentTest {
         testEntity.addComponent(cookingComponent);
 
         testEntity.create();
-
-        mockTime = mock(GameTime.class);
     }
 
     /**
@@ -80,22 +81,22 @@ public class CookingComponentTest {
         assertEquals("OVEN", handlerComponent.getType());
     }
 
-    /**
     @Test
     void testUpdateCooking() {
-        cookingComponent.addItem();
+        testEntity.getEvents().trigger("give station item", "acai");
+        testEntity.getEvents().trigger("give station item", "banana");
+
         when(mockTime.getDeltaTime()).thenReturn((float) 500L);
         cookingComponent.update();
         assertEquals(9500L, cookingComponent.getCookingTime());
-
         cookingComponent.update();
         assertEquals(9000, cookingComponent.getCookingTime());
     }
 
     @Test
     void testGetCookingTime() {
-        cookingComponent.addItem();
+        testEntity.getEvents().trigger("give station item", "acai");
+        testEntity.getEvents().trigger("give station item", "banana");
         assertEquals(10000, cookingComponent.getCookingTime());
     }
-    **/
 }
