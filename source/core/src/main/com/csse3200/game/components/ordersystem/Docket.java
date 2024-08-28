@@ -82,7 +82,4 @@ public class Docket extends UIComponent {
     public String getCurrentTextureName() {
         return docket.getDrawable() != null ? docket.getDrawable().toString() : "none";
     }
-
-
 }
-

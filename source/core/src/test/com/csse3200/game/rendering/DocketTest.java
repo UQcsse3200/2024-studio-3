@@ -1,5 +1,3 @@
-package com.csse3200.game.rendering;
-
 import static org.junit.jupiter.api.Assertions.*;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -43,4 +41,3 @@ class DocketTest {
         assertEquals(4, textureNameArray.length, "Texture name array should have a length of 4.");
     }
 }
-
