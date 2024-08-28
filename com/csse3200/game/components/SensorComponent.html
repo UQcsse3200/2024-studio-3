@@ -164,11 +164,15 @@ loadScripts(document, 'script');</script>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#onCollisionEnd(com.badlogic.gdx.physics.box2d.Fixture,com.badlogic.gdx.physics.box2d.Fixture)" class="member-name-link">onCollisionEnd</a><wbr>(com.badlogic.gdx.physics.box2d.Fixture&nbsp;me,
  com.badlogic.gdx.physics.box2d.Fixture&nbsp;other)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Called when a collision has ended between 2 fixtures</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#onCollisionStart(com.badlogic.gdx.physics.box2d.Fixture,com.badlogic.gdx.physics.box2d.Fixture)" class="member-name-link">onCollisionStart</a><wbr>(com.badlogic.gdx.physics.box2d.Fixture&nbsp;me,
  com.badlogic.gdx.physics.box2d.Fixture&nbsp;other)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Called when the component collides with another collider</div>
+</div>
 </div>
 </div>
 </div>
@@ -252,6 +256,12 @@ loadScripts(document, 'script');</script>
 <h3>onCollisionStart</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">onCollisionStart</span><wbr><span class="parameters">(com.badlogic.gdx.physics.box2d.Fixture&nbsp;me,
  com.badlogic.gdx.physics.box2d.Fixture&nbsp;other)</span></div>
+<div class="block">Called when the component collides with another collider</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>me</code> - Should be the fixture that got collided with - aka this sensor component</dd>
+<dd><code>other</code> - The fixture that collided with this component</dd>
+</dl>
 </section>
 </li>
 <li>
@@ -259,6 +269,12 @@ loadScripts(document, 'script');</script>
 <h3>onCollisionEnd</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">onCollisionEnd</span><wbr><span class="parameters">(com.badlogic.gdx.physics.box2d.Fixture&nbsp;me,
  com.badlogic.gdx.physics.box2d.Fixture&nbsp;other)</span></div>
+<div class="block">Called when a collision has ended between 2 fixtures</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>me</code> - Should be the fixture that got collided with - aka this sensor component</dd>
+<dd><code>other</code> - The fixture that this component stopped colliding with</dd>
+</dl>
 </section>
 </li>
 <li>
