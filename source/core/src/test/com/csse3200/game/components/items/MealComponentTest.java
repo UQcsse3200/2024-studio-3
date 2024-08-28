@@ -16,6 +16,7 @@ public class MealComponentTest {
     private IngredientComponent ingredient1;
     private IngredientComponent ingredient2;
     private IngredientComponent ingredient3;
+    private IngredientComponent ingredient4;
 
     @BeforeEach
     void setUp() {
@@ -26,6 +27,7 @@ public class MealComponentTest {
                 "cooked");
         ingredient3 = new IngredientComponent("Beef", ItemType.BEEF, 12, 10, 0,
                 "burnt");
+        ingredient4 = new IngredientComponent("Lettuce", ItemType.LETTUCE, 5, 0, 0, "raw");
     }
 
     @Test
