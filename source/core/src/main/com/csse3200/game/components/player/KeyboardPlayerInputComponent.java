@@ -114,6 +114,11 @@ public class KeyboardPlayerInputComponent extends InputComponent {
    */
   private void startInteraction() {
     isInteracting = !isInteracting;
+  
+    if (isInteracting) {
+      walkDirection.set(Vector2.Zero); 
+      triggerWalkEvent();             
+    }
   }
 
   private void whenInteractionEnds() {
