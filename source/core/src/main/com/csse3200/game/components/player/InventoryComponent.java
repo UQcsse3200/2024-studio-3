@@ -121,7 +121,7 @@ public class InventoryComponent extends Component {
      * @return - true if the ArrayList is empty, true otherwise.
      */
   public boolean isEmpty() {
-    return size > 0;
+    return size == 0;
   }
 
     /**
