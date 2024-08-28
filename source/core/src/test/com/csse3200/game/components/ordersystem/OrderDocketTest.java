@@ -9,6 +9,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import com.csse3200.game.services.DocketService;
 import com.csse3200.game.input.InputService;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 
 import static org.junit.jupiter.api.Assertions.*;
