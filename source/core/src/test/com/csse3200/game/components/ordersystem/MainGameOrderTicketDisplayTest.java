@@ -79,13 +79,11 @@ class MainGameOrderTicketDisplayTest {
         }
         orderTicketDisplay.updateDocketSizes();
         Table lastTable = MainGameOrderTicketDisplay.getTableArrayList().get(MainGameOrderTicketDisplay.getTableArrayList().size() - 1);
-        assertEquals(170f, lastTable.getWidth(), 0.1f);
-        assertEquals(200f, lastTable.getHeight(), 0.1f);
+        assertEquals(170f * (orderTicketDisplay.getViewportWidth()/1920f), lastTable.getWidth(), 0.1f);
+        assertEquals(200f * (orderTicketDisplay.getViewportHeight()/1080f), lastTable.getHeight(), 0.1f);
 
         float expectedX = orderTicketDisplay.getViewportWidth() - 260f;
-        float expectedY =
-                orderTicketDisplay.getViewportHeight() * orderTicketDisplay.getViewPortHeightMultiplier()
-                        + orderTicketDisplay.getViewPortHeightMultiplier() * 19.28f;
+        float expectedY = 900f * (orderTicketDisplay.getViewportHeight()/1080f);
 
         assertEquals(expectedX, lastTable.getX(), 0.1f);
         assertEquals(expectedY, lastTable.getY(), 0.1f);
@@ -98,13 +96,14 @@ class MainGameOrderTicketDisplayTest {
         orderTicketDisplay.updateDocketSizes();
         Table singleTable = MainGameOrderTicketDisplay.getTableArrayList().get(0);
 
-        assertEquals(170f, singleTable.getWidth(), 0.1f, "Docket width is incorrect.");
-        assertEquals(200f, singleTable.getHeight(), 0.1f, "Docket height is incorrect.");
+        assertEquals(
+                170f * (orderTicketDisplay.getViewportWidth()/1920f), singleTable.getWidth(),
+                        0.1f, "Docket width is incorrect.");
+        assertEquals(200f * (orderTicketDisplay.getViewportHeight()/1080f), singleTable.getHeight(),
+                        0.1f, "Docket height is incorrect.");
 
         float expectedX = orderTicketDisplay.getViewportWidth() - 260f; //orderTicketDisplay.getViewportWidth() - 260f
-        float expectedY =
-                orderTicketDisplay.getViewportHeight() * orderTicketDisplay.getViewPortHeightMultiplier()
-                        + orderTicketDisplay.getViewPortHeightMultiplier() * 19.28f;
+        float expectedY = 900f * (orderTicketDisplay.getViewportHeight()/1080f);
 
         assertEquals(expectedX, singleTable.getX(), 0.1f, "Docket X position is incorrect.");
         assertEquals(expectedY, singleTable.getY(), 0.1f, "Docket Y position is incorrect.");
@@ -119,8 +118,8 @@ class MainGameOrderTicketDisplayTest {
         orderTicketDisplay.updateDocketSizes();
         for (int i = 0; i < orderTicketDisplay.getTableArrayList().size() - 1; i++) {
             Table table = orderTicketDisplay.getTableArrayList().get(i);
-            assertEquals(120f, table.getWidth(), 0.1f);
-            assertEquals(150f, table.getHeight(), 0.1f);
+            assertEquals(120f * (orderTicketDisplay.getViewportWidth()/1920f), table.getWidth(), 0.1f);
+            assertEquals(150f * (orderTicketDisplay.getViewportHeight()/1080f), table.getHeight(), 0.1f);
         }
     }
 }
