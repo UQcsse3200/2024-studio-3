@@ -123,4 +123,21 @@ public class IngredientComponentTest {
         ingredient.chopItem();
         assertEquals("chopped", ingredient.getItemState());
     }
+
+    @Test
+    void setItemStateTest() {
+        IngredientComponent ingredient = new IngredientComponent("Beef", ItemType.BEEF, 10, 5,
+                0, "raw");
+        ingredient.setItemState("cooked");
+        assertEquals("cooked", ingredient.getItemState());
+    }
+
+    @Test
+    void rawItemTest() {
+        IngredientComponent ingredient = new IngredientComponent("Beef", ItemType.BEEF, 10, 5,
+                0, "cooked");
+        ingredient.rawItem();
+        assertEquals("raw", ingredient.getItemState());
+    }
+
 }
