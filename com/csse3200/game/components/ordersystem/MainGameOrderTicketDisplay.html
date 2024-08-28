@@ -101,7 +101,10 @@ loadScripts(document, 'script');</script>
 <hr>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">MainGameOrderTicketDisplay</span>
 <span class="extends-implements">extends <a href="../../ui/UIComponent.html" title="class in com.csse3200.game.ui">UIComponent</a></span></div>
-<div class="block">Displays Order Ticket at Main Game screen to the Main Menu screen.</div>
+<div class="block">Displays order tickets on the main game screen. This class manages the
+ creation, positioning, and updating of order tickets, as well as shifting
+ them left or right in response to user actions. It also handles the
+ countdown timers for each order and disposes of them when the timer expires.</div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -125,8 +128,10 @@ loadScripts(document, 'script');</script>
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Constructor</div>
 <div class="table-header col-last">Description</div>
-<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E()" class="member-name-link">MainGameOrderTicketDisplay</a>()</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(java.lang.String)" class="member-name-link">MainGameOrderTicketDisplay</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;recipeName)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Constructs an MainGameOrderTicketDisplay instance</div>
+</div>
 </div>
 </section>
 </li>
@@ -143,39 +148,81 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#addActors()" class="member-name-link">addActors</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Adds a new order ticket to the display and sets its initial position and size.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#create()" class="member-name-link">create</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Called when the entity is created and registered.</div>
+<div class="block">Initialises the display and sets up event listeners for creating and shifting orders.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#dispose()" class="member-name-link">dispose</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Called when the component is disposed.</div>
+<div class="block">Disposes of all resources associated with the order tickets, including clearing and removing tables from the stage.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#draw(com.badlogic.gdx.graphics.g2d.SpriteBatch)" class="member-name-link">draw</a><wbr>(com.badlogic.gdx.graphics.g2d.SpriteBatch&nbsp;batch)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Draw the renderable.</div>
+<div class="block">Draws the order tickets on the screen.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/ArrayList.html" title="class or interface in java.util" class="external-link">ArrayList</a><wbr>&lt;com.badlogic.gdx.scenes.scene2d.ui.Table&gt;</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getTableArrayList()" class="member-name-link">getTableArrayList</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Returns the list of tables used for displaying order tickets.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>float</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getViewportHeight()" class="member-name-link">getViewportHeight</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Returns the viewportHeight.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>float</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getViewPortHeightMultiplier()" class="member-name-link">getViewPortHeightMultiplier</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Returns the viewportHeightMultiplayer.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>float</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getViewportWidth()" class="member-name-link">getViewportWidth</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Returns the viewportWidth.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>float</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getZIndex()" class="member-name-link">getZIndex</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Z index controls rendering order within a layer.</div>
+<div class="block">Returns the z-index for this component.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#reorderDockets(int)" class="member-name-link">reorderDockets</a><wbr>(int&nbsp;index)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Reorders the dockets after one is removed or shifted.</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#stageDispose(com.csse3200.game.components.ordersystem.Docket,com.badlogic.gdx.scenes.scene2d.ui.Table,int)" class="member-name-link">stageDispose</a><wbr>(<a href="Docket.html" title="class in com.csse3200.game.components.ordersystem">Docket</a>&nbsp;background,
- com.badlogic.gdx.scenes.scene2d.ui.Table&nbsp;table,
- int&nbsp;index)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setStage(com.badlogic.gdx.scenes.scene2d.Stage)" class="member-name-link">setStage</a><wbr>(com.badlogic.gdx.scenes.scene2d.Stage&nbsp;stage)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#shiftDocketsLeft()" class="member-name-link">shiftDocketsLeft</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">* Shifts the order tickets to the left by moving the first ticket to the end of the list.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#shiftDocketsRight()" class="member-name-link">shiftDocketsRight</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Shifts the order tickets to the right by moving the last ticket to the beginning of the list.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#update()" class="member-name-link">update</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Called once per frame of the game, and should be used for most component logic.</div>
+<div class="block">Updates the state of all order tickets, including countdown timers and their positions on the screen.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#updateDocketDisplay()" class="member-name-link">updateDocketDisplay</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Updates the display for all dockets.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#updateDocketSizes()" class="member-name-link">updateDocketSizes</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Updates the sizes of all dockets.</div>
 </div>
 </div>
 </div>
@@ -210,9 +257,14 @@ loadScripts(document, 'script');</script>
 <h2>Constructor Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="&lt;init&gt;()">
+<section class="detail" id="&lt;init&gt;(java.lang.String)">
 <h3>MainGameOrderTicketDisplay</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">MainGameOrderTicketDisplay</span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">MainGameOrderTicketDisplay</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;recipeName)</span></div>
+<div class="block">Constructs an MainGameOrderTicketDisplay instance</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>recipeName</code> - the name of the recipe to be displayed</dd>
+</dl>
 </section>
 </li>
 </ul>
@@ -227,9 +279,7 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="create()">
 <h3>create</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">create</span>()</div>
-<div class="block"><span class="description-from-type-label">Description copied from class:&nbsp;<code><a href="../Component.html#create()">Component</a></code></span></div>
-<div class="block">Called when the entity is created and registered. Initial logic such as calls to GetComponent
- should be made here, not in the constructor which is called before an entity is finished.</div>
+<div class="block">Initialises the display and sets up event listeners for creating and shifting orders.</div>
 <dl class="notes">
 <dt>Overrides:</dt>
 <dd><code><a href="../../ui/UIComponent.html#create()">create</a></code>&nbsp;in class&nbsp;<code><a href="../../ui/UIComponent.html" title="class in com.csse3200.game.ui">UIComponent</a></code></dd>
@@ -240,21 +290,50 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="addActors()">
 <h3>addActors</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">addActors</span>()</div>
+<div class="block">Adds a new order ticket to the display and sets its initial position and size.
+ Initialises the background, labels, and countdown timer for the order.</div>
 </section>
 </li>
 <li>
 <section class="detail" id="reorderDockets(int)">
 <h3>reorderDockets</h3>
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">reorderDockets</span><wbr><span class="parameters">(int&nbsp;index)</span></div>
+<div class="block">Reorders the dockets after one is removed or shifted.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>index</code> - the index of the docket that was removed or shifted.</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="shiftDocketsLeft()">
+<h3>shiftDocketsLeft</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">shiftDocketsLeft</span>()</div>
+<div class="block">* Shifts the order tickets to the left by moving the first ticket to the end of the list.
+ Updates the positions and sizes of all tickets.</div>
+</section>
+</li>
+<li>
+<section class="detail" id="shiftDocketsRight()">
+<h3>shiftDocketsRight</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">shiftDocketsRight</span>()</div>
+<div class="block">Shifts the order tickets to the right by moving the last ticket to the beginning of the list.
+ Updates the positions and sizes of all tickets.</div>
+</section>
+</li>
+<li>
+<section class="detail" id="updateDocketSizes()">
+<h3>updateDocketSizes</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">updateDocketSizes</span>()</div>
+<div class="block">Updates the sizes of all dockets. The last docket in the list is enlarged, while others remain the same size.</div>
 </section>
 </li>
 <li>
 <section class="detail" id="update()">
 <h3>update</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">update</span>()</div>
-<div class="block"><span class="description-from-type-label">Description copied from class:&nbsp;<code><a href="../Component.html#update()">Component</a></code></span></div>
-<div class="block">Called once per frame of the game, and should be used for most component logic. Not called if
- component is disabled.</div>
+<div class="block">Updates the state of all order tickets, including countdown timers and their positions on the screen.
+ Removes any order tickets whose timers have expired.</div>
 <dl class="notes">
 <dt>Overrides:</dt>
 <dd><code><a href="../Component.html#update()">update</a></code>&nbsp;in class&nbsp;<code><a href="../Component.html" title="class in com.csse3200.game.components">Component</a></code></dd>
@@ -262,16 +341,22 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
+<section class="detail" id="updateDocketDisplay()">
+<h3>updateDocketDisplay</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">updateDocketDisplay</span>()</div>
+<div class="block">Updates the display for all dockets. This includes updating their positions and sizes.</div>
+</section>
+</li>
+<li>
 <section class="detail" id="draw(com.badlogic.gdx.graphics.g2d.SpriteBatch)">
 <h3>draw</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">draw</span><wbr><span class="parameters">(com.badlogic.gdx.graphics.g2d.SpriteBatch&nbsp;batch)</span></div>
-<div class="block"><span class="description-from-type-label">Description copied from class:&nbsp;<code><a href="../../rendering/RenderComponent.html#draw(com.badlogic.gdx.graphics.g2d.SpriteBatch)">RenderComponent</a></code></span></div>
-<div class="block">Draw the renderable. Should be called only by the renderer, not manually.</div>
+<div class="block">Draws the order tickets on the screen. The actual drawing is handled by the stage.</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="../../rendering/RenderComponent.html#draw(com.badlogic.gdx.graphics.g2d.SpriteBatch)">draw</a></code>&nbsp;in class&nbsp;<code><a href="../../rendering/RenderComponent.html" title="class in com.csse3200.game.rendering">RenderComponent</a></code></dd>
 <dt>Parameters:</dt>
-<dd><code>batch</code> - Batch to render to.</dd>
+<dd><code>batch</code> - the sprite batch used for drawing.</dd>
 </dl>
 </section>
 </li>
@@ -279,37 +364,77 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="getZIndex()">
 <h3>getZIndex</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">float</span>&nbsp;<span class="element-name">getZIndex</span>()</div>
-<div class="block"><span class="description-from-type-label">Description copied from interface:&nbsp;<code><a href="../../rendering/Renderable.html#getZIndex()">Renderable</a></code></span></div>
-<div class="block">Z index controls rendering order within a layer. Higher Z index is drawn on top.</div>
+<div class="block">Returns the z-index for this component. The z-index determines the rendering order of UI components.</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="../../rendering/Renderable.html#getZIndex()">getZIndex</a></code>&nbsp;in interface&nbsp;<code><a href="../../rendering/Renderable.html" title="interface in com.csse3200.game.rendering">Renderable</a></code></dd>
 <dt>Overrides:</dt>
 <dd><code><a href="../../ui/UIComponent.html#getZIndex()">getZIndex</a></code>&nbsp;in class&nbsp;<code><a href="../../ui/UIComponent.html" title="class in com.csse3200.game.ui">UIComponent</a></code></dd>
 <dt>Returns:</dt>
-<dd>Z index</dd>
+<dd>the z-index for this component.</dd>
 </dl>
 </section>
 </li>
 <li>
-<section class="detail" id="stageDispose(com.csse3200.game.components.ordersystem.Docket,com.badlogic.gdx.scenes.scene2d.ui.Table,int)">
-<h3>stageDispose</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">stageDispose</span><wbr><span class="parameters">(<a href="Docket.html" title="class in com.csse3200.game.components.ordersystem">Docket</a>&nbsp;background,
- com.badlogic.gdx.scenes.scene2d.ui.Table&nbsp;table,
- int&nbsp;index)</span></div>
+<section class="detail" id="setStage(com.badlogic.gdx.scenes.scene2d.Stage)">
+<h3>setStage</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setStage</span><wbr><span class="parameters">(com.badlogic.gdx.scenes.scene2d.Stage&nbsp;stage)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="dispose()">
 <h3>dispose</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">dispose</span>()</div>
-<div class="block"><span class="description-from-type-label">Description copied from class:&nbsp;<code><a href="../Component.html#dispose()">Component</a></code></span></div>
-<div class="block">Called when the component is disposed. Dispose of any internal resources here.</div>
+<div class="block">Disposes of all resources associated with the order tickets, including clearing and removing tables from the stage.</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code>dispose</code>&nbsp;in interface&nbsp;<code>com.badlogic.gdx.utils.Disposable</code></dd>
 <dt>Overrides:</dt>
 <dd><code><a href="../../rendering/RenderComponent.html#dispose()">dispose</a></code>&nbsp;in class&nbsp;<code><a href="../../rendering/RenderComponent.html" title="class in com.csse3200.game.rendering">RenderComponent</a></code></dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getViewportWidth()">
+<h3>getViewportWidth</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">float</span>&nbsp;<span class="element-name">getViewportWidth</span>()</div>
+<div class="block">Returns the viewportWidth.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>the float value of viewportWidth.</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getViewportHeight()">
+<h3>getViewportHeight</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">float</span>&nbsp;<span class="element-name">getViewportHeight</span>()</div>
+<div class="block">Returns the viewportHeight.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>the float value of viewportHeight.</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getViewPortHeightMultiplier()">
+<h3>getViewPortHeightMultiplier</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">float</span>&nbsp;<span class="element-name">getViewPortHeightMultiplier</span>()</div>
+<div class="block">Returns the viewportHeightMultiplayer.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>the float value of viewportHeightMultiplayer.</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getTableArrayList()">
+<h3>getTableArrayList</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/ArrayList.html" title="class or interface in java.util" class="external-link">ArrayList</a>&lt;com.badlogic.gdx.scenes.scene2d.ui.Table&gt;</span>&nbsp;<span class="element-name">getTableArrayList</span>()</div>
+<div class="block">Returns the list of tables used for displaying order tickets.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>the list of order ticket tables.</dd>
 </dl>
 </section>
 </li>

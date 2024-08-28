@@ -86,15 +86,21 @@ loadScripts(document, 'script');</script>
 </div>
 <div class="inheritance" title="Inheritance Tree"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">java.lang.Object</a>
 <div class="inheritance"><a href="../Component.html" title="class in com.csse3200.game.components">com.csse3200.game.components.Component</a>
+<div class="inheritance"><a href="../../input/InputComponent.html" title="class in com.csse3200.game.input">com.csse3200.game.input.InputComponent</a>
 <div class="inheritance">com.csse3200.game.components.ordersystem.OrderActions</div>
 </div>
 </div>
+</div>
 <section class="class-description" id="class-description">
+<dl class="notes">
+<dt>All Implemented Interfaces:</dt>
+<dd><code>com.badlogic.gdx.input.GestureDetector.GestureListener</code>, <code>com.badlogic.gdx.InputProcessor</code></dd>
+</dl>
 <hr>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">OrderActions</span>
-<span class="extends-implements">extends <a href="../Component.html" title="class in com.csse3200.game.components">Component</a></span></div>
-<div class="block">This class listens to events related to the Order System and does something when
- one of the events is triggered</div>
+<span class="extends-implements">extends <a href="../../input/InputComponent.html" title="class in com.csse3200.game.input">InputComponent</a></span></div>
+<div class="block">This class listens to key presses to shift dockets left and right and handles
+ order-related actions in the game.</div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -102,6 +108,9 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="field-summary" id="field-summary">
 <h2>Field Summary</h2>
+<div class="inherited-list">
+<h3 id="fields-inherited-from-class-com.csse3200.game.input.InputComponent">Fields inherited from class&nbsp;com.csse3200.game.input.<a href="../../input/InputComponent.html" title="class in com.csse3200.game.input">InputComponent</a></h3>
+<code><a href="../../input/InputComponent.html#priority">priority</a></code></div>
 <div class="inherited-list">
 <h3 id="fields-inherited-from-class-com.csse3200.game.components.Component">Fields inherited from class&nbsp;com.csse3200.game.components.<a href="../Component.html" title="class in com.csse3200.game.components">Component</a></h3>
 <code><a href="../Component.html#enabled">enabled</a>, <a href="../Component.html#entity">entity</a></code></div>
@@ -116,7 +125,9 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Constructor</div>
 <div class="table-header col-last">Description</div>
 <div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(com.csse3200.game.GdxGame)" class="member-name-link">OrderActions</a><wbr>(<a href="../../GdxGame.html" title="class in com.csse3200.game">GdxGame</a>&nbsp;game)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block">Constructs an OrderActions instance with a reference to the main game object.</div>
+</div>
 </div>
 </section>
 </li>
@@ -134,14 +145,33 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#create()" class="member-name-link">create</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Called when the entity is created and registered.</div>
+<div class="block">Initialises the OrderActions component by registering input listeners and
+ event listeners for order-related actions.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#keyDown(int)" class="member-name-link">keyDown</a><wbr>(int&nbsp;keycode)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Handles key press events.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#keyTyped(char)" class="member-name-link">keyTyped</a><wbr>(char&nbsp;character)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Handles key typed events.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#keyUp(int)" class="member-name-link">keyUp</a><wbr>(int&nbsp;keycode)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Handles key release events.</div>
 </div>
 </div>
 </div>
 </div>
 <div class="inherited-list">
+<h3 id="methods-inherited-from-class-com.csse3200.game.input.InputComponent">Methods inherited from class&nbsp;com.csse3200.game.input.<a href="../../input/InputComponent.html" title="class in com.csse3200.game.input">InputComponent</a></h3>
+<code><a href="../../input/InputComponent.html#dispose()">dispose</a>, <a href="../../input/InputComponent.html#fling(float,float,int)">fling</a>, <a href="../../input/InputComponent.html#getPriority()">getPriority</a>, <a href="../../input/InputComponent.html#longPress(float,float)">longPress</a>, <a href="../../input/InputComponent.html#mouseMoved(int,int)">mouseMoved</a>, <a href="../../input/InputComponent.html#pan(float,float,float,float)">pan</a>, <a href="../../input/InputComponent.html#panStop(float,float,int,int)">panStop</a>, <a href="../../input/InputComponent.html#pinch(com.badlogic.gdx.math.Vector2,com.badlogic.gdx.math.Vector2,com.badlogic.gdx.math.Vector2,com.badlogic.gdx.math.Vector2)">pinch</a>, <a href="../../input/InputComponent.html#pinchStop()">pinchStop</a>, <a href="../../input/InputComponent.html#pinchStopHandled()">pinchStopHandled</a>, <a href="../../input/InputComponent.html#scrolled(float,float)">scrolled</a>, <a href="../../input/InputComponent.html#setPriority(int)">setPriority</a>, <a href="../../input/InputComponent.html#tap(float,float,int,int)">tap</a>, <a href="../../input/InputComponent.html#touchDown(float,float,int,int)">touchDown</a>, <a href="../../input/InputComponent.html#touchDown(int,int,int,int)">touchDown</a>, <a href="../../input/InputComponent.html#touchDragged(int,int,int)">touchDragged</a>, <a href="../../input/InputComponent.html#touchUp(int,int,int,int)">touchUp</a>, <a href="../../input/InputComponent.html#zoom(float,float)">zoom</a></code></div>
+<div class="inherited-list">
 <h3 id="methods-inherited-from-class-com.csse3200.game.components.Component">Methods inherited from class&nbsp;com.csse3200.game.components.<a href="../Component.html" title="class in com.csse3200.game.components">Component</a></h3>
-<code><a href="../Component.html#dispose()">dispose</a>, <a href="../Component.html#earlyUpdate()">earlyUpdate</a>, <a href="../Component.html#getEntity()">getEntity</a>, <a href="../Component.html#setEnabled(boolean)">setEnabled</a>, <a href="../Component.html#setEntity(com.csse3200.game.entities.Entity)">setEntity</a>, <a href="../Component.html#toString()">toString</a>, <a href="../Component.html#triggerEarlyUpdate()">triggerEarlyUpdate</a>, <a href="../Component.html#triggerUpdate()">triggerUpdate</a>, <a href="../Component.html#update()">update</a></code></div>
+<code><a href="../Component.html#earlyUpdate()">earlyUpdate</a>, <a href="../Component.html#getEntity()">getEntity</a>, <a href="../Component.html#setEnabled(boolean)">setEnabled</a>, <a href="../Component.html#setEntity(com.csse3200.game.entities.Entity)">setEntity</a>, <a href="../Component.html#toString()">toString</a>, <a href="../Component.html#triggerEarlyUpdate()">triggerEarlyUpdate</a>, <a href="../Component.html#triggerUpdate()">triggerUpdate</a>, <a href="../Component.html#update()">update</a></code></div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-java.lang.Object">Methods inherited from class&nbsp;java.lang.<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></h3>
 <code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html#clone()" title="class or interface in java.lang" class="external-link">clone</a>, <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html#equals(java.lang.Object)" title="class or interface in java.lang" class="external-link">equals</a>, <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html#finalize()" title="class or interface in java.lang" class="external-link">finalize</a>, <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html#getClass()" title="class or interface in java.lang" class="external-link">getClass</a>, <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html#hashCode()" title="class or interface in java.lang" class="external-link">hashCode</a>, <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html#notify()" title="class or interface in java.lang" class="external-link">notify</a>, <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html#notifyAll()" title="class or interface in java.lang" class="external-link">notifyAll</a>, <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html#wait()" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html#wait(long)" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html#wait(long,int)" title="class or interface in java.lang" class="external-link">wait</a></code></div>
@@ -160,6 +190,11 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="&lt;init&gt;(com.csse3200.game.GdxGame)">
 <h3>OrderActions</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">OrderActions</span><wbr><span class="parameters">(<a href="../../GdxGame.html" title="class in com.csse3200.game">GdxGame</a>&nbsp;game)</span></div>
+<div class="block">Constructs an OrderActions instance with a reference to the main game object. - Tia</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>game</code> - the main game instance</dd>
+</dl>
 </section>
 </li>
 </ul>
@@ -174,12 +209,80 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="create()">
 <h3>create</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">create</span>()</div>
-<div class="block"><span class="description-from-type-label">Description copied from class:&nbsp;<code><a href="../Component.html#create()">Component</a></code></span></div>
-<div class="block">Called when the entity is created and registered. Initial logic such as calls to GetComponent
- should be made here, not in the constructor which is called before an entity is finished.</div>
+<div class="block">Initialises the OrderActions component by registering input listeners and
+ event listeners for order-related actions.</div>
 <dl class="notes">
 <dt>Overrides:</dt>
-<dd><code><a href="../Component.html#create()">create</a></code>&nbsp;in class&nbsp;<code><a href="../Component.html" title="class in com.csse3200.game.components">Component</a></code></dd>
+<dd><code><a href="../../input/InputComponent.html#create()">create</a></code>&nbsp;in class&nbsp;<code><a href="../../input/InputComponent.html" title="class in com.csse3200.game.input">InputComponent</a></code></dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="keyDown(int)">
+<h3>keyDown</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">keyDown</span><wbr><span class="parameters">(int&nbsp;keycode)</span></div>
+<div class="block">Handles key press events. Shifts dockets left or right based on the pressed key. - Tia</div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code>keyDown</code>&nbsp;in interface&nbsp;<code>com.badlogic.gdx.InputProcessor</code></dd>
+<dt>Overrides:</dt>
+<dd><code><a href="../../input/InputComponent.html#keyDown(int)">keyDown</a></code>&nbsp;in class&nbsp;<code><a href="../../input/InputComponent.html" title="class in com.csse3200.game.input">InputComponent</a></code></dd>
+<dt>Parameters:</dt>
+<dd><code>keycode</code> - the code of the pressed key</dd>
+<dt>Returns:</dt>
+<dd>true if the key event was handled, false otherwise</dd>
+<dt>See Also:</dt>
+<dd>
+<ul class="tag-list">
+<li><code>InputProcessor.keyDown(int)</code></li>
+</ul>
+</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="keyUp(int)">
+<h3>keyUp</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">keyUp</span><wbr><span class="parameters">(int&nbsp;keycode)</span></div>
+<div class="block">Handles key release events. Currently does nothing. - Tia</div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code>keyUp</code>&nbsp;in interface&nbsp;<code>com.badlogic.gdx.InputProcessor</code></dd>
+<dt>Overrides:</dt>
+<dd><code><a href="../../input/InputComponent.html#keyUp(int)">keyUp</a></code>&nbsp;in class&nbsp;<code><a href="../../input/InputComponent.html" title="class in com.csse3200.game.input">InputComponent</a></code></dd>
+<dt>Parameters:</dt>
+<dd><code>keycode</code> - the code of the released key</dd>
+<dt>Returns:</dt>
+<dd>false, as no action is taken</dd>
+<dt>See Also:</dt>
+<dd>
+<ul class="tag-list">
+<li><code>InputProcessor.keyUp(int)</code></li>
+</ul>
+</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="keyTyped(char)">
+<h3>keyTyped</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">keyTyped</span><wbr><span class="parameters">(char&nbsp;character)</span></div>
+<div class="block">Handles key typed events. Currently does nothing. - Tia</div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code>keyTyped</code>&nbsp;in interface&nbsp;<code>com.badlogic.gdx.InputProcessor</code></dd>
+<dt>Overrides:</dt>
+<dd><code><a href="../../input/InputComponent.html#keyTyped(char)">keyTyped</a></code>&nbsp;in class&nbsp;<code><a href="../../input/InputComponent.html" title="class in com.csse3200.game.input">InputComponent</a></code></dd>
+<dt>Parameters:</dt>
+<dd><code>character</code> - the typed character</dd>
+<dt>Returns:</dt>
+<dd>false, as no action is taken</dd>
+<dt>See Also:</dt>
+<dd>
+<ul class="tag-list">
+<li><code>InputProcessor.keyTyped(char)</code></li>
+</ul>
+</dd>
 </dl>
 </section>
 </li>

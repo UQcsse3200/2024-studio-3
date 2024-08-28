@@ -101,6 +101,7 @@ loadScripts(document, 'script');</script>
 <hr>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">Docket</span>
 <span class="extends-implements">extends <a href="../../ui/UIComponent.html" title="class in com.csse3200.game.ui">UIComponent</a></span></div>
+<div class="block">UI component class for displaying a docket and changing its appearance depending on time remaining.</div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -125,7 +126,9 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Constructor</div>
 <div class="table-header col-last">Description</div>
 <div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E()" class="member-name-link">Docket</a>()</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block">Constructs a docket component and initialises its skin.</div>
+</div>
 </div>
 </section>
 </li>
@@ -143,34 +146,66 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#create()" class="member-name-link">create</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Called when the entity is created and registered.</div>
+<div class="block">Creates the docket component.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#draw(com.badlogic.gdx.graphics.g2d.SpriteBatch)" class="member-name-link">draw</a><wbr>(com.badlogic.gdx.graphics.g2d.SpriteBatch&nbsp;batch)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Draw the renderable.</div>
+<div class="block">Draws the docket component.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getCellHash()" class="member-name-link">getCellHash</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>com.badlogic.gdx.scenes.scene2d.ui.Skin</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getDocketSkin()" class="member-name-link">getDocketSkin</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>com.badlogic.gdx.scenes.scene2d.ui.Image</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getImage()" class="member-name-link">getImage</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>long</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getStartTime()" class="member-name-link">getStartTime</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>[]</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getTextureNameArray()" class="member-name-link">getTextureNameArray</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Returns the cell hash associated with this docket.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getCurrentTextureName()" class="member-name-link">getCurrentTextureName</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Retrieves the name of the current drawable's texture.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>com.badlogic.gdx.scenes.scene2d.ui.Skin</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getDocketSkin()" class="member-name-link">getDocketSkin</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Returns the skin object containing the docket textures.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>com.badlogic.gdx.scenes.scene2d.ui.Image</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getImage()" class="member-name-link">getImage</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Returns the image representing the docket.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>long</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getStartTime()" class="member-name-link">getStartTime</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Returns the start time of when the docket was created.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>[]</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getTextureNameArray()" class="member-name-link">getTextureNameArray</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Returns the array of texture names corresponding to the different states of the docket.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setCellHash(int)" class="member-name-link">setCellHash</a><wbr>(int&nbsp;cellHash)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Sets the cell hash that uniquely identifies the cell this docket is associated with.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setCellHash(int)" class="member-name-link">setCellHash</a><wbr>(int&nbsp;cellHash)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setDocket(com.badlogic.gdx.scenes.scene2d.ui.Image)" class="member-name-link">setDocket</a><wbr>(com.badlogic.gdx.scenes.scene2d.ui.Image&nbsp;docket)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Sets the image associated with this docket.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setSkin(com.badlogic.gdx.scenes.scene2d.ui.Skin)" class="member-name-link">setSkin</a><wbr>(com.badlogic.gdx.scenes.scene2d.ui.Skin&nbsp;skin)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Sets the skin associated with this docket.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setStage(com.badlogic.gdx.scenes.scene2d.Stage)" class="member-name-link">setStage</a><wbr>(com.badlogic.gdx.scenes.scene2d.Stage&nbsp;mock)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#updateDocketTexture(double)" class="member-name-link">updateDocketTexture</a><wbr>(double&nbsp;remainingTimeSecs)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Updates the texture of the docket based on the remaining time before it disposes.</div>
+</div>
 </div>
 </div>
 </div>
@@ -207,6 +242,7 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="&lt;init&gt;()">
 <h3>Docket</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">Docket</span>()</div>
+<div class="block">Constructs a docket component and initialises its skin.</div>
 </section>
 </li>
 </ul>
@@ -221,9 +257,7 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="create()">
 <h3>create</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">create</span>()</div>
-<div class="block"><span class="description-from-type-label">Description copied from class:&nbsp;<code><a href="../Component.html#create()">Component</a></code></span></div>
-<div class="block">Called when the entity is created and registered. Initial logic such as calls to GetComponent
- should be made here, not in the constructor which is called before an entity is finished.</div>
+<div class="block">Creates the docket component.</div>
 <dl class="notes">
 <dt>Overrides:</dt>
 <dd><code><a href="../../ui/UIComponent.html#create()">create</a></code>&nbsp;in class&nbsp;<code><a href="../../ui/UIComponent.html" title="class in com.csse3200.game.ui">UIComponent</a></code></dd>
@@ -231,58 +265,133 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
+<section class="detail" id="setSkin(com.badlogic.gdx.scenes.scene2d.ui.Skin)">
+<h3>setSkin</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setSkin</span><wbr><span class="parameters">(com.badlogic.gdx.scenes.scene2d.ui.Skin&nbsp;skin)</span></div>
+<div class="block">Sets the skin associated with this docket.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>skin</code> - the skin to be associated with this docket.</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="setDocket(com.badlogic.gdx.scenes.scene2d.ui.Image)">
+<h3>setDocket</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setDocket</span><wbr><span class="parameters">(com.badlogic.gdx.scenes.scene2d.ui.Image&nbsp;docket)</span></div>
+<div class="block">Sets the image associated with this docket.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>docket</code> - the image to be associated with this docket.</dd>
+</dl>
+</section>
+</li>
+<li>
 <section class="detail" id="setCellHash(int)">
 <h3>setCellHash</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setCellHash</span><wbr><span class="parameters">(int&nbsp;cellHash)</span></div>
+<div class="block">Sets the cell hash that uniquely identifies the cell this docket is associated with.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>cellHash</code> - the unique hash for the cell</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="getCellHash()">
 <h3>getCellHash</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">getCellHash</span>()</div>
+<div class="block">Returns the cell hash associated with this docket.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>the cell hash</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="getImage()">
 <h3>getImage</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">com.badlogic.gdx.scenes.scene2d.ui.Image</span>&nbsp;<span class="element-name">getImage</span>()</div>
+<div class="block">Returns the image representing the docket.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>the docket image</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="getTextureNameArray()">
 <h3>getTextureNameArray</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>[]</span>&nbsp;<span class="element-name">getTextureNameArray</span>()</div>
+<div class="block">Returns the array of texture names corresponding to the different states of the docket.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>an array of texture names</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="getDocketSkin()">
 <h3>getDocketSkin</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">com.badlogic.gdx.scenes.scene2d.ui.Skin</span>&nbsp;<span class="element-name">getDocketSkin</span>()</div>
+<div class="block">Returns the skin object containing the docket textures.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>the docket skin</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="getStartTime()">
 <h3>getStartTime</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name">getStartTime</span>()</div>
+<div class="block">Returns the start time of when the docket was created.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>the start time in milliseconds</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="updateDocketTexture(double)">
 <h3>updateDocketTexture</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">updateDocketTexture</span><wbr><span class="parameters">(double&nbsp;remainingTimeSecs)</span></div>
+<div class="block">Updates the texture of the docket based on the remaining time before it disposes.
+ As the remaining time decreases, the texture changes to indicate the time state
+ of the docket.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>remainingTimeSecs</code> - the remaining time in seconds</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="draw(com.badlogic.gdx.graphics.g2d.SpriteBatch)">
 <h3>draw</h3>
 <div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">draw</span><wbr><span class="parameters">(com.badlogic.gdx.graphics.g2d.SpriteBatch&nbsp;batch)</span></div>
-<div class="block"><span class="description-from-type-label">Description copied from class:&nbsp;<code><a href="../../rendering/RenderComponent.html#draw(com.badlogic.gdx.graphics.g2d.SpriteBatch)">RenderComponent</a></code></span></div>
-<div class="block">Draw the renderable. Should be called only by the renderer, not manually.</div>
+<div class="block">Draws the docket component.</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="../../rendering/RenderComponent.html#draw(com.badlogic.gdx.graphics.g2d.SpriteBatch)">draw</a></code>&nbsp;in class&nbsp;<code><a href="../../rendering/RenderComponent.html" title="class in com.csse3200.game.rendering">RenderComponent</a></code></dd>
 <dt>Parameters:</dt>
-<dd><code>batch</code> - Batch to render to.</dd>
+<dd><code>batch</code> - the SpriteBatch used for drawing</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="setStage(com.badlogic.gdx.scenes.scene2d.Stage)">
+<h3>setStage</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setStage</span><wbr><span class="parameters">(com.badlogic.gdx.scenes.scene2d.Stage&nbsp;mock)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="getCurrentTextureName()">
+<h3>getCurrentTextureName</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getCurrentTextureName</span>()</div>
+<div class="block">Retrieves the name of the current drawable's texture.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>the name of the current texture, or "none" if no drawable is set</dd>
 </dl>
 </section>
 </li>
