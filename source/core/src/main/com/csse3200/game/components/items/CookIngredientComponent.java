@@ -73,5 +73,19 @@ public class CookIngredientComponent extends Component {
     void stopCookingIngredient() {
         isCooking = false;
     }
+
+    /**
+     * Returns whether the item is being cooked
+     * @return isCooking
+     */
+    public boolean getIsCooking() {
+        return isCooking;
+    }
+
+/*
+    void setTimeSource(GameTime timesource) {
+        this.timesource = timesource;
+    }
+*/
 }
 
