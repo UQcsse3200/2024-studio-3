@@ -186,7 +186,6 @@ public class MainGameOrderTicketDisplay extends UIComponent {
     }
 
     public void updateDocketDisplay() {
-        // Implement logic to update the display
         updateDocketPositions();
     }
 

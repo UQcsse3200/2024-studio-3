@@ -19,7 +19,7 @@ public class MainGameOrderBtnDisplay extends UIComponent{
 
     private static final Logger logger = LoggerFactory.getLogger(MainGameExitDisplay.class);
     private static final float Z_INDEX = 2f;
-    private Table table;
+    public Table table;
 
     @Override
     public void create() {
@@ -70,5 +70,6 @@ public class MainGameOrderBtnDisplay extends UIComponent{
         table.clear();
         super.dispose();
     }
+
 }
 

@@ -32,5 +32,4 @@ public abstract class UIComponent extends RenderComponent implements Renderable 
     return 1f;
   }
 
-
     }
