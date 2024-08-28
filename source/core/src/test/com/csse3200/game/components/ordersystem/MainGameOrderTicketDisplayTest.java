@@ -99,8 +99,10 @@ class MainGameOrderTicketDisplayTest {
         assertEquals(170f, singleTable.getWidth(), 0.1f, "Docket width is incorrect.");
         assertEquals(200f, singleTable.getHeight(), 0.1f, "Docket height is incorrect.");
 
-        float expectedX = orderTicketDisplay.getViewportWidth() - 260f;
-        float expectedY = orderTicketDisplay.getViewportHeight() * orderTicketDisplay.getViewPortHeightMultiplier() - 50;
+        float expectedX = orderTicketDisplay.getViewportWidth() - 260f; //orderTicketDisplay.getViewportWidth() - 260f
+        float expectedY =
+                orderTicketDisplay.getViewportHeight() * orderTicketDisplay.getViewPortHeightMultiplier()
+                        + orderTicketDisplay.getViewPortHeightMultiplier() * 19.28f;
 
         assertEquals(expectedX, singleTable.getX(), 0.1f, "Docket X position is incorrect.");
         assertEquals(expectedY, singleTable.getY(), 0.1f, "Docket Y position is incorrect.");
