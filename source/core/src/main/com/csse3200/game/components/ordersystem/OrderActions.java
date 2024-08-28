@@ -45,7 +45,6 @@ public class OrderActions extends InputComponent {
         ServiceLocator.getDocketService().getEvents().addListener("removeOrder", this::onRemoveOrder);
         ServiceLocator.getDocketService().getEvents().addListener(
                 "reorderDockets", MainGameOrderTicketDisplay::reorderDockets);
-
         entity.getEvents().addListener("moveOrder", this::onMoveOrder);
         entity.getEvents().addListener("changeColour", this::onChangeColour);
 

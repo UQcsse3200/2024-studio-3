@@ -20,7 +20,6 @@ public class Docket extends UIComponent {
     private static final long DEFAULT_TIMER = 5000;
     private long startTime;
 
-    // Default constructor
 
     /**
      * Constructs a docket component and initialises its skin.
@@ -33,7 +32,10 @@ public class Docket extends UIComponent {
         setupSkin();
     }
 
-    // Initialize the Skin and Image
+    /**
+     * Sets up UI skin by loading a texture atlas and
+     * setting a drawable.
+     */
     private void setupSkin() {
         if (Gdx.files != null) {
             TextureAtlas docketAtlas = new TextureAtlas(Gdx.files.internal("images/ordersystem/DocketStatusIndicator.atlas"));
@@ -50,12 +52,18 @@ public class Docket extends UIComponent {
         super.create();
     }
 
-    // Setter for testing
+    /**
+     * Sets the skin associated with this docket.
+     * @param skin the skin to be associated with this docket.
+     */
     public void setSkin(Skin skin) {
         this.docketSkin = skin;
     }
 
-    // Setter for testing
+    /**
+     * Sets the image associated with this docket.
+     * @param docket the image to be associated with this docket.
+     */
     public void setDocket(Image docket) {
         this.docket = docket;
     }
@@ -110,7 +118,6 @@ public class Docket extends UIComponent {
         return startTime;
     }
 
-
     /**
      * Updates the texture of the docket based on the remaining time before it disposes.
      * As the remaining time decreases, the texture changes to indicate the time state
@@ -133,7 +140,7 @@ public class Docket extends UIComponent {
      */
     @Override
     protected void draw(SpriteBatch batch) {
-        // Do not need to do anything here :)
+        // Draw is handled by stage
     }
 
     @Override
@@ -141,7 +148,10 @@ public class Docket extends UIComponent {
         // Implementation not required for the test
     }
 
-    // Method to get the current texture name for testing
+    /**
+     * Retrieves the name of the current drawable's texture.
+     * @return the name of the current texture, or "none" if no drawable is set
+     */
     public String getCurrentTextureName() {
         return docket.getDrawable() != null ? docket.getDrawable().toString() : "none";
     }

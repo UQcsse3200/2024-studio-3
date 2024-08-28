@@ -1,19 +1,26 @@
 package com.csse3200.game.rendering;
 
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import static org.junit.jupiter.api.Assertions.*;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.csse3200.game.components.ordersystem.Docket;
-import org.junit.Before;
-import org.junit.Test;
-import static org.junit.Assert.*;
+import com.csse3200.game.extensions.GameExtension;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+@ExtendWith(GameExtension.class)
 
-public class DocketTest {
+class DocketTest {
 
     private Docket docket;
+    private Docket docket2;
 
-    @Before
-    public void setUp() {
+    @BeforeEach
+    void setUp() {
+        Skin mockSkin = new Skin();
+        Image mockImage = new Image();
         docket = new Docket();
+        docket2 = new Docket();
     }
 
 //    @Test
@@ -32,12 +39,23 @@ public class DocketTest {
 //        assertEquals("expired_docket", getTextureName(docket.getImage()));
 //    }
 
-    private String getTextureName(Image image) {
-        if (image.getDrawable() == null) {
-            return "none";
-        }
-        TextureRegion region = (TextureRegion) image.getDrawable();
-        return region.toString();
+    @Test
+    void testDefaultStartTime() {
+        long startTime = docket2.getStartTime();
+        assertTrue(startTime > 0, "Start time should be initialized and greater than 0.");
+    }
+
+    @Test
+    void testSetAndGetCellHash() {
+        int hashValue = 12345;
+        docket.setCellHash(hashValue);
+        assertEquals(hashValue, docket.getCellHash(), "Cell hash should be set and returned correctly.");
+    }
+
+    @Test
+    void testGetTextureNameArray() {
+        String[] textureNameArray = docket.getTextureNameArray();
+        assertNotNull(textureNameArray, "Texture name array should not be null.");
+        assertEquals(4, textureNameArray.length, "Texture name array should have a length of 4.");
     }
 }
-
