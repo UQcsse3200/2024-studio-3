@@ -25,7 +25,7 @@ public class MainGameOrderTicketDisplayTest {
         mockSkin = Mockito.mock(Skin.class);
         mockTable = Mockito.mock(Table.class);
 
-        display = new MainGameOrderTicketDisplay();
+        display = new MainGameOrderTicketDisplay("acai");
         display.setStage(mockStage);
         display.setSkin(mockSkin);
     }

@@ -1,33 +1,29 @@
 package com.csse3200.game.components.ordersystem;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
-import com.csse3200.game.components.maingame.MainGameExitDisplay;
+import com.csse3200.game.components.Component;
+import com.csse3200.game.entities.configs.MultiStationRecipeConfig;
+import com.csse3200.game.entities.configs.SingleStationRecipeConfig;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-
+import com.csse3200.game.entities.factories.DishFactory;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 
 /**
  * Displays Order Ticket at Main Game screen to the Main Menu screen.
  */
-
 public class MainGameOrderTicketDisplay extends UIComponent {
-    private static final Logger logger = LoggerFactory.getLogger(MainGameExitDisplay.class);
+    private static final Logger logger = LoggerFactory.getLogger(MainGameOrderTicketDisplay.class);
     private static final float Z_INDEX = 2f;
-    private static final long DEFAULT_TIMER = 5000;
     private static final float viewportHeight =
             ServiceLocator.getRenderService().getStage().getViewport().getCamera().viewportHeight;
     private static final float viewportWidth =
@@ -40,6 +36,13 @@ public class MainGameOrderTicketDisplay extends UIComponent {
     private static ArrayList<Long> startTimeArrayList;
     private static ArrayList<Label> countdownLabelArrayList;
 
+    private static final long DEFAULT_TIMER = 1000;
+
+    private String recipeName;
+
+    public MainGameOrderTicketDisplay(String recipeName) {
+        this.recipeName = recipeName;
+    }
 
     @Override
     public void create() {
@@ -51,6 +54,17 @@ public class MainGameOrderTicketDisplay extends UIComponent {
     }
 
     public void addActors() {
+        Recipe recipe = new Recipe(recipeName);
+        List<String> ingredients = recipe.getIngredients();
+        int makingTime = recipe.getMakingTime();
+        Integer burnedTime = recipe.getBurnedTime();
+        String stationType = recipe.getStationType();
+        logger.info("Recipe Name: " + recipeName);
+        logger.info("Ingredients: " + ingredients);
+        logger.info("Making Time: " + makingTime);
+        logger.info("Burned Time: " + (burnedTime != null ? burnedTime : "N/A"));
+        logger.info("Station Type: " + stationType);
+
         Table table = new Table();
         long startTime = TimeUtils.millis();
         startTimeArrayList.add(startTime);
@@ -66,7 +80,7 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         Label ingredient1Label = new Label("Ingredient 1", skin);
         Label ingredient2Label = new Label("Ingredient 2", skin);
         Label ingredient3Label = new Label("Ingredient 3", skin);
-        Label countdownLabel = new Label("Timer: 5000", skin);
+        Label countdownLabel = new Label("Timer: " + DEFAULT_TIMER, skin);
         countdownLabelArrayList.add(countdownLabel);
         table.setBackground(background.getImage().getDrawable()); //resize background
 //        table.add(recipeNameLabel).padTop(90f).padLeft(10f).row();

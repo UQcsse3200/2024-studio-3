@@ -8,6 +8,10 @@ import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
 /**
  * This class listens to events relevant to the Main Game Screen and does something when one of the
  * events is triggered.
@@ -24,13 +28,17 @@ public class MainGameActions extends Component {
 
   @Override
   public void create() {
-    entity.getEvents().addListener("exit", this::onExit);
-    entity.getEvents().addListener("createOrder", this::onCreateOrder);
-    ui = new Entity();
-    docketDisplayer = new MainGameOrderTicketDisplay();
-    ui.addComponent(docketDisplayer);
-    ServiceLocator.getEntityService().register(ui);
-//    entity.getEvents().addListener("orderDone", this::onOrderDone);
+    if (ui == null) {
+      ui = new Entity();
+
+      String[] recipeNames = {"acaiBowl", "salad", "fruitSalad", "steakMeal", "bananaSplit"};
+      docketDisplayer = new MainGameOrderTicketDisplay(recipeNames[new Random().nextInt(recipeNames.length)]);
+      ui.addComponent(docketDisplayer);
+      ServiceLocator.getEntityService().register(ui);
+
+      entity.getEvents().addListener("exit", this::onExit);
+      entity.getEvents().addListener("createOrder", this::onCreateOrder);
+    }
   }
 
   /**

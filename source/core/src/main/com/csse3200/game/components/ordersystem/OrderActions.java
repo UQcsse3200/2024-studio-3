@@ -39,6 +39,7 @@ public class OrderActions extends Component {
 
     /**
      * Removes order from the line
+     * To do: remove when order is complete
      */
     private void onRemoveOrder(int index) {
         logger.info("Remove order");
