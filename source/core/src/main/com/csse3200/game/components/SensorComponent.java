@@ -11,8 +11,8 @@ import java.util.Set;
  * Finds the closest interactable object inside a range of the player
  */
 public class SensorComponent extends Component {
-    private short targetLayer;
-    private float sensorDistance = 1f;
+    private final short targetLayer;
+    private final float sensorDistance;
     private InteractionComponent interactionComponent;
     private Set<Fixture> collidingFixtures = new HashSet<>();
 
@@ -30,8 +30,8 @@ public class SensorComponent extends Component {
 
     @Override
     public void create() {
-        entity.getEvents().addListener("interactClose", this::onCollisionStart);
-        entity.getEvents().addListener("interactLost", this::onCollisionEnd);
+        entity.getEvents().addListener("collisionStart", this::onCollisionStart);
+        entity.getEvents().addListener("collisionEnd", this::onCollisionEnd);
         this.interactionComponent = entity.getComponent(InteractionComponent.class);
         super.create();
     }
@@ -58,7 +58,7 @@ public class SensorComponent extends Component {
 
     public void onCollisionStart(Fixture me, Fixture other) {
         if (interactionComponent.getFixture() != me) {
-            // Not triggered by interactionComponent, so ignore
+            // Not triggered by me, so ignore
             return;
         }
         // Check that the fixture has the correct target layer
@@ -66,8 +66,7 @@ public class SensorComponent extends Component {
             // Doesn't match our target layer, ignore
             return;
         }
-
-        // Check if the collidingFixture is close enough senser
+        // Check if the collidingFixture is close enough sensor
         if (isWithinDistance(other, sensorDistance))
         {
             // Update the collision set
@@ -98,12 +97,19 @@ public class SensorComponent extends Component {
             float dist = getFixtureDistance(fixture);
             if (dist > sensorDistance) {
                 toRemove.add(fixture);
-            } else if (closestDistance < sensorDistance || dist < closestDistance) {
+            } else if (closestDistance < 0 || dist < closestDistance) {
                 closestDistance = dist;
                 closestFixture = fixture;
             }
         }
         collidingFixtures.removeAll(toRemove);
+
+        if (collidingFixtures.size() == 0) {
+            closestDistance = -1f;
+            closestFixture = null;
+        }
+
+
     }
 
 

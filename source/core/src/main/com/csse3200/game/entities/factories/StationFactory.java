@@ -8,6 +8,7 @@ import com.csse3200.game.entities.Entity;
 import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.PhysicsUtils;
 import com.csse3200.game.physics.components.ColliderComponent;
+import com.csse3200.game.physics.components.InteractionComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.rendering.TextureRenderComponent;
 
@@ -21,8 +22,11 @@ public class StationFactory {
         .addComponent(new TextureRenderComponent("images/stations/oven.png"))
         .addComponent(new PhysicsComponent())
         .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
+        .addComponent(new InteractionComponent(PhysicsLayer.INTERACTABLE))
         .addComponent(new StationItemHandlerComponent("oven", new ArrayList<>()));
 
+
+    oven.getComponent(InteractionComponent.class).setAsBox(oven.getScale());
 
     oven.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
     oven.getComponent(TextureRenderComponent.class).scaleEntity();
@@ -43,9 +47,11 @@ public class StationFactory {
         .addComponent(new TextureRenderComponent("images/stations/stove.png"))
         .addComponent(new PhysicsComponent())
         .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
+        .addComponent(new InteractionComponent(PhysicsLayer.INTERACTABLE))
         .addComponent(new StationItemHandlerComponent("stove", new ArrayList<>()));
 
 
+    stove.getComponent(InteractionComponent.class).setAsBox(stove.getScale());
     stove.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
     stove.getComponent(TextureRenderComponent.class).scaleEntity();
     stove.scaleHeight(1.5f);
