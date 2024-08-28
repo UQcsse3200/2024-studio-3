@@ -7,60 +7,73 @@ import com.csse3200.game.entities.Entity;
 import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import java.util.Random;
 
 /**
  * This class listens to events relevant to the Main Game Screen and does something when one of the
  * events is triggered.
  */
 public class MainGameActions extends Component {
-  private static final Logger logger = LoggerFactory.getLogger(MainGameActions.class);
-  private GdxGame game;
-  private Entity ui;
-  private MainGameOrderTicketDisplay docketDisplayer;
+	private static final Logger logger = LoggerFactory.getLogger(MainGameActions.class);
+	private GdxGame game;
+	private Entity ui;
+	private MainGameOrderTicketDisplay docketDisplayer;
+	String[] recipeNames = {"acaiBowl", "salad", "fruitSalad", "steakMeal", "bananaSplit"};
 
-  public MainGameActions(GdxGame game) {
-    this.game = game;
-  }
+	/**
+	 * Constructs a MainGameActions instance
+	 *
+	 * @param game the game
+	 */
+	public MainGameActions(GdxGame game) {
+		this.game = game;
+	}
 
-  @Override
-  public void create() {
-    entity.getEvents().addListener("exit", this::onExit);
-    entity.getEvents().addListener("createOrder", this::onCreateOrder);
-    ui = new Entity();
-    docketDisplayer = new MainGameOrderTicketDisplay();
-    ui.addComponent(docketDisplayer);
-    ServiceLocator.getEntityService().register(ui);
-//    entity.getEvents().addListener("orderDone", this::onOrderDone);
-  }
+	/**
+	 * Initializes the component, sets up event listeners, and creates UI entities.
+	 */
+	@Override
+	public void create() {
+		if (ui == null) {
+			ui = new Entity();
+			String randomRecipe = recipeNames[new Random().nextInt(recipeNames.length)];
+			docketDisplayer = new MainGameOrderTicketDisplay(randomRecipe);
+			docketDisplayer.setStage(ServiceLocator.getRenderService().getStage());
+			ui.addComponent(docketDisplayer);
+			entity.getEvents().addListener("exit", this::onExit);
+			entity.getEvents().addListener("createOrder", this::onCreateOrder);
+			ServiceLocator.getEntityService().register(ui);
+		}
+	}
 
-  /**
-   * Swaps to the Main Menu screen.
-   */
-  private void onExit() {
-    logger.info("Exiting main game screen");
-    game.setScreen(GdxGame.ScreenType.MAIN_MENU);
-  }
+	/**
+	 * Swaps to the Main Menu screen.
+	 */
+	private void onExit() {
+		logger.info("Exiting main game screen");
+		game.setScreen(GdxGame.ScreenType.MAIN_MENU);
+	}
 
-  /**
-   * Create Order Ticket
-   */
-  private void onCreateOrder() {
-    logger.info("Creating order");
-    /*ui = new Entity();
-    ui.addComponent(new MainGameOrderTicketDisplay());
-    ServiceLocator.getEntityService().register(ui);*/
-    //ServiceLocator.getEntityService();
-    docketDisplayer.addActors();
-  }
+	/**
+	 * Create Order Docket
+	 */
+	private void onCreateOrder() {
+//		String randomRecipe = recipeNames[new Random().nextInt(recipeNames.length)];
+//		docketDisplayer = new MainGameOrderTicketDisplay(randomRecipe);
+//		docketDisplayer.setStage(ServiceLocator.getRenderService().getStage());
+//		ui.addComponent(docketDisplayer);
+		docketDisplayer.addActors();
+//		logger.info("Order created with recipe: {}", randomRecipe);
+	}
 
-//  /**
-//   * Order Done Button
-//   */
-//  private void onOrderDone() {
-//      ServiceLocator.getEntityService().unregister(ui);
-//      ui.dispose();
-//      ui = null;
-//      logger.info("Order entity disposed");
-//  }
-
+	/**
+	 * Handles the event when an order is done.
+	 * Unregisters and disposes of the UI entity.
+	 */
+	private void onOrderDone() {
+		ServiceLocator.getEntityService().unregister(ui);
+		ui.dispose();
+		ui = null;
+		logger.info("Order entity disposed");
+	}
 }

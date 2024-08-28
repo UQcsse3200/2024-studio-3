@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 import com.csse3200.game.services.GameTime;
 import com.csse3200.game.services.ServiceLocator;
@@ -181,5 +182,10 @@ public class AnimationRenderComponent extends RenderComponent {
   public void dispose() {
     atlas.dispose();
     super.dispose();
+  }
+
+  @Override
+  public void setStage(Stage mock) {
+
   }
 }

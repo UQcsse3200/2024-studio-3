@@ -87,6 +87,7 @@ public class CookIngredientComponent extends Component {
      * Stops the cooking process. This method is called when cooking is complete or
      * when the cooking process is manually stopped.
      */
+
     void stopCookingIngredient() {
         isCooking = false;
     }
