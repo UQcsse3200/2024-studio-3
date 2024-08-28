@@ -19,6 +19,8 @@ import com.csse3200.game.ui.UIComponent;
 import com.csse3200.game.utils.StringDecorator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Settings menu display and logic. If you bork the settings, they can be changed manually in
@@ -34,6 +36,9 @@ public class SettingsMenuDisplay extends UIComponent {
   private CheckBox vsyncCheck;
   private Slider uiScaleSlider;
   private SelectBox<StringDecorator<DisplayMode>> displayModeSelect;
+  private TextField interactText;
+  private TextField recipeNavLeftText;
+  private TextField recipeNavRightText;
 
   public SettingsMenuDisplay(GdxGame game) {
     super();
@@ -92,6 +97,15 @@ public class SettingsMenuDisplay extends UIComponent {
     displayModeSelect.setItems(getDisplayModes(selectedMonitor));
     displayModeSelect.setSelected(getActiveMode(displayModeSelect.getItems()));
 
+    Label interactLabel = new Label("Interact:", skin);
+    interactText = new TextField(settings.interact, skin);
+
+    Label recipeNavLeftLabel = new Label("Recipe Navigate Left:", skin);
+    recipeNavLeftText = new TextField(settings.recipeNavLeft, skin);
+
+    Label recipleNavRightLabel = new Label("Recipe Navigate Right:", skin);
+    recipeNavRightText = new TextField(settings.recipeNavRight, skin);
+
     // Position Components on table
     Table table = new Table();
 
@@ -117,6 +131,18 @@ public class SettingsMenuDisplay extends UIComponent {
     table.row().padTop(10f);
     table.add(displayModeLabel).right().padRight(15f);
     table.add(displayModeSelect).left();
+
+    table.row().padTop(10f);
+    table.add(interactLabel).right().padRight(15f);
+    table.add(interactText).width(30).left();
+
+    table.row().padTop(10f);
+    table.add(recipeNavLeftLabel).right().padRight(15f);
+    table.add(recipeNavLeftText).width(30).left();
+
+    table.row().padTop(10f);
+    table.add(recipleNavRightLabel).right().padRight(15f);
+    table.add(recipeNavRightText).width(30).left();
 
     // Events on inputs
     uiScaleSlider.addListener(
@@ -198,13 +224,28 @@ public class SettingsMenuDisplay extends UIComponent {
     settings.displayMode = new DisplaySettings(displayModeSelect.getSelected().object);
     settings.vsync = vsyncCheck.isChecked();
 
+    Set<String> keys = new HashSet<>();
+
+    settings.interact = setKey(keys, interactText.getText(), settings.interact);
+    settings.recipeNavLeft = setKey(keys, recipeNavLeftText.getText(), settings.recipeNavLeft);
+    settings.recipeNavRight = setKey(keys, recipeNavRightText.getText(), settings.recipeNavRight);
+
     UserSettings.set(settings, true);
+  }
+
+  private String setKey(Set<String> keys, String newKey, String oldKey) {
+    if (newKey != null && newKey.length() == 1 && keys.add(newKey)) {
+      return newKey;
+    }
+    else {
+      keys.add(oldKey);
+      return oldKey;
+    }
   }
 
   private void exitMenu() {
     game.setScreen(ScreenType.MAIN_MENU);
   }
-
   private Integer parseOrNull(String num) {
     try {
       return Integer.parseInt(num, 10);

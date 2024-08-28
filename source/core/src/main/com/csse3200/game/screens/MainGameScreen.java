@@ -25,11 +25,14 @@ import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.terminal.Terminal;
 import com.csse3200.game.ui.terminal.TerminalDisplay;
+import com.csse3200.game.components.maingame.EndDayDisplay;
 import com.csse3200.game.components.maingame.MainGameExitDisplay;
 import com.csse3200.game.components.gamearea.PerformanceDisplay;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.csse3200.game.components.ordersystem.DocketLineDisplay;
+
+import java.util.Arrays;
 
 /**
  * The game screen containing the main game.
@@ -47,9 +50,10 @@ public class MainGameScreen extends ScreenAdapter {
 	// Modified the camera position to fix layout
 	private static final Vector2 CAMERA_POSITION = new Vector2(7.5f, 6.0f);
 
-	private final GdxGame game;
-	private final Renderer renderer;
-	private final PhysicsEngine physicsEngine;
+  private final GdxGame game;
+  private final Renderer renderer;
+  private final PhysicsEngine physicsEngine;
+  private boolean isPaused = false;
 
 	public MainGameScreen(GdxGame game) {
 		this.game = game;
@@ -84,8 +88,10 @@ public class MainGameScreen extends ScreenAdapter {
 
 	@Override
 	public void render(float delta) {
-		physicsEngine.update();
-		ServiceLocator.getEntityService().update();
+		if (!isPaused) {
+			physicsEngine.update();
+			ServiceLocator.getEntityService().update();
+		}
 		renderer.render();
 	}
 
@@ -98,11 +104,13 @@ public class MainGameScreen extends ScreenAdapter {
 	@Override
 	public void pause() {
 		logger.info("Game paused");
+		isPaused = true;
 	}
 
 	@Override
 	public void resume() {
 		logger.info("Game resumed");
+		isPaused = false;
 	}
 
 	@Override
@@ -144,17 +152,19 @@ public class MainGameScreen extends ScreenAdapter {
 
 		Entity ui = new Entity();
 		ui.addComponent(new InputDecorator(stage, 10))
-				.addComponent(new PerformanceDisplay())
-				.addComponent(new MainGameActions(this.game))
-				.addComponent(new MainGameExitDisplay())
-				.addComponent(new Terminal())
-				.addComponent(inputComponent)
-				.addComponent(new TerminalDisplay())
-				// order system
-				.addComponent(new DocketLineDisplay())
-				//.addComponent(new DocketDisplay())
-				.addComponent(new OrderActions(this.game))
-				.addComponent(new MainGameOrderBtnDisplay());
+
+			.addComponent(new PerformanceDisplay())
+			.addComponent(new MainGameActions(this.game))
+			.addComponent(new MainGameExitDisplay())
+			.addComponent(new Terminal())
+			.addComponent(inputComponent)
+			.addComponent(new TerminalDisplay())
+			// order system
+			.addComponent(new DocketLineDisplay())
+			//.addComponent(new DocketDisplay())
+			.addComponent(new OrderActions(this.game))
+			.addComponent(new MainGameOrderBtnDisplay())
+		        .addComponent(new EndDayDisplay(this));
 		ServiceLocator.getEntityService().register(ui);
 	}
 }

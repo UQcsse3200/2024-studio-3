@@ -90,6 +90,12 @@ public class UserSettings {
      */
     public float uiScale = 1f;
     public DisplaySettings displayMode = null;
+    /**
+     * Play input key binds
+     */
+    public String interact = "E";
+    public String recipeNavLeft = "[";
+    public String recipeNavRight = "]";
   }
 
   /**

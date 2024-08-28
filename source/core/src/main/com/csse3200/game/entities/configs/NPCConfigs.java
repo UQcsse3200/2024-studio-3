@@ -6,4 +6,6 @@ package com.csse3200.game.entities.configs;
 public class NPCConfigs {
   public BaseEntityConfig ghost = new BaseEntityConfig();
   public GhostKingConfig ghostKing = new GhostKingConfig();
+  public BaseCustomerConfig customer = new BaseCustomerConfig(); // to be worked on
+  public CustomerPersonalityConfig personalityCustomer = new CustomerPersonalityConfig();
 }
