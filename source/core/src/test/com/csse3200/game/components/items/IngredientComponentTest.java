@@ -84,4 +84,43 @@ public class IngredientComponentTest {
         }
     }
 
+    @Test
+    void burnItemTest() {
+        IngredientComponent ingredient = new IngredientComponent("Beef", ItemType.BEEF, 10, 5,
+                0, "raw");
+        ingredient.burnItem();
+        assertEquals("burnt", ingredient.getItemState());
+    }
+
+    @Test
+    void burnItemUnsupportedOperationExceptionTest() {
+        IngredientComponent ingredient = new IngredientComponent("Banana", ItemType.BANANA, 1, 0,
+                5, "raw");
+        try {
+            ingredient.cookItem();
+            fail("Expected UnsupportedOperationException to be thrown");
+        } catch (UnsupportedOperationException e) {
+            assertEquals("This item is not able to be burnt.", e.getMessage());
+        }
+    }
+
+    @Test
+    void chopItemTest() {
+        IngredientComponent ingredient = new IngredientComponent("Beef", ItemType.BEEF, 10, 5,
+                0, "raw");
+        try {
+            ingredient.chopItem();
+            fail("Expected UnsupportedOperationException to be thrown");
+        } catch (UnsupportedOperationException e) {
+            assertEquals("This item is not choppable.", e.getMessage());
+        }
+    }
+
+    @Test
+    void chopItemUnsupportedOperationExceptionTest() {
+        IngredientComponent ingredient = new IngredientComponent("Banana", ItemType.BANANA, 1, 0,
+                5, "raw");
+        ingredient.chopItem();
+        assertEquals("chopped", ingredient.getItemState());
+    }
 }
