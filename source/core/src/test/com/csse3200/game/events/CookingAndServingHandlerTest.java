@@ -97,6 +97,4 @@ public class CookingAndServingHandlerTest {
         assertEquals("images/cooked_beef.png", textureRender.getTexturePath());
     }
 
-
-
 }
