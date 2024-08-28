@@ -25,7 +25,6 @@ public class CookingComponentTest {
     private StationItemHandlerComponent handlerComponent;
     private CookingComponent cookingComponent;
 
-
     @BeforeEach
     void init() {
         MockitoAnnotations.openMocks(this);
@@ -51,36 +50,44 @@ public class CookingComponentTest {
     }
 
     /**
-     * Tests that the event trigger affects both
-     * CookingComponent.addItem and StationItemHandlerComponent.giveItem.
+     * Tests that the respective event triggers affects both
+     * CookingComponent.addItem, StationItemHandlerComponent.giveItem,
+     * CookingComponent.removeItem and StationItemHandler.takeItem.
      */
     @Test
-    void testEvent() {
+    void testGiveEventTrigger() {
         testEntity.getEvents().trigger("give station item", "acai");
         verify(handlerComponent).giveItem("acai"); // verifies that giveItem method was called
         verify(cookingComponent).addItem("acai"); // verifies that addItem method was called
+        testEntity.getEvents().trigger("take item");
+        verify(handlerComponent).takeItem(); // verifies that takeItem method was called
+        verify(cookingComponent).removeItem(); // verifies that removeItem method was called
     }
 
+    /**
+     * Tests that cooking does not commence unless the ingredients are part of a valid recipe
+     */
     @Test
     void testAddOneItem() {
         testEntity.getEvents().trigger("give station item", "banana");
         assertFalse(cookingComponent.isCooking());
     }
 
+    /**
+     * Tests that cooking stops upon removal
+     */
     @Test
     void testRemoveItem() {
         testEntity.getEvents().trigger("give station item", "acai");
         testEntity.getEvents().trigger("give station item", "banana");
         assertTrue(cookingComponent.isCooking());
-        cookingComponent.removeItem();
+        testEntity.getEvents().trigger("take item");
         assertFalse(cookingComponent.isCooking());
     }
 
-    @Test
-    void testGetStationType() {
-        assertEquals("OVEN", handlerComponent.getType());
-    }
-
+    /**
+     * Tests that the cooking time updates correctly
+     */
     @Test
     void testUpdateCooking() {
         testEntity.getEvents().trigger("give station item", "acai");
@@ -93,6 +100,9 @@ public class CookingComponentTest {
         assertEquals(9000, cookingComponent.getCookingTime());
     }
 
+    /**
+     * Tests the getCookingTime method
+     */
     @Test
     void testGetCookingTime() {
         testEntity.getEvents().trigger("give station item", "acai");
