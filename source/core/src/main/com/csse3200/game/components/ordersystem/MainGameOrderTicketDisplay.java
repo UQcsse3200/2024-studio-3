@@ -232,17 +232,17 @@ public class MainGameOrderTicketDisplay extends UIComponent {
             float yVal = viewportHeight * viewPortHeightMultiplier;
             Array<Cell> cells = table.getCells();
             if (i == tableArrayList.size() - 1) { // Tail docket
-                table.setSize(viewportWidth * 0.089f, viewportHeight * 0.185f);
+                table.setSize(170f * (viewportWidth/1920f), 200f * (viewportHeight/1080f));
                 // Fixed position for enlarged docket
-                table.setPosition(xEnlargedArea, viewportHeight* 0.791f); // - (40 * viewPortHeightMultiplier)
+                table.setPosition(xEnlargedArea, 855 * (viewportHeight/1080)); // - (40 * viewPortHeightMultiplier)
                 // Apply enlarged font size
                 for (int j = 0; j < cells.size; j++) {
                     Label label = (Label)cells.get(j).getActor();
                     label.setFontScale(1f * (viewportWidth/1920f));
                 }
             } else { // Non-enlarged dockets
-                table.setSize(viewportWidth * 0.0625f, viewportHeight * 0.139f);
-                table.setPosition(xVal, viewportHeight * 0.833f);
+                table.setSize(120f * (viewportWidth/1920f), 150f * (viewportHeight/1080f));
+                table.setPosition(xVal, 900f * (viewportHeight/1080f));
                 for (int j = 0; j < cells.size; j++) {
                     Label label = (Label)cells.get(j).getActor();
                     label.setFontScale(0.7f * (viewportWidth/1920f));
