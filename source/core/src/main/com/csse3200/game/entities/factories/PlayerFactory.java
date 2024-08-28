@@ -38,7 +38,7 @@ public class PlayerFactory {
 
     Entity player =
         new Entity()
-            .addComponent(new TextureRenderComponent("images/box_boy_leaf.png"))
+            .addComponent(new TextureRenderComponent("images/chef_player.png"))
             .addComponent(new PhysicsComponent())
             .addComponent(new ColliderComponent())
             .addComponent(new HitboxComponent().setLayer(PhysicsLayer.PLAYER))
@@ -50,9 +50,9 @@ public class PlayerFactory {
             .addComponent(new InteractionComponent(PhysicsLayer.INTERACTABLE))
             .addComponent(new SensorComponent(PhysicsLayer.INTERACTABLE, 10f));
 
-    PhysicsUtils.setScaledCollider(player, 0.6f, 0.3f);
+    player.scaleHeight(1.5f);
+    PhysicsUtils.setScaledCollider(player, 0.3f, 0.3f);
     player.getComponent(ColliderComponent.class).setDensity(1.5f);
-    player.getComponent(TextureRenderComponent.class).scaleEntity();
     return player;
   }
 
