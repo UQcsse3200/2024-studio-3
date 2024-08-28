@@ -3,9 +3,11 @@ package com.csse3200.game.components.player;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.Fixture;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.services.ServiceLocator;
+import com.csse3200.game.components.SensorComponent;
 
 /**
  * Action component for interacting with the player. Player events should be initialised in create()
@@ -17,10 +19,12 @@ public class PlayerActions extends Component {
   private PhysicsComponent physicsComponent;
   private Vector2 walkDirection = Vector2.Zero.cpy();
   private boolean moving = false;
+  private SensorComponent interactionSensor;
 
   @Override
   public void create() {
     physicsComponent = entity.getComponent(PhysicsComponent.class);
+    interactionSensor = entity.getComponent(SensorComponent.class);
     entity.getEvents().addListener("walk", this::walk);
     entity.getEvents().addListener("walkStop", this::stopWalking);
     entity.getEvents().addListener("attack", this::attack);
@@ -30,6 +34,14 @@ public class PlayerActions extends Component {
   public void update() {
     if (moving) {
       updateSpeed();
+    }
+
+    // Check for the closest sensor
+    interactionSensor.update();
+    Fixture interactable = interactionSensor.getClosestFixture();
+    if (interactable != null) {
+      //This is where we know we can interact with an object
+
     }
   }
 
