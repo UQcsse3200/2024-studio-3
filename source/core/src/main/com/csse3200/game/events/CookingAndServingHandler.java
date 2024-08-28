@@ -81,7 +81,7 @@ public class CookingAndServingHandler extends Component {
 
         }
     }
-    private void deleteMeal() {
+    public void deleteMeal() {
         /**
          * Disposes of meals once served to customers.
          */
@@ -124,5 +124,9 @@ public class CookingAndServingHandler extends Component {
                 }
             }
         }
+    }
+
+    public boolean isServed() {
+        return isServed;
     }
 }

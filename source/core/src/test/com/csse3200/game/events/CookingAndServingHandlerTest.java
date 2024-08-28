@@ -1,8 +1,6 @@
 package com.csse3200.game.events;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.csse3200.game.components.items.IngredientComponent;
-import com.csse3200.game.components.items.ItemType;
 import com.csse3200.game.rendering.TextureRenderComponent;
 import com.csse3200.game.services.GameTime;
 import com.csse3200.game.extensions.GameExtension;
@@ -11,6 +9,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
+import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(GameExtension.class)
@@ -19,61 +18,60 @@ public class CookingAndServingHandlerTest {
     private CookingAndServingHandler cookingHandler;
     private GameTime gameTime;
     private Entity entity;
+    private IngredientComponent ingredient;
+    private TextureRenderComponent textureRender;
 
     @BeforeEach
     void setup () {
-        gameTime = new GameTime();
+        gameTime = mock(GameTime.class);
         cookingHandler = new CookingAndServingHandler(gameTime);
 
-        entity = new Entity();
+        entity = mock(Entity.class);
+        ingredient = mock(IngredientComponent.class);
+        textureRender = mock(TextureRenderComponent.class);
+
+        when(entity.getComponent(IngredientComponent.class)).thenReturn(ingredient);
+        when(entity.getComponent(TextureRenderComponent.class)).thenReturn(textureRender);
+
         cookingHandler.setEntity(entity);
     }
 
     @Test
-    void createWithMissingComponents() {
+    void createTest() {
+        when(ingredient.getItemState()).thenReturn("raw");
+
         cookingHandler.create();
-        assertNull(entity.getComponent(IngredientComponent.class));
-        assertNull(entity.getComponent(TextureRenderComponent.class));
+
+        verify(entity).getComponent(IngredientComponent.class);
+        verify(entity).getComponent(TextureRenderComponent.class);
+        verify(textureRender).setTexture("images/raw_null.png");
     }
 
     @Test
-    void startCookingWithRawIngredientTest() {
-
-        IngredientComponent ingredient = new IngredientComponent("Beef", ItemType.BEEF, 10,5,0, "raw");
-        TextureRenderComponent textureRender = new TextureRenderComponent("images/raw_beef.png");
-        entity.addComponent(ingredient);
-        entity.addComponent(textureRender);
+    void startCookingtartTest() {
+        when(ingredient.getItemState()).thenReturn("raw");
+        when(gameTime.getTime()).thenReturn(1000L);
 
         cookingHandler.create();
         cookingHandler.startCooking();
 
         assertTrue(cookingHandler.isCooking());
-        assertEquals("raw", ingredient.getItemState());
-
+        verify(ingredient).getItemState();
     }
 
     @Test
-    void cookingWithNonRawIngredientTest() {
-
-        IngredientComponent ingredient = new IngredientComponent("Beef", ItemType.BEEF, 10, 5, 0, "cooked");
-        TextureRenderComponent textureRender = new TextureRenderComponent("images/cooked_beef.png");
-
-        entity.addComponent(ingredient);
-        entity.addComponent(textureRender);
+    void startCookingWithNonRawIngredientTest() {
+        when(ingredient.getItemState()).thenReturn("cooked");
 
         cookingHandler.create();
         cookingHandler.startCooking();
 
         assertFalse(cookingHandler.isCooking());
-        assertEquals("cooked", ingredient.getItemState());
     }
 
     @Test
     void stopCookingTest() {
-
-        IngredientComponent ingredient = new IngredientComponent("Beef", ItemType.BEEF, 10,5, 0,"raw" );
-        entity.addComponent(ingredient);
-        entity.addComponent(new TextureRenderComponent("images/raw_beef.png"));
+        when(ingredient.getItemState()).thenReturn("raw");
 
         cookingHandler.create();
         cookingHandler.startCooking();
@@ -83,18 +81,74 @@ public class CookingAndServingHandlerTest {
     }
 
     @Test
-    void updateTextureTest () {
-        IngredientComponent ingredient = new IngredientComponent("Beef", ItemType.BEEF, 10, 5, 0, "raw");
-        TextureRenderComponent textureRender = new TextureRenderComponent("images/raw_beef.png");
-
-        entity.addComponent(ingredient);
-        entity.addComponent(textureRender);
+    void serveMealTest() {
+        when(ingredient.getItemState()).thenReturn("cooked");
 
         cookingHandler.create();
-        ingredient.cookItem();
+        cookingHandler.serveMeal();
+
+        verify(ingredient).getItemState();
+        assertTrue(cookingHandler.isServed());
+    }
+
+    @Test
+    void serveMealNotCooked() {
+        when(ingredient.getItemState()).thenReturn("raw");
+
+        cookingHandler.create();
+        cookingHandler.serveMeal();
+
+        verify(ingredient).getItemState();
+        assertFalse(cookingHandler.isServed());
+    }
+
+    @Test
+    void deleteMealWhenServedTest() {
+        when(ingredient.getItemState()).thenReturn("cooked");
+
+        cookingHandler.create();
+        cookingHandler.serveMeal();
+        cookingHandler.deleteMeal();
+
+        verify(entity).dispose();
+    }
+
+    @Test
+    void deleteMealWhenNotServedTest() {
+        when(ingredient.getItemState()).thenReturn("raw");
+
+        cookingHandler.create();
+        cookingHandler.deleteMeal();
+
+        verify(entity, never()).dispose();
+    }
+
+    @Test
+    void updateStateCookingToCooked() {
+        when(ingredient.getItemState()).thenReturn("raw");
+        when(gameTime.getTime()).thenReturn(0L).thenReturn(5000L);
+        when(ingredient.getCookTime()).thenReturn(5);
+
+        cookingHandler.create();
+        cookingHandler.startCooking();
         cookingHandler.updateState();
 
-        assertEquals("images/cooked_beef.png", textureRender.getTexturePath());
+        verify(ingredient).cookItem();
+        verify(textureRender).setTexture("images/cooked_null.png");
+    }
+
+    @Test
+    void updateStateCookingToBurnt() {
+        when(ingredient.getItemState()).thenReturn("raw");
+        when(gameTime.getTime()).thenReturn(0L).thenReturn(6500L);
+        when(ingredient.getCookTime()).thenReturn(5);
+
+        cookingHandler.create();
+        cookingHandler.startCooking();
+        cookingHandler.updateState();
+
+        verify(ingredient).burnItem();
+        verify(textureRender).setTexture("images/burnt_null.png");
     }
 
 }
