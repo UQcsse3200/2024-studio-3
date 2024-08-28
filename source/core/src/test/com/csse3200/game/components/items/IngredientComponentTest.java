@@ -14,7 +14,7 @@ public class IngredientComponentTest {
                 5, 3, "raw");
         assertEquals("Cucumber", ingredient.getItemName());
         assertEquals(ItemType.CUCUMBER, ingredient.getItemType());
-        assertEquals(10, ingredient.weight());
+        assertEquals(10, ingredient.getWeight());
         assertEquals(5, ingredient.getCookTime());
         assertEquals(3, ingredient.getChopTime());
         assertEquals("raw", ingredient.getItemState());
@@ -28,7 +28,7 @@ public class IngredientComponentTest {
                 8, 0, "cooked");
         assertEquals("Beef", ingredient.getItemName());
         assertEquals(ItemType.BEEF, ingredient.getItemType());
-        assertEquals(10, ingredient.weight());
+        assertEquals(10, ingredient.getWeight());
         assertEquals(8, ingredient.getCookTime());
         assertEquals(0, ingredient.getChopTime());
         assertEquals("cooked", ingredient.getItemState());
@@ -42,7 +42,7 @@ public class IngredientComponentTest {
                 0, 4, "chopped");
         assertEquals("Strawberry", ingredient.getItemName());
         assertEquals(ItemType.STRAWBERRY, ingredient.getItemType());
-        assertEquals(5, ingredient.weight());
+        assertEquals(5, ingredient.getWeight());
         assertEquals(0, ingredient.getCookTime());
         assertEquals(4, ingredient.getChopTime());
         assertEquals("chopped", ingredient.getItemState());
@@ -56,7 +56,7 @@ public class IngredientComponentTest {
                 0, 0, "raw");
         assertEquals("Lettuce", ingredient.getItemName());
         assertEquals(ItemType.LETTUCE, ingredient.getItemType());
-        assertEquals(3, ingredient.weight());
+        assertEquals(3, ingredient.getWeight());
         assertEquals(0, ingredient.getCookTime());
         assertEquals(0, ingredient.getChopTime());
         assertEquals("raw", ingredient.getItemState());
