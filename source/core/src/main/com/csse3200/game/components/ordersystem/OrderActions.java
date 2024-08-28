@@ -11,16 +11,15 @@ import com.csse3200.game.components.ordersystem.MainGameOrderTicketDisplay;
 
 /**
  * This class listens to key presses to shift dockets left and right and handles
- * order-related actions in the game. - Tia
+ * order-related actions in the game.
  */
-
 public class OrderActions extends InputComponent {
     private static final Logger logger = LoggerFactory.getLogger(OrderActions.class);
     private GdxGame game;
     private static final int SHIFT_LEFT_KEY = Input.Keys.LEFT_BRACKET; // Key for shifting left
     private static final int SHIFT_RIGHT_KEY = Input.Keys.RIGHT_BRACKET; // Key for shifting right
 
-     /**
+    /**
      * Constructs an OrderActions instance with a reference to the main game object. - Tia
      *
      * @param game the main game instance
@@ -32,7 +31,7 @@ public class OrderActions extends InputComponent {
 
     /**
      * Initialises the OrderActions component by registering input listeners and
-     * event listeners for order-related actions. - Tia/ Michael?
+     * event listeners for order-related actions.
      */
     @Override
     public void create() {
@@ -43,12 +42,11 @@ public class OrderActions extends InputComponent {
         ServiceLocator.getDocketService().getEvents().addListener("removeOrder", this::onRemoveOrder);
         ServiceLocator.getDocketService().getEvents().addListener(
                 "reorderDockets", MainGameOrderTicketDisplay::reorderDockets);
-
         entity.getEvents().addListener("moveOrder", this::onMoveOrder);
         entity.getEvents().addListener("changeColour", this::onChangeColour);
     }
 
-     /**
+    /**
      * Handles key press events. Shifts dockets left or right based on the pressed key. - Tia
      *
      * @param keycode the code of the pressed key
@@ -56,19 +54,18 @@ public class OrderActions extends InputComponent {
      */
     @Override
     public boolean keyDown(int keycode) {
-        
-    if (keycode == Keys.LEFT_BRACKET) {
-        logger.info("Shift dockets left");
-        ServiceLocator.getDocketService().getEvents().trigger("shiftDocketsLeft");
-        return true;
-    } else if (keycode == Keys.RIGHT_BRACKET) {
-        logger.info("Shift dockets right");
-        ServiceLocator.getDocketService().getEvents().trigger("shiftDocketsRight");
-        return true;
-    }
+        if (keycode == Keys.LEFT_BRACKET) {
+            logger.info("Shift dockets left");
+            ServiceLocator.getDocketService().getEvents().trigger("shiftDocketsLeft");
+            return true;
+        } else if (keycode == Keys.RIGHT_BRACKET) {
+            logger.info("Shift dockets right");
+            ServiceLocator.getDocketService().getEvents().trigger("shiftDocketsRight");
+            return true;
+        }
 
-    logger.info("pls work");
-    return false;
+        logger.info("pls work");
+        return false;
     }
 
      /**

@@ -23,11 +23,12 @@ public class ServiceLocator {
   private static PhysicsService physicsService;
   private static GameTime timeSource;
   private static InputService inputService;
+
   private static ResourceService resourceService;
 
   //Me new stuff :)
-  private static DocketService docketService;
 
+  private static DocketService docketService;
 
   public static EntityService getEntityService() {
     return entityService;
@@ -63,9 +64,12 @@ public class ServiceLocator {
   }
 
   public static void registerDocketService(DocketService service) {
+    if (docketService != null) {
+      logger.warn("Docket service is being overwritten!");
+    }
     logger.debug("Registering docket service {}", service);
     docketService = service;
-}
+  }
 
   public static void registerRenderService(RenderService service) {
     logger.debug("Registering render service {}", service);
@@ -82,16 +86,18 @@ public class ServiceLocator {
     timeSource = source;
   }
 
-  public static void registerInputService(InputService source) {
-    logger.debug("Registering input service {}", source);
-    inputService = source;
+  public static void registerInputService(InputService service) {
+    if (inputService != null) {
+      logger.warn("Input service is being overwritten!");
+    }
+    logger.debug("Registering input service {}", service);
+    inputService = service;
   }
 
   public static void registerResourceService(ResourceService source) {
     logger.debug("Registering resource service {}", source);
     resourceService = source;
   }
-
 
 
   public static void clear() {
@@ -101,6 +107,7 @@ public class ServiceLocator {
     timeSource = null;
     inputService = null;
     resourceService = null;
+    docketService = null;
   }
 
   private ServiceLocator() {
