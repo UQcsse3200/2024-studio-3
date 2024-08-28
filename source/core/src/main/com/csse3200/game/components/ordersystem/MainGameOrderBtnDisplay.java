@@ -20,6 +20,7 @@ public class MainGameOrderBtnDisplay extends UIComponent{
     private static final Logger logger = LoggerFactory.getLogger(MainGameExitDisplay.class);
     private static final float Z_INDEX = 2f;
     public Table table;
+    public boolean pressed = false;
 
     @Override
     public void create() {
@@ -41,7 +42,9 @@ public class MainGameOrderBtnDisplay extends UIComponent{
                     @Override
                     public void changed(ChangeEvent changeEvent, Actor actor) {
                         logger.debug("Create Order button clicked");
+                        pressed = true;
                         entity.getEvents().trigger("createOrder");
+                        pressed = false;
                     }
                 });
         table.add(createOrderBtn).padBottom(10f).padRight(10f);
@@ -69,6 +72,10 @@ public class MainGameOrderBtnDisplay extends UIComponent{
     public void dispose() {
         table.clear();
         super.dispose();
+    }
+
+    public boolean getState(){
+        return pressed;
     }
 
 }
