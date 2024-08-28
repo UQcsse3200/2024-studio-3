@@ -26,6 +26,9 @@ public class MainGameActions extends Component {
    
   }
 
+  /**
+   * Initializes the component, sets up event listeners, and creates UI entities.
+   */
   @Override
   public void create() {
     entity.getEvents().addListener("exit", this::onExit);
@@ -45,16 +48,17 @@ public class MainGameActions extends Component {
   }
 
   /**
-   * Create Order Ticket
+   * Create Order Docket
    */
   private void onCreateOrder() {
     logger.info("Creating order");
     docketDisplayer.addActors();
   }
 
-//  /**
-//   * Order Done Button
-//   */
+  /**
+   * Handles the event when an order is done.
+   * Unregisters and disposes of the UI entity.
+   */
  private void onOrderDone() {
      ServiceLocator.getEntityService().unregister(ui);
      ui.dispose();

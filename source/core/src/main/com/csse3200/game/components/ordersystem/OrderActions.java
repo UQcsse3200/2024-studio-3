@@ -13,9 +13,8 @@ import com.csse3200.game.components.ordersystem.MainGameOrderTicketDisplay;
 
 /**
  * This class listens to key presses to shift dockets left and right and handles
- * order-related actions in the game. - Tia
+ * order-related actions in the game.
  */
-
 public class OrderActions extends InputComponent {
     private static final Logger logger = LoggerFactory.getLogger(OrderActions.class);
     private GdxGame game;
@@ -24,7 +23,7 @@ public class OrderActions extends InputComponent {
 
 
      /**
-     * Constructs an OrderActions instance with a reference to the main game object. - Tia
+     * Constructs an OrderActions instance with a reference to the main game object.
      *
      * @param game the main game instance
      */
@@ -35,7 +34,7 @@ public class OrderActions extends InputComponent {
 
     /**
      * Initialises the OrderActions component by registering input listeners and
-     * event listeners for order-related actions. - Tia/ Michael?
+     * event listeners for order-related actions.
      */
     @Override
     public void create() {
