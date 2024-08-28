@@ -140,7 +140,7 @@ class InventoryComponentTest {
   void shouldNotFindItem() {
     InventoryComponent inventory = new InventoryComponent(5);
 
-    ItemComponent item = new ItemComponent("Chicken", ItemType.CHICKEN, 1);
+    ItemComponent item = new ItemComponent("Beef", ItemType.BEEF, 1);
     assertFalse(inventory.find(item));
   }
 
@@ -153,7 +153,7 @@ class InventoryComponentTest {
       inventory.addItem(item);
     }
   
-    item = new ItemComponent("Chicken", ItemType.CHICKEN, 1);
+    item = new ItemComponent("Beef", ItemType.BEEF, 1);
     inventory.addItem(item);
     assertFalse(inventory.find(item)); // Needs some kind of reminder when adding to a full inventory
   }
@@ -194,7 +194,7 @@ class InventoryComponentTest {
   @Test
   void shouldGetSelectedItem() {
     InventoryComponent inventory = new InventoryComponent(5);
-    ItemComponent item = new ItemComponent("Chicken", ItemType.CHICKEN, 1);
+    ItemComponent item = new ItemComponent("Beef", ItemType.BEEF, 1);
     inventory.addItem(item);
 
     inventory.setSelected(0);
