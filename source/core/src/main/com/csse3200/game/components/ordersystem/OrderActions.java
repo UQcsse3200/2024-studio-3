@@ -13,9 +13,8 @@ import com.csse3200.game.components.ordersystem.MainGameOrderTicketDisplay;
 
 /**
  * This class listens to key presses to shift dockets left and right and handles
- * order-related actions in the game. - Tia
+ * order-related actions in the game.
  */
-
 public class OrderActions extends InputComponent {
     private static final Logger logger = LoggerFactory.getLogger(OrderActions.class);
     private GdxGame game;
@@ -35,7 +34,7 @@ public class OrderActions extends InputComponent {
 
     /**
      * Initialises the OrderActions component by registering input listeners and
-     * event listeners for order-related actions. - Tia/ Michael?
+     * event listeners for order-related actions.
      */
     @Override
     public void create() {
@@ -60,7 +59,6 @@ public class OrderActions extends InputComponent {
      */
     @Override
     public boolean keyDown(int keycode) {
-
         if (keycode == Keys.LEFT_BRACKET) {
             logger.info("Shift dockets left");
             ServiceLocator.getDocketService().getEvents().trigger("shiftDocketsLeft");
@@ -75,7 +73,7 @@ public class OrderActions extends InputComponent {
         return false;
     }
 
-    /**
+     /**
      * Handles key release events. Currently does nothing. - Tia
      *
      * @param keycode the code of the released key

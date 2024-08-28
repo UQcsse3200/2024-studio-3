@@ -20,6 +20,7 @@ public class Docket extends UIComponent {
     private static final long DEFAULT_TIMER = 5000;
     private long startTime;
 
+
     /**
      * Constructs a docket component and initialises its skin.
      */
@@ -71,6 +72,7 @@ public class Docket extends UIComponent {
      * Sets the cell hash that uniquely identifies the cell this docket is associated with.
      * @param cellHash the unique hash for the cell
      */
+
     public void setCellHash(int cellHash) {
         this.cellHash = cellHash;
     }
