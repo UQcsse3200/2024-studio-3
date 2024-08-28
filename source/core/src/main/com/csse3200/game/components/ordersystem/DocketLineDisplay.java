@@ -27,14 +27,18 @@ public class DocketLineDisplay extends UIComponent {
 	private Table table;
     private Image pineLine;
 
-
-
+	/**
+	 * Initializes the DocketLineDisplay component by creating and adding its actors to the stage.
+	 */
 	@Override
 	public void create() {
 		super.create();
 		addActors();
 	}
 
+	/**
+	 * Adds the actors to the table and sets up the layout.
+	 */
 	private void addActors() {
 		table = new Table();
 		table.top().left();
@@ -52,17 +56,27 @@ public class DocketLineDisplay extends UIComponent {
 		stage.addActor(table);
 	}
 
-
+	/**
+	 * Draws the DocketLineDisplay component.
+	 * @param batch the SpriteBatch used for drawing
+	 */
 	@Override
 	public void draw(SpriteBatch batch) {
 		// draw is handled by the stage
 	}
 
+	/**
+	 * Returns the Z-index of the DocketLineDisplay component.
+	 * @return the Z-index of the component
+	 */
 	@Override
 	public float getZIndex() {
 		return Z_INDEX;
 	}
 
+	/**
+	 * Clears the table and calls the superclass' dispose method.
+	 */
 	@Override
 	public void setStage(Stage mock) {
 

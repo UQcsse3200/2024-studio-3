@@ -199,7 +199,7 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         }
     }
 
-    private void updateDocketSizes() {
+    public void updateDocketSizes() {
         float xEnlargedArea = viewportWidth - 260f;
         for (int i = 0; i < tableArrayList.size(); i++) {
             Table table = tableArrayList.get(i);
@@ -280,6 +280,39 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         countdownLabelArrayList.clear();
         super.dispose();
     }
+
+    /**
+     * Returns the list of tables used for displaying order tickets.
+     * @return the list of order ticket tables.
+     */
+    public static ArrayList<Table> getTableArrayList() {
+        return tableArrayList;
+    }
+
+    /**
+     * Returns the viewportWidth.
+     * @return the float value of viewportWidth.
+     */
+    public float getViewportWidth() {
+        return viewportWidth;
+    }
+
+    /**
+     * Returns the viewportHeight.
+     * @return the float value of viewportHeight.
+     */
+    public float getViewportHeight() {
+        return viewportHeight;
+    }
+
+    /**
+     * Returns the viewportHeightMultiplayer.
+     * @return the float value of viewportHeightMultiplayer.
+     */
+    public float getViewPortHeightMultiplier() {
+        return viewPortHeightMultiplier;
+    }
+
 //    public void stageDispose(Docket background, Table table, int index) {
 //        table.setBackground((Drawable) null);
 //        table.clear();
