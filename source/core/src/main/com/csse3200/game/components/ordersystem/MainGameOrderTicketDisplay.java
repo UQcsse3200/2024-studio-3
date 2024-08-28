@@ -231,12 +231,12 @@ public class MainGameOrderTicketDisplay extends UIComponent {
             if (i == tableArrayList.size() - 1) { // Tail docket
                 table.setSize(170f, 200f);
                 // Fixed position for enlarged docket
-                table.setPosition(xEnlargedArea, yVal - 50);
+                table.setPosition(xEnlargedArea, yVal + (viewPortHeightMultiplier * 19.28f)); // - (40 * viewPortHeightMultiplier)
                 // Apply enlarged font size
 
             } else { // Non-enlarged dockets
                 table.setSize(120f, 150f);
-                table.setPosition(xVal, yVal);
+                table.setPosition(xVal, yVal + (77.14f * viewPortHeightMultiplier));
             }
         }
     }
