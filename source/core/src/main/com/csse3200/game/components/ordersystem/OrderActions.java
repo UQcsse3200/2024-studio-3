@@ -99,7 +99,7 @@ public class OrderActions extends InputComponent {
     /**
      * Handles the event to add an order to the line. Tia
      */
-    private void onAddOrder() {
+    public void onAddOrder() {
         logger.info("Add order");
     }
 
@@ -108,7 +108,7 @@ public class OrderActions extends InputComponent {
      *
      * @param index the index of the order to be removed
      */
-    private void onRemoveOrder(int index) {
+    public void onRemoveOrder(int index) {
         logger.info("Remove order");
         ServiceLocator.getDocketService().getEvents().trigger("reorderDockets", index);
     }
@@ -116,7 +116,7 @@ public class OrderActions extends InputComponent {
     /**
      * Moves order
      */
-    private void onMoveOrder() {
+    public void onMoveOrder() {
         logger.info("Move order");
         // do something
     }
@@ -124,7 +124,7 @@ public class OrderActions extends InputComponent {
     /**
      * Changes order colour based on recipe timer
      */
-    private void onChangeColour() {
+    public void onChangeColour() {
         logger.info("Move order");
         // do something
     }

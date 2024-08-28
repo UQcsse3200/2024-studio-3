@@ -318,7 +318,13 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         super.dispose();
     }
 
-
+    /**
+     * Sets the stage for this UI component. Used to add the component to a specific stage or change the stage it belongs to.
+     *
+     * <p>Override this method to provide custom behavior when this component is added to or removed from a stage.
+     *
+     * @param stage the stage to set for this UI component, or null if the component is being removed from a stage.
+     */
     @Override
     public void setStage(Stage stage) {
         // Your implementation here

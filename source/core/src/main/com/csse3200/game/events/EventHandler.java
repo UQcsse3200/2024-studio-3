@@ -8,6 +8,9 @@ import org.slf4j.LoggerFactory;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Consumer;
+import java.util.List;
+import java.util.ArrayList;
+
 
 /**
  * Send and receive events between objects. EventHandler provides an implementation of the Observer
@@ -23,10 +26,12 @@ import java.util.function.Consumer;
 public class EventHandler {
   private static final Logger logger = LoggerFactory.getLogger(EventHandler.class);
   Map<String, Array<EventListener>> listeners;
+  private final Map<String, List<Object[]>> triggeredEvents;
 
   public EventHandler() {
     // Assume no events by default, which will be the case for most entities
     listeners = new HashMap<>(0);
+    triggeredEvents = new HashMap<>();
   }
 
   /**
@@ -156,4 +161,34 @@ public class EventHandler {
   private static void logTrigger(String eventName) {
     logger.debug("Triggering event {}", eventName);
   }
+
+
+  /**
+   * Check if a specific event with specific arguments was triggered.
+   *
+   * @param eventName the name of the event
+   * @param args the arguments that should have been passed to the event
+   * @return true if the event was triggered with the provided arguments, false otherwise
+   */
+  public boolean hasTriggered(String eventName, Object... args) {
+    List<Object[]> events = triggeredEvents.get(eventName);
+    if (events != null) {
+      for (Object[] eventArgs : events) {
+        if (eventArgs.length == args.length) {
+          boolean allMatch = true;
+          for (int i = 0; i < args.length; i++) {
+            if (!eventArgs[i].equals(args[i])) {
+              allMatch = false;
+              break;
+            }
+          }
+          if (allMatch) {
+            return true;
+          }
+        }
+      }
+    }
+    return false;
+  }
 }
+
