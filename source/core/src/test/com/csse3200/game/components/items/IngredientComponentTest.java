@@ -140,4 +140,25 @@ public class IngredientComponentTest {
         assertEquals("raw", ingredient.getItemState());
     }
 
+    @Test
+    void isCookableTest() {
+        IngredientComponent cookableIngredient = new IngredientComponent("Beef", ItemType.BEEF, 10, 5,
+                0, "raw");
+        assertTrue(cookableIngredient.isCookable());
+
+        IngredientComponent nonCookableIngredient = new IngredientComponent("Banana", ItemType.BANANA, 1, 0,
+                5, "raw");
+        assertFalse(nonCookableIngredient.isCookable());
+    }
+
+    @Test
+    void isChoppableTest() {
+        IngredientComponent choppableIngredient = new IngredientComponent("Banana", ItemType.BANANA, 1, 0,
+                5, "raw");
+        assertTrue(choppableIngredient.isChoppable());
+
+        IngredientComponent nonChoppableIngredient = new IngredientComponent("Beef", ItemType.BEEF, 10, 5,
+                0, "raw");
+        assertFalse(nonChoppableIngredient.isChoppable());
+    }
 }
