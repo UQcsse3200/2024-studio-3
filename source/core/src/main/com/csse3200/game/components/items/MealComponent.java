@@ -15,7 +15,6 @@ public class MealComponent extends ItemComponent {
         this.price = price;
 
     }
-
     public List<IngredientComponent> getIngredients() {
         return ingredients;
     }
