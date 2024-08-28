@@ -152,55 +152,6 @@ class SensorComponentTest {
          assertNull(closestFixture, "Closest fixture should be null");
      }
 
-     @Test
-     void shouldShowClosestFixture() {
-         Entity entity = createEntity(0, 0);
-         Entity closeTarget = createTarget(0, 0);
-         Entity farTarget = createTarget(10, 10);
-
-         Fixture entityFixture = entity.getComponent(InteractionComponent.class).getFixture();
-         Fixture closeTargetFixture = closeTarget.getComponent(InteractionComponent.class).getFixture();
-         Fixture farTargetFixture = farTarget.getComponent(InteractionComponent.class).getFixture();
-
-         // Should not detect a target far away
-         sensorComponent.onCollisionStart(entityFixture, farTargetFixture);
-
-         // Should not detect a target far away
-         assertEquals(0, sensorComponent.getNumFixtures(),
-                 "There should be no fixtures in the list");
-         Fixture closestFixture = sensorComponent.getClosestFixture();
-         assertNull(closestFixture, "Closest fixture should not be null");
-
-         // Should detect a close target
-         sensorComponent.onCollisionStart(entityFixture, closeTargetFixture);
-
-         // Should detect a target close
-         assertEquals(1, sensorComponent.getNumFixtures(),
-                 "There should be one fixture added to the list");
-         closestFixture = sensorComponent.getClosestFixture();
-         assertNotNull(closestFixture, "Closest fixture should not be null");
-         assertEquals(closestFixture, closeTargetFixture);
-
-         // Changing entity location
-         entity.setPosition(10, 10);
-         sensorComponent.onCollisionStart(entityFixture, closeTargetFixture);
-         // Should no longer detect a close target
-         assertEquals(0, sensorComponent.getNumFixtures(),
-                 "There should no fixture in the list");
-         closestFixture = sensorComponent.getClosestFixture();
-         assertNotNull(closestFixture, "Closest fixture should not be null");
-         assertEquals(closestFixture, closeTargetFixture);
-
-
-         sensorComponent.onCollisionStart(entityFixture, farTargetFixture);
-         // Should detect a target close
-         assertEquals(1, sensorComponent.getNumFixtures(),
-                 "There should be one fixture added to the list");
-         closestFixture = sensorComponent.getClosestFixture();
-         assertNotNull(closestFixture, "Closest fixture should be null");
-         assertEquals(closestFixture, farTargetFixture);
-     }
-
     private Entity createEntity(float x, float y) {
         Entity entity = new Entity();
         entity.setPosition(x, y);

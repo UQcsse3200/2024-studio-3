@@ -103,13 +103,6 @@ public class SensorComponent extends Component {
             }
         }
         collidingFixtures.removeAll(toRemove);
-
-        if (collidingFixtures.size() == 0) {
-            closestDistance = -1f;
-            closestFixture = null;
-        }
-
-
     }
 
 
