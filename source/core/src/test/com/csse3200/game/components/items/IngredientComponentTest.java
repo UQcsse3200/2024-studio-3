@@ -50,4 +50,18 @@ public class IngredientComponentTest {
         assertTrue(ingredient.isChoppable());
     }
 
+    @Test
+    void IngredientComponentConstructorTest() {
+        IngredientComponent ingredient = new IngredientComponent("Lettuce", ItemType.LETTUCE, 3,
+                0, 0, "raw");
+        assertEquals("Lettuce", ingredient.getItemName());
+        assertEquals(ItemType.LETTUCE, ingredient.getItemType());
+        assertEquals(3, ingredient.weight());
+        assertEquals(0, ingredient.getCookTime());
+        assertEquals(0, ingredient.getChopTime());
+        assertEquals("raw", ingredient.getItemState());
+        assertFalse(ingredient.isCookable());
+        assertFalse(ingredient.isChoppable());
+    }
+
 }
