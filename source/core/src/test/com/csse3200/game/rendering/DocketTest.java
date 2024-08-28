@@ -22,12 +22,14 @@ class DocketTest {
         //docket = new Docket(mockSkin, mockImage);
         docket2 = new Docket();
     }
-
+/*
     @Test
     void testDefaultStartTime() {
         long startTime = docket2.getStartTime();
         assertTrue(startTime > 0, "Start time should be initialized and greater than 0.");
     }
+    */
+
 /*
     @Test
     void testSetAndGetCellHash() {

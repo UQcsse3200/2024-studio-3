@@ -33,6 +33,7 @@ public class MainGameOrderBtnDisplay extends UIComponent{
         table.setFillParent(true);
 
         TextButton createOrderBtn = new TextButton("Create Order", skin);
+        logger.info("Create Order button created");
 
         // Triggers an event when the button is pressed.
         createOrderBtn.addListener(
@@ -61,7 +62,7 @@ public class MainGameOrderBtnDisplay extends UIComponent{
 
     @Override
     public void setStage(Stage mock) {
-
+        this.stage = stage;
     }
 
     @Override
