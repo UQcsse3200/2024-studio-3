@@ -24,6 +24,7 @@ public class ServiceLocator {
   private static GameTime timeSource;
   private static InputService inputService;
   private static ResourceService resourceService;
+
   //Me new stuff :)
   private static DocketService docketService;
 
@@ -61,6 +62,11 @@ public class ServiceLocator {
     entityService = service;
   }
 
+  public static void registerDocketService(DocketService service) {
+    logger.debug("Registering docket service {}", service);
+    docketService = service;
+}
+
   public static void registerRenderService(RenderService service) {
     logger.debug("Registering render service {}", service);
     renderService = service;
@@ -86,10 +92,7 @@ public class ServiceLocator {
     resourceService = source;
   }
 
-  public static void registerDocketService(DocketService source) {
-    logger.debug("Registering docket service {}", source);
-    docketService = source;
-  }
+
 
   public static void clear() {
     entityService = null;

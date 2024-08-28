@@ -7,7 +7,6 @@ import com.csse3200.game.entities.Entity;
 import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -24,6 +23,7 @@ public class MainGameActions extends Component {
 
   public MainGameActions(GdxGame game) {
     this.game = game;
+   
   }
 
   @Override
@@ -54,21 +54,23 @@ public class MainGameActions extends Component {
    */
   private void onCreateOrder() {
     logger.info("Creating order");
-    /*ui = new Entity();
-    ui.addComponent(new MainGameOrderTicketDisplay());
-    ServiceLocator.getEntityService().register(ui);*/
-    //ServiceLocator.getEntityService();
     docketDisplayer.addActors();
   }
 
 //  /**
 //   * Order Done Button
 //   */
-//  private void onOrderDone() {
-//      ServiceLocator.getEntityService().unregister(ui);
-//      ui.dispose();
-//      ui = null;
-//      logger.info("Order entity disposed");
-//  }
+ private void onOrderDone() {
+     ServiceLocator.getEntityService().unregister(ui);
+     ui.dispose();
+     ui = null;
+     logger.info("Order entity disposed");
+ }
 
 }
+ 
+
+
+
+
+ 

@@ -32,9 +32,9 @@ public class DocketDisplay extends UIComponent {
 		table.padTop(30f).padLeft(15f);
 
 		Image docket =
-			new Image(
-				ServiceLocator.getResourceService()
-					.getAsset("images/ordersystem/docket_background.png", Texture.class));
+				new Image(
+						ServiceLocator.getResourceService()
+								.getAsset("images/ordersystem/docket_background.png", Texture.class));
 
 		table.add(docket).pad(5);
 		table.row();
