@@ -10,7 +10,6 @@ import com.badlogic.gdx.utils.TimeUtils;
 import com.csse3200.game.components.maingame.MainGameExitDisplay;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
-import com.csse3200.game.components.ordersystem.DocketLineDisplay;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.badlogic.gdx.Gdx;
@@ -36,11 +35,6 @@ public class MainGameOrderTicketDisplay extends UIComponent {
     private static ArrayList<Docket> backgroundArrayList;
     private static ArrayList<Label> countdownLabelArrayList;
     private static int orderNumb = 0;
-    private DocketLineDisplay docketLineDisplay;
-
-    public MainGameOrderTicketDisplay(DocketLineDisplay docketLineDisplay) {
-        this.docketLineDisplay = docketLineDisplay;
-    }
 
     @Override
     public void create() {
@@ -70,9 +64,7 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         logger.info("New table added. Total tables: {}", tableArrayList.size());
 
         table.setFillParent(false);
-        // table.setSize(viewportWidth * 3f/32f, 5f/27f * viewportHeight); // DEFAULT_HEIGHT
-        updateDocketSizes(); 
-
+        table.setSize(viewportWidth * 3f/32f, 5f/27f * viewportHeight); // DEFAULT_HEIGHT
         float xVal = cntXval(tableArrayList.size());
         float yVal = viewportHeight * viewPortHeightMultiplier;
         table.setPosition(xVal, yVal);
@@ -108,30 +100,14 @@ public class MainGameOrderTicketDisplay extends UIComponent {
 
         updateDocketSizes();
     }
-    private void updateDocketPositions() {
-    float pipelineY = getPipelineY(docketLineDisplay); // Get the Y position of the pipeline
-    for (int i = 0; i < tableArrayList.size(); i++) {
-        Table table = tableArrayList.get(i);
-        float xVal = cntXval(i + 1);
-        table.setPosition(xVal, pipelineY); // Align the docket with the pipeline
-        logger.info("Updated position of docket {}: ({}, {})", i, xVal, pipelineY);
-    }
-}
-
-private float getPipelineY(DocketLineDisplay docketLineDisplay) {
-    Image pineLine = docketLineDisplay.getPineLine();
-
-    
-    float pipelineHeight = pineLine.getHeight();
-    float stageHeight = stage.getViewport().getWorldHeight();
 
     // Assuming the pipeline is positioned near the top of the stage
     return stageHeight - pipelineHeight - 30f; // Adjust the offset as needed
-}
 
-private float cntXval(int instanceCnt) {
-    return 20f + (instanceCnt - 1) * (distance + getViewportWidth() * 3f / 32f);
-}
+
+    private float cntXval(int instanceCnt) {
+        return 20f + (instanceCnt - 1) * (distance + viewportWidth * 3f/32f);
+    }
 
     // private float cntXval(int instanceCnt) {
     //     return 20f + (instanceCnt - 1) * (distance + viewportWidth * 3f/32f);
@@ -201,21 +177,17 @@ private float cntXval(int instanceCnt) {
         logger.info("Docket positions updated after right shift");
     }
 
-    
+    private void updateDocketPositions() {
+        for (int i = 0; i < tableArrayList.size(); i++) {
+            Table table = tableArrayList.get(i);
+            float xVal = cntXval(i + 1);
 
-    // private void updateDocketPositions() {
-    //     for (int i = 0; i < tableArrayList.size(); i++) {
-    //         Table table = tableArrayList.get(i);
-    //         float xVal = cntXval(i + 1);
-
-    //         table.setPosition(xVal, table.getY());
-    //         logger.info("Updated position of docket {}: ({}, {})", i, xVal, table.getY());
-    //     }
-    // }
+            table.setPosition(xVal, table.getY());
+            logger.info("Updated position of docket {}: ({}, {})", i, xVal, table.getY());
+        }
+    }
 
     private void updateDocketSizes() {
-        float viewportWidth = getViewportWidth();
-        float viewportHeight = getViewportHeight();
         float xEnlargedArea = viewportWidth - 260f;
         for (int i = 0; i < tableArrayList.size(); i++) {
             Table table = tableArrayList.get(i);
@@ -233,14 +205,6 @@ private float cntXval(int instanceCnt) {
                 table.setPosition(xVal, yVal);
             }
         }
-    }
-
-    private float getViewportWidth() {
-        return ServiceLocator.getRenderService().getStage().getViewport().getWorldWidth();
-    }
-
-    private float getViewportHeight() {
-        return ServiceLocator.getRenderService().getStage().getViewport().getWorldHeight();
     }
 
 
