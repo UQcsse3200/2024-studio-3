@@ -1,5 +1,6 @@
 package com.csse3200.game.components.items;
 
+import com.csse3200.game.components.station.StationItemHandlerComponent;
 import com.csse3200.game.events.EventHandler;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.services.GameTime;
@@ -20,6 +21,7 @@ public class CookIngredientComponentTest {
     private GameTime mockTimesource;
     private Entity mockEntity;
     private EventHandler mockEvents;
+    private StationItemHandlerComponent mockStationItemHandler;
 
     /**
      * Sets up the test environment by initializing the necessary mock objects and
@@ -27,19 +29,26 @@ public class CookIngredientComponentTest {
      */
     @BeforeEach
     public void setUp() {
-        mockEntity = mock(Entity.class);
+        mockEntity = new Entity();
+        // creating mockEntity via
+        // mock(EventHandler.class) was causing some issue that I couldn't
+        // look into yet
+
         mockEvents = mock(EventHandler.class);
         mockIngredient = mock(IngredientComponent.class);
+        mockStationItemHandler = mock(StationItemHandlerComponent.class);
         mockTimesource = mock(GameTime.class);
         ServiceLocator.registerTimeSource(mockTimesource);
 
         cookIngredientComponent = new CookIngredientComponent();
 
-        when(mockEntity.getComponent(IngredientComponent.class)).thenReturn(mockIngredient);
-        when(mockEntity.getEvents()).thenReturn(mockEvents);
+//        when(mockEntity.getComponent(IngredientComponent.class)).thenReturn(mockIngredient);
+//        when(mockEntity.getEvents()).thenReturn(mockEvents);
+        mockEntity.addComponent(mockIngredient).addComponent(cookIngredientComponent);
+        mockEntity.create();
 
-        cookIngredientComponent.setEntity(mockEntity);
-        cookIngredientComponent.create();
+//        cookIngredientComponent.setEntity(mockEntity);
+//        cookIngredientComponent.create();
     }
 
     /**
@@ -51,7 +60,7 @@ public class CookIngredientComponentTest {
     public void testCookingStarts() {
         when(mockTimesource.getTime()).thenReturn(1000L); // Simulate game time
 
-        cookIngredientComponent.cookIngredient("NORMAL", 1);
+        mockEntity.getEvents().trigger("cookIngredient", "NORMAL", 1);
 
         verify(mockTimesource).getTime();
         verify(mockIngredient).getCookTime();
@@ -68,7 +77,8 @@ public class CookIngredientComponentTest {
         when(mockTimesource.getTime()).thenReturn(1000L, 10000L); // Simulate passage of time
         when(mockIngredient.getCookTime()).thenReturn(1); // Setting some cook time: 1 seconds
 
-        cookIngredientComponent.cookIngredient("NORMAL", 1);
+        mockEntity.getEvents().trigger("cookIngredient", "NORMAL", 1);
+        // After cookIngredientComponent.cookIngredient() gets called
         // cookEndTime = 1000L + 1 * 1000L * 1 = 2000
 
         cookIngredientComponent.update(); // This should trigger cooking
@@ -84,8 +94,9 @@ public class CookIngredientComponentTest {
      */
     @Test
     public void testStopCooking() {
-        cookIngredientComponent.cookIngredient("NORMAL", 1);
-        cookIngredientComponent.stopCookingIngredient();
+        mockEntity.getEvents().trigger("cookIngredient", "NORMAL", 1);
+        assertTrue(cookIngredientComponent.getIsCooking());
+        mockEntity.getEvents().trigger("stopCookingIngredient");
         assertFalse(cookIngredientComponent.getIsCooking());
     }
 
@@ -99,7 +110,7 @@ public class CookIngredientComponentTest {
         when(mockTimesource.getTime()).thenReturn(1000L, 20000L); // Simulate item being cooked and then overcooked
         when(mockIngredient.getCookTime()).thenReturn(1);
 
-        cookIngredientComponent.cookIngredient("NORMAL", 1);
+        mockEntity.getEvents().trigger("cookIngredient", "NORMAL", 1);
         // cookEndTime = 1000L + 1 * 1000L * 1 = 2000L = 2 seconds
 
         cookIngredientComponent.update();
