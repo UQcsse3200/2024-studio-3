@@ -34,7 +34,11 @@ public class CookingComponent extends Component {
         // Add to cooking timer and cook item
         if (isCooking) {
             if (cookingTime < 0) { // Recipe is fully cooked
-                // TODO remove current items
+                // remove current items
+                for (Optional<String> x : inventoryComponent.getItems()) {
+                    inventoryComponent.removeCurrentItem();
+                }
+                // replace with dish from recipe
                 inventoryComponent.setCurrentItem(targetRecipe);
             }
             cookingTime -= gameTime.getDeltaTime();
