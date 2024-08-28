@@ -13,7 +13,7 @@ public class ItemComponent extends Component {
      * Called when the item is created and initates necessary variables
      * @param itemName - a string which is the name of the item
      * @param itemType - an ItemType which is the type of the item
-     * @param weight - an intger which is the weight of the item
+     * @param weight - an integer which is the weight of the item
      */
     public ItemComponent(String itemName, ItemType itemType, int weight) {
         this.itemId = UUID.randomUUID().toString();
