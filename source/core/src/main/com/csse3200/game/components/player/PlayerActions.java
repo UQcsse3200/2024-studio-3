@@ -79,6 +79,9 @@ public class PlayerActions extends Component {
     // Get the closest fixture all call an interact method on it
     Fixture interactable = interactionSensor.getClosestFixture();
     if (interactable != null) {
+      // We need to notify the input that we are inside an interaction
+      entity.getEvents().trigger("startInteraction");
+
       // Logic for what interaction even to call on the station
       entity.getEvents().trigger("Add Station Item");
     }
