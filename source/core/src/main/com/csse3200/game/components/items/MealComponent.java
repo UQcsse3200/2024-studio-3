@@ -47,12 +47,13 @@ public class MealComponent extends ItemComponent {
         for (IngredientComponent ingredient : ingredients) {
             String itemState = ingredient.getItemState();
 
-            if (itemState.equals("burnt") || itemState.equals("raw")) {
+            if (itemState.equals("burnt")
+                    || (ingredient.getItemType() != ItemType.LETTUCE && itemState.equals("raw"))) {
                 penaltyCount += 1;
             }
         }
 
-        penalty = (penaltyCount / ingredients.size()) * 100;
+        penalty = (int) Math.round(((double) penaltyCount / ingredients.size()) * 100);
 
         return qualityScore - penalty;
     }
