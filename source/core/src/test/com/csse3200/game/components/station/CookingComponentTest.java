@@ -10,55 +10,61 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.MockitoAnnotations;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(GameExtension.class)
 public class CookingComponentTest {
-
+    private Entity testEntity;
+    private EventHandler testEvents;
+    private StationInventoryComponent inventoryComponent;
+    private StationItemHandlerComponent handlerComponent;
     private CookingComponent cookingComponent;
-    private StationInventoryComponent mockInventory;
-    private StationItemHandlerComponent itemHandle;
+
     private GameTime mockTime;
-    private Entity mockEntity;
-    private EventHandler mockEvents;
+
 
     @BeforeEach
     void init() {
         MockitoAnnotations.openMocks(this);
+
+        testEntity = new Entity();
+        // testEvents = mock(EventHandler.class);
+
+        inventoryComponent = new StationInventoryComponent();
+        testEntity.addComponent(inventoryComponent);
+
         ArrayList<String> acceptableItems = new ArrayList<>();
         acceptableItems.add("acai");
         acceptableItems.add("banana");
-        itemHandle = new StationItemHandlerComponent("OVEN", acceptableItems);
-        mockInventory = mock(StationInventoryComponent.class);
-
-        mockEntity = mock(Entity.class);
-        mockEvents = mock(EventHandler.class);
-
-        when(mockEntity.getComponent(StationInventoryComponent.class)).thenReturn(mockInventory);
-        when(mockEntity.getEvents()).thenReturn(mockEvents);
-
-        itemHandle.setEntity(mockEntity);
-        itemHandle.create();
+        handlerComponent = spy(new StationItemHandlerComponent("OVEN", acceptableItems));
+        testEntity.addComponent(handlerComponent);
 
         cookingComponent = new CookingComponent();
-        cookingComponent.setEntity(mockEntity);
-        cookingComponent.create();
+        testEntity.addComponent(cookingComponent);
+
+        testEntity.create();
+
+        mockTime = mock(GameTime.class);
     }
 
-    /**
     @Test
     void testRemoveItem() {
+        handlerComponent.giveItem("acai");
+        cookingComponent.addItem();
+        handlerComponent.giveItem("banana");
         cookingComponent.addItem();
         assertTrue(cookingComponent.isCooking());
         cookingComponent.removeItem();
         assertFalse(cookingComponent.isCooking());
     }
-    **/
+
     @Test
     void testGetStationType() {
-        assertEquals("OVEN", itemHandle.getType());
+        assertEquals("OVEN", handlerComponent.getType());
     }
 
     /**
