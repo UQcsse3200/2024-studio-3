@@ -238,14 +238,14 @@ public class MainGameOrderTicketDisplay extends UIComponent {
                 // Apply enlarged font size
                 for (int j = 0; j < cells.size; j++) {
                     Label label = (Label)cells.get(j).getActor();
-                    label.setFontScale(1f);
+                    label.setFontScale(1f * (viewportWidth/1920f));
                 }
             } else { // Non-enlarged dockets
                 table.setSize(viewportWidth * 0.0625f, viewportHeight * 0.139f);
                 table.setPosition(xVal, viewportHeight * 0.833f);
                 for (int j = 0; j < cells.size; j++) {
                     Label label = (Label)cells.get(j).getActor();
-                    label.setFontScale(0.7f);
+                    label.setFontScale(0.7f * (viewportWidth/1920f));
                 }
             }
         }
