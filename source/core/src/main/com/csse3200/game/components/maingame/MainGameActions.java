@@ -19,6 +19,7 @@ public class MainGameActions extends Component {
   private static final Logger logger = LoggerFactory.getLogger(MainGameActions.class);
   private GdxGame game;
   private Entity ui;
+  private MainGameOrderTicketDisplay docketDisplayer;
 
 
   public MainGameActions(GdxGame game) {
@@ -31,8 +32,8 @@ public class MainGameActions extends Component {
     entity.getEvents().addListener("exit", this::onExit);
     entity.getEvents().addListener("createOrder", this::onCreateOrder);
     ui = new Entity();
-    // docketDisplayer = new MainGameOrderTicketDisplay();
-    // ui.addComponent(docketDisplayer);
+    docketDisplayer = new MainGameOrderTicketDisplay();
+    ui.addComponent(docketDisplayer);
     ServiceLocator.getEntityService().register(ui);
 
   }
@@ -50,9 +51,7 @@ public class MainGameActions extends Component {
    */
   private void onCreateOrder() {
     logger.info("Creating order");
-    ui = new Entity();
-    ui.addComponent(new MainGameOrderTicketDisplay());
-    ServiceLocator.getEntityService().register(ui);
+    docketDisplayer.addActors();
   }
 
 //  /**
