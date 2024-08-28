@@ -39,12 +39,13 @@ public class CookingAndServingHandlerTest {
     @Test
     void createTest() {
         when(ingredient.getItemState()).thenReturn("raw");
+        when(ingredient.getItemName()).thenReturn("fish");
 
         cookingHandler.create();
 
         verify(entity).getComponent(IngredientComponent.class);
         verify(entity).getComponent(TextureRenderComponent.class);
-        verify(textureRender).setTexture("images/raw_null.png");
+        verify(textureRender).setTexture("images/ingredients/raw_fish.png");
     }
 
     @Test
@@ -83,11 +84,12 @@ public class CookingAndServingHandlerTest {
     @Test
     void serveMealTest() {
         when(ingredient.getItemState()).thenReturn("cooked");
+        when(ingredient.getItemName()).thenReturn("beef");
 
         cookingHandler.create();
         cookingHandler.serveMeal();
 
-        verify(ingredient).getItemState();
+        verify(textureRender).setTexture("images/ingredients/cooked_beef.png");
         assertTrue(cookingHandler.isServed());
     }
 
@@ -105,6 +107,7 @@ public class CookingAndServingHandlerTest {
     @Test
     void deleteMealWhenServedTest() {
         when(ingredient.getItemState()).thenReturn("cooked");
+        when(ingredient.getItemName()).thenReturn("beef");
 
         cookingHandler.create();
         cookingHandler.serveMeal();
@@ -127,14 +130,14 @@ public class CookingAndServingHandlerTest {
     void updateStateCookingToCooked() {
         when(ingredient.getItemState()).thenReturn("raw");
         when(gameTime.getTime()).thenReturn(0L).thenReturn(5000L);
-        when(ingredient.getCookTime()).thenReturn(5);
+        when(ingredient.getItemName()).thenReturn("beef");
 
         cookingHandler.create();
         cookingHandler.startCooking();
         cookingHandler.updateState();
 
         verify(ingredient).cookItem();
-        verify(textureRender).setTexture("images/cooked_null.png");
+        verify(textureRender).setTexture("images/ingredients/cooked_beef.png");
     }
 
     @Test
@@ -142,13 +145,29 @@ public class CookingAndServingHandlerTest {
         when(ingredient.getItemState()).thenReturn("raw");
         when(gameTime.getTime()).thenReturn(0L).thenReturn(6500L);
         when(ingredient.getCookTime()).thenReturn(5);
+        when(ingredient.getItemName()).thenReturn("beef");
 
         cookingHandler.create();
         cookingHandler.startCooking();
         cookingHandler.updateState();
 
         verify(ingredient).burnItem();
-        verify(textureRender).setTexture("images/burnt_null.png");
+        verify(textureRender).setTexture("images/ingredients/burnt_beef.png");
+    }
+
+    @Test
+    void noStateChangeTest() {
+        when(ingredient.getItemState()).thenReturn("raw");
+        when(gameTime.getTime()).thenReturn(0L).thenReturn(3000L);
+        when(ingredient.getCookTime()).thenReturn(5);
+
+        cookingHandler.create();
+        cookingHandler.startCooking();
+        cookingHandler.updateState();
+
+        verify(ingredient, never()).cookItem();
+        verify(ingredient, never()).burnItem();
+
     }
 
 }
