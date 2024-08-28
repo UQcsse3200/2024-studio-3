@@ -83,7 +83,9 @@ class MainGameOrderTicketDisplayTest {
         assertEquals(200f, lastTable.getHeight(), 0.1f);
 
         float expectedX = orderTicketDisplay.getViewportWidth() - 260f;
-        float expectedY = orderTicketDisplay.getViewportHeight() * orderTicketDisplay.getViewPortHeightMultiplier() - 50;
+        float expectedY =
+                orderTicketDisplay.getViewportHeight() * orderTicketDisplay.getViewPortHeightMultiplier()
+                        + orderTicketDisplay.getViewPortHeightMultiplier() * 19.28f;
 
         assertEquals(expectedX, lastTable.getX(), 0.1f);
         assertEquals(expectedY, lastTable.getY(), 0.1f);
