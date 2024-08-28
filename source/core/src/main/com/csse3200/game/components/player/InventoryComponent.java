@@ -32,6 +32,7 @@ public class InventoryComponent extends Component {
       items.add(null);
     }
     size = 0;
+    setSelected(0);
   }
 
 
