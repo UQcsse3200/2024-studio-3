@@ -12,5 +12,9 @@ public enum ItemType {
     STRAWBERRY,
     CHOCOLATE,
     FRUITSALAD,
+    ACAIBOWL,
+    SALAD,
+    STEAKMEAL,
+    BANANASPLIT,
     RAW_FOOD
 }
