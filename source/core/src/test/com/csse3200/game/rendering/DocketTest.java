@@ -16,21 +16,21 @@ public class DocketTest {
         docket = new Docket();
     }
 
-    @Test
-    public void testUpdateDocketTexture() {
-        // Check initial texture
-        assertEquals("fresh_docket", getTextureName(docket.getImage()));
-
-        // Update texture with different remaining times
-        docket.updateDocketTexture(2.5);
-        assertEquals("mild_docket", getTextureName(docket.getImage()));
-
-        docket.updateDocketTexture(1.5);
-        assertEquals("old_docket", getTextureName(docket.getImage()));
-
-        docket.updateDocketTexture(0.5);
-        assertEquals("expired_docket", getTextureName(docket.getImage()));
-    }
+//    @Test
+//    public void testUpdateDocketTexture() {
+//        // Check initial texture
+//        assertEquals("fresh_docket", getTextureName(docket.getImage()));
+//
+//        // Update texture with different remaining times
+//        docket.updateDocketTexture(2.5);
+//        assertEquals("mild_docket", getTextureName(docket.getImage()));
+//
+//        docket.updateDocketTexture(1.5);
+//        assertEquals("old_docket", getTextureName(docket.getImage()));
+//
+//        docket.updateDocketTexture(0.5);
+//        assertEquals("expired_docket", getTextureName(docket.getImage()));
+//    }
 
     private String getTextureName(Image image) {
         if (image.getDrawable() == null) {

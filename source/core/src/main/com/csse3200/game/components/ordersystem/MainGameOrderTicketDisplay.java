@@ -275,6 +275,12 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         countdownLabelArrayList.clear();
         super.dispose();
     }
+
+    @Override
+    public void setStage(Stage stage) {
+        // Your implementation here
+    }
+
 //    public void stageDispose(Docket background, Table table, int index) {
 //        table.setBackground((Drawable) null);
 //        table.clear();
