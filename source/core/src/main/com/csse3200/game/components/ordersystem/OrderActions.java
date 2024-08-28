@@ -7,7 +7,6 @@ import com.csse3200.game.input.InputComponent;
 import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import com.csse3200.game.components.ordersystem.MainGameOrderTicketDisplay;
 
 /**
  * This class listens to key presses to shift dockets left and right and handles
@@ -42,7 +41,6 @@ public class OrderActions extends InputComponent {
         ServiceLocator.getDocketService().getEvents().addListener("removeOrder", this::onRemoveOrder);
         ServiceLocator.getDocketService().getEvents().addListener(
                 "reorderDockets", MainGameOrderTicketDisplay::reorderDockets);
-        entity.getEvents().addListener("moveOrder", this::onMoveOrder);
         entity.getEvents().addListener("changeColour", this::onChangeColour);
     }
 
@@ -64,7 +62,7 @@ public class OrderActions extends InputComponent {
             return true;
         }
 
-        logger.info("pls work");
+//        logger.info("pls work");
         return false;
     }
 
@@ -104,14 +102,6 @@ public class OrderActions extends InputComponent {
     private void onRemoveOrder(int index) {
         logger.info("Remove order");
         ServiceLocator.getDocketService().getEvents().trigger("reorderDockets", index);
-    }
-
-    /**
-     * Moves order
-     */
-    private void onMoveOrder() {
-        logger.info("Move order");
-        // do something
     }
 
     /**

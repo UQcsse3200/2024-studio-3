@@ -4,12 +4,9 @@ import com.csse3200.game.GdxGame;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.ordersystem.MainGameOrderTicketDisplay;
 import com.csse3200.game.entities.Entity;
-import com.csse3200.game.entities.factories.UIFactory;
 import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 /**
@@ -21,7 +18,13 @@ public class MainGameActions extends Component {
 	private GdxGame game;
 	private Entity ui;
 	private MainGameOrderTicketDisplay docketDisplayer;
+	String[] recipeNames = {"acaiBowl", "salad", "fruitSalad", "steakMeal", "bananaSplit"};
 
+	/**
+	 * Constructs a MainGameActions instance
+	 *
+	 * @param game the game
+	 */
 	public MainGameActions(GdxGame game) {
 		this.game = game;
 	}
@@ -33,19 +36,13 @@ public class MainGameActions extends Component {
 	public void create() {
 		if (ui == null) {
 			ui = new Entity();
-
-			String[] recipeNames = {"acaiBowl", "salad", "fruitSalad", "steakMeal", "bananaSplit"};
-//      docketDisplayer = new MainGameOrderTicketDisplay(recipeNames[new Random().nextInt(recipeNames.length)]);
-//			docketDisplayer = ui.getComponent(MainGameOrderTicketDisplay.class);
-			if (docketDisplayer == null) {
-				docketDisplayer = new MainGameOrderTicketDisplay(recipeNames[new Random().nextInt(recipeNames.length)]);
-				ui.addComponent(docketDisplayer);
-			}
+			String randomRecipe = recipeNames[new Random().nextInt(recipeNames.length)];
+			docketDisplayer = new MainGameOrderTicketDisplay(randomRecipe);
+			docketDisplayer.setStage(ServiceLocator.getRenderService().getStage());
 			ui.addComponent(docketDisplayer);
-			ServiceLocator.getEntityService().register(ui);
-
 			entity.getEvents().addListener("exit", this::onExit);
 			entity.getEvents().addListener("createOrder", this::onCreateOrder);
+			ServiceLocator.getEntityService().register(ui);
 		}
 	}
 
@@ -61,8 +58,12 @@ public class MainGameActions extends Component {
 	 * Create Order Docket
 	 */
 	private void onCreateOrder() {
-		logger.info("Creating order");
+//		String randomRecipe = recipeNames[new Random().nextInt(recipeNames.length)];
+//		docketDisplayer = new MainGameOrderTicketDisplay(randomRecipe);
+//		docketDisplayer.setStage(ServiceLocator.getRenderService().getStage());
+//		ui.addComponent(docketDisplayer);
 		docketDisplayer.addActors();
+//		logger.info("Order created with recipe: {}", randomRecipe);
 	}
 
 	/**
@@ -76,9 +77,3 @@ public class MainGameActions extends Component {
 		logger.info("Order entity disposed");
 	}
 }
- 
-
-
-
-
- 

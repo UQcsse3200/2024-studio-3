@@ -11,7 +11,6 @@ import com.csse3200.game.ui.UIComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
 /**
  * Displays a button on the main game screen that allows players to create a new order.
  * The button is positioned at the bottom right corner of the screen.

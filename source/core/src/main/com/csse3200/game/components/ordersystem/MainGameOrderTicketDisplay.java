@@ -12,8 +12,6 @@ import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
-import com.csse3200.game.entities.factories.DishFactory;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,32 +41,26 @@ public class MainGameOrderTicketDisplay extends UIComponent {
     private String recipeName;
     private Recipe recipe;
     private List<String> ingredients;
-    private int makingTime;
     private Integer burnedTime;
     private String stationType;
     private long timer;
 
     /**
+     * Constructs an MainGameOrderTicketDisplay instance
      *
-     * @param recipeName
+     * @param recipeName the name of the recipe to be displayed
      */
     public MainGameOrderTicketDisplay(String recipeName) {
         this.recipeName = recipeName;
         this.recipe = new Recipe(recipeName);
         this.ingredients = recipe.getIngredients();
-//        this.makingTime = recipe.getMakingTime();
         this.burnedTime = recipe.getBurnedTime();
         this.stationType = recipe.getStationType();
         this.timer = recipe.getMakingTime() * DEFAULT_TIMER;
-    }
-
-    /**
-     * Updates ticket timer
-     * @param makingTime the making time of the order
-     * @return the ticket time
-     */
-    private long calculateTimer(int makingTime) {
-        return 1000 * makingTime;
+        tableArrayList = new ArrayList<>();
+        startTimeArrayList = new ArrayList<>();
+        backgroundArrayList = new ArrayList<>();
+        countdownLabelArrayList = new ArrayList<>();
     }
 
     /**
@@ -78,14 +70,9 @@ public class MainGameOrderTicketDisplay extends UIComponent {
     public void create() {
         super.create();
         logger.info("MainGameOrderTicketDisplay created");
-        tableArrayList = new ArrayList<>();
-        startTimeArrayList = new ArrayList<>();
-        backgroundArrayList = new ArrayList<>();
-        countdownLabelArrayList = new ArrayList<>();
 
         entity.getEvents().addListener("createOrder", this::addActors);
-        logger.info("Listener added for createOrder event");
-
+//        logger.info("Listener added for createOrder event");
         ServiceLocator.getDocketService().getEvents().addListener("shiftDocketsLeft", this::shiftDocketsLeft);
         ServiceLocator.getDocketService().getEvents().addListener("shiftDocketsRight", this::shiftDocketsRight);
         // logger.info("Listeners added for shiftDocketsLeft and shiftDocketsRight events");
@@ -95,17 +82,10 @@ public class MainGameOrderTicketDisplay extends UIComponent {
      * Initialises the background, labels, and countdown timer for the order.
      */
     public void addActors() {
-//        Recipe recipe = new Recipe(recipeName);
-//        List<String> ingredients = recipe.getIngredients();
-//        int makingTime = recipe.getMakingTime();
-//        Integer burnedTime = recipe.getBurnedTime();
-//        String stationType = recipe.getStationType();
-//        long timer = calculateTimer(makingTime);
-        logger.info("Recipe Name: " + recipeName);
-        logger.info("Ingredients: " + ingredients);
-        logger.info("Making Time: " + timer);
-        logger.info("Burned Time: " + (burnedTime != null ? burnedTime : "N/A"));
-        logger.info("Station Type: " + stationType);
+        if (startTimeArrayList == null) {
+            logger.error("startTimeArrayList is not initialized");
+            return;
+        }
 
         logger.info("Adding a new order ticket");
 
@@ -113,14 +93,14 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         long startTime = TimeUtils.millis();
         startTimeArrayList.add(startTime);
         tableArrayList.add(table);
-        logger.info("New table added. Total tables: {}", tableArrayList.size());
+//        logger.info("New table added. Total tables: {}", tableArrayList.size());
 
         table.setFillParent(false);
         table.setSize(viewportWidth * 3f / 32f, 5f / 27f * viewportHeight); // DEFAULT_HEIGHT
         float xVal = cntXval(tableArrayList.size());
         float yVal = viewportHeight * viewPortHeightMultiplier;
         table.setPosition(xVal, yVal);
-        logger.info("Position set for new table: ({}, {})", xVal, yVal);
+//        logger.info("Position set for new table: ({}, {})", xVal, yVal);
 
         Docket background = new Docket();
         backgroundArrayList.add(background);
@@ -141,17 +121,13 @@ public class MainGameOrderTicketDisplay extends UIComponent {
 
         Label countdownLabel = new Label("Timer: " + timer, skin);
         countdownLabelArrayList.add(countdownLabel);
-        logger.info("Labels added. Total countdown labels: {}", countdownLabelArrayList.size());
-
-
-
+//        logger.info("Labels added. Total countdown labels: {}", countdownLabelArrayList.size());
         table.add(countdownLabel).padLeft(10f).row();
 
         stage.addActor(table);
         logger.info("Order ticket added to stage");
 
         // Enlarge the last docket in the list
-
         updateDocketSizes();
     }
 
@@ -349,8 +325,12 @@ public class MainGameOrderTicketDisplay extends UIComponent {
     }
 
     @Override
-    public void setStage(Stage mock) {
-        //he he ha
+    public void setStage(Stage stage) {
+        if (stage == null) {
+            logger.error("Attempted to set a null stage.");
+            return;
+        }
+        this.stage = stage;
     }
 
     /**
