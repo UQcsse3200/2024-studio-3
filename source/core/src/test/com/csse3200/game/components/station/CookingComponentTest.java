@@ -52,6 +52,13 @@ public class CookingComponentTest {
     }
 
     @Test
+    void testAddOneItem() {
+        handlerComponent.giveItem("banana");
+        cookingComponent.addItem();
+        assertFalse(cookingComponent.isCooking());
+    }
+
+    @Test
     void testRemoveItem() {
         handlerComponent.giveItem("acai");
         cookingComponent.addItem();
