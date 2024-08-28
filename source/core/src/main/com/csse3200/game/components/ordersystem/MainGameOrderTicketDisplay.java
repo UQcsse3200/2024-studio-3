@@ -18,7 +18,10 @@ import com.badlogic.gdx.Gdx;
 import java.util.ArrayList;
 
 /**
- * Displays Order Ticket at Main Game screen to the Main Menu screen.
+ * Displays order tickets on the main game screen. This class manages the
+ * creation, positioning, and updating of order tickets, as well as shifting
+ * them left or right in response to user actions. It also handles the
+ * countdown timers for each order and disposes of them when the timer expires.
  */
 public class MainGameOrderTicketDisplay extends UIComponent {
     private static final Logger logger = LoggerFactory.getLogger(MainGameExitDisplay.class);
@@ -38,6 +41,10 @@ public class MainGameOrderTicketDisplay extends UIComponent {
     private static ArrayList<Label> countdownLabelArrayList;
     private static int orderNumb = 0;
 
+
+    /**
+     * Initialises the display and sets up event listeners for creating and shifting orders.
+     */
     @Override
     public void create() {
         super.create();
@@ -56,16 +63,13 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         ServiceLocator.getDocketService().getEvents().addListener("shiftDocketsRight", this::shiftDocketsRight);
         // logger.info("Listeners added for shiftDocketsLeft and shiftDocketsRight events");
     }
-
+    /**
+     * Adds a new order ticket to the display and sets its initial position and size.
+     * Initialises the background, labels, and countdown timer for the order.
+     */
     public void addActors() {
         logger.info("Adding a new order ticket");
-//        tableArrayList = new ArrayList<>();
-//        backgroundArrayList = new ArrayList<>();
-//        startTimeArrayList = new ArrayList<>();
-//        countdownLabelArrayList = new ArrayList<>();
-//    }
-//
-//    public void addActors() {
+
         Table table = new Table();
         long startTime = TimeUtils.millis();
         startTimeArrayList.add(startTime);
@@ -86,13 +90,7 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         Label orderNumbLabel = new Label(orderNumStr, skin);
         logger.info("New docket background added. Total backgrounds: {}", backgroundArrayList.size());
 
-//        table.setFillParent(false);
-//        table.setSize(viewportWidth * 3f/32f, 5f/27f * viewportHeight); //DEFAULT_HEIGHT
-//        float xVal = cntXval(tableArrayList.size());
-//        float yVal = viewportHeight * viewPortHeightMultiplier;
-//        table.setPosition(xVal, yVal);
-//        Docket background = new Docket();
-//        backgroundArrayList.add(background);
+
         Label recipeNameLabel = new Label("Recipe name", skin);
         Label ingredient1Label = new Label("Ingredient 1", skin);
         Label ingredient2Label = new Label("Ingredient 2", skin);
@@ -117,21 +115,32 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         updateDocketSizes();
     }
 
+    /**
+     * Calculates the x-position for an order ticket based on its index.
+     *
+     * @param instanceCnt the index of the order ticket.
+     * @return the x-position for the order ticket.
+     */
     private float cntXval(int instanceCnt) {
         return 20f + (instanceCnt - 1) * (distance + viewportWidth * 3f/32f);
     }
 
-    // private float cntXval(int instanceCnt) {
-    //     return 20f + (instanceCnt - 1) * (distance + viewportWidth * 3f/32f);
-    // }
 
+    /**
+     * Reorders the dockets after one is removed or shifted.
+     *
+     * @param index the index of the docket that was removed or shifted.
+     */
    public static void reorderDockets(int index) {
         for (int i = index + 1; i < tableArrayList.size(); i++) {
             Table currTable = tableArrayList.get(i);
             currTable.setX(currTable.getX() - (distance + viewportWidth * 3f / 32f));
         }
     }
-
+    /**
+     * * Shifts the order tickets to the left by moving the first ticket to the end of the list.
+     * Updates the positions and sizes of all tickets.
+     * */
  public void shiftDocketsLeft() {
         if (tableArrayList.isEmpty() || backgroundArrayList.isEmpty()) {
             logger.warn("No dockets to shift left");
@@ -156,7 +165,13 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         logger.info("Docket positions updated after left shift");
     }
 
-
+    /**
+     * Removes and disposes of a docket from the stage and its associated resources.
+     *
+     * @param docket the docket to be disposed of.
+     * @param table  the table representing the docket.
+     * @param index  the index of the docket.
+     */
     private void stageDispose(Docket docket, Table table, int index) {
         table.setBackground((Drawable) null);
         table.clear();
@@ -165,7 +180,10 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         docket.dispose();
     }
 
-
+    /**
+     * Shifts the order tickets to the right by moving the last ticket to the beginning of the list.
+     * Updates the positions and sizes of all tickets.
+     */
     public void shiftDocketsRight() {
         if (tableArrayList.isEmpty() || backgroundArrayList.isEmpty()) {
             logger.warn("No dockets to shift right");
@@ -189,6 +207,9 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         logger.info("Docket positions updated after right shift");
     }
 
+    /**
+     * Updates the positions of all dockets based on their current index in the list.
+     */
     private void updateDocketPositions() {
         for (int i = 0; i < tableArrayList.size(); i++) {
             Table table = tableArrayList.get(i);
@@ -198,7 +219,9 @@ public class MainGameOrderTicketDisplay extends UIComponent {
             logger.info("Updated position of docket {}: ({}, {})", i, xVal, table.getY());
         }
     }
-
+    /**
+     * Updates the sizes of all dockets. The last docket in the list is enlarged, while others remain the same size.
+     */
     public void updateDocketSizes() {
         float xEnlargedArea = viewportWidth - 260f;
         for (int i = 0; i < tableArrayList.size(); i++) {
@@ -219,6 +242,10 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         }
     }
 
+    /**
+     * Updates the state of all order tickets, including countdown timers and their positions on the screen.
+     * Removes any order tickets whose timers have expired.
+     */
     @Override
     public void update() {
         // No additional update logic needed here, shifting is handled by the OrderActions class
@@ -246,22 +273,37 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         updateDocketSizes();
     }
 
-
+    /**
+     * Updates the display for all dockets. This includes updating their positions and sizes.
+     */
     public void updateDocketDisplay() {
         // Implement logic to update the display
         updateDocketPositions();
     }
 
+    /**
+     * Draws the order tickets on the screen. The actual drawing is handled by the stage.
+     *
+     * @param batch the sprite batch used for drawing.
+     */
     @Override
     public void draw(SpriteBatch batch) {
         // Draw is handled by the stage
     }
 
+    /**
+     * Returns the z-index for this component. The z-index determines the rendering order of UI components.
+     *
+     * @return the z-index for this component.
+     */
     @Override
     public float getZIndex() {
         return Z_INDEX;
     }
 
+    /**
+     * Disposes of all resources associated with the order tickets, including clearing and removing tables from the stage.
+     */
     @Override
     public void dispose() {
         // Cleanup resources
@@ -284,12 +326,5 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         return tableArrayList;
     }
 
-//    public void stageDispose(Docket background, Table table, int index) {
-//        table.setBackground((Drawable) null);
-//        table.clear();
-//        table.remove();
-//        ServiceLocator.getDocketService().getEvents().trigger("removeOrder", index);
-//        background.dispose();
-//        //dispose();
-//    }
+
 }

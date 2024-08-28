@@ -10,22 +10,31 @@ import com.csse3200.game.ui.UIComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/**
- * Displays a button to order at Main Game screen to the Main Menu screen.
- */
 
+/**
+ * Displays a button on the main game screen that allows players to create a new order.
+ * The button is positioned at the bottom right corner of the screen.
+ */
 public class MainGameOrderBtnDisplay extends UIComponent{
 
     private static final Logger logger = LoggerFactory.getLogger(MainGameExitDisplay.class);
     private static final float Z_INDEX = 2f;
     private Table table;
 
+
+    /**
+     * Initialises the button display and sets up the actors in the UI.
+     */
     @Override
     public void create() {
         super.create();
         addActors();
     }
 
+    /**
+     * Adds the button to the UI and sets up the event listener for the button click.
+     * When the "Create Order" button is clicked, it triggers the "createOrder" event.
+     */
     private void addActors() {
         table = new Table();
         table.bottom().right();
@@ -47,17 +56,31 @@ public class MainGameOrderBtnDisplay extends UIComponent{
         stage.addActor(table);
     }
 
+    /**
+     * Draws the button on the screen. The actual rendering is handled by the stage, so this method is empty.
+     *
+     * @param batch the sprite batch used for drawing.
+     */
     @Override
     public void draw(SpriteBatch batch) {
         // draw is handled by the stage
 
     }
 
+    /**
+     * Returns the z-index for this component. The z-index determines the rendering order of UI components.
+     *
+     * @return the z-index for this component.
+     */
     @Override
     public float getZIndex() {
         return Z_INDEX;
     }
 
+
+    /**
+     * Disposes of the button display, clearing the table and removing it from the stage.
+     */
     @Override
     public void dispose() {
         table.clear();

@@ -88,19 +88,6 @@ public class Docket extends UIComponent {
         return startTime;
     }
 
-    /*@Override
-    public void update() {
-        long elapsedTime = TimeUtils.timeSinceMillis(getStartTime()); //inspired by services/GameTime
-        long remainingTime = DEFAULT_TIMER - elapsedTime; //inspired by services/GameTime
-        double remainingTimeSecs = remainingTime / 1000;
-        if (remainingTime > 0) {
-            //countdownLabel.setText("Timer: " + (remainingTime / 1000));
-            updateDocketTexture(remainingTimeSecs);
-        } else {
-            ServiceLocator.getDocketService().getEvents().trigger("removeDocket", this);
-        }
-    }*/
-
     /**
      * Updates the texture of the docket based on the remaining time before it disposes.
      * As the remaining time decreases, the texture changes to indicate the time state
