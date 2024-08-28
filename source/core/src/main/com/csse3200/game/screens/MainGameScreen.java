@@ -28,6 +28,7 @@ import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.terminal.Terminal;
 import com.csse3200.game.ui.terminal.TerminalDisplay;
+import com.csse3200.game.components.maingame.EndDayDisplay;
 import com.csse3200.game.components.maingame.MainGameExitDisplay;
 import com.csse3200.game.components.gamearea.PerformanceDisplay;
 import com.badlogic.gdx.graphics.Texture;
@@ -62,6 +63,7 @@ public class MainGameScreen extends ScreenAdapter {
   private final GdxGame game;
   private final Renderer renderer;
   private final PhysicsEngine physicsEngine;
+  private boolean isPaused = false;
 
 	public MainGameScreen(GdxGame game) {
 		this.game = game;
@@ -96,8 +98,10 @@ public class MainGameScreen extends ScreenAdapter {
 
 	@Override
 	public void render(float delta) {
+		if (!isPaused) {
 		physicsEngine.update();
 		ServiceLocator.getEntityService().update();
+		}
 		renderer.render();
 	}
 
@@ -110,11 +114,13 @@ public class MainGameScreen extends ScreenAdapter {
 	@Override
 	public void pause() {
 		logger.info("Game paused");
+		isPaused = true;
 	}
 
 	@Override
 	public void resume() {
 		logger.info("Game resumed");
+		isPaused = false;
 	}
 
 	@Override
@@ -166,7 +172,8 @@ public class MainGameScreen extends ScreenAdapter {
 			.addComponent(new DocketLineDisplay())
 			//.addComponent(new DocketDisplay())
 			.addComponent(new OrderActions(this.game))
-			.addComponent(new MainGameOrderBtnDisplay());
+			.addComponent(new MainGameOrderBtnDisplay())
+		        .addComponent(new EndDayDisplay(this));
 		ServiceLocator.getEntityService().register(ui);
 	}
 }
