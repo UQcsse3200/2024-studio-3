@@ -38,11 +38,9 @@ class DocketTest {
 
     @Test
     void testGetTextureNameArray() {
-        String[] textureNameArray = docket.getTextureNameArray();
+        String[] textureNameArray =  docket.getTextureNameArray();
         assertNotNull(textureNameArray, "Texture name array should not be null.");
         assertEquals(4, textureNameArray.length, "Texture name array should have a length of 4.");
     }
-
-
 }
 
