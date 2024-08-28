@@ -28,12 +28,8 @@ public class KeyboardPlayerInputComponent extends InputComponent {
   @Override
   public boolean keyDown(int keycode) {
     if (keycode == Keys.E) {
-      if (isInteracting) {
-        entity.getEvents().trigger("interactionEnd");
-      } else {
-        isInteracting = true;
-        entity.getEvents().trigger("interact");
-      }
+      // Trigger an interaction attempt
+      entity.getEvents().trigger("interact");
       return true;
     }
 
@@ -110,6 +106,19 @@ public class KeyboardPlayerInputComponent extends InputComponent {
   public void create() {
     super.create();
     entity.getEvents().addListener("interactionEnd", this::whenInteractionEnds);
+    entity.getEvents().addListener("startInteraction", this::startInteraction);
+  }
+
+  /**
+   * Called when the player is attempting to interact and there is also a station that can be interacted with
+   */
+  private void startInteraction() {
+    isInteracting = !isInteracting;
+  
+    if (isInteracting) {
+      walkDirection.set(Vector2.Zero); 
+      triggerWalkEvent();             
+    }
   }
 
   private void whenInteractionEnds() {
@@ -118,3 +127,4 @@ public class KeyboardPlayerInputComponent extends InputComponent {
 
 
 }
+
