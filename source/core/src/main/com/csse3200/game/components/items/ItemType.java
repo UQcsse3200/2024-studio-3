@@ -4,12 +4,15 @@ public enum ItemType {
     FISH,
     BANANA,
     BEEF,
-    CHICKEN,
     ACAI,
     LETTUCE,
     CUCUMBER,
     TOMATO,
     STRAWBERRY,
     CHOCOLATE,
-    FRUITSALAD
+    FRUITSALAD,
+    ACAIBOWL,
+    SALAD,
+    STEAKMEAL,
+    BANANASPLIT,
 }

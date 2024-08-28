@@ -95,4 +95,12 @@ public class StationInventoryComponent extends Component {
         }
         return Optional.empty();
     }
+
+    /**
+     * Gets the items contained in the inventory.
+     * @return the list of items
+     */
+    public ArrayList<Optional<String>> getItems() {
+        return item;
+    }
 }
