@@ -23,18 +23,19 @@ import java.util.ArrayList;
 public class MainGameOrderTicketDisplay extends UIComponent {
     private static final Logger logger = LoggerFactory.getLogger(MainGameExitDisplay.class);
     private static final float Z_INDEX = 2f;
-    private static final long DEFAULT_TIMER = 5000;
-    private static final float viewPortHeightMultiplier = 7f/9f;
-    private static final float viewPortWidthMultiplier = 3f/32f;
+    private static final long DEFAULT_TIMER = 10000;
+    private static final float viewPortHeightMultiplier = 7f / 9f;
+    private static final float viewPortWidthMultiplier = 3f / 32f;
+
     private static final float viewportHeight =
             ServiceLocator.getRenderService().getStage().getViewport().getCamera().viewportHeight;
     private static final float viewportWidth =
             ServiceLocator.getRenderService().getStage().getViewport().getCamera().viewportWidth;
     private static final int distance = 20;
-    public static ArrayList<Table> tableArrayList;
-    public static ArrayList<Long> startTimeArrayList;
-    public static ArrayList<Docket> backgroundArrayList;
-    public static ArrayList<Label> countdownLabelArrayList;
+    private static ArrayList<Table> tableArrayList;
+    private static ArrayList<Long> startTimeArrayList;
+    private static ArrayList<Docket> backgroundArrayList;
+    private static ArrayList<Label> countdownLabelArrayList;
     private static int orderNumb = 0;
 
     @Override
@@ -58,6 +59,13 @@ public class MainGameOrderTicketDisplay extends UIComponent {
 
     public void addActors() {
         logger.info("Adding a new order ticket");
+//        tableArrayList = new ArrayList<>();
+//        backgroundArrayList = new ArrayList<>();
+//        startTimeArrayList = new ArrayList<>();
+//        countdownLabelArrayList = new ArrayList<>();
+//    }
+//
+//    public void addActors() {
         Table table = new Table();
         long startTime = TimeUtils.millis();
         startTimeArrayList.add(startTime);
@@ -65,7 +73,7 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         logger.info("New table added. Total tables: {}", tableArrayList.size());
 
         table.setFillParent(false);
-        table.setSize(viewportWidth * 3f/32f, 5f/27f * viewportHeight); // DEFAULT_HEIGHT
+        table.setSize(viewportWidth * 3f / 32f, 5f / 27f * viewportHeight); // DEFAULT_HEIGHT
         float xVal = cntXval(tableArrayList.size());
         float yVal = viewportHeight * viewPortHeightMultiplier;
         table.setPosition(xVal, yVal);
@@ -78,6 +86,13 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         Label orderNumbLabel = new Label(orderNumStr, skin);
         logger.info("New docket background added. Total backgrounds: {}", backgroundArrayList.size());
 
+//        table.setFillParent(false);
+//        table.setSize(viewportWidth * 3f/32f, 5f/27f * viewportHeight); //DEFAULT_HEIGHT
+//        float xVal = cntXval(tableArrayList.size());
+//        float yVal = viewportHeight * viewPortHeightMultiplier;
+//        table.setPosition(xVal, yVal);
+//        Docket background = new Docket();
+//        backgroundArrayList.add(background);
         Label recipeNameLabel = new Label("Recipe name", skin);
         Label ingredient1Label = new Label("Ingredient 1", skin);
         Label ingredient2Label = new Label("Ingredient 2", skin);
@@ -98,21 +113,26 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         logger.info("Order ticket added to stage");
 
         // Enlarge the last docket in the list
-        //updateDocketSizes();
+
+        updateDocketSizes();
     }
 
     private float cntXval(int instanceCnt) {
-        return 20f + (instanceCnt - 1) * (distance + viewportWidth * 3f/32f);
+        return 20f + (instanceCnt - 1) * (distance + viewportWidth * 3f / 32f);
     }
 
-   public static void reorderDockets(int index) {
+    // private float cntXval(int instanceCnt) {
+    //     return 20f + (instanceCnt - 1) * (distance + viewportWidth * 3f/32f);
+    // }
+
+    public static void reorderDockets(int index) {
         for (int i = index + 1; i < tableArrayList.size(); i++) {
             Table currTable = tableArrayList.get(i);
             currTable.setX(currTable.getX() - (distance + viewportWidth * 3f / 32f));
         }
     }
 
- public void shiftDocketsLeft() {
+    public void shiftDocketsLeft() {
         if (tableArrayList.isEmpty() || backgroundArrayList.isEmpty()) {
             logger.warn("No dockets to shift left");
             return;
@@ -125,12 +145,19 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         backgroundArrayList.add(firstDocket);
         logger.info("First docket background moved to the end. New first docket index: {}", backgroundArrayList.get(0));
 
+        Long firstStartTime = startTimeArrayList.remove(0);
+        startTimeArrayList.add(firstStartTime);
+
+        Label firstCountdownLabel = countdownLabelArrayList.remove(0);
+        countdownLabelArrayList.add(firstCountdownLabel);
+
         updateDocketPositions();
+        updateDocketSizes();
         logger.info("Docket positions updated after left shift");
     }
 
 
-    public void stageDispose(Docket docket, Table table, int index) {
+    private void stageDispose(Docket docket, Table table, int index) {
         table.setBackground((Drawable) null);
         table.clear();
         table.remove();
@@ -146,9 +173,19 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         }
         Table lastTable = tableArrayList.remove(tableArrayList.size() - 1);
         tableArrayList.add(0, lastTable);
+
         Docket lastDocket = backgroundArrayList.remove(backgroundArrayList.size() - 1);
         backgroundArrayList.add(0, lastDocket);
+
+        Long lastStartTime = startTimeArrayList.remove(startTimeArrayList.size() - 1);
+        startTimeArrayList.add(0, lastStartTime);
+
+        Label lastCountdownLabel = countdownLabelArrayList.remove(countdownLabelArrayList.size() - 1);
+        countdownLabelArrayList.add(0, lastCountdownLabel);
+
         updateDocketPositions();
+        updateDocketSizes();
+
         logger.info("Docket positions updated after right shift");
     }
 
@@ -156,11 +193,31 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         for (int i = 0; i < tableArrayList.size(); i++) {
             Table table = tableArrayList.get(i);
             float xVal = cntXval(i + 1);
+
             table.setPosition(xVal, table.getY());
             logger.info("Updated position of docket {}: ({}, {})", i, xVal, table.getY());
         }
     }
 
+    public void updateDocketSizes() {
+        float xEnlargedArea = viewportWidth - 260f;
+        for (int i = 0; i < tableArrayList.size(); i++) {
+            Table table = tableArrayList.get(i);
+            float xVal = cntXval(i + 1);
+            float yVal = viewportHeight * viewPortHeightMultiplier;
+
+            if (i == tableArrayList.size() - 1) { // Tail docket
+                table.setSize(170f, 200f);
+                // Fixed position for enlarged docket
+                table.setPosition(xEnlargedArea, yVal - 50);
+                // Apply enlarged font size
+
+            } else { // Non-enlarged dockets
+                table.setSize(120f, 150f);
+                table.setPosition(xVal, yVal);
+            }
+        }
+    }
 
     @Override
     public void update() {
@@ -173,7 +230,7 @@ public class MainGameOrderTicketDisplay extends UIComponent {
             long remainingTime = DEFAULT_TIMER - elapsedTime;
             if (remainingTime > 0) {
                 currCountdown.setText("Timer: " + (remainingTime / 1000));
-                currBackground.updateDocketTexture((double) remainingTime/1000);
+                currBackground.updateDocketTexture((double) remainingTime / 1000);
                 currTable.setBackground(currBackground.getImage().getDrawable());
             } else {
                 stageDispose(currBackground, currTable, i);
@@ -183,9 +240,15 @@ public class MainGameOrderTicketDisplay extends UIComponent {
                 countdownLabelArrayList.remove(i);
             }
         }
+
+
+        updateDocketPositions();
+        updateDocketSizes();
     }
 
+
     public void updateDocketDisplay() {
+        // Implement logic to update the display
         updateDocketPositions();
     }
 
@@ -217,4 +280,45 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         countdownLabelArrayList.clear();
         super.dispose();
     }
+
+    /**
+     * Returns the list of tables used for displaying order tickets.
+     * @return the list of order ticket tables.
+     */
+    public static ArrayList<Table> getTableArrayList() {
+        return tableArrayList;
+    }
+
+    /**
+     * Returns the viewportWidth.
+     * @return the float value of viewportWidth.
+     */
+    public float getViewportWidth() {
+        return viewportWidth;
+    }
+
+    /**
+     * Returns the viewportHeight.
+     * @return the float value of viewportHeight.
+     */
+    public float getViewportHeight() {
+        return viewportHeight;
+    }
+
+    /**
+     * Returns the viewportHeightMultiplayer.
+     * @return the float value of viewportHeightMultiplayer.
+     */
+    public float getViewPortHeightMultiplier() {
+        return viewPortHeightMultiplier;
+    }
+
+//    public void stageDispose(Docket background, Table table, int index) {
+//        table.setBackground((Drawable) null);
+//        table.clear();
+//        table.remove();
+//        ServiceLocator.getDocketService().getEvents().trigger("removeOrder", index);
+//        background.dispose();
+//        //dispose();
+//    }
 }

@@ -100,6 +100,8 @@ public class StationItemHandlerComponent extends Component {
     public void takeItem() {
         Optional<String> oldItem = inventoryComponent.removeCurrentItem();
         // trigger here on player inventory component to send returned item
-        // when done
+        // when done    }
+
+        entity.getEvents().trigger("interactionEnd");
     }
 }

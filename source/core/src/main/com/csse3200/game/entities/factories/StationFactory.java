@@ -73,7 +73,7 @@ public class StationFactory {
     station.getComponent(TextureRenderComponent.class).scaleEntity();
     station.scaleHeight(height);
 
-    PhysicsUtils.setScaledCollider(station, 0.3f, 0.2f);
+    PhysicsUtils.setScaledCollider(station, 1f, 1f);
 
     return station;
   }

@@ -1,15 +1,12 @@
 package com.csse3200.game.screens;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.areas.ForestGameArea;
 import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.components.maingame.MainGameActions;
-import com.csse3200.game.components.ordersystem.DocketDisplay;
 import com.csse3200.game.components.ordersystem.MainGameOrderBtnDisplay;
 import com.csse3200.game.components.ordersystem.OrderActions;
 import com.csse3200.game.entities.Entity;
@@ -30,13 +27,6 @@ import com.csse3200.game.ui.terminal.Terminal;
 import com.csse3200.game.ui.terminal.TerminalDisplay;
 import com.csse3200.game.components.maingame.MainGameExitDisplay;
 import com.csse3200.game.components.gamearea.PerformanceDisplay;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.ScreenAdapter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.csse3200.game.components.ordersystem.DocketLineDisplay;
@@ -47,18 +37,19 @@ import com.csse3200.game.components.ordersystem.DocketLineDisplay;
  * <p>Details on libGDX screens: https://happycoding.io/tutorials/libgdx/game-screens
  */
 public class MainGameScreen extends ScreenAdapter {
-  private static final Logger logger = LoggerFactory.getLogger(MainGameScreen.class);
+	private static final Logger logger = LoggerFactory.getLogger(MainGameScreen.class);
 	private static final String[] mainGameTextures = {
 			"images/heart.png",
 			// order system assets
 			"images/ordersystem/docket_background.png",
 			"images/ordersystem/pin_line.png"
 	};
+	// Modified the camera position to fix layout
 	private static final Vector2 CAMERA_POSITION = new Vector2(7.5f, 6.0f);
-  private final ShapeRenderer shapeRenderer;
-  private final GdxGame game;
-  private final Renderer renderer;
-  private final PhysicsEngine physicsEngine;
+
+	private final GdxGame game;
+	private final Renderer renderer;
+	private final PhysicsEngine physicsEngine;
 
 	public MainGameScreen(GdxGame game) {
 		this.game = game;
@@ -84,32 +75,12 @@ public class MainGameScreen extends ScreenAdapter {
 		loadAssets();
 		createUI();
 
-    logger.debug("Initialising main game screen entities");
-    TerrainFactory terrainFactory = new TerrainFactory(renderer.getCamera());
-    ForestGameArea forestGameArea = new ForestGameArea(terrainFactory);
-    shapeRenderer = new ShapeRenderer();
-    forestGameArea.create();
-  }
+		logger.debug("Initialising main game screen entities");
+		TerrainFactory terrainFactory = new TerrainFactory(renderer.getCamera());
+		ForestGameArea forestGameArea = new ForestGameArea(terrainFactory);
+		forestGameArea.create();
+	}
 
-  private void drawFrame() {
-    int frameHeight = 1150;
-
-    float x = 291;
-    float y = 24;
-    float width = 1533;
-    float height = frameHeight;
-    float lineWidth = 10;
-
-    shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-    shapeRenderer.setColor(0, 0, 0, 1);
-
-    shapeRenderer.rectLine(new Vector2(x, y + height), new Vector2(x + width, y + height), lineWidth);
-    shapeRenderer.rectLine(new Vector2(x, y), new Vector2(x + width, y), lineWidth);
-    shapeRenderer.rectLine(new Vector2(x, y), new Vector2(x, y + height), lineWidth);
-    shapeRenderer.rectLine(new Vector2(x + width, y), new Vector2(x + width, y + height), lineWidth);
-
-    shapeRenderer.end();
-  }
 
 	@Override
 	public void render(float delta) {
@@ -182,12 +153,7 @@ public class MainGameScreen extends ScreenAdapter {
 				// order system
 				.addComponent(new DocketLineDisplay())
 				//.addComponent(new DocketDisplay())
-				.addComponent(new OrderActions(this.game) {
-					@Override
-					protected Logger getLogger() {
-						return null;
-					}
-				})
+				.addComponent(new OrderActions(this.game))
 				.addComponent(new MainGameOrderBtnDisplay());
 		ServiceLocator.getEntityService().register(ui);
 	}

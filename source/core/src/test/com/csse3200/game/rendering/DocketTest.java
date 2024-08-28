@@ -19,18 +19,16 @@ class DocketTest {
     void setUp() {
         Skin mockSkin = new Skin();
         Image mockImage = new Image();
-        //docket = new Docket(mockSkin, mockImage);
+        docket = new Docket();
         docket2 = new Docket();
     }
-/*
+
     @Test
     void testDefaultStartTime() {
         long startTime = docket2.getStartTime();
         assertTrue(startTime > 0, "Start time should be initialized and greater than 0.");
     }
-    */
 
-/*
     @Test
     void testSetAndGetCellHash() {
         int hashValue = 12345;
@@ -40,10 +38,8 @@ class DocketTest {
 
     @Test
     void testGetTextureNameArray() {
-        String[] textureNameArray =  docket.getTextureNameArray();
+        String[] textureNameArray = docket.getTextureNameArray();
         assertNotNull(textureNameArray, "Texture name array should not be null.");
         assertEquals(4, textureNameArray.length, "Texture name array should have a length of 4.");
     }
-    */
-
 }
