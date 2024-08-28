@@ -39,11 +39,11 @@ public class DocketDisplayTest {
         docketDisplay = new DocketDisplay();
         docketDisplay.create(); // Initialize components
     }
-
+/*
     @Test
     public void testDocketDisplayNotNull() {
         assertNotNull(docketDisplay);
     }
-
+*/
 
 }

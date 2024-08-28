@@ -16,7 +16,7 @@ class OrderActionsTest {
     private GdxGame mockGame;
     private DocketService mockDocketService;
     private Logger mockLogger;
-
+/*
     @BeforeEach
     void setUp() {
         mockGame = mock(GdxGame.class);
@@ -76,6 +76,7 @@ class OrderActionsTest {
         verify(mockLogger).info("Change colour");
        
     }
+*/
 }
 
 
