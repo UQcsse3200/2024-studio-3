@@ -6,33 +6,40 @@ public class MealComponent extends ItemComponent {
     private List<IngredientComponent> ingredients;
     private int quality;
     private int price;
-    private String mealType;
 
-    public MealComponent(String itemName, ItemType itemType, int weight, List<IngredientComponent> ingredients,
+    public MealComponent(String mealName, ItemType mealType, int weight, List<IngredientComponent> ingredients,
                          int price) {
-        super(itemName, itemType, weight);
+        super(mealName, mealType, weight);
         this.ingredients = ingredients;
         this.quality = calculateQuality();
         this.price = price;
-        this.mealType = determineMealType();
 
     }
-
     public List<IngredientComponent> getIngredients() {
         return ingredients;
     }
 
     public void setIngredients(List<IngredientComponent> ingredients) {
         this.ingredients = ingredients;
-        this.mealType = determineMealType();
+        this.quality = calculateQuality();
     }
 
     public void addIngredient(IngredientComponent ingredient) {
         this.ingredients.add(ingredient);
-        this.mealType = determineMealType();
+        this.quality = calculateQuality();
+    }
+
+    public void deleteIngredient(IngredientComponent ingredient) {
+        this.ingredients.remove(ingredient);
+        this.quality = calculateQuality();
     }
 
     private int calculateQuality() {
+
+        if (ingredients.isEmpty()) {
+            return 0;
+        }
+
         int qualityScore = 100;
         int penalty;
         int penaltyCount = 0;
@@ -50,15 +57,15 @@ public class MealComponent extends ItemComponent {
         return qualityScore - penalty;
     }
 
-    private String determineMealType() {
-        return "SomeMealType";
-    }
-
-    public String getMealType() {
-        return mealType;
-    }
-
     public int getQuality() {
         return quality;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
+    }
+
+    public int getPrice() {
+        return price;
     }
 }
