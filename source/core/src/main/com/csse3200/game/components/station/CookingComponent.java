@@ -48,7 +48,7 @@ public class CookingComponent extends Component {
         // Converting List<Optional<String>> to List<String>
         List<String> templist = new ArrayList<String>();
         for (Optional<String> x : inventoryComponent.getItems()) {
-            templist.add(x.get());
+            if (x.isPresent()) templist.add(x.get());
         }
 
         List<String> possibleRecipes = DishFactory.getRecipe(templist);
