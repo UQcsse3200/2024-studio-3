@@ -169,7 +169,7 @@ public class ItemFactory {
                                                             new IngredientComponent("Strawberry", ItemType.STRAWBERRY, 1, 3, 10, "chopped"));
 
         Entity fruitSalad = createTemplateItem()
-                .addComponent(new TextureRenderComponent("images/fruit_salad.png"))
+                .addComponent(new TextureRenderComponent("images/meals/fruit_salad.png"))
                 .addComponent(new MealComponent("Fruit Salad", ItemType.FRUITSALAD, 2, ingredients, 5));
         PhysicsUtils.setScaledCollider(fruitSalad, 0.6f, 0.3f);
         fruitSalad.getComponent(ColliderComponent.class).setDensity(1.5f);
@@ -185,7 +185,7 @@ public class ItemFactory {
                 new IngredientComponent("Acai", ItemType.ACAI, 1, 3, 10, "chopped"));
 
         Entity acaiBowl = createTemplateItem()
-                .addComponent(new TextureRenderComponent("images/acai_bowl.png"))
+                .addComponent(new TextureRenderComponent("images/meals/acai_bowl.png"))
                 .addComponent(new MealComponent("Acai Bowl", ItemType.ACAIBOWL, 2, ingredients, 5));
         PhysicsUtils.setScaledCollider(acaiBowl, 0.6f, 0.3f);
         acaiBowl.getComponent(ColliderComponent.class).setDensity(1.5f);
@@ -202,7 +202,7 @@ public class ItemFactory {
                 new IngredientComponent("Cucumber", ItemType.CUCUMBER, 1, 3, 10, "chopped"));
 
         Entity salad = createTemplateItem()
-                .addComponent(new TextureRenderComponent("images/salad.png"))
+                .addComponent(new TextureRenderComponent("images/meals/salad.png"))
                 .addComponent(new MealComponent("Salad", ItemType.SALAD, 3, ingredients, 10));
         PhysicsUtils.setScaledCollider(salad, 0.6f, 0.3f);
         salad.getComponent(ColliderComponent.class).setDensity(1.5f);
@@ -219,7 +219,7 @@ public class ItemFactory {
                 new IngredientComponent("Cucumber", ItemType.CUCUMBER, 1, 3, 10, "chopped"));
 
         Entity steakMeal = createTemplateItem()
-                .addComponent(new TextureRenderComponent("images/steak_meal.png"))
+                .addComponent(new TextureRenderComponent("images/meals/steak_meal.png"))
                 .addComponent(new MealComponent("Steak Meal", ItemType.STEAKMEAL, 3, ingredients, 10));
         PhysicsUtils.setScaledCollider(steakMeal, 0.6f, 0.3f);
         steakMeal.getComponent(ColliderComponent.class).setDensity(1.5f);
@@ -237,7 +237,7 @@ public class ItemFactory {
                 new IngredientComponent("Strawberry", ItemType.STRAWBERRY, 1, 3, 10, "chopped"));
 
         Entity bananaSplit = createTemplateItem()
-                .addComponent(new TextureRenderComponent("images/banana_split.png"))
+                .addComponent(new TextureRenderComponent("images/meals/banana_split.png"))
                 .addComponent(new MealComponent("Banana Split", ItemType.BANANASPLIT, 3, ingredients, 10));
         PhysicsUtils.setScaledCollider(bananaSplit, 0.6f, 0.3f);
         bananaSplit.getComponent(ColliderComponent.class).setDensity(1.5f);
