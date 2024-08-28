@@ -12,7 +12,7 @@ import java.util.*;
  */
 public class CookingComponent extends Component {
     private StationInventoryComponent inventoryComponent;
-    private GameTime gameTime;
+    private GameTime timeSource;
     private long cookingTime;
     private boolean isCooking;
     private String targetRecipe;
@@ -23,7 +23,7 @@ public class CookingComponent extends Component {
     @Override
     public void create() {
         inventoryComponent = entity.getComponent(StationInventoryComponent.class);
-        gameTime = ServiceLocator.getTimeSource();
+        timeSource = ServiceLocator.getTimeSource();
         entity.getEvents().addListener("give station item", this::addItem);
         entity.getEvents().addListener("take item", this::removeItem);
     }
@@ -43,7 +43,7 @@ public class CookingComponent extends Component {
                 // replace with dish from recipe
                 inventoryComponent.setCurrentItem(targetRecipe);
             }
-            cookingTime -= gameTime.getDeltaTime();
+            cookingTime -= timeSource.getDeltaTime();
         }
     }
 
