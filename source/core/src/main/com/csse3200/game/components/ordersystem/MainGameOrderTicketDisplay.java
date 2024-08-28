@@ -284,6 +284,30 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         return tableArrayList;
     }
 
+    /**
+     * Returns the viewportWidth.
+     * @return the float value of viewportWidth.
+     */
+    public float getViewportWidth() {
+        return viewportWidth;
+    }
+
+    /**
+     * Returns the viewportHeight.
+     * @return the float value of viewportHeight.
+     */
+    public float getViewportHeight() {
+        return viewportHeight;
+    }
+
+    /**
+     * Returns the viewportHeightMultiplayer.
+     * @return the float value of viewportHeightMultiplayer.
+     */
+    public float getViewPortHeightMultiplier() {
+        return viewPortHeightMultiplier;
+    }
+
 //    public void stageDispose(Docket background, Table table, int index) {
 //        table.setBackground((Drawable) null);
 //        table.clear();
