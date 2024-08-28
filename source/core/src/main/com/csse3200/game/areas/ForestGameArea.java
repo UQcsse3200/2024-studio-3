@@ -104,7 +104,7 @@ public class ForestGameArea extends GameArea {
 
     spawnGhosts();
     spawnGhostKing();
-    spawnBananaSplit();
+    spawnBeef("cooked");
     spawnStations();
 
     playMusic();
