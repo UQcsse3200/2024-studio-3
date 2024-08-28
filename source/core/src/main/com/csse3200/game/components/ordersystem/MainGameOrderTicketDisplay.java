@@ -24,8 +24,8 @@ public class MainGameOrderTicketDisplay extends UIComponent {
     private static final Logger logger = LoggerFactory.getLogger(MainGameExitDisplay.class);
     private static final float Z_INDEX = 2f;
     private static final long DEFAULT_TIMER = 10000;
-    private static final float viewPortHeightMultiplier = 7f/9f;
-    private static final float viewPortWidthMultiplier = 3f/32f;
+    private static final float viewPortHeightMultiplier = 7f / 9f;
+    private static final float viewPortWidthMultiplier = 3f / 32f;
 
     private static final float viewportHeight =
             ServiceLocator.getRenderService().getStage().getViewport().getCamera().viewportHeight;
@@ -52,7 +52,7 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         entity.getEvents().addListener("shiftDocketsLeft", this::shiftDocketsLeft);
         entity.getEvents().addListener("shiftDocketsRight", this::shiftDocketsRight);
 
-         ServiceLocator.getDocketService().getEvents().addListener("shiftDocketsLeft", this::shiftDocketsLeft);
+        ServiceLocator.getDocketService().getEvents().addListener("shiftDocketsLeft", this::shiftDocketsLeft);
         ServiceLocator.getDocketService().getEvents().addListener("shiftDocketsRight", this::shiftDocketsRight);
         // logger.info("Listeners added for shiftDocketsLeft and shiftDocketsRight events");
     }
@@ -73,7 +73,7 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         logger.info("New table added. Total tables: {}", tableArrayList.size());
 
         table.setFillParent(false);
-        table.setSize(viewportWidth * 3f/32f, 5f/27f * viewportHeight); // DEFAULT_HEIGHT
+        table.setSize(viewportWidth * 3f / 32f, 5f / 27f * viewportHeight); // DEFAULT_HEIGHT
         float xVal = cntXval(tableArrayList.size());
         float yVal = viewportHeight * viewPortHeightMultiplier;
         table.setPosition(xVal, yVal);
@@ -118,21 +118,21 @@ public class MainGameOrderTicketDisplay extends UIComponent {
     }
 
     private float cntXval(int instanceCnt) {
-        return 20f + (instanceCnt - 1) * (distance + viewportWidth * 3f/32f);
+        return 20f + (instanceCnt - 1) * (distance + viewportWidth * 3f / 32f);
     }
 
     // private float cntXval(int instanceCnt) {
     //     return 20f + (instanceCnt - 1) * (distance + viewportWidth * 3f/32f);
     // }
 
-   public static void reorderDockets(int index) {
+    public static void reorderDockets(int index) {
         for (int i = index + 1; i < tableArrayList.size(); i++) {
             Table currTable = tableArrayList.get(i);
             currTable.setX(currTable.getX() - (distance + viewportWidth * 3f / 32f));
         }
     }
 
- public void shiftDocketsLeft() {
+    public void shiftDocketsLeft() {
         if (tableArrayList.isEmpty() || backgroundArrayList.isEmpty()) {
             logger.warn("No dockets to shift left");
             return;
@@ -145,11 +145,11 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         backgroundArrayList.add(firstDocket);
         logger.info("First docket background moved to the end. New first docket index: {}", backgroundArrayList.get(0));
 
-         Long firstStartTime = startTimeArrayList.remove(0);
-         startTimeArrayList.add(firstStartTime);
+        Long firstStartTime = startTimeArrayList.remove(0);
+        startTimeArrayList.add(firstStartTime);
 
-         Label firstCountdownLabel = countdownLabelArrayList.remove(0);
-         countdownLabelArrayList.add(firstCountdownLabel);
+        Label firstCountdownLabel = countdownLabelArrayList.remove(0);
+        countdownLabelArrayList.add(firstCountdownLabel);
 
         updateDocketPositions();
         updateDocketSizes();
@@ -230,7 +230,7 @@ public class MainGameOrderTicketDisplay extends UIComponent {
             long remainingTime = DEFAULT_TIMER - elapsedTime;
             if (remainingTime > 0) {
                 currCountdown.setText("Timer: " + (remainingTime / 1000));
-                currBackground.updateDocketTexture((double) remainingTime/1000);
+                currBackground.updateDocketTexture((double) remainingTime / 1000);
                 currTable.setBackground(currBackground.getImage().getDrawable());
             } else {
                 stageDispose(currBackground, currTable, i);
@@ -260,6 +260,11 @@ public class MainGameOrderTicketDisplay extends UIComponent {
     @Override
     public float getZIndex() {
         return Z_INDEX;
+    }
+
+    @Override
+    public void setStage(Stage mock) {
+        //he he ha
     }
 
     @Override
