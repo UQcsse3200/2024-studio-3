@@ -32,7 +32,7 @@ public class CookingComponentTest {
 
         testEntity = new Entity();
 
-        inventoryComponent = new StationInventoryComponent();
+        inventoryComponent = spy(new StationInventoryComponent());
         testEntity.addComponent(inventoryComponent);
 
         ArrayList<String> acceptableItems = new ArrayList<>();
@@ -41,12 +41,23 @@ public class CookingComponentTest {
         handlerComponent = spy(new StationItemHandlerComponent("OVEN", acceptableItems));
         testEntity.addComponent(handlerComponent);
 
-        cookingComponent = new CookingComponent();
+        cookingComponent = spy(new CookingComponent());
         testEntity.addComponent(cookingComponent);
 
         testEntity.create();
 
         mockTime = mock(GameTime.class);
+    }
+
+    /**
+     * Tests that the event trigger affects both
+     * CookingComponent.addItem and StationItemHandlerComponent.giveItem.
+     */
+    @Test
+    void testEvent() {
+        testEntity.getEvents().trigger("give station item", "acai");
+        verify(handlerComponent).giveItem("acai"); // verifies that giveItem method was called
+        verify(cookingComponent).addItem("acai"); // verifies that addItem method was called
     }
 
     @Test
