@@ -101,10 +101,6 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         updateDocketSizes();
     }
 
-    // Assuming the pipeline is positioned near the top of the stage
-    return stageHeight - pipelineHeight - 30f; // Adjust the offset as needed
-
-
     private float cntXval(int instanceCnt) {
         return 20f + (instanceCnt - 1) * (distance + viewportWidth * 3f/32f);
     }
@@ -206,9 +202,6 @@ public class MainGameOrderTicketDisplay extends UIComponent {
             }
         }
     }
-
-
-
 
     @Override
     public void update() {
