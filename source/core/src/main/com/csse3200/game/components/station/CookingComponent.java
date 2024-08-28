@@ -3,6 +3,7 @@ package com.csse3200.game.components.station;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.services.GameTime;
 import com.csse3200.game.entities.factories.DishFactory; // TODO should I??
+import com.csse3200.game.services.ServiceLocator;
 
 import java.util.*;
 
@@ -22,6 +23,7 @@ public class CookingComponent extends Component {
     @Override
     public void create() {
         inventoryComponent = entity.getComponent(StationInventoryComponent.class);
+        gameTime = ServiceLocator.getTimeSource();
         entity.getEvents().addListener("give station item", this::addItem);
         entity.getEvents().addListener("take item", this::removeItem);
     }
