@@ -56,6 +56,9 @@ public class PlayerActions extends Component {
     body.applyLinearImpulse(impulse, body.getWorldCenter(), true);
   }
 
+  /**
+   * Triggers an interaction event. It holds the logic in how to interact with a given station
+   */
   void interact() {
     // Get the closest fixture all call an interact method on it
     Fixture interactable = interactionSensor.getClosestFixture();

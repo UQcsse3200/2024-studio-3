@@ -40,7 +40,7 @@ public class StationFactory {
 
     /**
    * Creates visible stove.
-   * @return Stove entity with relavent behaviors 
+   * @return Stove entity with relavent behaviors
    */
   public static Entity createStove() {
     Entity stove = new Entity()

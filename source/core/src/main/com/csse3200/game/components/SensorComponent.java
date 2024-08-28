@@ -56,6 +56,11 @@ public class SensorComponent extends Component {
         return this.collidingFixtures.size();
     }
 
+    /**
+     *  Called when the component collides with another collider
+     * @param me Should be the fixture that got collided with - aka this sensor component
+     * @param other The fixture that collided with this component
+     */
     public void onCollisionStart(Fixture me, Fixture other) {
         if (interactionComponent.getFixture() != me) {
             // Not triggered by me, so ignore
@@ -72,19 +77,27 @@ public class SensorComponent extends Component {
             // Update the collision set
             collidingFixtures.add(other);
         }
-
-
+        //Update the set of fixtures
         updateFixtures();
     }
 
+    /**
+     * Called when a collision has ended between 2 fixtures
+     * @param me Should be the fixture that got collided with - aka this sensor component
+     * @param other The fixture that this component stopped colliding with
+     */
     public void onCollisionEnd(Fixture me, Fixture other) {
-        if (interactionComponent.getFixture() != other) {
+        if (interactionComponent.getFixture() != me) {
             // Not triggered by interactionComponent, so ignore
             return;
         }
-
+        if (!PhysicsLayer.contains(targetLayer, other.getFilterData().categoryBits)) {
+            // Doesn't match our target layer, ignore
+            return;
+        }
         // Remove the fixture if it was previously detected
         collidingFixtures.remove(other);
+        //Update the set of fixtures
         updateFixtures();
     }
 
@@ -103,6 +116,12 @@ public class SensorComponent extends Component {
             }
         }
         collidingFixtures.removeAll(toRemove);
+
+        // If no colliding fixtures, then it is empty
+        if (collidingFixtures.isEmpty()) {
+            closestFixture = null;
+            closestDistance = -1f;
+        }
     }
 
 
