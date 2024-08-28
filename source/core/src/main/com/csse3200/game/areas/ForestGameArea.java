@@ -14,6 +14,7 @@ import com.csse3200.game.entities.factories.NPCFactory;
 import com.csse3200.game.entities.factories.ObstacleFactory;
 import com.csse3200.game.entities.factories.PlayerFactory;
 import com.csse3200.game.entities.factories.StationFactory;
+import com.csse3200.game.entities.factories.ItemFactory;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.utils.math.GridPoint2Utils;
@@ -27,6 +28,20 @@ public class ForestGameArea extends GameArea {
   private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(10, 10);
   private static final float WALL_WIDTH = 0.1f;
   private static final String[] forestTextures = {
+    "images/raw_cucumber.png",
+    "images/raw_tomato.png",
+    "images/raw_strawberry.png",
+    "images/raw_lettuce.png",
+    "images/raw_chocolate.png",
+    "images/money.png",
+    "images/fruit_salad.png",
+    "images/raw_banana.png",
+    "images/chopped_banana.png",
+    "images/raw_fish.png",
+    "images/cooked_fish.png",
+    "images/raw_beef.png",
+    "images/cooked_beef.png",
+    "images/burnt_beef.png",
     "images/box_boy_leaf.png",
     "images/tree.png",
     "images/ghost_king.png",
@@ -72,11 +87,12 @@ public class ForestGameArea extends GameArea {
     displayUI();
 
     spawnTerrain();
-    spawnTrees();
+    //spawnTrees();
     player = spawnPlayer();
+
     spawnGhosts();
     spawnGhostKing();
-
+    spawnBeef("raw");
     spawnStations();
 
     playMusic();
@@ -144,6 +160,48 @@ public class ForestGameArea extends GameArea {
     Entity newPlayer = PlayerFactory.createPlayer();
     spawnEntityAt(newPlayer, PLAYER_SPAWN, true, true);
     return newPlayer;
+  }
+
+  /**
+   * Spawn a fish item.
+   * @param cookedLevel - The level the fish is cooked at, can be "raw", "cooked" or "burnt".
+   * @return A fish entity.
+   */
+  private Entity spawnFish(String cookedLevel) {
+    Entity newFish = ItemFactory.createFish(cookedLevel);
+    spawnEntityAt(newFish, new GridPoint2(15, 15), true, true);
+    return newFish;
+  }
+
+  /**
+   * Spawn a beef item.
+   * @param cookedLevel - The level the beef is cooked at, can be "raw", "cooked" or "burnt".
+   * @return A beef entity.
+   */
+  private Entity spawnBeef(String cookedLevel) {
+    Entity newBeef = ItemFactory.createBeef(cookedLevel);
+    spawnEntityAt(newBeef, new GridPoint2(12, 12), true, true);
+    newBeef.setScale(0.5f,0.5f);
+    return newBeef;
+  }
+
+  /**
+   * Spawn a banana item.
+   * @param choppedLevel - The level the banana is chopped at, can be "raw" or "chopped".
+   * @return A banana entity.
+   */
+  private Entity spawnBanana(String choppedLevel) {
+    Entity newBanana = ItemFactory.createBanana(choppedLevel);
+    spawnEntityAt(newBanana, new GridPoint2(18, 18), true, true);
+    newBanana.setScale(0.5f,0.5f);
+    return newBanana;
+  }
+
+  private Entity spawnFruitSalad() {
+    Entity newFruitSalad = ItemFactory.createFruitSalad();
+    spawnEntityAt(newFruitSalad, new GridPoint2(16, 16), true, true);
+    newFruitSalad.setScale(0.5f,0.5f);
+    return newFruitSalad;
   }
 
   private void spawnGhosts() {
