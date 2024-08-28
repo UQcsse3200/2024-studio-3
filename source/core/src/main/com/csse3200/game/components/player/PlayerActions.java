@@ -28,6 +28,7 @@ public class PlayerActions extends Component {
     entity.getEvents().addListener("walk", this::walk);
     entity.getEvents().addListener("walkStop", this::stopWalking);
     entity.getEvents().addListener("attack", this::attack);
+    entity.getEvents().addListener("interact", this::interact);
   }
 
   @Override
@@ -35,13 +36,14 @@ public class PlayerActions extends Component {
     if (moving) {
       updateSpeed();
     }
+    updateInteraction();
+  }
 
-    // Check for the closest sensor
+  private void updateInteraction() {
     interactionSensor.update();
     Fixture interactable = interactionSensor.getClosestFixture();
     if (interactable != null) {
-      //This is where we know we can interact with an object
-
+      //This is where you show the tooltip / outline for the closest station
     }
   }
 
@@ -52,6 +54,18 @@ public class PlayerActions extends Component {
     // impulse = (desiredVel - currentVel) * mass
     Vector2 impulse = desiredVelocity.sub(velocity).scl(body.getMass());
     body.applyLinearImpulse(impulse, body.getWorldCenter(), true);
+  }
+
+  /**
+   * Triggers an interaction event. It holds the logic in how to interact with a given station
+   */
+  void interact() {
+    // Get the closest fixture all call an interact method on it
+    Fixture interactable = interactionSensor.getClosestFixture();
+    if (interactable != null) {
+      // Logic for what interaction even to call on the station
+      entity.getEvents().trigger("Add Station Item");
+    }
   }
 
   /**
