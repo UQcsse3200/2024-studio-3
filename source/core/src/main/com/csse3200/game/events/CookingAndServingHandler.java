@@ -13,6 +13,8 @@ public class CookingAndServingHandler extends Component {
     private boolean isCooking;
     private long cookStartTime;
 
+    private boolean isServed;
+
     public CookingAndServingHandler(GameTime timeSource) {
         this.timeSource = timeSource;
     }
@@ -65,12 +67,28 @@ public class CookingAndServingHandler extends Component {
          */
         textureRender.setTexture(texturePath);
     }
+
+    public void serveMeal() {
+        if (ingredient != null && ingredient.getItemState().equals("cooked")) {
+            isServed = true;
+            System.out.println(ingredient.getItemName() + " has been served to the customer.");
+
+            } else {
+            System.out.println("Meal cannot be served yet. It is not ready.");
+
+        }
+        
+    }
     private void deleteMeal() {
         /**
          * Disposes of meals once served to customers.
          */
-        entity.dispose();
-        System.out.println("Meal Entity has served and removed from the game");
+        if (isServed) {
+            entity.dispose();
+            System.out.println("Meal Entity has served and removed from the game");
+        } else {
+            System.out.println("Meal has not been served yet so it cannot be removed.");
+        }
     }
 
     public void updateState() {

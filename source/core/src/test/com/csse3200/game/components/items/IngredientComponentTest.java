@@ -14,12 +14,12 @@ public class IngredientComponentTest {
                 5, 3, "raw");
         assertEquals("Cucumber", ingredient.getItemName());
         assertEquals(ItemType.CUCUMBER, ingredient.getItemType());
-        assertEquals(10, ingredient.weight());
+        assertEquals(10, ingredient.getWeight());
         assertEquals(5, ingredient.getCookTime());
         assertEquals(3, ingredient.getChopTime());
         assertEquals("raw", ingredient.getItemState());
-        assertTrue(ingredient.isCookable());
-        assertTrue(ingredient.isChoppable());
+        assertTrue(ingredient.getIsCookable());
+        assertTrue(ingredient.getIsChoppable());
     }
 
     @Test
@@ -28,12 +28,12 @@ public class IngredientComponentTest {
                 8, 0, "cooked");
         assertEquals("Beef", ingredient.getItemName());
         assertEquals(ItemType.BEEF, ingredient.getItemType());
-        assertEquals(10, ingredient.weight());
+        assertEquals(10, ingredient.getWeight());
         assertEquals(8, ingredient.getCookTime());
         assertEquals(0, ingredient.getChopTime());
         assertEquals("cooked", ingredient.getItemState());
-        assertTrue(ingredient.isCookable());
-        assertFalse(ingredient.isChoppable());
+        assertTrue(ingredient.getIsCookable());
+        assertFalse(ingredient.getIsChoppable());
     }
 
     @Test
@@ -42,12 +42,12 @@ public class IngredientComponentTest {
                 0, 4, "chopped");
         assertEquals("Strawberry", ingredient.getItemName());
         assertEquals(ItemType.STRAWBERRY, ingredient.getItemType());
-        assertEquals(5, ingredient.weight());
+        assertEquals(5, ingredient.getWeight());
         assertEquals(0, ingredient.getCookTime());
         assertEquals(4, ingredient.getChopTime());
         assertEquals("chopped", ingredient.getItemState());
-        assertFalse(ingredient.isCookable());
-        assertTrue(ingredient.isChoppable());
+        assertFalse(ingredient.getIsCookable());
+        assertTrue(ingredient.getIsChoppable());
     }
 
     @Test
@@ -56,12 +56,12 @@ public class IngredientComponentTest {
                 0, 0, "raw");
         assertEquals("Lettuce", ingredient.getItemName());
         assertEquals(ItemType.LETTUCE, ingredient.getItemType());
-        assertEquals(3, ingredient.weight());
+        assertEquals(3, ingredient.getWeight());
         assertEquals(0, ingredient.getCookTime());
         assertEquals(0, ingredient.getChopTime());
         assertEquals("raw", ingredient.getItemState());
-        assertFalse(ingredient.isCookable());
-        assertFalse(ingredient.isChoppable());
+        assertFalse(ingredient.getIsCookable());
+        assertFalse(ingredient.getIsChoppable());
     }
 
     @Test
@@ -140,4 +140,25 @@ public class IngredientComponentTest {
         assertEquals("raw", ingredient.getItemState());
     }
 
+    @Test
+    void isCookableTest() {
+        IngredientComponent cookableIngredient = new IngredientComponent("Beef", ItemType.BEEF, 10, 5,
+                0, "raw");
+        assertTrue(cookableIngredient.getIsCookable());
+
+        IngredientComponent nonCookableIngredient = new IngredientComponent("Banana", ItemType.BANANA, 1, 0,
+                5, "raw");
+        assertFalse(nonCookableIngredient.getIsCookable());
+    }
+
+    @Test
+    void isChoppableTest() {
+        IngredientComponent choppableIngredient = new IngredientComponent("Banana", ItemType.BANANA, 1, 0,
+                5, "raw");
+        assertTrue(choppableIngredient.getIsChoppable());
+
+        IngredientComponent nonChoppableIngredient = new IngredientComponent("Beef", ItemType.BEEF, 10, 5,
+                0, "raw");
+        assertFalse(nonChoppableIngredient.getIsChoppable());
+    }
 }

@@ -42,11 +42,11 @@ public class IngredientComponent extends ItemComponent{
         return this.itemState;
     }
 
-    public boolean isCookable() {
+    public boolean getIsCookable() {
         return isCookable;
     }
 
-    public boolean isChoppable() {
+    public boolean getIsChoppable() {
         return isChoppable;
     }
 

@@ -32,28 +32,28 @@ public class ForestGameArea extends GameArea {
           "images/banana_split.png",
           "images/salad.png",
           "images/steak_meal.png",
-          "images/chopped_acai.png",
-          "images/raw_acai.png",
-          "images/chopped_chocolate.png",
-          "images/raw_chocolate.png",
-          "images/raw_cucumber.png",
-          "images/raw_tomato.png",
-          "images/raw_strawberry.png",
-          "images/raw_lettuce.png",
-          "images/raw_chocolate.png",
-          "images/chopped_cucumber.png",
-          "images/chopped_lettuce.png",
-          "images/chopped_tomato.png",
-          "images/chopped_strawberry.png",
+          "images/ingredients/chopped_acai.png",
+          "images/ingredients/raw_acai.png",
+          "images/ingredients/chopped_chocolate.png",
+          "images/ingredients/raw_chocolate.png",
+          "images/ingredients/raw_cucumber.png",
+          "images/ingredients/raw_tomato.png",
+          "images/ingredients/raw_strawberry.png",
+          "images/ingredients/raw_lettuce.png",
+          "images/ingredients/raw_chocolate.png",
+          "images/ingredients/chopped_cucumber.png",
+          "images/ingredients/chopped_lettuce.png",
+          "images/ingredients/chopped_tomato.png",
+          "images/ingredients/chopped_strawberry.png",
           "images/money.png",
           "images/fruit_salad.png",
-          "images/raw_banana.png",
-          "images/chopped_banana.png",
-          "images/raw_fish.png",
-          "images/cooked_fish.png",
-          "images/raw_beef.png",
-          "images/cooked_beef.png",
-          "images/burnt_beef.png",
+          "images/ingredients/raw_banana.png",
+          "images/ingredients/chopped_banana.png",
+          "images/ingredients/raw_fish.png",
+          "images/ingredients/cooked_fish.png",
+          "images/ingredients/raw_beef.png",
+          "images/ingredients/cooked_beef.png",
+          "images/ingredients/burnt_beef.png",
           "images/box_boy_leaf.png",
           "images/tree.png",
           "images/ghost_king.png",
@@ -281,6 +281,10 @@ public class ForestGameArea extends GameArea {
     return newAcai;
   }
 
+  /**
+   * Spawn a FruitSalad item.
+   * @return A FruitSalad entity.
+   */
   private Entity spawnFruitSalad() {
     Entity newFruitSalad = ItemFactory.createFruitSalad();
     spawnEntityAt(newFruitSalad, new GridPoint2(16, 16), true, true);
@@ -288,6 +292,10 @@ public class ForestGameArea extends GameArea {
     return newFruitSalad;
   }
 
+  /**
+   * Spawn an AcaiBowl item.
+   * @return An AcaiBowl entity.
+   */
   private Entity spawnAcaiBowl() {
     Entity newAcaiBowl = ItemFactory.createAcaiBowl();
     spawnEntityAt(newAcaiBowl, new GridPoint2(16, 10), true, true);
@@ -295,6 +303,10 @@ public class ForestGameArea extends GameArea {
     return newAcaiBowl;
   }
 
+  /**
+   * Spawn a Salad item.
+   * @return A Salad entity.
+   */
   private Entity spawnSalad() {
     Entity newSalad = ItemFactory.createSalad();
     spawnEntityAt(newSalad, new GridPoint2(13, 10), true, true);
@@ -302,6 +314,10 @@ public class ForestGameArea extends GameArea {
     return newSalad;
   }
 
+  /**
+   * Spawn a SteakMeal item.
+   * @return A SteakMeal entity.
+   */
   private Entity spawnSteakMeal() {
     Entity newSteakMeal = ItemFactory.createSteakMeal();
     spawnEntityAt(newSteakMeal, new GridPoint2(10, 9), true, true);
@@ -309,6 +325,10 @@ public class ForestGameArea extends GameArea {
     return newSteakMeal;
   }
 
+  /**
+   * Spawn a BananaSplit item.
+   * @return A BananaSplit entity.
+   */
   private Entity spawnBananaSplit() {
     Entity newBananaSplit = ItemFactory.createBananaSplit();
     spawnEntityAt(newBananaSplit, new GridPoint2(14, 12), true, true);
