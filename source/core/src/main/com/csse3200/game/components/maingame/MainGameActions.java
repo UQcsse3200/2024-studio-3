@@ -31,10 +31,10 @@ public class MainGameActions extends Component {
     entity.getEvents().addListener("exit", this::onExit);
     entity.getEvents().addListener("createOrder", this::onCreateOrder);
     ui = new Entity();
-    docketDisplayer = new MainGameOrderTicketDisplay();
-    ui.addComponent(docketDisplayer);
+    // docketDisplayer = new MainGameOrderTicketDisplay();
+    // ui.addComponent(docketDisplayer);
     ServiceLocator.getEntityService().register(ui);
-//    entity.getEvents().addListener("orderDone", this::onOrderDone);
+
   }
 
   /**
