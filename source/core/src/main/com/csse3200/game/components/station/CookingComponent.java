@@ -44,7 +44,7 @@ public class CookingComponent extends Component {
     /**
      * Method triggered when item added to station.
      */
-    public void addItem() {
+    public void addItem(String item) {
         // Converting List<Optional<String>> to List<String>
         List<String> templist = new ArrayList<String>();
         for (Optional<String> x : inventoryComponent.getItems()) {
