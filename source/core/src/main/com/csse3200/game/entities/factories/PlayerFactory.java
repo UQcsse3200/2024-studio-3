@@ -4,6 +4,7 @@ import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.components.player.PlayerActions;
 import com.csse3200.game.components.player.PlayerStatsDisplay;
+import com.csse3200.game.components.SensorComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.configs.PlayerConfig;
 import com.csse3200.game.files.FileLoader;
@@ -36,7 +37,7 @@ public class PlayerFactory {
 
     Entity player =
         new Entity()
-            .addComponent(new TextureRenderComponent("images/box_boy_leaf.png"))
+            .addComponent(new TextureRenderComponent("images/chef_player.png"))
             .addComponent(new PhysicsComponent())
             .addComponent(new ColliderComponent())
             .addComponent(new HitboxComponent().setLayer(PhysicsLayer.PLAYER))
@@ -44,11 +45,12 @@ public class PlayerFactory {
             .addComponent(new CombatStatsComponent(stats.health, stats.baseAttack))
             .addComponent(new InventoryComponent(stats.gold))
             .addComponent(inputComponent)
-            .addComponent(new PlayerStatsDisplay());
-
-    PhysicsUtils.setScaledCollider(player, 0.6f, 0.3f);
+            .addComponent(new PlayerStatsDisplay())
+            .addComponent(new SensorComponent(PhysicsLayer.INTERACTABLE, 1f));
+    
+    player.scaleHeight(1.5f);
+    PhysicsUtils.setScaledCollider(player, 0.3f, 0.2f);
     player.getComponent(ColliderComponent.class).setDensity(1.5f);
-    player.getComponent(TextureRenderComponent.class).scaleEntity();
     return player;
   }
 
