@@ -28,10 +28,10 @@ public class ForestGameArea extends GameArea {
   private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(10, 10);
   private static final float WALL_WIDTH = 0.1f;
   private static final String[] forestTextures = {
-          "images/acai_bowl.png",
-          "images/banana_split.png",
-          "images/salad.png",
-          "images/steak_meal.png",
+          "images/meals/acai_bowl.png",
+          "images/meals/banana_split.png",
+          "images/meals/salad.png",
+          "images/meals/steak_meal.png",
           "images/ingredients/chopped_acai.png",
           "images/ingredients/raw_acai.png",
           "images/ingredients/chopped_chocolate.png",
@@ -46,7 +46,7 @@ public class ForestGameArea extends GameArea {
           "images/ingredients/chopped_tomato.png",
           "images/ingredients/chopped_strawberry.png",
           "images/money.png",
-          "images/fruit_salad.png",
+          "images/meals/fruit_salad.png",
           "images/ingredients/raw_banana.png",
           "images/ingredients/chopped_banana.png",
           "images/ingredients/raw_fish.png",
