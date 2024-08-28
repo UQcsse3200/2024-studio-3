@@ -35,10 +35,6 @@ public class ServiceLocator {
     return renderService;
   }
 
-  public static DocketService getDocketService() {
-    return docketService;
-  }
-
   public static PhysicsService getPhysicsService() {
     return physicsService;
   }
