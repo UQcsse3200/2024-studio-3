@@ -120,7 +120,9 @@ loadScripts(document, 'script');</script>
 <div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(java.lang.String,com.csse3200.game.components.items.ItemType,int)" class="member-name-link">ItemComponent</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;itemName,
  <a href="ItemType.html" title="enum class in com.csse3200.game.components.items">ItemType</a>&nbsp;itemType,
  int&nbsp;weight)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block">Called when the item is created and initates necessary variables</div>
+</div>
 </div>
 </section>
 </li>
@@ -137,16 +139,24 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getItemId()" class="member-name-link">getItemId</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Gets the id of the item</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getItemName()" class="member-name-link">getItemName</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Gets the name of the item</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ItemType.html" title="enum class in com.csse3200.game.components.items">ItemType</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getItemType()" class="member-name-link">getItemType</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Gets the type of the item</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#weight()" class="member-name-link">weight</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getWeight()" class="member-name-link">getWeight</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Gets the weight of the item</div>
+</div>
 </div>
 </div>
 </div>
@@ -173,6 +183,13 @@ loadScripts(document, 'script');</script>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">ItemComponent</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;itemName,
  <a href="ItemType.html" title="enum class in com.csse3200.game.components.items">ItemType</a>&nbsp;itemType,
  int&nbsp;weight)</span></div>
+<div class="block">Called when the item is created and initates necessary variables</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>itemName</code> - - a string which is the name of the item</dd>
+<dd><code>itemType</code> - - an ItemType which is the type of the item</dd>
+<dd><code>weight</code> - - an intger which is the weight of the item</dd>
+</dl>
 </section>
 </li>
 </ul>
@@ -187,24 +204,44 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="getItemId()">
 <h3>getItemId</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getItemId</span>()</div>
+<div class="block">Gets the id of the item</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>a string which is the randomly generated id of the item</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="getItemName()">
 <h3>getItemName</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getItemName</span>()</div>
+<div class="block">Gets the name of the item</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>a string which is the name of the item</dd>
+</dl>
 </section>
 </li>
 <li>
-<section class="detail" id="weight()">
-<h3>weight</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">weight</span>()</div>
+<section class="detail" id="getWeight()">
+<h3>getWeight</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">getWeight</span>()</div>
+<div class="block">Gets the weight of the item</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>a string which is the weight of the item</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="getItemType()">
 <h3>getItemType</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ItemType.html" title="enum class in com.csse3200.game.components.items">ItemType</a></span>&nbsp;<span class="element-name">getItemType</span>()</div>
+<div class="block">Gets the type of the item</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>an itemType which is the type the items is</dd>
+</dl>
 </section>
 </li>
 </ul>
