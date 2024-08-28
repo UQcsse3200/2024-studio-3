@@ -8,6 +8,7 @@ import com.csse3200.game.components.items.ItemComponent;
 import com.csse3200.game.components.items.ItemType;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 @ExtendWith(GameExtension.class)
 class InventoryComponentTest {
@@ -295,39 +296,303 @@ class InventoryComponentTest {
   // }
 
   @Test
-  void shouldGetItems() {
+  void shouldGetEmptyItems() {
     InventoryComponent inventory = new InventoryComponent(2);
-    // TODO: needs adding functionality to be implemented
+    ArrayList<ItemComponent> items = inventory.getItems();
+    assertNotNull(items);
+    for (ItemComponent item : items) {
+        assertNull(item);
+    }
   }
 
   @Test
   void shouldAddItems() {
-    //
+    InventoryComponent inventory = new InventoryComponent(2);
+    ItemComponent chocolate = new ItemComponent("Chocolate", ItemType.CHOCOLATE, 1);
+    ItemComponent beef = new ItemComponent("Beef", ItemType.BEEF, 1);
+    inventory.addItem(chocolate);
+    inventory.addItem(beef);
+
+    // what the items ArrayList should look like
+    ArrayList<ItemComponent> ideal = new ArrayList<>(Arrays.asList(chocolate, beef));
+    assertEquals(ideal, inventory.getItems());
   }
 
   @Test
-  void shouldntAddItems() {
-    // (if inventory is full)
+  void shouldReturnItemClone() {
+    InventoryComponent inventory = new InventoryComponent(2);
+    ItemComponent chocolate = new ItemComponent("Chocolate", ItemType.CHOCOLATE, 1);
+    ItemComponent beef = new ItemComponent("Beef", ItemType.BEEF, 1);
+    inventory.addItem(chocolate);
+    inventory.addItem(beef);
+
+    ArrayList<ItemComponent> clone = inventory.getItems();
+    // modify the clone
+    clone.remove(beef);
+    assertNotEquals(clone, inventory.getItems());
   }
 
   @Test
-  void shouldRemoveItems() {
-    //
+  void shouldBeEmptyAfterRemove() {
+    // add and remove items
+    InventoryComponent inventory = new InventoryComponent(2);
+    ItemComponent chocolate = new ItemComponent("Chocolate", ItemType.CHOCOLATE, 1);
+    ItemComponent beef = new ItemComponent("Beef", ItemType.BEEF, 1);
+    inventory.addItem(chocolate);
+    inventory.addItem(beef);
+    inventory.removeAt(0);
+    inventory.removeAt(1);
+    assertTrue(inventory.isEmpty());
   }
 
   @Test
-  void shouldntRemoveItems() {
-    // (if inventory is empty)
+  void shouldGetNull() {
+    InventoryComponent inventory = new InventoryComponent(2);
+    ItemComponent beef = new ItemComponent("Beef", ItemType.BEEF, 1);
+    inventory.addItem(beef);
+    assertNull(inventory.getItemAt(1));
   }
 
   @Test
-  void shouldSelectItems() {
-    // idk if we are going to have this method?
+  void shouldGetCorrectItem() {
+    InventoryComponent inventory = new InventoryComponent(2);
+    ItemComponent beef = new ItemComponent("Beef", ItemType.BEEF, 1);
+    inventory.addItem(beef);
+    assertEquals(beef, inventory.getItemAt(0));
   }
 
   @Test
-  void shouldAddAndResize() {
-    // (basically resizing with stuff in inventory)
+  void shouldNotGetItemWithNegIndex() {
+    InventoryComponent inventory = new InventoryComponent(2);
+    try {
+      inventory.getItemAt(-1);
+    } catch (IllegalArgumentException e) {
+      assertEquals("Invalid index parameter. Must be non-negative and within the current size of the inventory.", e.getMessage());
+    }
   }
 
+  @Test
+  void shouldNotGetItemWithInvalidIndex() {
+    InventoryComponent inventory = new InventoryComponent(2);
+    try {
+      inventory.getItemAt(3);
+    } catch (IllegalArgumentException e) {
+      assertEquals("Invalid index parameter. Must be non-negative and within the current size of the inventory.", e.getMessage());
+    }
+  }
+
+  @Test
+  void firstItemShouldBeNull() {
+    InventoryComponent inventory = new InventoryComponent(2);
+    assertNull(inventory.getItemFirst());
+  }
+
+  @Test
+  void shouldGetFirstItem() {
+    InventoryComponent inventory = new InventoryComponent(2);
+    ItemComponent beef = new ItemComponent("Beef", ItemType.BEEF, 1);
+    inventory.addItem(beef);
+    assertEquals(beef, inventory.getItemFirst());
+  }
+
+  @Test
+  void lastItemShouldBeNull() {
+    InventoryComponent inventory = new InventoryComponent(2);
+    assertNull(inventory.getItemLast());
+  }
+
+  @Test
+  void shouldGetLastItem() {
+    InventoryComponent inventory = new InventoryComponent(2);
+    ItemComponent chocolate = new ItemComponent("Chocolate", ItemType.CHOCOLATE, 1);
+    ItemComponent beef = new ItemComponent("Beef", ItemType.BEEF, 1);
+    inventory.addItem(chocolate);
+    inventory.addItem(beef);
+    assertEquals(beef, inventory.getItemLast());
+  }
+
+  @Test
+  void shouldIncreaseAndKeepExistingItems() {
+    InventoryComponent inventory = new InventoryComponent(2);
+    ItemComponent chocolate = new ItemComponent("Chocolate", ItemType.CHOCOLATE, 1);
+    inventory.addItem(chocolate);
+    inventory.increaseCapacity(3);
+    assertEquals(chocolate, inventory.getItemAt(0));
+    assertNull(inventory.getItemAt(1));
+  }
+
+  @Test
+  void shouldAddToFirstSlot() {
+    InventoryComponent inventory = new InventoryComponent(3);
+    ItemComponent chocolate = new ItemComponent("Chocolate", ItemType.CHOCOLATE, 1);
+    ItemComponent beef = new ItemComponent("Beef", ItemType.BEEF, 1);
+    ItemComponent acai = new ItemComponent("Acai", ItemType.ACAI, 1);
+    inventory.addItemAt(chocolate, 0);
+    inventory.addItemAt(beef, 2);
+    inventory.addItem(acai);
+    assertEquals(acai, inventory.getItemAt(1));
+  }
+
+  @Test
+  void shouldAddItemAt() {
+    InventoryComponent inventory = new InventoryComponent(3);
+    ItemComponent chocolate = new ItemComponent("Chocolate", ItemType.CHOCOLATE, 1);
+    inventory.addItemAt(chocolate, 1);
+    assertEquals(chocolate, inventory.getItemAt(1));
+  }
+
+  @Test
+  void shouldAddAndIncreaseSize() {
+    InventoryComponent inventory = new InventoryComponent(3);
+    ItemComponent chocolate = new ItemComponent("Chocolate", ItemType.CHOCOLATE, 1);
+    inventory.addItemAt(chocolate, 1);
+    assertEquals(1, inventory.getSize());
+  }
+
+  @Test
+  void shouldNotAddAtNegativeIndex() {
+    InventoryComponent inventory = new InventoryComponent(2);
+    ItemComponent chocolate = new ItemComponent("Chocolate", ItemType.CHOCOLATE, 1);
+    try {
+      inventory.addItemAt(chocolate,-3);
+    } catch (IllegalArgumentException e) {
+      assertEquals("Invalid index parameter. Must be non-negative and within the current size of the inventory.", e.getMessage());
+    }
+  }
+
+  @Test
+  void shouldNotAddAtInvalidIndex() {
+    InventoryComponent inventory = new InventoryComponent(2);
+    ItemComponent chocolate = new ItemComponent("Chocolate", ItemType.CHOCOLATE, 1);
+    try {
+      inventory.addItemAt(chocolate,3);
+    } catch (IllegalArgumentException e) {
+      assertEquals("Invalid index parameter. Must be non-negative and within the current size of the inventory.", e.getMessage());
+    }
+  }
+
+  @Test
+  void shouldNotAddWhenAlreadyOccupied() {
+    InventoryComponent inventory = new InventoryComponent(2);
+    ItemComponent chocolate = new ItemComponent("Chocolate", ItemType.CHOCOLATE, 1);
+    ItemComponent acai = new ItemComponent("Acai", ItemType.ACAI, 1);
+    inventory.addItemAt(chocolate,1);
+
+    try {
+      inventory.addItemAt(acai,1);
+    } catch (IllegalArgumentException e) {
+      assertEquals("Index in Inventory already occupied by an Item.", e.getMessage());
+    }
+  }
+
+  @Test
+  void shouldRemoveAtIndex() {
+    InventoryComponent inventory = new InventoryComponent(2);
+    ItemComponent chocolate = new ItemComponent("Chocolate", ItemType.CHOCOLATE, 1);
+    inventory.addItemAt(chocolate,1);
+    assertEquals(chocolate, inventory.removeAt(1));
+  }
+
+  @Test
+  void shouldDecreaseSize() {
+    InventoryComponent inventory = new InventoryComponent(5);
+    assertFalse(inventory.isFull());
+
+    ItemComponent item;
+    for (int i = 0; i < 3; i++) {
+      item = new ItemComponent("Beef", ItemType.BEEF, 1);
+      inventory.addItem(item);
+    }
+    inventory.removeAt(1);
+    assertEquals(2, inventory.getSize());
+  }
+
+  @Test
+  void shouldNotRemoveAtNegativeIndex() {
+    InventoryComponent inventory = new InventoryComponent(2);
+    try {
+      inventory.removeAt(-1);
+    } catch (IllegalArgumentException e) {
+      assertEquals("Invalid index parameter. Must be non-negative and within the current size of the inventory.", e.getMessage());
+    }
+  }
+
+  @Test
+  void shouldNotRemoveAt() {
+    InventoryComponent inventory = new InventoryComponent(2);
+    try {
+      inventory.removeAt(3);
+    } catch (IllegalArgumentException e) {
+      assertEquals("Invalid index parameter. Must be non-negative and within the current size of the inventory.", e.getMessage());
+    }
+  }
+
+  @Test
+  void shouldNotRemoveEmptySlot() {
+    InventoryComponent inventory = new InventoryComponent(2);
+    try {
+      inventory.removeAt(0);
+    } catch (IllegalArgumentException e) {
+      assertEquals("Index in Inventory does not contain an Item.", e.getMessage());
+    }
+  }
+
+  @Test
+  void shouldAddMultipleItemsAndRemove() {
+    InventoryComponent inventory = new InventoryComponent(3);
+    ItemComponent chocolate = new ItemComponent("Chocolate", ItemType.CHOCOLATE, 1);
+    ItemComponent beef = new ItemComponent("Beef", ItemType.BEEF, 1);
+    ItemComponent acai = new ItemComponent("Acai", ItemType.ACAI, 1);
+    inventory.addItemAt(chocolate, 0);
+    inventory.addItemAt(beef, 2);
+    inventory.addItem(acai);
+    // remove all but 1st element
+    inventory.removeAt(2);
+    inventory.removeAt(1);
+    assertEquals(chocolate, inventory.getItemAt(0));
+    inventory.removeAt(0);
+    // should be empty
+    assertTrue(inventory.isEmpty());
+  }
+
+  @Test
+  void shouldFillInventoryRemoveAndAddAgain() {
+    InventoryComponent inventory = new InventoryComponent(3);
+    ItemComponent chocolate = new ItemComponent("Chocolate", ItemType.CHOCOLATE, 1);
+    ItemComponent beef = new ItemComponent("Beef", ItemType.BEEF, 1);
+    ItemComponent acai = new ItemComponent("Acai", ItemType.ACAI, 1);
+    // fill inventory
+    inventory.addItem(chocolate);
+    inventory.addItem(beef);
+    inventory.addItem(acai);
+    assertTrue(inventory.isFull());
+    // empty inventory
+    for (int i = 0; i < 3; i++) {
+      inventory.removeAt(i);
+    }
+    assertTrue(inventory.isEmpty());
+    // add items again
+    inventory.addItemAt(chocolate, 0);
+    assertEquals(chocolate, inventory.getItemAt(0));
+  }
+
+  @Test
+  void shouldIncreaseCapacityAndAdd() {
+    InventoryComponent inventory = new InventoryComponent(1);
+    ItemComponent chocolate = new ItemComponent("Chocolate", ItemType.CHOCOLATE, 1);
+    inventory.addItem(chocolate);
+    assertTrue(inventory.isFull());
+    // increase the capacity
+    inventory.increaseCapacity(3);
+    // add more items
+    ItemComponent beef = new ItemComponent("Beef", ItemType.BEEF, 1);
+    ItemComponent acai = new ItemComponent("Acai", ItemType.ACAI, 1);
+    inventory.addItem(beef);
+    inventory.addItem(acai);
+    assertTrue(inventory.isFull());
+    // check if everything added right
+    assertEquals(chocolate, inventory.getItemAt(0));
+    assertEquals(beef, inventory.getItemAt(1));
+    assertEquals(acai, inventory.getItemAt(2));
+  }
 }
