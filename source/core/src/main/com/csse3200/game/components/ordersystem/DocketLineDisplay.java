@@ -44,7 +44,6 @@ public class DocketLineDisplay extends UIComponent {
 				new Image(
 						ServiceLocator.getResourceService()
 								.getAsset("images/ordersystem/pin_line.png", Texture.class));
-			docketLineResize();  
 
 		table.add(pineLine).pad(5);
 		table.row();
