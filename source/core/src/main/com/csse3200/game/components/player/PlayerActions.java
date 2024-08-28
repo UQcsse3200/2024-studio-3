@@ -39,12 +39,28 @@ public class PlayerActions extends Component {
     updateInteraction();
   }
 
+  /**
+   * Updates the player's interaction with nearby objects. This method checks for the closest
+   * interactable object within the sensor's range. If an interactable object is found, it triggers
+   * the display of a tooltip with interaction details. If no interactable object is nearby, it hides
+   * the tooltip.
+   * */
   private void updateInteraction() {
     interactionSensor.update();
     Fixture interactable = interactionSensor.getClosestFixture();
     if (interactable != null) {
+
       //This is where you show the tooltip / outline for the closest station
+      String interactionKey = "Press E ";  // Hardcoded for simplicity, could be dynamic
+      String itemName = "Some Task";  // Placeholder for actual item name
+      // Trigger show tooltip event with interaction details
+      entity.getEvents().trigger("showTooltip", interactionKey + ": " + itemName);
+
+    } else {
+      // Hide tooltip if no interactable is nearby
+      entity.getEvents().trigger("hideTooltip");
     }
+
   }
 
   private void updateSpeed() {

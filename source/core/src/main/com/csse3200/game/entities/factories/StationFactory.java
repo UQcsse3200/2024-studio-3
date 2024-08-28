@@ -3,6 +3,7 @@ package com.csse3200.game.entities.factories;
 import java.util.ArrayList;
 
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.csse3200.game.components.TooltipsDisplay;
 import com.csse3200.game.components.station.StationItemHandlerComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.physics.PhysicsLayer;
@@ -23,6 +24,7 @@ public class StationFactory {
         .addComponent(new PhysicsComponent())
         .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
         .addComponent(new InteractionComponent(PhysicsLayer.INTERACTABLE))
+            .addComponent(new TooltipsDisplay())
         .addComponent(new StationItemHandlerComponent("oven", new ArrayList<>()));
 
 
@@ -48,6 +50,7 @@ public class StationFactory {
         .addComponent(new PhysicsComponent())
         .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
         .addComponent(new InteractionComponent(PhysicsLayer.INTERACTABLE))
+            .addComponent(new TooltipsDisplay())
         .addComponent(new StationItemHandlerComponent("stove", new ArrayList<>()));
 
 
@@ -59,5 +62,28 @@ public class StationFactory {
     PhysicsUtils.setScaledCollider(stove, 0.3f, 0.2f);
     
     return stove;
+  }
+
+  /**
+   * Creates visible station.
+   * @param height Station height in world units
+   * @param type Type of station
+   * @return Station entity of given width and height with relavent behaviors
+   */
+  public static Entity createStation(String type, float height) {
+    Entity station = new Entity()
+        .addComponent(new TextureRenderComponent("images/stations/benches/"+ type + ".png"))
+        .addComponent(new PhysicsComponent())
+        .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
+        .addComponent(new StationItemHandlerComponent(type, new ArrayList<>()));
+
+
+    station.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
+    station.getComponent(TextureRenderComponent.class).scaleEntity();
+    station.scaleHeight(height);
+
+    PhysicsUtils.setScaledCollider(station, 1f, 1f);
+
+    return station;
   }
 }
