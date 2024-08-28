@@ -8,8 +8,6 @@ import com.csse3200.game.components.items.ItemComponent;
 import java.util.ArrayList;
 import java.lang.IllegalArgumentException;
 
-/* team 1 feature branch, work here */
-
 /**
  * A generic inventory component that is used to keep track of stored items
  * for an entity
@@ -58,7 +56,7 @@ public class InventoryComponent extends Component {
   /**
    * Sets the size of this item component to the newSize provided.
    * 
-   * @param newSize - the size to set this item component's capacity to. Must be a positive, non-zero integer.
+   * @param newCapacity - the size to set this item component's capacity to. Must be a positive, non-zero integer.
    * @throws java.lang.IllegalArgumentException - if newSize is < 1.
    */
   public void setCapacity(int newCapacity) {
@@ -69,7 +67,8 @@ public class InventoryComponent extends Component {
   }
 
   /**
-   * Sets the currently selected item to the index specified
+   * Sets the currently selected item to the index specified.
+   * 
    * @param index - the index to set the currently selected item to
    * @throws java.lang.IllegalArgumentException - if index is not within 0 <= index < this.getSize()
    */
@@ -81,8 +80,8 @@ public class InventoryComponent extends Component {
   }
 
   /**
-   * Returns the index of the currently selected item
-   * @return the index of the currently selected item
+   * Returns the index of the currently selected item.
+   * @return - the index of the currently selected item.
    */
   public int getSelectedIndex() {
     return this.selected;
@@ -90,7 +89,7 @@ public class InventoryComponent extends Component {
 
   /**
    * Returns the currently selected item of the inventory
-   * @return the item that is currently selected
+   * @return - the item that is currently selected
    */
   public ItemComponent getSelectedItem() {
     return this.getItemAt(this.getSelectedIndex());
@@ -107,8 +106,7 @@ public class InventoryComponent extends Component {
   }
 
     /**
-     * Returns true if the number items currently stored in the
-     * Inventory is equal to the maximum size of the inventory, false otherwise.
+     * Returns true if Inventory data structure is full.
      * 
      * @return - true if the ArrayList is full, false otherwise.
      */
@@ -117,7 +115,7 @@ public class InventoryComponent extends Component {
   }
 
     /**
-     * Returns true if the Inventory is empty.
+     * Returns true if the Inventory data structure is empty.
      * 
      * @return - true if the ArrayList is empty, true otherwise.
      */
@@ -206,20 +204,7 @@ public class InventoryComponent extends Component {
       size++;
     } 
   }
-
-    /**
-     * Adds the item to the start of the Inventory, if there is capacity.
-     * 
-     * @param item - the item to be added to the Inventory.
-     
-  public void prependItem(String item) {
-    if (!this.isFull()) {
-      items.addFirst(item);
-      size++;
-    }
-  }
-    */
-
+  
     /**
      * Adds the item to the Inventory at the given index, if there is capacity.
      * 
