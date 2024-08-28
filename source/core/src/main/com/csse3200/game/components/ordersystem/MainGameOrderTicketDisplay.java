@@ -23,7 +23,7 @@ import java.util.ArrayList;
 public class MainGameOrderTicketDisplay extends UIComponent {
     private static final Logger logger = LoggerFactory.getLogger(MainGameExitDisplay.class);
     private static final float Z_INDEX = 2f;
-    private static final long DEFAULT_TIMER = 999999;
+    private static final long DEFAULT_TIMER = 5000;
     private static final float viewPortHeightMultiplier = 7f/9f;
     private static final float viewPortWidthMultiplier = 3f/32f;
     private static final float viewportHeight =
@@ -51,7 +51,7 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         entity.getEvents().addListener("shiftDocketsLeft", this::shiftDocketsLeft);
         entity.getEvents().addListener("shiftDocketsRight", this::shiftDocketsRight);
 
-         ServiceLocator.getDocketService().getEvents().addListener("shiftDocketsLeft", this::shiftDocketsLeft);
+        ServiceLocator.getDocketService().getEvents().addListener("shiftDocketsLeft", this::shiftDocketsLeft);
         ServiceLocator.getDocketService().getEvents().addListener("shiftDocketsRight", this::shiftDocketsRight);
         // logger.info("Listeners added for shiftDocketsLeft and shiftDocketsRight events");
     }
@@ -199,6 +199,11 @@ public class MainGameOrderTicketDisplay extends UIComponent {
     @Override
     public float getZIndex() {
         return Z_INDEX;
+    }
+
+    @Override
+    public void setStage(Stage mock) {
+        //he he ha
     }
 
     @Override
