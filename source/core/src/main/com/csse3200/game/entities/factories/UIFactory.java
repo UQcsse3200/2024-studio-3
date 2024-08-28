@@ -14,6 +14,6 @@ public class UIFactory {
      * @return the entity with a MainGameOrderTicketDisplay component
      */
     public static Entity createDocketUI() {
-        return new Entity().addComponent(new MainGameOrderTicketDisplay());
+        return new Entity().addComponent(new MainGameOrderTicketDisplay(""));
     }
 }

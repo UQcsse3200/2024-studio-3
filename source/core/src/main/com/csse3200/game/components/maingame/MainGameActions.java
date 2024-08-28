@@ -36,9 +36,9 @@ public class MainGameActions extends Component {
 
 			String[] recipeNames = {"acaiBowl", "salad", "fruitSalad", "steakMeal", "bananaSplit"};
 //      docketDisplayer = new MainGameOrderTicketDisplay(recipeNames[new Random().nextInt(recipeNames.length)]);
-			docketDisplayer = ui.getComponent(MainGameOrderTicketDisplay.class);
+//			docketDisplayer = ui.getComponent(MainGameOrderTicketDisplay.class);
 			if (docketDisplayer == null) {
-				docketDisplayer = new MainGameOrderTicketDisplay();
+				docketDisplayer = new MainGameOrderTicketDisplay(recipeNames[new Random().nextInt(recipeNames.length)]);
 				ui.addComponent(docketDisplayer);
 			}
 			ui.addComponent(docketDisplayer);

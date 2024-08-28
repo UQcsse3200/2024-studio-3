@@ -38,18 +38,38 @@ public class MainGameOrderTicketDisplay extends UIComponent {
     private static ArrayList<Docket> backgroundArrayList;
     private static ArrayList<Label> countdownLabelArrayList;
     private static int orderNumb = 0;
-
     private static final long DEFAULT_TIMER = 10000;
 
     private String recipeName;
+    private Recipe recipe;
+    private List<String> ingredients;
+    private int makingTime;
+    private Integer burnedTime;
+    private String stationType;
+    private long timer;
 
     /**
      *
      * @param recipeName
      */
-//    public MainGameOrderTicketDisplay(String recipeName) {
-//        this.recipeName = recipeName;
-//    }
+    public MainGameOrderTicketDisplay(String recipeName) {
+        this.recipeName = recipeName;
+        this.recipe = new Recipe(recipeName);
+        this.ingredients = recipe.getIngredients();
+//        this.makingTime = recipe.getMakingTime();
+        this.burnedTime = recipe.getBurnedTime();
+        this.stationType = recipe.getStationType();
+        this.timer = recipe.getMakingTime() * DEFAULT_TIMER;
+    }
+
+    /**
+     * Updates ticket timer
+     * @param makingTime the making time of the order
+     * @return the ticket time
+     */
+    private long calculateTimer(int makingTime) {
+        return 1000 * makingTime;
+    }
 
     /**
      * Initialises the display and sets up event listeners for creating and shifting orders.
@@ -75,14 +95,15 @@ public class MainGameOrderTicketDisplay extends UIComponent {
      * Initialises the background, labels, and countdown timer for the order.
      */
     public void addActors() {
-        Recipe recipe = new Recipe(recipeName);
-        List<String> ingredients = recipe.getIngredients();
-        int makingTime = recipe.getMakingTime();
-        Integer burnedTime = recipe.getBurnedTime();
-        String stationType = recipe.getStationType();
+//        Recipe recipe = new Recipe(recipeName);
+//        List<String> ingredients = recipe.getIngredients();
+//        int makingTime = recipe.getMakingTime();
+//        Integer burnedTime = recipe.getBurnedTime();
+//        String stationType = recipe.getStationType();
+//        long timer = calculateTimer(makingTime);
         logger.info("Recipe Name: " + recipeName);
         logger.info("Ingredients: " + ingredients);
-        logger.info("Making Time: " + makingTime);
+        logger.info("Making Time: " + timer);
         logger.info("Burned Time: " + (burnedTime != null ? burnedTime : "N/A"));
         logger.info("Station Type: " + stationType);
 
@@ -101,28 +122,29 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         table.setPosition(xVal, yVal);
         logger.info("Position set for new table: ({}, {})", xVal, yVal);
 
-
         Docket background = new Docket();
         backgroundArrayList.add(background);
+//        logger.info("New docket background added. Total backgrounds: {}", backgroundArrayList.size());
+        table.setBackground(background.getImage().getDrawable());
+
         String orderNumStr = "Order" + " " + ++orderNumb;
         Label orderNumbLabel = new Label(orderNumStr, skin);
-        logger.info("New docket background added. Total backgrounds: {}", backgroundArrayList.size());
+        table.add(orderNumbLabel).padLeft(10f).row();
 
+        Label recipeNameLabel = new Label(recipeName, skin);
+        table.add(recipeNameLabel).padLeft(10f).row();
 
-        Label recipeNameLabel = new Label("Recipe name", skin);
-        Label ingredient1Label = new Label("Ingredient 1", skin);
-        Label ingredient2Label = new Label("Ingredient 2", skin);
-        Label ingredient3Label = new Label("Ingredient 3", skin);
-        Label countdownLabel = new Label("Timer: " + DEFAULT_TIMER, skin);
+        for (String ingredient : ingredients) {
+            Label ingredientLabel = new Label(ingredient, skin);
+            table.add(ingredientLabel).padLeft(10f).row();
+        }
+
+        Label countdownLabel = new Label("Timer: " + timer, skin);
         countdownLabelArrayList.add(countdownLabel);
         logger.info("Labels added. Total countdown labels: {}", countdownLabelArrayList.size());
 
-        table.setBackground(background.getImage().getDrawable());
-        table.add(orderNumbLabel).padLeft(10f).row();
-        table.add(recipeNameLabel).padLeft(10f).row();
-        table.add(ingredient1Label).padLeft(10f).row();
-        table.add(ingredient2Label).padLeft(10f).row();
-        table.add(ingredient3Label).padLeft(10f).row();
+
+
         table.add(countdownLabel).padLeft(10f).row();
 
         stage.addActor(table);
@@ -142,7 +164,6 @@ public class MainGameOrderTicketDisplay extends UIComponent {
     private float cntXval(int instanceCnt) {
         return 20f + (instanceCnt - 1) * (distance + viewportWidth * 3f / 32f);
     }
-
 
     /**
      * Reorders the dockets after one is removed or shifted.
@@ -235,7 +256,7 @@ public class MainGameOrderTicketDisplay extends UIComponent {
             float xVal = cntXval(i + 1);
 
             table.setPosition(xVal, table.getY());
-            logger.info("Updated position of docket {}: ({}, {})", i, xVal, table.getY());
+//            logger.info("Updated position of docket {}: ({}, {})", i, xVal, table.getY());
         }
     }
     /**
@@ -280,7 +301,7 @@ public class MainGameOrderTicketDisplay extends UIComponent {
             Table currTable = tableArrayList.get(i);
             Label currCountdown = countdownLabelArrayList.get(i);
             long elapsedTime = TimeUtils.timeSinceMillis(startTimeArrayList.get(i));
-            long remainingTime = DEFAULT_TIMER - elapsedTime;
+            long remainingTime = timer - elapsedTime;
             if (remainingTime > 0) {
                 currCountdown.setText("Timer: " + (remainingTime / 1000));
                 currBackground.updateDocketTexture((double) remainingTime / 1000);

@@ -51,7 +51,7 @@ class MainGameOrderTicketDisplayTest {
         lenient().when(ServiceLocator.getRenderService().getStage().getViewport().getCamera()).thenReturn(camera);
         when(ServiceLocator.getDocketService().getEvents()).thenReturn(eventHandler);
 
-        orderTicketDisplay = new MainGameOrderTicketDisplay();
+        orderTicketDisplay = new MainGameOrderTicketDisplay("acaiBowl");
         Entity entity = new Entity();
         entity.addComponent(orderTicketDisplay);
         orderTicketDisplay.create();
