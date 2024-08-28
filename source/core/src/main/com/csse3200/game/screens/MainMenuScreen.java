@@ -81,7 +81,7 @@ public class MainMenuScreen extends ScreenAdapter {
   private void loadAssets() {
     logger.debug("Loading assets");
     ResourceService resourceService = ServiceLocator.getResourceService();
-    resourceService.loadTextures(Arrays.toString(mainMenuTextures));
+    resourceService.loadTextures(mainMenuTextures);
     ServiceLocator.getResourceService().loadAll();
   }
 

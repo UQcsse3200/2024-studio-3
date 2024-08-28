@@ -134,7 +134,7 @@ public class MainGameScreen extends ScreenAdapter {
 	private void loadAssets() {
 		logger.debug("Loading assets");
 		ResourceService resourceService = ServiceLocator.getResourceService();
-		resourceService.loadTextures(Arrays.toString(mainGameTextures));
+		resourceService.loadTextures(mainGameTextures);
 		ServiceLocator.getResourceService().loadAll();
 	}
 

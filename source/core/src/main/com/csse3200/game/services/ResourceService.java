@@ -139,7 +139,7 @@ public class ResourceService implements Disposable {
    *
    * @param textureNames texture filenames
    */
-  public void loadTextures(String textureNames) {
+  public void loadTextures(String[] textureNames) {
     loadAssets(textureNames, Texture.class);
   }
 
