@@ -64,4 +64,24 @@ public class IngredientComponentTest {
         assertFalse(ingredient.isChoppable());
     }
 
+    @Test
+    void cookItemTest() {
+        IngredientComponent ingredient = new IngredientComponent("Beef", ItemType.BEEF, 10, 5,
+                0, "raw");
+        ingredient.cookItem();
+        assertEquals("cooked", ingredient.getItemState());
+    }
+
+    @Test
+    void cookItemUnsupportedOperationExceptionTest() {
+        IngredientComponent ingredient = new IngredientComponent("Banana", ItemType.BANANA, 1, 0,
+                5, "raw");
+        try {
+            ingredient.cookItem();
+            fail("Expected UnsupportedOperationException to be thrown");
+        } catch (UnsupportedOperationException e) {
+            assertEquals("This item is not cookable.", e.getMessage());
+        }
+    }
+
 }
