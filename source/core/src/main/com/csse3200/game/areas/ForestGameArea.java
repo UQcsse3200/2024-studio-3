@@ -99,12 +99,11 @@ public class ForestGameArea extends GameArea {
         displayUI();
 
     spawnTerrain();
-
+    spawnBenches();
     // Spawn the restaurant
     spawnDoor();
     spawnWall();
     make_border();
-    spawnBenches();
     spawnStations();
     // Spawn beef
     spawnBeef("raw");
@@ -263,7 +262,7 @@ public class ForestGameArea extends GameArea {
 
     // Bottom bench
     GridPoint2 bottomBench = new GridPoint2(5,1);
-    Entity station4 = StationFactory.createStation("bench7", 1.0f);
+    Entity station4 = StationFactory.createStation("bench7", 1f);
     spawnEntityAt(station4, bottomBench, true, false);
     Vector2 pos4 = station4.getPosition();
     station4.setPosition(pos4.x - (terrain.getTileSize() / 2), pos4.y - (terrain.getTileSize() / 2));
@@ -271,16 +270,16 @@ public class ForestGameArea extends GameArea {
     // Left bench
     GridPoint2 leftBench = new GridPoint2(2,2);
     Entity station1 = StationFactory.createStation("bench2", 4.5f);
-    spawnEntityAt(station1, leftBench, false, false);
+    spawnEntityAt(station1, leftBench, true, false);
     Vector2 pos1 = station1.getPosition();
     station1.setPosition(pos1.x, pos1.y);
 
     // Right bench
     GridPoint2 rightBench = new GridPoint2(7,0);
-    Entity station6 = StationFactory.createStation("bench6", 10.0f);
-    spawnEntityAt(station6, rightBench, false, false);
+    Entity station6 = StationFactory.createStation("bench6", 9.9f);
+    spawnEntityAt(station6, rightBench, true, false);
     Vector2 pos6 = station6.getPosition();
-    station6.setPosition(pos6.x + (terrain.getTileSize() / 4), pos6.y + (terrain.getTileSize() / 2));
+    station6.setPosition(pos6.x + (terrain.getTileSize() /10), pos6.y + (terrain.getTileSize() / 2));
 
     // Center top bench
     GridPoint2 centerTopBench = new GridPoint2(5,3);
