@@ -13,7 +13,7 @@ import com.csse3200.game.components.ordersystem.MainGameOrderTicketDisplay;
 /**
  * This class listens to key presses to shift dockets left and right.
  */
-public class OrderActions extends InputComponent {
+public abstract class OrderActions extends InputComponent {
     private static final Logger logger = LoggerFactory.getLogger(OrderActions.class);
     private GdxGame game;
     private static final int SHIFT_LEFT_KEY = Input.Keys.LEFT_BRACKET; // Key for shifting left
@@ -100,4 +100,6 @@ public class OrderActions extends InputComponent {
         logger.info("Move order");
         // do something
     }
+
+    protected abstract Logger getLogger();
 }
