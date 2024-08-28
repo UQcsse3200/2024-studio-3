@@ -51,18 +51,7 @@ public class DocketLineDisplay extends UIComponent {
 
 		stage.addActor(table);
 	}
-	public Image getPineLine() {
-        return pineLine;
-    }
 
-	    private void docketLineResize() {
-        // Dynamically get the current viewport width and height
-        float viewportWidth = stage.getViewport().getWorldWidth();
-        float viewportHeight = stage.getViewport().getWorldHeight();
-
-        pineLine.setSize(viewportWidth * 0.9f, pineLine.getHeight());  // Adjust the width multiplier as needed
-    }
-	
 
 	@Override
 	public void draw(SpriteBatch batch) {
