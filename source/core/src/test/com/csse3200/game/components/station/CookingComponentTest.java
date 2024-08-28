@@ -35,13 +35,14 @@ public class CookingComponentTest {
 
         testEntity = new Entity();
 
-        inventoryComponent = spy(new StationInventoryComponent());
+        inventoryComponent = spy(new StationInventoryComponent()); // Spies on inventory component
         testEntity.addComponent(inventoryComponent);
 
         ArrayList<String> acceptableItems = new ArrayList<>();
         acceptableItems.add("acai");
         acceptableItems.add("banana");
-        handlerComponent = spy(new StationItemHandlerComponent("OVEN", acceptableItems));
+        handlerComponent = spy(new StationItemHandlerComponent("OVEN", acceptableItems)); // Creates spy on
+                                                                                                // Handler component
         testEntity.addComponent(handlerComponent);
 
         cookingComponent = spy(new CookingComponent());
@@ -71,14 +72,14 @@ public class CookingComponentTest {
     void testRemoveItem() {
         testEntity.getEvents().trigger("give station item", "acai");
         testEntity.getEvents().trigger("give station item", "banana");
-        assertTrue(cookingComponent.isCooking());
-        cookingComponent.removeItem();
-        assertFalse(cookingComponent.isCooking());
+        assertTrue(cookingComponent.isCooking()); // Chekcs that cooking started
+        cookingComponent.removeItem(); // Removes
+        assertFalse(cookingComponent.isCooking()); // Checks cooking stopped after being removed
     }
 
     @Test
     void testGetStationType() {
-        assertEquals("OVEN", handlerComponent.getType());
+        assertEquals("OVEN", handlerComponent.getType()); // checks station type is set correctly
     }
 
     @Test
@@ -86,9 +87,9 @@ public class CookingComponentTest {
         testEntity.getEvents().trigger("give station item", "acai");
         testEntity.getEvents().trigger("give station item", "banana");
 
-        when(mockTime.getDeltaTime()).thenReturn((float) 500L);
+        when(mockTime.getDeltaTime()).thenReturn((float) 500L); // Mocks delta time to simulate time elapsing
         cookingComponent.update();
-        assertEquals(9500L, cookingComponent.getCookingTime());
+        assertEquals(9500L, cookingComponent.getCookingTime()); // checks cooking time has decreased by 500
         cookingComponent.update();
         assertEquals(9000, cookingComponent.getCookingTime());
     }
@@ -97,6 +98,6 @@ public class CookingComponentTest {
     void testGetCookingTime() {
         testEntity.getEvents().trigger("give station item", "acai");
         testEntity.getEvents().trigger("give station item", "banana");
-        assertEquals(10000, cookingComponent.getCookingTime());
+        assertEquals(10000, cookingComponent.getCookingTime()); // Verifies initial cooking time
     }
 }
