@@ -125,7 +125,6 @@ public class CookingAndServingHandler extends Component {
             }
         }
     }
-
     public boolean isServed() {
         return isServed;
     }

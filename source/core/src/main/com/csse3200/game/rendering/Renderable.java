@@ -1,6 +1,7 @@
 package com.csse3200.game.rendering;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 
 /**
  * Can be rendered onto the screen given a Sprite batch.
@@ -23,4 +24,6 @@ public interface Renderable extends Comparable<Renderable> {
    * @return layer
    */
   int getLayer();
+
+    void setStage(Stage mock);
 }

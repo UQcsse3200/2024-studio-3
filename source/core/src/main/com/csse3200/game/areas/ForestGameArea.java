@@ -20,8 +20,8 @@ import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.utils.math.GridPoint2Utils;
 import com.csse3200.game.utils.math.RandomUtils;
 
-import java.sql.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /** Forest area for the demo game with trees, a player, and some enemies. */
@@ -29,6 +29,7 @@ public class ForestGameArea extends GameArea {
   private static final Logger logger = LoggerFactory.getLogger(ForestGameArea.class);
   private static final int NUM_TREES = 7;
   private static final int NUM_GHOSTS = 2;
+  private static final int NUM_CUSTOMERS_BASE = 1;
   private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(5, 3);
   private static final float WALL_WIDTH = 0.1f;
   private static final String[] forestTextures = {
@@ -75,6 +76,7 @@ public class ForestGameArea extends GameArea {
     "images/stations/benches/bench4.png",
     "images/stations/benches/bench6.png",
     "images/stations/benches/bench1.png",
+          "images/tooltip_bg.png",
     "images/stations/benches/bench6-bottom.png",
     "images/stations/benches/bench6-top.png"
   };
@@ -115,6 +117,7 @@ public class ForestGameArea extends GameArea {
     spawnStations();
     // Spawn beef
     spawnBeef("raw");
+    spawnCustomer();
 
     // Spawn the player
     player = spawnPlayer();
@@ -430,6 +433,32 @@ public class ForestGameArea extends GameArea {
     return newFruitSalad;
   }
 
+  private void spawnCustomer() {
+    GridPoint2 position = new GridPoint2(1, 5);
+    //System.out.println("1");
+
+    //System.out.println("2");
+    Vector2 targetPos3 = new Vector2(3, 5); // Target position for ghost king
+    Entity customer = NPCFactory.createGhostKing(player, targetPos3);
+    spawnEntityAt(customer, position, true, true);
+//    for (int i = 0; i < NUM_CUSTOMERS_BASE; i++) {
+//      customer = NPCFactory.createCustomer();
+//      spawnEntityAt(customer, position, true, true);
+//      System.out.println("Customer spawned");
+//    }
+
+    //System.out.println("3");
+  }
+
+//    private void spawnCustomerPersonal() {
+//        GridPoint2 position = new GridPoint2(1, 5);
+//       //System.out.println("1");
+//        Entity customer = NPCFactory.createCustomer(targetPosition);
+//        //System.out.println("2");
+//        spawnEntityAt(customer, position, true, true);
+//        //System.out.println("3");
+//    }
+
 
   /**
    * Spawn an AcaiBowl item.
@@ -475,25 +504,25 @@ public class ForestGameArea extends GameArea {
     return newBananaSplit;
   }
 
-  private void spawnGhosts() {
-    GridPoint2 minPos = new GridPoint2(0, 0);
-    GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
-
-    for (int i = 0; i < NUM_GHOSTS; i++) {
-      GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
-      Entity ghost = NPCFactory.createGhost(player);
-      spawnEntityAt(ghost, randomPos, true, true);
-    }
-  }
-
-  private void spawnGhostKing() {
-    GridPoint2 minPos = new GridPoint2(0, 0);
-    GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
-
-    GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
-    Entity ghostKing = NPCFactory.createGhostKing(player);
-    spawnEntityAt(ghostKing, randomPos, true, true);
-  }
+//  private void spawnGhosts() {
+//    GridPoint2 minPos = new GridPoint2(0, 0);
+//    GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
+//
+//    for (int i = 0; i < NUM_GHOSTS; i++) {
+//      GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
+//      Entity ghost = NPCFactory.createGhost(player);
+//      spawnEntityAt(ghost, randomPos, true, true);
+//    }
+//  }
+//
+//  private void spawnGhostKing() {
+//    GridPoint2 minPos = new GridPoint2(0, 0);
+//    GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
+//
+//    GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
+//    Entity ghostKing = NPCFactory.createGhostKing(player);
+//    spawnEntityAt(ghostKing, randomPos, true, true);
+//  }
 
   private void playMusic() {
     Music music = ServiceLocator.getResourceService().getAsset(backgroundMusic, Music.class);

@@ -84,4 +84,8 @@ public class RenderService implements Disposable {
   public void dispose() {
     renderables.clear();
   }
+
+  public <T> void getStage(T mock) {
+
+  }
 }
