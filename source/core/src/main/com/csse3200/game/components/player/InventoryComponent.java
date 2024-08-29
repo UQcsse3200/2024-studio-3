@@ -57,7 +57,7 @@ public class InventoryComponent extends Component {
    * Sets the size of this item component to the newSize provided.
    * 
    * @param newCapacity - the size to set this item component's capacity to. Must be a positive, non-zero integer.
-   * Throws IllegalArgumentException - if newSize is < 1.
+   * Throws IllegalArgumentException - if newSize is 1.
    */
   public void setCapacity(int newCapacity) {
       if (newCapacity < 1) {
@@ -70,7 +70,7 @@ public class InventoryComponent extends Component {
    * Sets the currently selected item to the index specified.
    * 
    * @param index - the index to set the currently selected item to
-   * Throws IllegalArgumentException - if index is not within 0 <= index < this.getSize()
+   * Throws IllegalArgumentException - if index is not within 0  index  this.getSize()
    */
   public void setSelected(int index) {
     if (index < 0 || index >= this.getCapacity()) {
