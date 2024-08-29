@@ -31,7 +31,7 @@ import com.csse3200.game.components.gamearea.PerformanceDisplay;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.csse3200.game.components.ordersystem.DocketLineDisplay;
-
+import com.csse3200.game.components.player.InventoryDisplay;
 import java.util.Arrays;
 
 /**
