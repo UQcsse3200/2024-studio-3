@@ -34,6 +34,7 @@ public class MainGameOrderTicketDisplay extends UIComponent {
     private static ArrayList<Long> startTimeArrayList;
     private static ArrayList<Docket> backgroundArrayList;
     private static ArrayList<Label> countdownLabelArrayList;
+    private static ArrayList<Long> recipeTimeArrayList;
     private static int orderNumb = 0;
     private static final long DEFAULT_TIMER = 10000;
     private Recipe recipe;
@@ -46,6 +47,7 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         startTimeArrayList = new ArrayList<>();
         backgroundArrayList = new ArrayList<>();
         countdownLabelArrayList = new ArrayList<>();
+        recipeTimeArrayList = new ArrayList<>();
     }
 
     /**
@@ -83,16 +85,6 @@ public class MainGameOrderTicketDisplay extends UIComponent {
      * Initialises the background, labels, and countdown timer for the order.
      */
     public void addActors() {
-        if (startTimeArrayList == null) {
-            logger.error("startTimeArrayList is not initialized");
-            return;
-        }
-
-        if (tableArrayList == null) {
-            logger.error("tableArrayList is not initialized");
-            return;
-        }
-
         Table table = new Table();
         long startTime = TimeUtils.millis();
         startTimeArrayList.add(startTime);
@@ -123,7 +115,9 @@ public class MainGameOrderTicketDisplay extends UIComponent {
             table.add(ingredientLabel).padLeft(10f).row();
         }
 
-    Label countdownLabel = new Label("Timer: " + getRecipe().getMakingTime() * DEFAULT_TIMER, skin);
+        long timer = getRecipe().getMakingTime() * DEFAULT_TIMER;
+        recipeTimeArrayList.add(timer);
+        Label countdownLabel = new Label("Timer: " + timer, skin);
         countdownLabelArrayList.add(countdownLabel);
         table.add(countdownLabel).padLeft(10f).row();
 
@@ -177,6 +171,9 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         Label firstCountdownLabel = countdownLabelArrayList.remove(0);
         countdownLabelArrayList.add(firstCountdownLabel);
 
+        long firstRecipeTime = recipeTimeArrayList.remove(0);
+        recipeTimeArrayList.add(0, firstRecipeTime);
+
         updateDocketPositions();
         updateDocketSizes();
         logger.info("Docket positions updated after left shift");
@@ -217,6 +214,9 @@ public class MainGameOrderTicketDisplay extends UIComponent {
 
         Label lastCountdownLabel = countdownLabelArrayList.remove(countdownLabelArrayList.size() - 1);
         countdownLabelArrayList.add(0, lastCountdownLabel);
+
+        long recipeTime = recipeTimeArrayList.remove(recipeTimeArrayList.size() - 1);
+        recipeTimeArrayList.add(0, recipeTime);
 
         updateDocketPositions();
         updateDocketSizes();
@@ -278,7 +278,7 @@ public class MainGameOrderTicketDisplay extends UIComponent {
             Table currTable = tableArrayList.get(i);
             Label currCountdown = countdownLabelArrayList.get(i);
             long elapsedTime = TimeUtils.timeSinceMillis(startTimeArrayList.get(i));
-            long remainingTime = getRecipe().getMakingTime() * DEFAULT_TIMER - elapsedTime;
+            long remainingTime = recipeTimeArrayList.get(i) - elapsedTime;
             if (remainingTime > 0) {
                 currCountdown.setText("Timer: " + (remainingTime / 1000));
                 currBackground.updateDocketTexture((double) remainingTime / 1000);
@@ -289,6 +289,7 @@ public class MainGameOrderTicketDisplay extends UIComponent {
                 backgroundArrayList.remove(i);
                 startTimeArrayList.remove(i);
                 countdownLabelArrayList.remove(i);
+                recipeTimeArrayList.remove(i);
             }
         }
 
