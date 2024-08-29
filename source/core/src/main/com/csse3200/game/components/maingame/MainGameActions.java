@@ -34,17 +34,10 @@ public class MainGameActions extends Component {
 	 */
 	@Override
 	public void create() {
-		if (ui == null) {
 			ui = new Entity();
-			String randomRecipe = recipeNames[new Random().nextInt(recipeNames.length)];
 			docketDisplayer = new MainGameOrderTicketDisplay();
-			docketDisplayer.setRecipe(randomRecipe);
-			docketDisplayer.setStage(ServiceLocator.getRenderService().getStage());
-			ui.addComponent(docketDisplayer);
 			entity.getEvents().addListener("exit", this::onExit);
 			entity.getEvents().addListener("createOrder", this::onCreateOrder);
-			ServiceLocator.getEntityService().register(ui);
-		}
 	}
 
 	/**
@@ -59,12 +52,14 @@ public class MainGameActions extends Component {
 	 * Create Order Docket
 	 */
 	private void onCreateOrder() {
-//		String randomRecipe = recipeNames[new Random().nextInt(recipeNames.length)];
-//		docketDisplayer = new MainGameOrderTicketDisplay(randomRecipe);
-//		docketDisplayer.setStage(ServiceLocator.getRenderService().getStage());
-//		ui.addComponent(docketDisplayer);
+		String randomRecipe = recipeNames[new Random().nextInt(recipeNames.length)];
+
+		docketDisplayer.setRecipe(randomRecipe);
+		docketDisplayer.setStage(ServiceLocator.getRenderService().getStage());
 		docketDisplayer.addActors();
-//		logger.info("Order created with recipe: {}", randomRecipe);
+		ui.addComponent(docketDisplayer);
+		ServiceLocator.getEntityService().register(ui);
+		logger.info("Order created with recipe: {}", randomRecipe);
 	}
 
 	/**

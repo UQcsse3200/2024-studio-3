@@ -67,15 +67,6 @@ public class MainGameOrderTicketDisplay extends UIComponent {
     }
 
     /**
-     * Gets the amount of time it takes for the docket to expire
-     *
-     * @return the time of ticket expiry
-     */
-    public long getTimer() {
-        return getRecipe().getMakingTime() * DEFAULT_TIMER;
-    }
-
-    /**
      * Initialises the display and sets up event listeners for creating and shifting orders.
      */
     @Override
@@ -129,7 +120,7 @@ public class MainGameOrderTicketDisplay extends UIComponent {
             table.add(ingredientLabel).padLeft(10f).row();
         }
 
-    Label countdownLabel = new Label("Timer: " + getTimer(), skin);
+    Label countdownLabel = new Label("Timer: " + getRecipe().getMakingTime() * DEFAULT_TIMER, skin);
         countdownLabelArrayList.add(countdownLabel);
         table.add(countdownLabel).padLeft(10f).row();
 
@@ -144,6 +135,7 @@ public class MainGameOrderTicketDisplay extends UIComponent {
      * @return the x-position for the order ticket.
      */
     private float cntXval(int instanceCnt) {
+//        logger.info("instanceCnt" + instanceCnt);
         return 20f + (instanceCnt - 1) * (distance + viewportWidth * 3f / 32f);
     }
 
@@ -283,7 +275,7 @@ public class MainGameOrderTicketDisplay extends UIComponent {
             Table currTable = tableArrayList.get(i);
             Label currCountdown = countdownLabelArrayList.get(i);
             long elapsedTime = TimeUtils.timeSinceMillis(startTimeArrayList.get(i));
-            long remainingTime = getTimer() - elapsedTime;
+            long remainingTime = getRecipe().getMakingTime() * DEFAULT_TIMER - elapsedTime;
             if (remainingTime > 0) {
                 currCountdown.setText("Timer: " + (remainingTime / 1000));
                 currBackground.updateDocketTexture((double) remainingTime / 1000);
