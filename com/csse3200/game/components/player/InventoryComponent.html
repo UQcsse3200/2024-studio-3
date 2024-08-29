@@ -93,10 +93,8 @@ loadScripts(document, 'script');</script>
 <hr>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">InventoryComponent</span>
 <span class="extends-implements">extends <a href="../Component.html" title="class in com.csse3200.game.components">Component</a></span></div>
-<div class="block">A component intended to be used by the player to track their inventory.
-
- Currently only stores the gold amount but can be extended for more advanced functionality such as storing items.
- Can also be used as a more generic component for other entities.</div>
+<div class="block">A generic inventory component that is used to keep track of stored items
+ for an entity</div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -117,7 +115,7 @@ loadScripts(document, 'script');</script>
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Constructor</div>
 <div class="table-header col-last">Description</div>
-<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(int)" class="member-name-link">InventoryComponent</a><wbr>(int&nbsp;gold)</code></div>
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(int)" class="member-name-link">InventoryComponent</a><wbr>(int&nbsp;capacity)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 </div>
 </section>
@@ -134,24 +132,92 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#addGold(int)" class="member-name-link">addGold</a><wbr>(int&nbsp;gold)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#addItem(com.csse3200.game.components.items.ItemComponent)" class="member-name-link">addItem</a><wbr>(<a href="../items/ItemComponent.html" title="class in com.csse3200.game.components.items">ItemComponent</a>&nbsp;item)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Adds to the player's gold.</div>
-</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getGold()" class="member-name-link">getGold</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Returns the player's gold.</div>
-</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#hasGold(int)" class="member-name-link">hasGold</a><wbr>(int&nbsp;gold)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Returns if the player has a certain amount of gold.</div>
+<div class="block">Adds the item to the first empty index of the inventory.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setGold(int)" class="member-name-link">setGold</a><wbr>(int&nbsp;gold)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#addItemAt(com.csse3200.game.components.items.ItemComponent,int)" class="member-name-link">addItemAt</a><wbr>(<a href="../items/ItemComponent.html" title="class in com.csse3200.game.components.items">ItemComponent</a>&nbsp;item,
+ int&nbsp;index)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Sets the player's gold.</div>
+<div class="block">Adds the item to the Inventory at the given index, if there is capacity.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#find(com.csse3200.game.components.items.ItemComponent)" class="member-name-link">find</a><wbr>(<a href="../items/ItemComponent.html" title="class in com.csse3200.game.components.items">ItemComponent</a>&nbsp;item)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Checks if at least one instance of item is in the Inventory.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getCapacity()" class="member-name-link">getCapacity</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Returns the capacity of this inventory component.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../items/ItemComponent.html" title="class in com.csse3200.game.components.items">ItemComponent</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getItemAt(int)" class="member-name-link">getItemAt</a><wbr>(int&nbsp;index)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Returns the item at index if it exists in the current inventory.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../items/ItemComponent.html" title="class in com.csse3200.game.components.items">ItemComponent</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getItemFirst()" class="member-name-link">getItemFirst</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Returns the first element of the Inventory if it is not empty.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../items/ItemComponent.html" title="class in com.csse3200.game.components.items">ItemComponent</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getItemLast()" class="member-name-link">getItemLast</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Returns the last element of the Inventory if it is not empty.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/ArrayList.html" title="class or interface in java.util" class="external-link">ArrayList</a><wbr>&lt;<a href="../items/ItemComponent.html" title="class in com.csse3200.game.components.items">ItemComponent</a>&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getItems()" class="member-name-link">getItems</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Returns an ArrayList containing the items stored in this
+ InventoryComponent.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getSelectedIndex()" class="member-name-link">getSelectedIndex</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Returns the index of the currently selected item.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../items/ItemComponent.html" title="class in com.csse3200.game.components.items">ItemComponent</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getSelectedItem()" class="member-name-link">getSelectedItem</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Returns the currently selected item of the inventory</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getSize()" class="member-name-link">getSize</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Returns the current number of items in the inventory component.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#increaseCapacity(int)" class="member-name-link">increaseCapacity</a><wbr>(int&nbsp;newCapacity)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Increases the capacity of the Inventory if the given newSize is larger 
+ than the current size.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isEmpty()" class="member-name-link">isEmpty</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Returns true if the Inventory data structure is empty.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isFull()" class="member-name-link">isFull</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Returns true if Inventory data structure is full.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../items/ItemComponent.html" title="class in com.csse3200.game.components.items">ItemComponent</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#removeAt(int)" class="member-name-link">removeAt</a><wbr>(int&nbsp;index)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Removes and returns the item from the Inventory at the given index, if it exists.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setCapacity(int)" class="member-name-link">setCapacity</a><wbr>(int&nbsp;newCapacity)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Sets the size of this item component to the newSize provided.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setSelected(int)" class="member-name-link">setSelected</a><wbr>(int&nbsp;index)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Sets the currently selected item to the index specified.</div>
 </div>
 </div>
 </div>
@@ -176,7 +242,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="&lt;init&gt;(int)">
 <h3>InventoryComponent</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">InventoryComponent</span><wbr><span class="parameters">(int&nbsp;gold)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">InventoryComponent</span><wbr><span class="parameters">(int&nbsp;capacity)</span></div>
 </section>
 </li>
 </ul>
@@ -188,48 +254,203 @@ loadScripts(document, 'script');</script>
 <h2>Method Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="getGold()">
-<h3>getGold</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">getGold</span>()</div>
-<div class="block">Returns the player's gold.</div>
+<section class="detail" id="getCapacity()">
+<h3>getCapacity</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">getCapacity</span>()</div>
+<div class="block">Returns the capacity of this inventory component. I.e. the
+ maximum number of items it can hold.</div>
 <dl class="notes">
 <dt>Returns:</dt>
-<dd>entity's health</dd>
+<dd>- the set capacity of the inventory.</dd>
 </dl>
 </section>
 </li>
 <li>
-<section class="detail" id="hasGold(int)">
-<h3>hasGold</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a></span>&nbsp;<span class="element-name">hasGold</span><wbr><span class="parameters">(int&nbsp;gold)</span></div>
-<div class="block">Returns if the player has a certain amount of gold.</div>
+<section class="detail" id="getSize()">
+<h3>getSize</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">getSize</span>()</div>
+<div class="block">Returns the current number of items in the inventory component.</div>
 <dl class="notes">
-<dt>Parameters:</dt>
-<dd><code>gold</code> - required amount of gold</dd>
 <dt>Returns:</dt>
-<dd>player has greater than or equal to the required amount of gold</dd>
+<dd>- the number of items in the inventoru.</dd>
 </dl>
 </section>
 </li>
 <li>
-<section class="detail" id="setGold(int)">
-<h3>setGold</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setGold</span><wbr><span class="parameters">(int&nbsp;gold)</span></div>
-<div class="block">Sets the player's gold. Gold has a minimum bound of 0.</div>
+<section class="detail" id="setCapacity(int)">
+<h3>setCapacity</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setCapacity</span><wbr><span class="parameters">(int&nbsp;newCapacity)</span></div>
+<div class="block">Sets the size of this item component to the newSize provided.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
-<dd><code>gold</code> - gold</dd>
+<dd><code>newCapacity</code> - - the size to set this item component's capacity to. Must be a positive, non-zero integer.
+ Throws IllegalArgumentException - if newSize is 1.</dd>
 </dl>
 </section>
 </li>
 <li>
-<section class="detail" id="addGold(int)">
-<h3>addGold</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">addGold</span><wbr><span class="parameters">(int&nbsp;gold)</span></div>
-<div class="block">Adds to the player's gold. The amount added can be negative.</div>
+<section class="detail" id="setSelected(int)">
+<h3>setSelected</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setSelected</span><wbr><span class="parameters">(int&nbsp;index)</span></div>
+<div class="block">Sets the currently selected item to the index specified.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
-<dd><code>gold</code> - gold to add</dd>
+<dd><code>index</code> - - the index to set the currently selected item to
+ Throws IllegalArgumentException - if index is not within 0  index  this.getSize()</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getSelectedIndex()">
+<h3>getSelectedIndex</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">getSelectedIndex</span>()</div>
+<div class="block">Returns the index of the currently selected item.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>- the index of the currently selected item.</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getSelectedItem()">
+<h3>getSelectedItem</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../items/ItemComponent.html" title="class in com.csse3200.game.components.items">ItemComponent</a></span>&nbsp;<span class="element-name">getSelectedItem</span>()</div>
+<div class="block">Returns the currently selected item of the inventory</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>- the item that is currently selected</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getItems()">
+<h3>getItems</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/ArrayList.html" title="class or interface in java.util" class="external-link">ArrayList</a>&lt;<a href="../items/ItemComponent.html" title="class in com.csse3200.game.components.items">ItemComponent</a>&gt;</span>&nbsp;<span class="element-name">getItems</span>()</div>
+<div class="block">Returns an ArrayList containing the items stored in this
+ InventoryComponent.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>- an ArrayList containing items currently stored in the inventory.</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="isFull()">
+<h3>isFull</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isFull</span>()</div>
+<div class="block">Returns true if Inventory data structure is full.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>- true if the ArrayList is full, false otherwise.</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="isEmpty()">
+<h3>isEmpty</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isEmpty</span>()</div>
+<div class="block">Returns true if the Inventory data structure is empty.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>- true if the ArrayList is empty, true otherwise.</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getItemAt(int)">
+<h3>getItemAt</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../items/ItemComponent.html" title="class in com.csse3200.game.components.items">ItemComponent</a></span>&nbsp;<span class="element-name">getItemAt</span><wbr><span class="parameters">(int&nbsp;index)</span></div>
+<div class="block">Returns the item at index if it exists in the current inventory.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>index</code> - - the index being queried.</dd>
+<dt>Returns:</dt>
+<dd>the item at index if it exists in the current inventory, null if there is nothing there.
+ Throws IllegalArgumentException - if the given index is negative or out of bounds.</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getItemFirst()">
+<h3>getItemFirst</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../items/ItemComponent.html" title="class in com.csse3200.game.components.items">ItemComponent</a></span>&nbsp;<span class="element-name">getItemFirst</span>()</div>
+<div class="block">Returns the first element of the Inventory if it is not empty.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>- the item at the first index of the Inventory if it exists, null otherwise.</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getItemLast()">
+<h3>getItemLast</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../items/ItemComponent.html" title="class in com.csse3200.game.components.items">ItemComponent</a></span>&nbsp;<span class="element-name">getItemLast</span>()</div>
+<div class="block">Returns the last element of the Inventory if it is not empty.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>- the item at the last index of the Inventory if it exists, null otherwise.</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="increaseCapacity(int)">
+<h3>increaseCapacity</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">increaseCapacity</span><wbr><span class="parameters">(int&nbsp;newCapacity)</span></div>
+<div class="block">Increases the capacity of the Inventory if the given newSize is larger 
+ than the current size.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>newCapacity</code> - the new capacity of the Inventory.</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="find(com.csse3200.game.components.items.ItemComponent)">
+<h3>find</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">find</span><wbr><span class="parameters">(<a href="../items/ItemComponent.html" title="class in com.csse3200.game.components.items">ItemComponent</a>&nbsp;item)</span></div>
+<div class="block">Checks if at least one instance of item is in the Inventory.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>item</code> - - the item to search the Inventory for.</dd>
+<dt>Returns:</dt>
+<dd>- true if there is at least one instance of item, false otherwise.</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="addItem(com.csse3200.game.components.items.ItemComponent)">
+<h3>addItem</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">addItem</span><wbr><span class="parameters">(<a href="../items/ItemComponent.html" title="class in com.csse3200.game.components.items">ItemComponent</a>&nbsp;item)</span></div>
+<div class="block">Adds the item to the first empty index of the inventory.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>item</code> - - the item to be added to the Inventory.</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="addItemAt(com.csse3200.game.components.items.ItemComponent,int)">
+<h3>addItemAt</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">addItemAt</span><wbr><span class="parameters">(<a href="../items/ItemComponent.html" title="class in com.csse3200.game.components.items">ItemComponent</a>&nbsp;item,
+ int&nbsp;index)</span></div>
+<div class="block">Adds the item to the Inventory at the given index, if there is capacity.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>item</code> - - the item to be added to the Inventory.</dd>
+<dd><code>index</code> - - the index where the item will be inserted.
+ Throws IllegalArgumentException - if the given index is negative or out of bounds.</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="removeAt(int)">
+<h3>removeAt</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../items/ItemComponent.html" title="class in com.csse3200.game.components.items">ItemComponent</a></span>&nbsp;<span class="element-name">removeAt</span><wbr><span class="parameters">(int&nbsp;index)</span></div>
+<div class="block">Removes and returns the item from the Inventory at the given index, if it exists.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>index</code> - - the index where an item will be removed.
+ Throws IllegalArgumentException - if the given index is negative or out of bounds.</dd>
 </dl>
 </section>
 </li>
