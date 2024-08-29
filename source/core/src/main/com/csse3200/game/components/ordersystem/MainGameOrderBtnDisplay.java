@@ -16,12 +16,10 @@ import org.slf4j.LoggerFactory;
  * The button is positioned at the bottom right corner of the screen.
  */
 public class MainGameOrderBtnDisplay extends UIComponent{
-
     private static final Logger logger = LoggerFactory.getLogger(MainGameExitDisplay.class);
     private static final float Z_INDEX = 2f;
     public Table table;
     public boolean pressed = false;
-
 
     /**
      * Initialises the button display and sets up the actors in the UI.
@@ -90,12 +88,20 @@ public class MainGameOrderBtnDisplay extends UIComponent{
         this.stage = stage;
     }
 
+    /**
+     * Removed the button
+     */
     @Override
     public void dispose() {
         table.clear();
         super.dispose();
     }
 
+    /**
+     * Get the state of the button
+     *
+     * @return true if button is pressed, false otherwise
+     */
     public boolean getState(){
         return pressed;
     }

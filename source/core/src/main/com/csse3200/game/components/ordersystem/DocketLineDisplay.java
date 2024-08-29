@@ -75,6 +75,9 @@ public class DocketLineDisplay extends UIComponent {
 
 	}
 
+	/**
+	 * Removes the table
+	 */
 	@Override
 	public void dispose() {
 		table.clear();

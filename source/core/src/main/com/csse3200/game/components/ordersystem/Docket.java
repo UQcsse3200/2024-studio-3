@@ -17,9 +17,7 @@ public class Docket extends UIComponent {
     private static String[] textureNameArray = {"fresh_docket", "mild_docket", "old_docket", "expired_docket"};
     private Image docket;
     private int cellHash;
-    private static final long DEFAULT_TIMER = 5000;
     private long startTime;
-
 
     /**
      * Constructs a docket component and initialises its skin.
