@@ -283,8 +283,9 @@ loadScripts(document, 'script');</script>
 <div class="block">Sets the size of this item component to the newSize provided.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
-<dd><code>newCapacity</code> - - the size to set this item component's capacity to. Must be a positive, non-zero integer.
- Throws IllegalArgumentException - if newSize is 1.</dd>
+<dd><code>newCapacity</code> - - the size to set this item component's capacity to. Must be a positive, non-zero integer.</dd>
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalArgumentException.html" title="class or interface in java.lang" class="external-link">IllegalArgumentException</a></code> - - if newSize is less than 1.</dd>
 </dl>
 </section>
 </li>
@@ -295,8 +296,9 @@ loadScripts(document, 'script');</script>
 <div class="block">Sets the currently selected item to the index specified.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
-<dd><code>index</code> - - the index to set the currently selected item to
- Throws IllegalArgumentException - if index is not within 0  index  this.getSize()</dd>
+<dd><code>index</code> - - the index to set the currently selected item to</dd>
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalArgumentException.html" title="class or interface in java.lang" class="external-link">IllegalArgumentException</a></code> - - if index is not within 0 and this.getSize()</dd>
 </dl>
 </section>
 </li>
@@ -365,8 +367,9 @@ loadScripts(document, 'script');</script>
 <dt>Parameters:</dt>
 <dd><code>index</code> - - the index being queried.</dd>
 <dt>Returns:</dt>
-<dd>the item at index if it exists in the current inventory, null if there is nothing there.
- Throws IllegalArgumentException - if the given index is negative or out of bounds.</dd>
+<dd>the item at index if it exists in the current inventory, null if there is nothing there.</dd>
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalArgumentException.html" title="class or interface in java.lang" class="external-link">IllegalArgumentException</a></code> - - if the given index is negative or out of bounds.</dd>
 </dl>
 </section>
 </li>
@@ -437,8 +440,9 @@ loadScripts(document, 'script');</script>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>item</code> - - the item to be added to the Inventory.</dd>
-<dd><code>index</code> - - the index where the item will be inserted.
- Throws IllegalArgumentException - if the given index is negative or out of bounds.</dd>
+<dd><code>index</code> - - the index where the item will be inserted.</dd>
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalArgumentException.html" title="class or interface in java.lang" class="external-link">IllegalArgumentException</a></code> - - if the given index is negative or out of bounds.</dd>
 </dl>
 </section>
 </li>
@@ -449,8 +453,9 @@ loadScripts(document, 'script');</script>
 <div class="block">Removes and returns the item from the Inventory at the given index, if it exists.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
-<dd><code>index</code> - - the index where an item will be removed.
- Throws IllegalArgumentException - if the given index is negative or out of bounds.</dd>
+<dd><code>index</code> - - the index where an item will be removed.</dd>
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalArgumentException.html" title="class or interface in java.lang" class="external-link">IllegalArgumentException</a></code> - - if the given index is negative or out of bounds.</dd>
 </dl>
 </section>
 </li>
