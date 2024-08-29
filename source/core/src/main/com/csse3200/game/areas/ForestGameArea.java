@@ -38,8 +38,15 @@ public class ForestGameArea extends GameArea {
     "images/meals/salad.png",
     "images/meals/steak_meal.png",
     "images/ingredients/raw_cucumber.png",
+    "images/ingredients/raw_acai.png",
     "images/ingredients/raw_tomato.png",
     "images/ingredients/raw_strawberry.png",
+    "images/ingredients/chopped_strawberry.png",
+    "images/ingredients/chopped_chocolate.png",
+    "images/ingredients/chopped_cucumber.png",
+    "images/ingredients/chopped_lettuce.png",
+    "images/ingredients/chopped_acai.png",
+    "images/ingredients/chopped_tomato.png",
     "images/ingredients/raw_lettuce.png",
     "images/ingredients/raw_chocolate.png",
     "images/money.png",
@@ -116,7 +123,9 @@ public class ForestGameArea extends GameArea {
     spawnBenches();
     spawnStations();
     // Spawn beef
-    spawnBeef("raw");
+    spawnBeef("cooked");
+    spawnStrawberry("chopped");
+   spawnLettuce("chopped");
     spawnCustomer();
 
     // Spawn the player

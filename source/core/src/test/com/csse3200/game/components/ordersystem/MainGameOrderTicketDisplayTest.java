@@ -18,6 +18,8 @@ import org.mockito.Mock;
 import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.Random;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
@@ -45,6 +47,9 @@ class MainGameOrderTicketDisplayTest {
         when(ServiceLocator.getDocketService().getEvents()).thenReturn(eventHandler);
 
         orderTicketDisplay = new MainGameOrderTicketDisplay();
+        String[] recipeNames = {"acaiBowl", "salad", "fruitSalad", "steakMeal", "bananaSplit"};
+        String randomRecipe = recipeNames[new Random().nextInt(recipeNames.length)];
+        orderTicketDisplay.setRecipe(randomRecipe);
         Entity entity = new Entity();
         entity.addComponent(orderTicketDisplay);
         orderTicketDisplay.create();

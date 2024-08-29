@@ -31,7 +31,7 @@ import com.csse3200.game.components.gamearea.PerformanceDisplay;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.csse3200.game.components.ordersystem.DocketLineDisplay;
-
+import com.csse3200.game.components.player.InventoryDisplay;
 import java.util.Arrays;
 
 /**
@@ -45,7 +45,8 @@ public class MainGameScreen extends ScreenAdapter {
 			"images/heart.png",
 			// order system assets
 			"images/ordersystem/docket_background.png",
-			"images/ordersystem/pin_line.png"
+			"images/ordersystem/pin_line.png",
+			"images/bird.png"
 	};
 	// Modified the camera position to fix layout
 	private static final Vector2 CAMERA_POSITION = new Vector2(7.5f, 6.0f);

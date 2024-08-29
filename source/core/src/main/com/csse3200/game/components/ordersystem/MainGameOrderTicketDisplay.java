@@ -88,13 +88,16 @@ public class MainGameOrderTicketDisplay extends UIComponent {
             return;
         }
 
-        logger.info("Adding a new order ticket");
+        if (tableArrayList == null) {
+            logger.error("tableArrayList is not initialized");
+            return;
+        }
 
         Table table = new Table();
         long startTime = TimeUtils.millis();
         startTimeArrayList.add(startTime);
         tableArrayList.add(table);
-//        logger.info("New table added. Total tables: {}", tableArrayList.size());
+        logger.info("New table added. Total tables: {}", tableArrayList.size());
 
         table.setFillParent(false);
         table.setSize(viewportWidth * 3f / 32f, 5f / 27f * viewportHeight); // DEFAULT_HEIGHT
