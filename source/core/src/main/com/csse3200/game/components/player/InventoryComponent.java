@@ -57,7 +57,7 @@ public class InventoryComponent extends Component {
    * Sets the size of this item component to the newSize provided.
    * 
    * @param newCapacity - the size to set this item component's capacity to. Must be a positive, non-zero integer.
-   * Throws IllegalArgumentException - if newSize is 1.
+   * @throws IllegalArgumentException - if newSize is less than 1.
    */
   public void setCapacity(int newCapacity) {
       if (newCapacity < 1) {
@@ -70,7 +70,7 @@ public class InventoryComponent extends Component {
    * Sets the currently selected item to the index specified.
    * 
    * @param index - the index to set the currently selected item to
-   * Throws IllegalArgumentException - if index is not within 0  index  this.getSize()
+   * @throws IllegalArgumentException - if index is not within 0 and this.getSize()
    */
   public void setSelected(int index) {
     if (index < 0 || index >= this.getCapacity()) {
@@ -128,7 +128,7 @@ public class InventoryComponent extends Component {
      * 
      * @param index - the index being queried.
      * @return the item at index if it exists in the current inventory, null if there is nothing there.
-     * Throws IllegalArgumentException - if the given index is negative or out of bounds.
+     * @throws IllegalArgumentException - if the given index is negative or out of bounds.
      */
   public ItemComponent getItemAt(int index) {
     if (index < 0 || index > capacity) {
@@ -210,7 +210,7 @@ public class InventoryComponent extends Component {
      * 
      * @param item - the item to be added to the Inventory.
      * @param index - the index where the item will be inserted.
-     * Throws IllegalArgumentException - if the given index is negative or out of bounds.
+     * @throws IllegalArgumentException - if the given index is negative or out of bounds.
      */
   public void addItemAt(ItemComponent item, int index) {
     if (index > capacity || index < 0) {
@@ -230,7 +230,7 @@ public class InventoryComponent extends Component {
      * Removes and returns the item from the Inventory at the given index, if it exists.
      * 
      * @param index - the index where an item will be removed.
-     * Throws IllegalArgumentException - if the given index is negative or out of bounds.
+     * @throws IllegalArgumentException - if the given index is negative or out of bounds.
      */
   public ItemComponent removeAt(int index) {
     if (index < 0 || index > capacity) {
