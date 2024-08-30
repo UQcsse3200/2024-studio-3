@@ -61,6 +61,14 @@ public class LevelService {
             case 1:
                 int i = 0;
                 int j = 10;
+                /*CURRENT IDEA FOR FIX
+                *
+                * Private variable that gets reassigned when this method is called
+                * The variable has a start time, calculate time since then,
+                * if enough time has passed, new customer
+                *
+                * Basically what exists but more sophisticated
+                * */
                 while (i < 5) {
                     if (j == 10) {
                         levelEventHandler.trigger("spawnCustomer");
