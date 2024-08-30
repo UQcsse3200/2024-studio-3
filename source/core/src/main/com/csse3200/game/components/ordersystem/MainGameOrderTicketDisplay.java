@@ -390,4 +390,16 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         return tableArrayList;
     }
 
+    public static ArrayList<Long> getStartTimeArrayList() {
+        return startTimeArrayList;
+    }
+
+    public static ArrayList<Label> getCountdownLabelArrayList() {
+        return countdownLabelArrayList;
+    }
+
+    public static ArrayList<Docket> getBackgroundArrayList() {
+        return backgroundArrayList;
+    }
+
 }
