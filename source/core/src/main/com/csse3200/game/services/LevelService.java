@@ -51,4 +51,11 @@ public class LevelService {
     public void setCurrLevel(int newLevel) {
         currLevel = newLevel;
     }
+
+    public void levelControl(int level) {
+        switch (level) {
+            case 1:
+                ;
+        }
+    }
 }
