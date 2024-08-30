@@ -29,6 +29,7 @@ public class ServiceLocator {
   //Me new stuff :)
 
   private static DocketService docketService;
+  private final static LevelService levelService = new LevelService();
 
   public static EntityService getEntityService() {
     return entityService;
@@ -56,6 +57,10 @@ public class ServiceLocator {
 
   public static DocketService getDocketService() {
     return docketService;
+  }
+
+  public static LevelService getLevelService(){
+    return levelService;
   }
 
   public static void registerEntityService(EntityService service) {
@@ -98,7 +103,6 @@ public class ServiceLocator {
     logger.debug("Registering resource service {}", source);
     resourceService = source;
   }
-
 
   public static void clear() {
     entityService = null;
