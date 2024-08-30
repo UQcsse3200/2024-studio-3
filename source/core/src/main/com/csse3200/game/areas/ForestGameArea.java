@@ -111,6 +111,7 @@ public class ForestGameArea extends GameArea {
   /** Create the game area, including terrain, static entities (trees), dynamic entities (player) */
   @Override
   public void create() {
+
     loadAssets();
 
     displayUI();
@@ -125,13 +126,14 @@ public class ForestGameArea extends GameArea {
     // Spawn beef
     spawnBeef("cooked");
     spawnStrawberry("chopped");
-   spawnLettuce("chopped");
+    spawnLettuce("chopped");
     spawnCustomer();
 
     // Spawn the player
     player = spawnPlayer();
 
     playMusic();
+    ServiceLocator.getLevelService().getEvents().addListener("spawnCustomer", this::spawnCustomer);
   }
 
   private void displayUI() {

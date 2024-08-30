@@ -86,7 +86,6 @@ public class MainGameOrderTicketDisplay extends UIComponent {
             logger.error("startTimeArrayList is not initialized");
             return;
         }
-
         logger.info("Adding a new order ticket");
 
         Table table = new Table();

@@ -19,10 +19,7 @@ import com.csse3200.game.physics.PhysicsEngine;
 import com.csse3200.game.physics.PhysicsService;
 import com.csse3200.game.rendering.RenderService;
 import com.csse3200.game.rendering.Renderer;
-import com.csse3200.game.services.DocketService;
-import com.csse3200.game.services.GameTime;
-import com.csse3200.game.services.ResourceService;
-import com.csse3200.game.services.ServiceLocator;
+import com.csse3200.game.services.*;
 import com.csse3200.game.ui.terminal.Terminal;
 import com.csse3200.game.ui.terminal.TerminalDisplay;
 import com.csse3200.game.components.maingame.EndDayDisplay;
@@ -72,6 +69,7 @@ public class MainGameScreen extends ScreenAdapter {
 		ServiceLocator.registerEntityService(new EntityService());
 		ServiceLocator.registerRenderService(new RenderService());
 		ServiceLocator.registerDocketService(new DocketService());
+		ServiceLocator.registerLevelService(new LevelService());
 
 		renderer = RenderFactory.createRenderer();
 		renderer.getCamera().getEntity().setPosition(CAMERA_POSITION);
@@ -84,6 +82,7 @@ public class MainGameScreen extends ScreenAdapter {
 		TerrainFactory terrainFactory = new TerrainFactory(renderer.getCamera());
 		ForestGameArea forestGameArea = new ForestGameArea(terrainFactory);
 		forestGameArea.create();
+		ServiceLocator.getLevelService().getEvents().trigger("nextLevel", 1);
 	}
 
 

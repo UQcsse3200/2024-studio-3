@@ -2,6 +2,8 @@ package com.csse3200.game.services;
 
 import com.csse3200.game.areas.ForestGameArea;
 import com.csse3200.game.events.EventHandler;
+import com.csse3200.game.screens.MainGameScreen;
+import org.slf4j.LoggerFactory;
 
 import java.util.logging.Level;
 
@@ -58,11 +60,13 @@ public class LevelService {
         switch (level) {
             case 1:
                 int i = 0;
-                int j = 1000;
+                int j = 10;
                 while (i < 5) {
-                    if (j == 1000) {
-                        levelEventHandler.trigger("createCustomer");
+                    if (j == 10) {
+                        levelEventHandler.trigger("spawnCustomer");
                         j = 0;
+                        LoggerFactory.getLogger(LevelService.class).info(":)");
+                        i++;
                     }
                     j++;
                 }
