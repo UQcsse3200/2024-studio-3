@@ -15,6 +15,7 @@ public class LevelService {
     public LevelService() {
         levelEventHandler = new EventHandler();
         currLevel = 1;
+        //levelEventHandler.addListener("nextLevel", someClass::someMethod, currLevel);
     }
 
     /**
