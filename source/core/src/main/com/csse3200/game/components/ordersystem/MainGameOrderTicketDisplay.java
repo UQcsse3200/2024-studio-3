@@ -187,7 +187,7 @@ public class MainGameOrderTicketDisplay extends UIComponent {
      * @param table  the table representing the docket.
      * @param index  the index of the docket.
      */
-    private void stageDispose(Docket docket, Table table, int index) {
+    public void stageDispose(Docket docket, Table table, int index) {
         table.setBackground((Drawable) null);
         table.clear();
         table.remove();

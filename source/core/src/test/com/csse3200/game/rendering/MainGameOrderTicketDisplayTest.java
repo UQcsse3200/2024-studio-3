@@ -43,12 +43,12 @@ class MainGameOrderTicketDisplayTest {
 
         verify(mockStage).addActor(any(Table.class));
 
-        assertEquals(1, MainGameOrderTicketDisplay.tableArrayList.size());
+        assertEquals(1, display.getTableArrayList().size());
 
-        Table table = MainGameOrderTicketDisplay.tableArrayList.getFirst();
+        Table table = display.getTableArrayList().getFirst();
         assertNotNull(table);
 
-        Label countdownLabel = MainGameOrderTicketDisplay.countdownLabelArrayList.getFirst();
+        Label countdownLabel = MainGameOrderTicketDisplay.getCountdownLabelArrayList().getFirst();
         assertNotNull(countdownLabel);
         assertEquals("Timer: 5000", countdownLabel.getText().toString());
     }
@@ -59,27 +59,27 @@ class MainGameOrderTicketDisplayTest {
 
         // Fast forward the time
         long futureTime = TimeUtils.millis() + 6000; // 6 seconds ahead
-        MainGameOrderTicketDisplay.startTimeArrayList.set(0, futureTime);
+        display.getStartTimeArrayList().set(0, futureTime);
 
         display.update();
 
-        Label countdownLabel = MainGameOrderTicketDisplay.countdownLabelArrayList.getFirst();
+        Label countdownLabel = display.getCountdownLabelArrayList().getFirst();
         assertEquals("Timer: 0", countdownLabel.getText().toString());
 
-        assertTrue(MainGameOrderTicketDisplay.tableArrayList.isEmpty());
-        assertTrue(MainGameOrderTicketDisplay.backgroundArrayList.isEmpty());
-        assertTrue(MainGameOrderTicketDisplay.startTimeArrayList.isEmpty());
-        assertTrue(MainGameOrderTicketDisplay.countdownLabelArrayList.isEmpty());
+        assertTrue(display.getTableArrayList().isEmpty());
+        assertTrue(display.getBackgroundArrayList().isEmpty());
+        assertTrue(display.getStartTimeArrayList().isEmpty());
+        assertTrue(display.getCountdownLabelArrayList().isEmpty());
     }
 
     @Test
     void testStageDispose() {
         display.addActors();
-        Table table = MainGameOrderTicketDisplay.tableArrayList.getFirst();
+        Table table = display.getTableArrayList().getFirst();
 
-        MainGameOrderTicketDisplay.backgroundArrayList.set(0, mockDocket);
+        display.getBackgroundArrayList().set(0, mockDocket);
 
-        Docket background = MainGameOrderTicketDisplay.backgroundArrayList.getFirst();
+        Docket background = display.getBackgroundArrayList().getFirst();
 
         boolean hasChildrenBeforeDispose = !table.getChildren().isEmpty();
 
