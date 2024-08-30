@@ -5,13 +5,16 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.csse3200.game.components.ordersystem.MainGameOrderTicketDisplay;
+import com.csse3200.game.extensions.GameExtension;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
+@ExtendWith(GameExtension.class)
 public class MainGameOrderTicketDisplayTest {
 
     private MainGameOrderTicketDisplay display;
@@ -26,9 +29,9 @@ public class MainGameOrderTicketDisplayTest {
         mockSkin = Mockito.mock(Skin.class);
         mockTable = Mockito.mock(Table.class);
 
-        display = new MainGameOrderTicketDisplay();
-        display.setStage(mockStage);
-        display.setSkin(mockSkin);
+        display = new MainGameOrderTicketDisplay("idk lol");
+        //display.setStage(mockStage);
+        //display.setSkin(mockSkin);
     }
 
     @Test
