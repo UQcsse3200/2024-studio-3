@@ -1,9 +1,10 @@
-package com.csse3200.game.components.ordersystem;
+package com.csse3200.game.rendering;
 
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.csse3200.game.components.ordersystem.MainGameOrderTicketDisplay;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;

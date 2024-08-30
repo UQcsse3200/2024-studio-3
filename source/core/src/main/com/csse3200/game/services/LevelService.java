@@ -56,6 +56,13 @@ public class LevelService {
         currLevel = newLevel;
     }
 
+    /**
+     * Depending on what level the game is switching to,
+     * a method relating to each level will be called, in order to
+     * spawn customers with different parameters
+     *
+     * @param level the level number
+     */
     public void levelControl(int level) {
         switch (level) {
             case 1:
@@ -68,6 +75,8 @@ public class LevelService {
                 * if enough time has passed, new customer
                 *
                 * Basically what exists but more sophisticated
+                *
+                * Maybe, just maybe. Make an entity to hijack the update method?????
                 * */
                 while (i < 5) {
                     if (j == 10) {
