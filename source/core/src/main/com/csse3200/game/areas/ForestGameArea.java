@@ -442,7 +442,7 @@ public class ForestGameArea extends GameArea {
     return newFruitSalad;
   }
 
-  private void spawnCustomer() {
+  public void spawnCustomer() {
     GridPoint2 position = new GridPoint2(1, 5);
     //System.out.println("1");
 

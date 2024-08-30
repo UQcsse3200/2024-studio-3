@@ -1,5 +1,6 @@
 package com.csse3200.game.services;
 
+import com.csse3200.game.areas.ForestGameArea;
 import com.csse3200.game.events.EventHandler;
 
 import java.util.logging.Level;
@@ -15,7 +16,8 @@ public class LevelService {
     public LevelService() {
         levelEventHandler = new EventHandler();
         currLevel = 1;
-        //levelEventHandler.addListener("nextLevel", someClass::someMethod, currLevel);
+        levelEventHandler.addListener("nextLevel", this::levelControl);
+        levelEventHandler.addListener("createCustomer", ForestGameArea::spawnCustomer);
     }
 
     /**
@@ -55,7 +57,15 @@ public class LevelService {
     public void levelControl(int level) {
         switch (level) {
             case 1:
-                ;
+                int i = 0;
+                int j = 1000;
+                while (i < 5) {
+                    if (j == 1000) {
+                        levelEventHandler.trigger("createCustomer");
+                        j = 0;
+                    }
+                    j++;
+                }
         }
     }
 }
