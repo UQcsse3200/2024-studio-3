@@ -4,6 +4,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.utils.TimeUtils;
 import com.csse3200.game.components.ordersystem.MainGameOrderTicketDisplay;
 import com.csse3200.game.extensions.GameExtension;
 import org.junit.Before;
@@ -15,7 +16,7 @@ import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(GameExtension.class)
-public class MainGameOrderTicketDisplayTest {
+public class MainGameOrderDisplayTest {
 
     private MainGameOrderTicketDisplay display;
     private Stage mockStage;
@@ -38,9 +39,9 @@ public class MainGameOrderTicketDisplayTest {
     public void testCreateInitializesComponents() {
         display.create();
 
-        assertNotNull("Table should be initialized", display.table);
-        assertNotNull("Countdown label should be initialized", display.countdownLabel);
-        assertEquals("Start time should be set", TimeUtils.millis(), display.startTime, 100);
+        assertNotNull("Table should be initialized", display.getTableArrayList());
+        assertNotNull("Countdown label should be initialized", display.getCountdownLabelArrayList());
+        assertEquals("Start time should be set", TimeUtils.millis(), display.getStartTimeArrayList().get(0), 100);
     }
 
     @Test
@@ -53,11 +54,13 @@ public class MainGameOrderTicketDisplayTest {
     @Test
     public void testUpdateCountdownDecreasesCorrectly() {
         display.create();
-        display.startTime = TimeUtils.millis() - 5000; // Simulate 5 seconds have passed
+        display.getStartTimeArrayList().set(0, TimeUtils.millis() - 5000); // Simulate 5 seconds have passed
 
         display.update();
 
-        assertEquals("Timer should display correct countdown", "Timer: " + (DEFAULT_TIMER / 1000 - 5), display.countdownLabel.getText().toString());
+        assertEquals(
+                "Timer should display correct countdown", "Timer: " +
+                        (10000 / 1000 - 5), display.getCountdownLabelArrayList().get(0).getText().toString());
     }
 
     @Test
