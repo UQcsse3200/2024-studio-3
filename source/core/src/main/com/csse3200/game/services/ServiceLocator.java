@@ -29,7 +29,7 @@ public class ServiceLocator {
   //Me new stuff :)
 
   private static DocketService docketService;
-  private final static LevelService levelService = new LevelService();
+  private static LevelService levelService;
 
   public static EntityService getEntityService() {
     return entityService;
@@ -102,6 +102,14 @@ public class ServiceLocator {
   public static void registerResourceService(ResourceService source) {
     logger.debug("Registering resource service {}", source);
     resourceService = source;
+  }
+
+  public static void registerLevelService(LevelService source) {
+    if (levelService == null) {
+      levelService = source;
+    } else {
+      logger.warn("Level service is already assigned, ignoring register");
+    }
   }
 
   public static void clear() {
