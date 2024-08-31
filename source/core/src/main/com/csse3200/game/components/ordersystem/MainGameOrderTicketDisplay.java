@@ -77,7 +77,6 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         entity.getEvents().addListener("createOrder", this::addActors);
         ServiceLocator.getDocketService().getEvents().addListener("shiftDocketsLeft", this::shiftDocketsLeft);
         ServiceLocator.getDocketService().getEvents().addListener("shiftDocketsRight", this::shiftDocketsRight);
-        logger.info("MainGameOrderTicketDisplay created");
     }
 
     /**
@@ -89,7 +88,7 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         long startTime = TimeUtils.millis();
         startTimeArrayList.add(startTime);
         tableArrayList.add(table);
-        logger.info("New table added. Total tables: {}", tableArrayList.size());
+//        logger.info("New table added. Total tables: {}", tableArrayList.size());
 
         table.setFillParent(false);
         table.setSize(viewportWidth * 3f / 32f, 5f / 27f * viewportHeight); // DEFAULT_HEIGHT
