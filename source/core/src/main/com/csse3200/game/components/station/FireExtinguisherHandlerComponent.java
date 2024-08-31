@@ -48,7 +48,7 @@ public class FireExtinguisherHandlerComponent extends Component {
      * Gives or puts back the fire extinguisher from the inventory
      * @param player The player entity component
      */
-    private void givePutExtinguisher(Entity player) {
+    public void givePutExtinguisher(Entity player) {
         InventoryComponent inventory = player.getComponent(InventoryComponent.class);
         if (inventory == null) {
             System.out.println("No inventory component found");
