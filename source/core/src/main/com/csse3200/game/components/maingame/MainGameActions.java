@@ -4,6 +4,7 @@ import com.csse3200.game.GdxGame;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.ordersystem.MainGameOrderTicketDisplay;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.entities.factories.UIFactory;
 import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,10 +35,11 @@ public class MainGameActions extends Component {
 	 */
 	@Override
 	public void create() {
-			ui = new Entity();
-			docketDisplayer = new MainGameOrderTicketDisplay();
-			entity.getEvents().addListener("exit", this::onExit);
-			entity.getEvents().addListener("createOrder", this::onCreateOrder);
+		ui = new Entity();
+		ui = UIFactory.createDocketUI();
+		docketDisplayer = ui.getComponent(MainGameOrderTicketDisplay.class);
+		entity.getEvents().addListener("exit", this::onExit);
+		entity.getEvents().addListener("createOrder", this::onCreateOrder);
 	}
 
 	/**
