@@ -63,6 +63,7 @@ public class ForestGameArea extends GameArea {
     "images/stations/oven.png",
     "images/stations/stove.png",
     "images/stations/bench.png",
+    "images/fireExtinguisher/Fire_Extinguisher.png",
     "images/chef_player.png",
     "images/frame/top_border.png",
     "images/frame/left_border.png",
@@ -279,6 +280,11 @@ public class ForestGameArea extends GameArea {
     Entity stove = StationFactory.createStove();
     spawnEntityAt(stove, stovePos, false, false);
     stove.setPosition(stove.getPosition().x + 2.7f , stove.getPosition().y + 1.3f);
+
+    GridPoint2 fireExtinguisherPos = new GridPoint2(3, 4);
+    Entity fireExtinguisher = StationFactory.createFireExtinguisher();
+    spawnEntityAt(fireExtinguisher, fireExtinguisherPos, false, false);
+    stove.setPosition(stove.getPosition().x - 2.7f , stove.getPosition().y - 1.3f);
   }
 
     /**

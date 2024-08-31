@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.csse3200.game.components.TooltipsDisplay;
+import com.csse3200.game.components.station.FireExtinguisherHandlerComponent;
 import com.csse3200.game.components.station.StationItemHandlerComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.physics.PhysicsLayer;
@@ -62,6 +63,23 @@ public class StationFactory {
     PhysicsUtils.setScaledCollider(stove, 0.3f, 0.2f);
     
     return stove;
+  }
+  public static Entity createFireExtinguisher() {
+    Entity fireExtinguisher = new Entity()
+            .addComponent(new TextureRenderComponent("images/fireExtinguisher/Fire_Extinguisher.png"))
+            .addComponent(new PhysicsComponent())
+            .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
+            .addComponent(new InteractionComponent(PhysicsLayer.INTERACTABLE))
+            .addComponent(new TooltipsDisplay())
+            .addComponent(new FireExtinguisherHandlerComponent());
+    fireExtinguisher.getComponent(InteractionComponent.class).setAsBox(fireExtinguisher.getScale());
+    fireExtinguisher.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
+    fireExtinguisher.getComponent(TextureRenderComponent.class).scaleEntity();
+    fireExtinguisher.scaleHeight(1.5f);
+    InteractionComponent feInteractionComponent = fireExtinguisher.getComponent(InteractionComponent.class);
+    feInteractionComponent.create();
+    feInteractionComponent.getFixture().setUserData(fireExtinguisher);
+    return fireExtinguisher;
   }
 
   /**
