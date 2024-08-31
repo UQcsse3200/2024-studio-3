@@ -2,6 +2,14 @@ package com.csse3200.game.components.items;
 
 import java.util.List;
 
+/**
+ * TODO: team 1
+ * 
+ * - add functionlity for adding items to a meal
+ * - change initialisation of the component
+ * - clarify how items will be added w/ the station people
+ */
+
 public class MealComponent extends ItemComponent {
     private List<IngredientComponent> ingredients;
     private int quality;
