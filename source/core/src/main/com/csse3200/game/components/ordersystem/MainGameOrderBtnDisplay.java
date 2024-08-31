@@ -36,7 +36,7 @@ public class MainGameOrderBtnDisplay extends UIComponent{
      * Adds the button to the UI and sets up the event listener for the button click.
      * When the "Create Order" button is clicked, it triggers the "createOrder" event.
      */
-    private void addActors() {
+    public void addActors() {
         table = new Table();
         table.bottom().right();
         table.setFillParent(true);
@@ -87,7 +87,7 @@ public class MainGameOrderBtnDisplay extends UIComponent{
      */
     @Override
     public void setStage(Stage mock) {
-        this.stage = stage;
+        this.stage = mock;
     }
 
     @Override

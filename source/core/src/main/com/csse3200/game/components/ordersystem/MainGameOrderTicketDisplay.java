@@ -43,7 +43,7 @@ public class MainGameOrderTicketDisplay extends UIComponent {
     private List<String> ingredients;
     private Integer burnedTime;
     private String stationType;
-    private long timer;
+    private static long timer;
 
     /**
      * Constructs an MainGameOrderTicketDisplay instance
@@ -400,6 +400,10 @@ public class MainGameOrderTicketDisplay extends UIComponent {
 
     public static ArrayList<Docket> getBackgroundArrayList() {
         return backgroundArrayList;
+    }
+
+    public static long getTimer() {
+        return timer;
     }
 
 }
