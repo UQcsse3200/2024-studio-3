@@ -3,7 +3,6 @@ package com.csse3200.game.components.player;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector2;
-import com.csse3200.game.components.SensorComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.input.InputComponent;
 import com.csse3200.game.utils.math.Vector2Utils;
@@ -91,10 +90,6 @@ public class KeyboardPlayerInputComponent extends InputComponent {
     };
   }
 
-  public Vector2 getDirection() {
-    return this.walkDirection;
-  }
-
   private void triggerWalkEvent() {
 
     Vector2 lastDir = this.walkDirection.cpy();
@@ -147,10 +142,22 @@ public class KeyboardPlayerInputComponent extends InputComponent {
   }
 
   private Vector2 keysToVector() {
-    float xCom = (isPressed(Keys.D) ? Vector2Utils.RIGHT.x : 0f) + (isPressed(Keys.A) ? Vector2Utils.LEFT.x : 0f);
-    float yCom = (isPressed(Keys.W) ? Vector2Utils.UP.y : 0f) + (isPressed(Keys.S) ? Vector2Utils.DOWN.y : 0f);
-    float mag = (Math.abs(Math.abs(xCom) - Math.abs(yCom)) < 0.1f ? ROOT2INV : 1f);
-    return new Vector2(xCom, yCom).scl(mag);
+    float xCom = 0f;
+    float yCom = 0f;
+
+    if (isPressed(Keys.D)) xCom += 1f;
+    if (isPressed(Keys.A)) xCom -= 1f;
+    if (isPressed(Keys.W)) yCom += 1f;
+    if (isPressed(Keys.S)) yCom -= 1f;
+
+// Normalize the vector for diagonal movement
+    float length = (float) Math.sqrt(xCom * xCom + yCom * yCom);
+    if (length > 0) {
+      xCom /= length;
+      yCom /= length;
+    }
+
+    return new Vector2(xCom, yCom).scl(WALK_SPEED);
   }
 
   private boolean isPressed(int keycode) {
