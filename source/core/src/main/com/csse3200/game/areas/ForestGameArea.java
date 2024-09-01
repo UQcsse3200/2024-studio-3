@@ -1,6 +1,7 @@
 package com.csse3200.game.areas;
 
 import com.csse3200.game.entities.benches.Bench;
+import com.csse3200.game.entities.configs.PlayerConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.badlogic.gdx.audio.Music;
@@ -88,7 +89,7 @@ public class ForestGameArea extends GameArea {
     "images/stations/benches/bench6-top.png"
   };
   private static final String[] forestTextureAtlases = {
-    "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/ghostKing.atlas"
+    "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/ghostKing.atlas", "images/player.atlas"
   };
   private static final String[] forestSounds = {"sounds/Impact4.ogg"};
   private static final String backgroundMusic = "sounds/BGM_03_mp3.mp3";
@@ -317,9 +318,9 @@ public class ForestGameArea extends GameArea {
   }
 
   private Entity spawnPlayer() {
-    Entity newPlayer = PlayerFactory.createPlayer();
-    // scale it
-    newPlayer.setScale(2.1f, 2.1f);
+    Entity newPlayer;
+    PlayerConfig playerConfig = new PlayerConfig();
+    newPlayer = PlayerFactory.createPlayer(playerConfig);
     spawnEntityAt(newPlayer, PLAYER_SPAWN, true, true);
     return newPlayer;
   }
