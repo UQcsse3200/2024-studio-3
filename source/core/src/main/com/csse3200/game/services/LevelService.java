@@ -66,7 +66,7 @@ public class LevelService {
     public void levelControl(int level) {
         switch (level) {
             case 1:
-                levelEventHandler.trigger("startSpawning", 1);
+                levelEventHandler.trigger("startSpawning", 5);
                 /*CURRENT IDEA FOR FIX
                 *
                 * Private variable that gets reassigned when this method is called

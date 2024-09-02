@@ -6,6 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.areas.ForestGameArea;
 import com.csse3200.game.areas.terrain.TerrainFactory;
+import com.csse3200.game.components.levels.LevelComponent;
 import com.csse3200.game.components.maingame.MainGameActions;
 import com.csse3200.game.components.ordersystem.MainGameOrderBtnDisplay;
 import com.csse3200.game.components.ordersystem.OrderActions;
@@ -82,6 +83,9 @@ public class MainGameScreen extends ScreenAdapter {
 		TerrainFactory terrainFactory = new TerrainFactory(renderer.getCamera());
 		ForestGameArea forestGameArea = new ForestGameArea(terrainFactory);
 		forestGameArea.create();
+		Entity levelEntity = new Entity();
+		levelEntity.addComponent(new LevelComponent());
+		ServiceLocator.getEntityService().register(levelEntity);
 		ServiceLocator.getLevelService().getEvents().trigger("nextLevel", 1);
 	}
 

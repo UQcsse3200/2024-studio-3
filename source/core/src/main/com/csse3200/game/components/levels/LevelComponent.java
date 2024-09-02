@@ -23,7 +23,7 @@ public class LevelComponent extends Component {
             long elapsedTimeSecs = elapsedTime / 1000;
             //If more than five seconds have passed, there are more customers to spawn
             //AND if another customer can join the line
-            if (elapsedTimeSecs >= 5 && numbCustomersSpawned < levelSpawnCap && currentCustomersLinedUp < 5) {
+            if (elapsedTimeSecs >= 3 && numbCustomersSpawned < levelSpawnCap && currentCustomersLinedUp < 5) {
                 setSpawnStartTime();
                 customerSpawned();
                 ServiceLocator.getLevelService().getEvents().trigger("spawnCustomer");
