@@ -68,10 +68,13 @@ public class LevelService {
         switch (level) {
             case 1:
                 spawnCap = 5;
+                break;
             case 2:
                 spawnCap = 7;
+                break;
             case 3:
                 spawnCap = 8;
+                break;
         }
         levelEventHandler.trigger("startSpawning", spawnCap);
     }
