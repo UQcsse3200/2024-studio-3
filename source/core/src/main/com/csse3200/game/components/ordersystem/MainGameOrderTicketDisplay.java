@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Cell;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
+import com.csse3200.game.components.player.PlayerStatsDisplay;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
 import org.slf4j.Logger;
@@ -38,6 +39,8 @@ public class MainGameOrderTicketDisplay extends UIComponent {
     private static int orderNumb = 0;
     private static final long DEFAULT_TIMER = 10000;
     private Recipe recipe;
+    private int gold = 0;
+    private int recipeValue = 2;
 
     /**
      * Constructs an MainGameOrderTicketDisplay instance
@@ -192,6 +195,8 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         table.remove();
         ServiceLocator.getDocketService().getEvents().trigger("removeOrder", index);
         docket.dispose();
+        gold = gold + recipeValue;
+        PlayerStatsDisplay.updatePlayerGoldUI(gold);
     }
 
     /**
@@ -284,6 +289,7 @@ public class MainGameOrderTicketDisplay extends UIComponent {
                 currBackground.updateDocketTexture((double) remainingTime / 1000);
                 currTable.setBackground(currBackground.getImage().getDrawable());
             } else {
+                // if order is successful
                 stageDispose(currBackground, currTable, i);
                 tableArrayList.remove(i);
                 backgroundArrayList.remove(i);
