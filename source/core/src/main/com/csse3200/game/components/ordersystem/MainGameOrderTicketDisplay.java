@@ -86,6 +86,8 @@ public class MainGameOrderTicketDisplay extends UIComponent {
     public void addActors() {
         Table table = new Table();
         long startTime = TimeUtils.millis();
+        long timer = getRecipe().getMakingTime() * DEFAULT_TIMER;
+
         startTimeArrayList.add(startTime);
         tableArrayList.add(table);
 //        logger.info("New table added. Total tables: {}", tableArrayList.size());
@@ -97,7 +99,7 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         table.setPosition(xVal, yVal);
 //        logger.info("Position set for new table: ({}, {})", xVal, yVal);
 
-        Docket background = new Docket();
+        Docket background = new Docket(timer);
         backgroundArrayList.add(background);
 //        logger.info("New docket background added. Total backgrounds: {}", backgroundArrayList.size());
         table.setBackground(background.getImage().getDrawable());
@@ -114,7 +116,6 @@ public class MainGameOrderTicketDisplay extends UIComponent {
             table.add(ingredientLabel).padLeft(10f).row();
         }
 
-        long timer = getRecipe().getMakingTime() * DEFAULT_TIMER;
         recipeTimeArrayList.add(timer);
         Label countdownLabel = new Label("Timer: " + timer, skin);
         countdownLabelArrayList.add(countdownLabel);

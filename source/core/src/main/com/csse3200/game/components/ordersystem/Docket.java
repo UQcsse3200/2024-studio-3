@@ -8,6 +8,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.csse3200.game.ui.UIComponent;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * UI component class for displaying a docket and changing its appearance depending on time remaining.
@@ -18,15 +20,17 @@ public class Docket extends UIComponent {
     private Image docket;
     private int cellHash;
     private long startTime;
+    long totalRecipeTime;
 
     /**
      * Constructs a docket component and initialises its skin.
      */
-    public Docket() {
+    public Docket(long totalRecipeTime) {
         // Initialize components here
         this.docketSkin = new Skin();
         this.docket = new Image();
         this.startTime = TimeUtils.millis();
+        this.totalRecipeTime = totalRecipeTime / 1000;
         setupSkin();
     }
 
@@ -123,11 +127,13 @@ public class Docket extends UIComponent {
      * @param remainingTimeSecs the remaining time in seconds
      */
     public void updateDocketTexture(double remainingTimeSecs) {
-        if (remainingTimeSecs <= 3 && remainingTimeSecs >= 2) {
+        if (remainingTimeSecs >= this.totalRecipeTime * 0.6) {
+            docket.setDrawable(docketSkin.getDrawable(textureNameArray[0]));
+        } else if (remainingTimeSecs >= this.totalRecipeTime * 0.3) {
             docket.setDrawable(docketSkin.getDrawable(textureNameArray[1]));
-        } else if (remainingTimeSecs <= 2 && remainingTimeSecs >= 1) {
+        } else if (remainingTimeSecs > 0) {
             docket.setDrawable(docketSkin.getDrawable(textureNameArray[2]));
-        } else if (remainingTimeSecs <= 1 && remainingTimeSecs >= 0) {
+        } else {
             docket.setDrawable(docketSkin.getDrawable(textureNameArray[3]));
         }
     }
