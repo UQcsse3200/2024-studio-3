@@ -12,6 +12,7 @@ import com.csse3200.game.components.ordersystem.MainGameOrderBtnDisplay;
 import com.csse3200.game.components.ordersystem.OrderActions;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
+import com.csse3200.game.entities.factories.LevelFactory;
 import com.csse3200.game.entities.factories.RenderFactory;
 import com.csse3200.game.input.InputComponent;
 import com.csse3200.game.input.InputDecorator;
@@ -83,9 +84,8 @@ public class MainGameScreen extends ScreenAdapter {
 		TerrainFactory terrainFactory = new TerrainFactory(renderer.getCamera());
 		ForestGameArea forestGameArea = new ForestGameArea(terrainFactory);
 		forestGameArea.create();
-		Entity levelEntity = new Entity();
-		levelEntity.addComponent(new LevelComponent());
-		ServiceLocator.getEntityService().register(levelEntity);
+		Entity spawnControllerEntity = LevelFactory.createSpawnControllerEntity();
+		ServiceLocator.getEntityService().register(spawnControllerEntity;
 		ServiceLocator.getLevelService().getEvents().trigger("nextLevel", 1);
 	}
 
