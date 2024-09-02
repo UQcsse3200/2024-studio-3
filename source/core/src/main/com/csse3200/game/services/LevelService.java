@@ -18,7 +18,7 @@ public class LevelService {
     public LevelService() {
         levelEventHandler = new EventHandler();
         currLevel = 1;
-        levelEventHandler.addListener("nextLevel", this::levelControl);
+        levelEventHandler.addListener("startLevel", this::levelControl);
         levelEventHandler.addListener("createCustomer", ForestGameArea::spawnCustomer);
     }
 
