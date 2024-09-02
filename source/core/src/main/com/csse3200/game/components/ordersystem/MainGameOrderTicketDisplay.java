@@ -133,7 +133,7 @@ public class MainGameOrderTicketDisplay extends UIComponent {
      */
     private float cntXval(int instanceCnt) {
 //        logger.info("instanceCnt" + instanceCnt);
-        return 20f + (instanceCnt - 1) * (distance + viewportWidth * 3f / 32f);
+        return 225f + (instanceCnt - 1) * (distance + viewportWidth * 3f / 32f);
     }
 
     /**
@@ -240,7 +240,7 @@ public class MainGameOrderTicketDisplay extends UIComponent {
      * Updates the sizes of all dockets. The last docket in the list is enlarged, while others remain the same size.
      */
     public void updateDocketSizes() {
-        float xEnlargedArea = viewportWidth - 260f;
+        float xEnlargedArea = viewportWidth - 320f;
         for (int i = 0; i < tableArrayList.size(); i++) {
             Table table = tableArrayList.get(i);
             float xVal = cntXval(i + 1);

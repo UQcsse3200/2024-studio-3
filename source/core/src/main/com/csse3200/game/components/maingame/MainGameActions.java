@@ -51,7 +51,7 @@ public class MainGameActions extends Component {
 	 * Create Order Docket
 	 */
 	private void onCreateOrder() {
-		int orderLimit = 5;
+		int orderLimit = 8;
 		int orderCount = MainGameOrderTicketDisplay.getTableArrayList().size();
 
 		if (orderCount < orderLimit) {

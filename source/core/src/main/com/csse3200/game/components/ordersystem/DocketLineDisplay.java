@@ -36,7 +36,7 @@ public class DocketLineDisplay extends UIComponent {
 		table = new Table();
 		table.top().left();
 		table.setFillParent(true);
-		table.padTop(18f).padLeft(10f);
+		table.padTop(18f).padLeft(200f).padRight(120f);
 
 		pineLine =
 		  new Image(
