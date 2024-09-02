@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Cell;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.csse3200.game.components.player.PlayerStatsDisplay;
+import com.csse3200.game.entities.Entity;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
 import org.slf4j.Logger;
@@ -89,7 +90,6 @@ public class MainGameOrderTicketDisplay extends UIComponent {
     public void addActors() {
         Table table = new Table();
         long startTime = TimeUtils.millis();
-        long timer = getRecipe().getMakingTime() * DEFAULT_TIMER;
 
         startTimeArrayList.add(startTime);
         tableArrayList.add(table);
@@ -101,8 +101,7 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         float yVal = viewportHeight * viewPortHeightMultiplier;
         table.setPosition(xVal, yVal);
 //        logger.info("Position set for new table: ({}, {})", xVal, yVal);
-
-        Docket background = new Docket(timer);
+        Docket background = new Docket(getTimer());
         backgroundArrayList.add(background);
 //        logger.info("New docket background added. Total backgrounds: {}", backgroundArrayList.size());
         table.setBackground(background.getImage().getDrawable());
@@ -118,9 +117,8 @@ public class MainGameOrderTicketDisplay extends UIComponent {
             Label ingredientLabel = new Label(ingredient, skin);
             table.add(ingredientLabel).padLeft(10f).row();
         }
-
-        recipeTimeArrayList.add(timer);
-        Label countdownLabel = new Label("Timer: " + timer, skin);
+        recipeTimeArrayList.add(getTimer());
+        Label countdownLabel = new Label("Timer: " + getTimer(), skin);
         countdownLabelArrayList.add(countdownLabel);
         table.add(countdownLabel).padLeft(10f).row();
 
@@ -189,15 +187,27 @@ public class MainGameOrderTicketDisplay extends UIComponent {
      * @param table  the table representing the docket.
      * @param index  the index of the docket.
      */
-    private void stageDispose(Docket docket, Table table, int index) {
+    public void stageDispose(Docket docket, Table table, int index) {
         table.setBackground((Drawable) null);
         table.clear();
         table.remove();
         ServiceLocator.getDocketService().getEvents().trigger("removeOrder", index);
         docket.dispose();
         gold = gold + recipeValue;
-        PlayerStatsDisplay.updatePlayerGoldUI(gold);
+        if (entity != null) {
+            entity.getEvents().trigger("updateGold", gold);
+        }
     }
+
+//    public void updatePlayerGold(int gold) {
+//        // Retrieve PlayerStatsDisplay component from the player entity
+//        PlayerStatsDisplay statsDisplay = player.getComponent(PlayerStatsDisplay.class);
+//        if (statsDisplay != null) {
+//            statsDisplay.updatePlayerGoldUI(gold);
+//        } else {
+//            System.out.println("PlayerStatsDisplay component not found.");
+//        }
+//    }
 
     /**
      * Shifts the order tickets to the right by moving the last ticket to the beginning of the list.
@@ -392,6 +402,22 @@ public class MainGameOrderTicketDisplay extends UIComponent {
      */
     public static ArrayList<Table> getTableArrayList() {
         return tableArrayList;
+    }
+
+    public static ArrayList<Long> getStartTimeArrayList() {
+        return startTimeArrayList;
+    }
+
+    public static ArrayList<Label> getCountdownLabelArrayList() {
+        return countdownLabelArrayList;
+    }
+
+    public static ArrayList<Docket> getBackgroundArrayList() {
+        return backgroundArrayList;
+    }
+
+    public long getTimer() {
+        return getRecipe().getMakingTime() * DEFAULT_TIMER;
     }
 
 }
