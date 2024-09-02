@@ -66,8 +66,7 @@ public class LevelService {
     public void levelControl(int level) {
         switch (level) {
             case 1:
-                int i = 0;
-                int j = 10;
+                levelEventHandler.trigger("startSpawning", 1);
                 /*CURRENT IDEA FOR FIX
                 *
                 * Private variable that gets reassigned when this method is called
@@ -78,15 +77,7 @@ public class LevelService {
                 *
                 * Maybe, just maybe. Make an entity to hijack the update method?????
                 * */
-                while (i < 5) {
-                    if (j == 10) {
-                        levelEventHandler.trigger("spawnCustomer");
-                        j = 0;
-                        LoggerFactory.getLogger(LevelService.class).info(":)");
-                        i++;
-                    }
-                    j++;
-                }
+
         }
     }
 }
