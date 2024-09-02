@@ -64,20 +64,15 @@ public class LevelService {
      * @param level the level number
      */
     public void levelControl(int level) {
+        int spawnCap = 0;
         switch (level) {
             case 1:
-                levelEventHandler.trigger("startSpawning", 5);
-                /*CURRENT IDEA FOR FIX
-                *
-                * Private variable that gets reassigned when this method is called
-                * The variable has a start time, calculate time since then,
-                * if enough time has passed, new customer
-                *
-                * Basically what exists but more sophisticated
-                *
-                * Maybe, just maybe. Make an entity to hijack the update method?????
-                * */
-
+                spawnCap = 5;
+            case 2:
+                spawnCap = 7;
+            case 3:
+                spawnCap = 8;
         }
+        levelEventHandler.trigger("startSpawning", spawnCap);
     }
 }
