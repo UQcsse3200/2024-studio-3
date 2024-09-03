@@ -1,14 +1,26 @@
 package com.csse3200.game.components.maingame;
 
+import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.EventListener;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.csse3200.game.screens.MainGameScreen;
+import com.csse3200.game.screens.MainMenuScreen;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class PauseMenu extends UIComponent {
+    private static final Logger logger = LoggerFactory.getLogger(PauseMenu.class);
+
     private boolean isVisible;
     private final MainGameScreen game;
     private Table table;
@@ -24,6 +36,7 @@ public class PauseMenu extends UIComponent {
         super.create();
         table = new Table();
         table.setVisible(isVisible);
+        displayScreen();
 
 
         // Main Menu Actions (after creating the UI and implement the functionalities, we need to
@@ -40,9 +53,17 @@ public class PauseMenu extends UIComponent {
     }
 
     public void displayScreen() {
-        if (isVisible) {
-            toggleVisibility();
-        }
+        stage.addListener(new InputListener() {
+            @Override
+            public boolean keyDown(InputEvent event, int keycode) {
+                if (keycode == com.badlogic.gdx.Input.Keys.O) {
+                    toggleVisibility();
+                    logger.info("press O");
+                    return true;
+                }
+                return false;
+            }
+        });
     }
 
     public void showMenu() {
