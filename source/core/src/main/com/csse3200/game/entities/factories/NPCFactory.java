@@ -89,9 +89,8 @@ public class NPCFactory {
         return ghostKing;
     }
 
-
-    public static Entity createCustomer(Entity target, Vector2 targetPosition) {
-        Entity customer = createBaseCustomer(target, targetPosition);
+    public static Entity createCustomerPersonal(Vector2 targetPosition) {
+        Entity customer = createBaseCustomer(targetPosition);
         GhostKingConfig config = configs.ghostKing;
 
         AnimationRenderComponent animator =
@@ -110,7 +109,27 @@ public class NPCFactory {
         return customer;
     }
 
-    public static Entity createBaseCustomer(Entity target, Vector2 targetPosition) {
+    public static Entity createCustomer(Vector2 targetPosition) {
+        Entity customer = createBaseCustomer(targetPosition);
+        GhostKingConfig config = configs.ghostKing;
+
+        AnimationRenderComponent animator =
+                new AnimationRenderComponent(
+                        ServiceLocator.getResourceService()
+                                .getAsset("images/ghostKing.atlas", TextureAtlas.class));
+        animator.addAnimation("float", 0.3f, Animation.PlayMode.LOOP);
+        animator.addAnimation("angry_float", 0.3f, Animation.PlayMode.LOOP);
+
+        customer
+                .addComponent(new CombatStatsComponent(config.health, config.baseAttack))
+                .addComponent(animator)
+                .addComponent(new GhostAnimationController());
+
+        customer.getComponent(AnimationRenderComponent.class).scaleEntity();
+        return customer;
+    }
+
+    public static Entity createBaseCustomer(Vector2 targetPosition) {
         AITaskComponent aiComponent =
                 new AITaskComponent()
                         .addTask(new PathFollowTask(targetPosition));
