@@ -29,7 +29,6 @@ public class DishFactory {
      */
     private static Map<String, SingleStationRecipeConfig> getSingleStationRecipes() {
         Map<String, SingleStationRecipeConfig> singleStationRecipes = new HashMap<>();
-        singleStationRecipes.put("acaiBowl", configs.acaiBowl);
         singleStationRecipes.put("salad", configs.salad);
         singleStationRecipes.put("fruitSalad", configs.fruitSalad);
         singleStationRecipes.put("bananaSplit", configs.bananaSplit);
@@ -43,6 +42,8 @@ public class DishFactory {
     private static Map<String, MultiStationRecipeConfig> getMultiStationRecipes() {
         Map<String, MultiStationRecipeConfig> multiStationRecipes = new HashMap<>();
         multiStationRecipes.put("steakMeal", configs.steakMeal);
+        multiStationRecipes.put("acaiBowl", configs.acaiBowl);
+
         return multiStationRecipes;
     }
 
@@ -63,7 +64,8 @@ public class DishFactory {
             String recipe = entry.getKey();
             SingleStationRecipeConfig recipeConfig = entry.getValue();
 
-            if (new HashSet<>(recipeConfig.ingredient).containsAll(ingredient)) {
+            if (!recipeConfig.ingredient.isEmpty() &&
+                    new HashSet<>(recipeConfig.ingredient).containsAll(ingredient)) {
                 recipes.add(recipe);
             }
         }
@@ -72,7 +74,8 @@ public class DishFactory {
             String recipe = entry.getKey();
             MultiStationRecipeConfig recipeConfig = entry.getValue();
 
-            if (new HashSet<>(recipeConfig.ingredient).containsAll(ingredient)) {
+            if (!recipeConfig.ingredient.isEmpty() &&
+                    new HashSet<>(recipeConfig.ingredient).containsAll(ingredient)) {
                 recipes.add(recipe);
             }
         }
