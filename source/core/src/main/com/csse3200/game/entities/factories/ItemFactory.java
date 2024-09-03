@@ -2,17 +2,13 @@ package com.csse3200.game.entities.factories;
 
 import java.util.Arrays;
 import com.csse3200.game.entities.Entity;
-import com.csse3200.game.files.FileLoader;
 import com.csse3200.game.components.items.*;
-import com.csse3200.game.input.InputComponent;
 import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.PhysicsUtils;
 import com.csse3200.game.physics.components.ColliderComponent;
 import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.rendering.TextureRenderComponent;
-import com.csse3200.game.services.ServiceLocator;
-
 import java.util.List;
 
 public class ItemFactory {
@@ -244,5 +240,30 @@ public class ItemFactory {
         return bananaSplit;
     }
 
+    public static Entity createBaseItem(String itemName) {
 
+        switch (itemName) {
+                case "fish":
+                        return ItemFactory.createFish("raw");
+                case "beef":
+                        return ItemFactory.createBeef("raw");
+                case "banana":
+                        return ItemFactory.createBanana("raw");
+                case "cucumber":
+                        return ItemFactory.createCucumber("raw");
+                case "tomato":
+                        return ItemFactory.createTomato("raw");
+                case "strawberry":
+                        return ItemFactory.createStrawberry("raw");
+                case "lettuce":
+                        return ItemFactory.createLettuce("raw");
+                case "chocolate":
+                        return ItemFactory.createChocolate("raw");
+                case "acai":
+                        return ItemFactory.createAcai("raw");
+        }
+
+        // Here to supress warnings about return values
+        return null;
+    }
 }
