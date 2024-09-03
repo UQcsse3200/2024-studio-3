@@ -1,12 +1,16 @@
 package com.csse3200.game.components.maingame;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.csse3200.game.screens.MainGameScreen;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
+
+import static com.badlogic.gdx.scenes.scene2d.ui.Table.Debug.table;
 
 public class PauseMenu extends UIComponent {
     private boolean isVisible;
@@ -20,10 +24,24 @@ public class PauseMenu extends UIComponent {
         isVisible = false;
     }
 
-    public void create(){
-        super.create();
+
+    private void addImage() {
         table = new Table();
-        table.setVisible(isVisible);
+        table.setFillParent(true);
+        Image title = new Image(ServiceLocator
+                .getResourceService().getAsset("images/pause_menu.png", Texture.class));
+
+
+    }
+
+    public void create() {
+        super.create();
+        //table = new Table();
+        //table.setVisible(isVisible);
+        //ServiceLocator.getResourceService().loadTextures(pauseMenuTexture);
+        //ServiceLocator.getResourceService().loadAll(); // Ensures the texture is loaded
+
+        //addImage();
 
 
         // Main Menu Actions (after creating the UI and implement the functionalities, we need to
@@ -70,6 +88,11 @@ public class PauseMenu extends UIComponent {
        }
     }
 
+    public void dispose() {
+        //ServiceLocator.getResourceService().unloadAssets(pauseMenuTexture);
+    }
+
+
 
     @Override
     protected void draw(SpriteBatch batch) {
@@ -78,6 +101,6 @@ public class PauseMenu extends UIComponent {
 
     @Override
     public void setStage(Stage mock) {
-
     }
+
 }
