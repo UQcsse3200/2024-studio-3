@@ -1,5 +1,7 @@
 package com.csse3200.game.components.maingame;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -16,6 +18,10 @@ public class PauseMenu extends UIComponent {
     private boolean isVisible;
     private final MainGameScreen game;
     private Table table;
+
+    private PauseMenu pauseMenu;
+
+
     private static final String[] pauseMenuTexture = {"images/pause_menu.png"};
 
     public PauseMenu (MainGameScreen game) {
@@ -28,8 +34,13 @@ public class PauseMenu extends UIComponent {
     private void addImage() {
         table = new Table();
         table.setFillParent(true);
-        Image title = new Image(ServiceLocator
-                .getResourceService().getAsset("images/pause_menu.png", Texture.class));
+        Texture pauseMenuTexture = ServiceLocator
+                .getResourceService().getAsset("images/pause_menu.png", Texture.class);
+
+        Image backgroundImage = new Image(pauseMenuTexture);
+        table.add(backgroundImage).expand().center();
+        stage.addActor(table); //will ensure that elements is rendered correctly
+        table.setVisible(isVisible);
 
 
     }
@@ -38,10 +49,10 @@ public class PauseMenu extends UIComponent {
         super.create();
         //table = new Table();
         //table.setVisible(isVisible);
-        //ServiceLocator.getResourceService().loadTextures(pauseMenuTexture);
-        //ServiceLocator.getResourceService().loadAll(); // Ensures the texture is loaded
+        ServiceLocator.getResourceService().loadTextures(pauseMenuTexture);
+        ServiceLocator.getResourceService().loadAll(); // Ensures the texture is loaded
 
-        //addImage();
+        addImage();
 
 
         // Main Menu Actions (after creating the UI and implement the functionalities, we need to
@@ -63,6 +74,16 @@ public class PauseMenu extends UIComponent {
         }
     }
 
+    public void handleInput() {
+        if (Gdx.input.isKeyJustPressed(Input.Keys.Q)) {
+            toggleVisibility(); // i used Q to call the PauseMenu
+        }
+    }
+
+    public boolean isVisible() {
+        return isVisible;
+    }
+
     public void showMenu() {
         isVisible = true;
         table.setVisible(true);
@@ -82,14 +103,18 @@ public class PauseMenu extends UIComponent {
 
     public void toggleVisibility() {
        if (isVisible) {
-           showMenu();
+           hideMenu(); // i changed the toggle visibility, as i think if the menu is visible,
+                       // then the next step we want to do is to hide it and vice versa
        } else {
-           hideMenu();
+           showMenu();
        }
     }
 
+
+
     public void dispose() {
-        //ServiceLocator.getResourceService().unloadAssets(pauseMenuTexture);
+        super.dispose();
+        ServiceLocator.getResourceService().unloadAssets(pauseMenuTexture);
     }
 
 
@@ -102,5 +127,7 @@ public class PauseMenu extends UIComponent {
     @Override
     public void setStage(Stage mock) {
     }
+
+
 
 }
