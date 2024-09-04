@@ -26,21 +26,30 @@ import java.util.List;
 import java.util.ArrayList;
 
 public class TextDisplay extends UIComponent {
-    private boolean isVisible;
-    private int textLimit = 80;
-    private final MainGameScreen game;
-    private Image displayBox;
+    //String building variables
     private List<String> text;
+    private int text_length = 0;
+    private StringBuilder currentText;
+    private int textLimit = 80;
+    private int charIndex = 0;
+    private long lastUpdate = 0L;
+    private long delay = 100L;
+    // Displaying variables
+    private boolean visible;
     private Table layout;
+    private Label label;
+    private Image displayBox;
+    private final MainGameScreen game;
     public TextDisplay(MainGameScreen game) {
         super();
         this.game = game;
-        isVisible = true;
+        this.visible = true;
+        this.currentText = new StringBuilder();
     }
     public void create() {
         super.create();
         layout = new Table();
-        layout.setVisible(isVisible);
+        layout.setVisible(visible);
         layout.center().bottom();
         layout.setFillParent(true);
         stage.addActor(layout);
@@ -50,12 +59,16 @@ public class TextDisplay extends UIComponent {
         Drawable textboxDrawable = new TextureRegionDrawable(textboxTexture);
         Image textboxImage = new Image(textboxDrawable);
         textboxImage.setScale(0.4f);
-        layout.add(textboxImage).bottom().center().padBottom(0).padLeft(100).row();
+        layout.add(textboxImage).bottom().center().padBottom(0).padLeft(700).row();
+        label = new Label("", skin);
+        layout.add(label).bottom().center().padBottom(300).padLeft(400).row();
+        setText("Hello There Chat whats up with you guys. I just love CSSE3200 so much. Please send help");
     }
     public void setText(String text) {
         List<String> new_text = new ArrayList<>();
+        text_length = text.length();
         String temp = "";
-        for (int i = 0; i < text.length(); i++) {
+        for (int i = 0; i < text_length; i++) {
             if (i != 0 && i % textLimit == 0) {
                 new_text.add(temp);
                 temp = "";
@@ -63,10 +76,26 @@ public class TextDisplay extends UIComponent {
             temp += text.charAt(i);
         }
         new_text.add(temp);
+        System.out.println(new_text);
         this.text = new_text;
     }
     public List<String> getText() {
         return text;
+    }
+    public void toggleVisible() {
+        this.visible = !this.visible;
+    }
+    @Override
+    public void update() {
+        long time = ServiceLocator.getTimeSource().getTime();
+        if (charIndex < text_length) {
+            if (time - lastUpdate >= delay) {
+                lastUpdate = time;
+                this.currentText.append(text.get(charIndex / textLimit).charAt(charIndex % textLimit));
+                label.setText(currentText.toString());
+                charIndex++;
+            }
+        }
     }
 
     @Override
