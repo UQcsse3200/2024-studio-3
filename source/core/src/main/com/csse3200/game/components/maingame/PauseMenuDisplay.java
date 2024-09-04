@@ -42,6 +42,9 @@ public class PauseMenuDisplay extends UIComponent {
 
         Image backgroundImage = new Image(pauseMenuTexture);
 
+        table.setBackground(backgroundImage.getDrawable());
+        backgroundImage.setSize(400, 400);
+
         TextButton resumeBtn = new TextButton("Resume", skin);
         TextButton restartBtn = new TextButton("Restart", skin);
         TextButton settingsBtn = new TextButton("Settings", skin);
@@ -91,9 +94,9 @@ public class PauseMenuDisplay extends UIComponent {
                     }
                 });
 
-        table.add(backgroundImage).expand().center().minWidth(550).minHeight(500);
-        table.row();
-        table.add(resumeBtn).minWidth(300).minHeight(50).padTop(10);
+        //table.add(backgroundImage).expand().center().minWidth(550).minHeight(500);
+       // table.row();
+        table.add(resumeBtn).minWidth(300).minHeight(50).padTop(200);
         table.row();
         table.add(restartBtn).minWidth(300).minHeight(50).padTop(10);
         table.row();
