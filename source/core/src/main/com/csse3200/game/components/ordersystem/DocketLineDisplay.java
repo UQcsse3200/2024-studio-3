@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
  * A UI component for displaying the Docket Pin Line
  */
 public class DocketLineDisplay extends UIComponent {
-	private static final Logger logger = LoggerFactory.getLogger(MainMenuDisplay.class);
+	private static final Logger logger = LoggerFactory.getLogger(DocketLineDisplay.class);
 	private static final float Z_INDEX = 2f;
 	private Table table;
     private Image pineLine;
@@ -36,12 +36,12 @@ public class DocketLineDisplay extends UIComponent {
 		table = new Table();
 		table.top().left();
 		table.setFillParent(true);
-		table.padTop(18f).padLeft(10f);
+		table.padTop(18f).padLeft(200f).padRight(120f);
 
 		pineLine =
-				new Image(
-						ServiceLocator.getResourceService()
-								.getAsset("images/ordersystem/pin_line.png", Texture.class));
+		  new Image(
+			ServiceLocator.getResourceService()
+			  .getAsset("images/ordersystem/pin_line.png", Texture.class));
 
 		table.add(pineLine).pad(5);
 		table.row();
@@ -75,6 +75,9 @@ public class DocketLineDisplay extends UIComponent {
 
 	}
 
+	/**
+	 * Removes the table
+	 */
 	@Override
 	public void dispose() {
 		table.clear();

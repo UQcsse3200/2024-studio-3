@@ -4,6 +4,7 @@ import com.csse3200.game.GdxGame;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.ordersystem.MainGameOrderTicketDisplay;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.entities.factories.UIFactory;
 import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,8 +17,8 @@ import java.util.Random;
 public class MainGameActions extends Component {
 	private static final Logger logger = LoggerFactory.getLogger(MainGameActions.class);
 	private GdxGame game;
-	private Entity ui;
-	private MainGameOrderTicketDisplay docketDisplayer;
+	private Entity ui = UIFactory.createDocketUI();
+	private MainGameOrderTicketDisplay docketDisplayer = ui.getComponent(MainGameOrderTicketDisplay.class);
 	String[] recipeNames = {"acaiBowl", "salad", "fruitSalad", "steakMeal", "bananaSplit"};
 
 	/**
@@ -34,16 +35,8 @@ public class MainGameActions extends Component {
 	 */
 	@Override
 	public void create() {
-		if (ui == null) {
-			ui = new Entity();
-			String randomRecipe = recipeNames[new Random().nextInt(recipeNames.length)];
-			docketDisplayer = new MainGameOrderTicketDisplay(randomRecipe);
-			docketDisplayer.setStage(ServiceLocator.getRenderService().getStage());
-			ui.addComponent(docketDisplayer);
-			entity.getEvents().addListener("exit", this::onExit);
-			entity.getEvents().addListener("createOrder", this::onCreateOrder);
-			ServiceLocator.getEntityService().register(ui);
-		}
+		entity.getEvents().addListener("exit", this::onExit);
+		entity.getEvents().addListener("createOrder", this::onCreateOrder);
 	}
 
 	/**
@@ -58,12 +51,18 @@ public class MainGameActions extends Component {
 	 * Create Order Docket
 	 */
 	private void onCreateOrder() {
-//		String randomRecipe = recipeNames[new Random().nextInt(recipeNames.length)];
-//		docketDisplayer = new MainGameOrderTicketDisplay(randomRecipe);
-//		docketDisplayer.setStage(ServiceLocator.getRenderService().getStage());
-//		ui.addComponent(docketDisplayer);
-		docketDisplayer.addActors();
-//		logger.info("Order created with recipe: {}", randomRecipe);
+		int orderLimit = 8;
+		int orderCount = MainGameOrderTicketDisplay.getTableArrayList().size();
+
+		if (orderCount < orderLimit) {
+			String randomRecipe = recipeNames[new Random().nextInt(recipeNames.length)];
+			docketDisplayer.setRecipe(randomRecipe);
+			docketDisplayer.setStage(ServiceLocator.getRenderService().getStage());
+			docketDisplayer.addActors();
+			ServiceLocator.getEntityService().register(ui);
+		} else {
+			logger.info("Order limit of {} reached", orderLimit);
+		}
 	}
 
 	/**
