@@ -1,12 +1,15 @@
 package com.csse3200.game.components.maingame;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
@@ -21,10 +24,7 @@ public class PauseMenuDisplay extends UIComponent {
     private boolean isVisible;
     private final MainGameScreen game;
     private Table table;
-    private Image menu;
-
     private static final Logger logger = LoggerFactory.getLogger(PauseMenuDisplay.class);
-
     private static final String[] pauseMenuTexture = {"images/pause_menu.png"};
 
     public PauseMenuDisplay(MainGameScreen game) {
@@ -45,7 +45,8 @@ public class PauseMenuDisplay extends UIComponent {
         TextButton resumeBtn = new TextButton("Resume", skin);
         TextButton restartBtn = new TextButton("Restart", skin);
         TextButton settingsBtn = new TextButton("Settings", skin);
-        TextButton exitBtn = new TextButton("Exit", skin);
+        TextButton exitBtn = new TextButton("Main Menu", skin);
+        TextButton quitBtn = new TextButton("Quit", skin);
 
         resumeBtn.addListener(new ClickListener() {
             @Override
@@ -81,6 +82,15 @@ public class PauseMenuDisplay extends UIComponent {
                     }
                 });
 
+        quitBtn.addListener(
+                new ChangeListener() {
+                    @Override
+                    public void changed(ChangeEvent changeEvent, Actor actor) {
+                        logger.debug("Quit button clicked");
+                        entity.getEvents().trigger("quit");
+                    }
+                });
+
         table.add(backgroundImage).expand().center().minWidth(550).minHeight(500);
         table.row();
         table.add(resumeBtn).minWidth(300).minHeight(50).padTop(10);
@@ -90,9 +100,10 @@ public class PauseMenuDisplay extends UIComponent {
         table.add(settingsBtn).minWidth(300).minHeight(50).padTop(10);
         table.row();
         table.add(exitBtn).minWidth(300).minHeight(50).padTop(10);
+        table.row();
+        table.add(quitBtn).minWidth(300).minHeight(50).padTop(10);
 
         stage.addActor(table);
-
         table.setVisible(isVisible);
         displayScreen();
     }

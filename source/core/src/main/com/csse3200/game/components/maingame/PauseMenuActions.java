@@ -17,6 +17,7 @@ public class PauseMenuActions extends Component {
     public void create() {
         entity.getEvents().addListener("restart", this::onRestart);
         entity.getEvents().addListener("setting", this::onSettings);
+        entity.getEvents().addListener("quit", this::onQuit);
         entity.getEvents().addListener("exitGame", this::onExit);
     }
 
@@ -27,8 +28,12 @@ public class PauseMenuActions extends Component {
 
     private void onExit() {
         logger.info("Exit game");
+        game.setScreen(GdxGame.ScreenType.MAIN_MENU);
+    }
+
+    private void onQuit() {
+        logger.info("Quit game");
         game.exit();
-//        game.setScreen(GdxGame.ScreenType.MAIN_MENU);
     }
 
     private void onSettings() {
