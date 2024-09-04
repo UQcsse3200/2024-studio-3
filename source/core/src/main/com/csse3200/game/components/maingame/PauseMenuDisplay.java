@@ -8,10 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.csse3200.game.screens.MainGameScreen;
@@ -34,6 +31,106 @@ public class PauseMenuDisplay extends UIComponent {
     }
 
 
+    private Image createPauseMenuBackground() {
+        Texture pauseMenuTexture = ServiceLocator
+                .getResourceService().getAsset("images/pause_menu.png", Texture.class);
+        Image backgroundImage = new Image(pauseMenuTexture);
+        backgroundImage.setSize(800, 800);
+
+        return backgroundImage;
+    }
+
+    private Table createButtonsTable() {
+        Table buttonTable = new Table();
+
+        TextButton resumeBtn = new TextButton("Resume", skin);
+        TextButton restartBtn = new TextButton("Restart", skin);
+        TextButton settingsBtn = new TextButton("Settings", skin);
+        TextButton exitBtn = new TextButton("Main Menu", skin);
+        TextButton quitBtn = new TextButton("Quit", skin);
+
+
+        resumeBtn.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                toggleVisibility();
+            }
+        });
+
+        restartBtn.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent changeEvent, Actor actor) {
+                logger.debug("Restart button clicked");
+                entity.getEvents().trigger("restart");
+            }
+        });
+
+        settingsBtn.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent changeEvent, Actor actor) {
+                logger.debug("Settings button clicked");
+                entity.getEvents().trigger("setting");
+            }
+        });
+
+        exitBtn.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent changeEvent, Actor actor) {
+                logger.debug("Exit button clicked");
+                entity.getEvents().trigger("exitGame");
+            }
+        });
+
+        quitBtn.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent changeEvent, Actor actor) {
+                logger.debug("Quit button clicked");
+                entity.getEvents().trigger("quit");
+            }
+        });
+
+        buttonTable.add(resumeBtn).minWidth(200).minHeight(30).padTop(40);
+        buttonTable.row();
+        buttonTable.add(restartBtn).minWidth(200).minHeight(30).padTop(10);
+        buttonTable.row();
+        buttonTable.add(settingsBtn).minWidth(200).minHeight(30).padTop(10);
+        buttonTable.row();
+        buttonTable.add(exitBtn).minWidth(200).minHeight(30).padTop(10);
+        buttonTable.row();
+        buttonTable.add(quitBtn).minWidth(200).minHeight(30).padTop(10);
+
+        return buttonTable;
+    }
+
+    private void stackPauseMenu() {
+        table = new Table();
+        table.setFillParent(true);
+
+        Image backgroundImage = createPauseMenuBackground();
+        Table buttonTable = createButtonsTable();
+
+        Stack stack = new Stack();
+        stack.add(backgroundImage);
+
+        stack.add(buttonTable);
+
+
+        table.add(stack).center().expand();
+
+
+        stage.addActor(table);
+
+
+        table.setVisible(isVisible);
+        displayScreen();
+    }
+
+
+    public void addActors() {
+        stackPauseMenu();
+    }
+
+        /*
     private void addActors() {
         table = new Table();
         table.setFillParent(true);
@@ -43,7 +140,6 @@ public class PauseMenuDisplay extends UIComponent {
         Image backgroundImage = new Image(pauseMenuTexture);
 
         table.setBackground(backgroundImage.getDrawable());
-        backgroundImage.setSize(400, 400);
 
         TextButton resumeBtn = new TextButton("Resume", skin);
         TextButton restartBtn = new TextButton("Restart", skin);
@@ -96,7 +192,7 @@ public class PauseMenuDisplay extends UIComponent {
 
         //table.add(backgroundImage).expand().center().minWidth(550).minHeight(500);
        // table.row();
-        table.add(resumeBtn).minWidth(300).minHeight(50).padTop(200);
+        table.add(resumeBtn).minWidth(300).minHeight(50).padTop(20);
         table.row();
         table.add(restartBtn).minWidth(300).minHeight(50).padTop(10);
         table.row();
@@ -109,7 +205,8 @@ public class PauseMenuDisplay extends UIComponent {
         stage.addActor(table);
         table.setVisible(isVisible);
         displayScreen();
-    }
+    } */
+
 
     public void create() {
         super.create();
