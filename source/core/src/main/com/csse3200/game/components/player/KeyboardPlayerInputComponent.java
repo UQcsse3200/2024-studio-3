@@ -32,6 +32,11 @@ public class KeyboardPlayerInputComponent extends InputComponent {
     if (keycode == Keys.L) {
         FiredEnd ending = new FiredEnd();
         ending.trigger();
+
+        // Need to have some sort of event trigger
+        // then when the trigger is... triggered GameArea does the ending
+        // this will allow me to pass the necessary variables directly
+
       return true;
     }
 
