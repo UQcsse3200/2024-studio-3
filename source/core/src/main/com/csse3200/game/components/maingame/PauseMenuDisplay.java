@@ -49,7 +49,6 @@ public class PauseMenuDisplay extends UIComponent {
         TextButton exitBtn = new TextButton("Main Menu", skin);
         TextButton quitBtn = new TextButton("Quit", skin);
 
-
         resumeBtn.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -89,15 +88,15 @@ public class PauseMenuDisplay extends UIComponent {
             }
         });
 
-        buttonTable.add(resumeBtn).minWidth(250).minHeight(50).padTop(70);
+        buttonTable.add(resumeBtn).minWidth(250).minHeight(53).padTop(50);
         buttonTable.row();
-        buttonTable.add(restartBtn).minWidth(250).minHeight(50).padTop(20);
+        buttonTable.add(restartBtn).minWidth(250).minHeight(53).padTop(20);
         buttonTable.row();
-        buttonTable.add(settingsBtn).minWidth(250).minHeight(50).padTop(20);
+        buttonTable.add(settingsBtn).minWidth(250).minHeight(53).padTop(20);
         buttonTable.row();
-        buttonTable.add(exitBtn).minWidth(250).minHeight(50).padTop(20);
+        buttonTable.add(exitBtn).minWidth(250).minHeight(53).padTop(20);
         buttonTable.row();
-        buttonTable.add(quitBtn).minWidth(250).minHeight(50).padTop(20);
+        buttonTable.add(quitBtn).minWidth(250).minHeight(53).padTop(20);
 
         return buttonTable;
     }
@@ -241,14 +240,14 @@ public class PauseMenuDisplay extends UIComponent {
     public void showMenu() {
         isVisible = true;
         table.setVisible(true);
-        logger.info("MY PAUSE");
+        logger.info("PAUSE GAME");
         game.pause();
     }
 
     public void hideMenu() {
         isVisible = false;
         table.setVisible(false);
-        logger.info("MY RESUME");
+        logger.info("RESUME GAME");
         game.resume();
     }
 
