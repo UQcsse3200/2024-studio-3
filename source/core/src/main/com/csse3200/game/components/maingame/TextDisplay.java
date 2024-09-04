@@ -28,10 +28,26 @@ public class TextDisplay extends UIComponent {
     private final MainGameScreen game;
     private Image displayBox;
     private String text;
+    private Table layout;
     public TextDisplay(MainGameScreen game) {
         super();
         this.game = game;
-        isVisible = false;
+        isVisible = true;
+    }
+    public void create() {
+        super.create();
+        layout = new Table();
+        layout.setVisible(isVisible);
+        layout.bottom().center();
+        layout.setFillParent(true);
+        stage.addActor(layout);
+
+        Texture textboxTexture = ServiceLocator.getResourceService()
+                .getAsset("images/textbox.png", Texture.class);
+        Drawable textboxDrawable = new TextureRegionDrawable(textboxTexture);
+        Image textboxImage = new Image(textboxDrawable);
+        textboxImage.setScale(0.4f);
+        layout.add(textboxImage).padBottom(50).center().row();
     }
     public void setText(String text) {
         this.text = text;
