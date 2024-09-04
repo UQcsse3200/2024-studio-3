@@ -83,13 +83,13 @@ public class PauseMenuDisplay extends UIComponent {
 
         table.add(backgroundImage).expand().center().minWidth(550).minHeight(500);
         table.row();
-        table.add(resumeBtn);
+        table.add(resumeBtn).minWidth(300).minHeight(50).padTop(10);
         table.row();
-        table.add(restartBtn);
+        table.add(restartBtn).minWidth(300).minHeight(50).padTop(10);
         table.row();
-        table.add(settingsBtn);
+        table.add(settingsBtn).minWidth(300).minHeight(50).padTop(10);
         table.row();
-        table.add(exitBtn);
+        table.add(exitBtn).minWidth(300).minHeight(50).padTop(10);
 
         stage.addActor(table);
 
