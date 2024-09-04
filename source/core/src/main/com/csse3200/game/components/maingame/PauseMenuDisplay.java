@@ -1,84 +1,109 @@
 package com.csse3200.game.components.maingame;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.csse3200.game.components.ordersystem.MainGameOrderTicketDisplay;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.csse3200.game.screens.MainGameScreen;
-import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import static com.badlogic.gdx.scenes.scene2d.ui.Table.Debug.table;
-
-public class PauseMenu extends UIComponent {
+public class PauseMenuDisplay extends UIComponent {
     private boolean isVisible;
     private final MainGameScreen game;
     private Table table;
     private Image menu;
 
-    private PauseMenu pauseMenu;
-    private static final Logger logger = LoggerFactory.getLogger(PauseMenu.class);
-
+    private static final Logger logger = LoggerFactory.getLogger(PauseMenuDisplay.class);
 
     private static final String[] pauseMenuTexture = {"images/pause_menu.png"};
 
-    public PauseMenu (MainGameScreen game) {
+    public PauseMenuDisplay(MainGameScreen game) {
         super();
         this.game = game;
         isVisible = false;
     }
 
 
-    private void addImage() {
+    private void addActors() {
         table = new Table();
         table.setFillParent(true);
         Texture pauseMenuTexture = ServiceLocator
                 .getResourceService().getAsset("images/pause_menu.png", Texture.class);
 
         Image backgroundImage = new Image(pauseMenuTexture);
+
+        TextButton resumeBtn = new TextButton("Resume", skin);
+        TextButton restartBtn = new TextButton("Restart", skin);
+        TextButton settingsBtn = new TextButton("Settings", skin);
+        TextButton exitBtn = new TextButton("Exit", skin);
+
+        resumeBtn.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                toggleVisibility();
+            }
+        });
+
+        restartBtn.addListener(
+                new ChangeListener() {
+                    @Override
+                    public void changed(ChangeEvent changeEvent, Actor actor) {
+                        logger.debug("Start button clicked");
+                        entity.getEvents().trigger("restart");
+                    }
+                });
+
+        settingsBtn.addListener(
+                new ChangeListener() {
+                    @Override
+                    public void changed(ChangeEvent changeEvent, Actor actor) {
+                        logger.debug("Settings button clicked");
+                        entity.getEvents().trigger("setting");
+                    }
+                });
+
+        exitBtn.addListener(
+                new ChangeListener() {
+                    @Override
+                    public void changed(ChangeEvent changeEvent, Actor actor) {
+                        logger.debug("Exit button clicked");
+                        entity.getEvents().trigger("exitGame");
+                    }
+                });
+
         table.add(backgroundImage).expand().center().minWidth(550).minHeight(500);
-        stage.addActor(table); //will ensure that elements is rendered correctly
+        table.row();
+        table.add(resumeBtn);
+        table.row();
+        table.add(restartBtn);
+        table.row();
+        table.add(settingsBtn);
+        table.row();
+        table.add(exitBtn);
+
+        stage.addActor(table);
+
         table.setVisible(isVisible);
         displayScreen();
-
     }
 
     public void create() {
         super.create();
-        //table = new Table();
-        //table.setVisible(isVisible);
         ServiceLocator.getResourceService().loadTextures(pauseMenuTexture);
         ServiceLocator.getResourceService().loadAll(); // Ensures the texture is loaded
-
-        addImage();
-
-
-
-        // Main Menu Actions (after creating the UI and implement the functionalities, we need to
-        // trigger each button
-//        entity.getEvents().addListener("start", this::onStart);
-//        entity.getEvents().addListener("load", this::onLoad);
-//        entity.getEvents().addListener("exit", this::onExit);
-//        entity.getEvents().addListener("settings", this::onSettings);
+        addActors();
     }
 
-    // UI part
-    public void menuUI() {
-
-    }
 
     public void displayScreen() {
         stage.addListener(new InputListener() {
@@ -96,23 +121,15 @@ public class PauseMenu extends UIComponent {
         }
     }
 
-    public void handleInput() {
-        if (Gdx.input.isKeyJustPressed(Input.Keys.Q)) {
-            toggleVisibility(); // i used Q to call the PauseMenu
-        }
-    }
 
-    public boolean isVisible() {
+    public boolean getIsVisible() {
         return isVisible;
     }
+
 
     public void showMenu() {
         isVisible = true;
         table.setVisible(true);
-
-//        ResourceService resourceService = ServiceLocator.getResourceService();
-//        resourceService.loadTextures(pauseMenuTexture);
-//        ServiceLocator.getResourceService().loadAll();
         logger.info("MY PAUSE");
         game.pause();
     }
@@ -120,8 +137,6 @@ public class PauseMenu extends UIComponent {
     public void hideMenu() {
         isVisible = false;
         table.setVisible(false);
-//        ResourceService resourceService = ServiceLocator.getResourceService();
-//        resourceService.unloadAssets(pauseMenuTexture);
         logger.info("MY RESUME");
         game.resume();
     }
@@ -136,30 +151,19 @@ public class PauseMenu extends UIComponent {
     }
 
 
-
     @Override
     public void dispose() {
         super.dispose();
+//        table.clear();
         ServiceLocator.getResourceService().unloadAssets(pauseMenuTexture);
     }
 
-
-
     @Override
     protected void draw(SpriteBatch batch) {
-
     }
 
     @Override
     public void setStage(Stage mock) {
     }
-
-//    @Override
-//    public void dispose() {
-//        table.clear();
-//        super.dispose();
-//    }
-
-
 
 }
