@@ -108,6 +108,14 @@ public class ForestGameArea extends GameArea {
     this.terrainFactory = terrainFactory;
   }
 
+  /**
+   * Gets the terrainFactory for use in other classes
+   * @return TerrainFactory instance
+   */
+  public TerrainFactory getTerrainFactory() {
+    return this.terrainFactory;
+  }
+
   /** Create the game area, including terrain, static entities (trees), dynamic entities (player) */
   @Override
   public void create() {
@@ -125,7 +133,7 @@ public class ForestGameArea extends GameArea {
     // Spawn beef
     spawnBeef("cooked");
     spawnStrawberry("chopped");
-   spawnLettuce("chopped");
+    spawnLettuce("chopped");
     spawnCustomer();
 
     // Spawn the player

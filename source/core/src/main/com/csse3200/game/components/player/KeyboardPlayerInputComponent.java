@@ -4,6 +4,7 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.components.SensorComponent;
+import com.csse3200.game.components.cutscenes.FiredEnd;
 import com.csse3200.game.input.InputComponent;
 import com.csse3200.game.utils.math.Vector2Utils;
 
@@ -27,6 +28,13 @@ public class KeyboardPlayerInputComponent extends InputComponent {
    */
   @Override
   public boolean keyDown(int keycode) {
+    // A temporary key to auto trigger cutscenes for testing
+    if (keycode == Keys.L) {
+        FiredEnd ending = new FiredEnd();
+        ending.trigger();
+      return true;
+    }
+
     if (keycode == Keys.E) {
       // Trigger an interaction attempt
       entity.getEvents().trigger("interact");
@@ -69,6 +77,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
    * @return whether the input was processed
    * @see InputProcessor#keyUp(int)
    */
+
   @Override
   public boolean keyUp(int keycode) {
     if (!isInteracting) {
