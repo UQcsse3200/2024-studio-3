@@ -1,32 +1,38 @@
 package com.csse3200.game.components.maingame;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.csse3200.game.components.ordersystem.MainGameOrderTicketDisplay;
 import com.csse3200.game.screens.MainGameScreen;
-import com.csse3200.game.screens.MainMenuScreen;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class PauseMenu extends UIComponent {
-    private static final Logger logger = LoggerFactory.getLogger(PauseMenu.class);
+import static com.badlogic.gdx.scenes.scene2d.ui.Table.Debug.table;
 
+public class PauseMenu extends UIComponent {
     private boolean isVisible;
     private final MainGameScreen game;
     private Table table;
     private Image menu;
+
+    private PauseMenu pauseMenu;
+    private static final Logger logger = LoggerFactory.getLogger(PauseMenu.class);
+
+
     private static final String[] pauseMenuTexture = {"images/pause_menu.png"};
 
     public PauseMenu (MainGameScreen game) {
@@ -35,12 +41,29 @@ public class PauseMenu extends UIComponent {
         isVisible = false;
     }
 
-    public void create(){
-        super.create();
+
+    private void addImage() {
         table = new Table();
+        table.setFillParent(true);
+        Texture pauseMenuTexture = ServiceLocator
+                .getResourceService().getAsset("images/pause_menu.png", Texture.class);
+
+        Image backgroundImage = new Image(pauseMenuTexture);
+        table.add(backgroundImage).expand().center().minWidth(550).minHeight(500);
+        stage.addActor(table); //will ensure that elements is rendered correctly
         table.setVisible(isVisible);
-//        stage.addActor(table);
         displayScreen();
+
+    }
+
+    public void create() {
+        super.create();
+        //table = new Table();
+        //table.setVisible(isVisible);
+        ServiceLocator.getResourceService().loadTextures(pauseMenuTexture);
+        ServiceLocator.getResourceService().loadAll(); // Ensures the texture is loaded
+
+        addImage();
 
 
 
@@ -68,6 +91,19 @@ public class PauseMenu extends UIComponent {
                 return false;
             }
         });
+        if (isVisible) {
+            toggleVisibility();
+        }
+    }
+
+    public void handleInput() {
+        if (Gdx.input.isKeyJustPressed(Input.Keys.Q)) {
+            toggleVisibility(); // i used Q to call the PauseMenu
+        }
+    }
+
+    public boolean isVisible() {
+        return isVisible;
     }
 
     public void showMenu() {
@@ -100,6 +136,15 @@ public class PauseMenu extends UIComponent {
     }
 
 
+
+    @Override
+    public void dispose() {
+        super.dispose();
+        ServiceLocator.getResourceService().unloadAssets(pauseMenuTexture);
+    }
+
+
+
     @Override
     protected void draw(SpriteBatch batch) {
 
@@ -109,9 +154,12 @@ public class PauseMenu extends UIComponent {
     public void setStage(Stage mock) {
     }
 
-    @Override
-    public void dispose() {
-        table.clear();
-        super.dispose();
-    }
+//    @Override
+//    public void dispose() {
+//        table.clear();
+//        super.dispose();
+//    }
+
+
+
 }
