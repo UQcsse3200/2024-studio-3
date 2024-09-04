@@ -77,6 +77,7 @@ public class ForestGameArea extends GameArea {
     "images/frame/top_border_wall.png",
     "images/frame/bottom_border_wall.png",
     "images/frame/border.png",
+          "images/frame/separation_border.png",
     "images/stations/benches/bench7.png",
     "images/stations/benches/bench2.png",
     "images/stations/benches/bench3-5.png",
@@ -262,11 +263,11 @@ public class ForestGameArea extends GameArea {
     }
 
     //separation border
-    for(int y=0;y<(int)tileBounds.y;y++) {
-      GridPoint2 position = new GridPoint2(1,y);
-      Entity separate = ObstacleFactory.createBorder("right_border",tileSize);
-      spawnEntityAt(separate,position,true,false);
-    }
+    Entity sep_border = ObstacleFactory.createSeparation("separation_border");
+    GridPoint2 coords = new GridPoint2(96,10);
+    spawnEntityAt(sep_border, coords, true, true);
+    Vector2 pos = sep_border.getPosition();
+    sep_border.setPosition((pos.x / (24 * (terrain.getTileSize()))) + 0.02f, pos.y / (24 * (terrain.getTileSize())));
   }
 
   private void spawnStations() {

@@ -67,6 +67,28 @@ public class ObstacleFactory {
   }
 
   /**
+   * Creates a separation border between customer and chef
+   * @param s Name of the border to be spawned
+   */
+  public static Entity createSeparation(String s){
+    Entity border = new Entity()
+            .addComponent(new TextureRenderComponent("images/frame/"+s+".png"))
+            .addComponent(new PhysicsComponent())
+            .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
+
+    float width  = -1f;
+    float height = 117f;
+    float scalefactor = 11f;
+
+
+    border.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
+    PhysicsUtils.setScaledCollider(border, 1.0F, 0.8F);
+    border.setScale(width/scalefactor, height/scalefactor);
+    PhysicsUtils.setScaledCollider(border, 1, (height - 5) / height);
+    return border;
+  }
+
+  /**
    * Creats an entry and exit door
    * @param s Name of door to be spawned
    * @param tileSize Width of door according to the size of the tiles
