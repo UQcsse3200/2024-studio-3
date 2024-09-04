@@ -89,15 +89,15 @@ public class PauseMenuDisplay extends UIComponent {
             }
         });
 
-        buttonTable.add(resumeBtn).minWidth(250).minHeight(50).padTop(40);
+        buttonTable.add(resumeBtn).minWidth(250).minHeight(50).padTop(70);
         buttonTable.row();
-        buttonTable.add(restartBtn).minWidth(250).minHeight(50).padTop(10);
+        buttonTable.add(restartBtn).minWidth(250).minHeight(50).padTop(20);
         buttonTable.row();
-        buttonTable.add(settingsBtn).minWidth(250).minHeight(50).padTop(10);
+        buttonTable.add(settingsBtn).minWidth(250).minHeight(50).padTop(20);
         buttonTable.row();
-        buttonTable.add(exitBtn).minWidth(250).minHeight(50).padTop(10);
+        buttonTable.add(exitBtn).minWidth(250).minHeight(50).padTop(20);
         buttonTable.row();
-        buttonTable.add(quitBtn).minWidth(250).minHeight(50).padTop(10);
+        buttonTable.add(quitBtn).minWidth(250).minHeight(50).padTop(20);
 
         return buttonTable;
     }
