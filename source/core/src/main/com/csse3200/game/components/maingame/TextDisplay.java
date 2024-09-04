@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Stack;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
@@ -24,6 +25,7 @@ import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
 import java.util.List;
 import java.util.ArrayList;
+import com.badlogic.gdx.utils.Align;
 
 public class TextDisplay extends UIComponent {
     //String building variables
@@ -34,12 +36,14 @@ public class TextDisplay extends UIComponent {
     private int charIndex = 0;
     private long lastUpdate = 0L;
     private long delay = 100L;
+
     // Displaying variables
     private boolean visible;
-    private Table layout;
+    private Stack layout;
     private Label label;
     private Image displayBox;
     private final MainGameScreen game;
+
     public TextDisplay(MainGameScreen game) {
         super();
         this.game = game;
@@ -48,20 +52,31 @@ public class TextDisplay extends UIComponent {
     }
     public void create() {
         super.create();
-        layout = new Table();
-        layout.setVisible(visible);
-        layout.center().bottom();
-        layout.setFillParent(true);
-        stage.addActor(layout);
 
+        // Create the table for layout control and stack for layering
+        Table table = new Table();
+        table.setFillParent(true);
+        table.center().bottom();
+        stage.addActor(table);
+        Stack stack = new Stack();
+
+        // Create and add the textbox image
         Texture textboxTexture = ServiceLocator.getResourceService()
                 .getAsset("images/textbox.png", Texture.class);
         Drawable textboxDrawable = new TextureRegionDrawable(textboxTexture);
         Image textboxImage = new Image(textboxDrawable);
-        textboxImage.setScale(0.4f);
-        layout.add(textboxImage).bottom().center().padBottom(0).padLeft(700).row();
+        textboxImage.setScale(1.25f);
+        stack.add(textboxImage);
+
+        // Create and add the label on top of the image in the stack
         label = new Label("", skin);
-        layout.add(label).bottom().center().padBottom(300).padLeft(400).row();
+        label.setWrap(false);
+        label.setAlignment(Align.top | Align.left);
+        stack.add(label);
+
+        // Add the stack to the table with padding or alignment options
+        table.add(stack).padBottom(70).padLeft(100).size(800, 200);
+
         setText("Hello There Chat whats up with you guys. I just love CSSE3200 so much. Please send help");
     }
     public void setText(String text) {
