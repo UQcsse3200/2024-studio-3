@@ -12,7 +12,6 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.List;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -23,11 +22,15 @@ import com.csse3200.game.GdxGame;
 import com.csse3200.game.screens.MainGameScreen;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
+import java.util.List;
+import java.util.ArrayList;
+
 public class TextDisplay extends UIComponent {
     private boolean isVisible;
+    private int textLimit = 80;
     private final MainGameScreen game;
     private Image displayBox;
-    private String text;
+    private List<String> text;
     private Table layout;
     public TextDisplay(MainGameScreen game) {
         super();
@@ -38,7 +41,7 @@ public class TextDisplay extends UIComponent {
         super.create();
         layout = new Table();
         layout.setVisible(isVisible);
-        layout.bottom().center();
+        layout.center().bottom();
         layout.setFillParent(true);
         stage.addActor(layout);
 
@@ -47,12 +50,22 @@ public class TextDisplay extends UIComponent {
         Drawable textboxDrawable = new TextureRegionDrawable(textboxTexture);
         Image textboxImage = new Image(textboxDrawable);
         textboxImage.setScale(0.4f);
-        layout.add(textboxImage).padBottom(50).center().row();
+        layout.add(textboxImage).bottom().center().padBottom(0).padLeft(100).row();
     }
     public void setText(String text) {
-        this.text = text;
+        List<String> new_text = new ArrayList<>();
+        String temp = "";
+        for (int i = 0; i < text.length(); i++) {
+            if (i != 0 && i % textLimit == 0) {
+                new_text.add(temp);
+                temp = "";
+            }
+            temp += text.charAt(i);
+        }
+        new_text.add(temp);
+        this.text = new_text;
     }
-    public String getText() {
+    public List<String> getText() {
         return text;
     }
 
