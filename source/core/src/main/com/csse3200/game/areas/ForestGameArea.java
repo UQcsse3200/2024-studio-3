@@ -243,8 +243,8 @@ public class ForestGameArea extends GameArea {
 
     //left border
     for(int y=0;y<(int)tileBounds.y;y++){
-      GridPoint2 position = new GridPoint2(0,y);
-      Entity left = ObstacleFactory.createBorder("left_border",tileSize);
+      GridPoint2 position = new GridPoint2(-1,y);
+      Entity left = ObstacleFactory.createBorder("right_border",tileSize);
       spawnEntityAt(left,position,true,false);
     }
 
