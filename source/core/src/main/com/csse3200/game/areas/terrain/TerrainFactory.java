@@ -133,6 +133,12 @@ public class TerrainFactory {
     }
   }
 
+  private static void createBenchGrid(GridPoint2 mapSize){
+    if (mapSize.x % 2 == 0) {
+      throw new IllegalArgumentException("Map size must be odd");
+    }
+  }
+
   /**
    * This enum should contain the different terrains in your game, e.g. Kitchen, cave, home, all with
    * the same oerientation. But for demonstration purposes, the base code has the same level in 3
