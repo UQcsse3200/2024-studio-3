@@ -39,9 +39,9 @@ public class MainGameOrderTicketDisplay extends UIComponent {
     private static ArrayList<Long> recipeTimeArrayList;
     private static int orderNumb = 0;
     private static final long DEFAULT_TIMER = 10000;
+    private static int recipeValue;
     private Recipe recipe;
     private int gold = 0;
-    private int recipeValue = 2;
 
     /**
      * Constructs an MainGameOrderTicketDisplay instance
@@ -52,6 +52,8 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         backgroundArrayList = new ArrayList<>();
         countdownLabelArrayList = new ArrayList<>();
         recipeTimeArrayList = new ArrayList<>();
+        setRecipeValue(2);
+        setGold(50);
     }
 
     /**
@@ -193,21 +195,49 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         table.remove();
         ServiceLocator.getDocketService().getEvents().trigger("removeOrder", index);
         docket.dispose();
-        gold = gold + recipeValue;
+        addGold(2);
+
+    }
+
+    /**
+     * Sets the entity's gold. Gold has a minimum bound of 0.
+     *
+     * @param gold gold
+     */
+    public void setGold(int gold) {
+        this.gold = Math.max(gold, 0);
         if (entity != null) {
-            entity.getEvents().trigger("updateGold", gold);
+            entity.getEvents().trigger("updateGold", this.gold);
         }
     }
 
-//    public void updatePlayerGold(int gold) {
-//        // Retrieve PlayerStatsDisplay component from the player entity
-//        PlayerStatsDisplay statsDisplay = player.getComponent(PlayerStatsDisplay.class);
-//        if (statsDisplay != null) {
-//            statsDisplay.updatePlayerGoldUI(gold);
-//        } else {
-//            System.out.println("PlayerStatsDisplay component not found.");
-//        }
-//    }
+    /**
+     * Adds to the player's gold. The amount added can be negative.
+     *
+     * @param gold gold to add
+     */
+    public void addGold(int gold) {
+        setGold(this.gold + gold);
+    }
+
+    /**
+     * Returns the entity's gold.
+     *
+     * @return entity's gold
+     */
+    public int getGold() {
+        return gold;
+    }
+
+
+    public void setRecipeValue(int index) {
+        recipeValue = index;
+    }
+
+    public static int getRecipeValue() {
+        return recipeValue;
+    }
+
 
     /**
      * Shifts the order tickets to the right by moving the last ticket to the beginning of the list.
@@ -306,6 +336,7 @@ public class MainGameOrderTicketDisplay extends UIComponent {
                 startTimeArrayList.remove(i);
                 countdownLabelArrayList.remove(i);
                 recipeTimeArrayList.remove(i);
+//                addGold(2);
             }
         }
 

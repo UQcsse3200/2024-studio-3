@@ -2,6 +2,7 @@ package com.csse3200.game.entities.factories;
 
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.TooltipsDisplay;
+import com.csse3200.game.components.ordersystem.MainGameOrderTicketDisplay;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.components.player.InventoryDisplay;
 import com.csse3200.game.components.player.PlayerActions;
@@ -46,12 +47,13 @@ public class PlayerFactory {
             .addComponent(new HitboxComponent().setLayer(PhysicsLayer.PLAYER))
             .addComponent(new PlayerActions())
             .addComponent(new CombatStatsComponent(stats.health, stats.baseAttack))
-            .addComponent(new InventoryComponent(stats.inventorySize))
+            .addComponent(new InventoryComponent(stats.inventorySize, stats.gold))
             .addComponent(new InventoryDisplay())
             .addComponent(inputComponent)
                 .addComponent(new TooltipsDisplay())
             .addComponent(new PlayerStatsDisplay())
             .addComponent(new InteractionComponent(PhysicsLayer.INTERACTABLE))
+            .addComponent(new MainGameOrderTicketDisplay())
             .addComponent(new SensorComponent(PhysicsLayer.INTERACTABLE, 10f));
     player.scaleHeight(1.5f);
     PhysicsUtils.setScaledCollider(player, 0.3f, 0.3f);

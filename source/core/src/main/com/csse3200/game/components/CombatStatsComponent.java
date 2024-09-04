@@ -12,6 +12,7 @@ public class CombatStatsComponent extends Component {
 
   private static final Logger logger = LoggerFactory.getLogger(CombatStatsComponent.class);
   private int health;
+  private int gold;
   private int baseAttack;
 
   public CombatStatsComponent(int health, int baseAttack) {
