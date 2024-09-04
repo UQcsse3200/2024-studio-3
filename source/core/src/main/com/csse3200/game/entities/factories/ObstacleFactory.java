@@ -43,23 +43,37 @@ public class ObstacleFactory {
     Entity wall = new Entity()
         .addComponent(new PhysicsComponent().setBodyType(BodyType.StaticBody))
         .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
-    wall.setScale(width, height);
+    //wall.setScale(width, height);
     return wall;
   }
 
   /**
-  * Used for creating a border around the restaurant
-  */
+   * Creates a border around the restaurant
+   * @param s Name of the border to be spawned
+   * @param tileSize Width of border according to the size of the tiles
+   */
   public static Entity createBorder(String s,float tileSize) {
     Entity border = new Entity()
-            .addComponent(new TextureRenderComponent("images/stations/"+s+".png"));
+            .addComponent(new TextureRenderComponent("images/frame/"+s+".png"))
+            .addComponent(new PhysicsComponent())
+            .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
+
+    border.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
+    border.getComponent(TextureRenderComponent.class).scaleEntity();
     border.scaleWidth(tileSize);
+
+    PhysicsUtils.setScaledCollider(border, 1f, 1f);
     return border;
   }
 
+  /**
+   * Creats an entry and exit door
+   * @param s Name of door to be spawned
+   * @param tileSize Width of door according to the size of the tiles
+   */
   public static Entity createDoor(String s,float tileSize) {
     Entity door = new Entity()
-            .addComponent(new TextureRenderComponent("images/stations/"+s+".png"));
+            .addComponent(new TextureRenderComponent("images/frame/"+s+".png"));
     door.scaleWidth(tileSize);
     return door;
   }

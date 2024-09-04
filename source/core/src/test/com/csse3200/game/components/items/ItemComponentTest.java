@@ -18,6 +18,6 @@ class ItemComponentTest {
         ItemComponent item = new ItemComponent("Test", ItemType.BEEF, 1);
         assertEquals("Test", item.getItemName());
         assertEquals(ItemType.BEEF, item.getItemType());
-        assertEquals(1, item.weight());
+        assertEquals(1, item.getWeight());
     }
 }
