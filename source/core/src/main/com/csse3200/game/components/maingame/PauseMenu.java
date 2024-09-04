@@ -2,12 +2,14 @@ package com.csse3200.game.components.maingame;
 
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.csse3200.game.screens.MainGameScreen;
@@ -24,6 +26,7 @@ public class PauseMenu extends UIComponent {
     private boolean isVisible;
     private final MainGameScreen game;
     private Table table;
+    private Image menu;
     private static final String[] pauseMenuTexture = {"images/pause_menu.png"};
 
     public PauseMenu (MainGameScreen game) {
@@ -36,7 +39,9 @@ public class PauseMenu extends UIComponent {
         super.create();
         table = new Table();
         table.setVisible(isVisible);
+//        stage.addActor(table);
         displayScreen();
+
 
 
         // Main Menu Actions (after creating the UI and implement the functionalities, we need to
@@ -58,7 +63,6 @@ public class PauseMenu extends UIComponent {
             public boolean keyDown(InputEvent event, int keycode) {
                 if (keycode == com.badlogic.gdx.Input.Keys.O) {
                     toggleVisibility();
-                    logger.info("press O");
                     return true;
                 }
                 return false;
@@ -69,8 +73,11 @@ public class PauseMenu extends UIComponent {
     public void showMenu() {
         isVisible = true;
         table.setVisible(true);
+
 //        ResourceService resourceService = ServiceLocator.getResourceService();
 //        resourceService.loadTextures(pauseMenuTexture);
+//        ServiceLocator.getResourceService().loadAll();
+        logger.info("MY PAUSE");
         game.pause();
     }
 
@@ -79,15 +86,16 @@ public class PauseMenu extends UIComponent {
         table.setVisible(false);
 //        ResourceService resourceService = ServiceLocator.getResourceService();
 //        resourceService.unloadAssets(pauseMenuTexture);
+        logger.info("MY RESUME");
         game.resume();
     }
 
 
     public void toggleVisibility() {
        if (isVisible) {
-           showMenu();
-       } else {
            hideMenu();
+       } else {
+           showMenu();
        }
     }
 
@@ -99,6 +107,11 @@ public class PauseMenu extends UIComponent {
 
     @Override
     public void setStage(Stage mock) {
+    }
 
+    @Override
+    public void dispose() {
+        table.clear();
+        super.dispose();
     }
 }
