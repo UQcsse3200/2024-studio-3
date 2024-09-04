@@ -22,7 +22,7 @@ public class PauseMenuDisplay extends UIComponent {
     private final MainGameScreen game;
     private Table table;
     private static final Logger logger = LoggerFactory.getLogger(PauseMenuDisplay.class);
-    private static final String[] pauseMenuTexture = {"images/pause_menu.png"};
+    private static final String[] pauseMenuTexture = {"images/pause_menu2.png"};
 
     public PauseMenuDisplay(MainGameScreen game) {
         super();
@@ -33,7 +33,7 @@ public class PauseMenuDisplay extends UIComponent {
 
     private Image createPauseMenuBackground() {
         Texture pauseMenuTexture = ServiceLocator
-                .getResourceService().getAsset("images/pause_menu.png", Texture.class);
+                .getResourceService().getAsset("images/pause_menu2.png", Texture.class);
         Image backgroundImage = new Image(pauseMenuTexture);
         backgroundImage.setSize(800, 800);
 
@@ -89,15 +89,15 @@ public class PauseMenuDisplay extends UIComponent {
             }
         });
 
-        buttonTable.add(resumeBtn).minWidth(200).minHeight(30).padTop(40);
+        buttonTable.add(resumeBtn).minWidth(250).minHeight(50).padTop(40);
         buttonTable.row();
-        buttonTable.add(restartBtn).minWidth(200).minHeight(30).padTop(10);
+        buttonTable.add(restartBtn).minWidth(250).minHeight(50).padTop(10);
         buttonTable.row();
-        buttonTable.add(settingsBtn).minWidth(200).minHeight(30).padTop(10);
+        buttonTable.add(settingsBtn).minWidth(250).minHeight(50).padTop(10);
         buttonTable.row();
-        buttonTable.add(exitBtn).minWidth(200).minHeight(30).padTop(10);
+        buttonTable.add(exitBtn).minWidth(250).minHeight(50).padTop(10);
         buttonTable.row();
-        buttonTable.add(quitBtn).minWidth(200).minHeight(30).padTop(10);
+        buttonTable.add(quitBtn).minWidth(250).minHeight(50).padTop(10);
 
         return buttonTable;
     }
