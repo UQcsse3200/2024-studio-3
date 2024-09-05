@@ -85,26 +85,7 @@ public class MainGameOrderBtnDisplay extends UIComponent{
 		this.stage = stage;
 	}
 
-    }
 
-    /**
-     * Returns the z-index for this component. The z-index determines the rendering order of UI components.
-     *
-     * @return the z-index for this component.
-     */
-    @Override
-    public float getZIndex() {
-        return Z_INDEX;
-    }
-
-
-    /**
-     * Disposes of the button display, clearing the table and removing it from the stage.
-     */
-    @Override
-    public void setStage(Stage mock) {
-        this.stage = mock;
-    }
 
 	/**
 	 * Get the state of the button
