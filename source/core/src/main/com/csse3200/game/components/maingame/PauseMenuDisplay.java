@@ -1,8 +1,6 @@
 package com.csse3200.game.components.maingame;
 
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -24,12 +22,24 @@ public class PauseMenuDisplay extends UIComponent {
     private static final Logger logger = LoggerFactory.getLogger(PauseMenuDisplay.class);
     private static final String[] pauseMenuTexture = {"images/pause_menu2.png"};
 
+    private PauseMenuKoalaDisplay koala = new PauseMenuKoalaDisplay();
+
     public PauseMenuDisplay(MainGameScreen game) {
         super();
         this.game = game;
         isVisible = false;
     }
 
+//    private Image createKoalaImage() {
+//        table = new Table();
+//        table.bottom().left();
+////        table.setFillParent(true);
+//        Texture koalaTexture = ServiceLocator
+//                .getResourceService().getAsset("images/koala5.png", Texture.class);
+//        Image koalaImage = new Image(koalaTexture);
+//        logger.debug("Not loading");
+//        return koalaImage;
+//    }
 
     private Image createPauseMenuBackground() {
         Texture pauseMenuTexture = ServiceLocator
@@ -106,6 +116,9 @@ public class PauseMenuDisplay extends UIComponent {
         table.setFillParent(true);
 
         Image backgroundImage = createPauseMenuBackground();
+
+//        Image koalaImage = createKoala();
+
         Table buttonTable = createButtonsTable();
 
         Stack stack = new Stack();
@@ -113,6 +126,9 @@ public class PauseMenuDisplay extends UIComponent {
 
         stack.add(buttonTable);
 
+//        stack.add(createKoalaImage());
+
+//        stack.add(koalaImage);
 
         table.add(stack).center().expand();
 
@@ -128,83 +144,6 @@ public class PauseMenuDisplay extends UIComponent {
     public void addActors() {
         stackPauseMenu();
     }
-
-        /*
-    private void addActors() {
-        table = new Table();
-        table.setFillParent(true);
-        Texture pauseMenuTexture = ServiceLocator
-                .getResourceService().getAsset("images/pause_menu.png", Texture.class);
-
-        Image backgroundImage = new Image(pauseMenuTexture);
-
-        table.setBackground(backgroundImage.getDrawable());
-
-        TextButton resumeBtn = new TextButton("Resume", skin);
-        TextButton restartBtn = new TextButton("Restart", skin);
-        TextButton settingsBtn = new TextButton("Settings", skin);
-        TextButton exitBtn = new TextButton("Main Menu", skin);
-        TextButton quitBtn = new TextButton("Quit", skin);
-
-        resumeBtn.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                toggleVisibility();
-            }
-        });
-
-        restartBtn.addListener(
-                new ChangeListener() {
-                    @Override
-                    public void changed(ChangeEvent changeEvent, Actor actor) {
-                        logger.debug("Start button clicked");
-                        entity.getEvents().trigger("restart");
-                    }
-                });
-
-        settingsBtn.addListener(
-                new ChangeListener() {
-                    @Override
-                    public void changed(ChangeEvent changeEvent, Actor actor) {
-                        logger.debug("Settings button clicked");
-                        entity.getEvents().trigger("setting");
-                    }
-                });
-
-        exitBtn.addListener(
-                new ChangeListener() {
-                    @Override
-                    public void changed(ChangeEvent changeEvent, Actor actor) {
-                        logger.debug("Exit button clicked");
-                        entity.getEvents().trigger("exitGame");
-                    }
-                });
-
-        quitBtn.addListener(
-                new ChangeListener() {
-                    @Override
-                    public void changed(ChangeEvent changeEvent, Actor actor) {
-                        logger.debug("Quit button clicked");
-                        entity.getEvents().trigger("quit");
-                    }
-                });
-
-        //table.add(backgroundImage).expand().center().minWidth(550).minHeight(500);
-       // table.row();
-        table.add(resumeBtn).minWidth(300).minHeight(50).padTop(20);
-        table.row();
-        table.add(restartBtn).minWidth(300).minHeight(50).padTop(10);
-        table.row();
-        table.add(settingsBtn).minWidth(300).minHeight(50).padTop(10);
-        table.row();
-        table.add(exitBtn).minWidth(300).minHeight(50).padTop(10);
-        table.row();
-        table.add(quitBtn).minWidth(300).minHeight(50).padTop(10);
-
-        stage.addActor(table);
-        table.setVisible(isVisible);
-        displayScreen();
-    } */
 
 
     public void create() {

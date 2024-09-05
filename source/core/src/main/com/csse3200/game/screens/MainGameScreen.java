@@ -160,6 +160,7 @@ public class MainGameScreen extends ScreenAdapter {
 		        .addComponent(new EndDayDisplay(this))
 						.addComponent(new PauseMenuDisplay(this))
 								.addComponent(new PauseMenuActions(this.game));
+
 		ServiceLocator.getEntityService().register(ui);
 	}
 }
