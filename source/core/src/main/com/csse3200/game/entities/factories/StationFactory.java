@@ -107,8 +107,6 @@ public class StationFactory {
     flame.addComponent(animator);
 
     flame.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
-
-    flame.getComponent(AnimationRenderComponent.class).scaleEntity();
     return flame;
   }
 }
