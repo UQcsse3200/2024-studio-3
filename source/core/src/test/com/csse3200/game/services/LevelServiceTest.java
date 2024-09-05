@@ -30,4 +30,10 @@ class LevelServiceTest {
         verify(levelServiceSpy).getEvents().trigger("startLevel");
         verify(levelServiceSpy).getEvents().trigger("createCustomer");
     }
+
+    @Test
+    void shouldReturnEventHandler() {
+        levelServiceSpy.getEvents();
+        verify(levelServiceSpy).getEvents();
+    }
 }
