@@ -3,8 +3,6 @@ package com.csse3200.game.components.player;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector2;
-import com.csse3200.game.components.SensorComponent;
-import com.csse3200.game.components.cutscenes.FiredEnd;
 import com.csse3200.game.input.InputComponent;
 import com.csse3200.game.utils.math.Vector2Utils;
 
@@ -30,8 +28,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
   public boolean keyDown(int keycode) {
     // A temporary key to auto trigger cutscenes for testing
     if (keycode == Keys.L) {
-        FiredEnd ending = new FiredEnd();
-        ending.trigger();
+      System.out.println("WHOOOOOOOOOOO");
 
         // Need to have some sort of event trigger
         // then when the trigger is... triggered GameArea does the ending

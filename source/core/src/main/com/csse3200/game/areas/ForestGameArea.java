@@ -1,5 +1,6 @@
 package com.csse3200.game.areas;
 
+import com.csse3200.game.components.cutscenes.GoodEnd;
 import com.csse3200.game.entities.benches.Bench;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,10 +19,8 @@ import com.csse3200.game.entities.factories.ItemFactory;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.utils.math.GridPoint2Utils;
-import com.csse3200.game.utils.math.RandomUtils;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /** Forest area for the demo game with trees, a player, and some enemies. */
@@ -108,14 +107,6 @@ public class ForestGameArea extends GameArea {
     this.terrainFactory = terrainFactory;
   }
 
-  /**
-   * Gets the terrainFactory for use in other classes
-   * @return TerrainFactory instance
-   */
-  public TerrainFactory getTerrainFactory() {
-    return this.terrainFactory;
-  }
-
   /** Create the game area, including terrain, static entities (trees), dynamic entities (player) */
   @Override
   public void create() {
@@ -140,6 +131,8 @@ public class ForestGameArea extends GameArea {
     player = spawnPlayer();
 
     playMusic();
+
+    triggerFiredEnd();
   }
 
   private void displayUI() {
@@ -576,5 +569,14 @@ public class ForestGameArea extends GameArea {
     super.dispose();
     ServiceLocator.getResourceService().getAsset(backgroundMusic, Music.class).stop();
     this.unloadAssets();
+  }
+
+
+  private void triggerFiredEnd() {
+    spawnBeef("cooked");
+  }
+
+  private void triggerGoodEnd() {
+    // pain
   }
 }
