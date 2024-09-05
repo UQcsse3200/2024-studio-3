@@ -78,15 +78,22 @@ public class ForestGameArea extends GameArea {
     "images/frame/top_border_wall.png",
     "images/frame/bottom_border_wall.png",
     "images/frame/border.png",
-    "images/stations/benches/bench7.png",
-    "images/stations/benches/bench2.png",
-    "images/stations/benches/bench3-5.png",
-    "images/stations/benches/bench4.png",
-    "images/stations/benches/bench6.png",
-    "images/stations/benches/bench1.png",
           "images/tooltip_bg.png",
     "images/stations/benches/bench6-bottom.png",
           "images/stations/benches/bench_test.png",
+          "images/stations/benches/middle.png",
+          "images/stations/benches/left_border.png",
+            "images/stations/benches/right_border.png",
+            "images/stations/benches/vertical.png",
+            "images/stations/benches/top_fin.png",
+          "images/stations/benches/bottom_fin.png",
+          "images/stations/benches/bottom_shadow_final.png",
+            "images/stations/benches/shadow_bottom_top.png",
+            "images/stations/benches/top_top_final.png",
+            "images/stations/benches/left_shadow.png",
+            "images/stations/benches/right_shadow.png",
+            "images/stations/benches/top_left_corner_final.png",
+            "images/stations/benches/top_left_corner.png",
     "images/stations/benches/bench6-top.png"
   };
   private static final String[] forestTextureAtlases = {
@@ -134,7 +141,7 @@ public class ForestGameArea extends GameArea {
     // Spawn the player
     player = spawnPlayer();
 
-    playMusic();
+    //playMusic();
   }
 
   private void displayUI() {
@@ -290,48 +297,82 @@ public class ForestGameArea extends GameArea {
    */
   private void spawnBenches() {
      //bottom
-     for (int i = 4; i < 16; i++) {
-       Entity bench = Bench.createBench("bench_test");
+     Entity bench1 = Bench.createBench("left_border");
+     spawnEntityAt(bench1, new GridPoint2(4,1), false, false);
+     bench1.setPosition(4, 1f);
+     for (int i = 5; i < 15; i++) {
+       Entity bench = Bench.createBench("middle");
        spawnEntityAt(bench, new GridPoint2(i, 1), false, false);
        bench.setPosition(i, 1f);
      }
+     Entity bench2 = Bench.createBench("right_border");
+     spawnEntityAt(bench2, new GridPoint2(15,1), false, false);
+     bench2.setPosition(15, 1f);
      //right
-     for (int i = 2; i < 9; i++) {
-       Entity bench = Bench.createBench("bench_test");
+     for (int i = 2; i < 10; i++) {
+       Entity bench = Bench.createBench("vertical");
        spawnEntityAt(bench, new GridPoint2(15, i), false, false);
        bench.setPosition(15f, i);
      }
-     //top
-     for (int i = 4; i < 16; i++) {
-       Entity bench = Bench.createBench("bench_test");
+     Entity bench4 = Bench.createBench("top_fin");
+     spawnEntityAt(bench4, new GridPoint2(15,10), false, false);
+     bench4.setPosition(15f, 10);
+
+     for (int i = 5; i < 15; i++) {
+       Entity bench = Bench.createBench("top_top_final");
        spawnEntityAt(bench, new GridPoint2(i, 10), true, true);
-       bench.setPosition(i, 9.9f);
+       bench.setPosition(i, 10f);
      }
-     //second row of top incase shadows wanted
-     for (int i = 4; i < 16; i++) {
-       Entity bench = Bench.createBench("bench_test");
+     Entity bench3 = Bench.createBench("top_left_corner_final");
+     spawnEntityAt(bench3, new GridPoint2(4,10), false, false);
+     bench3.setPosition(4, 10f);
+
+     //second row of top for shadows
+     for (int i = 5; i < 15; i++) {
+       Entity bench = Bench.createBench("shadow_bottom_top");
        spawnEntityAt(bench, new GridPoint2(i, 9), false, false);
        bench.setPosition(i, 9f);
      }
-    // left
-    for (int i = 4; i < 8; i++) {
-      Entity bench = Bench.createBench("bench_test");
+    Entity bench5 = Bench.createBench("left_shadow");
+    spawnEntityAt(bench5, new GridPoint2(4,9), false, false);
+    bench5.setPosition(4, 9f);
+
+    for (int i = 4; i < 7; i++) {
+      Entity bench = Bench.createBench("vertical");
       spawnEntityAt(bench, new GridPoint2(4, i), false, false);
       bench.setPosition(4f, i);
     }
-    //middle
-    for (int i = 2; i < 5; i++) {
-      Entity bench = Bench.createBench("bench_test");
-      spawnEntityAt(bench, new GridPoint2(9, i), false, false);
-      bench.setPosition(9f, i);
-    }
-    //middle
-    for (int i = 7; i < 10; i++) {
-      Entity bench = Bench.createBench("bench_test");
-      spawnEntityAt(bench, new GridPoint2(9, i), false, false);
-      bench.setPosition(9f, i);
-    }
+    Entity bench7 = Bench.createBench("bottom_shadow_final");
+    spawnEntityAt(bench7, new GridPoint2(4,3), false, false);
+    bench7.setPosition(4f, 3);
+    Entity bench8 = Bench.createBench("top_fin");
+    spawnEntityAt(bench8, new GridPoint2(4,7), false, false);
+    bench8.setPosition(4f, 7);
 
+    //middle 1
+    for (int i = 2; i < 4; i++) {
+      Entity bench = Bench.createBench("vertical");
+      spawnEntityAt(bench, new GridPoint2(9, i), false, false);
+      bench.setPosition(9f, i);
+    }
+    Entity bench9 = Bench.createBench("top_fin");
+    spawnEntityAt(bench9, new GridPoint2(9,4), false, false);
+    bench9.setPosition(9f, 4);
+    //middle 2
+    for (int i = 7; i < 9; i++) {
+      Entity bench = Bench.createBench("vertical");
+      spawnEntityAt(bench, new GridPoint2(9, i), false, false);
+      bench.setPosition(9f, i);
+    }
+    Entity bench12 = Bench.createBench("vertical");
+    spawnEntityAt(bench12, new GridPoint2(9,9), false, false);
+    bench12.setPosition(9f, 9);
+    Entity bench11 = Bench.createBench("bench_test");
+    spawnEntityAt(bench11, new GridPoint2(9,10), false, false);
+    bench11.setPosition(9f, 10);
+    Entity bench10 = Bench.createBench("bottom_shadow_final");
+    spawnEntityAt(bench10, new GridPoint2(9,7), false, false);
+    bench10.setPosition(9f, 7);
 
   }
 

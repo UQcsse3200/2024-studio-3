@@ -35,26 +35,9 @@ public class Bench extends Entity{
                 .addComponent(new PhysicsComponent())
                 .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
                 .addComponent(new StationItemHandlerComponent(type, new ArrayList<>()));
-
-        float width  = 0;
-        float height = 0;
-        float scalefactor = 8.91F;
-        switch(type) {
-            case "bench_test":
-                width = 7f;
-                height = 7f;
-                scalefactor = 7f;
-                break;
-             // replace with other bench types when wanting to include shadows or other:
-            case "bench1":
-                width = 15f;
-                height = 40f;
-                break;
-        }
-        if (width == 0 && height == 0) {
-            throw new IllegalArgumentException(
-                    "Illegal argument: 'type' does not correspond to an existing bench");
-        }
+       // float width  = 7f;
+        //float height = 7f;
+        //float scalefactor = 7f;
         bench.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
         return bench;
     }
