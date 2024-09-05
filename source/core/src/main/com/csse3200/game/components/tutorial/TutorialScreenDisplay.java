@@ -1,55 +1,157 @@
 package com.csse3200.game.components.tutorial;
 
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.csse3200.game.GdxGame;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
+import com.csse3200.game.components.ordersystem.MainGameOrderTicketDisplay;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
- * Displays tutorial-related UI elements on the screen.
+ * Displays tutorial-related UI components and manages tutorial flow.
  */
 public class TutorialScreenDisplay extends UIComponent {
-    private Table instructionTable;
-    private Label instructionLabel;
+    private static final Logger logger = LoggerFactory.getLogger(TutorialScreenDisplay.class);
+    private final GdxGame game;
+    private Label tutorialLabel;
+    private int tutorialStep = 0;  // tracks the current tutorial step
+
+    public TutorialScreenDisplay(GdxGame game) {
+        this.game = game;
+    }
 
     @Override
     public void create() {
         super.create();
+        setupUI();
+        advanceTutorialStep();  // start the tutorial from the first step
+    }
 
-        Stage stage = ServiceLocator.getRenderService().getStage();
-        instructionTable = new Table();
-        instructionLabel = new Label("", skin);
 
-        instructionTable.add(instructionLabel).pad(10f).row();
-        instructionTable.setFillParent(true);
-
-        stage.addActor(instructionTable);
-
-        // Start listening to tutorial events
-        ServiceLocator.getTutorialService().getEvents().addListener("updateInstruction", this::updateInstruction);
+    /**
+     * Sets up the tutorial UI components.
+     */
+    private void setupUI() {
+        tutorialLabel = new Label("", skin);  // create a label for tutorial instructions
+        stage.addActor(tutorialLabel);
     }
 
     /**
-     * Updates the tutorial instruction text displayed on the screen.
-     *
-     * @param instructionText The instruction text to display.
+     * Shifts the order tickets to the left using MainGameOrderTicketDisplay.
      */
-    private void updateInstruction(String instructionText) {
-        instructionLabel.setText(instructionText);
+    private void shiftDocketsLeft() {
+        orderTicketDisplay.shiftDocketsLeft();
+    }
+
+    /**
+     * Shifts the order tickets to the right using MainGameOrderTicketDisplay.
+     */
+    private void shiftDocketsRight() {
+        orderTicketDisplay.shiftDocketsRight();
+    }
+
+    /**
+     * Proceeds to the next tutorial step using a switch-case.
+     */
+    private void advanceTutorialStep() {
+        tutorialStep++;
+        switch (tutorialStep) {
+            case 1:
+                showMovementTutorial();
+                break;
+            case 2:
+                showItemPickupTutorial();
+                break;
+            case 3:
+                showOrderingTutorial();
+                break;
+            case 4:
+                completeTutorial();
+                break;
+            default:
+                logger.error("Unexpected tutorial step: " + tutorialStep);
+        }
+    }
+
+    /**
+     * Displays the movement tutorial. The player needs to use W/A/S/D to move.
+     */
+    private void showMovementTutorial() {
+        tutorialLabel.setText("Use W/A/S/D to move around.");
+        // implement all other movement tutorial code ehre
+        ServiceLocator.getInputService().getEvents().addListener("playerMoved", this::onPlayerMoved);
+    }
+
+    /**
+     * Called when the player moves. Proceeds to the next tutorial step.
+     */
+    private void onPlayerMoved() {
+        ServiceLocator.getInputService().getEvents().removeListener("playerMoved", this::onPlayerMoved);
+        advanceTutorialStep();
+    }
+
+    /**
+     * Displays the docket switching tutorial. The player needs to use [ and ] to switch dockets.
+     */
+    private void showOrderingTutorial() {
+        tutorialLabel.setText("Use the [ and ] keys to switch dockets.");
+        // all other ordering code to be implemented here once other team is finished with customer ordering
+        ServiceLocator.getTutorialService().getEvents().addListener("shiftDocketsRight", this::onDocketSwitched);
+        ServiceLocator.getTutorialService().getEvents().addListener("shiftDocketsLeft", this::onDocketSwitched);
+    }
+
+    /**
+     * Called when the player switches dockets. Proceeds to the next tutorial step.
+     */
+    private void onOrderingComplete() {
+        ServiceLocator.getTutorialService().getEvents().removeListener("shiftDocketsRight", this::onDocketSwitched);
+        ServiceLocator.getTutorialService().getEvents().removeListener("shiftDocketsLeft", this::onDocketSwitched);
+        advanceTutorialStep();
+    }
+
+    /**
+     * Displays the item pickup tutorial. The player needs to press SPACE to pick up an item.
+     */
+    private void showItemPickupTutorial() {
+        tutorialLabel.setText("Press SPACE to pick up the item."); // NEEDS TO BE MODIFIED ONCE WE TALK TO OTHER TEAM
+        // all other item pickup tutorial code to be implemend here
+
+        ServiceLocator.getTutorialService().getEvents().addListener("itemPickedUp", this::onItemPickedUp);
+    }
+
+    /**
+     * Called when the player picks up an item. Proceeds to the next tutorial step.
+     */
+    private void onItemPickedUp() {
+        ServiceLocator.getTutorialService().getEvents().removeListener("itemPickedUp", this::onItemPickedUp);
+        advanceTutorialStep();
+    }
+
+    /**
+     * Completes the tutorial and informs the player that they can continue.
+     */
+    private void completeTutorial() {
+        tutorialLabel.setText("Tutorial Complete! Press ENTER to continue.");
+        ServiceLocator.getInputService().getEvents().addListener("startGame", this::startGame);
+    }
+
+    /**
+     * Starts the main game after the tutorial is complete.
+     */
+    private void startGame() {
+        ServiceLocator.getInputService().getEvents().removeListener("startGame", this::startGame);
+        game.setScreen(GdxGame.ScreenType.MAIN_GAME);  // Transition to the main game
     }
 
     @Override
-    public void draw(SpriteBatch batch) {
-        // handled by stage
+    public void update() {
+        // might be useful later for dynamically updating order tickets
     }
 
     @Override
     public void dispose() {
-
-        instructionTable.clear();
-        instructionTable.remove();
         super.dispose();
+        tutorialLabel.remove();
     }
 }
