@@ -82,7 +82,7 @@ public class ForestGameArea extends GameArea {
           "images/tooltip_bg.png",
     "images/stations/benches/bench6-bottom.png",
     "images/stations/benches/bench6-top.png",
-    "images/fireExtinguisher/Fire_Extinguisher.png"
+    "images/fireExtinguisher/Fire_Extinguisher.png",
           "images/stations/benches/bench_test.png",
           "images/stations/benches/middle.png",
           "images/stations/benches/left_border.png",
@@ -284,12 +284,12 @@ public class ForestGameArea extends GameArea {
     GridPoint2 ovenPos = new GridPoint2(5,4);
     Entity oven = StationFactory.createOven();
     spawnEntityAt(oven, ovenPos, true, false);
-    oven.setPosition(oven.getPosition().x , oven.getPosition().y + 1.3f);
+    oven.setPosition(oven.getPosition().x , oven.getPosition().y + 0.9f);
 
     GridPoint2 stovePos = new GridPoint2(5,4);
     Entity stove = StationFactory.createStove();
     spawnEntityAt(stove, stovePos, false, false);
-    stove.setPosition(stove.getPosition().x + 2.7f , stove.getPosition().y + 1.3f);
+    stove.setPosition(stove.getPosition().x + 2.7f , stove.getPosition().y + 0.9f);
 
     //Spawn a flame, this is temporary and for testing purposes
     GridPoint2 flamePos = new GridPoint2(1,1);
