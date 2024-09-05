@@ -39,6 +39,7 @@ class MainGameOrderBtnDisplayTest {
     @BeforeEach
     void setUp() {
         ServiceLocator.registerRenderService(renderService);
+        renderService.setStage(stage);
         ServiceLocator.registerDocketService(docketService);
         createOrderBtn = new MainGameOrderBtnDisplay();
         createOrderBtn.setStage(stage);
@@ -47,6 +48,7 @@ class MainGameOrderBtnDisplayTest {
 
     @Test
     public void testButtonCreation() {
+        when(ServiceLocator.getRenderService().getStage()).thenReturn(stage);
         createOrderBtn.addActors();
         verify(stage).addActor(any(Table.class));
     }
