@@ -445,6 +445,7 @@ public class ForestGameArea extends GameArea {
   }
 
   public void spawnCustomer() {
+    logger.info("A customer has been spawned");
     GridPoint2 position = new GridPoint2(1, 5);
     //System.out.println("1");
 

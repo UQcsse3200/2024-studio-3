@@ -3,8 +3,11 @@ package com.csse3200.game.components.levels;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.services.ServiceLocator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class LevelComponent extends Component {
+    private static final Logger logger = LoggerFactory.getLogger(LevelComponent.class);
     private long spawnStartTime = 0;
     private boolean nowSpawning = false;
     private int levelSpawnCap = 0;
@@ -27,7 +30,9 @@ public class LevelComponent extends Component {
                 setSpawnStartTime();
                 customerSpawned();
                 ServiceLocator.getLevelService().getEvents().trigger("spawnCustomer");
+                logger.info("Spawned {} customer(s) so far", numbCustomersSpawned);
                 if (numbCustomersSpawned == levelSpawnCap) {
+                    logger.info("Hit the spawn limit of {}", levelSpawnCap);
                     toggleNowSpawning();
                 }
             }
