@@ -1,6 +1,5 @@
 package com.csse3200.game.areas;
 
-import com.csse3200.game.components.FlameComponent;
 import com.csse3200.game.entities.benches.Bench;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -86,13 +85,10 @@ public class ForestGameArea extends GameArea {
     "images/stations/benches/bench1.png",
           "images/tooltip_bg.png",
     "images/stations/benches/bench6-bottom.png",
-    "images/stations/benches/bench6-top.png",
+    "images/stations/benches/bench6-top.png"
   };
   private static final String[] forestTextureAtlases = {
-    "images/terrain_iso_grass.atlas",
-    "images/ghost.atlas",
-    "images/ghostKing.atlas",
-    "images/fireExtinguisher/atlas/flame.atlas",
+    "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/ghostKing.atlas"
   };
   private static final String[] forestSounds = {"sounds/Impact4.ogg"};
   private static final String backgroundMusic = "sounds/BGM_03_mp3.mp3";
@@ -288,6 +284,10 @@ public class ForestGameArea extends GameArea {
     GridPoint2 flamePos = new GridPoint2(1,1);
     Entity flame = StationFactory.createFlame();
     spawnEntityAt(flame, flamePos, false, false);
+
+    GridPoint2 fireExtinguisherPos = new GridPoint2(3, 4);
+    Entity fireExtinguisher = StationFactory.createFireExtinguisher();
+    spawnEntityAt(fireExtinguisher, fireExtinguisherPos, false, false);
   }
 
     /**
