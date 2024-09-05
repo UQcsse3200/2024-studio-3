@@ -88,7 +88,7 @@ public class ForestGameArea extends GameArea {
     "images/stations/benches/bench6-top.png"
   };
   private static final String[] forestTextureAtlases = {
-    "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/ghostKing.atlas, images/animal_images/gorilla.atlas"
+    "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/ghostKing.atlas", "images/animal_images/gorilla.atlas"
   };
   private static final String[] forestSounds = {"sounds/Impact4.ogg"};
   private static final String backgroundMusic = "sounds/BGM_03_mp3.mp3";
@@ -448,7 +448,7 @@ public class ForestGameArea extends GameArea {
 
     //System.out.println("2");
     Vector2 targetPos3 = new Vector2(3, 5); // Target position for ghost king
-    Entity customer = NPCFactory.createGhostKing(player, targetPos3);
+    Entity customer = NPCFactory.createCustomer(player, targetPos3);
     spawnEntityAt(customer, position, true, true);
 //    for (int i = 0; i < NUM_CUSTOMERS_BASE; i++) {
 //      customer = NPCFactory.createCustomer();

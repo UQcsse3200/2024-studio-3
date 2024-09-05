@@ -6,7 +6,7 @@
     "spawnTimer": 100,
     "preference": 0,
     "reputation": 100,
-    "texture": "images/animal_images/gorilla.png"
+    "texture": "images/animal_images/gorilla.atlas"
   },
 
   "Goose": {
