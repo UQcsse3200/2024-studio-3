@@ -86,6 +86,7 @@ public class ForestGameArea extends GameArea {
     "images/stations/benches/bench1.png",
           "images/tooltip_bg.png",
     "images/stations/benches/bench6-bottom.png",
+          "images/stations/benches/bench_test.png",
     "images/stations/benches/bench6-top.png"
   };
   private static final String[] forestTextureAtlases = {
@@ -120,8 +121,9 @@ public class ForestGameArea extends GameArea {
     // Spawn the restaurant
     spawnDoor();
     spawnWall();
+    spawnBenches();
     make_border();
-   // spawnBenches();
+
     spawnStations();
     // Spawn beef
     spawnBeef("cooked");
@@ -274,47 +276,63 @@ public class ForestGameArea extends GameArea {
     GridPoint2 ovenPos = new GridPoint2(5,4);
     Entity oven = StationFactory.createOven();
     spawnEntityAt(oven, ovenPos, true, false);
-    oven.setPosition(oven.getPosition().x , oven.getPosition().y + 1.3f);
+    oven.setPosition(oven.getPosition().x , oven.getPosition().y + 0.7f);
 
     GridPoint2 stovePos = new GridPoint2(5,4);
     Entity stove = StationFactory.createStove();
     spawnEntityAt(stove, stovePos, false, false);
-    stove.setPosition(stove.getPosition().x + 2.7f , stove.getPosition().y + 1.3f);
+    stove.setPosition(stove.getPosition().x + 2.7f , stove.getPosition().y + 0.7f);
   }
 
-    /**
-     * spawn a bench
-     * @param type: bench filename
-     * @param x: x coordinate
-     * @param y: y coordinate
-     *         note: coordinates begin at bottom left of screen
-     */
-  private void spawnBench(String type, int x, int y) {
-      GridPoint2 coords = new GridPoint2(x,y);
-      Entity bench = Bench.createBench(type);
-      spawnEntityAt(bench, coords, true, true);
-      Vector2 pos = bench.getPosition();
 
-      // this is very scuffed but it aligns.
-      bench.setPosition((pos.x / (24 * (terrain.getTileSize()))) + 0.02f, pos.y / (24 * (terrain.getTileSize())));
-  }
   /**
    * Render and spawn all benches.
    */
   private void spawnBenches() {
-      List<Bench> benches = new ArrayList<Bench>();
-      benches.add(new Bench("bench3-5", 98, 224));
-      benches.add(new Bench("bench7", 98, 25));
-      benches.add(new Bench("bench2", 96, 72));
-      benches.add(new Bench("bench6-bottom", 343,27));
-      benches.add(new Bench("bench6-top", 343,131));
-      benches.add(new Bench("bench4", 217, 160));
-      benches.add(new Bench("bench1", 217, 26));
+     //bottom
+     for (int i = 4; i < 16; i++) {
+       Entity bench = Bench.createBench("bench_test");
+       spawnEntityAt(bench, new GridPoint2(i, 1), false, false);
+       bench.setPosition(i, 1f);
+     }
+     //right
+     for (int i = 2; i < 9; i++) {
+       Entity bench = Bench.createBench("bench_test");
+       spawnEntityAt(bench, new GridPoint2(15, i), false, false);
+       bench.setPosition(15f, i);
+     }
+     //top
+     for (int i = 4; i < 16; i++) {
+       Entity bench = Bench.createBench("bench_test");
+       spawnEntityAt(bench, new GridPoint2(i, 10), true, true);
+       bench.setPosition(i, 9.9f);
+     }
+     //second row of top incase shadows wanted
+     for (int i = 4; i < 16; i++) {
+       Entity bench = Bench.createBench("bench_test");
+       spawnEntityAt(bench, new GridPoint2(i, 9), false, false);
+       bench.setPosition(i, 9f);
+     }
+    // left
+    for (int i = 4; i < 8; i++) {
+      Entity bench = Bench.createBench("bench_test");
+      spawnEntityAt(bench, new GridPoint2(4, i), false, false);
+      bench.setPosition(4f, i);
+    }
+    //middle
+    for (int i = 2; i < 5; i++) {
+      Entity bench = Bench.createBench("bench_test");
+      spawnEntityAt(bench, new GridPoint2(9, i), false, false);
+      bench.setPosition(9f, i);
+    }
+    //middle
+    for (int i = 7; i < 10; i++) {
+      Entity bench = Bench.createBench("bench_test");
+      spawnEntityAt(bench, new GridPoint2(9, i), false, false);
+      bench.setPosition(9f, i);
+    }
 
-      for (int i = 0; i < benches.size(); i++) {
-          Bench bench = benches.get(i);
-          spawnBench(bench.type, bench.x, bench.y);
-      }
+
   }
 
   private Entity spawnPlayer() {

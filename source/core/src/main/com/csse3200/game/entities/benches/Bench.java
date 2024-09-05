@@ -17,14 +17,6 @@ public class Bench extends Entity{
     public String type;
     public int x;
     public int y;
-    /* bench asset dimensions
-     * bench1:   15x40
-     * bench2:   15x57
-     * bench3-5: 107x15
-     * bench4:   15x45
-     * bench6:   15x105
-     * bench7:   107x9
-     */
     public Bench(String type, int x, int y) {
         this.type = type;
         this.x    = x;
@@ -48,87 +40,22 @@ public class Bench extends Entity{
         float height = 0;
         float scalefactor = 8.91F;
         switch(type) {
+            case "bench_test":
+                width = 7f;
+                height = 7f;
+                scalefactor = 7f;
+                break;
+             // replace with other bench types when wanting to include shadows or other:
             case "bench1":
-                width  = 15f;
-                height = 44f;
-                scalefactor = 10.3f;
+                width = 15f;
+                height = 40f;
                 break;
-            case "bench2":
-                width  = 15f;
-                height = 57f;
-                scalefactor = 11f;
-                break;
-            case "bench3-5":
-                width  = 104f;
-                height = 14f;
-                scalefactor = 8.91f;
-                break;
-            case "bench4":
-                width  = 15f;
-                height = 43.8f;
-                scalefactor = 10.3F;
-                break;
-            case "bench6":
-                width  = 15f;
-                height = 105f;
-                scalefactor = 8.91F;
-                break;
-            case "bench6-top":
-                width  = 14.1f;
-                height = 48.9f;
-                scalefactor = 8.91F;
-                break;
-            case "bench6-bottom":
-                width  = 14.1f;
-                height = 53f;
-                scalefactor = 8.91F;
-                break;
-            case "bench7":
-                width  = 106f;
-                height = 9f;
-                scalefactor = 8.91F;
         }
         if (width == 0 && height == 0) {
             throw new IllegalArgumentException(
                     "Illegal argument: 'type' does not correspond to an existing bench");
         }
         bench.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
-
-        PhysicsUtils.setScaledCollider(bench, 1.0F, 0.8F);
-
-
-        // magic scaling factor (it is about half a pixel off)
-       // float scalefactor = 8.91F;
-        bench.setScale(width/scalefactor, height/scalefactor);
-        // scaleY < 1 so that you can walk behind the benches
-        PhysicsUtils.setScaledCollider(bench, 1, (height - 5) / height);
-        return bench;
-    }
-
-
-    /**
-     * Creates visible station.
-     *
-     * @param height Station height in world units
-     * @param type   Type of station
-     * @param xScale Bench collision in x
-     * @param yScale Bench collision in y
-     * @return Station entity of given width and height with relavent behaviors
-     */
-    public static Entity createBench(String type, float height, float xScale, float yScale) {
-        Entity bench = new Entity()
-                .addComponent(new TextureRenderComponent("images/stations/" + type + ".png"))
-                .addComponent(new PhysicsComponent())
-                .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
-                .addComponent(new StationItemHandlerComponent(type, new ArrayList<>()));
-
-
-        bench.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
-        bench.getComponent(TextureRenderComponent.class).scaleEntity();
-        bench.scaleHeight(height);
-
-        PhysicsUtils.setScaledCollider(bench, xScale, yScale);
-
         return bench;
     }
 
