@@ -30,9 +30,10 @@ import com.badlogic.gdx.utils.Align;
 public class TextDisplay extends UIComponent {
     //String building variables
     private List<String> text;
+    private int current_part = 0;
     private int text_length = 0;
     private StringBuilder currentText;
-    private int textLimit = 80;
+    private int textLimit = 40;
     private int charIndex = 0;
     private long lastUpdate = 0L;
     private long delay = 100L;
@@ -82,6 +83,8 @@ public class TextDisplay extends UIComponent {
         setupInputListener();
     }
     public void setText(String text) {
+        setVisible(true);
+        current_part = 0;
         List<String> new_text = new ArrayList<>();
         text_length = text.length();
         String temp = "";
@@ -99,18 +102,18 @@ public class TextDisplay extends UIComponent {
     public List<String> getText() {
         return text;
     }
-    public void toggleVisible() {
-        this.visible = !this.visible;
-        table.setVisible(this.visible);
+    public void setVisible(boolean value) {
+        this.visible = value;
+        table.setVisible(value);
     }
     public boolean getVisible() {return this.visible;}
     @Override
     public void update() {
         long time = ServiceLocator.getTimeSource().getTime();
-        if (charIndex < text_length) {
+        if (charIndex < this.text.get(current_part).length()) {
             if (time - lastUpdate >= delay) {
                 lastUpdate = time;
-                this.currentText.append(text.get(charIndex / textLimit).charAt(charIndex % textLimit));
+                this.currentText.append(text.get(current_part).charAt(charIndex));
                 label.setText(currentText.toString());
                 charIndex++;
             }
@@ -121,8 +124,13 @@ public class TextDisplay extends UIComponent {
         stage.addListener(new InputListener() {
             @Override
             public boolean keyDown(InputEvent event, int keycode) {
-                if (getVisible() && keycode == com.badlogic.gdx.Input.Keys.ENTER) {
-                    toggleVisible();
+                if (keycode == com.badlogic.gdx.Input.Keys.ENTER) {
+                    current_part++;
+                    charIndex = 0;
+                    lastUpdate = 0;
+                    if (current_part == TextDisplay.this.text.size()) {
+                        setVisible(false);
+                    }
                     return true;
                 }
                 return false;
