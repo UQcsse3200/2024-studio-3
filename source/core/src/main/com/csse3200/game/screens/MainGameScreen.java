@@ -26,6 +26,7 @@ import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.terminal.Terminal;
 import com.csse3200.game.ui.terminal.TerminalDisplay;
 import com.csse3200.game.components.maingame.EndDayDisplay;
+import com.csse3200.game.components.maingame.MoralDecision;
 import com.csse3200.game.components.maingame.MainGameExitDisplay;
 import com.csse3200.game.components.gamearea.PerformanceDisplay;
 import org.slf4j.Logger;
@@ -162,7 +163,8 @@ public class MainGameScreen extends ScreenAdapter {
 			.addComponent(new TerminalDisplay())
 			.addComponent(new OrderActions(this.game))
 			.addComponent(new MainGameOrderBtnDisplay())
-		        .addComponent(new EndDayDisplay(this));
+				.addComponent(new EndDayDisplay(this))
+				.addComponent(new MoralDecision(this));
 		ServiceLocator.getEntityService().register(ui);
 	}
 }
