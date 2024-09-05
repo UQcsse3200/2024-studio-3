@@ -59,6 +59,7 @@ public class ForestGameArea extends GameArea {
     "images/ingredients/cooked_beef.png",
     "images/ingredients/burnt_beef.png",
     "images/tiles/orange_tile.png",
+          "images/tiles/bench_test.png",
     "images/tiles/blue_tile.png",
     "images/stations/oven.png",
     "images/stations/stove.png",
@@ -120,7 +121,7 @@ public class ForestGameArea extends GameArea {
     spawnDoor();
     spawnWall();
     make_border();
-    spawnBenches();
+   // spawnBenches();
     spawnStations();
     // Spawn beef
     spawnBeef("cooked");

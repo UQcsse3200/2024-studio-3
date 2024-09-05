@@ -59,25 +59,26 @@ public class TerrainFactory {
             new TextureRegion(resourceService.getAsset("images/tiles/orange_tile.png", Texture.class));
         TextureRegion custTile =
             new TextureRegion(resourceService.getAsset("images/tiles/blue_tile.png", Texture.class));
-        return createKitchenDemoTerrain(2f, orthoFloor, custTile);
-
+        TextureRegion benchTile =
+            new TextureRegion(resourceService.getAsset("images/tiles/bench_test.png", Texture.class));
+        return createKitchenDemoTerrain(2f, orthoFloor, custTile, benchTile);
         // leaving this code incase we decide to implement isometric instead
       case KITCHEN_DEMO_ISO:
         TextureRegion isoGrass =
             new TextureRegion(resourceService.getAsset("images/iso_grass_1.png", Texture.class));
         TextureRegion isoTuft =
             new TextureRegion(resourceService.getAsset("images/iso_grass_2.png", Texture.class));
-        return createKitchenDemoTerrain(1f, isoGrass, isoTuft);
+        return createKitchenDemoTerrain(1f, isoGrass, isoTuft, isoTuft);
       default:
         return null;
     }
   }
 
   private TerrainComponent createKitchenDemoTerrain(
-      float tileWorldSize, TextureRegion floor, TextureRegion customer_tiles) {
+      float tileWorldSize, TextureRegion floor, TextureRegion customer_tiles, TextureRegion bench_tiles) {
     // Customer_tiles are the blue tiles where the customers/animals are going to be
     GridPoint2 tilePixelSize = new GridPoint2(floor.getRegionWidth(), floor.getRegionHeight());
-    TiledMap tiledMap = createKitchenDemoTiles(tilePixelSize, floor, customer_tiles);
+    TiledMap tiledMap = createKitchenDemoTiles(tilePixelSize, floor, customer_tiles, bench_tiles);
     TiledMapRenderer renderer = createRenderer(tiledMap, tileWorldSize / tilePixelSize.x);
     return new TerrainComponent(camera, tiledMap, renderer, orientation, tileWorldSize);
   }
@@ -96,10 +97,11 @@ public class TerrainFactory {
   }
 
   private TiledMap createKitchenDemoTiles(
-      GridPoint2 tileSize, TextureRegion floor, TextureRegion customer_tiles) {
+      GridPoint2 tileSize, TextureRegion floor, TextureRegion customer_tiles, TextureRegion bench_tiles) {
     TiledMap tiledMap = new TiledMap();
     TerrainTile floorTile= new TerrainTile(floor);
     TerrainTile customerTile = new TerrainTile(customer_tiles);
+    TerrainTile benchTile = new TerrainTile(bench_tiles);
     TiledMapTileLayer layer = new TiledMapTileLayer(MAP_SIZE.x, MAP_SIZE.y, tileSize.x , tileSize.y);
     // Size for blue tiles
     GridPoint2 modified_size = new GridPoint2(MAP_SIZE.x/4 , MAP_SIZE.y);
@@ -107,7 +109,9 @@ public class TerrainFactory {
     // Create base orange tiles
     fillTiles(layer, MAP_SIZE, floorTile);
     // Create blue tiles with modified map size
+    createBenchGrid(layer,benchTile, MAP_SIZE);
     fillBlueTiles(layer, modified_size, customerTile, CUST_TILE_COUNT);
+
     tiledMap.getLayers().add(layer);
     return tiledMap;
   }
@@ -125,7 +129,7 @@ public class TerrainFactory {
 
   private static void fillTiles(TiledMapTileLayer layer, GridPoint2 mapSize, TerrainTile tile) {
     for (int x = 0; x < mapSize.x; x++) {
-      for (int y = 0; y < mapSize.y; y++) {
+      for (int y = 1; y < mapSize.y; y++) {
         Cell cell = new Cell();
         cell.setTile(tile);
         layer.setCell(x, y, cell);
@@ -133,11 +137,15 @@ public class TerrainFactory {
     }
   }
 
-  private static void createBenchGrid(GridPoint2 mapSize){
-    if (mapSize.x % 2 == 0) {
-      throw new IllegalArgumentException("Map size must be odd");
+  private static void createBenchGrid(TiledMapTileLayer layer, TerrainTile tile, GridPoint2 mapSize){
+    for (int x = 0; x< mapSize.x; x++){
+      Cell cell = new Cell();
+        cell.setTile(tile);
+        layer.setCell(x, 0, cell);
+        }
+
     }
-  }
+
 
   /**
    * This enum should contain the different terrains in your game, e.g. Kitchen, cave, home, all with
