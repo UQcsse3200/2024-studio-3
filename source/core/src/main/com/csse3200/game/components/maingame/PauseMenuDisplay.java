@@ -49,7 +49,7 @@ public class PauseMenuDisplay extends UIComponent {
         Texture koalaTexture = ServiceLocator
                 .getResourceService().getAsset("images/koala4.png", Texture.class);
         Image koalaImage = new Image(koalaTexture);
-        koalaImage.setSize(200,200);
+        koalaImage.setSize(230,230);
         logger.debug("Not loading");
         return koalaImage;
     }
@@ -72,7 +72,7 @@ public class PauseMenuDisplay extends UIComponent {
 
         Image koalaImage = createKoalaImage2();
 
-        koalaTable.add(koalaImage).size(150, 150).expand().top().padTop(10).right();
+        koalaTable.add(koalaImage).size(170, 170).expand().top().padTop(10).right();
 
         return koalaTable;
     }
