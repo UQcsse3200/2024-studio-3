@@ -415,4 +415,8 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         return timer;
     }
 
+    public static ArrayList<Long> getRecipeTimeArrayList() {
+        return recipeTimeArrayList;
+    }
+
 }
