@@ -101,5 +101,6 @@ public class LevelService {
                 break;
         }
         levelEventHandler.trigger("startSpawning", spawnCap);
+        incrementLevel();
     }
 }
