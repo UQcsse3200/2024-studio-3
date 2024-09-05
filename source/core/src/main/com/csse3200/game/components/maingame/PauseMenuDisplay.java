@@ -46,7 +46,8 @@ public class PauseMenuDisplay extends UIComponent {
 
         Image koalaImage = createKoalaImage();
 
-        koalaTable.add(koalaImage).size(200, 150).expand().bottom().left().padRight(100).padTop(40);
+//        koalaTable.add(koalaImage).size(200, 150).expand().bottom().left().padRight(100).padTop(40);
+        koalaTable.add(koalaImage).size(200, 150).expand().padTop(500).padRight(150);
 
         return koalaTable;
     }
@@ -108,7 +109,7 @@ public class PauseMenuDisplay extends UIComponent {
             }
         });
 
-        buttonTable.add(resumeBtn).minWidth(250).minHeight(53).padTop(50);
+        buttonTable.add(resumeBtn).minWidth(250).minHeight(53).padTop(20);
         buttonTable.row();
         buttonTable.add(restartBtn).minWidth(250).minHeight(53).padTop(20);
         buttonTable.row();
