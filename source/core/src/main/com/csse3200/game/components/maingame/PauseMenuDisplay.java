@@ -22,6 +22,8 @@ public class PauseMenuDisplay extends UIComponent {
     private static final Logger logger = LoggerFactory.getLogger(PauseMenuDisplay.class);
     private static final String[] pauseMenuTexture = {"images/pause_menu2.png"};
     private static final String[] koalaTexture = {"images/koala5.png"};
+    private static final String[] koalaTexture2 = {"images/koala4.png"};
+
     public PauseMenuDisplay(MainGameScreen game) {
         super();
         this.game = game;
@@ -34,6 +36,18 @@ public class PauseMenuDisplay extends UIComponent {
         table.setFillParent(true);
         Texture koalaTexture = ServiceLocator
                 .getResourceService().getAsset("images/koala5.png", Texture.class);
+        Image koalaImage = new Image(koalaTexture);
+        koalaImage.setSize(250,250);
+        logger.debug("Not loading");
+        return koalaImage;
+    }
+
+    private Image createKoalaImage2() {
+        table = new Table();
+        table.bottom().left();
+        table.setFillParent(true);
+        Texture koalaTexture = ServiceLocator
+                .getResourceService().getAsset("images/koala4.png", Texture.class);
         Image koalaImage = new Image(koalaTexture);
         koalaImage.setSize(200,200);
         logger.debug("Not loading");
@@ -48,6 +62,17 @@ public class PauseMenuDisplay extends UIComponent {
 
 //        koalaTable.add(koalaImage).size(200, 150).expand().bottom().left().padRight(100).padTop(40);
         koalaTable.add(koalaImage).size(200, 150).expand().padTop(500).padRight(150);
+
+        return koalaTable;
+    }
+
+    private Table createKoalaTable2() {
+
+        Table koalaTable = new Table();
+
+        Image koalaImage = createKoalaImage2();
+
+        koalaTable.add(koalaImage).size(150, 150).expand().top().padTop(10).right();
 
         return koalaTable;
     }
@@ -128,12 +153,14 @@ public class PauseMenuDisplay extends UIComponent {
 
         Image backgroundImage = createPauseMenuBackground();
         Table koalaTable = createKoalaTable();
+        Table koalaTable2 = createKoalaTable2();
 
         Table buttonTable = createButtonsTable();
 
         Stack stack = new Stack();
         stack.add(backgroundImage);
         stack.add(koalaTable);
+        stack.add(koalaTable2);
 
         stack.add(buttonTable);
 
@@ -155,6 +182,7 @@ public class PauseMenuDisplay extends UIComponent {
         super.create();
         ServiceLocator.getResourceService().loadTextures(pauseMenuTexture);
         ServiceLocator.getResourceService().loadTextures(koalaTexture);
+        ServiceLocator.getResourceService().loadTextures(koalaTexture2);
         ServiceLocator.getResourceService().loadAll(); // Ensures the texture is loaded
         addActors();
     }
