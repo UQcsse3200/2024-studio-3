@@ -24,22 +24,80 @@ import com.csse3200.game.screens.MainGameScreen;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
 
+
 public class MoralDecision extends UIComponent {
+    private Table layout; // Layout manager
     private boolean isVisible;
-    private Image characterImage;
-    private boolean characterVisible;
     private final MainGameScreen game;
-
-
+    private Image characterImage;
 
     public MoralDecision(MainGameScreen game) {
         super();
         this.game = game;
         isVisible = false;
-        characterVisible = false;
+    }
+
+    public void create() {
+        super.create();
+        layout = new Table();
+        layout.setFillParent(true);
+        layout.setVisible(isVisible);
+        stage.addActor(layout);
+
+        // create black background
+        Pixmap pixmap = new Pixmap(1, 1, Pixmap.Format.RGBA8888);
+        pixmap.setColor(Color.BLACK);
+        pixmap.fill();
+        Texture pixmapTex = new Texture(pixmap);
+        pixmap.dispose();
+        Drawable blackBackground = new TextureRegionDrawable(new TextureRegion(pixmapTex));
+        layout.setBackground(blackBackground);
+
+        initialiseUI();
+        setupInputListener();
+    }
+
+
+    private void setupInputListener() {
+        stage.addListener(new InputListener() {
+            @Override
+            public boolean keyDown(InputEvent event, int keycode) {
+                if (keycode == com.badlogic.gdx.Input.Keys.M) {
+                    toggleVisibility();
+                    return true;
+                }
+                return false;
+            }
+        });
+    }
+
+
+    private void initialiseUI() {
+        Label titleLabel = new Label("moral deiciosn", new Label.LabelStyle(new BitmapFont(), Color.PINK));
+        layout.add(titleLabel).pad(10).row();
 
     }
 
+
+    public void show() {
+        isVisible = true;
+        layout.setVisible(isVisible);
+        game.pause(); // Pause the game when the display is shown
+    }
+
+    public void hide() {
+        isVisible = false;
+        layout.setVisible(isVisible);
+        game.resume(); // Resume the game when the display is hidden
+    }
+
+    public void toggleVisibility() {
+        if (isVisible) {
+            hide();
+        } else {
+            show();
+        }
+    }
 
     @Override
     public void draw(SpriteBatch batch) {
@@ -47,6 +105,6 @@ public class MoralDecision extends UIComponent {
     }
 
     @Override
-    public void setStage(Stage mock) {
+    public void setStage(Stage stage) {
     }
 }
