@@ -30,6 +30,18 @@ class KeyboardPlayerInputComponentTest {
   }
 
   @Test
+  void shouldIgnoreNonMovementKeysWhileMoving() {
+    inputComponent.keyDown(Keys.W); // Start moving up
+    verify(eventHandlerMock, times(1)).trigger("walkUp");
+
+    inputComponent.keyDown(Keys.F); // Press an unrelated key (F)
+    verify(eventHandlerMock, never()).trigger("walkStop"); // Movement should continue
+
+    inputComponent.keyUp(Keys.W); // Release W, stop moving
+    verify(eventHandlerMock, times(1)).trigger("walkStop");
+  }
+
+  @Test
   void shouldTriggerInteract() {
     inputComponent.keyDown(Keys.E);
     verify(eventHandlerMock, times(1)).trigger("interact");
