@@ -30,8 +30,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
   public boolean keyDown(int keycode) {
     // A temporary key to auto trigger cutscenes for testing
     if (keycode == Keys.L) {
-        FiredEnd ending = new FiredEnd();
-        ending.trigger();
+      System.out.println("WHOOOOOOOOOOO");
 
         // Need to have some sort of event trigger
         // then when the trigger is... triggered GameArea does the ending

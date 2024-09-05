@@ -30,12 +30,20 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class FiredEnd extends GameArea {
+public class FiredEnd extends ForestGameArea {
     private TerrainFactory terrainFactory;
 
-    private void assignTerrain() {
-        //this.terrainFactory = getTerrainFactory();
+    /**
+     * Initialise this ForestGameArea to use the provided TerrainFactory.
+     *
+     * @param terrainFactory TerrainFactory used to create the terrain for the GameArea.
+     * @requires terrainFactory != null
+     */
+    public FiredEnd(TerrainFactory terrainFactory) {
+        super(terrainFactory);
+        this.terrainFactory = terrainFactory;
     }
+
     private static final String[] forestTextures = {
             "images/ingredients/raw_beef.png",
             "images/ingredients/cooked_beef.png",
@@ -48,7 +56,6 @@ public class FiredEnd extends GameArea {
     }
     @Override
     public void create() {
-        assignTerrain();
 
         spawnBeef("cooked");
     }

@@ -1,5 +1,6 @@
 package com.csse3200.game.areas;
 
+import com.csse3200.game.components.cutscenes.FiredEnd;
 import com.csse3200.game.entities.benches.Bench;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -108,14 +109,6 @@ public class ForestGameArea extends GameArea {
     this.terrainFactory = terrainFactory;
   }
 
-  /**
-   * Gets the terrainFactory for use in other classes
-   * @return TerrainFactory instance
-   */
-  public TerrainFactory getTerrainFactory() {
-    return this.terrainFactory;
-  }
-
   /** Create the game area, including terrain, static entities (trees), dynamic entities (player) */
   @Override
   public void create() {
@@ -140,6 +133,18 @@ public class ForestGameArea extends GameArea {
     player = spawnPlayer();
 
     playMusic();
+
+    /**
+     * BROKEN FOR NOW DONT TOUCH
+    for (int i = 0; i < 5; i++) {
+      this.triggerFiredEnd();
+    }
+    */
+  }
+
+  private void triggerFiredEnd() {
+    FiredEnd ending = new FiredEnd(this.terrainFactory);
+    ending.trigger();
   }
 
   private void displayUI() {
