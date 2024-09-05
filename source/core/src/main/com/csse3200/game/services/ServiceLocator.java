@@ -30,6 +30,9 @@ public class ServiceLocator {
 
   private static DocketService docketService;
 
+  private static TutorialService tutorialService;  // for tut service
+
+
   public static EntityService getEntityService() {
     return entityService;
   }
@@ -56,6 +59,15 @@ public class ServiceLocator {
 
   public static DocketService getDocketService() {
     return docketService;
+  }
+
+  public static TutorialService getTutorialService() {
+    return tutorialService;
+  }
+
+  public static void registerTutorialService(TutorialService service) {
+    logger.debug("Registering tutorial service {}", service);
+    tutorialService = service;
   }
 
   public static void registerEntityService(EntityService service) {
