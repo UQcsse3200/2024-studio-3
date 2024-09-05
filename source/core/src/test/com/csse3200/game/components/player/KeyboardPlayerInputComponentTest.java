@@ -28,6 +28,18 @@ class KeyboardPlayerInputComponentTest {
     inputComponent = new KeyboardPlayerInputComponent();
     inputComponent.setEntity(entityMock);
   }
+  @Test
+  void shouldTriggerDiagonalWalkUpRight() {
+    inputComponent.keyDown(Keys.W);
+    inputComponent.keyDown(Keys.D);
+    verify(eventHandlerMock).trigger("walkUpRight");
+  }
+  @Test
+  void shouldTriggerDiagonalWalkDownLeft() {
+    inputComponent.keyDown(Keys.S);
+    inputComponent.keyDown(Keys.A);
+    verify(eventHandlerMock).trigger("walkDownLeft");
+  }
 
   @Test
   void shouldIgnoreNonMovementKeysWhileMoving() {
