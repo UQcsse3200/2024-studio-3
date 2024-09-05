@@ -20,6 +20,7 @@ import static com.badlogic.gdx.Gdx.app;
  */
 public class GdxGame extends Game {
   private static final Logger logger = LoggerFactory.getLogger(GdxGame.class);
+  private Screen previousScreen;
 
   @Override
   public void create() {
@@ -47,10 +48,23 @@ public class GdxGame extends Game {
   public void setScreen(ScreenType screenType) {
     logger.info("Setting game screen to {}", screenType);
     Screen currentScreen = getScreen();
+
     if (currentScreen != null) {
       currentScreen.dispose();
     }
+
+    if (screenType == ScreenType.SETTINGS) {
+      previousScreen = currentScreen;  // Save the current screen before changing
+    }
     setScreen(newScreen(screenType));
+  }
+
+  /**
+   * Get the previous game's screen
+   * @return previous screen
+   */
+  public Screen getPreviousScreen() {
+    return previousScreen;
   }
 
   @Override

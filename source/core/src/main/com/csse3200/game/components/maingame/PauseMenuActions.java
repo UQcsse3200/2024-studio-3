@@ -40,5 +40,4 @@ public class PauseMenuActions extends Component {
         logger.info("Launching settings screen");
         game.setScreen(GdxGame.ScreenType.SETTINGS);
     }
-
 }
