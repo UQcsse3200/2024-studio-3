@@ -141,25 +141,22 @@ public class TerrainFactory {
   }
 
   private static void createBenchGrid(TiledMapTileLayer layer, TerrainTile tile, GridPoint2 mapSize) {
-    for (int x = 2; x < mapSize.x; x++) {
-      Cell cell = new Cell();
-      cell.setTile(tile);
-
-      layer.setCell(x, 0, cell);
+    for (int x = 0; x < mapSize.x; x++) {
+      for (int y = 0; y < mapSize.y; y++){
+        if (x == 0 || x == mapSize.x - 1 || y == 0 || y == mapSize.y - 1) {
+          Cell cell = new Cell();
+          cell.setTile(tile);
+          layer.setCell(x, y, cell);
+        }
+      }
     }
-    for (int y = 0; y < mapSize.y; y++) {
+    for (int y=2; y < 4; y++){
       Cell cell = new Cell();
       cell.setTile(tile);
-      layer.setCell(mapSize.x-1, y, cell);
-    }
-    for (int x = 2; x < mapSize.x; x++) {
-      Cell cell = new Cell();
-      cell.setTile(tile);
+      layer.setCell(2, y, cell);
 
-      layer.setCell(x, mapSize.y-1, cell);
     }
   }
-
 
   /**
    * This enum should contain the different terrains in your game, e.g. Kitchen, cave, home, all with
