@@ -154,8 +154,13 @@ public class TerrainFactory {
       Cell cell = new Cell();
       cell.setTile(tile);
       layer.setCell(2, y, cell);
-
     }
+    Cell cell = new Cell();
+    cell.setTile(tile);
+    layer.setCell(4, 1, cell);
+
+    layer.setCell(4, 4,cell);
+
   }
 
   /**
