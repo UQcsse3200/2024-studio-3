@@ -2,6 +2,7 @@ package com.csse3200.game.components.tutorial;
 
 import com.badlogic.gdx.Input;
 import com.csse3200.game.GdxGame;
+import com.csse3200.game.entities.Entity;
 import com.csse3200.game.input.InputComponent;
 import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
@@ -20,4 +21,76 @@ public class TutorialActions extends InputComponent {
         this.game = game;
     }
 
+    @Override
+    public void create() {
+        ServiceLocator.getInputService().register(this);
+        ServiceLocator.getTutorialService().getEvents().trigger("startTutorial");
+
+        ServiceLocator.getInputService().getEvents().addListener("playerMoved", this::onPlayerMove);
+        ServiceLocator.getDocketService().getEvents().addListener("shiftDocketsLeft", this::onShiftDocketsLeft);
+        ServiceLocator.getDocketService().getEvents().addListener("shiftDocketsRight", this::onShiftDocketsRight);
+    }
+
+    @Override
+    public boolean keyDown(int keycode) {
+        if (keycode == Input.Keys.SPACE) {
+            logger.info("Space key pressed, triggering item pickup.");
+            ServiceLocator.getTutorialService().getEvents().trigger("itemPickedUp");
+            return true;
+        }
+        else if (keycode == Input.Keys.ENTER) {
+            logger.info("Enter key pressed, completing the tutorial.");
+            ServiceLocator.getTutorialService().getEvents().trigger("completeTutorial");
+            return true;
+        }
+        else if (keycode == Input.Keys.W || keycode == Input.Keys.A || keycode == Input.Keys.S || keycode == Input.Keys.D) {
+            logger.info("Movement key (W/A/S/D) pressed.");
+            ServiceLocator.getTutorialService().getEvents().trigger("playerMoved");
+            return true;
+        }
+        if (keycode == Keys.LEFT_BRACKET) {
+            logger.info("Shift dockets left pressed.");
+            ServiceLocator.getDocketService().getEvents().trigger("shiftDocketsLeft");
+            return true;
+        } else if (keycode == Keys.RIGHT_BRACKET) {
+            logger.info("Shift dockets right pressed.");
+            ServiceLocator.getDocketService().getEvents().trigger("shiftDocketsRight");
+            return true;
+        }
+        return false;
+    }
+
+    private void onPlayerMove() {
+        logger.info("Player moved, advancing tutorial.");
+        ServiceLocator.getTutorialService().getEvents().trigger("advanceTutorial");
+    }
+
+    private void onShiftDocketsLeft() {
+        logger.info("Dockets shifted left.");
+        // Perform any tutorial-related actions needed when this occurs
+        ServiceLocator.getTutorialService().getEvents().trigger("advanceTutorial");
+    }
+
+    private void onShiftDocketsRight() {
+        logger.info("Dockets shifted right.");
+        ServiceLocator.getTutorialService().getEvents().trigger("advanceTutorial");
+    }
+
+    @Override
+    public boolean keyUp(int keycode) {
+        return false;
+    }
+
+    @Override
+    public boolean keyTyped(char character) {
+        return false;
+    }
+
+    @Override
+    public void dispose() {
+        ServiceLocator.getInputService().getEvents().removeListener("playerMoved", this::onPlayerMove);
+        ServiceLocator.getDocketService().getEvents().removeListener("shiftDocketsLeft", this::onShiftDocketsLeft);
+        ServiceLocator.getDocketService().getEvents().removeListener("shiftDocketsRight", this::onShiftDocketsRight);
+        super.dispose();
+    }
 }
