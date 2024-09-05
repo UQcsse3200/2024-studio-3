@@ -41,12 +41,14 @@ public class TextDisplay extends UIComponent {
     private boolean visible;
     private Stack layout;
     private Label label;
+    private Table table;
     private Image displayBox;
     private final MainGameScreen game;
 
     public TextDisplay(MainGameScreen game) {
         super();
         this.game = game;
+        this.table = new Table();
         this.visible = true;
         this.currentText = new StringBuilder();
     }
@@ -54,7 +56,6 @@ public class TextDisplay extends UIComponent {
         super.create();
 
         // Create the table for layout control and stack for layering
-        Table table = new Table();
         table.setFillParent(true);
         table.center().bottom();
         stage.addActor(table);
@@ -78,6 +79,7 @@ public class TextDisplay extends UIComponent {
         table.add(stack).padBottom(70).padLeft(100).size(800, 200);
 
         setText("Hello There Chat whats up with you guys. I just love CSSE3200 so much. Please send help");
+        setupInputListener();
     }
     public void setText(String text) {
         List<String> new_text = new ArrayList<>();
@@ -99,7 +101,9 @@ public class TextDisplay extends UIComponent {
     }
     public void toggleVisible() {
         this.visible = !this.visible;
+        table.setVisible(this.visible);
     }
+    public boolean getVisible() {return this.visible;}
     @Override
     public void update() {
         long time = ServiceLocator.getTimeSource().getTime();
@@ -111,6 +115,19 @@ public class TextDisplay extends UIComponent {
                 charIndex++;
             }
         }
+    }
+
+    private void setupInputListener() {
+        stage.addListener(new InputListener() {
+            @Override
+            public boolean keyDown(InputEvent event, int keycode) {
+                if (getVisible() && keycode == com.badlogic.gdx.Input.Keys.ENTER) {
+                    toggleVisible();
+                    return true;
+                }
+                return false;
+            }
+        });
     }
 
     @Override
