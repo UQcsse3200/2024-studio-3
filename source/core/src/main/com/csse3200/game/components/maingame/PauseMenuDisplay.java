@@ -22,24 +22,11 @@ public class PauseMenuDisplay extends UIComponent {
     private static final Logger logger = LoggerFactory.getLogger(PauseMenuDisplay.class);
     private static final String[] pauseMenuTexture = {"images/pause_menu2.png"};
 
-    private PauseMenuKoalaDisplay koala = new PauseMenuKoalaDisplay();
-
     public PauseMenuDisplay(MainGameScreen game) {
         super();
         this.game = game;
         isVisible = false;
     }
-
-//    private Image createKoalaImage() {
-//        table = new Table();
-//        table.bottom().left();
-////        table.setFillParent(true);
-//        Texture koalaTexture = ServiceLocator
-//                .getResourceService().getAsset("images/koala5.png", Texture.class);
-//        Image koalaImage = new Image(koalaTexture);
-//        logger.debug("Not loading");
-//        return koalaImage;
-//    }
 
     private Image createPauseMenuBackground() {
         Texture pauseMenuTexture = ServiceLocator
@@ -117,8 +104,6 @@ public class PauseMenuDisplay extends UIComponent {
 
         Image backgroundImage = createPauseMenuBackground();
 
-//        Image koalaImage = createKoala();
-
         Table buttonTable = createButtonsTable();
 
         Stack stack = new Stack();
@@ -126,15 +111,9 @@ public class PauseMenuDisplay extends UIComponent {
 
         stack.add(buttonTable);
 
-//        stack.add(createKoalaImage());
-
-//        stack.add(koalaImage);
-
         table.add(stack).center().expand();
 
-
         stage.addActor(table);
-
 
         table.setVisible(isVisible);
         displayScreen();
@@ -170,12 +149,6 @@ public class PauseMenuDisplay extends UIComponent {
         }
     }
 
-
-    public boolean getIsVisible() {
-        return isVisible;
-    }
-
-
     public void showMenu() {
         isVisible = true;
         table.setVisible(true);
@@ -203,7 +176,6 @@ public class PauseMenuDisplay extends UIComponent {
     @Override
     public void dispose() {
         super.dispose();
-//        table.clear();
         ServiceLocator.getResourceService().unloadAssets(pauseMenuTexture);
     }
 

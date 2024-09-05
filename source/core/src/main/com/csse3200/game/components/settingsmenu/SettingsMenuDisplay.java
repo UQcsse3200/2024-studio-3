@@ -246,6 +246,8 @@ public class SettingsMenuDisplay extends UIComponent {
   private void exitMenu() {
     game.setScreen(ScreenType.MAIN_MENU);
   }
+
+
   private Integer parseOrNull(String num) {
     try {
       return Integer.parseInt(num, 10);
