@@ -133,7 +133,6 @@ public class ForestGameArea extends GameArea {
     player = spawnPlayer();
 
     playMusic();
-    ServiceLocator.getLevelService().getEvents().addListener("spawnCustomer", this::spawnCustomer);
   }
 
   private void displayUI() {

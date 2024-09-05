@@ -87,6 +87,7 @@ public class MainGameScreen extends ScreenAdapter {
 		Entity spawnControllerEntity = LevelFactory.createSpawnControllerEntity();
 		ServiceLocator.getEntityService().register(spawnControllerEntity);
 		int currLevel = ServiceLocator.getLevelService().getCurrLevel();
+		ServiceLocator.getLevelService().getEvents().trigger("setGameArea", forestGameArea);
 		ServiceLocator.getLevelService().getEvents().trigger("startLevel", currLevel);
 	}
 
