@@ -1,33 +1,30 @@
 flame.png
 size:256,64
-filter:Nearest,Nearest
+format: RGBA8888
+filter: Linear,Linear
 repeat:none
-
-fire
+flame
   rotate: false
   xy: 2,2
   size: 32,37
   orig: 32,37
   offset: 0,0
   index: 3
-
-fire
+flame
   rotate: false
   xy: 36,2
   size: 32,37
   orig: 32,37
   offset: 0,0
   index: 2
-
-fire
+flame
   rotate: false
   xy: 70,2
   size: 32,37
   orig: 32,37
   offset: 0,0
   index: 4
-
-fire
+flame
   rotate: false
   xy: 104,2
   size: 32,37
