@@ -21,11 +21,34 @@ public class PauseMenuDisplay extends UIComponent {
     private Table table;
     private static final Logger logger = LoggerFactory.getLogger(PauseMenuDisplay.class);
     private static final String[] pauseMenuTexture = {"images/pause_menu2.png"};
-
+    private static final String[] koalaTexture = {"images/koala5.png"};
     public PauseMenuDisplay(MainGameScreen game) {
         super();
         this.game = game;
         isVisible = false;
+    }
+
+    private Image createKoalaImage() {
+        table = new Table();
+        table.bottom().left();
+        table.setFillParent(true);
+        Texture koalaTexture = ServiceLocator
+                .getResourceService().getAsset("images/koala5.png", Texture.class);
+        Image koalaImage = new Image(koalaTexture);
+        koalaImage.setSize(200,200);
+        logger.debug("Not loading");
+        return koalaImage;
+    }
+
+    private Table createKoalaTable() {
+
+        Table koalaTable = new Table();
+
+        Image koalaImage = createKoalaImage();
+
+        koalaTable.add(koalaImage).size(200, 150).expand().bottom().left().padRight(100).padTop(40);
+
+        return koalaTable;
     }
 
     private Image createPauseMenuBackground() {
@@ -103,11 +126,13 @@ public class PauseMenuDisplay extends UIComponent {
         table.setFillParent(true);
 
         Image backgroundImage = createPauseMenuBackground();
+        Table koalaTable = createKoalaTable();
 
         Table buttonTable = createButtonsTable();
 
         Stack stack = new Stack();
         stack.add(backgroundImage);
+        stack.add(koalaTable);
 
         stack.add(buttonTable);
 
@@ -128,6 +153,7 @@ public class PauseMenuDisplay extends UIComponent {
     public void create() {
         super.create();
         ServiceLocator.getResourceService().loadTextures(pauseMenuTexture);
+        ServiceLocator.getResourceService().loadTextures(koalaTexture);
         ServiceLocator.getResourceService().loadAll(); // Ensures the texture is loaded
         addActors();
     }
