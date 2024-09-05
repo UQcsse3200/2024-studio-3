@@ -16,21 +16,21 @@ import org.slf4j.LoggerFactory;
  * The button is positioned at the bottom right corner of the screen.
  */
 public class MainGameOrderBtnDisplay extends UIComponent{
+	private static final Logger logger = LoggerFactory.getLogger(MainGameOrderBtnDisplay.class);
+	private static final float Z_INDEX = 2f;
+	public Table table;
+	public boolean pressed = false;
 
-    private static final Logger logger = LoggerFactory.getLogger(MainGameExitDisplay.class);
-    private static final float Z_INDEX = 2f;
-    public Table table;
-    public boolean pressed = false;
+	/**
+	 * Initialises the button display and sets up the actors in the UI.
+	 */
+	@Override
+	public void create() {
+		super.create();
+		addActors();
+		logger.info("order button created");
+	}
 
-
-    /**
-     * Initialises the button display and sets up the actors in the UI.
-     */
-    @Override
-    public void create() {
-        super.create();
-        addActors();
-    }
 
     /**
      * Adds the button to the UI and sets up the event listener for the button click.
@@ -40,34 +40,50 @@ public class MainGameOrderBtnDisplay extends UIComponent{
         table = new Table();
         table.bottom().right();
         table.setFillParent(true);
+		// Triggers an event when the button is pressed.
+		TextButton createOrderBtn = new TextButton("Create Order", skin);
+		logger.info("Create Order button created");
+		createOrderBtn.addListener(
+		  new ChangeListener() {
+			  @Override
+			  public void changed(ChangeEvent changeEvent, Actor actor) {
+				  logger.debug("Create Order button clicked");
+				  pressed = true;
+				  entity.getEvents().trigger("createOrder");
+				  pressed = false;
+			  }
+		  });
+		table.add(createOrderBtn).padBottom(10f).padRight(10f);
+		stage.addActor(table);
+	}
 
-        TextButton createOrderBtn = new TextButton("Create Order", skin);
-        logger.info("Create Order button created");
+	/**
+	 * Draws the button on the screen. The actual rendering is handled by the stage, so this method is empty.
+	 *
+	 * @param batch the sprite batch used for drawing.
+	 */
+	@Override
+	public void draw(SpriteBatch batch) {
+		// draw is handled by the stage
+	}
 
-        // Triggers an event when the button is pressed.
-        createOrderBtn.addListener(
-                new ChangeListener() {
-                    @Override
-                    public void changed(ChangeEvent changeEvent, Actor actor) {
-                        logger.debug("Create Order button clicked");
-                        pressed = true;
-                        entity.getEvents().trigger("createOrder");
-                        pressed = false;
-                    }
-                });
-        table.add(createOrderBtn).padBottom(10f).padRight(10f);
+	/**
+	 * Returns the z-index for this component. The z-index determines the rendering order of UI components.
+	 *
+	 * @return the z-index for this component.
+	 */
+	@Override
+	public float getZIndex() {
+		return Z_INDEX;
+	}
 
-        stage.addActor(table);
-    }
-
-    /**
-     * Draws the button on the screen. The actual rendering is handled by the stage, so this method is empty.
-     *
-     * @param batch the sprite batch used for drawing.
-     */
-    @Override
-    public void draw(SpriteBatch batch) {
-        // draw is handled by the stage
+	/**
+	 * Disposes of the button display, clearing the table and removing it from the stage.
+	 */
+	@Override
+	public void setStage(Stage mock) {
+		this.stage = stage;
+	}
 
     }
 
@@ -90,15 +106,23 @@ public class MainGameOrderBtnDisplay extends UIComponent{
         this.stage = mock;
     }
 
-    @Override
-    public void dispose() {
-        table.clear();
-        super.dispose();
-    }
+	/**
+	 * Get the state of the button
+	 *
+	 * @return true if button is pressed, false otherwise
+	 */
+	public boolean getState(){
+		return pressed;
+	}
 
-    public boolean getState(){
-        return pressed;
-    }
+	/**
+	 * Removed the button
+	 */
+	@Override
+	public void dispose() {
+		table.clear();
+		super.dispose();
+	}
 
 }
 

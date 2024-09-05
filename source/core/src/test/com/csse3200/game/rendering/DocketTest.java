@@ -19,8 +19,8 @@ class DocketTest {
     void setUp() {
         Skin mockSkin = new Skin();
         Image mockImage = new Image();
-        docket = new Docket();
-        docket2 = new Docket();
+        docket = new Docket(5000);
+        docket2 = new Docket(5000);
     }
 
 //    @Test

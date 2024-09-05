@@ -22,8 +22,11 @@ import org.mockito.Mock;
 import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+
 import static org.junit.Assert.assertNotNull;
 import static org.junit.jupiter.api.Assertions.*;
+import java.util.Random;
+
 import static org.mockito.Mockito.*;
 
 @ExtendWith(GameExtension.class)
@@ -49,7 +52,10 @@ class MainGameOrderTicketDisplayTest {
         lenient().when(ServiceLocator.getRenderService().getStage().getViewport().getCamera()).thenReturn(camera);
         when(ServiceLocator.getDocketService().getEvents()).thenReturn(eventHandler);
 
-        orderTicketDisplay = new MainGameOrderTicketDisplay("acaiBowl");
+        orderTicketDisplay = new MainGameOrderTicketDisplay();
+        String[] recipeNames = {"acaiBowl", "salad", "fruitSalad", "steakMeal", "bananaSplit"};
+        String randomRecipe = recipeNames[new Random().nextInt(recipeNames.length)];
+        orderTicketDisplay.setRecipe(randomRecipe);
         Entity entity = new Entity();
         entity.addComponent(orderTicketDisplay);
         orderTicketDisplay.create();
@@ -113,7 +119,7 @@ class MainGameOrderTicketDisplayTest {
         assertEquals(170f * (orderTicketDisplay.getViewportWidth()/1920f), lastTable.getWidth(), 0.1f);
         assertEquals(200f * (orderTicketDisplay.getViewportHeight()/1080f), lastTable.getHeight(), 0.1f);
 
-        float expectedX = orderTicketDisplay.getViewportWidth() - 260f;
+        float expectedX = orderTicketDisplay.getViewportWidth() - 320f;
         float expectedY = 900f * (orderTicketDisplay.getViewportHeight()/1080f);
 
         assertEquals(expectedX, lastTable.getX(), 0.1f);
@@ -178,7 +184,7 @@ class MainGameOrderTicketDisplayTest {
         assertEquals(200f * (orderTicketDisplay.getViewportHeight()/1080f), singleTable.getHeight(),
                         0.1f, "Docket height is incorrect.");
 
-        float expectedX = orderTicketDisplay.getViewportWidth() - 260f; //orderTicketDisplay.getViewportWidth() - 260f
+        float expectedX = orderTicketDisplay.getViewportWidth() - 320f; //orderTicketDisplay.getViewportWidth() - 260f
         float expectedY = 900f * (orderTicketDisplay.getViewportHeight()/1080f);
 
         assertEquals(expectedX, singleTable.getX(), 0.1f, "Docket X position is incorrect.");

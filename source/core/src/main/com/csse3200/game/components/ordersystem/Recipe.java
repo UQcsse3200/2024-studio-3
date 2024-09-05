@@ -6,18 +6,27 @@ import com.csse3200.game.entities.factories.DishFactory;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
+/**
+ * Get recipe data from any station
+ */
 public class Recipe {
 	private String recipeName;
 	private SingleStationRecipeConfig singleStationRecipe;
 	private MultiStationRecipeConfig multiStationRecipe;
 
+	/**
+	 * Constructs recipe data from the recipes name
+	 * @param recipeName name of the reci[e
+	 */
 	public Recipe(String recipeName) {
 		this.recipeName = recipeName;
 		loadRecipeDetails();
 	}
 
+	/**
+	 * Loads recipe data
+	 */
 	private void loadRecipeDetails() {
 		if (DishFactory.recipeExists(recipeName)) {
 			singleStationRecipe = DishFactory.getSingleStationRecipe(recipeName);
@@ -25,6 +34,10 @@ public class Recipe {
 		}
 	}
 
+	/**
+	 * Gets recipe ingredients
+	 * @return recipe ingredients
+	 */
 	public List<String> getIngredients() {
 		if (multiStationRecipe != null) {
 			return multiStationRecipe.getIngredient();
@@ -34,6 +47,10 @@ public class Recipe {
 		return Collections.emptyList();
 	}
 
+	/**
+	 * Gets recipe making time
+	 * @return making time
+	 */
 	public int getMakingTime() {
 		if (multiStationRecipe != null) {
 			return multiStationRecipe.getMakingTime();
@@ -43,6 +60,18 @@ public class Recipe {
 		return 0;
 	}
 
+	/**
+	 * Gets recipe name
+	 * @return recipe name
+	 */
+	public String getName() {
+		return this.recipeName;
+	}
+
+	/**
+	 * Gets recipe burn time
+	 * @return recipe burn time
+	 */
 	public Integer getBurnedTime() {
 		if (multiStationRecipe != null) {
 			return multiStationRecipe.getBurnedTime();
@@ -50,6 +79,10 @@ public class Recipe {
 		return null;
 	}
 
+	/**
+	 * Gets recipe station type
+	 * @return recipe station type
+	 */
 	public String getStationType() {
 		if (multiStationRecipe != null) {
 			if (multiStationRecipe.getFryingPan() != null) {
