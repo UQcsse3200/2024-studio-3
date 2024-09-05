@@ -72,12 +72,15 @@ public class TextDisplay extends UIComponent {
 
         // Create and add the label on top of the image in the stack
         label = new Label("", skin);
-        label.setWrap(false);
+        label.setWrap(true);
         label.setAlignment(Align.top | Align.left);
-        stack.add(label);
+
+        Table labelTable = new Table();
+        labelTable.add(label).padLeft(130).padBottom(10).size(800,200);
+        stack.add(labelTable);
 
         // Add the stack to the table with padding or alignment options
-        table.add(stack).padBottom(70).padLeft(100).size(800, 200);
+        table.add(stack).padBottom(70).padLeft(0).size(800, 200);
 
         setText("Hello There Chat whats up with you guys. I just love CSSE3200 so much. Please send help");
         setupInputListener();
@@ -110,7 +113,7 @@ public class TextDisplay extends UIComponent {
     @Override
     public void update() {
         long time = ServiceLocator.getTimeSource().getTime();
-        if (charIndex < this.text.get(current_part).length()) {
+        if (current_part != TextDisplay.this.text.size() && charIndex < this.text.get(current_part).length()) {
             if (time - lastUpdate >= delay) {
                 lastUpdate = time;
                 this.currentText.append(text.get(current_part).charAt(charIndex));
