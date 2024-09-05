@@ -9,7 +9,7 @@ import java.util.logging.Level;
 
 /**Allows for global access and control of the game levels*/
 public class LevelService {
-    private final EventHandler levelEventHandler;
+    private EventHandler levelEventHandler;
     private int currLevel;
 
     /**
@@ -102,5 +102,9 @@ public class LevelService {
         }
         levelEventHandler.trigger("startSpawning", spawnCap);
         incrementLevel();
+    }
+
+    public void resetEventHandler() {
+        levelEventHandler = new EventHandler();
     }
 }
