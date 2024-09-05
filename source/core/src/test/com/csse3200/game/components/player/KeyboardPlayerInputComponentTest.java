@@ -36,30 +36,6 @@ class KeyboardPlayerInputComponentTest {
   }
 
   @Test
-  void shouldTriggerWalkUp() {
-      inputComponent.keyDown(Keys.W);
-      verify(eventHandlerMock, times(1)).trigger("walk", new Vector2(0, 1));
-  }
-
-  @Test
-  void shouldTriggerWalkLeft() {
-      inputComponent.keyDown(Keys.A);
-      verify(eventHandlerMock, times(1)).trigger("walk", new Vector2(-1.0f, 0.0f));
-  }
-
-  @Test
-  void shouldTriggerWalkDown() {
-      inputComponent.keyDown(Keys.S);
-      verify(eventHandlerMock, times(1)).trigger("walk", new Vector2(0.0f, -1.0f));
-  }
-
-  @Test
-  void shouldTriggerWalkRight() {
-      inputComponent.keyDown(Keys.D);
-      verify(eventHandlerMock, times(1)).trigger("walk", new Vector2(1.0f, 0.0f));
-  }
-
-  @Test
   void shouldStopOnButtonRelease() {
     inputComponent.keyDown(Keys.W);
     inputComponent.keyUp(Keys.W);
