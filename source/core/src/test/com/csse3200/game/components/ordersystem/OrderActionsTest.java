@@ -28,7 +28,7 @@ class OrderActionsTest {
     private OrderActions orderActions;
     private DocketService docketService;
     private Entity entity;
-    private static final Logger logger = LoggerFactory.getLogger(OrderActions.class);
+    private static final Logger logger = LoggerFactory.getLogger(OrderActionsTest.class);
 
     @BeforeEach
     void setUp() {
