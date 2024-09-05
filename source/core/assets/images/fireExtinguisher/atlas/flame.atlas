@@ -1,0 +1,33 @@
+flame.png
+size:256,64
+format: RGBA8888
+filter: Linear,Linear
+repeat:none
+flame
+  rotate: false
+  xy: 2,2
+  size: 32,37
+  orig: 32,37
+  offset: 0,0
+  index: 3
+flame
+  rotate: false
+  xy: 36,2
+  size: 32,37
+  orig: 32,37
+  offset: 0,0
+  index: 2
+flame
+  rotate: false
+  xy: 70,2
+  size: 32,37
+  orig: 32,37
+  offset: 0,0
+  index: 4
+flame
+  rotate: false
+  xy: 104,2
+  size: 32,37
+  orig: 32,37
+  offset: 0,0
+  index: 1
