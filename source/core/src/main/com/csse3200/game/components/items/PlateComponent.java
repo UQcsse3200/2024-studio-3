@@ -24,6 +24,7 @@ public class PlateComponent extends Component {
         this.state = PlateState.DIRTY;
         this.itemOnPlate = null;
         this.isAvailable = true;
+        this.isServable = false;
         this.timeSource = ServiceLocator.getTimeSource();
     }
     @Override
