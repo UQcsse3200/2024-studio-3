@@ -40,7 +40,7 @@ public class CustomerComponent extends Component {
         } else {
             this.reputation = reputation;
         }
-    }
+    } //test
 
     public int getReputation() {
         return this.reputation;
