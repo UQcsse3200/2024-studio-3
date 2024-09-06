@@ -1,5 +1,6 @@
 package com.csse3200.game.areas;
 
+import com.badlogic.gdx.utils.Null;
 import com.csse3200.game.components.cutscenes.GoodEnd;
 import com.csse3200.game.entities.benches.Bench;
 import org.slf4j.Logger;
@@ -125,14 +126,14 @@ public class ForestGameArea extends GameArea {
     spawnBeef("cooked");
     spawnStrawberry("chopped");
     spawnLettuce("chopped");
-    spawnCustomer();
+    //spawnCustomer();
+
+    triggerFiredEnd();
 
     // Spawn the player
     player = spawnPlayer();
 
     playMusic();
-
-    triggerFiredEnd();
   }
 
   private void displayUI() {
@@ -571,9 +572,25 @@ public class ForestGameArea extends GameArea {
     this.unloadAssets();
   }
 
+  private void spawnBoss() {
+    GridPoint2 position = new GridPoint2(1, 2);
+
+    Vector2 targetPos = new Vector2(5, 3); // Target position for ghost king
+    Entity customer = NPCFactory.createBoss(targetPos);
+    spawnEntityAt(customer, position, false, false);
+//    for (int i = 0; i < NUM_CUSTOMERS_BASE; i++) {
+//      customer = NPCFactory.createCustomer();
+//      spawnEntityAt(customer, position, true, true);
+//      System.out.println("Customer spawned");
+//    }
+
+    //System.out.println("3");
+  }
+
+
 
   private void triggerFiredEnd() {
-    spawnBeef("cooked");
+    spawnBoss();
   }
 
   private void triggerGoodEnd() {
