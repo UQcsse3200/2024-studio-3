@@ -47,7 +47,7 @@ public class MoralDecision extends UIComponent {
         layout.setVisible(isVisible);
         stage.addActor(layout);
 
-        // create black background
+        // create gray background
         Pixmap pixmap = new Pixmap(1, 1, Pixmap.Format.RGBA8888);
         pixmap.setColor(Color.GRAY);
         pixmap.fill();
@@ -67,7 +67,7 @@ public class MoralDecision extends UIComponent {
         characterImage = new Image(imgDrawable);
 
         // add racoon image to the table and shift it left by adjusting padding
-        layout.add(characterImage).padLeft(100).center().row(); // Add padding to move left
+        layout.add(characterImage).padRight(1000).center().row(); // Add padding to move left
 
         setupInputListener();
     }
