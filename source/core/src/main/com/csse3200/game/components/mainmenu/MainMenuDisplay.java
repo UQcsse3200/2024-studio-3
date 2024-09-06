@@ -39,6 +39,7 @@ public class MainMenuDisplay extends UIComponent {
     TextButton loadBtn = new TextButton("Load", skin);
     TextButton settingsBtn = new TextButton("Settings", skin);
     TextButton exitBtn = new TextButton("Exit", skin);
+    TextButton tutBtn = new TextButton("Start Tutorial", skin);
 
     // Triggers an event when the button is pressed
     startBtn.addListener(
@@ -77,6 +78,16 @@ public class MainMenuDisplay extends UIComponent {
           }
         });
 
+    // added, tutorial button
+      tutBtn.addListener(
+              new ChangeListener() {
+                  @Override
+                  public void changed(ChangeEvent changeEvent, Actor actor) {
+                      logger.debug("Start button clicked");
+                      entity.getEvents().trigger("tutorial");
+                  }
+              });
+
     table.add(title);
     table.row();
     table.add(startBtn).padTop(30f);
@@ -86,7 +97,9 @@ public class MainMenuDisplay extends UIComponent {
     table.add(settingsBtn).padTop(15f);
     table.row();
     table.add(exitBtn).padTop(15f);
-
+    table.row();
+    table.add(tutBtn).padTop(15f);
+    table.row();
     stage.addActor(table);
   }
 

@@ -1,12 +1,14 @@
 package com.csse3200.game.components.tutorial;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
 import com.csse3200.game.components.ordersystem.MainGameOrderTicketDisplay;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 
 /**
  * Displays tutorial-related UI components and manages tutorial flow.
@@ -16,9 +18,12 @@ public class TutorialScreenDisplay extends UIComponent {
     private final GdxGame game;
     private Label tutorialLabel;
     private int tutorialStep = 0;  // tracks the current tutorial step
+    private MainGameOrderTicketDisplay orderTicketDisplay;
+
 
     public TutorialScreenDisplay(GdxGame game) {
         this.game = game;
+        this.orderTicketDisplay = new MainGameOrderTicketDisplay();
     }
 
     @Override
@@ -87,7 +92,12 @@ public class TutorialScreenDisplay extends UIComponent {
      * Called when the player moves. Proceeds to the next tutorial step.
      */
     private void onPlayerMoved() {
-        ServiceLocator.getInputService().getEvents().removeListener("playerMoved", this::onPlayerMoved);
+        advanceTutorialStep();
+    }
+
+    private void onDocketSwitched() {
+        // Implement the behavior when a docket is shifted left or right
+        logger.info("Docket has been switched");
         advanceTutorialStep();
     }
 
@@ -105,8 +115,6 @@ public class TutorialScreenDisplay extends UIComponent {
      * Called when the player switches dockets. Proceeds to the next tutorial step.
      */
     private void onOrderingComplete() {
-        ServiceLocator.getTutorialService().getEvents().removeListener("shiftDocketsRight", this::onDocketSwitched);
-        ServiceLocator.getTutorialService().getEvents().removeListener("shiftDocketsLeft", this::onDocketSwitched);
         advanceTutorialStep();
     }
 
@@ -124,7 +132,6 @@ public class TutorialScreenDisplay extends UIComponent {
      * Called when the player picks up an item. Proceeds to the next tutorial step.
      */
     private void onItemPickedUp() {
-        ServiceLocator.getTutorialService().getEvents().removeListener("itemPickedUp", this::onItemPickedUp);
         advanceTutorialStep();
     }
 
@@ -140,7 +147,6 @@ public class TutorialScreenDisplay extends UIComponent {
      * Starts the main game after the tutorial is complete.
      */
     private void startGame() {
-        ServiceLocator.getInputService().getEvents().removeListener("startGame", this::startGame);
         game.setScreen(GdxGame.ScreenType.MAIN_GAME);  // Transition to the main game
     }
 
@@ -153,5 +159,18 @@ public class TutorialScreenDisplay extends UIComponent {
     public void dispose() {
         super.dispose();
         tutorialLabel.remove();
+    }
+
+    public void draw(SpriteBatch batch) {
+        // handled by stage
+    }
+
+    @Override
+    public void setStage(Stage stage) {
+        if (stage == null) {
+            logger.error("Attempted to set a null stage.");
+            return;
+        }
+        this.stage = stage;
     }
 }

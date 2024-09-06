@@ -57,7 +57,7 @@ public class TutorialScreen extends ScreenAdapter {
     private final PhysicsEngine physicsEngine;
     private boolean isPaused = false;
 
-    public MainGameScreen(GdxGame game) {
+    public TutorialScreen(GdxGame game) {
         this.game = game;
 
         logger.debug("Initialising tutorial screen services");
@@ -73,7 +73,7 @@ public class TutorialScreen extends ScreenAdapter {
         ServiceLocator.registerEntityService(new EntityService());
         ServiceLocator.registerRenderService(new RenderService());
         ServiceLocator.registerDocketService(new DocketService());
-        ServiceLocator.registerDocketService(new TutorialService());
+        ServiceLocator.registerTutorialService(new TutorialService());
 
         renderer = RenderFactory.createRenderer();
         renderer.getCamera().getEntity().setPosition(CAMERA_POSITION);
@@ -118,7 +118,7 @@ public class TutorialScreen extends ScreenAdapter {
 
     @Override
     public void dispose() {
-        logger.debug("Disposing main game screen");
+        logger.debug("Disposing tutorial screen");
 
         renderer.dispose();
         unloadAssets();
@@ -126,8 +126,6 @@ public class TutorialScreen extends ScreenAdapter {
         ServiceLocator.getEntityService().dispose();
         ServiceLocator.getRenderService().dispose();
         ServiceLocator.getResourceService().dispose();
-        ServiceLocator.getDocketService().dispose();
-        ServiceLocator.getTutorialService().dispose();
 
         ServiceLocator.clear();
     }
@@ -168,8 +166,7 @@ public class TutorialScreen extends ScreenAdapter {
                 .addComponent(new DocketLineDisplay())
                 .addComponent(new OrderActions(this.game))
                 .addComponent(new MainGameOrderBtnDisplay())
-                .addComponent(new TutorialScreenDisplay())
-                .addComponent(new EndDayDisplay(this));
+                .addComponent(new TutorialScreenDisplay(this.game));
         ServiceLocator.getEntityService().register(ui);
     }
 }

@@ -1,6 +1,7 @@
 package com.csse3200.game.components.tutorial;
 
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.Input.Keys;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.input.InputComponent;
@@ -35,17 +36,15 @@ public class TutorialActions extends InputComponent {
     public boolean keyDown(int keycode) {
         if (keycode == Input.Keys.SPACE) {
             logger.info("Space key pressed, triggering item pickup.");
-            ServiceLocator.getTutorialService().getEvents().trigger("itemPickedUp");
+            ServiceLocator.getInputService().getEvents().trigger("itemPickedUp"); //CLARIFY WHICH SERVICE WITH TEAM
             return true;
-        }
-        else if (keycode == Input.Keys.ENTER) {
+        } else if (keycode == Input.Keys.ENTER) {
             logger.info("Enter key pressed, completing the tutorial.");
             ServiceLocator.getTutorialService().getEvents().trigger("completeTutorial");
             return true;
-        }
-        else if (keycode == Input.Keys.W || keycode == Input.Keys.A || keycode == Input.Keys.S || keycode == Input.Keys.D) {
+        } else if (keycode == Input.Keys.W || keycode == Input.Keys.A || keycode == Input.Keys.S || keycode == Input.Keys.D) {
             logger.info("Movement key (W/A/S/D) pressed.");
-            ServiceLocator.getTutorialService().getEvents().trigger("playerMoved");
+            ServiceLocator.getInputService().getEvents().trigger("playerMoved");
             return true;
         }
         if (keycode == Keys.LEFT_BRACKET) {
@@ -67,7 +66,6 @@ public class TutorialActions extends InputComponent {
 
     private void onShiftDocketsLeft() {
         logger.info("Dockets shifted left.");
-        // Perform any tutorial-related actions needed when this occurs
         ServiceLocator.getTutorialService().getEvents().trigger("advanceTutorial");
     }
 
@@ -86,11 +84,6 @@ public class TutorialActions extends InputComponent {
         return false;
     }
 
-    @Override
-    public void dispose() {
-        ServiceLocator.getInputService().getEvents().removeListener("playerMoved", this::onPlayerMove);
-        ServiceLocator.getDocketService().getEvents().removeListener("shiftDocketsLeft", this::onShiftDocketsLeft);
-        ServiceLocator.getDocketService().getEvents().removeListener("shiftDocketsRight", this::onShiftDocketsRight);
-        super.dispose();
-    }
+
+
 }
