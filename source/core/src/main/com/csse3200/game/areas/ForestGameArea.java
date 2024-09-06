@@ -446,29 +446,17 @@ public class ForestGameArea extends GameArea {
 
   private void spawnCustomer() {
     GridPoint2 position = new GridPoint2(1, 5);
-    //System.out.println("1");
-
-    //System.out.println("2");
-    Vector2 targetPos3 = new Vector2(3, 5); // Target position for ghost king
-    Entity customer = NPCFactory.createGhostKing(player, targetPos3);
+    Vector2 targetPos = new Vector2(3, 5); // Target position for ghost king
+    Entity customer = NPCFactory.createCustomer(targetPos);
     spawnEntityAt(customer, position, true, true);
-//    for (int i = 0; i < NUM_CUSTOMERS_BASE; i++) {
-//      customer = NPCFactory.createCustomer();
-//      spawnEntityAt(customer, position, true, true);
-//      System.out.println("Customer spawned");
-//    }
-
-    //System.out.println("3");
   }
 
-//    private void spawnCustomerPersonal() {
-//        GridPoint2 position = new GridPoint2(1, 5);
-//       //System.out.println("1");
-//        Entity customer = NPCFactory.createCustomer(targetPosition);
-//        //System.out.println("2");
-//        spawnEntityAt(customer, position, true, true);
-//        //System.out.println("3");
-//    }
+    private void spawnCustomerPersonal() {
+        GridPoint2 position = new GridPoint2(1, 5);
+        Vector2 targetPos = new Vector2(3, 5);
+        Entity customer = NPCFactory.createCustomerPersonal(targetPos);
+        spawnEntityAt(customer, position, true, true);
+    }
 
 
   /**
@@ -586,8 +574,6 @@ public class ForestGameArea extends GameArea {
 
     //System.out.println("3");
   }
-
-
 
   private void triggerFiredEnd() {
     spawnBoss();

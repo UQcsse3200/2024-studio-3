@@ -136,7 +136,9 @@ public class NPCFactory {
     }
 
 
-    public static Entity createCustomer(Entity target, Vector2 targetPosition) {
+
+    public static Entity createCustomerPersonal(Vector2 targetPosition) {
+
         Entity customer = createBaseCustomer(targetPosition);
         GhostKingConfig config = configs.ghostKing;
 
@@ -156,23 +158,26 @@ public class NPCFactory {
         return customer;
     }
 
-    /**
-    public static Entity createBaseCustomer(Entity target, Vector2 targetPosition) {
-        AITaskComponent aiComponent =
-                new AITaskComponent()
-                        .addTask(new PathFollowTask(targetPosition));
-        Entity npc =
-                new Entity()
-                        .addComponent(new PhysicsComponent())
-                        .addComponent(new PhysicsMovementComponent())
-                        .addComponent(new ColliderComponent())
-                        .addComponent(new HitboxComponent().setLayer(PhysicsLayer.NPC))
-                        .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 1.5f))
-                        .addComponent(aiComponent);
 
-        PhysicsUtils.setScaledCollider(npc, 0.9f, 0.4f);
-        return npc;
-    }*/
+    public static Entity createCustomer(Vector2 targetPosition) {
+        Entity customer = createBaseCustomer(targetPosition);
+        GhostKingConfig config = configs.ghostKing;
+
+        AnimationRenderComponent animator =
+                new AnimationRenderComponent(
+                        ServiceLocator.getResourceService()
+                                .getAsset("images/ghostKing.atlas", TextureAtlas.class));
+        animator.addAnimation("float", 0.3f, Animation.PlayMode.LOOP);
+        animator.addAnimation("angry_float", 0.3f, Animation.PlayMode.LOOP);
+
+        customer
+                .addComponent(new CombatStatsComponent(config.health, config.baseAttack))
+                .addComponent(animator)
+                .addComponent(new GhostAnimationController());
+
+        customer.getComponent(AnimationRenderComponent.class).scaleEntity();
+        return customer;
+    }
 
     public static Entity createBaseCustomer(Vector2 targetPosition) {
         AITaskComponent aiComponent =
