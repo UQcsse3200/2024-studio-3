@@ -3,12 +3,21 @@ package com.csse3200.game.components.tutorial;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.csse3200.game.GdxGame;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
+import com.badlogic.gdx.scenes.scene2d.ui.Cell;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
 import com.csse3200.game.components.ordersystem.MainGameOrderTicketDisplay;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
+
 
 /**
  * Displays tutorial-related UI components and manages tutorial flow.
@@ -17,6 +26,9 @@ public class TutorialScreenDisplay extends UIComponent {
     private static final Logger logger = LoggerFactory.getLogger(TutorialScreenDisplay.class);
     private final GdxGame game;
     private Label tutorialLabel;
+    private Image tutorialBox;  // White box for background
+    private Skin skin;
+
     private int tutorialStep = 0;  // tracks the current tutorial step
     private MainGameOrderTicketDisplay orderTicketDisplay;
 
@@ -24,6 +36,7 @@ public class TutorialScreenDisplay extends UIComponent {
     public TutorialScreenDisplay(GdxGame game) {
         this.game = game;
         this.orderTicketDisplay = new MainGameOrderTicketDisplay();
+
     }
 
     @Override
@@ -38,7 +51,25 @@ public class TutorialScreenDisplay extends UIComponent {
      * Sets up the tutorial UI components.
      */
     private void setupUI() {
-        tutorialLabel = new Label("", skin);  // create a label for tutorial instructions
+        // Create a skin for loading textures
+        skin = new Skin();
+
+        // Manually load the white_box texture and add it to the skin
+        skin.add("tutorial_box", new Texture(Gdx.files.internal("core/assets/images/tutorial/tutorial_box.png")));
+
+        // Create a white box background
+        tutorialBox = new Image(skin.getDrawable("tutorial_box"));
+        tutorialBox.setSize(300, 150);
+        float boxX = stage.getViewport().getWorldWidth() * 0.1f;
+        float boxY = stage.getViewport().getWorldHeight() * 0.75f;
+        tutorialBox.setPosition(boxX, boxY);
+
+
+        tutorialLabel = new Label("", skin);
+        tutorialLabel.setFontScale(1.2f);  // scale font size
+        tutorialLabel.setPosition(boxX + 20, boxY + 80);
+
+        stage.addActor(tutorialBox);
         stage.addActor(tutorialLabel);
     }
 
