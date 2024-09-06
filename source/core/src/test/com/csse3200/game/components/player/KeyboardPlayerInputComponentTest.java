@@ -28,35 +28,35 @@ class KeyboardPlayerInputComponentTest {
     inputComponent = new KeyboardPlayerInputComponent();
     inputComponent.setEntity(entityMock);
   }
+  @Test
+  void shouldTriggerDiagonalWalkUpRight() {
+    inputComponent.keyDown(Keys.W);
+    inputComponent.keyDown(Keys.D);
+    verify(eventHandlerMock).trigger("walkUpRight");
+  }
+  @Test
+  void shouldTriggerDiagonalWalkDownLeft() {
+    inputComponent.keyDown(Keys.S);
+    inputComponent.keyDown(Keys.A);
+    verify(eventHandlerMock).trigger("walkDownLeft");
+  }
+
+  @Test
+  void shouldIgnoreNonMovementKeysWhileMoving() {
+    inputComponent.keyDown(Keys.W); // Start moving up
+    verify(eventHandlerMock, times(1)).trigger("walkUp");
+
+    inputComponent.keyDown(Keys.F); // Press an unrelated key (F)
+    verify(eventHandlerMock, never()).trigger("walkStop"); // Movement should continue
+
+    inputComponent.keyUp(Keys.W); // Release W, stop moving
+    verify(eventHandlerMock, times(1)).trigger("walkStop");
+  }
 
   @Test
   void shouldTriggerInteract() {
     inputComponent.keyDown(Keys.E);
     verify(eventHandlerMock, times(1)).trigger("interact");
-  }
-
-  @Test
-  void shouldTriggerWalkUp() {
-      inputComponent.keyDown(Keys.W);
-      verify(eventHandlerMock, times(1)).trigger("walk", new Vector2(0, 1));
-  }
-
-  @Test
-  void shouldTriggerWalkLeft() {
-      inputComponent.keyDown(Keys.A);
-      verify(eventHandlerMock, times(1)).trigger("walk", new Vector2(-1.0f, 0.0f));
-  }
-
-  @Test
-  void shouldTriggerWalkDown() {
-      inputComponent.keyDown(Keys.S);
-      verify(eventHandlerMock, times(1)).trigger("walk", new Vector2(0.0f, -1.0f));
-  }
-
-  @Test
-  void shouldTriggerWalkRight() {
-      inputComponent.keyDown(Keys.D);
-      verify(eventHandlerMock, times(1)).trigger("walk", new Vector2(1.0f, 0.0f));
   }
 
   @Test
