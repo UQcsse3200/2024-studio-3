@@ -97,7 +97,14 @@ public class ForestGameArea extends GameArea {
             "images/stations/benches/right_shadow.png",
             "images/stations/benches/top_left_corner_final.png",
             "images/stations/benches/top_left_corner.png",
-    "images/stations/benches/bench6-top.png"
+    "images/stations/benches/bench6-top.png",
+          "images/frame/vertical_border.png",
+          "images/frame/horizontal_border.png",
+          "images/frame/topleft_door.png",
+          "images/frame/topright_door.png",
+          "images/frame/bottomleft_door.png",
+          "images/frame/bottomright_door.png",
+          "images/frame/wall.png"
   };
   private static final String[] forestTextureAtlases = {"images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/ghostKing.atlas", "images/player.atlas", "images/fireExtinguisher/atlas/flame.atlas"};
   private static final String[] forestSounds = {"sounds/Impact4.ogg"};
@@ -186,97 +193,104 @@ public class ForestGameArea extends GameArea {
    * Spawns the entry and exit doors of the restaurant
    */
   private void spawnDoor() {
-    float tileSize = terrain.getTileSize();
-    GridPoint2 tileBounds = terrain.getMapBounds(0);
-    Vector2 worldBounds = new Vector2(tileBounds.x * tileSize, tileBounds.y * tileSize);
+    GridPoint2 coords;
+    Vector2 pos;
+    Entity top_left_door = ObstacleFactory.Door("topleft_door");
+    coords = new GridPoint2(0,264);
+    spawnEntityAt(top_left_door, coords, true, true);
+    pos = top_left_door.getPosition();
+    top_left_door.setPosition((pos.x / (24 * (terrain.getTileSize()))) + 0.02f, pos.y / (24 * (terrain.getTileSize())));
 
-    //Entry door
-    GridPoint2 position = new GridPoint2(0,(int)tileBounds.y-1);
-    Entity door = ObstacleFactory.createDoor("top_door_left_part",tileSize);
-    spawnEntityAt(door,position,true,false);
+    Entity top_right_door = ObstacleFactory.Door("topright_door");
+    coords = new GridPoint2(48,264);
+    spawnEntityAt(top_right_door, coords, true, true);
+    pos = top_right_door.getPosition();
+    top_right_door.setPosition((pos.x / (24 * (terrain.getTileSize()))) + 0.02f, pos.y / (24 * (terrain.getTileSize())));
 
-    position = new GridPoint2(1,(int)tileBounds.y-1);
-    door = ObstacleFactory.createDoor("top_door_right_part",tileSize);
-    spawnEntityAt(door,position,true,false);
+    Entity bottom_left_door = ObstacleFactory.Door("bottomleft_door");
+    coords = new GridPoint2(0,1);
+    spawnEntityAt(bottom_left_door, coords, true, true);
+    pos = bottom_left_door.getPosition();
+    bottom_left_door.setPosition((pos.x / (24 * (terrain.getTileSize()))) + 0.02f, pos.y / (24 * (terrain.getTileSize())));
 
-    //Exit door
-    position = new GridPoint2(0,0);
-    door = ObstacleFactory.createDoor("bottom_left_inv",tileSize);
-    spawnEntityAt(door,position,true,false);
-
-    position = new GridPoint2(1,0);
-    door = ObstacleFactory.createDoor("bottom_right_inv",tileSize);
-    spawnEntityAt(door,position,true,false);
+    Entity bottom_right_door = ObstacleFactory.Door("bottomright_door");
+    coords = new GridPoint2(48,1);
+    spawnEntityAt(bottom_right_door, coords, true, true);
+    pos = bottom_right_door.getPosition();
+    bottom_right_door.setPosition((pos.x / (24 * (terrain.getTileSize()))) + 0.02f, pos.y / (24 * (terrain.getTileSize())));
   }
 
   /**
    * Spawns the wall around the restaurant
    */
   private void spawnWall() {
-    float tileSize = terrain.getTileSize();
-    GridPoint2 tileBounds = terrain.getMapBounds(0);
-    Vector2 worldBounds = new Vector2(tileBounds.x * tileSize, tileBounds.y * tileSize);
+    GridPoint2 coords;
+    Vector2 pos;
+    Entity top_wall = ObstacleFactory.wall();
+    coords = new GridPoint2(99,264);
+    spawnEntityAt(top_wall, coords, true, true);
+    pos = top_wall.getPosition();
+    top_wall.setPosition((pos.x / (24 * (terrain.getTileSize()))) + 0.02f, pos.y / (24 * (terrain.getTileSize())));
 
-    for(int x=0;x<2;x++){
-      GridPoint2 position = new GridPoint2(x,0);
-      Entity left = ObstacleFactory.createBorder("border",tileSize);
-      spawnEntityAt(left,position,true,false);
-    }
-
-    for(int x=2;x<(int)tileBounds.x;x++){
-      GridPoint2 position = new GridPoint2(x,(int)tileBounds.y-1);
-      Entity top = ObstacleFactory.createBorder("top_border_wall",tileSize);
-      spawnEntityAt(top,position,true,false);
-
-
-      position = new GridPoint2(x,0);
-      Entity bottom = ObstacleFactory.createBorder("bottom_border_wall",tileSize);
-      spawnEntityAt(bottom,position,true,false);
-    }
-
+    Entity bottom_wall = ObstacleFactory.wall();
+    coords = new GridPoint2(99,1);
+    spawnEntityAt(bottom_wall, coords, true, true);
+    pos = bottom_wall.getPosition();
+    bottom_wall.setPosition((pos.x / (24 * (terrain.getTileSize()))) + 0.02f, pos.y / (24 * (terrain.getTileSize())));
   }
 
   /**
    * Renders a black border around the restaurant
    */
   private void make_border(){
-    float tileSize = terrain.getTileSize();
-    GridPoint2 tileBounds = terrain.getMapBounds(0);
-    Vector2 worldBounds = new Vector2(tileBounds.x * tileSize, tileBounds.y * tileSize);
+    GridPoint2 coords = new GridPoint2(0,0);
+    Vector2 pos;
 
     //top border
-    for(int x=0;x<(int)tileBounds.x; x++){
-      GridPoint2 position=new GridPoint2(x,(int)tileBounds.y-1);
-      Entity top = ObstacleFactory.createBorder("top_border",tileSize);
-      spawnEntityAt(top,position,true,false);
-    }
+    Entity top_border = ObstacleFactory.horizontalSeparation();
+    coords = new GridPoint2(2,286);
+    spawnEntityAt(top_border, coords, true, true);
+    pos = top_border.getPosition();
+    top_border.setPosition((pos.x / (24 * (terrain.getTileSize()))) + 0.02f, pos.y / (24 * (terrain.getTileSize())));
 
-    //left border
-    for(int y=0;y<(int)tileBounds.y;y++){
-      GridPoint2 position = new GridPoint2(-1,y);
-      Entity left = ObstacleFactory.createBorder("right_border",tileSize);
-      spawnEntityAt(left,position,true,false);
-    }
+    Entity top_down_border = ObstacleFactory.horizontalSeparation();
+    coords = new GridPoint2(2,263);
+    spawnEntityAt(top_down_border, coords, true, true);
+    pos = top_down_border.getPosition();
+    top_down_border.setPosition((pos.x / (24 * (terrain.getTileSize()))) + 0.02f, pos.y / (24 * (terrain.getTileSize())));
 
     //bottom border
-    for(int x=0;x<(int)tileBounds.x; x++){
-      GridPoint2 positon = new GridPoint2(x,0);
-      Entity bottom = ObstacleFactory.createBorder("bottom_border",tileSize);
-      spawnEntityAt(bottom,positon,true,false);
-    }
+    Entity bottom_border = ObstacleFactory.horizontalSeparation();
+    coords = new GridPoint2(2,-1);
+    spawnEntityAt(bottom_border, coords, true, true);
+    pos = bottom_border.getPosition();
+    bottom_border.setPosition((pos.x / (24 * (terrain.getTileSize()))) + 0.02f, pos.y / (24 * (terrain.getTileSize())));
+
+    Entity bottom_up_border = ObstacleFactory.horizontalSeparation();
+    coords = new GridPoint2(2,23);
+    spawnEntityAt(bottom_up_border, coords, true, true);
+    pos = bottom_up_border.getPosition();
+    bottom_up_border.setPosition((pos.x / (24 * (terrain.getTileSize()))) + 0.02f, pos.y / (24 * (terrain.getTileSize())));
+
+    //left border
+    Entity left_border = ObstacleFactory.verticalSeparation();
+    coords = new GridPoint2(0,3);
+    spawnEntityAt(left_border, coords, true, true);
+    pos = left_border.getPosition();
+    left_border.setPosition((pos.x / (24 * (terrain.getTileSize()))) + 0.02f, pos.y / (24 * (terrain.getTileSize())));
 
     //right border
-    for(int y=0;y<(int)tileBounds.y;y++){
-      GridPoint2 position = new GridPoint2((int)tileBounds.x-1,y);
-      Entity right = ObstacleFactory.createBorder("right_border",tileSize);
-      spawnEntityAt(right,position,true,false);
-    }
+    Entity right_border = ObstacleFactory.verticalSeparation();
+    coords = new GridPoint2(385,3);
+    spawnEntityAt(right_border, coords, true, true);
+    pos = right_border.getPosition();
+    right_border.setPosition((pos.x / (24 * (terrain.getTileSize()))) + 0.02f, pos.y / (24 * (terrain.getTileSize())));
 
     //separation border
-    Entity sep_border = ObstacleFactory.createSeparation("separation_border");
-    GridPoint2 coords = new GridPoint2(96,10);
+    Entity sep_border = ObstacleFactory.verticalSeparation();
+    coords = new GridPoint2(96,3);
     spawnEntityAt(sep_border, coords, true, true);
-    Vector2 pos = sep_border.getPosition();
+    pos = sep_border.getPosition();
     sep_border.setPosition((pos.x / (24 * (terrain.getTileSize()))) + 0.02f, pos.y / (24 * (terrain.getTileSize())));
   }
 
