@@ -33,7 +33,7 @@ public class TextDisplay extends UIComponent {
     private int current_part = 0;
     private int text_length = 0;
     private StringBuilder currentText;
-    private int textLimit = 40;
+    private int textLimit = 60;
     private int charIndex = 0;
     private long lastUpdate = 0L;
     private long delay = 100L;
@@ -71,16 +71,20 @@ public class TextDisplay extends UIComponent {
         stack.add(textboxImage);
 
         // Create and add the label on top of the image in the stack
-        label = new Label("", skin);
+        BitmapFont defaultFont = new BitmapFont();
+        Label.LabelStyle labelStyle = new Label.LabelStyle(defaultFont, Color.BLACK);
+        label = new Label("", labelStyle);
+        label.setFontScale(3.0f);
         label.setWrap(true);
         label.setAlignment(Align.top | Align.left);
 
         Table labelTable = new Table();
-        labelTable.add(label).padLeft(130).padBottom(10).size(800,200);
+        labelTable.add(label).padLeft(140).padBottom(10).size(
+                (int)(Gdx.graphics.getWidth() * 0.5), (int)(Gdx.graphics.getHeight() * 0.2));
         stack.add(labelTable);
 
         // Add the stack to the table with padding or alignment options
-        table.add(stack).padBottom(70).padLeft(0).size(800, 200);
+        table.add(stack).padBottom(70).padLeft(0).size((int)(Gdx.graphics.getWidth() * 0.5), (int)(Gdx.graphics.getHeight() * 0.2));
 
         setText("Hello There Chat whats up with you guys. I just love CSSE3200 so much. Please send help");
         setupInputListener();
@@ -131,6 +135,7 @@ public class TextDisplay extends UIComponent {
                     current_part++;
                     charIndex = 0;
                     lastUpdate = 0;
+                    TextDisplay.this.currentText = new StringBuilder();
                     if (current_part == TextDisplay.this.text.size()) {
                         setVisible(false);
                     }
