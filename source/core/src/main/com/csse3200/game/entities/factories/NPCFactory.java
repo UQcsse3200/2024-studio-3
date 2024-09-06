@@ -73,6 +73,7 @@ public class NPCFactory {
         Entity ghostKing = createBaseNPC(target, targetPosition);
         GhostKingConfig config = configs.ghostKing;
 
+
         AnimationRenderComponent animator =
                 new AnimationRenderComponent(
                         ServiceLocator.getResourceService()
