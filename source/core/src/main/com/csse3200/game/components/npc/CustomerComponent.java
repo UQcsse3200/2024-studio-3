@@ -8,16 +8,18 @@ import org.slf4j.LoggerFactory;
 
 public class CustomerComponent extends Component {
     private static final Logger logger = LoggerFactory.getLogger(CustomerComponent.class);
+
     private int countDown;
     private int reputation;
     private int patience;
     private int spawnTimer;
+    private String type;
     private String name;
-    private int pref;
+    private int preference;
 
 
     public CustomerComponent(BaseCustomerConfig config) {
-        this.name = config.name;
+        this.type = config.type;
         this.patience = config.patience;
         this.spawnTimer = config.spawnTimer;
         this.countDown = config.countDown;
@@ -25,11 +27,12 @@ public class CustomerComponent extends Component {
 
     public CustomerComponent(CustomerPersonalityConfig config) {
         this.name = config.name;
+        this.type = config.type;
         this.patience = config.patience;
         this.spawnTimer = config.spawnTimer;
         this.countDown = config.countDown;
         this.reputation = config.reputation;
-        this.pref = config.pref;
+        this.preference = config.preference;
     }
 
     public void setReputation(int reputation) {

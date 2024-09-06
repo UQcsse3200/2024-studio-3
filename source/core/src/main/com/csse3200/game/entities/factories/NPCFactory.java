@@ -4,7 +4,9 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.ai.tasks.AITaskComponent;
+import com.csse3200.game.areas.ForestGameArea;
 import com.csse3200.game.components.CombatStatsComponent;
+import com.csse3200.game.components.npc.CustomerComponent;
 import com.csse3200.game.components.npc.GhostAnimationController;
 import com.csse3200.game.components.TouchAttackComponent;
 import com.csse3200.game.components.tasks.PathFollowTask;
@@ -33,8 +35,9 @@ import com.csse3200.game.services.ServiceLocator;
 public class NPCFactory {
     private static final NPCConfigs configs =
             FileLoader.readClass(NPCConfigs.class, "configs/NPCs.json");
-    private static final BaseCustomerConfig customerConfig =
-            FileLoader.readClass(BaseCustomerConfig.class, "configs/Customer.json");
+
+    private static final NPCConfigs personalCustomerConfig =
+            FileLoader.readClass(NPCConfigs.class, "configs/NPCs.json");
 
     /**
      * Creates a ghost entity.
@@ -89,9 +92,22 @@ public class NPCFactory {
         return ghostKing;
     }
 
-    public static Entity createCustomerPersonal(Vector2 targetPosition) {
+    public static Entity createCustomerPersonal(String name, Vector2 targetPosition) {
         Entity customer = createBaseCustomer(targetPosition);
-        GhostKingConfig config = configs.ghostKing;
+
+        CustomerPersonalityConfig config = switch (name) {
+            case "Hank" -> personalCustomerConfig.Hank;
+            case "Lewis" -> personalCustomerConfig.Lewis;
+            case "Silver" -> personalCustomerConfig.Silver;
+            case "John" -> personalCustomerConfig.John;
+            case "Moonki" -> personalCustomerConfig.Moonki;
+            default -> personalCustomerConfig.Default;
+        };
+
+        System.out.println(name);
+        System.out.println(config.name);
+        System.out.println(config.type);
+        System.out.println(config.countDown);
 
         AnimationRenderComponent animator =
                 new AnimationRenderComponent(
@@ -101,7 +117,6 @@ public class NPCFactory {
         animator.addAnimation("angry_float", 0.3f, Animation.PlayMode.LOOP);
 
         customer
-                .addComponent(new CombatStatsComponent(config.health, config.baseAttack))
                 .addComponent(animator)
                 .addComponent(new GhostAnimationController());
 

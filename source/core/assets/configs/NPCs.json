@@ -7,6 +7,67 @@
     "health": 100,
     "baseAttack": 25,
     "spookyFactor": 7
+  },
+  "Hank": {
+    "name": "Hank",
+    "type": "Gorilla",
+    "countDown": 20,
+    "patience": 100,
+    "spawnTimer": 100,
+    "preference": 0,
+    "reputation": 100,
+    "texture": "images/animal_images/gorilla.png"
+  },
+  "Lewis": {
+    "name": "Lewis",
+    "type": "Goose",
+    "countDown": 30,
+    "patience": 100,
+    "spawnTimer": 100,
+    "preference": 0,
+    "reputation": 100,
+    "texture": "images/animal_images/goose.png"
+  },
+  "Silver": {
+    "name": "Silver",
+    "type": "Snow_Fox",
+    "countDown": 50,
+    "patience": 100,
+    "spawnTimer": 100,
+    "preference": 0,
+    "reputation": 100,
+    "texture": "images/animal_images/snow_wolf.png"
+  },
+  "John": {
+    "name": "John",
+    "type": "Goat",
+    "countDown": 50,
+    "patience": 100,
+    "spawnTimer": 100,
+    "preference": 0,
+    "reputation": 100,
+    "texture": "images/animal_images/goat.png"
+  },
+  "Moonki": {
+    "name": "Moonki>",
+    "type": "Monkey",
+    "countDown": 40,
+    "patience": 100,
+    "spawnTimer": 100,
+    "preference": 0,
+    "reputation": 100,
+    "texture": "images/animal_images/monkey.png"
+  },
+
+  "Default": {
+    "name": "Shouldn't be reachable>",
+    "type": "error",
+    "countDown": 999,
+    "patience": 999,
+    "spawnTimer": 999,
+    "preference": 999,
+    "reputation": 999,
+    "texture": "error error"
   }
 }
 
