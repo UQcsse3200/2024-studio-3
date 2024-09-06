@@ -5,5 +5,6 @@ public class BaseCustomerConfig {
     public int countDown = 30; // in seconds
     public int patience = 100; // in seconds
     public int spawnTimer = 100; // in seconds
+
     public String texture;
 }

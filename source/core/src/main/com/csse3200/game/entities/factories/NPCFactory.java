@@ -158,6 +158,7 @@ public class NPCFactory {
                         .addComponent(aiComponent);
 
         PhysicsUtils.setScaledCollider(npc, 0.9f, 0.4f);
+        npc.getComponent(PhysicsComponent.class).getBody().setUserData("Customer");
         return npc;
     }
 

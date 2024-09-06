@@ -15,7 +15,7 @@ public class CustomerComponent extends Component {
     private int spawnTimer;
     private String type;
     private String name;
-    private int preference;
+    private String preference;
 
 
     public CustomerComponent(BaseCustomerConfig config) {
@@ -80,4 +80,6 @@ public class CustomerComponent extends Component {
     public String getName() {
         return this.name;
     }
+
+    public String getPreference(){return this.preference;}
 }
