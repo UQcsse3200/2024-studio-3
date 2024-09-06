@@ -37,8 +37,11 @@ public class MoralDecision extends UIComponent {
         isVisible = false;
     }
 
+    @Override
     public void create() {
         super.create();
+
+        // create a table layout
         layout = new Table();
         layout.setFillParent(true);
         layout.setVisible(isVisible);
@@ -46,14 +49,26 @@ public class MoralDecision extends UIComponent {
 
         // create black background
         Pixmap pixmap = new Pixmap(1, 1, Pixmap.Format.RGBA8888);
-        pixmap.setColor(Color.BLACK);
+        pixmap.setColor(Color.GRAY);
         pixmap.fill();
         Texture pixmapTex = new Texture(pixmap);
         pixmap.dispose();
         Drawable blackBackground = new TextureRegionDrawable(new TextureRegion(pixmapTex));
         layout.setBackground(blackBackground);
 
-        initialiseUI();
+        // set up the label using table layout
+        BitmapFont font = new BitmapFont();
+        Label titleLabel = new Label("Moral Decision", new Label.LabelStyle(font, Color.WHITE));
+        layout.add(titleLabel).pad(10).row();
+
+        // load and position the racoon image slightly to the left
+        Texture imgTexture = new Texture(Gdx.files.internal("images/racoon.png"));
+        Drawable imgDrawable = new TextureRegionDrawable(imgTexture);
+        characterImage = new Image(imgDrawable);
+
+        // add racoon image to the table and shift it left by adjusting padding
+        layout.add(characterImage).padLeft(100).center().row(); // Add padding to move left
+
         setupInputListener();
     }
 
