@@ -1,6 +1,7 @@
 package com.csse3200.game.areas;
 
 import com.csse3200.game.entities.benches.Bench;
+import com.csse3200.game.entities.configs.PlayerConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.badlogic.gdx.audio.Music;
@@ -59,6 +60,7 @@ public class ForestGameArea extends GameArea {
     "images/ingredients/cooked_beef.png",
     "images/ingredients/burnt_beef.png",
     "images/tiles/orange_tile.png",
+          "images/tiles/bench_test.png",
     "images/tiles/blue_tile.png",
     "images/stations/oven.png",
     "images/stations/stove.png",
@@ -77,20 +79,27 @@ public class ForestGameArea extends GameArea {
     "images/frame/top_border_wall.png",
     "images/frame/bottom_border_wall.png",
     "images/frame/border.png",
-          "images/frame/separation_border.png",
-    "images/stations/benches/bench7.png",
-    "images/stations/benches/bench2.png",
-    "images/stations/benches/bench3-5.png",
-    "images/stations/benches/bench4.png",
-    "images/stations/benches/bench6.png",
-    "images/stations/benches/bench1.png",
           "images/tooltip_bg.png",
     "images/stations/benches/bench6-bottom.png",
+    "images/stations/benches/bench6-top.png",
+    "images/fireExtinguisher/Fire_Extinguisher.png",
+          "images/stations/benches/bench_test.png",
+          "images/stations/benches/middle.png",
+          "images/stations/benches/left_border.png",
+            "images/stations/benches/right_border.png",
+            "images/stations/benches/vertical.png",
+            "images/stations/benches/top_fin.png",
+          "images/stations/benches/bottom_fin.png",
+          "images/stations/benches/bottom_shadow_final.png",
+            "images/stations/benches/shadow_bottom_top.png",
+            "images/stations/benches/top_top_final.png",
+            "images/stations/benches/left_shadow.png",
+            "images/stations/benches/right_shadow.png",
+            "images/stations/benches/top_left_corner_final.png",
+            "images/stations/benches/top_left_corner.png",
     "images/stations/benches/bench6-top.png"
   };
-  private static final String[] forestTextureAtlases = {
-    "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/ghostKing.atlas"
-  };
+  private static final String[] forestTextureAtlases = {"images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/ghostKing.atlas", "images/player.atlas", "images/fireExtinguisher/atlas/flame.atlas"};
   private static final String[] forestSounds = {"sounds/Impact4.ogg"};
   private static final String backgroundMusic = "sounds/BGM_03_mp3.mp3";
   private static final String[] forestMusic = {backgroundMusic};
@@ -120,8 +129,9 @@ public class ForestGameArea extends GameArea {
     // Spawn the restaurant
     spawnDoor();
     spawnWall();
-    make_border();
     spawnBenches();
+    make_border();
+
     spawnStations();
     // Spawn beef
     spawnBeef("cooked");
@@ -132,7 +142,7 @@ public class ForestGameArea extends GameArea {
     // Spawn the player
     player = spawnPlayer();
 
-    playMusic();
+    //playMusic();
   }
 
   private void displayUI() {
@@ -274,53 +284,112 @@ public class ForestGameArea extends GameArea {
     GridPoint2 ovenPos = new GridPoint2(5,4);
     Entity oven = StationFactory.createOven();
     spawnEntityAt(oven, ovenPos, true, false);
-    oven.setPosition(oven.getPosition().x , oven.getPosition().y + 1.3f);
+    oven.setPosition(oven.getPosition().x , oven.getPosition().y + 0.9f);
 
     GridPoint2 stovePos = new GridPoint2(5,4);
     Entity stove = StationFactory.createStove();
     spawnEntityAt(stove, stovePos, false, false);
-    stove.setPosition(stove.getPosition().x + 2.7f , stove.getPosition().y + 1.3f);
+    stove.setPosition(stove.getPosition().x + 2.7f , stove.getPosition().y + 0.9f);
+
+    //Spawn a flame, this is temporary and for testing purposes
+    GridPoint2 flamePos = new GridPoint2(1,1);
+    Entity flame = StationFactory.createFlame();
+    spawnEntityAt(flame, flamePos, false, false);
+
+    GridPoint2 fireExtinguisherPos = new GridPoint2(3, 4);
+    Entity fireExtinguisher = StationFactory.createFireExtinguisher();
+    spawnEntityAt(fireExtinguisher, fireExtinguisherPos, false, false);
   }
 
-    /**
-     * spawn a bench
-     * @param type: bench filename
-     * @param x: x coordinate
-     * @param y: y coordinate
-     *         note: coordinates begin at bottom left of screen
-     */
-  private void spawnBench(String type, int x, int y) {
-      GridPoint2 coords = new GridPoint2(x,y);
-      Entity bench = Bench.createBench(type);
-      spawnEntityAt(bench, coords, true, true);
-      Vector2 pos = bench.getPosition();
 
-      // this is very scuffed but it aligns.
-      bench.setPosition((pos.x / (24 * (terrain.getTileSize()))) + 0.02f, pos.y / (24 * (terrain.getTileSize())));
-  }
   /**
    * Render and spawn all benches.
    */
   private void spawnBenches() {
-      List<Bench> benches = new ArrayList<Bench>();
-      benches.add(new Bench("bench3-5", 98, 224));
-      benches.add(new Bench("bench7", 98, 25));
-      benches.add(new Bench("bench2", 96, 72));
-      benches.add(new Bench("bench6-bottom", 343,27));
-      benches.add(new Bench("bench6-top", 343,131));
-      benches.add(new Bench("bench4", 217, 160));
-      benches.add(new Bench("bench1", 217, 26));
+     //bottom
+     Entity bench1 = Bench.createBench("left_border");
+     spawnEntityAt(bench1, new GridPoint2(4,1), false, false);
+     bench1.setPosition(4, 1f);
+     for (int i = 5; i < 15; i++) {
+       Entity bench = Bench.createBench("middle");
+       spawnEntityAt(bench, new GridPoint2(i, 1), false, false);
+       bench.setPosition(i, 1f);
+     }
+     Entity bench2 = Bench.createBench("right_border");
+     spawnEntityAt(bench2, new GridPoint2(15,1), false, false);
+     bench2.setPosition(15, 1f);
+     //right
+     for (int i = 2; i < 10; i++) {
+       Entity bench = Bench.createBench("vertical");
+       spawnEntityAt(bench, new GridPoint2(15, i), false, false);
+       bench.setPosition(15f, i);
+     }
+     Entity bench4 = Bench.createBench("top_fin");
+     spawnEntityAt(bench4, new GridPoint2(15,10), false, false);
+     bench4.setPosition(15f, 10);
 
-      for (int i = 0; i < benches.size(); i++) {
-          Bench bench = benches.get(i);
-          spawnBench(bench.type, bench.x, bench.y);
-      }
+     for (int i = 5; i < 15; i++) {
+       Entity bench = Bench.createBench("top_top_final");
+       spawnEntityAt(bench, new GridPoint2(i, 10), true, true);
+       bench.setPosition(i, 10f);
+     }
+     Entity bench3 = Bench.createBench("top_left_corner_final");
+     spawnEntityAt(bench3, new GridPoint2(4,10), false, false);
+     bench3.setPosition(4, 10f);
+
+     //second row of top for shadows
+     for (int i = 5; i < 15; i++) {
+       Entity bench = Bench.createBench("shadow_bottom_top");
+       spawnEntityAt(bench, new GridPoint2(i, 9), false, false);
+       bench.setPosition(i, 9f);
+     }
+    Entity bench5 = Bench.createBench("left_shadow");
+    spawnEntityAt(bench5, new GridPoint2(4,9), false, false);
+    bench5.setPosition(4, 9f);
+
+    for (int i = 4; i < 7; i++) {
+      Entity bench = Bench.createBench("vertical");
+      spawnEntityAt(bench, new GridPoint2(4, i), false, false);
+      bench.setPosition(4f, i);
+    }
+    Entity bench7 = Bench.createBench("bottom_shadow_final");
+    spawnEntityAt(bench7, new GridPoint2(4,3), false, false);
+    bench7.setPosition(4f, 3);
+    Entity bench8 = Bench.createBench("top_fin");
+    spawnEntityAt(bench8, new GridPoint2(4,7), false, false);
+    bench8.setPosition(4f, 7);
+
+    //middle 1
+    for (int i = 2; i < 4; i++) {
+      Entity bench = Bench.createBench("vertical");
+      spawnEntityAt(bench, new GridPoint2(9, i), false, false);
+      bench.setPosition(9f, i);
+    }
+    Entity bench9 = Bench.createBench("top_fin");
+    spawnEntityAt(bench9, new GridPoint2(9,4), false, false);
+    bench9.setPosition(9f, 4);
+    //middle 2
+    for (int i = 7; i < 9; i++) {
+      Entity bench = Bench.createBench("vertical");
+      spawnEntityAt(bench, new GridPoint2(9, i), false, false);
+      bench.setPosition(9f, i);
+    }
+    Entity bench12 = Bench.createBench("vertical");
+    spawnEntityAt(bench12, new GridPoint2(9,9), false, false);
+    bench12.setPosition(9f, 9);
+    Entity bench11 = Bench.createBench("bench_test");
+    spawnEntityAt(bench11, new GridPoint2(9,10), false, false);
+    bench11.setPosition(9f, 10);
+    Entity bench10 = Bench.createBench("bottom_shadow_final");
+    spawnEntityAt(bench10, new GridPoint2(9,7), false, false);
+    bench10.setPosition(9f, 7);
+
   }
 
   private Entity spawnPlayer() {
-    Entity newPlayer = PlayerFactory.createPlayer();
-    // scale it
-    newPlayer.setScale(2.1f, 2.1f);
+    Entity newPlayer;
+    PlayerConfig playerConfig = new PlayerConfig();
+    newPlayer = PlayerFactory.createPlayer(playerConfig);
     spawnEntityAt(newPlayer, PLAYER_SPAWN, true, true);
     return newPlayer;
   }
