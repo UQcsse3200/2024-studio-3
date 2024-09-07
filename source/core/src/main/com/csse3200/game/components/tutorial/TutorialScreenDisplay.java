@@ -155,8 +155,7 @@ Table table = new Table();
     private void showMovementTutorial() {
         tutorialLabel.setText("Use W/A/S/D to move around.");
         // implement all other movement tutorial code here
-        // Add the table to the stage
-//        stage.addActor(table);
+
         ServiceLocator.getInputService().getEvents().addListener("playerMoved", this::onPlayerMoved);
     }
 
@@ -172,6 +171,7 @@ Table table = new Table();
 
         if(i == 1) advanceTutorialStep();//hacky way to implement tutorial
         i++;
+
     }
 
     private void onDocketSwitched() {
@@ -206,7 +206,7 @@ Table table = new Table();
 
         ServiceLocator.getTutorialService().getEvents().addListener("itemPickedUp", this::onItemPickedUp);
     }
-    private boolean onInputKey(int keycode) {
+   private boolean onInputKey(int keycode) {
         if (keycode == Input.Keys.E) {
             logger.info("'E' key pressed, attempting to pick up item.");
             // Trigger item pickup event
