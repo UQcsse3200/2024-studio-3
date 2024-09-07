@@ -13,8 +13,8 @@ public class PlateComponent extends Component {
     private String itemOnPlate;
     private boolean isAvailable;
     private boolean isServable;
-    private final GameTime timeSource;
-    private long washEndTime;
+    //private final GameTime timeSource;
+    //private long washEndTime;
 
     public enum PlateState {
         CLEAN, DIRTY, IN_USE, WASHING
@@ -25,7 +25,7 @@ public class PlateComponent extends Component {
         this.itemOnPlate = null;
         this.isAvailable = true;
         this.isServable = false;
-        this.timeSource = ServiceLocator.getTimeSource();
+        //this.timeSource = ServiceLocator.getTimeSource(); --unused until cleanplate is implemented
     }
     @Override
     public void create() {
@@ -37,6 +37,8 @@ public class PlateComponent extends Component {
         return isAvailable;
     }
 
+    //Method check isServable --check if it is a meal or not (extract from ItemType to extract meals)
+    //if isServable can be served to customers else, can only interact in kitchen
     public boolean isServable() {
         return isServable;
     }
@@ -45,6 +47,7 @@ public class PlateComponent extends Component {
         return state == PlateState.CLEAN;
     }
 
+    /* wait to be implemented with washing station
     public void washPlate() {
         if (state == PlateState.DIRTY) {
             state = PlateState.WASHING;
@@ -54,13 +57,14 @@ public class PlateComponent extends Component {
             logger.warn("Cannot wash plate");
         }
     }
-
+    */
     @Override
     public void update() {
-        if (state == PlateState.WASHING && timeSource.getTime() >= washEndTime) {
+       /* not implemented until washing station is implemented
+          if (state == PlateState.WASHING && timeSource.getTime() >= washEndTime) {
             state = PlateState.CLEAN;
             logger.info("Plate clean");
-        }
+        }*/
     }
 
     public boolean addToPlate(String item) {
@@ -103,10 +107,6 @@ public class PlateComponent extends Component {
             logger.warn("Cannot letdown plate");
         }
     }
-
-    //Method check isServable --check if it is a meal or not (extract from ItemType to extract meals)
-    //if isServable can be served to customers else, can only interact in kitchen
-
 
     public void dispose() {
         logger.info("Plate disposed");
