@@ -8,6 +8,7 @@ import com.csse3200.game.components.TooltipsDisplay;
 import com.csse3200.game.components.items.ItemComponent;
 import com.csse3200.game.components.items.ItemType;
 import com.csse3200.game.components.player.InventoryComponent;
+import com.csse3200.game.components.station.IngredientStationHandlerComponent;
 import com.csse3200.game.components.station.StationItemHandlerComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.physics.PhysicsLayer;
@@ -31,13 +32,14 @@ public class StationFactory {
             .addComponent(new TooltipsDisplay())
         .addComponent(new StationItemHandlerComponent("oven", new ArrayList<>()))
             .addComponent(new InventoryComponent(1));
+
+    oven.getComponent(InventoryComponent.class).addItem(new ItemComponent("lettuce", ItemType.LETTUCE, 1));
+
     oven.getComponent(InteractionComponent.class).setAsBox(oven.getScale());
     oven.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
     oven.getComponent(TextureRenderComponent.class).scaleEntity();
     oven.scaleHeight(1.5f);
 
-
-    oven.getComponent(InventoryComponent.class).addItem(new ItemComponent("lettuce", ItemType.LETTUCE, 1));
     PhysicsUtils.setScaledCollider(oven, 0.3f, 0.2f);
     // Add station reference
     PhysicsComponent physicsComponent = oven.getComponent(PhysicsComponent.class);
@@ -75,6 +77,32 @@ public class StationFactory {
     Body body = physicsComponent.getBody();
     body.setUserData(stove);
     return stove;
+  }
+
+  public static Entity createAppleTree() {
+    Entity apple = new Entity()
+            .addComponent(new TextureRenderComponent("images/stations/apple_tree.png"))
+            .addComponent(new PhysicsComponent())
+            .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
+            .addComponent(new InteractionComponent(PhysicsLayer.INTERACTABLE))
+            .addComponent(new TooltipsDisplay())
+            .addComponent(new InventoryComponent(1))
+            .addComponent(new IngredientStationHandlerComponent("apples"));
+
+    apple.getComponent(InventoryComponent.class).addItem(new ItemComponent("Apples", ItemType.APPLE, 1));
+
+    // Physics components
+    apple.getComponent(InteractionComponent.class).setAsBox(apple.getScale());
+    apple.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
+    apple.getComponent(TextureRenderComponent.class).scaleEntity();
+    apple.scaleHeight(2f);
+    PhysicsUtils.setScaledCollider(apple, 0.3f, 0.2f);
+
+    // Add station reference
+    PhysicsComponent physicsComponent = apple.getComponent(PhysicsComponent.class);
+    Body body = physicsComponent.getBody();
+    body.setUserData(apple);
+    return apple;
   }
 
   /**
