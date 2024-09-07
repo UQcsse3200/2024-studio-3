@@ -69,6 +69,10 @@ public class LevelComponent extends Component {
         return currentCustomersLinedUp;
     }
 
+    public int getNumbCustomersSpawned() {
+        return numbCustomersSpawned;
+    }
+
     public boolean getNowSpawning() {
         return nowSpawning;
     }

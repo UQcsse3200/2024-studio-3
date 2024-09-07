@@ -34,4 +34,13 @@ class LevelComponentTest {
         verify(levelComponentSpy).setSpawnStartTime();
         verify(levelComponentSpy).toggleNowSpawning();
     }
+
+    @Test
+    void shouldHaveDefaultValues() {
+        assertEquals(0,levelComponentSpy.getSpawnStartTime());
+        assertFalse(levelComponentSpy.getNowSpawning());
+        assertEquals(0,levelComponentSpy.getLevelSpawnCap());
+        assertEquals(0,levelComponentSpy.getNumbCustomersSpawned());
+        assertEquals(0,levelComponentSpy.getCurrentCustomersLinedUp());
+    }
 }
