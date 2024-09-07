@@ -127,7 +127,7 @@ public class InventoryComponent extends Component {
      * Returns the item at index if it exists in the current inventory.
      * 
      * @param index - the index being queried.
-     * @return the item at index if it exists in the current inventory, null if there is nothing there.
+     * @return - the item at index if it exists in the current inventory, null if there is nothing there.
      * @throws IllegalArgumentException - if the given index is negative or out of bounds.
      */
   public ItemComponent getItemAt(int index) {
@@ -249,5 +249,24 @@ public class InventoryComponent extends Component {
       return item; 
     }
     return null;
+  }
+
+  /**
+   * Returns the names of all items present in the list, in order.
+   * 
+   * @return - the list of names of items in the inventory, null if empty.
+   */
+  public ArrayList<String> getItemNames() {
+    ArrayList<String> itemNames = new ArrayList();
+
+    if (this.isEmpty()) {
+      return itemNames;
+    } else {
+      for (ItemComponent item : items) {
+        if (item != null) {
+          itemNames.add(item.getItemName());
+        }
+      }
+    }
   }
 }
