@@ -2,7 +2,7 @@
 package com.csse3200.game.entities.factories;
 
 
-import com.csse3200.game.entities.configs.CookingConfig;
+import com.csse3200.game.entities.configs.RecipeConfig;
 import com.csse3200.game.entities.configs.SingleStationRecipeConfig;
 import com.csse3200.game.entities.configs.MultiStationRecipeConfig;
 
@@ -20,8 +20,8 @@ import java.util.*;
  * the properties stores in 'CookingConfig'.
  */
 public class DishFactory {
-    private static final CookingConfig configs =
-            FileLoader.readClass(CookingConfig.class, "configs/recipe.json");
+    private static final RecipeConfig configs =
+            FileLoader.readClass(RecipeConfig.class, "configs/recipe.json");
 
     /**
      * Store the recipe and associated ingredients to the dictionary

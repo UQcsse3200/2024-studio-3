@@ -1,6 +1,6 @@
 package com.csse3200.game.files;
 
-import com.csse3200.game.entities.configs.CookingConfig;
+import com.csse3200.game.entities.configs.RecipeConfig;
 import com.csse3200.game.entities.factories.DishFactory;
 import com.csse3200.game.extensions.GameExtension;
 import org.junit.jupiter.api.BeforeEach;
@@ -15,10 +15,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @ExtendWith(GameExtension.class)
 public class RecipeFileLoaderTest {
 
-    public CookingConfig configs;
+    public RecipeConfig configs;
     @BeforeEach
     public void setUp() {
-        configs = FileLoader.readClass(CookingConfig.class, "configs/recipe.json");
+        configs = FileLoader.readClass(RecipeConfig.class, "configs/recipe.json");
     }
 
     @Test
