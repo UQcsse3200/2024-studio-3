@@ -20,9 +20,12 @@ import com.csse3200.game.entities.factories.ItemFactory;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.utils.math.GridPoint2Utils;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /** Forest area for the demo game with trees, a player, and some enemies. */
 public class ForestGameArea extends GameArea {
@@ -575,7 +578,20 @@ public class ForestGameArea extends GameArea {
   }
 
   private void triggerFiredEnd() {
-    spawnBoss();
+    ExecutorService executor = Executors.newSingleThreadExecutor();
+    executor.submit(() -> {
+      try {
+        Thread.sleep(10000);
+        spawnBoss();
+
+      } catch (InterruptedException e) {
+        Thread.currentThread().interrupt();
+        System.out.println("Thread was interrupted");
+      }
+    });
+
+    // Shutdown the executor to prevent zombie threads
+    executor.shutdown();
   }
 
   private void triggerGoodEnd() {
