@@ -2,8 +2,11 @@ package com.csse3200.game.components.levels;
 
 import com.csse3200.game.areas.ForestGameArea;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.events.listeners.EventListener0;
+import com.csse3200.game.events.listeners.EventListener1;
 import com.csse3200.game.extensions.GameExtension;
 import com.csse3200.game.services.LevelService;
+import com.csse3200.game.services.ServiceLocator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -79,5 +82,19 @@ class LevelComponentTest {
         verify(levelComponentSpy).setGameArea(mockGameArea);
         assertEquals(levelComponentSpy.getGameArea(), mockGameArea);
         verify(levelComponentSpy).getGameArea();
+    }
+
+    @Test
+    void scuffed() {
+        ServiceLocator.registerLevelService(new LevelService());
+        EventListener1 mockEvent = mock(EventListener1.class);
+        ForestGameArea mockGameArea = mock(ForestGameArea.class);
+        ServiceLocator.getLevelService().getEvents().addListener("createCustomer", mockEvent);
+        levelComponentSpy.initSpawning(5);
+        verify(mockEvent, atMost(5)).handle(mockGameArea);
+        verify(levelComponentSpy, atMost(2)).toggleNowSpawning();
+        verify(levelComponentSpy, atMost(5)).customerSpawned();
+        //assertEquals(5, levelComponentSpy.getNumbCustomersSpawned());
+        //assertEquals(levelComponentSpy.getLevelSpawnCap(), levelComponentSpy.getNumbCustomersSpawned());
     }
 }
