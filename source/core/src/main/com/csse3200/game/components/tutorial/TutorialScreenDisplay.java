@@ -26,10 +26,10 @@ public class TutorialScreenDisplay extends UIComponent {
     private Label tutorialLabel;
     private Image tutorialBox;  // White box for background
     private Skin skin;
-   private  int  i = 0;
+    private  int  i = 0;
     private int tutorialStep = 0;  // tracks the current tutorial step
     private MainGameOrderTicketDisplay orderTicketDisplay;
-Table table = new Table();
+    Table table = new Table();
 
     public TutorialScreenDisplay(GdxGame game) {
         this.game = game;
@@ -54,7 +54,7 @@ Table table = new Table();
     private void setupUI() {
         // Create a skin for loading textures
         skin = new Skin(Gdx.files.internal("flat-earth/skin/flat-earth-ui.json"));
-  
+
         // Manually load the white_box texture and add it to the skin
         skin.add("tutorial_box", new Texture(Gdx.files.internal("images/tutorial/tutorial_box.png")));
 
@@ -206,17 +206,17 @@ Table table = new Table();
 
         ServiceLocator.getTutorialService().getEvents().addListener("itemPickedUp", this::onItemPickedUp);
     }
-   private boolean onInputKey(int keycode) {
-        if (keycode == Input.Keys.E) {
-            logger.info("'E' key pressed, attempting to pick up item.");
-            // Trigger item pickup event
-            ServiceLocator.getInputService().getEvents().trigger("itemPickedUp");
-            return true;
-        }
-        else {
-            return false;
-        }
-    }
+//   private boolean onInputKey(int keycode) {
+//        if (keycode == Input.Keys.E) {s
+//            logger.info("'E' key pressed, attempting to pick up item.");
+//            // Trigger item pickup event
+//            ServiceLocator.getInputService().getEvents().trigger("itemPickedUp");
+//            return true;
+//        }
+//        else {
+//            return false;
+//        }
+//    }
 
 
 
@@ -266,3 +266,4 @@ Table table = new Table();
         this.stage = stage;
     }
 }
+
