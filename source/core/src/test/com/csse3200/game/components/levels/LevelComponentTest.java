@@ -1,5 +1,6 @@
 package com.csse3200.game.components.levels;
 
+import com.csse3200.game.areas.ForestGameArea;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.extensions.GameExtension;
 import com.csse3200.game.services.LevelService;
@@ -10,8 +11,7 @@ import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.atMost;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(GameExtension.class)
 @ExtendWith(MockitoExtension.class)
@@ -70,5 +70,14 @@ class LevelComponentTest {
         levelComponentSpy.resetCustomerSpawn();
         verify(levelComponentSpy).resetCustomerSpawn();
         assertEquals(0, levelComponentSpy.getNumbCustomersSpawned());
+    }
+
+    @Test
+    void shouldAppropriatelySetAndGetGameArea() {
+        ForestGameArea mockGameArea = mock(ForestGameArea.class);
+        levelComponentSpy.setGameArea(mockGameArea);
+        verify(levelComponentSpy).setGameArea(mockGameArea);
+        assertEquals(levelComponentSpy.getGameArea(), mockGameArea);
+        verify(levelComponentSpy).getGameArea();
     }
 }
