@@ -11,18 +11,18 @@ public class StationCookingComponent extends Component  {
         itemHandler = entity.getComponent(StationItemHandlerComponent.class);
     }
 
-    @Override
-    public void update() {
-        if (!itemHandler.hasItem()) {
-            return;
-        }
+//    @Override
+//    public void update() {
+//        if (!itemHandler.hasItem()) {
+//            return;
+//        }
+//
+//        this.cookItem();
+//    }
 
-        this.cookItem();
-    }
-
-    private void cookItem() {
-        itemHandler.peekItem().getEvents().trigger("cookIngredient", "HOT", 1);
-    }
+//    private void cookItem() {
+//        itemHandler.peekItem().getEvents().trigger("cookIngredient", "HOT", 1);
+//    }
 
 
     

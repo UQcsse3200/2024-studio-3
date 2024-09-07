@@ -287,10 +287,10 @@ public class ForestGameArea extends GameArea {
     spawnEntityAt(appleTree, appleTreePos, false, false);
     appleTree.setPosition(appleTree.getPosition().x + 4.2f , appleTree.getPosition().y - 1.3f);
 
-    GridPoint2 serveryPos = new GridPoint2(3,0);
-    Entity servery = StationFactory.createServery();
-    spawnEntityAt(servery, serveryPos, false, false);
-    servery.setPosition(servery.getPosition().x, servery.getPosition().y + 1.3f);
+//    GridPoint2 serveryPos = new GridPoint2(3,0);
+//    Entity servery = StationFactory.createServery();
+//    spawnEntityAt(servery, serveryPos, false, false);
+//    servery.setPosition(servery.getPosition().x, servery.getPosition().y + 1.3f);
   }
 
     /**

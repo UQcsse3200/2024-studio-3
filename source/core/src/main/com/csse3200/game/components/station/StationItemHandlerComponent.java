@@ -6,9 +6,6 @@ import com.csse3200.game.components.Component;
 import com.csse3200.game.components.items.ItemComponent;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.entities.Entity;
-import com.csse3200.game.components.items.ItemComponent;
-import com.csse3200.game.components.items.ItemType;
-import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.components.player.InventoryDisplay;
 
 public class StationItemHandlerComponent extends Component {
@@ -87,7 +84,7 @@ public class StationItemHandlerComponent extends Component {
             ItemComponent item = playerInventoryComponent.getItemFirst();
             // Check item is accepted
             if (!isItemAccepted(item)) {
-                // Throw a failed accept interaction as item not valid in current station
+                // Throw an accept failure, interaction as item not valid in current station
                 entity.getEvents().trigger("showTooltip", "We don't accept that trash here...");
             } else {
                 this.stationReceiveItem(item);
@@ -110,6 +107,14 @@ public class StationItemHandlerComponent extends Component {
         // This needs initialising by parsing given list and passed during factory
         // Placeholder to accept everything
         return true;
+    }
+
+    /**
+     *
+     * @return current Item being stored
+     */
+    public ItemComponent peek() {
+        return this.inventoryComponent.getItemFirst();
     }
 
     /**
@@ -142,20 +147,6 @@ public class StationItemHandlerComponent extends Component {
         //}
 
         // TODO: make  a serving station component
-        /*String stationState = "HOT";
-        switch (type) {
-            case "COOK_TOP" -> {
-                entity.getEvents().trigger("cookIngredient", "NORMAL", 1);
-            }
-            case "OVEN" -> {
-                entity.getEvents().trigger("cookIngredient", stationState, 5);
-            }
-            case "CUTTING_BOARD" -> {
-                entity.getEvents().trigger("chopIngredient");
-            } case "servery" -> {
-                submitMeal(item);
-            }
-        }*/
 }
 
     /**
@@ -178,7 +169,7 @@ public class StationItemHandlerComponent extends Component {
         entity.getEvents().trigger("interactionEnd");
     }
 
-    // not sure where to put this exactly
+    // this will go in Serving station when component completed
     public void submitMeal(String item) {
         //TODO:
         //call getCurrentBigTicketInfo() to get values of bigticket, returning a string[]
