@@ -42,5 +42,17 @@ class LevelComponentTest {
         assertEquals(0,levelComponentSpy.getLevelSpawnCap());
         assertEquals(0,levelComponentSpy.getNumbCustomersSpawned());
         assertEquals(0,levelComponentSpy.getCurrentCustomersLinedUp());
+        assertNull(levelComponentSpy.getGameArea());
+    }
+
+    @Test
+    void shouldAppropriatelyTrackNumberOfCustomersInLineUp() {
+        assertEquals(0, levelComponentSpy.getCurrentCustomersLinedUp());
+        levelComponentSpy.customerJoinedLineUp();
+        verify(levelComponentSpy).customerJoinedLineUp();
+        assertEquals(1,levelComponentSpy.getCurrentCustomersLinedUp());
+        levelComponentSpy.customerLeftLineUp();
+        verify(levelComponentSpy).customerLeftLineUp();
+        assertEquals(0, levelComponentSpy.getCurrentCustomersLinedUp());
     }
 }
