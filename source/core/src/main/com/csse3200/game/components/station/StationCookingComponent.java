@@ -32,6 +32,9 @@ public class StationCookingComponent extends Component  {
             .getEntity()
             .getEvents()
             .trigger("cookIngredient", "HOT", 1);
+        // TODO: modify the call to cookIngredient so that the correct timees
+        // can be used for each ingerdient
+        // May need to use the item handler for this
     }
 
 }
