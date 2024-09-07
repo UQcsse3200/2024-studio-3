@@ -62,11 +62,12 @@ public class StationItemHandlerComponent extends Component {
         // Pre calcs
         boolean full = playerInventoryComponent.isFull() & this.inventoryComponent.isFull();
         boolean empty = playerInventoryComponent.isEmpty() & this.inventoryComponent.isEmpty();
+
         if (full | empty) {
             // Throw an invalid interaction, red cross on station etc
             entity.getEvents().trigger("showTooltip", "Station is Full!");
+        // Input to station
         } else if (playerInventoryComponent.isFull()) {
-            // Player trying to give item to station
             ItemComponent item = playerInventoryComponent.getItemFirst();
             // Check item is accepted
             if (!isItemAccepted(item)) {
@@ -78,6 +79,7 @@ public class StationItemHandlerComponent extends Component {
                 playerInventoryComponent.removeAt(0);
                 inventoryDisplay.update();
             }
+        // Output from station
         } else if (inventoryComponent.isFull()) {
             // Player wants item from station
             this.stationGiveItem(playerInventoryComponent, inventoryDisplay);
