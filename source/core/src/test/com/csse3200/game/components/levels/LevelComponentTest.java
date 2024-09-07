@@ -29,5 +29,9 @@ class LevelComponentTest {
     void shouldInitSpawningProperly() {
         levelComponentSpy.initSpawning(1);
         verify(levelComponentSpy).initSpawning(1);
+        verify(levelComponentSpy).resetCustomerSpawn();
+        verify(levelComponentSpy).setLevelSpawnCap(1);
+        verify(levelComponentSpy).setSpawnStartTime();
+        verify(levelComponentSpy).toggleNowSpawning();
     }
 }
