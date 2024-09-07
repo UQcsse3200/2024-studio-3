@@ -95,7 +95,7 @@ public class NPCFactory {
         AnimationRenderComponent animator =
                 new AnimationRenderComponent(
                         ServiceLocator.getResourceService()
-                                .getAsset("images/ghostKing.atlas", TextureAtlas.class));
+                                .getAsset("images/special_NPCs/boss.atlas", TextureAtlas.class));
         animator.addAnimation("float", 0.3f, Animation.PlayMode.LOOP);
         animator.addAnimation("angry_float", 0.3f, Animation.PlayMode.LOOP);
 
@@ -104,7 +104,7 @@ public class NPCFactory {
                 .addComponent(animator)
                 .addComponent(new GhostAnimationController());
 
-        customer.getComponent(AnimationRenderComponent.class).scaleEntity();
+        //customer.getComponent(AnimationRenderComponent.class).scaleEntity();
         return customer;
     }
 
