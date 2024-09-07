@@ -78,19 +78,17 @@ public class StationItemHandlerComponent extends Component {
 
         if (full | empty) {
             // Throw an invalid interaction, red cross on station etc
-            entity.getEvents().trigger("showTooltip", "Station is Full!");
+            //entity.getEvents().trigger("showTooltip", "Why would you even try...");
+            inventoryDisplay.update();
         // Input to station
         } else if (playerInventoryComponent.isFull()) {
             ItemComponent item = playerInventoryComponent.getItemFirst();
             // Check item is accepted
             if (!isItemAccepted(item)) {
                 // Throw an accept failure, interaction as item not valid in current station
-                entity.getEvents().trigger("showTooltip", "We don't accept that trash here...");
+                //entity.getEvents().trigger("showTooltip", "We don't accept that trash here...");
             } else {
-                this.stationReceiveItem(item);
-                // 0 by default, same position as getItemFirst()
-                playerInventoryComponent.removeAt(0);
-                inventoryDisplay.update();
+                this.stationReceiveItem(item, playerInventoryComponent, inventoryDisplay);
             }
         // Output from station
         } else if (inventoryComponent.isFull()) {
@@ -118,12 +116,16 @@ public class StationItemHandlerComponent extends Component {
     }
 
     /**
-        Adds the item to the station
-        @param item that is being given to the station
+         Takes the item from the player and stores in station
+         @param playerInventoryComponent reference to player inventory
+         @param inventoryDisplay reference to UI for inventory display
      */
-    public void stationReceiveItem(ItemComponent item) {
-        this.inventoryComponent.addItem(item);
-//        entity.getEvents().trigger("showTooltip", "You gave something to the station!");
+    public void stationReceiveItem(ItemComponent item, InventoryComponent playerInventoryComponent, InventoryDisplay inventoryDisplay) {
+        this.inventoryComponent.addItemAt(item, 0);
+        // 0 by default, same position as getItemFirst()
+        playerInventoryComponent.removeAt(0);
+        inventoryDisplay.update();
+        //entity.getEvents().trigger("showTooltip", "You gave something to the station!");
         // Need timers and animation start here, for Animations and Timer task ticket
 
 
@@ -152,6 +154,7 @@ public class StationItemHandlerComponent extends Component {
     /**
         Takes the item from the station, and returns the old item
         @param playerInventoryComponent reference to player inventory
+        @param inventoryDisplay reference to UI for inventory display
      */
     public void stationGiveItem(InventoryComponent playerInventoryComponent, InventoryDisplay inventoryDisplay) {
         // These are placeholders and don't currently go anywhere
@@ -162,7 +165,7 @@ public class StationItemHandlerComponent extends Component {
         //}
 //        entity.getEvents().trigger("showTooltip", "You took something from the station!");
         ItemComponent item = inventoryComponent.getItemFirst();
-        playerInventoryComponent.addItem(item);
+        playerInventoryComponent.addItemAt(item,0);
         inventoryDisplay.update();
         // Remove single item in station
         this.inventoryComponent.removeAt(0);

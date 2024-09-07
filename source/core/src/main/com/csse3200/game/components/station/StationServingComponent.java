@@ -1,6 +1,9 @@
 package com.csse3200.game.components.station;
 
 import com.csse3200.game.components.Component;
+import com.csse3200.game.components.items.ItemComponent;
+import com.csse3200.game.components.player.InventoryComponent;
+import com.csse3200.game.components.player.InventoryDisplay;
 
 /**
  * StationServingComponent.java
@@ -9,7 +12,7 @@ import com.csse3200.game.components.Component;
  * able to be served to a customer. This will specifically be used by the 
  * serving bench 'station'.
  * </p>
- * {@link #submitMeal()}: Function which controls the submission of a meal by the
+ * {@link #submitMeal(ItemComponent)}: Function which controls the submission of a meal by the
  * class.
  * </p>
  * This component is currently incomplete and will need to be finished.
@@ -25,14 +28,27 @@ public class StationServingComponent extends Component {
      */
     @Override
     public void create() {
-        entity.getEvents().addListener("Submit Meal", this::submitMeal);
+        entity.getEvents().addListener("Station Interaction", this::handleInteraction);
     }
 
+    /**
+     * Handles any interaction with station, using current state of player and station
+     * inventory to determine intended interaction
+     * @param playerInventoryComponent reference to player inventory component
+     */
+    public void handleInteraction(InventoryComponent playerInventoryComponent, InventoryDisplay inventoryDisplay) {
+        if (playerInventoryComponent.isFull()) {
+            ItemComponent item = playerInventoryComponent.getItemFirst();
+            playerInventoryComponent.removeAt(0);
+            inventoryDisplay.update();
+            submitMeal(item);
+        }
+    }
     /**
      * Function which allows the StationServingComponent to be able to access 
      * the inventory and serve a meal to one of the customers. 
      */
-    public void submitMeal() {
+    public void submitMeal(ItemComponent item) {
         //TODO:
         //call getCurrentBigTicketInfo() to get values of bigticket, returning a string[]
         //String[] bigTicketInfo =

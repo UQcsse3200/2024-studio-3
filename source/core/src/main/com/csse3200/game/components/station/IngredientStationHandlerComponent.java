@@ -2,6 +2,7 @@ package com.csse3200.game.components.station;
 
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.items.ItemComponent;
+import com.csse3200.game.components.items.ItemType;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.components.player.InventoryDisplay;
 
@@ -37,7 +38,7 @@ public class IngredientStationHandlerComponent extends Component {
     @Override
     public void create() {
         entity.getEvents().addListener("Station Interaction", this::handleInteraction);
-        inventoryComponent = entity.getComponent(InventoryComponent.class);
+        this.inventoryComponent = entity.getComponent(InventoryComponent.class);
     }
 
     /**
@@ -67,8 +68,10 @@ public class IngredientStationHandlerComponent extends Component {
      */
     public void stationGiveItem(InventoryComponent playerInventoryComponent, InventoryDisplay inventoryDisplay) {
         // entity.getEvents().trigger("showTooltip", "You took something from the station!");
-        ItemComponent item = inventoryComponent.getItemFirst();
-        playerInventoryComponent.addItem(item);
+        ItemComponent item = this.inventoryComponent.getItemFirst();
+        playerInventoryComponent.addItemAt(item,0);
+        this.inventoryComponent.removeAt(0);
+        this.inventoryComponent.addItemAt(new ItemComponent("Apples", ItemType.APPLE, 1), 0);
         inventoryDisplay.update();
         entity.getEvents().trigger("interactionEnd");
     }

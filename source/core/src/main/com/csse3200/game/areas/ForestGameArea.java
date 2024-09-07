@@ -18,10 +18,8 @@ import com.csse3200.game.entities.factories.ItemFactory;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.utils.math.GridPoint2Utils;
-import com.csse3200.game.utils.math.RandomUtils;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /** Forest area for the demo game with trees, a player, and some enemies. */
@@ -63,6 +61,9 @@ public class ForestGameArea extends GameArea {
     "images/stations/oven.png",
     "images/stations/stove.png",
           "images/stations/apple_tree.png",
+          "images/stations/bench_middle.png",
+          "images/stations/bench_legs.png",
+          "images/stations/bench_top.png",
     "images/stations/bench.png",
     "images/stations/servery.png",
     "images/chef_player.png",
@@ -287,10 +288,26 @@ public class ForestGameArea extends GameArea {
     spawnEntityAt(appleTree, appleTreePos, false, false);
     appleTree.setPosition(appleTree.getPosition().x + 4.2f , appleTree.getPosition().y - 1.3f);
 
-//    GridPoint2 serveryPos = new GridPoint2(3,0);
-//    Entity servery = StationFactory.createServery();
-//    spawnEntityAt(servery, serveryPos, false, false);
-//    servery.setPosition(servery.getPosition().x, servery.getPosition().y + 1.3f);
+    GridPoint2 serveryPos = new GridPoint2(3,0);
+    Entity servery = StationFactory.createSubmissionWindow();
+    spawnEntityAt(servery, serveryPos, false, false);
+    servery.setPosition(servery.getPosition().x, servery.getPosition().y + 1.3f);
+
+    // Bench
+    GridPoint2 middlePos = new GridPoint2(5,4);
+    Entity middle = StationFactory.createMainBenchTable();
+    spawnEntityAt(middle, middlePos, false, false);
+    middle.setPosition(middle.getPosition().x - 2.6f, middle.getPosition().y - 1.3f);
+
+    GridPoint2 topPos = new GridPoint2(5,4);
+    Entity top = StationFactory.createTopBenchTable();
+    spawnEntityAt(top, topPos, false, false);
+    top.setPosition(top.getPosition().x - 2.6f, top.getPosition().y);
+
+    GridPoint2 bottomPos = new GridPoint2(5,4);
+    Entity bottom = StationFactory.createFeetBenchTable();
+    spawnEntityAt(bottom, bottomPos, false, false);
+    bottom.setPosition(bottom.getPosition().x - 2.6f, bottom.getPosition().y - 2.6f);
   }
 
     /**
@@ -315,12 +332,12 @@ public class ForestGameArea extends GameArea {
   private void spawnBenches() {
       List<Bench> benches = new ArrayList<Bench>();
       benches.add(new Bench("bench3-5", 98, 224));
-      //benches.add(new Bench("bench7", 98, 25));
+      benches.add(new Bench("bench7", 98, 25));
       benches.add(new Bench("bench2", 96, 72));
       //benches.add(new Bench("bench6-bottom", 343,27));
       //benches.add(new Bench("bench6-top", 343,131));
-      benches.add(new Bench("bench4", 217, 160));
-      benches.add(new Bench("bench1", 217, 26));
+      //benches.add(new Bench("bench4", 217, 160));
+      //benches.add(new Bench("bench1", 217, 26));
 
       for (int i = 0; i < benches.size(); i++) {
           Bench bench = benches.get(i);
