@@ -9,6 +9,7 @@ import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.components.levels.LevelComponent;
 import com.csse3200.game.components.maingame.MainGameActions;
 import com.csse3200.game.components.ordersystem.MainGameOrderBtnDisplay;
+import com.csse3200.game.components.ordersystem.MainGameOrderTicketDisplay;
 import com.csse3200.game.components.ordersystem.OrderActions;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
@@ -50,10 +51,14 @@ public class MainGameScreen extends ScreenAdapter {
 	// Modified the camera position to fix layout
 	private static final Vector2 CAMERA_POSITION = new Vector2(7.5f, 6.0f);
 
-  private final GdxGame game;
-  private final Renderer renderer;
-  private final PhysicsEngine physicsEngine;
-  private boolean isPaused = false;
+
+
+	private final GdxGame game;
+	private final Renderer renderer;
+	private final PhysicsEngine physicsEngine;
+	private boolean isPaused = false;
+	private DocketLineDisplay docketLineDisplay;
+	private MainGameOrderTicketDisplay orderTicketDisplay;
 
 	public MainGameScreen(GdxGame game) {
 		this.game = game;
@@ -102,6 +107,10 @@ public class MainGameScreen extends ScreenAdapter {
 	@Override
 	public void resize(int width, int height) {
 		renderer.resize(width, height);
+		docketLineDisplay.resize();
+		if (orderTicketDisplay != null) {
+			orderTicketDisplay.updateDocketSizes(); // Call updateDocketSizes() when resizing
+		}
 		logger.trace("Resized renderer: ({} x {})", width, height);
 	}
 
@@ -144,6 +153,8 @@ public class MainGameScreen extends ScreenAdapter {
 		resourceService.unloadAssets(mainGameTextures);
 	}
 
+
+
 	/**
 	 * Creates the main game's ui including components for rendering ui elements to the screen and
 	 * capturing and handling ui input.
@@ -154,9 +165,11 @@ public class MainGameScreen extends ScreenAdapter {
 		InputComponent inputComponent =
 				ServiceLocator.getInputService().getInputFactory().createForTerminal();
 
+		docketLineDisplay = new DocketLineDisplay();
+
 		Entity ui = new Entity();
 		ui.addComponent(new InputDecorator(stage, 10))
-		  .addComponent(new DocketLineDisplay())
+		  	.addComponent(docketLineDisplay)
 			.addComponent(new PerformanceDisplay())
 			.addComponent(new MainGameActions(this.game))
 			.addComponent(new MainGameExitDisplay())

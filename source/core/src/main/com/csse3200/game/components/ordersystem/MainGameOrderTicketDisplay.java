@@ -1,5 +1,6 @@
 package com.csse3200.game.components.ordersystem;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -24,7 +25,7 @@ import java.util.ArrayList;
  */
 public class MainGameOrderTicketDisplay extends UIComponent {
     private static final Logger logger = LoggerFactory.getLogger(MainGameOrderTicketDisplay.class);
-    private static final float Z_INDEX = 2f;
+    private static final float Z_INDEX = 3f;
     private static final float viewPortHeightMultiplier = 7f / 9f;
     private static final float viewPortWidthMultiplier = 3f / 32f;
     private static final float viewportHeight =
@@ -126,6 +127,8 @@ public class MainGameOrderTicketDisplay extends UIComponent {
 
         stage.addActor(table);
         updateDocketSizes();
+
+        table.setZIndex((int)getZIndex());
     }
 
     /**
@@ -285,24 +288,38 @@ public class MainGameOrderTicketDisplay extends UIComponent {
      * Updates the sizes of all dockets. The last docket in the list is enlarged, while others remain the same size.
      */
     public void updateDocketSizes() {
-        float xEnlargedArea = viewportWidth - 320f;
+        float widthAdjustment = 140f * (viewportWidth/1080f);
+        float heightAdjustment = 40f * (viewportHeight/1080f); //155
+
+        float enlargedDocketWidth = 170f * (viewportWidth/1920f) ;
+        float enlargedDocketHeight = 200f * (viewportHeight/1080f);
+
+        float enlargedWidth = Gdx.graphics.getWidth() - enlargedDocketWidth - widthAdjustment;
+        float enlargedHeight = Gdx.graphics.getHeight() - enlargedDocketHeight - heightAdjustment;
+
+        float normalDocketWidth = 120f * (viewportWidth/1920f);
+        float normalDocketHeight = 150f * (viewportHeight/1080f);
+
+        float normalHeight = Gdx.graphics.getHeight() - normalDocketHeight- heightAdjustment;
+
         for (int i = 0; i < tableArrayList.size(); i++) {
             Table table = tableArrayList.get(i);
-            float xVal = cntXval(i + 1);
-            float yVal = viewportHeight * viewPortHeightMultiplier;
+
             Array<Cell> cells = table.getCells();
             if (i == tableArrayList.size() - 1) { // Tail docket
-                table.setSize(170f * (viewportWidth/1920f), 200f * (viewportHeight/1080f));
+                table.setSize(enlargedDocketWidth, enlargedDocketHeight);
                 // Fixed position for enlarged docket
-                table.setPosition(xEnlargedArea, 855 * (viewportHeight/1080)); // - (40 * viewPortHeightMultiplier)
+                table.setPosition(enlargedWidth, enlargedHeight);
+
                 // Apply enlarged font size
                 for (int j = 0; j < cells.size; j++) {
                     Label label = (Label)cells.get(j).getActor();
-                    label.setFontScale(1f * (viewportWidth/1920f));
+                    label.setFontScale(viewportWidth/1920f);
                 }
             } else { // Non-enlarged dockets
-                table.setSize(120f * (viewportWidth/1920f), 150f * (viewportHeight/1080f));
-                table.setPosition(xVal, 900f * (viewportHeight/1080f));
+                table.setSize(normalDocketWidth, normalDocketHeight);
+                float xVal = cntXval(i + 1);
+                table.setPosition(xVal, normalHeight);
                 for (int j = 0; j < cells.size; j++) {
                     Label label = (Label)cells.get(j).getActor();
                     label.setFontScale(0.7f * (viewportWidth/1920f));
