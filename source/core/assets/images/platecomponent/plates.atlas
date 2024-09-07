@@ -1,0 +1,23 @@
+platestates.png
+size: 1890,1417
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+clean_plate
+  rotate: false
+  xy: 0,0
+  size: 630,1417
+  orig: 630,1417
+  offset: 0,0
+dirty_plate
+  rotate: false
+  xy: 630,0
+  size: 630,1417
+  orig: 630,1417
+  offset: 0,0
+cleaning_plate
+  rotate: false
+  xy: 1260,0
+  size: 630,1417
+  orig: 630,1417
+  offset: 0,0

@@ -129,6 +129,9 @@ public class ForestGameArea extends GameArea {
     spawnLettuce("chopped");
     spawnCustomer();
 
+    //spawnplates
+    //spawnPlates(3);
+
     // Spawn the player
     player = spawnPlayer();
 
@@ -543,6 +546,13 @@ public class ForestGameArea extends GameArea {
 //    Entity ghostKing = NPCFactory.createGhostKing(player);
 //    spawnEntityAt(ghostKing, randomPos, true, true);
 //  }
+
+
+
+  /* Here method to spawn plates
+  private Entity spawnPlates(int Quantity) {
+      //here unconstructed
+  }*/
 
   private void playMusic() {
     Music music = ServiceLocator.getResourceService().getAsset(backgroundMusic, Music.class);
