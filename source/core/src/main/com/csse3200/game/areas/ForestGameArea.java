@@ -62,6 +62,7 @@ public class ForestGameArea extends GameArea {
     "images/tiles/blue_tile.png",
     "images/stations/oven.png",
     "images/stations/stove.png",
+          "images/stations/apple_tree.png",
     "images/stations/bench.png",
     "images/stations/servery.png",
     "images/chef_player.png",
@@ -281,6 +282,11 @@ public class ForestGameArea extends GameArea {
     spawnEntityAt(stove, stovePos, false, false);
     stove.setPosition(stove.getPosition().x + 2.7f , stove.getPosition().y + 1.3f);
 
+    GridPoint2 appleTreePos = new GridPoint2( 5, 4);
+    Entity appleTree = StationFactory.createAppleTree();
+    spawnEntityAt(appleTree, appleTreePos, false, false);
+    appleTree.setPosition(appleTree.getPosition().x + 4.2f , appleTree.getPosition().y - 1.3f);
+
     GridPoint2 serveryPos = new GridPoint2(3,0);
     Entity servery = StationFactory.createServery();
     spawnEntityAt(servery, serveryPos, false, false);
@@ -309,10 +315,10 @@ public class ForestGameArea extends GameArea {
   private void spawnBenches() {
       List<Bench> benches = new ArrayList<Bench>();
       benches.add(new Bench("bench3-5", 98, 224));
-      benches.add(new Bench("bench7", 98, 25));
+      //benches.add(new Bench("bench7", 98, 25));
       benches.add(new Bench("bench2", 96, 72));
-      benches.add(new Bench("bench6-bottom", 343,27));
-      benches.add(new Bench("bench6-top", 343,131));
+      //benches.add(new Bench("bench6-bottom", 343,27));
+      //benches.add(new Bench("bench6-top", 343,131));
       benches.add(new Bench("bench4", 217, 160));
       benches.add(new Bench("bench1", 217, 26));
 
