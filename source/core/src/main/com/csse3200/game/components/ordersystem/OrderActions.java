@@ -34,10 +34,7 @@ public class OrderActions extends InputComponent {
      */
     @Override
     public void create() {
-
         ServiceLocator.getInputService().register(this);
-        entity.getEvents().addListener("addOrder", this::onAddOrder);
-
         ServiceLocator.getDocketService().getEvents().addListener("removeOrder", this::onRemoveOrder);
         ServiceLocator.getDocketService().getEvents().addListener(
                 "reorderDockets", MainGameOrderTicketDisplay::reorderDockets);
@@ -88,19 +85,12 @@ public class OrderActions extends InputComponent {
     }
 
     /**
-     * Handles the event to add an order to the line. Tia
-     */
-    private void onAddOrder() {
-        logger.info("Add order");
-    }
-
-    /**
      * Handles the event to remove an order from the line.
      *
      * @param index the index of the order to be removed
      */
     private void onRemoveOrder(int index) {
-        logger.info("Remove order");
+//        logger.info("Remove order");
         ServiceLocator.getDocketService().getEvents().trigger("reorderDockets", index);
     }
 
@@ -108,7 +98,7 @@ public class OrderActions extends InputComponent {
      * Changes order colour based on recipe timer
      */
     private void onChangeColour() {
-        logger.info("Move order");
+//        logger.info("Move order");
         // do something
     }
 }

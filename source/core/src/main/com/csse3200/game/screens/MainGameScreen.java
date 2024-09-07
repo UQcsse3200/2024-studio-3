@@ -26,6 +26,8 @@ import com.csse3200.game.components.gamearea.PerformanceDisplay;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.csse3200.game.components.ordersystem.DocketLineDisplay;
+import com.csse3200.game.components.player.InventoryDisplay;
+import java.util.Arrays;
 
 /**
  * The game screen containing the main game.
@@ -38,7 +40,8 @@ public class MainGameScreen extends ScreenAdapter {
 			"images/heart.png",
 			// order system assets
 			"images/ordersystem/docket_background.png",
-			"images/ordersystem/pin_line.png"
+			"images/ordersystem/pin_line.png",
+			"images/bird.png"
 	};
 	// Modified the camera position to fix layout
 	private static final Vector2 CAMERA_POSITION = new Vector2(7.5f, 6.0f);
@@ -145,16 +148,13 @@ public class MainGameScreen extends ScreenAdapter {
 
 		Entity ui = new Entity();
 		ui.addComponent(new InputDecorator(stage, 10))
-
+		  .addComponent(new DocketLineDisplay())
 			.addComponent(new PerformanceDisplay())
 			.addComponent(new MainGameActions(this.game))
 			.addComponent(new MainGameExitDisplay())
 			.addComponent(new Terminal())
 			.addComponent(inputComponent)
 			.addComponent(new TerminalDisplay())
-			// order system
-			.addComponent(new DocketLineDisplay())
-			//.addComponent(new DocketDisplay())
 			.addComponent(new OrderActions(this.game))
 			.addComponent(new MainGameOrderBtnDisplay())
 		        .addComponent(new EndDayDisplay(this))
