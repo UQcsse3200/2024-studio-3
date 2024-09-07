@@ -1,7 +1,5 @@
 package com.csse3200.game.entities.factories;
 
-import java.util.ArrayList;
-
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.csse3200.game.components.TooltipsDisplay;
 import com.csse3200.game.components.station.StationItemHandlerComponent;
@@ -25,7 +23,7 @@ public class StationFactory {
         .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
         .addComponent(new InteractionComponent(PhysicsLayer.INTERACTABLE))
             .addComponent(new TooltipsDisplay())
-        .addComponent(new StationItemHandlerComponent("oven", new ArrayList<>()));
+        .addComponent(new StationItemHandlerComponent("oven"));
 
 
     oven.getComponent(InteractionComponent.class).setAsBox(oven.getScale());
@@ -51,7 +49,7 @@ public class StationFactory {
         .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
         .addComponent(new InteractionComponent(PhysicsLayer.INTERACTABLE))
             .addComponent(new TooltipsDisplay())
-        .addComponent(new StationItemHandlerComponent("stove", new ArrayList<>()));
+        .addComponent(new StationItemHandlerComponent("stove"));
 
 
     stove.getComponent(InteractionComponent.class).setAsBox(stove.getScale());
@@ -75,7 +73,7 @@ public class StationFactory {
         .addComponent(new TextureRenderComponent("images/stations/benches/"+ type + ".png"))
         .addComponent(new PhysicsComponent())
         .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
-        .addComponent(new StationItemHandlerComponent(type, new ArrayList<>()));
+        .addComponent(new StationItemHandlerComponent(type));
 
 
     station.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);

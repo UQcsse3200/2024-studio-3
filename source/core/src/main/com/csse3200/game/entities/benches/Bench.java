@@ -42,7 +42,7 @@ public class Bench extends Entity{
                 .addComponent(new TextureRenderComponent("images/stations/benches/" + type + ".png"))
                 .addComponent(new PhysicsComponent())
                 .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
-                .addComponent(new StationItemHandlerComponent(type, new ArrayList<>()));
+                .addComponent(new StationItemHandlerComponent(type));
 
         float width  = 0;
         float height = 0;
@@ -120,7 +120,7 @@ public class Bench extends Entity{
                 .addComponent(new TextureRenderComponent("images/stations/" + type + ".png"))
                 .addComponent(new PhysicsComponent())
                 .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
-                .addComponent(new StationItemHandlerComponent(type, new ArrayList<>()));
+                .addComponent(new StationItemHandlerComponent(type));
 
 
         bench.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);

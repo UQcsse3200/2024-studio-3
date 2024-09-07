@@ -1,19 +1,20 @@
 package com.csse3200.game.components.station;
 
-import java.util.HashSet;
 import java.util.ArrayList;
-import java.util.Optional;
 
 import com.csse3200.game.components.Component;
+import com.csse3200.game.components.items.ItemComponent;
+import com.csse3200.game.components.player.InventoryComponent;
+import com.csse3200.game.entities.Entity;
 
 public class StationItemHandlerComponent extends Component {
     /**
      * String type - storing type of station
-     * StationInventoryComponent inventorycomponent - instance of inventory for this station
+     * InventoryComponent inventorycomponent - instance of inventory for this station
      * TBD acceptableItems - HashMap, HashSet etc of mappings for acceptable items based on station
      */
     private final String type;
-    private StationInventoryComponent inventoryComponent;
+    private InventoryComponent inventoryComponent;
     private ArrayList<String> acceptableItems = new ArrayList<>();
 
     // General TODO:
@@ -28,9 +29,9 @@ public class StationItemHandlerComponent extends Component {
      * @param type - storing type of station
      * @param acceptableItems - HashMap, HashSet etc of mappings for acceptable items based on station
      */
-    public StationItemHandlerComponent(String type, ArrayList<String> acceptableItems) {
+    public StationItemHandlerComponent(String type) {
         this.type = type;
-        this.acceptableItems = acceptableItems;
+        this.getAcceptedItem();
     }
 
     /**
@@ -39,14 +40,17 @@ public class StationItemHandlerComponent extends Component {
      */
     @Override
     public void create() {
-        acceptableItems.add("meat");
-        acceptableItems.add("vegetable");
-        acceptableItems.add("cheese");
-        inventoryComponent = entity.getComponent(StationInventoryComponent.class);
-        entity.getEvents().addListener("item exists", this::hasItem);
-        entity.getEvents().addListener("give station item", this::giveItem);
-        entity.getEvents().addListener("take item", this::takeItem);
-        entity.getEvents().addListener("get type", this::getType);
+        inventoryComponent = entity.getComponent(InventoryComponent.class);
+    }
+
+    /**
+     * Get the acceptable items and put it in the station
+     */
+    private void getAcceptedItem() {
+        // get the acceptable items type by reading the json file i will create
+        this.acceptableItems.add("beef");
+        this.acceptableItems.add("cheese");
+        this.acceptableItems.add("apple");
     }
 
     /**
@@ -61,11 +65,20 @@ public class StationItemHandlerComponent extends Component {
      * Checks if the item can be accepted
      * @param item to check if can be accepted
      */
-    public boolean isItemAccepted(String item) {
-        // This needs to be available outside of handler, again how does interaction want
-        // to receive it
-        return this.acceptableItems.contains(item);
+    public boolean isItemAccepted(Entity item) {
+        String itemName = item
+                .getComponent(ItemComponent.class)
+                .getItemName();
 
+        return this.acceptableItems.contains(itemName);
+    }
+
+    /**
+     * Checks if the item can be accepted
+     * @param item to check if can be accepted
+     */
+    public boolean isItemAccepted(String item) {
+        return this.acceptableItems.contains(item);
     }
 
     /**
@@ -73,52 +86,54 @@ public class StationItemHandlerComponent extends Component {
      * @return true if the station has an item
      */
     public boolean hasItem() {
-        // This needs to send a fail trigger to player, plays full animation
-        // Doesn't receive item etc
-        return this.inventoryComponent.isItemPresent();
+        return !this.inventoryComponent.isEmpty();
     }
 
     /**
         Adds the item to the station
         @param item that is being given to the station
      */
-    public void giveItem(String item) {
-        if (this.hasItem()) {
-            // This needs to send a fail trigger to player, plays full animation
-            // Doesn't receive item etc
-            return;
-        }
+    public void giveItem(Entity item) {
+
+        // Check item is being able to be given
         if (!this.isItemAccepted(item)) {
-            // This needs to send a different fail trigger to player, plays full animation
-            // Doesn't receive item etc
-            return;
-        }
-        inventoryComponent.setCurrentItem(item);
-
-        // Hi, from Team 2, as mentioned in the studio
-        // We made the trigger for start cooking/chopping depending on the station
-        // Note: We didn't request a member variable for stationState since not all
-        //      stations would have a state of "HOT". It doesn't make sense in the context
-        //      of a cutting board.
-        String stationState = "HOT";
-        switch (type) {
-            case "COOK_TOP" -> {
-                entity.getEvents().trigger("cookIngredient", "NORMAL", 1);
-            }
-            case "OVEN" -> {
-                entity.getEvents().trigger("cookIngredient", stationState, 5);
-            }
-            case "CUTTING_BOARD" ->
-                entity.getEvents().trigger("chopIngredient");
+            return; // return if the item isn't accepted
         }
 
+        // Check the inventory has space to give items
+        if (this.inventoryComponent.isFull()) {
+            return; // return if full inventory
+        }
 
+        // Add  the item to the inventory component
+        inventoryComponent.addItem(item.getComponent(ItemComponent.class));
     }
 
     /**
         Takes the item from the station, and returns the old item
      */
-    public void takeItem() {
+    public Entity takeItem() {
+        if (inventoryComponent.isEmpty()) {
+            return null;
+        }
+
+        return inventoryComponent.removeAt(0).getEntity();
+    }
+
+    public Entity peekItem() {
+        if (inventoryComponent.isEmpty()) {
+            return null;
+        }
+
+        return inventoryComponent.getItemAt(0).getEntity();
+    }
+
+
+
+    /**
+        Takes the item from the station, and returns the old item
+     */
+    /*public void takeItem() {
         // Hi, from Team 2, as mentioned in the studio
         // We made the trigger for stop cooking/chopping here
         if (type.equals("COOK_TOP") || type.equals("OVEN")) {
@@ -131,5 +146,5 @@ public class StationItemHandlerComponent extends Component {
         // trigger here on player inventory component to send returned item
         // when done
         entity.getEvents().trigger("interactionEnd");
-    }
+    }*/
 }
