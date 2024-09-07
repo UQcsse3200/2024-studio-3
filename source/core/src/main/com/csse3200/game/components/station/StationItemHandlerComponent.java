@@ -97,8 +97,34 @@ public class StationItemHandlerComponent extends Component {
 
         // Check item is being able to be given
         if (!this.isItemAccepted(item)) {
-            return; // return if the item isn't accepted
+            // This needs to send a different fail trigger to player, plays full animation
+            // Doesn't receive item etc
+            return;
         }
+        
+        //inventoryComponent.setCurrentItem(item);
+
+        // Hi, from Team 2, as mentioned in the studio
+        // We made the trigger for start cooking/chopping depending on the station
+        // Note: We didn't request a member variable for stationState since not all
+        //      stations would have a state of "HOT". It doesn't make sense in the context
+        //      of a cutting board.
+        
+        // TODO: make  a serving station component
+        /*String stationState = "HOT";
+        switch (type) {
+            case "COOK_TOP" -> {
+                entity.getEvents().trigger("cookIngredient", "NORMAL", 1);
+            }
+            case "OVEN" -> {
+                entity.getEvents().trigger("cookIngredient", stationState, 5);
+            }
+            case "CUTTING_BOARD" -> {
+                entity.getEvents().trigger("chopIngredient");
+            } case "servery" -> {
+                submitMeal(item);
+            }
+        }*/
 
         // Check the inventory has space to give items
         if (this.inventoryComponent.isFull()) {
@@ -120,6 +146,11 @@ public class StationItemHandlerComponent extends Component {
         return inventoryComponent.removeAt(0).getEntity();
     }
 
+    /**
+     *  Returns the item currently within the inventory component without
+     *  removing it. Useful for updating an item i.e. cooking or chopping
+     * @return Entity that is within the station presently.
+     */
     public Entity peekItem() {
         if (inventoryComponent.isEmpty()) {
             return null;
@@ -146,5 +177,17 @@ public class StationItemHandlerComponent extends Component {
         // trigger here on player inventory component to send returned item
         // when done
         entity.getEvents().trigger("interactionEnd");
+    }
+
+    // not sure where to put this exactly
+    public void submitMeal(String item) {
+        //TODO:
+        //call getCurrentBigTicketInfo() to get values of bigticket, returning a string[]
+        //String[] bigTicketInfo =
+        // call made to other teams function
+
+        //TBD(item, bigTicketInfo[0], bigTicketInfo[1], bigTicketInfo[2]);
+        //AKA item being submitted, order number of ticket, meal of ticket, time left of ticket.
+        return;
     }*/
 }

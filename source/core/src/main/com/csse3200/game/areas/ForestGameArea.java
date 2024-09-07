@@ -279,6 +279,13 @@ public class ForestGameArea extends GameArea {
     Entity stove = StationFactory.createStove();
     spawnEntityAt(stove, stovePos, false, false);
     stove.setPosition(stove.getPosition().x + 2.7f , stove.getPosition().y + 1.3f);
+
+
+    // TBD
+    //GridPoint2 serveryPos = new GridPoint2(5,4);
+    //Entity servery = StationFactory.createServery();
+    //spawnEntityAt(servery, serveryPos, false, false);
+    //servery.setPosition(servery.getPosition().x + 2.7f , servery.getPosition().y + 1.3f);
   }
 
     /**
