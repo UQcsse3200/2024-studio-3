@@ -16,6 +16,23 @@ public class StationChoppingComponent extends Component {
     @Override
     public void create() {
         itemHandler = entity.getComponent(StationItemHandlerComponent.class);
+        entity.getEvents().addListener("Chop Ingredient", this::chopIngredient);
+    }
+
+    /**
+     * Function to start the chopping of the ingredient.
+     */
+    public void chopIngredient() {
+        if (itemHandler.peek() == null) {
+            return; // No item in station cannot do anything
+        }
+
+        // Start the ingredient chopping process
+        itemHandler
+            .peek()
+            .getEntity()
+            .getEvents()
+            .trigger("chopIngredient");
     }
     
 }

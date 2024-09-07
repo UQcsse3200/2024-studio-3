@@ -15,21 +15,23 @@ public class StationCookingComponent extends Component  {
     @Override
     public void create() {
         itemHandler = entity.getComponent(StationItemHandlerComponent.class);
+        entity.getEvents().addListener("Cook Ingredient", this::cookIngredient);
     }
 
-//    @Override
-//    public void update() {
-//        if (!itemHandler.hasItem()) {
-//            return;
-//        }
-//
-//        this.cookItem();
-//    }
+    /**
+     * Function to start the cooking of the ingredient within the station.
+     */
+    public void cookIngredient() {
+        if (itemHandler.peek() == null) {
+            return; // No item in the station
+        }
 
-//    private void cookItem() {
-//        itemHandler.peekItem().getEvents().trigger("cookIngredient", "HOT", 1);
-//    }
+        // Trigger the interaction to cook the ingredient since it exists
+        itemHandler
+            .peek()
+            .getEntity()
+            .getEvents()
+            .trigger("cookIngredient", "HOT", 1);
+    }
 
-
-    
 }
