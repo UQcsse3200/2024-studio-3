@@ -69,6 +69,22 @@ public class LevelComponent extends Component {
         return currentCustomersLinedUp;
     }
 
+    public boolean getNowSpawning() {
+        return nowSpawning;
+    }
+
+    public int getLevelSpawnCap() {
+        return levelSpawnCap;
+    }
+
+    public ForestGameArea getGameArea() {
+        return gameArea;
+    }
+
+    public Long getSpawnStartTime() {
+        return spawnStartTime;
+    }
+
     public void customerJoinedLineUp() {
         currentCustomersLinedUp++;
     }
