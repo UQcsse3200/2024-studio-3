@@ -236,19 +236,23 @@ public class ForestGameArea extends GameArea {
     GridPoint2 tileBounds = terrain.getMapBounds(0);
     Vector2 worldBounds = new Vector2(tileBounds.x * tileSize, tileBounds.y * tileSize);
 
+    /**
     //top border
     for(int x=0;x<(int)tileBounds.x; x++){
       GridPoint2 position=new GridPoint2(x,(int)tileBounds.y-1);
       Entity top = ObstacleFactory.createBorder("top_border",tileSize);
       spawnEntityAt(top,position,true,false);
     }
+     */
 
+    /**
     //left border
     for(int y=0;y<(int)tileBounds.y;y++){
       GridPoint2 position = new GridPoint2(0,y);
       Entity left = ObstacleFactory.createBorder("left_border",tileSize);
       spawnEntityAt(left,position,true,false);
     }
+     */
 
     //bottom border
     for(int x=0;x<(int)tileBounds.x; x++){
@@ -264,12 +268,14 @@ public class ForestGameArea extends GameArea {
       spawnEntityAt(right,position,true,false);
     }
 
+
     //separation border
     for(int y=0;y<(int)tileBounds.y;y++) {
-      GridPoint2 position = new GridPoint2(1,y);
-      Entity separate = ObstacleFactory.createBorder("right_border",tileSize);
+      GridPoint2 position = new GridPoint2(2,y);
+      Entity separate = ObstacleFactory.createBorder("left_border",tileSize);
       spawnEntityAt(separate,position,true,false);
     }
+
   }
 
   private void spawnStations() {
@@ -562,18 +568,10 @@ public class ForestGameArea extends GameArea {
   }
 
   private void spawnBoss() {
-    GridPoint2 position = new GridPoint2(1, 2);
-
-    Vector2 targetPos = new Vector2(5, 3); // Target position for ghost king
-    Entity customer = NPCFactory.createBoss(targetPos);
-    spawnEntityAt(customer, position, false, false);
-//    for (int i = 0; i < NUM_CUSTOMERS_BASE; i++) {
-//      customer = NPCFactory.createCustomer();
-//      spawnEntityAt(customer, position, true, true);
-//      System.out.println("Customer spawned");
-//    }
-
-    //System.out.println("3");
+    GridPoint2 position = new GridPoint2(1, 5);
+    Vector2 targetPos = new Vector2(2, 6); // Target position for ghost king
+    Entity boss = NPCFactory.createBoss(targetPos);
+    spawnEntityAt(boss, position, false, false);
   }
 
   private void triggerFiredEnd() {
