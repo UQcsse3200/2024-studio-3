@@ -7,7 +7,7 @@ import com.csse3200.game.entities.factories.ItemFactory;
 
 public class StationCollectionComponent extends Component {
 
-    StationItemHandlerComponent itemHandler;
+    private StationItemHandlerComponent itemHandler;
 
     @Override
     public void create() {

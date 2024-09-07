@@ -169,15 +169,4 @@ public class StationItemHandlerComponent extends Component {
         entity.getEvents().trigger("interactionEnd");
     }
 
-    // this will go in Serving station when component completed
-    public void submitMeal(String item) {
-        //TODO:
-        //call getCurrentBigTicketInfo() to get values of bigticket, returning a string[]
-        //String[] bigTicketInfo =
-        // call made to other teams function
-
-        //TBD(item, bigTicketInfo[0], bigTicketInfo[1], bigTicketInfo[2]);
-        //AKA item being submitted, order number of ticket, meal of ticket, time left of ticket.
-        return;
-    }
 }
