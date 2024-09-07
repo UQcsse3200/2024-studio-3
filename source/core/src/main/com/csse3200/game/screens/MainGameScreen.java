@@ -46,7 +46,9 @@ public class MainGameScreen extends ScreenAdapter {
 			// order system assets
 			"images/ordersystem/docket_background.png",
 			"images/ordersystem/pin_line.png",
-			"images/bird.png"
+			"images/bird.png",
+			"images/point.png",
+			"images/coin.png"
 	};
 	// Modified the camera position to fix layout
 	private static final Vector2 CAMERA_POSITION = new Vector2(7.5f, 6.0f);

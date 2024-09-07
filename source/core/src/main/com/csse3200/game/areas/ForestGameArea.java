@@ -450,6 +450,7 @@ public class ForestGameArea extends GameArea {
     Vector2 targetPos3 = new Vector2(3, 5); // Target position for ghost king
     Entity customer = NPCFactory.createGhostKing(player, targetPos3);
     spawnEntityAt(customer, position, true, true);
+    ServiceLocator.getEntityService().getEvents().trigger("spawnCustomer", customer);
 //    for (int i = 0; i < NUM_CUSTOMERS_BASE; i++) {
 //      customer = NPCFactory.createCustomer();
 //      spawnEntityAt(customer, position, true, true);
