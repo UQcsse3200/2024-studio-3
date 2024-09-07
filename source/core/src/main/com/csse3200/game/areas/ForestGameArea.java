@@ -63,6 +63,7 @@ public class ForestGameArea extends GameArea {
     "images/stations/oven.png",
     "images/stations/stove.png",
     "images/stations/bench.png",
+    "images/stations/servery.png",
     "images/chef_player.png",
     "images/frame/top_border.png",
     "images/frame/left_border.png",
@@ -280,12 +281,10 @@ public class ForestGameArea extends GameArea {
     spawnEntityAt(stove, stovePos, false, false);
     stove.setPosition(stove.getPosition().x + 2.7f , stove.getPosition().y + 1.3f);
 
-
-    // TBD
-    //GridPoint2 serveryPos = new GridPoint2(5,4);
-    //Entity servery = StationFactory.createServery();
-    //spawnEntityAt(servery, serveryPos, false, false);
-    //servery.setPosition(servery.getPosition().x + 2.7f , servery.getPosition().y + 1.3f);
+    GridPoint2 serveryPos = new GridPoint2(3,0);
+    Entity servery = StationFactory.createServery();
+    spawnEntityAt(servery, serveryPos, false, false);
+    servery.setPosition(servery.getPosition().x, servery.getPosition().y + 1.3f);
   }
 
     /**
