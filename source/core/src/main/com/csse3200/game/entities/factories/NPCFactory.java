@@ -8,6 +8,7 @@ import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.npc.GhostAnimationController;
 import com.csse3200.game.components.TouchAttackComponent;
 import com.csse3200.game.components.tasks.PathFollowTask;
+import com.csse3200.game.components.tasks.WaitTask;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.configs.*;
 import com.csse3200.game.files.FileLoader;
@@ -89,7 +90,7 @@ public class NPCFactory {
     } */
 
     public static Entity createBoss(Vector2 targetPosition) {
-        Entity customer = createBaseCustomer(targetPosition);
+        Entity customer = createBaseCharacter(targetPosition);
         GhostKingConfig config = configs.ghostKing;
 
         AnimationRenderComponent animator =
@@ -107,6 +108,8 @@ public class NPCFactory {
         customer.getComponent(AnimationRenderComponent.class).scaleEntity();
         return customer;
     }
+
+
 
     /**
      * Creates a ghost king entity at a specific target position.
@@ -183,6 +186,23 @@ public class NPCFactory {
         AITaskComponent aiComponent =
                 new AITaskComponent()
                         .addTask(new PathFollowTask(targetPosition));
+        Entity npc =
+                new Entity()
+                        .addComponent(new PhysicsComponent())
+                        .addComponent(new PhysicsMovementComponent())
+                        .addComponent(new ColliderComponent())
+                        .addComponent(new HitboxComponent().setLayer(PhysicsLayer.NPC))
+                        .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 1.5f))
+                        .addComponent(aiComponent);
+        PhysicsUtils.setScaledCollider(npc, 0.9f, 0.4f);
+        return npc;
+    }
+
+    public static Entity createBaseCharacter(Vector2 targetPosition) {
+        AITaskComponent aiComponent = new AITaskComponent();
+                aiComponent
+                        .addTask(new PathFollowTask(targetPosition));
+                        //.addTask(new PathFollowTask(targetPosition2));
         Entity npc =
                 new Entity()
                         .addComponent(new PhysicsComponent())
