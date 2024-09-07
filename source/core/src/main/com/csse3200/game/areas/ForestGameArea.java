@@ -16,6 +16,7 @@ import com.csse3200.game.entities.factories.ObstacleFactory;
 import com.csse3200.game.entities.factories.PlayerFactory;
 import com.csse3200.game.entities.factories.StationFactory;
 import com.csse3200.game.entities.factories.ItemFactory;
+import com.csse3200.game.entities.factories.PlateFactory;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.utils.math.GridPoint2Utils;
@@ -87,7 +88,9 @@ public class ForestGameArea extends GameArea {
           "images/tooltip_bg.png",
     "images/stations/benches/bench6-bottom.png",
     "images/stations/benches/bench6-top.png",
-    "images/fireExtinguisher/Fire_Extinguisher.png"
+    "images/fireExtinguisher/Fire_Extinguisher.png",
+          "images/platecomponent/cleanplate.png",
+          "images/platecomponent/dirtyplate.png"
   };
   private static final String[] forestTextureAtlases = {"images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/ghostKing.atlas", "images/player.atlas", "images/fireExtinguisher/atlas/flame.atlas"};
   private static final String[] forestSounds = {"sounds/Impact4.ogg"};
@@ -130,6 +133,8 @@ public class ForestGameArea extends GameArea {
     spawnCustomer();
 
     //spawnplates
+    spawnPlate(); //single plate on grid
+    //spawnPlateBench(new GridPoint2(4, 4));
     //spawnPlates(3);
 
     // Spawn the player
@@ -548,10 +553,23 @@ public class ForestGameArea extends GameArea {
 //  }
 
 
+  private Entity spawnPlate() {
+    GridPoint2 platePosition = new GridPoint2(6, 3);
+    Entity newPlate = PlateFactory.createPlate();
+    spawnEntityAt(newPlate, platePosition, true, false);
+    //newPlate.setPosition(newPlate.getPosition().x + 1.0f, newPlate.getPosition().y + 1.3f);
 
-  /* Here method to spawn plates
-  private Entity spawnPlates(int Quantity) {
-      //here unconstructed
+    newPlate.setScale(1.75f, 1.75f);
+
+    return newPlate;
+  }
+
+/*
+  private Entity spawnPlateBench(GridPoint2 benchPosition) {
+    Entity newPlate = PlateFactory.createPlate();
+    spawnEntityAt(newPlate, benchPosition, true, true);
+    newPlate.setScale(1.5f, 1.5f);
+    return newPlate;
   }*/
 
   private void playMusic() {
