@@ -15,6 +15,9 @@ import com.csse3200.game.ui.UIComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * Display the Pause Menu when pausing the game
+ */
 public class PauseMenuDisplay extends UIComponent {
     private boolean isVisible;
     private final MainGameScreen game;
@@ -30,6 +33,10 @@ public class PauseMenuDisplay extends UIComponent {
         isVisible = false;
     }
 
+    /**
+     * Create the koala image at the bottom left of the pause menu
+     * @return koalaImage
+     */
     private Image createKoalaImage() {
         table = new Table();
         table.bottom().left();
@@ -42,6 +49,10 @@ public class PauseMenuDisplay extends UIComponent {
         return koalaImage;
     }
 
+    /**
+     * Create the koala image at the top right of the pause menu
+     * @return koalaImage2
+     */
     private Image createKoalaImage2() {
         table = new Table();
         table.bottom().left();
@@ -54,18 +65,23 @@ public class PauseMenuDisplay extends UIComponent {
         return koalaImage;
     }
 
+    /**
+     * Create table for koala1
+     * @return koalaTable
+     */
     private Table createKoalaTable() {
 
         Table koalaTable = new Table();
-
         Image koalaImage = createKoalaImage();
-
-//        koalaTable.add(koalaImage).size(200, 150).expand().bottom().left().padRight(100).padTop(40);
         koalaTable.add(koalaImage).size(200, 150).expand().padTop(500).padRight(150);
 
         return koalaTable;
     }
 
+    /**
+     * Create table for koala2
+     * @return koalaTable
+     */
     private Table createKoalaTable2() {
 
         Table koalaTable = new Table();
@@ -77,6 +93,10 @@ public class PauseMenuDisplay extends UIComponent {
         return koalaTable;
     }
 
+    /**
+     * Create the pause menu background image
+     * @return backgroundImage
+     */
     private Image createPauseMenuBackground() {
         Texture pauseMenuTexture = ServiceLocator
                 .getResourceService().getAsset("images/pause_menu2.png", Texture.class);
@@ -86,6 +106,10 @@ public class PauseMenuDisplay extends UIComponent {
         return backgroundImage;
     }
 
+    /**
+     * Create the table for buttons and add event listener to each button
+     * @return buttonTable
+     */
     private Table createButtonsTable() {
         Table buttonTable = new Table();
 
@@ -147,6 +171,9 @@ public class PauseMenuDisplay extends UIComponent {
         return buttonTable;
     }
 
+    /**
+     * Stack all the tables to the pause menu
+     */
     private void stackPauseMenu() {
         table = new Table();
         table.setFillParent(true);
@@ -188,6 +215,9 @@ public class PauseMenuDisplay extends UIComponent {
     }
 
 
+    /**
+     * Pressing O will stop the game and display the pause menu
+     */
     public void displayScreen() {
         stage.addListener(new InputListener() {
             @Override
@@ -204,6 +234,9 @@ public class PauseMenuDisplay extends UIComponent {
         }
     }
 
+    /**
+     * Display the pause menu screen and pause the game
+     */
     public void showMenu() {
         isVisible = true;
         table.setVisible(true);
@@ -211,6 +244,9 @@ public class PauseMenuDisplay extends UIComponent {
         game.pause();
     }
 
+    /**
+     * Hide the screen and resume the game
+     */
     public void hideMenu() {
         isVisible = false;
         table.setVisible(false);
@@ -219,6 +255,9 @@ public class PauseMenuDisplay extends UIComponent {
     }
 
 
+    /**
+     * Toggle if the pause menu should be show or hide
+     */
     public void toggleVisibility() {
        if (isVisible) {
            hideMenu();
