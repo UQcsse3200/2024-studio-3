@@ -3,17 +3,38 @@ size: 256, 320
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
-float
+walk
   rotate: false
   xy: 0, 0
   size: 65, 65
   orig: 65, 65
   offset: 0, 0
   index: 0
-float
+walk
   rotate: false
   xy: 65, 0
   size: 65, 65
   orig: 65, 65
   offset: 0, 0
   index: 1
+walk
+  rotate: false
+  xy: 130, 0
+  size: 65, 65
+  orig: 65, 65
+  offset: 0, 0
+  index: 2
+walk
+  rotate: false
+  xy: 195, 0
+  size: 65, 65
+  orig: 65, 65
+  offset: 0, 0
+  index: 3
+turn
+  rotate: false
+  xy: 130, 65
+  size: 65, 65
+  orig: 65, 65
+  offset: 0, 0
+  index: 0

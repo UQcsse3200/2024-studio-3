@@ -6,8 +6,10 @@ import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.ai.tasks.AITaskComponent;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.npc.GhostAnimationController;
+import com.csse3200.game.components.npc.SpecialNPCAnimationController;
 import com.csse3200.game.components.TouchAttackComponent;
 import com.csse3200.game.components.tasks.PathFollowTask;
+import com.csse3200.game.components.tasks.TurnTask;
 import com.csse3200.game.components.tasks.WaitTask;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.configs.*;
@@ -91,21 +93,18 @@ public class NPCFactory {
 
     public static Entity createBoss(Vector2 targetPosition) {
         Entity customer = createBaseCharacter(targetPosition);
-        GhostKingConfig config = configs.ghostKing;
 
         AnimationRenderComponent animator =
                 new AnimationRenderComponent(
                         ServiceLocator.getResourceService()
                                 .getAsset("images/special_NPCs/boss.atlas", TextureAtlas.class));
-        animator.addAnimation("float", 0.3f, Animation.PlayMode.LOOP);
-        animator.addAnimation("angry_float", 0.3f, Animation.PlayMode.LOOP);
+        animator.addAnimation("walk", 0.3f, Animation.PlayMode.LOOP);
+        animator.addAnimation("turn", 0.3f, Animation.PlayMode.LOOP);
 
         customer
-                .addComponent(new CombatStatsComponent(config.health, config.baseAttack))
                 .addComponent(animator)
-                .addComponent(new GhostAnimationController());
+                .addComponent(new SpecialNPCAnimationController());
 
-        //customer.getComponent(AnimationRenderComponent.class).scaleEntity();
         return customer;
     }
 
@@ -202,7 +201,8 @@ public class NPCFactory {
     public static Entity createBaseCharacter(Vector2 targetPosition) {
         AITaskComponent aiComponent = new AITaskComponent();
                 aiComponent
-                        .addTask(new PathFollowTask(targetPosition));
+                        .addTask(new PathFollowTask(targetPosition))
+                        .addTask(new TurnTask(10, 0.01f,10f));
                         //.addTask(new PathFollowTask(targetPosition2));
         Entity npc =
                 new Entity()
