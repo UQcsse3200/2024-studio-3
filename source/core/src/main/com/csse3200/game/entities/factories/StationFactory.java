@@ -65,6 +65,28 @@ public class StationFactory {
   }
 
   /**
+   * Creates a servery .
+   * @return Stove entity with relavent behaviors
+   */
+  public static Entity createServery() {
+    Entity stove = new Entity()
+            .addComponent(new TextureRenderComponent("images/stations/servery.png")) // TODO
+            .addComponent(new PhysicsComponent())
+            .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
+            .addComponent(new InteractionComponent(PhysicsLayer.INTERACTABLE))
+            .addComponent(new TooltipsDisplay())
+            .addComponent(new StationItemHandlerComponent("servery", new ArrayList<>()));
+
+
+    stove.getComponent(InteractionComponent.class).setAsBox(stove.getScale());
+    stove.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
+    stove.getComponent(TextureRenderComponent.class).scaleEntity();
+    stove.scaleHeight(1.5f);
+    PhysicsUtils.setScaledCollider(stove, 0.3f, 0.2f);
+    return stove;
+  }
+
+  /**
    * Creates visible station.
    * @param height Station height in world units
    * @param type Type of station
