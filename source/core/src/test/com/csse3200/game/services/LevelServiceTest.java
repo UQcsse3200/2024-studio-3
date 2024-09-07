@@ -1,5 +1,6 @@
 package com.csse3200.game.services;
 
+import com.csse3200.game.events.EventHandler;
 import com.csse3200.game.events.listeners.EventListener0;
 import com.csse3200.game.extensions.GameExtension;
 import org.junit.jupiter.api.Test;
@@ -41,6 +42,31 @@ class LevelServiceTest {
     void shouldReturnEventHandler() {
         levelServiceSpy.getEvents();
         verify(levelServiceSpy).getEvents();
+        assertEquals(levelServiceSpy.getEvents().getClass(), EventHandler.class);
     }
 
+    @Test
+    void shouldReturnDefaultLevelValueOfOneFromGetCurrLevel() {
+        assertEquals(levelServiceSpy.getCurrLevel(),1);
+    }
+
+    @Test
+    void shouldIncrementLevelByOne() {
+        levelServiceSpy.incrementLevel();
+        assertEquals(levelServiceSpy.getCurrLevel(), 2);
+    }
+
+    @Test
+    void shouldManuallySetLevel() {
+        levelServiceSpy.setCurrLevel(5);
+        assertEquals(levelServiceSpy.getCurrLevel(),5);
+    }
+
+    @Test
+    void shouldRespondToDifferentIntegersInLevelControl() {
+        for (int i = 0; i < 11; i++) {
+            levelServiceSpy.levelControl(i);
+            verify(levelServiceSpy).levelControl(i);
+        }
+    }
 }
