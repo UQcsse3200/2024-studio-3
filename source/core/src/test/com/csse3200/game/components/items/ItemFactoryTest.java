@@ -1,11 +1,8 @@
 package com.csse3200.game.components.items;
 
-import com.csse3200.game.components.items.*;
 import com.csse3200.game.entities.factories.ItemFactory;
-import com.csse3200.game.extensions.GameExtension;
 import com.csse3200.game.physics.components.ColliderComponent;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import static org.junit.jupiter.api.Assertions.*;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
@@ -148,6 +145,17 @@ public class ItemFactoryTest {
         baseComponentsAssertion(bananaSplit);
     }
 
+    @Test
+    void testCreateBaseItemValidItem() {
+        Entity testItem = ItemFactory.createBaseItem("strawberry");
+        assertEquals(ItemType.STRAWBERRY, testItem.getComponent(IngredientComponent.class).getItemType());
+        baseComponentsAssertion(testItem);
+    }
 
+    @Test
+    void testCreateBaseItemInvalidItem() {
+        Entity testItem = ItemFactory.createBaseItem("i don't exist");
+        assertTrue(testItem == null);
+    }
 
 }

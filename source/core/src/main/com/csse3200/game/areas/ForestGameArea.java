@@ -1,6 +1,7 @@
 package com.csse3200.game.areas;
 
 import com.csse3200.game.entities.benches.Bench;
+import com.csse3200.game.entities.configs.PlayerConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.badlogic.gdx.audio.Music;
@@ -85,11 +86,10 @@ public class ForestGameArea extends GameArea {
     "images/stations/benches/bench1.png",
           "images/tooltip_bg.png",
     "images/stations/benches/bench6-bottom.png",
-    "images/stations/benches/bench6-top.png"
+    "images/stations/benches/bench6-top.png",
+    "images/fireExtinguisher/Fire_Extinguisher.png"
   };
-  private static final String[] forestTextureAtlases = {
-    "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/ghostKing.atlas"
-  };
+  private static final String[] forestTextureAtlases = {"images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/ghostKing.atlas", "images/player.atlas", "images/fireExtinguisher/atlas/flame.atlas"};
   private static final String[] forestSounds = {"sounds/Impact4.ogg"};
   private static final String backgroundMusic = "sounds/BGM_03_mp3.mp3";
   private static final String[] forestMusic = {backgroundMusic};
@@ -279,6 +279,15 @@ public class ForestGameArea extends GameArea {
     Entity stove = StationFactory.createStove();
     spawnEntityAt(stove, stovePos, false, false);
     stove.setPosition(stove.getPosition().x + 2.7f , stove.getPosition().y + 1.3f);
+
+    //Spawn a flame, this is temporary and for testing purposes
+    GridPoint2 flamePos = new GridPoint2(1,1);
+    Entity flame = StationFactory.createFlame();
+    spawnEntityAt(flame, flamePos, false, false);
+
+    GridPoint2 fireExtinguisherPos = new GridPoint2(3, 4);
+    Entity fireExtinguisher = StationFactory.createFireExtinguisher();
+    spawnEntityAt(fireExtinguisher, fireExtinguisherPos, false, false);
   }
 
     /**
@@ -317,9 +326,9 @@ public class ForestGameArea extends GameArea {
   }
 
   private Entity spawnPlayer() {
-    Entity newPlayer = PlayerFactory.createPlayer();
-    // scale it
-    newPlayer.setScale(2.1f, 2.1f);
+    Entity newPlayer;
+    PlayerConfig playerConfig = new PlayerConfig();
+    newPlayer = PlayerFactory.createPlayer(playerConfig);
     spawnEntityAt(newPlayer, PLAYER_SPAWN, true, true);
     return newPlayer;
   }

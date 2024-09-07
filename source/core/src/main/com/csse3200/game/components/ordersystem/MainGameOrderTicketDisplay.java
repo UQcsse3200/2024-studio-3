@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Cell;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
+import com.csse3200.game.components.player.PlayerStatsDisplay;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
 import org.slf4j.Logger;
@@ -38,6 +39,8 @@ public class MainGameOrderTicketDisplay extends UIComponent {
     private static int orderNumb = 0;
     private static final long DEFAULT_TIMER = 10000;
     private Recipe recipe;
+    private int gold = 0;
+    private int recipeValue = 2;
 
     /**
      * Constructs an MainGameOrderTicketDisplay instance
@@ -77,7 +80,6 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         entity.getEvents().addListener("createOrder", this::addActors);
         ServiceLocator.getDocketService().getEvents().addListener("shiftDocketsLeft", this::shiftDocketsLeft);
         ServiceLocator.getDocketService().getEvents().addListener("shiftDocketsRight", this::shiftDocketsRight);
-        logger.info("MainGameOrderTicketDisplay created");
     }
 
     /**
@@ -87,9 +89,11 @@ public class MainGameOrderTicketDisplay extends UIComponent {
     public void addActors() {
         Table table = new Table();
         long startTime = TimeUtils.millis();
+        long timer = getRecipe().getMakingTime() * DEFAULT_TIMER;
+
         startTimeArrayList.add(startTime);
         tableArrayList.add(table);
-        logger.info("New table added. Total tables: {}", tableArrayList.size());
+//        logger.info("New table added. Total tables: {}", tableArrayList.size());
 
         table.setFillParent(false);
         table.setSize(viewportWidth * 3f / 32f, 5f / 27f * viewportHeight); // DEFAULT_HEIGHT
@@ -98,7 +102,7 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         table.setPosition(xVal, yVal);
 //        logger.info("Position set for new table: ({}, {})", xVal, yVal);
 
-        Docket background = new Docket();
+        Docket background = new Docket(timer);
         backgroundArrayList.add(background);
 //        logger.info("New docket background added. Total backgrounds: {}", backgroundArrayList.size());
         table.setBackground(background.getImage().getDrawable());
@@ -115,7 +119,6 @@ public class MainGameOrderTicketDisplay extends UIComponent {
             table.add(ingredientLabel).padLeft(10f).row();
         }
 
-        long timer = getRecipe().getMakingTime() * DEFAULT_TIMER;
         recipeTimeArrayList.add(timer);
         Label countdownLabel = new Label("Timer: " + timer, skin);
         countdownLabelArrayList.add(countdownLabel);
@@ -133,7 +136,7 @@ public class MainGameOrderTicketDisplay extends UIComponent {
      */
     private float cntXval(int instanceCnt) {
 //        logger.info("instanceCnt" + instanceCnt);
-        return 20f + (instanceCnt - 1) * (distance + viewportWidth * 3f / 32f);
+        return 225f + (instanceCnt - 1) * (distance + viewportWidth * 3f / 32f);
     }
 
     /**
@@ -192,6 +195,8 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         table.remove();
         ServiceLocator.getDocketService().getEvents().trigger("removeOrder", index);
         docket.dispose();
+        gold = gold + recipeValue;
+        PlayerStatsDisplay.updatePlayerGoldUI(gold);
     }
 
     /**
@@ -240,7 +245,7 @@ public class MainGameOrderTicketDisplay extends UIComponent {
      * Updates the sizes of all dockets. The last docket in the list is enlarged, while others remain the same size.
      */
     public void updateDocketSizes() {
-        float xEnlargedArea = viewportWidth - 260f;
+        float xEnlargedArea = viewportWidth - 320f;
         for (int i = 0; i < tableArrayList.size(); i++) {
             Table table = tableArrayList.get(i);
             float xVal = cntXval(i + 1);
@@ -284,6 +289,7 @@ public class MainGameOrderTicketDisplay extends UIComponent {
                 currBackground.updateDocketTexture((double) remainingTime / 1000);
                 currTable.setBackground(currBackground.getImage().getDrawable());
             } else {
+                // if order is successful
                 stageDispose(currBackground, currTable, i);
                 tableArrayList.remove(i);
                 backgroundArrayList.remove(i);
