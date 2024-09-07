@@ -62,7 +62,7 @@ public class ObstacleFactory {
     border.getComponent(TextureRenderComponent.class).scaleEntity();
     border.scaleWidth(tileSize);
 
-    PhysicsUtils.setScaledCollider(border, 1f, 1f);
+    PhysicsUtils.setScaledCollider(border, 0.001f, 1f);
     return border;
   }
 

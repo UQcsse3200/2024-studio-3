@@ -54,7 +54,7 @@ public class PlayerFactory {
             .addComponent(new InteractionComponent(PhysicsLayer.INTERACTABLE))
             .addComponent(new SensorComponent(PhysicsLayer.INTERACTABLE, 10f));
     player.scaleHeight(1.5f);
-    PhysicsUtils.setScaledCollider(player, 0.3f, 0.3f);
+    PhysicsUtils.setScaledCollider(player, 0.1f, 0.3f);
     player.getComponent(ColliderComponent.class).setDensity(1.5f);
     return player;
   }
