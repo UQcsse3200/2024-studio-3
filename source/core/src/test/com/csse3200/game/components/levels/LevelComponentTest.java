@@ -10,6 +10,7 @@ import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.atMost;
 import static org.mockito.Mockito.verify;
 
 @ExtendWith(GameExtension.class)
@@ -54,5 +55,20 @@ class LevelComponentTest {
         levelComponentSpy.customerLeftLineUp();
         verify(levelComponentSpy).customerLeftLineUp();
         assertEquals(0, levelComponentSpy.getCurrentCustomersLinedUp());
+    }
+
+    @Test
+    void shouldAppropriatelyUpdateTheNumberOfCustomersSpawned() {
+        assertEquals(0, levelComponentSpy.getNumbCustomersSpawned());
+        levelComponentSpy.customerSpawned();
+        assertEquals(1, levelComponentSpy.getNumbCustomersSpawned());
+        for (int i = 0; i < 4; i++) {
+            levelComponentSpy.customerSpawned();
+        }
+        verify(levelComponentSpy, atMost(5)).customerSpawned();
+        assertEquals(5, levelComponentSpy.getNumbCustomersSpawned());
+        levelComponentSpy.resetCustomerSpawn();
+        verify(levelComponentSpy).resetCustomerSpawn();
+        assertEquals(0, levelComponentSpy.getNumbCustomersSpawned());
     }
 }
