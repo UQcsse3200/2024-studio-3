@@ -108,8 +108,11 @@ public class StationItemHandlerComponent extends Component {
             case "OVEN" -> {
                 entity.getEvents().trigger("cookIngredient", stationState, 5);
             }
-            case "CUTTING_BOARD" ->
+            case "CUTTING_BOARD" -> {
                 entity.getEvents().trigger("chopIngredient");
+            } case "servery" -> {
+                submitMeal(item);
+            }
         }
 
 
@@ -131,5 +134,17 @@ public class StationItemHandlerComponent extends Component {
         // trigger here on player inventory component to send returned item
         // when done
         entity.getEvents().trigger("interactionEnd");
+    }
+
+    // not sure where to put this exactly
+    public void submitMeal(String item) {
+        //TODO:
+        //call getCurrentBigTicketInfo() to get values of bigticket, returning a string[]
+        //String[] bigTicketInfo =
+        // call made to other teams function
+
+        //TBD(item, bigTicketInfo[0], bigTicketInfo[1], bigTicketInfo[2]);
+        //AKA item being submitted, order number of ticket, meal of ticket, time left of ticket.
+        return;
     }
 }
