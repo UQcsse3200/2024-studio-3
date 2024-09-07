@@ -2,6 +2,12 @@ package com.csse3200.game.components.station;
 
 import com.csse3200.game.components.Component;
 
+/**
+ * StationCookingComponent.java
+ * </p>
+ * This class controls the cooking of items within a station. This is designed
+ * to be used by cooking stations which include the stove and the over.
+ */
 public class StationCookingComponent extends Component  {
 
     private StationItemHandlerComponent itemHandler;
