@@ -1,14 +1,12 @@
 package com.csse3200.game.components.tutorial;
 
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.Input;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.csse3200.game.GdxGame;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
-import com.badlogic.gdx.scenes.scene2d.ui.Cell;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
 import com.csse3200.game.components.ordersystem.MainGameOrderTicketDisplay;
@@ -28,14 +26,15 @@ public class TutorialScreenDisplay extends UIComponent {
     private Label tutorialLabel;
     private Image tutorialBox;  // White box for background
     private Skin skin;
-
+   private  int  i = 0;
     private int tutorialStep = 0;  // tracks the current tutorial step
     private MainGameOrderTicketDisplay orderTicketDisplay;
-
+Table table = new Table();
 
     public TutorialScreenDisplay(GdxGame game) {
         this.game = game;
         this.orderTicketDisplay = new MainGameOrderTicketDisplay();
+
 
     }
 
@@ -43,7 +42,9 @@ public class TutorialScreenDisplay extends UIComponent {
     public void create() {
         super.create();
         setupUI();
-        advanceTutorialStep();  // start the tutorial from the first step
+        advanceTutorialStep();
+        ServiceLocator.getInputService().getEvents().addListener("walked", this::onPlayerMoved);
+        ServiceLocator.getInputService().getEvents().addListener("interact", this::onInteraction);// start the tutorial from the first step
     }
 
 
@@ -52,12 +53,12 @@ public class TutorialScreenDisplay extends UIComponent {
      */
     private void setupUI() {
         // Create a skin for loading textures
-        skin = new Skin();
-
+        skin = new Skin(Gdx.files.internal("flat-earth/skin/flat-earth-ui.json"));
+  
         // Manually load the white_box texture and add it to the skin
-        skin.add("tutorial_box", new Texture(Gdx.files.internal("core/assets/images/tutorial/tutorial_box.png")));
+        skin.add("tutorial_box", new Texture(Gdx.files.internal("images/tutorial/tutorial_box.png")));
 
-        // Create a white box background
+        //Create a white box background
         tutorialBox = new Image(skin.getDrawable("tutorial_box"));
         tutorialBox.setSize(300, 150);
         float boxX = stage.getViewport().getWorldWidth() * 0.1f;
@@ -71,7 +72,45 @@ public class TutorialScreenDisplay extends UIComponent {
 
         stage.addActor(tutorialBox);
         stage.addActor(tutorialLabel);
+        stage.addActor(table);
     }
+//    private void setupUI() {
+//        // Create a skin for loading textures
+//        skin = new Skin(Gdx.files.internal("flat-earth/skin/flat-earth-ui.json"));
+//
+//        // Clear previous content from the table if needed
+//       table.clear();
+//
+//        // Load the background texture for the table and add it to the skin
+//        skin.add("table_bg", new Texture(Gdx.files.internal("images/tutorial/img.png")));
+//        skin.add("tutorial_box", new Texture(Gdx.files.internal("images/tutorial/tutorial_box.png")));
+//        // Create a white box background
+//        tutorialBox = new Image(skin.getDrawable("tutorial_box"));
+//        tutorialBox.setSize(300, 150);
+//        float boxX = stage.getViewport().getWorldWidth() * 0.1f;
+//        float boxY = stage.getViewport().getWorldHeight() * 0.75f;
+//        tutorialBox.setPosition(boxX, boxY);
+//
+//        // Create a tutorial label and position it on top of the box
+//        tutorialLabel = new Label("", skin);
+//        tutorialLabel.setFontScale(1.2f);  // scale font size
+//        tutorialLabel.setPosition(boxX + 20, boxY + 80);
+//
+//        // Create a new table and set its background image
+//     table = new Table();
+//        table.setFillParent(true);  // Make table fill the entire stage
+//       table.center();  // Center the table on the screen
+//        table.setBackground(skin.getDrawable("table_bg"));  // Set the background image for the table
+//
+//        // Add the label and box to the table for proper layout
+//        table.add(tutorialBox).size(300, 150).pad(10);  // Add box to the table with padding
+//       table.row();  // Move to the next row
+//        table.add(tutorialLabel).pad(10);  // Add label to the next row with padding
+//
+//        // Add the table to the stage
+//     //  stage.addActor(table);
+//    }
+
 
     /**
      * Shifts the order tickets to the left using MainGameOrderTicketDisplay.
@@ -115,7 +154,9 @@ public class TutorialScreenDisplay extends UIComponent {
      */
     private void showMovementTutorial() {
         tutorialLabel.setText("Use W/A/S/D to move around.");
-        // implement all other movement tutorial code ehre
+        // implement all other movement tutorial code here
+        // Add the table to the stage
+//        stage.addActor(table);
         ServiceLocator.getInputService().getEvents().addListener("playerMoved", this::onPlayerMoved);
     }
 
@@ -123,7 +164,14 @@ public class TutorialScreenDisplay extends UIComponent {
      * Called when the player moves. Proceeds to the next tutorial step.
      */
     private void onPlayerMoved() {
-        advanceTutorialStep();
+
+        if(i == 0) advanceTutorialStep();
+        i++;
+    }
+    private void onInteraction() {
+
+        if(i == 1) advanceTutorialStep();//hacky way to implement tutorial
+        i++;
     }
 
     private void onDocketSwitched() {
@@ -153,11 +201,24 @@ public class TutorialScreenDisplay extends UIComponent {
      * Displays the item pickup tutorial. The player needs to press SPACE to pick up an item.
      */
     private void showItemPickupTutorial() {
-        tutorialLabel.setText("Press SPACE to pick up the item."); // NEEDS TO BE MODIFIED ONCE WE TALK TO OTHER TEAM
+        tutorialLabel.setText("Press E to pick up the item."); // NEEDS TO BE MODIFIED ONCE WE TALK TO OTHER TEAM
         // all other item pickup tutorial code to be implemend here
 
         ServiceLocator.getTutorialService().getEvents().addListener("itemPickedUp", this::onItemPickedUp);
     }
+    private boolean onInputKey(int keycode) {
+        if (keycode == Input.Keys.E) {
+            logger.info("'E' key pressed, attempting to pick up item.");
+            // Trigger item pickup event
+            ServiceLocator.getInputService().getEvents().trigger("itemPickedUp");
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+
 
     /**
      * Called when the player picks up an item. Proceeds to the next tutorial step.

@@ -5,6 +5,7 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.input.InputComponent;
+import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.utils.math.Vector2Utils;
 
 import java.util.HashMap;
@@ -39,25 +40,32 @@ public class KeyboardPlayerInputComponent extends InputComponent {
     if (keycode == Keys.E) {
       // Trigger an interaction attempt
       entity.getEvents().trigger("interact");
+      ServiceLocator.getInputService().getEvents().trigger("interact");
       return true;
     }
 
     if (!isInteracting) {
+      ServiceLocator.getInputService().getEvents().trigger("walked");
       switch (keycode) {
+
         case Keys.W:
           walkDirection.add(Vector2Utils.UP);
+          entity.getEvents().trigger("walked");
           triggerWalkEvent();
           return true;
         case Keys.A:
           walkDirection.add(Vector2Utils.LEFT);
+          entity.getEvents().trigger("walked");
           triggerWalkEvent();
           return true;
         case Keys.S:
           walkDirection.add(Vector2Utils.DOWN);
+          entity.getEvents().trigger("walked");
           triggerWalkEvent();
           return true;
         case Keys.D:
           walkDirection.add(Vector2Utils.RIGHT);
+          entity.getEvents().trigger("walked");
           triggerWalkEvent();
           return true;
       }

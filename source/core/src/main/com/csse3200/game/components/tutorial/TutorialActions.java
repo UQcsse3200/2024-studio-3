@@ -35,7 +35,7 @@ public class TutorialActions extends InputComponent {
     @Override
     public boolean keyDown(int keycode) {
         if (keycode == Input.Keys.SPACE) {
-            logger.info("Space key pressed, triggering item pickup.");
+            System.out.println("Space key pressed, triggering item pickup.");
             ServiceLocator.getInputService().getEvents().trigger("itemPickedUp"); //CLARIFY WHICH SERVICE WITH TEAM
             return true;
         } else if (keycode == Input.Keys.ENTER) {
