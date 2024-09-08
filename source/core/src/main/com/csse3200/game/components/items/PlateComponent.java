@@ -57,19 +57,6 @@ public class PlateComponent extends Component {
         return false;
     }
 
-    public String removeFromPlate() {
-        if (state == PlateState.IN_USE) {
-            String removedItem = itemOnPlate;
-            itemOnPlate = null;
-            state = PlateState.CLEAN;
-            logger.info("Item '{}' removed from the plate.", removedItem);
-            return removedItem;
-        }
-        logger.warn("Nothing to remove");
-        return null;
-    }
-
-    //to handle interactions for plates
     public static boolean handlePlateInteraction(Fixture fixture, Entity player) {
         if (fixture.getUserData() instanceof Entity plateEntity) {
             PlateComponent plateComponent = plateEntity.getComponent(PlateComponent.class);
@@ -81,7 +68,6 @@ public class PlateComponent extends Component {
         return false;
     }
 
-    //for implementation in PlayerActions
     public void interactWithPlate(Entity player) {
         InventoryComponent inventory = player.getComponent(InventoryComponent.class);
         if (inventory == null) {
@@ -96,7 +82,6 @@ public class PlateComponent extends Component {
         }
     }
 
-    //cannot set yet since pickup playeraction still not active
     public void pickup(Entity player) {
         InventoryComponent inventory = player.getComponent(InventoryComponent.class);
         if (isAvailable && inventory.isEmpty()) {
