@@ -5,12 +5,8 @@ import com.csse3200.game.components.Component;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.factories.PlateFactory;
-import com.csse3200.game.services.GameTime;
-import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.ArrayList;
 
 
 public class PlateComponent extends Component {
@@ -20,13 +16,10 @@ public class PlateComponent extends Component {
     private boolean isAvailable;
     private boolean isServable;
     private boolean isPickedup;
-    private int plateIndex;
     int quantity;
-    //private final GameTime timeSource;
-    //private long washEndTime;
 
     public enum PlateState {
-        CLEAN, DIRTY, IN_USE, WASHING
+        CLEAN, DIRTY, WASHING
     }
 
     public PlateComponent(int quantity) {
@@ -35,14 +28,11 @@ public class PlateComponent extends Component {
         this.isAvailable = true;
         this.isServable = false;
         this.isPickedup = false;
-        this.plateIndex = -1;
         this.quantity = quantity;
-        //this.timeSource = ServiceLocator.getTimeSource(); --unused until cleanplate is implemented
     }
     @Override
     public void create() {
         logger.info("Plate create");
-        System.out.println("Plate create");
         this.isAvailable = true;
         entity.getEvents().addListener("interactWithPlate", this::interactWithPlate);
     }
@@ -52,15 +42,14 @@ public class PlateComponent extends Component {
         //still nothing here mate
     }
 
-    public boolean addMealToPlate(String meal) {
+    public void addMealToPlate(String meal) {
         if (state == PlateState.CLEAN && itemOnPlate == null) {
             itemOnPlate = meal;
-            state = PlateState.IN_USE;
-            logger.info("Item '{}' added to the plate.", meal);
-            return true;
+            isAvailable = false;
+            logger.info("Item '{}' on plate.", meal);
+            return;
         }
-        logger.warn("Cannot add item");
-        return false;
+        logger.warn("Cant add meal");
     }
 
     public static boolean handlePlateInteraction(Fixture fixture, Entity player) {
@@ -90,14 +79,14 @@ public class PlateComponent extends Component {
         if (isAvailable()) {
             pickup(player);
         } else if (isPickedUp()) {
-            letDown(player, plateIndex);
+            letDown(player);
         }
     }
 
     public void pickup(Entity player) {
         if (quantity > 1) {
             quantity--;
-            logger.info("Plate picked up. Remaining quantity: {}", quantity);
+            logger.info("Plate picked up. Remaining: {}", quantity);
             PlateFactory.disposePlate(entity, quantity);
         } else {
             PlateFactory.disposePlate(entity, 0);
@@ -105,7 +94,7 @@ public class PlateComponent extends Component {
         }
     }
 
-    public void letDown(Entity player, int plateIndex) {
+    public void letDown(Entity player) {
         //letdown simul
     }
 
@@ -116,6 +105,10 @@ public class PlateComponent extends Component {
 
     public int getQuantity() {
         return quantity;
+    }
+
+    public String getItemOnPlate(){
+        return itemOnPlate;
     }
 
     public void setQuantity(int quantity) {

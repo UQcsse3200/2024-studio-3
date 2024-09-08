@@ -90,6 +90,9 @@ public class PlateFactory {
         PhysicsUtils.setScaledCollider(plate, 0.6f, 0.3f);
         plate.getComponent(ColliderComponent.class).setDensity(1.0f);
 
+        PlateComponent plateComponent = plate.getComponent(PlateComponent.class);
+            plateComponent.addMealToPlate(mealType);
+
         return plate;
     }
 

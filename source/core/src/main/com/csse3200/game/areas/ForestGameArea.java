@@ -146,6 +146,7 @@ public class ForestGameArea extends GameArea {
 
     //spawnplates
     spawnPlate(5); //testplate spawn
+    spawnPlatewithItem();
     //spawnPlatewithItem();
     //spawnPlateBench(new GridPoint2(4, 4));
     //spawnPlates(3);
@@ -594,16 +595,16 @@ public class ForestGameArea extends GameArea {
     return newPlate;
   }
 
-/*
+
   private Entity spawnPlatewithItem() {
     Entity newPlate = PlateFactory.spawnMealOnPlate("salad");
-    GridPoint2 platePosition = new GridPoint2(6, 2);
+    GridPoint2 platePosition = new GridPoint2(6, 4);
     spawnEntityAt(newPlate, platePosition, true, false);
     newPlate.setScale(0.8f, 0.8f);
 
     return newPlate;
   }
-*/
+
   private void playMusic() {
     Music music = ServiceLocator.getResourceService().getAsset(backgroundMusic, Music.class);
     music.setLooping(true);
