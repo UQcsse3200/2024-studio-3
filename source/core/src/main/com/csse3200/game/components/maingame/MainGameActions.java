@@ -3,6 +3,7 @@ package com.csse3200.game.components.maingame;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.ordersystem.MainGameOrderTicketDisplay;
+import com.csse3200.game.components.ordersystem.OrderActions;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
@@ -18,6 +19,7 @@ public class MainGameActions extends Component {
 	private GdxGame game;
 	private Entity ui;
 	private MainGameOrderTicketDisplay docketDisplayer;
+	private OrderActions orderActions;
 	String[] recipeNames = {"acaiBowl", "salad", "fruitSalad", "steakMeal", "bananaSplit"};
 
 	/**
@@ -39,6 +41,8 @@ public class MainGameActions extends Component {
 			String randomRecipe = recipeNames[new Random().nextInt(recipeNames.length)];
 			docketDisplayer = new MainGameOrderTicketDisplay(randomRecipe);
 			docketDisplayer.setStage(ServiceLocator.getRenderService().getStage());
+			orderActions = new OrderActions(game);
+
 			ui.addComponent(docketDisplayer);
 			entity.getEvents().addListener("exit", this::onExit);
 			entity.getEvents().addListener("createOrder", this::onCreateOrder);

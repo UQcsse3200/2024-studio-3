@@ -1,13 +1,17 @@
 package com.csse3200.game.components.ordersystem;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Cell;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.SnapshotArray;
+import com.badlogic.gdx.utils.StringBuilder;
 import com.badlogic.gdx.utils.TimeUtils;
+import com.csse3200.game.physics.components.PhysicsMovementComponent;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
 import org.slf4j.Logger;
@@ -61,6 +65,9 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         startTimeArrayList = new ArrayList<>();
         backgroundArrayList = new ArrayList<>();
         countdownLabelArrayList = new ArrayList<>();
+
+
+
     }
 
     /**
@@ -290,6 +297,13 @@ public class MainGameOrderTicketDisplay extends UIComponent {
                 countdownLabelArrayList.remove(i);
             }
         }
+        if (!tableArrayList.isEmpty()) {
+            Table lastTable = tableArrayList.get(tableArrayList.size() - 1);
+            updateBigTicketInfo(lastTable);
+        } else {
+            ServiceLocator.getDocketService().getEvents().trigger("onUpdateBigTicket", null, null, null);
+
+        }
 
 
         updateDocketPositions();
@@ -302,6 +316,38 @@ public class MainGameOrderTicketDisplay extends UIComponent {
     public void updateDocketDisplay() {
         // Implement logic to update the display
         updateDocketPositions();
+    }
+
+    private void updateBigTicketInfo(Table bigTicket) {
+
+        SnapshotArray<Actor> children = bigTicket.getChildren();
+        String orderNum = "";
+        String meal = "";
+        String timeLeft = "";
+
+        for (int i = 0; i < children.size; i++) {
+            Actor actor = children.get(i);
+            if (actor instanceof Label) {
+                Label label = (Label) actor;
+                String text = label.getText().toString();
+                if (i == 0) {
+                    orderNum = text.replace("Order ", "");
+                } else if (i == 1) {  // Assuming the recipe name is always the second label
+                    meal = text;
+                } else if (i == 2) {
+                    timeLeft = text.replace("Timer: ", "");
+                }
+            }
+        }
+        /*
+        Array<Label> labels = bigTicket.getChildren().filter(Label.class);
+        String orderNum = labels.get(0).getText().toString().replace("Order ", "");
+        String meal = labels.get(1).getText().toString();
+        String timeLeft = labels.get(labels.size - 1).getText().toString();
+
+         */
+        ServiceLocator.getDocketService().getEvents().trigger("onUpdateBigTicket", orderNum, meal, timeLeft);
+        //orderActions.onUpdateBigTicket(orderNum, meal, timeLeft);
     }
 
     /**
