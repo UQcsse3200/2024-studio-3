@@ -93,7 +93,6 @@ public class StationInventoryComponent extends Component {
         return item.getFirst().isPresent();
     }
 
-
     /**
      * Set the current item within the station to the item provided. Checks if the 
      * item can be accepted only, call isItemPresent() in handler.
@@ -142,10 +141,9 @@ public class StationInventoryComponent extends Component {
             if (x.isPresent()) templist.add(x.get());
         }
 
-        List<String> possibleRecipes = DishFactory.getRecipe(templist);
-        if (possibleRecipes.size() == 1 && !isCooking) {
-            // TODO check that it completely matching the recipe
-            targetRecipe = possibleRecipes.get(0);
+        Optional<String> possibleRecipe = DishFactory.getDefinitiveRecipe(templist);
+        if (possibleRecipe.isPresent() && !isCooking) {
+            targetRecipe = possibleRecipe.get();
             cookingTime = 10000; // TODO edit placeholder, get cooking time from recipes?
             isCooking = true;
         }
