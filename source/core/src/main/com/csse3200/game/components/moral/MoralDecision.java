@@ -59,6 +59,10 @@ public class MoralDecision extends Component {
         return ListOfDecisions;
     }
 
+    public String getDecisionStatement(int index) {
+        return ListOfDecisions.get(index).getStatement();
+    }
+
     public void clearDecisions() {
         ListOfDecisions.clear();
     }
