@@ -89,7 +89,7 @@ public class DishFactory {
      @return name of recipe that contain associated ingredients
      */
     public static Optional<String> getDefinitiveRecipe (List<String> ingredients) {
-        if (ingredients.size() == 1) {
+        if (ingredients.size() >= 1) {
             for (Map.Entry<String, SingleStationRecipeConfig> entry : getSingleStationRecipes().entrySet()) {
                 String recipe = entry.getKey();
                 SingleStationRecipeConfig recipeConfig = entry.getValue();
@@ -99,8 +99,7 @@ public class DishFactory {
                     return Optional.of(recipe);
                 }
             }
-        }
-        else if (ingredients.size() > 1) {
+
             for (Map.Entry<String, MultiStationRecipeConfig> entry : getMultiStationRecipes().entrySet()) {
                 String recipe = entry.getKey();
                 MultiStationRecipeConfig recipeConfig = entry.getValue();
