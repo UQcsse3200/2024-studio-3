@@ -69,6 +69,7 @@ public class PlateComponent extends Component {
         return null;
     }
 
+    //to handle interactions for plates
     public static boolean handlePlateInteraction(Fixture fixture, Entity player) {
         if (fixture.getUserData() instanceof Entity plateEntity) {
             PlateComponent plateComponent = plateEntity.getComponent(PlateComponent.class);
@@ -80,6 +81,7 @@ public class PlateComponent extends Component {
         return false;
     }
 
+    //for implementation in PlayerActions
     public void interactWithPlate(Entity player) {
         InventoryComponent inventory = player.getComponent(InventoryComponent.class);
         if (inventory == null) {
@@ -94,6 +96,7 @@ public class PlateComponent extends Component {
         }
     }
 
+    //cannot set yet since pickup playeraction still not active
     public void pickup(Entity player) {
         InventoryComponent inventory = player.getComponent(InventoryComponent.class);
         if (isAvailable && inventory.isEmpty()) {
@@ -122,13 +125,13 @@ public class PlateComponent extends Component {
         }
     }
 
-    private boolean isPickedUp() {
-        return isPickedup;
-    }
-
     public void dispose() {
         logger.info("Plate disposed");
         isAvailable = false;
+    }
+
+    private boolean isPickedUp() {
+        return isPickedup;
     }
 
     public boolean isAvailable() {

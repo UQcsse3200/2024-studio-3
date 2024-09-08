@@ -24,6 +24,7 @@ import com.csse3200.game.entities.factories.PlateFactory;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.utils.math.GridPoint2Utils;
+import com.csse3200.game.components.items.PlateComponent;
 import com.csse3200.game.utils.math.RandomUtils;
 
 import java.util.ArrayList;
@@ -144,9 +145,9 @@ public class ForestGameArea extends GameArea {
 
     //spawnplates
     spawnPlate(2); //testplate spawn
+    spawnPlatewithItem();
     //spawnPlateBench(new GridPoint2(4, 4));
     //spawnPlates(3);
-
     // Spawn the player
     player = spawnPlayer();
 
@@ -584,9 +585,18 @@ public class ForestGameArea extends GameArea {
 
   private Entity spawnPlate(int quantity) {
     Entity newPlate = PlateFactory.createPlate(quantity);
-    GridPoint2 platePosition = new GridPoint2(6, 3);
+    GridPoint2 platePosition = new GridPoint2(5, 3);
     spawnEntityAt(newPlate, platePosition, true, false);
-    newPlate.setScale(1.3f, 1.3f);
+    newPlate.setScale(1.0f, 1.0f);
+
+    return newPlate;
+  }
+
+  private Entity spawnPlatewithItem() {
+    Entity newPlate = PlateFactory.spawnMealOnPlate("salad");
+    GridPoint2 platePosition = new GridPoint2(6, 2);
+    spawnEntityAt(newPlate, platePosition, true, false);
+    newPlate.setScale(0.8f, 0.8f);
 
     return newPlate;
   }
