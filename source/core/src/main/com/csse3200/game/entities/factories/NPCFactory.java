@@ -92,7 +92,7 @@ public class NPCFactory {
     } */
 
     public static Entity createBoss(Vector2 targetPosition) {
-        Entity customer = createBaseCharacter(targetPosition);
+        Entity boss = createBaseCharacter(targetPosition);
 
         AnimationRenderComponent animator =
                 new AnimationRenderComponent(
@@ -101,11 +101,11 @@ public class NPCFactory {
         animator.addAnimation("walk", 0.3f, Animation.PlayMode.LOOP);
         animator.addAnimation("turn", 0.3f, Animation.PlayMode.LOOP);
 
-        customer
+        boss
                 .addComponent(animator)
                 .addComponent(new SpecialNPCAnimationController());
 
-        return customer;
+        return boss;
     }
 
 
