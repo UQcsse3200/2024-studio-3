@@ -15,6 +15,7 @@ import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.areas.terrain.TerrainFactory.TerrainType;
 import com.csse3200.game.components.gamearea.GameAreaDisplay;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.components.items.PlateComponent;
 import com.csse3200.game.entities.factories.NPCFactory;
 import com.csse3200.game.entities.factories.ObstacleFactory;
 import com.csse3200.game.entities.factories.PlayerFactory;
@@ -144,10 +145,11 @@ public class ForestGameArea extends GameArea {
     spawnCustomer();
 
     //spawnplates
-    spawnPlate(2); //testplate spawn
-    spawnPlatewithItem();
+    spawnPlate(5); //testplate spawn
+    //spawnPlatewithItem();
     //spawnPlateBench(new GridPoint2(4, 4));
     //spawnPlates(3);
+
     // Spawn the player
     player = spawnPlayer();
 
@@ -585,13 +587,14 @@ public class ForestGameArea extends GameArea {
 
   private Entity spawnPlate(int quantity) {
     Entity newPlate = PlateFactory.createPlate(quantity);
-    GridPoint2 platePosition = new GridPoint2(5, 3);
+    GridPoint2 platePosition = new GridPoint2(6, 2);
     spawnEntityAt(newPlate, platePosition, true, false);
     newPlate.setScale(1.0f, 1.0f);
 
     return newPlate;
   }
 
+/*
   private Entity spawnPlatewithItem() {
     Entity newPlate = PlateFactory.spawnMealOnPlate("salad");
     GridPoint2 platePosition = new GridPoint2(6, 2);
@@ -600,7 +603,7 @@ public class ForestGameArea extends GameArea {
 
     return newPlate;
   }
-
+*/
   private void playMusic() {
     Music music = ServiceLocator.getResourceService().getAsset(backgroundMusic, Music.class);
     music.setLooping(true);

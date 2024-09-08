@@ -1,9 +1,11 @@
 package com.csse3200.game.entities.factories;
 
+import com.badlogic.gdx.physics.box2d.Body;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.TooltipsDisplay;
 import com.csse3200.game.components.items.PlateComponent;
 import com.csse3200.game.entities.Entity;
+import com.badlogic.gdx.physics.box2d.Fixture;
 import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.PhysicsUtils;
 import com.csse3200.game.physics.components.ColliderComponent;
@@ -28,36 +30,49 @@ public class PlateFactory {
                 .addComponent(new ColliderComponent())
                 .addComponent(new HitboxComponent().setLayer(PhysicsLayer.PLAYER))
                 .addComponent(new InteractionComponent(PhysicsLayer.INTERACTABLE))
-                .addComponent(new TooltipsDisplay())
-                .addComponent(new PlateComponent());
+                .addComponent(new TooltipsDisplay());
     }
 
     public static Entity createPlate(int quantity) {
         if (quantity < 1 || quantity > 5) {
-            // no action
+            //----
         }
+
         String texturePath = "images/platecomponent/stackedplates/" + quantity + "plates.png";
 
         Entity plate = createTemplatePlate()
-                .addComponent(new PlateComponent())
+                .addComponent(new PlateComponent(quantity))
                 .addComponent(new TextureRenderComponent(texturePath));
+
         PhysicsUtils.setScaledCollider(plate, 0.6f, 0.3f);
         plate.getComponent(ColliderComponent.class).setDensity(1.0f);
+
+        plate.getComponent(InteractionComponent.class).setAsBox(plate.getScale());
+        InteractionComponent plateInteraction = plate.getComponent(InteractionComponent.class);
+        plateInteraction.create();
+        plateInteraction.getFixture().setUserData(plate);
+        /*System.out.println("Created plate: " + plate);
+        System.out.println("Fixture: " + plateInteraction.getFixture());
+        System.out.println(plateInteraction.getFixture().getUserData());*/
+/*
+        Body body = plate.getComponent(PhysicsComponent.class).getBody();
+        for (Fixture fixture : body.getFixtureList()) {
+            fixture.setUserData(plate);
+            System.out.println("Set userData on fixture: " + fixture + " -> " + fixture.getUserData());
+        }*/
 
         return plate;
     }
 
-    //disposePlate method but unstestable waiting for actions hotkey activated
     public static void disposePlate(Entity plate, int quantity) {
-        if (quantity <= 1) {
-            //plate.getComponent(TextureRenderComponent.class).setTexture(null);
+        if (quantity == 0) {
+            System.out.println("Disposed fr");
             plate.dispose();
         } else {
-            int newQuantity = quantity - 1;
-            String newTexturePath = "images/platecomponent/stackedplates/" + newQuantity + "plates.png";
-
+            System.out.println("rerendered");
+            String newTexturePath = "images/platecomponent/stackedplates/" + quantity + "plates.png";
             TextureRenderComponent textureRenderComponent = plate.getComponent(TextureRenderComponent.class);
-            textureRenderComponent.setTexture(null);
+            //textureRenderComponent.setTexture(null);
             textureRenderComponent.setTexture(newTexturePath);
         }
     }
@@ -70,7 +85,7 @@ public class PlateFactory {
         }
 
         Entity plate = createTemplatePlate()
-                .addComponent(new PlateComponent())
+                .addComponent(new PlateComponent(1))
                 .addComponent(new TextureRenderComponent(mealTexturePath));
         PhysicsUtils.setScaledCollider(plate, 0.6f, 0.3f);
         plate.getComponent(ColliderComponent.class).setDensity(1.0f);

@@ -84,17 +84,16 @@ public class PlayerActions extends Component {
     if (interactable != null) {
       // We need to notify the input that we are inside an interaction
 
-      //added interaction handle for for plates
-      boolean interactingWithPlate = PlateComponent.handlePlateInteraction(interactable, entity);
-      if (interactingWithPlate) {
-        // Interaction handled by PlateComponent, exit method
-        return;
-      }
-
       // Handle if it was a fire extinguisher
       boolean interactingWithFireExtinguisher = FireExtinguisherHandlerComponent.handleFireExtinguisher(interactable, entity);
       if (interactingWithFireExtinguisher) {
         // No more interacting after this
+        return;
+      }
+
+      boolean interactingWithPlate = PlateComponent.handlePlateInteraction(interactable, entity);
+      if (interactingWithPlate) {
+        // Interaction handled by PlateComponent
         return;
       }
       entity.getEvents().trigger("startInteraction");
