@@ -45,7 +45,13 @@ public class TextDisplay extends UIComponent {
     private Table table;
     private Image displayBox;
     private final MainGameScreen game;
-
+    public TextDisplay() {
+        super();
+        this.game = null;
+        this.table = new Table();
+        this.visible = true;
+        this.currentText = new StringBuilder();
+    }
     public TextDisplay(MainGameScreen game) {
         super();
         this.game = game;
@@ -117,7 +123,7 @@ public class TextDisplay extends UIComponent {
     @Override
     public void update() {
         long time = ServiceLocator.getTimeSource().getTime();
-        if (current_part != TextDisplay.this.text.size() && charIndex < this.text.get(current_part).length()) {
+        if (current_part < TextDisplay.this.text.size() && charIndex < this.text.get(current_part).length()) {
             if (time - lastUpdate >= delay) {
                 lastUpdate = time;
                 this.currentText.append(text.get(current_part).charAt(charIndex));
