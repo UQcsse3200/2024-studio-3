@@ -78,6 +78,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
    * @return whether the input was processed
    * @see InputProcessor#keyUp(int)
    */
+
   @Override
   public boolean keyUp(int keycode) {
     keyFlags.put(keycode, 0);

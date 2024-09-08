@@ -8,8 +8,11 @@ import com.csse3200.game.areas.ForestGameArea;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.npc.CustomerComponent;
 import com.csse3200.game.components.npc.GhostAnimationController;
+import com.csse3200.game.components.npc.SpecialNPCAnimationController;
 import com.csse3200.game.components.TouchAttackComponent;
 import com.csse3200.game.components.tasks.PathFollowTask;
+import com.csse3200.game.components.tasks.TurnTask;
+import com.csse3200.game.components.tasks.WaitTask;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.configs.*;
 import com.csse3200.game.files.FileLoader;
@@ -66,6 +69,51 @@ public class NPCFactory {
     }
 
     /**
+     * Creates a boss entity.
+     *
+     * @param targetPosition Place to roam to
+     * @return entity
+
+    public static Entity createBoss(Entity target, Vector2 targetPosition) {
+        Entity boss = createBaseNPC(target, targetPosition);
+        BaseEntityConfig config = configs.ghost;
+
+        AnimationRenderComponent animator =
+                new AnimationRenderComponent(
+                        ServiceLocator.getResourceService().getAsset("images/ghost.atlas", TextureAtlas.class));
+        animator.addAnimation("angry_float", 0.1f, Animation.PlayMode.LOOP);
+        animator.addAnimation("float", 0.1f, Animation.PlayMode.LOOP);
+
+        boss
+                .addComponent(new CombatStatsComponent(config.health, config.baseAttack))
+                .addComponent(animator)
+                .addComponent(new GhostAnimationController());
+
+        boss.getComponent(AnimationRenderComponent.class).scaleEntity();
+
+        return boss;
+    } */
+
+    public static Entity createBoss(Vector2 targetPosition) {
+        Entity boss = createBaseCharacter(targetPosition);
+
+        AnimationRenderComponent animator =
+                new AnimationRenderComponent(
+                        ServiceLocator.getResourceService()
+                                .getAsset("images/special_NPCs/boss.atlas", TextureAtlas.class));
+        animator.addAnimation("walk", 0.3f, Animation.PlayMode.LOOP);
+        animator.addAnimation("turn", 0.3f, Animation.PlayMode.LOOP);
+
+        boss
+                .addComponent(animator)
+                .addComponent(new SpecialNPCAnimationController());
+
+        return boss;
+    }
+
+
+
+    /**
      * Creates a ghost king entity at a specific target position.
      *
      * @param target entity to chase
@@ -75,6 +123,7 @@ public class NPCFactory {
     public static Entity createGhostKing(Entity target, Vector2 targetPosition) {
         Entity ghostKing = createBaseNPC(target, targetPosition);
         GhostKingConfig config = configs.ghostKing;
+
 
         AnimationRenderComponent animator =
                 new AnimationRenderComponent(
@@ -94,7 +143,6 @@ public class NPCFactory {
 
     public static Entity createCustomerPersonal(String name, Vector2 targetPosition) {
         Entity customer = createBaseCustomer(targetPosition);
-
         CustomerPersonalityConfig config = switch (name) {
             case "Hank" -> personalCustomerConfig.Hank;
             case "Lewis" -> personalCustomerConfig.Lewis;
@@ -162,7 +210,24 @@ public class NPCFactory {
                         .addComponent(new HitboxComponent().setLayer(PhysicsLayer.NPC))
                         .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 1.5f))
                         .addComponent(aiComponent);
+        PhysicsUtils.setScaledCollider(npc, 0.9f, 0.4f);
+        return npc;
+    }
 
+    public static Entity createBaseCharacter(Vector2 targetPosition) {
+        AITaskComponent aiComponent = new AITaskComponent();
+                aiComponent
+                        .addTask(new PathFollowTask(targetPosition))
+                        .addTask(new TurnTask(10, 0.01f,10f));
+                        //.addTask(new PathFollowTask(targetPosition2));
+        Entity npc =
+                new Entity()
+                        .addComponent(new PhysicsComponent())
+                        .addComponent(new PhysicsMovementComponent())
+                        .addComponent(new ColliderComponent())
+                        .addComponent(new HitboxComponent().setLayer(PhysicsLayer.NPC))
+                        .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 1.5f))
+                        .addComponent(aiComponent);
         PhysicsUtils.setScaledCollider(npc, 0.9f, 0.4f);
         npc.getComponent(PhysicsComponent.class).getBody().setUserData("Customer");
         return npc;
@@ -174,9 +239,11 @@ public class NPCFactory {
      * @return entity
      */
     private static Entity createBaseNPC(Entity target, Vector2 targetPosition) {
-        AITaskComponent aiComponent =
-                new AITaskComponent()
-                        .addTask(new PathFollowTask(targetPosition));
+        AITaskComponent aiComponent = new AITaskComponent();
+                aiComponent
+                        .addTask(new PathFollowTask(new Vector2(1f, 4f)))
+                        .addTask(new PathFollowTask(new Vector2(7f, 3f)))
+                        .addTask(new PathFollowTask(new Vector2(2f, 6f)));
 
         Entity npc =
                 new Entity()
@@ -184,7 +251,7 @@ public class NPCFactory {
                         .addComponent(new PhysicsMovementComponent())
                         .addComponent(new ColliderComponent())
                         .addComponent(new HitboxComponent().setLayer(PhysicsLayer.NPC))
-                        .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 1.5f))
+                        //.addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 1.5f))
                         .addComponent(aiComponent);
 
         PhysicsUtils.setScaledCollider(npc, 0.9f, 0.4f);
