@@ -17,6 +17,11 @@ public class NPCConfigs {
 
   public CustomerPersonalityConfig Moonki = new CustomerPersonalityConfig();
 
+  public BaseCustomerConfig Basic_Sheep = new BaseCustomerConfig();
+
+  public BaseCustomerConfig Basic_Chicken = new BaseCustomerConfig();
+
   public CustomerPersonalityConfig Default = new CustomerPersonalityConfig();
+  public BaseCustomerConfig Basic_Default = new BaseCustomerConfig();
 
 }

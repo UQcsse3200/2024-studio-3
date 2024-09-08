@@ -21,7 +21,6 @@ public class CustomerComponent extends Component {
     public CustomerComponent(BaseCustomerConfig config) {
         this.type = config.type;
         this.patience = config.patience;
-        this.spawnTimer = config.spawnTimer;
         this.countDown = config.countDown;
     }
 
@@ -29,7 +28,6 @@ public class CustomerComponent extends Component {
         this.name = config.name;
         this.type = config.type;
         this.patience = config.patience;
-        this.spawnTimer = config.spawnTimer;
         this.countDown = config.countDown;
         this.reputation = config.reputation;
         this.preference = config.preference;
