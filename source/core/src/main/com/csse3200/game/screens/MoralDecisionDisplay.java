@@ -1,4 +1,4 @@
-package com.csse3200.game.components.maingame;
+package com.csse3200.game.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -12,26 +12,19 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.List;
-import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.csse3200.game.GdxGame;
-import com.csse3200.game.screens.MainGameScreen;
-import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
 
 
-public class MoralDecision extends UIComponent {
+public class MoralDecisionDisplay extends UIComponent {
     private Table layout; // Layout manager
     private boolean isVisible;
     private final MainGameScreen game;
     private Image characterImage;
 
-    public MoralDecision(MainGameScreen game) {
+    public MoralDecisionDisplay(MainGameScreen game) {
         super();
         this.game = game;
         isVisible = false;
