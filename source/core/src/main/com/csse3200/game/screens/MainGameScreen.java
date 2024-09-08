@@ -26,6 +26,7 @@ import com.csse3200.game.ui.terminal.Terminal;
 import com.csse3200.game.ui.terminal.TerminalDisplay;
 import com.csse3200.game.components.maingame.EndDayDisplay;
 import com.csse3200.game.components.maingame.MainGameExitDisplay;
+import com.csse3200.game.components.maingame.TextDisplay;
 import com.csse3200.game.components.gamearea.PerformanceDisplay;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,7 +46,8 @@ public class MainGameScreen extends ScreenAdapter {
 			// order system assets
 			"images/ordersystem/docket_background.png",
 			"images/ordersystem/pin_line.png",
-			"images/bird.png"
+			"images/bird.png",
+			"images/textbox.png"
 	};
 	// Modified the camera position to fix layout
 	private static final Vector2 CAMERA_POSITION = new Vector2(7.5f, 6.0f);
@@ -87,7 +89,9 @@ public class MainGameScreen extends ScreenAdapter {
 		forestGameArea.create();
 		Entity spawnControllerEntity = LevelFactory.createSpawnControllerEntity();
 		ServiceLocator.getEntityService().register(spawnControllerEntity);
-		ServiceLocator.getLevelService().getEvents().trigger("startLevel", 1);
+		int currLevel = ServiceLocator.getLevelService().getCurrLevel();
+		ServiceLocator.getLevelService().getEvents().trigger("setGameArea", forestGameArea);
+		ServiceLocator.getLevelService().getEvents().trigger("startLevel", currLevel);
 	}
 
 	@Override
@@ -165,7 +169,8 @@ public class MainGameScreen extends ScreenAdapter {
 			.addComponent(new TerminalDisplay())
 			.addComponent(new OrderActions(this.game))
 			.addComponent(new MainGameOrderBtnDisplay())
-		        .addComponent(new EndDayDisplay(this));
+		        .addComponent(new EndDayDisplay(this))
+				.addComponent(new TextDisplay(this));
 		ServiceLocator.getEntityService().register(ui);
 	}
 }

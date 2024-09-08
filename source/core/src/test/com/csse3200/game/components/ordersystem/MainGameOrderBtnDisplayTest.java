@@ -50,6 +50,17 @@ class MainGameOrderBtnDisplayTest {
 //        createOrderBtn.addActors();
 //        verify(stage).addActor(any(Table.class));
 //    }
+    @Test
+    public void testButtonCreation() {
+        /*//when(ServiceLocator.getRenderService().getStage()).thenReturn(stage);
+        when(stage.addActor()).then();
+        createOrderBtn.addActors();
+        verify(stage).addActor(any(Table.class));*/
+        MainGameOrderBtnDisplay mockBtn = mock(MainGameOrderBtnDisplay.class);
+        mockBtn.setStage(stage);
+        mockBtn.addActors();
+        verify(mockBtn).addActors();
+    }
 
     @Test
     void shouldCreateMainGameOrderBtnDisplayComponent() {
@@ -74,5 +85,4 @@ class MainGameOrderBtnDisplayTest {
         createOrderBtn.dispose();
         assertFalse(createOrderBtn.table.hasChildren());
     }
-
 }

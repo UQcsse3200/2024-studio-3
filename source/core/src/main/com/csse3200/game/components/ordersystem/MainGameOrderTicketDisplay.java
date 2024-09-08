@@ -442,4 +442,8 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         return getRecipe().getMakingTime() * DEFAULT_TIMER;
     }
 
+    public static ArrayList<Long> getRecipeTimeArrayList() {
+        return recipeTimeArrayList;
+    }
+
 }

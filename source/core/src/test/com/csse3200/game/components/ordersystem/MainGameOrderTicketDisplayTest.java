@@ -96,16 +96,21 @@ class MainGameOrderTicketDisplayTest {
 		  MainGameOrderTicketDisplay.getStartTimeArrayList(), "Start time should be set");
 	}
 
+	/**
+	 * test addActors() creates table
+	 */
 	@Test
 	public void testAddActorsAddsUIComponents() {
 		orderTicketDisplay.addActors();
 		verify(stage).addActor(any(Table.class));
 	}
 
+	/**
+	 * test addActors() timer label
+	 */
 	@Test
 	void testAddActors() {
 		orderTicketDisplay.addActors();
-
 		verify(stage).addActor(any(Table.class));
 
 		assertEquals(1, MainGameOrderTicketDisplay.getTableArrayList().size());
@@ -146,7 +151,9 @@ class MainGameOrderTicketDisplayTest {
 
 	}
 
-
+	/**
+	 * tests countdown decreases correctly
+	 */
 	@Test
 	public void testUpdateCountdownDecreasesCorrectly() {
 		orderTicketDisplay.create();
@@ -168,7 +175,9 @@ class MainGameOrderTicketDisplayTest {
 		verify(stage).dispose();
 	}
 
-
+	/**
+	 * test stage disposes
+	 */
 	@Test
 	void testStageDispose() {
 		orderTicketDisplay.addActors();
@@ -197,6 +206,9 @@ class MainGameOrderTicketDisplayTest {
 		assertTrue(hasChildrenBeforeDispose, "Table should have had children before dispose.");
 	}
 
+	/**
+	 * test stage sets
+	 */
 	@Test
 	void testSetStage() {
 		orderTicketDisplay.setStage(stage);

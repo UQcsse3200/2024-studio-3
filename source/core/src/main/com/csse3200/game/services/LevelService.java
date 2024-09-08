@@ -9,7 +9,7 @@ import java.util.logging.Level;
 
 /**Allows for global access and control of the game levels*/
 public class LevelService {
-    private final EventHandler levelEventHandler;
+    private EventHandler levelEventHandler;
     private int currLevel;
 
     /**
@@ -19,7 +19,8 @@ public class LevelService {
         levelEventHandler = new EventHandler();
         currLevel = 1;
         levelEventHandler.addListener("startLevel", this::levelControl);
-        levelEventHandler.addListener("createCustomer", ForestGameArea::spawnCustomer);
+//        levelEventHandler.addListener("createCustomer", ForestGameArea::spawnCustomer);
+        //ServiceLocator.getLevelService().getEvents().addListener("spawnCustomer", this::spawnCustomer);
     }
 
     /**
@@ -66,16 +67,45 @@ public class LevelService {
     public void levelControl(int level) {
         int spawnCap = 0;
         switch (level) {
+            case 0:
+                spawnCap = 1;
+                break;
             case 1:
-                spawnCap = 5;
+                spawnCap = 3;
                 break;
             case 2:
-                spawnCap = 7;
+                spawnCap = 4;
                 break;
             case 3:
+                spawnCap = 5;
+                break;
+            case 4:
+                spawnCap = 7;
+                break;
+            case 5:
+                spawnCap = 9;
+                break;
+            case 6:
+                spawnCap = 11;
+                break;
+            case 7:
                 spawnCap = 8;
+                break;
+            case 8:
+                spawnCap = 12;
+                break;
+            case 9:
+                spawnCap = 15;
+                break;
+            case 10:
+                spawnCap = 17;
                 break;
         }
         levelEventHandler.trigger("startSpawning", spawnCap);
+        incrementLevel();
+    }
+
+    public void resetEventHandler() {
+        levelEventHandler = new EventHandler();
     }
 }
