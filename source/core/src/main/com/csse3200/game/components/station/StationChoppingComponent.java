@@ -11,7 +11,7 @@ import com.csse3200.game.components.Component;
  */
 public class StationChoppingComponent extends Component {
 
-    private StationItemHandlerComponent itemHandler;
+    protected StationItemHandlerComponent itemHandler;
 
     @Override
     public void create() {

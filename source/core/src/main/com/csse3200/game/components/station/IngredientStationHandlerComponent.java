@@ -12,8 +12,8 @@ public class IngredientStationHandlerComponent extends Component {
      * StationInventoryComponent inventorycomponent - instance of inventory for this station
      * TBD acceptableItems - HashMap, HashSet etc of mappings for acceptable items based on station
      */
-    private final String type;
-    private InventoryComponent inventoryComponent;
+    protected final String type;
+    protected InventoryComponent inventoryComponent;
 
     // General TODO:
     // Add trigger calls to external for failed interactions
@@ -71,6 +71,11 @@ public class IngredientStationHandlerComponent extends Component {
         ItemComponent item = this.inventoryComponent.getItemFirst();
         playerInventoryComponent.addItemAt(item,0);
         this.inventoryComponent.removeAt(0);
+
+        // TODO: create a new entity instead of the item component and then get the item
+        // component from the entity and then put that in the inventory
+
+
         this.inventoryComponent.addItemAt(new ItemComponent("Apples", ItemType.APPLE, 1), 0);
         inventoryDisplay.update();
         entity.getEvents().trigger("interactionEnd");

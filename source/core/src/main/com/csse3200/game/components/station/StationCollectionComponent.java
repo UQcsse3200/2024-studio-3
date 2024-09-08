@@ -14,7 +14,7 @@ import com.csse3200.game.entities.factories.ItemFactory;
 public class StationCollectionComponent extends Component {
 
     // Item handler here to check that the item asked for is valid
-    private StationItemHandlerComponent itemHandler;
+    protected StationItemHandlerComponent itemHandler;
 
     /**
      *  On creation get the item handler component

@@ -21,7 +21,7 @@ public class StationServingComponent extends Component {
 
     // itemHandler allows acess for serving component to see the inventory of
     // the station.
-    private StationItemHandlerComponent itemHandler;
+    protected StationItemHandlerComponent itemHandler;
 
     /**
      * On creation a listener for Submit Meal will be added to the station.

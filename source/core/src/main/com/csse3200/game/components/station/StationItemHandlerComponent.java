@@ -14,9 +14,9 @@ public class StationItemHandlerComponent extends Component {
      * StationInventoryComponent inventorycomponent - instance of inventory for this station
      * TBD acceptableItems - HashMap, HashSet etc of mappings for acceptable items based on station
      */
-    private final String type;
-    private InventoryComponent inventoryComponent;
-    private final ArrayList<ItemComponent> acceptableItems;
+    protected final String type;
+    protected InventoryComponent inventoryComponent;
+    protected final ArrayList<ItemComponent> acceptableItems;
 
     // General TODO:
     // Add trigger calls to external for failed interactions
