@@ -108,6 +108,7 @@ public class NPCFactory {
         System.out.println(config.name);
         System.out.println(config.type);
         System.out.println(config.countDown);
+//        System.out.println(config.Customer_id);
 
         AnimationRenderComponent animator =
                 new AnimationRenderComponent(
@@ -124,9 +125,18 @@ public class NPCFactory {
         return customer;
     }
 
-    public static Entity createCustomer(Vector2 targetPosition) {
+    public static Entity createBasicCustomer(String name, Vector2 targetPosition) {
+
         Entity customer = createBaseCustomer(targetPosition);
-        GhostKingConfig config = configs.ghostKing;
+
+        BaseCustomerConfig config = switch (name) {
+            case "Basic Chicken" -> personalCustomerConfig.Basic_Sheep;
+            case "Basic Sheep" -> personalCustomerConfig.Basic_Chicken;
+            default -> personalCustomerConfig.Basic_Default;
+        };
+
+        System.out.println(config.type);
+//        System.out.println(config.Customer_id);
 
         AnimationRenderComponent animator =
                 new AnimationRenderComponent(
@@ -136,7 +146,6 @@ public class NPCFactory {
         animator.addAnimation("angry_float", 0.3f, Animation.PlayMode.LOOP);
 
         customer
-                .addComponent(new CombatStatsComponent(config.health, config.baseAttack))
                 .addComponent(animator)
                 .addComponent(new GhostAnimationController());
 

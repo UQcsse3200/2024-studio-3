@@ -1,6 +1,5 @@
 package com.csse3200.game.areas;
 
-import com.csse3200.game.components.npc.CustomerComponent;
 import com.csse3200.game.entities.benches.Bench;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,10 +18,8 @@ import com.csse3200.game.entities.factories.ItemFactory;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.utils.math.GridPoint2Utils;
-import com.csse3200.game.utils.math.RandomUtils;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /** Forest area for the demo game with trees, a player, and some enemies. */
@@ -104,7 +101,9 @@ public class ForestGameArea extends GameArea {
     LEWIS,
     SILVER,
     JOHN,
-    MOONKI
+    MOONKI,
+    BASIC_CHICKEN,
+    BASIC_SHEEP
   }
 
   /**
@@ -136,7 +135,8 @@ public class ForestGameArea extends GameArea {
     spawnStrawberry("chopped");
    spawnLettuce("chopped");
     Entity customerSpawnController = spawnCustomerController();
-    customerSpawnController.getEvents().trigger(personalCustomerEnums.LEWIS.name());
+    customerSpawnController.getEvents().trigger(personalCustomerEnums.HANK.name());
+    //customerSpawnController.getEvents().trigger(personalCustomerEnums.BASIC_CHICKEN.name());
 
     // Spawn the player
     player = spawnPlayer();
@@ -459,36 +459,45 @@ public class ForestGameArea extends GameArea {
     spawnController.getEvents().addListener(personalCustomerEnums.SILVER.name(), this::spawnSilver);
     spawnController.getEvents().addListener(personalCustomerEnums.JOHN.name(), this::spawnJohn);
     spawnController.getEvents().addListener(personalCustomerEnums.MOONKI.name(), this::spawnMoonki);
+    spawnController.getEvents().addListener(personalCustomerEnums.BASIC_SHEEP.name(), this::spawnBaseSheep);
+    spawnController.getEvents().addListener(personalCustomerEnums.BASIC_CHICKEN.name(), this::spawnBaseChicken);
     return spawnController;
   }
-  private void spawnCustomer() {
-    GridPoint2 position = new GridPoint2(1, 5);
-    Vector2 targetPos = new Vector2(3, 5);
-    Entity customer = NPCFactory.createCustomer(targetPos);
-    spawnEntityAt(customer, position, true, true);
-  }
 
-  private void spawnCustomerPersonal(String name) {
+  private void spawnCustomer(String name) {
         GridPoint2 position = new GridPoint2(1, 5);
         Vector2 targetPos = new Vector2(3, 5);
         Entity customer = NPCFactory.createCustomerPersonal(name, targetPos);
         spawnEntityAt(customer, position, true, true);
   }
 
+  private void spawnBasicCustomer(String name) {
+    GridPoint2 position = new GridPoint2(1, 5);
+    Vector2 targetPos = new Vector2(3, 5);
+    Entity customer = NPCFactory.createBasicCustomer(name, targetPos);
+    spawnEntityAt(customer, position, true, true);
+  }
+
   private void spawnHank() {
-    spawnCustomerPersonal("Hank");
+    spawnCustomer("Hank");
   }
   private void spawnLewis() {
-    spawnCustomerPersonal("Lewis");
+    spawnCustomer("Lewis");
   }
   private void spawnSilver() {
-    spawnCustomerPersonal("Silver");
+    spawnCustomer("Silver");
   }
   private void spawnJohn() {
-    spawnCustomerPersonal("John");
+    spawnCustomer("John");
   }
   private void spawnMoonki() {
-    spawnCustomerPersonal("Moonki");
+    spawnCustomer("Moonki");
+  }
+  private void spawnBaseChicken() {
+    spawnBasicCustomer("Basic Chicken");
+  }
+  private void spawnBaseSheep() {
+    spawnBasicCustomer("Basic Sheep");
   }
 
 

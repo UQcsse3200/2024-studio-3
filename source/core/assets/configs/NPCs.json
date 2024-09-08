@@ -49,7 +49,7 @@
     "texture": "images/animal_images/goat.png"
   },
   "Moonki": {
-    "name": "Moonki>",
+    "name": "Moonki",
     "type": "Monkey",
     "countDown": 40,
     "patience": 100,
@@ -67,6 +67,31 @@
     "spawnTimer": 999,
     "preference": 999,
     "reputation": 999,
+    "texture": "error error"
+  },
+  "Basic_Sheep": {
+    "type": "Sheep",
+    "countDown": 40,
+    "patience": 100,
+    "spawnTimer": 100,
+    "preference": "bananaSplit",
+    "texture": "images/animal_images/monkey.png"
+  },
+  "Basic_Chicken": {
+    "type": "Chicken",
+    "countDown": 40,
+    "patience": 100,
+    "spawnTimer": 100,
+    "preference": "bananaSplit",
+    "reputation": 100,
+    "texture": "images/animal_images/monkey.png"
+  },
+  "Basic_Default": {
+    "type": "error",
+    "countDown": 999,
+    "patience": 999,
+    "spawnTimer": 999,
+    "preference": 999,
     "texture": "error error"
   }
 }
