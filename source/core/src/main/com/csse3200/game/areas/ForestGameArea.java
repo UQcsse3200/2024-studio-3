@@ -145,11 +145,8 @@ public class ForestGameArea extends GameArea {
     spawnCustomer();
 
     //spawnplates
-    spawnPlate(5); //testplate spawn
-    spawnPlatewithItem();
+    //spawnPlate(5); //testplate spawn
     //spawnPlatewithItem();
-    //spawnPlateBench(new GridPoint2(4, 4));
-    //spawnPlates(3);
 
     // Spawn the player
     player = spawnPlayer();

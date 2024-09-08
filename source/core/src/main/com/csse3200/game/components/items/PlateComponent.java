@@ -46,6 +46,7 @@ public class PlateComponent extends Component {
         if (state == PlateState.CLEAN && itemOnPlate == null) {
             itemOnPlate = meal;
             isAvailable = false;
+            isServable = true;
             logger.info("Item '{}' on plate.", meal);
             return;
         }
@@ -84,7 +85,7 @@ public class PlateComponent extends Component {
     }
 
     public void pickup(Entity player) {
-        if (quantity > 1) {
+        if (quantity >= 1) {
             quantity--;
             logger.info("Plate picked up. Remaining: {}", quantity);
             PlateFactory.disposePlate(entity, quantity);

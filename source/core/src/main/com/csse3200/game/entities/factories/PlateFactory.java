@@ -1,11 +1,8 @@
 package com.csse3200.game.entities.factories;
 
-import com.badlogic.gdx.physics.box2d.Body;
-import com.csse3200.game.components.Component;
 import com.csse3200.game.components.TooltipsDisplay;
 import com.csse3200.game.components.items.PlateComponent;
 import com.csse3200.game.entities.Entity;
-import com.badlogic.gdx.physics.box2d.Fixture;
 import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.PhysicsUtils;
 import com.csse3200.game.physics.components.ColliderComponent;
@@ -13,18 +10,11 @@ import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.components.InteractionComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.rendering.TextureRenderComponent;
-import com.csse3200.game.areas.*;
-import com.csse3200.game.entities.factories.*;
-import com.csse3200.game.services.ServiceLocator;
+
 
 public class PlateFactory {
 
-    /**
-     * Create a template plate entity with common components.
-     *
-     * @return A basic plate entity.
-     */
-    private static Entity createTemplatePlate() {
+    public static Entity createTemplatePlate() {
         return new Entity()
                 .addComponent(new PhysicsComponent())
                 .addComponent(new ColliderComponent())
@@ -72,7 +62,6 @@ public class PlateFactory {
             System.out.println("rerendered");
             String newTexturePath = "images/platecomponent/stackedplates/" + quantity + "plates.png";
             TextureRenderComponent textureRenderComponent = plate.getComponent(TextureRenderComponent.class);
-            //textureRenderComponent.setTexture(null);
             textureRenderComponent.setTexture(newTexturePath);
         }
     }
@@ -80,9 +69,6 @@ public class PlateFactory {
     public static Entity spawnMealOnPlate(String mealType) {
 
         String mealTexturePath = getMealTexturePath(mealType);
-        if (mealTexturePath == null) {
-            //no meal
-        }
 
         Entity plate = createTemplatePlate()
                 .addComponent(new PlateComponent(1))
@@ -106,6 +92,5 @@ public class PlateFactory {
             default -> null;
         };
     }
-
 
 }
