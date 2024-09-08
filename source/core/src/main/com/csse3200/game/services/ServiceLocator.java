@@ -108,7 +108,7 @@ public class ServiceLocator {
    * @param service PlayerService
    */
   public static void registerPlayerService(PlayerService service) {
-    if (docketService != null) {
+    if (playerService != null) {
       logger.warn("Player service is being overwritten!");
     }
     logger.debug("Registering player service {}", service);

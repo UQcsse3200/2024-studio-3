@@ -6,12 +6,13 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.csse3200.game.components.player.PlayerStatsDisplay;
+import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.events.EventHandler;
 import com.csse3200.game.extensions.GameExtension;
 import com.csse3200.game.rendering.RenderService;
 import com.csse3200.game.services.DocketService;
+import com.csse3200.game.services.PlayerService;
 import com.csse3200.game.services.ServiceLocator;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
@@ -38,19 +39,24 @@ class MainGameOrderTicketDisplayTest {
 	@Mock Stage stage;
 	@Mock Viewport viewport;
 	@Mock DocketService docketService;
+	@Mock PlayerService playerService;
 	@Mock EventHandler eventHandler;
+	@Mock EventHandler eventHandler2;
 	MainGameOrderTicketDisplay orderTicketDisplay;
+	@Mock InventoryComponent inventoryComponent;
 	private static final Logger logger = LoggerFactory.getLogger(MainGameOrderTicketDisplayTest.class);
 
 	@BeforeEach
 	void setUp() {
 		ServiceLocator.registerRenderService(renderService);
 		ServiceLocator.registerDocketService(docketService);
+		ServiceLocator.registerPlayerService(playerService);
 
 		when(ServiceLocator.getRenderService().getStage()).thenReturn(stage);
 		when(ServiceLocator.getRenderService().getStage().getViewport()).thenReturn(viewport);
 		lenient().when(ServiceLocator.getRenderService().getStage().getViewport().getCamera()).thenReturn(camera);
 		when(ServiceLocator.getDocketService().getEvents()).thenReturn(eventHandler);
+		when(ServiceLocator.getPlayerService().getEvents()).thenReturn(eventHandler2);
 
 		orderTicketDisplay = new MainGameOrderTicketDisplay();
 //        String[] recipeNames = {"acaiBowl", "salad", "fruitSalad", "steakMeal", "bananaSplit"};
@@ -150,10 +156,12 @@ class MainGameOrderTicketDisplayTest {
 		verify(stage).dispose();
 	}
 
+
 	@Test
 	void testStageDispose() {
 		orderTicketDisplay.addActors();
-//		PlayerStatsDisplay.updatePlayerGoldUI(0);
+		inventoryComponent = mock(InventoryComponent.class);
+		orderTicketDisplay.inventoryComponent = inventoryComponent;
 
 		Assertions.assertNotNull(MainGameOrderTicketDisplay.getTableArrayList(), "Table ArrayList should not be null");
 		assertFalse(MainGameOrderTicketDisplay.getTableArrayList().isEmpty(), "Table ArrayList should not be empty");
@@ -176,7 +184,6 @@ class MainGameOrderTicketDisplayTest {
 		assertTrue(table.getChildren().isEmpty(), "Table should be cleared of children.");
 		assertTrue(hasChildrenBeforeDispose, "Table should have had children before dispose.");
 	}
-
 
 	@Test
 	void testSetStage() {

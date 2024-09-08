@@ -41,7 +41,7 @@ public class MainGameOrderTicketDisplay extends UIComponent {
     private static final long DEFAULT_TIMER = 10000;
     private static int recipeValue;
     private Recipe recipe;
-    private InventoryComponent inventoryComponent;
+    public InventoryComponent inventoryComponent;
 
     /**
      * Constructs an MainGameOrderTicketDisplay instance
