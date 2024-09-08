@@ -90,7 +90,6 @@ public class MainGameScreen extends ScreenAdapter {
 		ServiceLocator.getLevelService().getEvents().trigger("startLevel", 1);
 	}
 
-
 	@Override
 	public void render(float delta) {
 		if (!isPaused) {

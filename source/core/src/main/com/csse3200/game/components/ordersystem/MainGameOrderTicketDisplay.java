@@ -85,7 +85,6 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         entity.getEvents().addListener("createOrder", this::addActors);
         ServiceLocator.getDocketService().getEvents().addListener("shiftDocketsLeft", this::shiftDocketsLeft);
         ServiceLocator.getDocketService().getEvents().addListener("shiftDocketsRight", this::shiftDocketsRight);
-
     }
 
     /**
@@ -204,10 +203,18 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         inventoryComponent.addGold(getRecipeValue());
     }
 
-    public void setRecipeValue(int index) {
-        recipeValue = index;
+    /**
+     * Sets the recipe value
+     * @param value the price of the recipe
+     */
+    public void setRecipeValue(int value) {
+        recipeValue = value;
     }
 
+    /**
+     * Gets the recipe value
+     * @return the recipe price
+     */
     public static int getRecipeValue() {
         return recipeValue;
     }
@@ -403,18 +410,34 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         return tableArrayList;
     }
 
+    /**
+     * Gets the times that the recipes were created
+     * @return the start time array list
+     */
     public static ArrayList<Long> getStartTimeArrayList() {
         return startTimeArrayList;
     }
 
+    /**
+     * Gets the recipes' timer count down labels
+     * @return the countdown label array list
+     */
     public static ArrayList<Label> getCountdownLabelArrayList() {
         return countdownLabelArrayList;
     }
 
+    /**
+     * Gets the Docket's background displays
+     * @return the background array list
+     */
     public static ArrayList<Docket> getBackgroundArrayList() {
         return backgroundArrayList;
     }
 
+    /**
+     * Gets the making time of the recipe multiplied by the default timer
+     * @return the recipe timer
+     */
     public long getTimer() {
         return getRecipe().getMakingTime() * DEFAULT_TIMER;
     }
