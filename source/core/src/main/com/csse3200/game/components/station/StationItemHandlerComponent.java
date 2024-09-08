@@ -3,6 +3,8 @@ package com.csse3200.game.components.station;
 import java.util.ArrayList;
 
 import com.csse3200.game.components.Component;
+import com.csse3200.game.components.items.IngredientComponent;
+import com.csse3200.game.components.items.CookIngredientComponent;
 import com.csse3200.game.components.items.ItemComponent;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.entities.Entity;
@@ -125,6 +127,76 @@ public class StationItemHandlerComponent extends Component {
     }
 
     /**
+     * Function to assist in updating the item to a new state
+     * @param stop should the item be stopped from cooking 1 if yes, 0 otherwise
+     */
+    private void updateItem(int stop) {
+        // Get the item in the inventory
+        ItemComponent item = inventoryComponent.getItemFirst();
+
+        // Attempt to cook the ingredient if it is cookable
+        if (this.type == "oven" || this.type == "stove") {
+            boolean isCookable = false;
+
+            if (item.getEntity().getComponent(IngredientComponent.class) == null) {
+                return;
+            }
+
+            // Get if the item is cookable
+            isCookable = item.getEntity().getComponent(IngredientComponent.class).getIsCookable();
+
+            if (isCookable) {
+                // TODO: Might not be able to properly cook item until timers are here but this works for now
+                //item.getEntity().getComponent(IngredientComponent.class).cookItem();
+                //item.getEntity().getComponent(CookIngredientComponent.class).cookIngredient("HOT", 1);
+                //entity.getComponent(StationCookingComponent.class).cookIngredient();
+                if (stop == 0) {
+                    entity.getEvents().trigger("Cook Ingredient");
+                } else {
+                    entity.getEvents().trigger("Stop Cooking Ingredient");
+                }
+                
+            }
+        } else if (this.type == "cutting board" || this.type == "blender") {
+            boolean isChoppable = false;
+
+            if (item.getEntity().getComponent(IngredientComponent.class) == null) {
+                return;
+            }
+
+            // Get if the item is choppable
+            isChoppable = item.getEntity().getComponent(IngredientComponent.class).getIsChoppable();
+
+            if (isChoppable) {
+                if (stop == 0) {
+                    entity.getEvents().trigger("Chop Ingredient");
+                } else {
+                    entity.getEvents().trigger("Stop Chopping Ingredient");
+                }
+            }
+        }
+
+        // FOR DEBUGGING
+        // Get the item info to display
+        /*IngredientComponent itemInfo = item.getEntity().getComponent(IngredientComponent.class);
+        String name = itemInfo.getItemName();
+        boolean isCookable = itemInfo.getIsCookable();
+        boolean isChoppable = itemInfo.getIsChoppable();
+        String itemState = itemInfo.getItemState();
+        boolean isCooking = false;
+
+        if (isCookable) {
+            CookIngredientComponent c = item.getEntity().getComponent(CookIngredientComponent.class);
+            isCooking = c.getIsCooking();
+        }
+
+        String formatString = String
+        .format("ItemInfo: %s\ncookable %b\nchoppable %b\nCooking %b\nstate %s", name, isCookable, isChoppable, isCooking, itemState);
+        entity.getEvents().trigger("showTooltip", formatString);*/
+    }
+
+
+    /**
          Takes the item from the player and stores in station
          @param playerInventoryComponent reference to player inventory
          @param inventoryDisplay reference to UI for inventory display
@@ -134,31 +206,12 @@ public class StationItemHandlerComponent extends Component {
         // 0 by default, same position as getItemFirst()
         playerInventoryComponent.removeAt(0);
         inventoryDisplay.update();
-        //entity.getEvents().trigger("showTooltip", "You gave something to the station!");
+        
         // Need timers and animation start here, for Animations and Timer task ticket
-
-
-        // These are all placeholders and don't currently go anywhere
-
-        // Hi, from Team 2, as mentioned in the studio
-        // We made the trigger for start cooking/chopping depending on the station
-        // Note: We didn't request a member variable for stationState since not all
-        //      stations would have a state of "HOT". It doesn't make sense in the context
-        //      of a cutting board.
-        //String stationState = "HOT";
-        //switch (type) {
-        //    case "COOK_TOP" -> {
-        //        entity.getEvents().trigger("cookIngredient", "NORMAL", 1);
-        //    }
-        //    case "OVEN" -> {
-        //        entity.getEvents().trigger("cookIngredient", stationState, 5);
-        //    }
-        //    case "CUTTING_BOARD" ->
-        //        entity.getEvents().trigger("chopIngredient");
-        //}
-
+        this.updateItem(0);
+        
         // TODO: make  a serving station component
-}
+    }
 
     /**
         Takes the item from the station, and returns the old item
@@ -173,11 +226,16 @@ public class StationItemHandlerComponent extends Component {
         //    entity.getEvents().trigger("stopChoppingIngredient");
         //}
 //        entity.getEvents().trigger("showTooltip", "You took something from the station!");
+
+        // Stop the cooking process on the item
+        this.updateItem(1);
+
         ItemComponent item = inventoryComponent.getItemFirst();
         playerInventoryComponent.addItemAt(item,0);
         inventoryDisplay.update();
         // Remove single item in station
         this.inventoryComponent.removeAt(0);
+
         entity.getEvents().trigger("interactionEnd");
     }
 

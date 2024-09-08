@@ -45,6 +45,12 @@ public class IngredientStationHandlerComponent extends Component {
         entity.getEvents().addListener("Station Interaction", this::handleInteraction);
         this.inventoryComponent = entity.getComponent(InventoryComponent.class);
         this.collectionComponent = entity.getComponent(StationCollectionComponent.class);
+
+        // Get a random ingredient for now
+        IngredientComponent itemComponent = getRandomIngredient();
+
+        ///this.inventoryComponent.addItemAt(new ItemComponent("Apples", ItemType.APPLE, 1), 0);
+        this.inventoryComponent.addItemAt(itemComponent, 0);
     }
 
     /**

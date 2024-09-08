@@ -10,6 +10,7 @@ import com.csse3200.game.components.items.ItemType;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.components.station.IngredientStationHandlerComponent;
 import com.csse3200.game.components.station.StationCollectionComponent;
+import com.csse3200.game.components.station.StationCookingComponent;
 import com.csse3200.game.components.station.StationItemHandlerComponent;
 import com.csse3200.game.components.station.StationServingComponent;
 import com.csse3200.game.entities.Entity;
@@ -31,9 +32,10 @@ public class StationFactory {
         .addComponent(new PhysicsComponent())
         .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
         .addComponent(new InteractionComponent(PhysicsLayer.INTERACTABLE))
-            .addComponent(new TooltipsDisplay())
+        .addComponent(new TooltipsDisplay())
+        .addComponent(new StationCookingComponent())
         .addComponent(new StationItemHandlerComponent("oven", new ArrayList<>()))
-            .addComponent(new InventoryComponent(1));
+        .addComponent(new InventoryComponent(1));
 
     oven.getComponent(InteractionComponent.class).setAsBox(oven.getScale());
 
@@ -60,8 +62,9 @@ public class StationFactory {
         .addComponent(new PhysicsComponent())
         .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
         .addComponent(new InteractionComponent(PhysicsLayer.INTERACTABLE))
-            .addComponent(new TooltipsDisplay())
-            .addComponent(new InventoryComponent(1))
+        .addComponent(new TooltipsDisplay())
+        .addComponent(new InventoryComponent(1))
+        .addComponent(new StationCookingComponent())  
         .addComponent(new StationItemHandlerComponent("stove", new ArrayList<>()));
 
     stove.getComponent(InteractionComponent.class).setAsBox(stove.getScale());
@@ -92,7 +95,7 @@ public class StationFactory {
             .addComponent(new InventoryComponent(1))
             .addComponent(new IngredientStationHandlerComponent("apples"));
 
-    apple.getComponent(InventoryComponent.class).addItem(new ItemComponent("Apples", ItemType.APPLE, 1));
+    //apple.getComponent(InventoryComponent.class).addItem(new ItemComponent("Apples", ItemType.APPLE, 1));
 
     // Physics components
     apple.getComponent(InteractionComponent.class).setAsBox(apple.getScale());

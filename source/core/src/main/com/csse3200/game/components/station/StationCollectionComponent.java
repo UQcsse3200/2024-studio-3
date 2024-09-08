@@ -3,6 +3,7 @@ package com.csse3200.game.components.station;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.factories.ItemFactory;
+import com.csse3200.game.services.ServiceLocator;
 
 /**
  * StationCollectionComponent.java
@@ -30,7 +31,8 @@ public class StationCollectionComponent extends Component {
      * @return true if the item can be collected, false otherwise
      */
     public boolean canCollectItem(String itemType) {
-        return this.itemHandler.isItemAccepted(itemType);
+        return true;
+        //return this.itemHandler.isItemAccepted(itemType);
     }
 
     /**
@@ -44,7 +46,9 @@ public class StationCollectionComponent extends Component {
             return null;
         }*/
 
-        return ItemFactory.createBaseItem(itemType);
+        Entity newItem = ItemFactory.createBaseItem(itemType);
+        ServiceLocator.getEntityService().register(newItem); // Register so it can update !IMPORTANT!
+        return newItem;
     }
     
 }
