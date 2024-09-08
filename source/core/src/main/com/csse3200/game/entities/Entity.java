@@ -246,6 +246,7 @@ public class Entity {
     if (!enabled) {
       return;
     }
+    getEvents().update();
     for (Component component : createdComponents) {
       component.triggerUpdate();
     }
