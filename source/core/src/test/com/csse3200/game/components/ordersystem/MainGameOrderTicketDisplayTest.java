@@ -31,6 +31,9 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+/**
+ * Unit tests for the MainGameOrderTicketDisplay class.
+ */
 @ExtendWith(GameExtension.class)
 @ExtendWith(MockitoExtension.class)
 class MainGameOrderTicketDisplayTest {
@@ -46,6 +49,9 @@ class MainGameOrderTicketDisplayTest {
 	@Mock InventoryComponent inventoryComponent;
 	private static final Logger logger = LoggerFactory.getLogger(MainGameOrderTicketDisplayTest.class);
 
+	/**
+	 * Sets up the environment before each test by initializing services and MainGameOrderTicketDisplay instance
+	 */
 	@BeforeEach
 	void setUp() {
 		ServiceLocator.registerRenderService(renderService);
@@ -67,11 +73,17 @@ class MainGameOrderTicketDisplayTest {
 		orderTicketDisplay.create();
 	}
 
+	/**
+	 * Cleans up after each test by clearing the table array list.
+	 */
 	@AfterEach
 	void tearDown() {
 		MainGameOrderTicketDisplay.getTableArrayList().clear();
 	}
 
+	/**
+	 * Tests that create() are initializes UI components correctly
+	 */
 	@Test
 	public void testCreateInitializesComponents() {
 		orderTicketDisplay.create();
