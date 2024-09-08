@@ -139,7 +139,7 @@ public class ForestGameArea extends GameArea {
     // Spawn the player
     player = spawnPlayer();
     //ServiceLocator.getEntityService().getEvents().trigger("SetText", "Boss: Rent is due");
-    triggerFiredEnd();
+    triggerFiredEnd();    // Trigger the fired (bad) ending
 
     playMusic();
   }
@@ -587,7 +587,7 @@ public class ForestGameArea extends GameArea {
       try {
         Thread.sleep(10000);
         spawnBoss();
-        createTextBox("Test");
+        createTextBox("You *oink* two-legged moron! You're ruining my business' *oink* reputation!. Get out!");
 
       } catch (InterruptedException e) {
         Thread.currentThread().interrupt();
