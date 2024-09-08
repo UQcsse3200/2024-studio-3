@@ -1,7 +1,6 @@
 package com.csse3200.game.components.station;
 
 import com.csse3200.game.components.Component;
-import com.csse3200.game.components.items.ItemComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.factories.ItemFactory;
 
@@ -30,7 +29,7 @@ public class StationCollectionComponent extends Component {
      * @param itemType the type of item intended to be collected
      * @return true if the item can be collected, false otherwise
      */
-    public boolean canCollectItem(ItemComponent itemType) {
+    public boolean canCollectItem(String itemType) {
         return this.itemHandler.isItemAccepted(itemType);
     }
 
@@ -40,12 +39,12 @@ public class StationCollectionComponent extends Component {
      * @param itemType the type of item to be collected
      * @return the item if sucessful, null otherwise.
      */
-    public Entity collectItem(ItemComponent itemType) {
+    public Entity collectItem(String itemType) {
         if (!this.canCollectItem(itemType)) {
             return null;
         }
 
-        return ItemFactory.createBaseItem(itemType.getItemName());
+        return ItemFactory.createBaseItem(itemType);
     }
     
 }

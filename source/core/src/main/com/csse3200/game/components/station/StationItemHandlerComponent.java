@@ -67,6 +67,15 @@ public class StationItemHandlerComponent extends Component {
     }
 
     /**
+     * Checks if the item can be accepted into the station
+     * @param item to check acceptance for
+     * @return true if it can be acceptedd, false otherwise.
+     */
+    public boolean isItemAccepted(String item) {
+        return this.acceptableItems.contains(item);
+    }
+
+    /**
      * Handles any interaction with station, using current state of player and station
      * inventory to determine intended interaction
      * @param playerInventoryComponent reference to player inventory component
