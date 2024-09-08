@@ -53,6 +53,7 @@ public class StationInventoryComponentTest {
     @Test
     void shouldCheckItemPresentTest() {
         inventoryComponent.addItem("meat");
+        //testEntity.getEvents().trigger("give station item", "acai");
         assertTrue(inventoryComponent.isItemPresent());
     }
 

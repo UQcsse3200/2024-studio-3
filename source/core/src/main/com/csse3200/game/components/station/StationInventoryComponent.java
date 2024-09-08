@@ -38,9 +38,7 @@ public class StationInventoryComponent extends Component {
      * predefined configuration.
      */
     public StationInventoryComponent() {
-        this.item = new ArrayList<>(SIZE);
-        this.item.add(Optional.empty());
-        this.item.add(Optional.empty());
+        this.item = new ArrayList<>(0);
     }
 
     /**
@@ -49,7 +47,6 @@ public class StationInventoryComponent extends Component {
     @Override
     public void create() {
         timeSource = ServiceLocator.getTimeSource();
-        entity.getEvents().addListener("give station item", this::checkRecipe);
         entity.getEvents().addListener("take item", this::removeItem);
     }
 
@@ -90,7 +87,10 @@ public class StationInventoryComponent extends Component {
      * @return true is there is an item, otherwise false
      */
     public boolean isItemPresent() {
-        return item.getFirst().isPresent();
+        if (item.size() > 0) {
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -100,6 +100,7 @@ public class StationInventoryComponent extends Component {
      * @return true if the item has been accepted, false otherwise.
      */
     public boolean addItem(String newItem) {
+        if (this.item.size() >= SIZE) return false;
         this.item.add(Optional.of(newItem));
         return true;
     }
@@ -110,7 +111,7 @@ public class StationInventoryComponent extends Component {
      */
     public Optional<String> getCurrentItem() {
         if (this.isItemPresent()) {
-            return item.getFirst();
+            return item.get(0);
         }
         return Optional.empty();
     }
