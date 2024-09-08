@@ -29,7 +29,7 @@ public class ServiceLocator {
   //Me new stuff :)
 
   private static DocketService docketService;
-  private static DayCycleService dayCycleService;
+//  private static DayCycleService dayCycleService;
 
   public static EntityService getEntityService() {
     return entityService;
@@ -59,9 +59,9 @@ public class ServiceLocator {
     return docketService;
   }
 
-  public static DayCycleService getDayCycleService() {
+  /*public static DayCycleService getDayCycleService() {
     return dayCycleService;
-  }
+  }*/
 
   public static void registerEntityService(EntityService service) {
     logger.debug("Registering entity service {}", service);
@@ -76,13 +76,13 @@ public class ServiceLocator {
     docketService = service;
   }
 
-  public static void registerDayCycleService(DayCycleService service) {
+  /*public static void registerDayCycleService(DayCycleService service) {
     if (dayCycleService != null) {
       logger.warn("Day cycle service is being overwritten!");
     }
     logger.debug("Registering day cycle service {}", service);
     dayCycleService = service;
-  }
+  }*/
 
   public static void registerRenderService(RenderService service) {
     logger.debug("Registering render service {}", service);
