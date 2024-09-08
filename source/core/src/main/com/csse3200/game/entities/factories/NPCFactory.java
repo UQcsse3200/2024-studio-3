@@ -45,8 +45,8 @@ public class NPCFactory {
      * @param target entity to chase
      * @return entity
      */
-    public static Entity createGhost(Entity target, Vector2 targetPosition) {
-        Entity ghost = createBaseNPC(target, targetPosition);
+    public static Entity createGhost(Entity target, Vector2 targetPosition, String customerId) {
+        Entity ghost = createBaseNPC(target, targetPosition, customerId);
         BaseEntityConfig config = configs.ghost;
 
         AnimationRenderComponent animator =
@@ -72,8 +72,8 @@ public class NPCFactory {
      * @param targetPosition the target position on the screen where the ghost king should move
      * @return entity
      */
-    public static Entity createGhostKing(Entity target, Vector2 targetPosition) {
-        Entity ghostKing = createBaseNPC(target, targetPosition);
+    public static Entity createGhostKing(Entity target, Vector2 targetPosition, String customerId) {
+        Entity ghostKing = createBaseNPC(target, targetPosition, customerId);
         GhostKingConfig config = configs.ghostKing;
 
         AnimationRenderComponent animator =
@@ -92,8 +92,8 @@ public class NPCFactory {
         return ghostKing;
     }
 
-    public static Entity createCustomerPersonal(String name, Vector2 targetPosition) {
-        Entity customer = createBaseCustomer(targetPosition);
+    public static Entity createCustomerPersonal(String name, Vector2 targetPosition, String customerId) {
+        Entity customer = createBaseCustomer(targetPosition, customerId);
 
         CustomerPersonalityConfig config = switch (name) {
             case "Hank" -> personalCustomerConfig.Hank;
@@ -124,8 +124,8 @@ public class NPCFactory {
         return customer;
     }
 
-    public static Entity createCustomer(Vector2 targetPosition) {
-        Entity customer = createBaseCustomer(targetPosition);
+    public static Entity createCustomer(Vector2 targetPosition, String customerId) {
+        Entity customer = createBaseCustomer(targetPosition, customerId);
         GhostKingConfig config = configs.ghostKing;
 
         AnimationRenderComponent animator =
@@ -144,10 +144,10 @@ public class NPCFactory {
         return customer;
     }
 
-    public static Entity createBaseCustomer(Vector2 targetPosition) {
+    public static Entity createBaseCustomer(Vector2 targetPosition, String customerId) {
         AITaskComponent aiComponent =
                 new AITaskComponent()
-                        .addTask(new PathFollowTask(targetPosition));
+                        .addTask(new PathFollowTask(targetPosition, customerId));
         Entity npc =
                 new Entity()
                         .addComponent(new PhysicsComponent())
@@ -167,10 +167,10 @@ public class NPCFactory {
      *
      * @return entity
      */
-    private static Entity createBaseNPC(Entity target, Vector2 targetPosition) {
+    private static Entity createBaseNPC(Entity target, Vector2 targetPosition, String customerId) {
         AITaskComponent aiComponent =
                 new AITaskComponent()
-                        .addTask(new PathFollowTask(targetPosition));
+                        .addTask(new PathFollowTask(targetPosition, customerId));
 
         Entity npc =
                 new Entity()
@@ -185,7 +185,7 @@ public class NPCFactory {
         return npc;
     }
 
-    private NPCFactory() {
+    /*private NPCFactory() {
         throw new IllegalStateException("Instantiating static util class");
     }
     public static void createMultipleNPCs(Entity target) {
@@ -204,4 +204,6 @@ public class NPCFactory {
         // ServiceLocator.getGameWorld().addEntity(ghost2);
         // ServiceLocator.getGameWorld().addEntity(ghostKing);
     }
+    */
+
 }

@@ -466,14 +466,18 @@ public class ForestGameArea extends GameArea {
   private void spawnCustomer() {
     GridPoint2 position = new GridPoint2(1, 5);
     Vector2 targetPos = new Vector2(3, 5);
-    Entity customer = NPCFactory.createCustomer(targetPos);
+      String customerId = generateUniqueCustomerId();
+    Entity customer = NPCFactory.createCustomer(targetPos, customerId);
     spawnEntityAt(customer, position, true, true);
   }
-
+    private String generateUniqueCustomerId() {
+        return null;
+    }
   private void spawnCustomerPersonal(String name) {
         GridPoint2 position = new GridPoint2(1, 5);
         Vector2 targetPos = new Vector2(3, 5);
-        Entity customer = NPCFactory.createCustomerPersonal(name, targetPos);
+      String customerId = generateUniqueCustomerId();
+        Entity customer = NPCFactory.createCustomerPersonal(name, targetPos, customerId);
         spawnEntityAt(customer, position, true, true);
   }
 

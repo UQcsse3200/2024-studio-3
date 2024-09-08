@@ -18,17 +18,27 @@ public class PathFollowTask extends DefaultTask implements PriorityTask {
     private Vector2 currentTarget;
     private MovementTask movementTask;
     private Task currentTask;
+    private final String customerId;
 
     /**
      * Predefined coordinates where the NPC will move to when triggered.
      */
-    private Vector2 predefinedTargetPos = new Vector2(15f, 20f); // Example coordinates, change as needed
+    private Vector2 predefinedTargetPos = new Vector2(-1f, 1f); // Example coordinates, change as needed
+
+    /**
+     * Time in seconds to wait before moving to the predefined position.
+     */
+    private static final float WAIT_TIME = 15f; // 15 seconds
+    private float elapsedTime = 0f; // Time elapsed since the task started
+    private boolean hasMovedToPredefined = false; // Track if the movement to the predefined position has been triggered
 
     /**
      * @param targetPos The target position on the screen where the NPC should move.
+     * @param customerId The unique ID of the customer.
      */
-    public PathFollowTask(Vector2 targetPos) {
+    public PathFollowTask(Vector2 targetPos, String customerId) {
         this.targetPos = targetPos;
+        this.customerId = customerId;
     }
 
     @Override
@@ -39,6 +49,8 @@ public class PathFollowTask extends DefaultTask implements PriorityTask {
     @Override
     public void start() {
         super.start();
+        this.elapsedTime = 0f; // Reset elapsed time
+        this.hasMovedToPredefined = false; // Reset the movement flag
 
         // Start moving horizontally first
         Vector2 startPos = owner.getEntity().getPosition();
@@ -50,11 +62,29 @@ public class PathFollowTask extends DefaultTask implements PriorityTask {
         movementTask.start();
         currentTask = movementTask;
 
+        // Trigger event indicating the wander task has started
         this.owner.getEntity().getEvents().trigger("wanderStart");
+
+        // Add listener for early leave event
+        this.owner.getEntity().getEvents().addListener("leaveEarly", (String id) -> {
+            if (this.customerId.equals(id)) {
+                triggerMoveToPredefinedPosition(); // Trigger early leave
+                logger.debug("Customer {} is leaving early.", id);
+            }
+        });
     }
 
     @Override
     public void update() {
+        elapsedTime += getDeltaTime(); // Update elapsed time
+
+        // If no movement to predefined position has occurred and wait time is reached, trigger movement
+        if (!hasMovedToPredefined && elapsedTime >= WAIT_TIME) {
+            logger.debug("Wait time elapsed. Moving to predefined position.");
+            triggerMoveToPredefinedPosition();
+            hasMovedToPredefined = true; // Ensure this happens only once
+        }
+
         if (currentTask.getStatus() != Status.ACTIVE) {
             if (currentTarget.epsilonEquals(targetPos)) {
                 // Stop when the target position is reached
@@ -69,7 +99,7 @@ public class PathFollowTask extends DefaultTask implements PriorityTask {
     }
 
     private void startMoving() {
-        logger.debug("Starting moving to next step");
+        logger.debug("Starting to move to the next step");
         movementTask.setTarget(currentTarget);
         swapTask(movementTask);
     }
@@ -93,11 +123,9 @@ public class PathFollowTask extends DefaultTask implements PriorityTask {
     }
 
     /**
-     * Method to handle custom events for the NPC.
+     * Placeholder method for getting delta time. Replace with actual implementation.
      */
-    public void handleEvent(String event) {
-        if ("moveToPredefined".equals(event)) {
-            triggerMoveToPredefinedPosition();
-        }
+    private float getDeltaTime() {
+        return 1 / 60f; // Assuming 60 FPS, adjust as necessary
     }
 }
