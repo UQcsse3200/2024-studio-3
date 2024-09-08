@@ -2,6 +2,7 @@ package com.csse3200.game.areas;
 
 import com.badlogic.gdx.utils.Null;
 import com.csse3200.game.components.cutscenes.GoodEnd;
+import com.csse3200.game.components.maingame.TextDisplay;
 import com.csse3200.game.entities.benches.Bench;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,7 +14,9 @@ import com.csse3200.game.areas.terrain.TerrainFactory.TerrainType;
 import com.csse3200.game.components.gamearea.GameAreaDisplay;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.factories.NPCFactory;
+import com.csse3200.game.components.maingame.TextDisplay;
 import com.csse3200.game.entities.factories.ObstacleFactory;
+import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.entities.factories.PlayerFactory;
 import com.csse3200.game.entities.factories.StationFactory;
 import com.csse3200.game.entities.factories.ItemFactory;
@@ -110,6 +113,7 @@ public class ForestGameArea extends GameArea {
   public ForestGameArea(TerrainFactory terrainFactory) {
     super();
     this.terrainFactory = terrainFactory;
+    //this.textDisplay = textDisplay;
   }
 
   /** Create the game area, including terrain, static entities (trees), dynamic entities (player) */
@@ -132,10 +136,10 @@ public class ForestGameArea extends GameArea {
     spawnLettuce("chopped");
     //spawnCustomer();
 
-    triggerFiredEnd();
-
     // Spawn the player
     player = spawnPlayer();
+    //ServiceLocator.getEntityService().getEvents().trigger("SetText", "Boss: Rent is due");
+    triggerFiredEnd();
 
     playMusic();
   }
@@ -583,6 +587,7 @@ public class ForestGameArea extends GameArea {
       try {
         Thread.sleep(10000);
         spawnBoss();
+        createTextBox("Test");
 
       } catch (InterruptedException e) {
         Thread.currentThread().interrupt();
@@ -592,6 +597,12 @@ public class ForestGameArea extends GameArea {
 
     // Shutdown the executor to prevent zombie threads
     executor.shutdown();
+  }
+
+  private void createTextBox(String text) {
+    for (Entity entity: ServiceLocator.getEntityService().getEntities()) {
+      entity.getEvents().trigger("SetText", text);
+    }
   }
 
   private void triggerGoodEnd() {
