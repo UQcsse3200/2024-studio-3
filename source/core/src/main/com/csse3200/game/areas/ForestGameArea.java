@@ -1,5 +1,6 @@
 package com.csse3200.game.areas;
 
+import com.csse3200.game.components.npc.CustomerComponent;
 import com.csse3200.game.entities.benches.Bench;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -100,6 +101,14 @@ public class ForestGameArea extends GameArea {
 
   private Entity player;
 
+  public enum personalCustomerEnums{
+    HANK,
+    LEWIS,
+    SILVER,
+    JOHN,
+    MOONKI
+  }
+
   /**
    * Initialise this ForestGameArea to use the provided TerrainFactory.
    * @param terrainFactory TerrainFactory used to create the terrain for the GameArea.
@@ -128,7 +137,8 @@ public class ForestGameArea extends GameArea {
     spawnBeef("cooked");
     spawnStrawberry("chopped");
    spawnLettuce("chopped");
-    spawnCustomer();
+    Entity customerSpawnController = spawnCustomerController();
+    customerSpawnController.getEvents().trigger(personalCustomerEnums.LEWIS.name());
 
     // Spawn the player
     player = spawnPlayer();
@@ -444,19 +454,44 @@ public class ForestGameArea extends GameArea {
     return newFruitSalad;
   }
 
+  private Entity spawnCustomerController() {
+    Entity spawnController = new Entity();
+    spawnController.getEvents().addListener(personalCustomerEnums.HANK.name(), this::spawnHank);
+    spawnController.getEvents().addListener(personalCustomerEnums.LEWIS.name(), this::spawnLewis);
+    spawnController.getEvents().addListener(personalCustomerEnums.SILVER.name(), this::spawnSilver);
+    spawnController.getEvents().addListener(personalCustomerEnums.JOHN.name(), this::spawnJohn);
+    spawnController.getEvents().addListener(personalCustomerEnums.MOONKI.name(), this::spawnMoonki);
+    return spawnController;
+  }
   private void spawnCustomer() {
     GridPoint2 position = new GridPoint2(1, 5);
-    Vector2 targetPos = new Vector2(3, 5); // Target position for ghost king
+    Vector2 targetPos = new Vector2(3, 5);
     Entity customer = NPCFactory.createCustomer(targetPos);
     spawnEntityAt(customer, position, true, true);
   }
 
-    private void spawnCustomerPersonal() {
+  private void spawnCustomerPersonal(String name) {
         GridPoint2 position = new GridPoint2(1, 5);
         Vector2 targetPos = new Vector2(3, 5);
-        Entity customer = NPCFactory.createCustomerPersonal(targetPos);
+        Entity customer = NPCFactory.createCustomerPersonal(name, targetPos);
         spawnEntityAt(customer, position, true, true);
-    }
+  }
+
+  private void spawnHank() {
+    spawnCustomerPersonal("Hank");
+  }
+  private void spawnLewis() {
+    spawnCustomerPersonal("Lewis");
+  }
+  private void spawnSilver() {
+    spawnCustomerPersonal("Silver");
+  }
+  private void spawnJohn() {
+    spawnCustomerPersonal("John");
+  }
+  private void spawnMoonki() {
+    spawnCustomerPersonal("Moonki");
+  }
 
 
   /**
