@@ -139,7 +139,7 @@ public class ForestGameArea extends GameArea {
     // Spawn the player
     player = spawnPlayer();
     //ServiceLocator.getEntityService().getEvents().trigger("SetText", "Boss: Rent is due");
-    triggerFiredEnd();    // Trigger the fired (bad) ending
+    //triggerFiredEnd();    // Trigger the fired (bad) ending
 
     playMusic();
   }
