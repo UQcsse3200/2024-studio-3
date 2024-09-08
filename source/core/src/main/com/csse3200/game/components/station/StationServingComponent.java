@@ -2,8 +2,14 @@ package com.csse3200.game.components.station;
 
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.items.ItemComponent;
+import com.csse3200.game.components.ordersystem.OrderActions;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.components.player.InventoryDisplay;
+import com.csse3200.game.services.ServiceLocator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.security.Provider;
 
 /**
  * StationServingComponent.java
@@ -22,6 +28,8 @@ public class StationServingComponent extends Component {
     // itemHandler allows acess for serving component to see the inventory of
     // the station.
     protected StationItemHandlerComponent itemHandler;
+    private static final Logger logger = LoggerFactory.getLogger(StationServingComponent.class);
+    private OrderActions orderActions;
 
     /**
      * On creation a listener for Submit Meal will be added to the station.
@@ -29,6 +37,8 @@ public class StationServingComponent extends Component {
     @Override
     public void create() {
         entity.getEvents().addListener("Station Interaction", this::handleInteraction);
+        //orderActions = entity.getComponent(OrderActions.class);
+        orderActions = ServiceLocator.getOrderActions(); // ?
     }
 
     /**
@@ -49,14 +59,26 @@ public class StationServingComponent extends Component {
      * the inventory and serve a meal to one of the customers. 
      */
     public void submitMeal(ItemComponent item) {
-        //TODO:
-        //call getCurrentBigTicketInfo() to get values of bigticket, returning a string[]
-        //String[] bigTicketInfo =
-        // call made to other teams function
 
-        //TBD(item, bigTicketInfo[0], bigTicketInfo[1], bigTicketInfo[2]);
-        //AKA item being submitted, order number of ticket, meal of ticket, time left of ticket.
-        return;
+        String[] bigTicketInfo = orderActions.getCurrentBigTicketInfo();
+        if (bigTicketInfo[0] != null) {
+            logger.info(bigTicketInfo[0]);
+            logger.info(bigTicketInfo[1]);
+            logger.info(bigTicketInfo[2]);
+            // Call to other team's function with the big ticket info
+            //TBD(item, bigTicketInfo[0], bigTicketInfo[1], bigTicketInfo[2]);
+            // After successful submission, trigger removal of the big ticket
+            //ServiceLocator.getDocketService().getEvents().trigger("removeOrder",
+            //        MainGameOrderTicketDisplay.getTableArrayList().size() - 1);
+            ServiceLocator.getDocketService().getEvents().trigger("removeOrder", -1);
+
+            // NOTE: the current 'recipe name' is all the ingredients individually required (cucumber, tomato, lettuce)
+        } else {
+            logger.info("hello");
+            // Handle case where there's no current big ticket
+            // Maybe show an error message or ignore the submission
+            return;
+        }
     }
     
 }
