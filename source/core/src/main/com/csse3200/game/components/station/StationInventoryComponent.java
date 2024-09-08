@@ -49,7 +49,7 @@ public class StationInventoryComponent extends Component {
     @Override
     public void create() {
         timeSource = ServiceLocator.getTimeSource();
-        entity.getEvents().addListener("give station item", this::addItem);
+        entity.getEvents().addListener("give station item", this::checkRecipe);
         entity.getEvents().addListener("take item", this::removeItem);
     }
 
@@ -66,7 +66,7 @@ public class StationInventoryComponent extends Component {
                     removeCurrentItem();
                 }
                 // replace with dish from recipe
-                setCurrentItem(targetRecipe);
+                this.addItem(targetRecipe);
             }
             cookingTime -= timeSource.getDeltaTime();
         }
@@ -99,9 +99,8 @@ public class StationInventoryComponent extends Component {
      * @param newItem to be put into the station.
      * @return true if the item has been accepted, false otherwise.
      */
-    public boolean setCurrentItem(String newItem) {
-        // No item present, set item
-        this.item.set(0, (Optional.of(newItem)));
+    public boolean addItem(String newItem) {
+        this.item.add(Optional.of(newItem));
         return true;
     }
 
@@ -134,7 +133,7 @@ public class StationInventoryComponent extends Component {
     /**
      * Method triggered when item added to station.
      */
-    public void addItem(String item) {
+    public void checkRecipe(String item) {
         // Converting List<Optional<String>> to List<String>
         List<String> templist = new ArrayList<String>();
         for (Optional<String> x : getItems()) {

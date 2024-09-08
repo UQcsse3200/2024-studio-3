@@ -93,7 +93,8 @@ public class StationItemHandlerComponent extends Component {
             // Doesn't receive item etc
             return;
         }
-        inventoryComponent.setCurrentItem(item);
+        inventoryComponent.addItem(item);
+        inventoryComponent.checkRecipe(item);
 
         // Hi, from Team 2, as mentioned in the studio
         // We made the trigger for start cooking/chopping depending on the station

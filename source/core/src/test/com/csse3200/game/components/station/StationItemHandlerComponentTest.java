@@ -78,7 +78,7 @@ public class StationItemHandlerComponentTest {
         // verify mocks up a scenario, in this case that
         // setting Inventory happens once, cant actually check handler
         // as takeItem is void, include check later
-        verify(mockInventory).setCurrentItem("meat");
+        verify(mockInventory).addItem("meat");
     }
 
     @Test
@@ -89,14 +89,14 @@ public class StationItemHandlerComponentTest {
         // as takeItem is void, include check later
         // never() checks that no interaction actually occured, in this case
         // we expect nothing to happen as station is full with one item
-        verify(mockInventory, never()).setCurrentItem(anyString());
+        verify(mockInventory, never()).addItem(anyString());
     }
 
     @Test
     public void testGiveItem_whenItemNotAccepted() {
         when(mockInventory.isItemPresent()).thenReturn(false);
         handler.giveItem("stone");
-        verify(mockInventory, never()).setCurrentItem(anyString());
+        verify(mockInventory, never()).addItem(anyString());
     }
 
     @Test

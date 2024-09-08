@@ -46,13 +46,13 @@ public class StationInventoryComponentTest {
 
     @Test
     void shouldSetCurrentItemTest() {
-        inventoryComponent.setCurrentItem("meat");
+        inventoryComponent.addItem("meat");
         assertEquals("meat", inventoryComponent.getCurrentItem().orElse("Empty"));
     }
 
     @Test
     void shouldCheckItemPresentTest() {
-        inventoryComponent.setCurrentItem("meat");
+        inventoryComponent.addItem("meat");
         assertTrue(inventoryComponent.isItemPresent());
     }
 
@@ -69,13 +69,13 @@ public class StationInventoryComponentTest {
 
     @Test
     void shouldSetItemAccepted() {
-        inventoryComponent.setCurrentItem("meat");
+        inventoryComponent.addItem("meat");
         assertTrue(inventoryComponent.isItemPresent());
     }
 
     @Test
     void shouldRemoveCurrentItem() {
-        inventoryComponent.setCurrentItem("meat");
+        inventoryComponent.addItem("meat");
         String output = inventoryComponent.removeCurrentItem().orElse("Empty");
         assertEquals("meat", output);
         assertFalse(inventoryComponent.isItemPresent());
@@ -83,14 +83,14 @@ public class StationInventoryComponentTest {
 
     /**
      * Tests that the respective event triggers affects both
-     * CookingComponent.addItem, StationItemHandlerComponent.giveItem,
-     * CookingComponent.removeItem and StationItemHandler.takeItem.
+     * InventoryComponent.checkRecipe, StationItemHandlerComponent.giveItem,
+     * InventoryComponent.removeItem and StationItemHandler.takeItem.
      */
     @Test
     void testGiveEventTrigger() {
         testEntity.getEvents().trigger("give station item", "acai");
         verify(handlerComponent).giveItem("acai"); // verifies that giveItem method was called
-        verify(inventoryComponent).addItem("acai"); // verifies that addItem method was called
+        verify(inventoryComponent).checkRecipe("acai"); // verifies that checkRecipe method was called
         testEntity.getEvents().trigger("take item");
         verify(handlerComponent).takeItem(); // verifies that takeItem method was called
         verify(inventoryComponent).removeItem(); // verifies that removeItem method was called
