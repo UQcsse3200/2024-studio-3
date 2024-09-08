@@ -40,9 +40,9 @@ public class StationCollectionComponent extends Component {
      * @return the item if sucessful, null otherwise.
      */
     public Entity collectItem(String itemType) {
-        if (!this.canCollectItem(itemType)) {
+        /*if (!this.canCollectItem(itemType)) {
             return null;
-        }
+        }*/
 
         return ItemFactory.createBaseItem(itemType);
     }

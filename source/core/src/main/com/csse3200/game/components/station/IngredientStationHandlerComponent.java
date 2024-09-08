@@ -1,10 +1,15 @@
 package com.csse3200.game.components.station;
 
+import java.util.Random;
+
 import com.csse3200.game.components.Component;
+import com.csse3200.game.components.items.IngredientComponent;
 import com.csse3200.game.components.items.ItemComponent;
 import com.csse3200.game.components.items.ItemType;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.components.player.InventoryDisplay;
+import com.csse3200.game.entities.Entity;
+import com.csse3200.game.utils.math.RandomUtils;
 
 public class IngredientStationHandlerComponent extends Component {
     /**
@@ -14,6 +19,8 @@ public class IngredientStationHandlerComponent extends Component {
      */
     protected final String type;
     protected InventoryComponent inventoryComponent;
+    protected StationCollectionComponent collectionComponent;
+    private final String[] ingredientList = {"acai", "beef", "banana", "lettuce", "cucumber", "tomato", "strawberry", "chocolate", "fish"};
 
     // General TODO:
     // Add trigger calls to external for failed interactions
@@ -39,6 +46,7 @@ public class IngredientStationHandlerComponent extends Component {
     public void create() {
         entity.getEvents().addListener("Station Interaction", this::handleInteraction);
         this.inventoryComponent = entity.getComponent(InventoryComponent.class);
+        this.collectionComponent = entity.getComponent(StationCollectionComponent.class);
     }
 
     /**
@@ -75,9 +83,22 @@ public class IngredientStationHandlerComponent extends Component {
         // TODO: create a new entity instead of the item component and then get the item
         // component from the entity and then put that in the inventory
 
+        // For now just get a random ingredient WILL CHANGE LATER
+        IngredientComponent itemComponent = getRandomIngredient();
 
-        this.inventoryComponent.addItemAt(new ItemComponent("Apples", ItemType.APPLE, 1), 0);
+        ///this.inventoryComponent.addItemAt(new ItemComponent("Apples", ItemType.APPLE, 1), 0);
+        this.inventoryComponent.addItemAt(itemComponent, 0);
         inventoryDisplay.update();
         entity.getEvents().trigger("interactionEnd");
+    }
+
+    private IngredientComponent getRandomIngredient() {
+        int numIngredients = ingredientList.length;
+        int randomInt = new Random().nextInt(numIngredients);
+        String ingredient = ingredientList[randomInt];
+        Entity newItem = collectionComponent.collectItem(ingredient);
+        IngredientComponent itemComponent = newItem.getComponent(IngredientComponent.class);
+
+        return itemComponent;
     }
 }

@@ -9,6 +9,7 @@ import com.csse3200.game.components.items.ItemComponent;
 import com.csse3200.game.components.items.ItemType;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.components.station.IngredientStationHandlerComponent;
+import com.csse3200.game.components.station.StationCollectionComponent;
 import com.csse3200.game.components.station.StationItemHandlerComponent;
 import com.csse3200.game.components.station.StationServingComponent;
 import com.csse3200.game.entities.Entity;
@@ -87,6 +88,7 @@ public class StationFactory {
             .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
             .addComponent(new InteractionComponent(PhysicsLayer.INTERACTABLE))
             .addComponent(new TooltipsDisplay())
+            .addComponent(new StationCollectionComponent())
             .addComponent(new InventoryComponent(1))
             .addComponent(new IngredientStationHandlerComponent("apples"));
 
