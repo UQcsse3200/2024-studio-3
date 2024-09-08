@@ -92,6 +92,44 @@ public class DishFactory {
           getMultiStationRecipes().containsKey(recipeName);
     }
 
+    //// Added functions by Team 1 ////
+    /**
+     * Getter for the DishFactory recipe configs.
+     * 
+     * @return - the read-in configs from the recipes.json file.
+     */
+    public RecipeConfig getRecipeConfigs() {
+        return this.configs;
+    }
+
+    /**
+     * Getters for all recipes and configs from reading in the recipes file.
+     * 
+     * @return - a map of recipe names and condigurations from the recipes.json file.
+     */
+    public Map<String, SingleStationRecipeConfig> getAllRecipes() {
+        // they've partitioned their recipes based on number of stations takne to make it
+        // and not the number of ingredients. TODO refactor
+        Map<String, SingleStationRecipeConfig> singleRecipes = this.getSingleStationRecipes();
+        Map<String, MultiStationRecipeConfig> multiRecipes = this.getMultiStationRecipes();
+
+        // the returned map with all recipe configs
+        Map<String, SingleStationRecipeConfig> allRecipes = new HashMap<String, SingleStationRecipeConfig>();
+        
+        // add all single station recipes
+        for (Map.Entry<String, SingleStationRecipeConfig> single : getSingleStationRecipes().entrySet()) {
+            allRecipes.put(single.getKey(), single.getValue());
+        
+        // add all multi station recipes
+        for (Map.Entry<String, MultiStationRecipeConfig> multi : getMultiStationRecipes().entrySet()) {
+            allRecipes.put(multi.getKey(), multi.getValue());   // cast down to a single station recipe bc what is this
+        
+        return allRecipes;
+    }
+
+    
+
+
 //    /**
 //     * Get the station type for a given recipe
 //     * @param recipeName the name of the recipe
