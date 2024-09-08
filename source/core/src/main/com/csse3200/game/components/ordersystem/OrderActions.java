@@ -49,6 +49,7 @@ public class OrderActions extends InputComponent {
         entity.getEvents().addListener("changeColour", this::onChangeColour);
 
         ServiceLocator.getDocketService().getEvents().addListener("updateBigTicket", this::onUpdateBigTicket); // update big ticket values
+        ServiceLocator.getDocketService().getEvents().addListener("getTicketDetails", this::getCurrentBigTicketInfo); // dont like this but w/e for now
     }
 
     /**
@@ -133,6 +134,7 @@ public class OrderActions extends InputComponent {
         this.currentMeal = meal;
         this.currentTimeLeft = timeLeft;
         //logger.info("Big ticket updated: Order {}, Meal: {}, Time Left: {}", orderNumber, meal, timeLeft);
+        // logs the correct details
     }
 
     /**
@@ -150,6 +152,8 @@ public class OrderActions extends InputComponent {
      * @return String Array representation of big ticket details [orderNum, meal, time]
      */
     public String[] getCurrentBigTicketInfo() {
+        logger.info("Big ticket updated: Order {}, Meal: {}, Time Left: {}", currentOrderNumber, currentMeal, currentTimeLeft);
+        // logs null.
         return new String[]{currentOrderNumber, currentMeal, currentTimeLeft};
     }
 }

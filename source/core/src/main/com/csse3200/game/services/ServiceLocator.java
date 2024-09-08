@@ -120,6 +120,7 @@ public class ServiceLocator {
     inputService = null;
     resourceService = null;
     docketService = null;
+    orderActions = null;
   }
 
   private ServiceLocator() {

@@ -38,7 +38,7 @@ public class StationServingComponent extends Component {
     public void create() {
         entity.getEvents().addListener("Station Interaction", this::handleInteraction);
         //orderActions = entity.getComponent(OrderActions.class);
-        orderActions = ServiceLocator.getOrderActions(); // ?
+        orderActions = ServiceLocator.getOrderActions(); // ? doesn't seem to work...
     }
 
     /**
