@@ -7,6 +7,7 @@ import com.csse3200.game.files.UserSettings;
 import com.csse3200.game.screens.MainGameScreen;
 import com.csse3200.game.screens.MainMenuScreen;
 import com.csse3200.game.screens.SettingsScreen;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,15 +20,15 @@ import static com.badlogic.gdx.Gdx.app;
  */
 public class GdxGame extends Game {
   private static final Logger logger = LoggerFactory.getLogger(GdxGame.class);
+  private Screen previousScreen;
 
   @Override
   public void create() {
     logger.info("Creating game");
     loadSettings();
 
-    // Sets background to light yellow
-    Gdx.gl.glClearColor(248f/255f, 249/255f, 178/255f, 1);
-
+    // Initially set to the main menu screen
+    Gdx.gl.glClearColor(234f/255f, 221/255f, 202/255f, 1);
     setScreen(ScreenType.MAIN_MENU);
   }
 
@@ -47,10 +48,22 @@ public class GdxGame extends Game {
   public void setScreen(ScreenType screenType) {
     logger.info("Setting game screen to {}", screenType);
     Screen currentScreen = getScreen();
+
+    previousScreen = currentScreen;  // Save the current screen before changing
+
     if (currentScreen != null) {
       currentScreen.dispose();
     }
+
     setScreen(newScreen(screenType));
+  }
+
+  /**
+   * Get the previous game's screen
+   * @return previous screen
+   */
+  public Screen getPreviousScreen() {
+    return previousScreen;
   }
 
   @Override

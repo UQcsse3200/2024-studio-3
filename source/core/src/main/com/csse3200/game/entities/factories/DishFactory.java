@@ -29,7 +29,6 @@ public class DishFactory {
      */
     private static Map<String, SingleStationRecipeConfig> getSingleStationRecipes() {
         Map<String, SingleStationRecipeConfig> singleStationRecipes = new HashMap<>();
-        singleStationRecipes.put("acaiBowl", configs.acaiBowl);
         singleStationRecipes.put("salad", configs.salad);
         singleStationRecipes.put("fruitSalad", configs.fruitSalad);
         singleStationRecipes.put("bananaSplit", configs.bananaSplit);
@@ -43,6 +42,8 @@ public class DishFactory {
     private static Map<String, MultiStationRecipeConfig> getMultiStationRecipes() {
         Map<String, MultiStationRecipeConfig> multiStationRecipes = new HashMap<>();
         multiStationRecipes.put("steakMeal", configs.steakMeal);
+        multiStationRecipes.put("acaiBowl", configs.acaiBowl);
+
         return multiStationRecipes;
     }
 
@@ -63,7 +64,8 @@ public class DishFactory {
             String recipe = entry.getKey();
             SingleStationRecipeConfig recipeConfig = entry.getValue();
 
-            if (new HashSet<>(recipeConfig.ingredient).containsAll(ingredient)) {
+            if (!recipeConfig.ingredient.isEmpty() &&
+                    new HashSet<>(recipeConfig.ingredient).containsAll(ingredient)) {
                 recipes.add(recipe);
             }
         }
@@ -72,10 +74,74 @@ public class DishFactory {
             String recipe = entry.getKey();
             MultiStationRecipeConfig recipeConfig = entry.getValue();
 
-            if (new HashSet<>(recipeConfig.ingredient).containsAll(ingredient)) {
+            if (!recipeConfig.ingredient.isEmpty() &&
+                    new HashSet<>(recipeConfig.ingredient).containsAll(ingredient)) {
                 recipes.add(recipe);
             }
         }
         return recipes;
     }
+
+    public static SingleStationRecipeConfig getSingleStationRecipe(String recipeName) {
+        return getSingleStationRecipes().get(recipeName);
+    }
+
+    public static MultiStationRecipeConfig getMultiStationRecipe(String recipeName) {
+        return getMultiStationRecipes().get(recipeName);
+    }
+
+    public static boolean recipeExists(String recipeName) {
+        return getSingleStationRecipes().containsKey(recipeName) ||
+          getMultiStationRecipes().containsKey(recipeName);
+    }
+
+//    /**
+//     * Get the station type for a given recipe
+//     * @param recipeName the name of the recipe
+//     * @return list of station types required for the recipe
+//     */
+//    public static List<String> getStationTypes(String recipeName) {
+//        List<String> stationTypes = new ArrayList<>();
+//        SingleStationRecipeConfig singleStationRecipe = getSingleStationRecipes().get(recipeName);
+//        MultiStationRecipeConfig multiStationRecipe = getMultiStationRecipes().get(recipeName);
+//
+//        if (singleStationRecipe != null) {
+//            stationTypes.addAll(singleStationRecipe.getStationTypes());
+//        } else if (multiStationRecipe != null) {
+//            stationTypes.addAll(multiStationRecipe.getStationTypes());
+//        }
+//        return stationTypes;
+//    }
+//
+//    /**
+//     * Get the making time for a given recipe
+//     * @param recipeName the name of the recipe
+//     * @return making time for the recipe
+//     */
+//    public static int getMakingTime(String recipeName) {
+//        SingleStationRecipeConfig singleStationRecipe = getSingleStationRecipes().get(recipeName);
+//        MultiStationRecipeConfig multiStationRecipe = getMultiStationRecipes().get(recipeName);
+//
+//        if (singleStationRecipe != null) {
+//            return singleStationRecipe.makingTime;
+//        } else if (multiStationRecipe != null) {
+//            return multiStationRecipe.makingTime;
+//        }
+//        return 0;
+//    }
+//
+//    /**
+//     * Get the burned time for a given recipe, if applicable
+//     * @param recipeName the name of the recipe
+//     * @return burned time for the recipe, or -1 if not applicable
+//     */
+//    public static int getBurnedTime(String recipeName) {
+//        MultiStationRecipeConfig multiStationRecipe = getMultiStationRecipes().get(recipeName);
+//
+//        if (multiStationRecipe != null && multiStationRecipe.burnedTime != null) {
+//            return multiStationRecipe.burnedTime;
+//        }
+//        return -1; // Return -1 if there's no burned time
+//    }
+//
 }

@@ -2,6 +2,7 @@ package com.csse3200.game.components.maingame;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
@@ -54,6 +55,11 @@ public class MainGameExitDisplay extends UIComponent {
   @Override
   public float getZIndex() {
     return Z_INDEX;
+  }
+
+  @Override
+  public void setStage(Stage mock) {
+
   }
 
   @Override

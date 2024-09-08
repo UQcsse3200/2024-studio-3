@@ -3,6 +3,7 @@ package com.csse3200.game.components.mainmenu;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -99,7 +100,12 @@ public class MainMenuDisplay extends UIComponent {
     return Z_INDEX;
   }
 
-  @Override
+    @Override
+    public void setStage(Stage mock) {
+
+    }
+
+    @Override
   public void dispose() {
     table.clear();
     super.dispose();

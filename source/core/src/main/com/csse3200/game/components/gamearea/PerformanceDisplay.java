@@ -2,6 +2,7 @@ package com.csse3200.game.components.gamearea;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
@@ -51,6 +52,11 @@ public class PerformanceDisplay extends UIComponent {
   @Override
   public float getZIndex() {
     return Z_INDEX;
+  }
+
+  @Override
+  public void setStage(Stage mock) {
+
   }
 
   @Override
