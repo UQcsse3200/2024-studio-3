@@ -61,8 +61,6 @@ public class PlayerFactory {
     animator.addAnimation("Character_UpLeft", 0.2f, Animation.PlayMode.LOOP);
     animator.addAnimation("Character_Right", 0.2f, Animation.PlayMode.LOOP);
 
-
-
     Entity player =
         new Entity()
             .addComponent(new PhysicsComponent())
