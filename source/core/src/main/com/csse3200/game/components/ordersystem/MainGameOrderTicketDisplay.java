@@ -78,6 +78,7 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         ServiceLocator.getDocketService().getEvents().addListener("shiftDocketsLeft", this::shiftDocketsLeft);
         ServiceLocator.getDocketService().getEvents().addListener("shiftDocketsRight", this::shiftDocketsRight);
         // logger.info("Listeners added for shiftDocketsLeft and shiftDocketsRight events");
+        ServiceLocator.getDocketService().getEvents().addListener("removeBigTicket", this::removeBigTicket);
     }
     /**
      * Adds a new order ticket to the display and sets its initial position and size.
@@ -303,6 +304,17 @@ public class MainGameOrderTicketDisplay extends UIComponent {
 
         updateDocketPositions();
         updateDocketSizes();
+    }
+    public void removeBigTicket(){
+        int index = tableArrayList.size() - 1;
+        Docket currBackground = backgroundArrayList.get(index);
+        Table currTable = tableArrayList.get(index);
+
+        stageDispose(currBackground, currTable, index);
+        tableArrayList.remove(index);
+        backgroundArrayList.remove(index);
+        startTimeArrayList.remove(index);
+        countdownLabelArrayList.remove(index);
     }
 
     /**

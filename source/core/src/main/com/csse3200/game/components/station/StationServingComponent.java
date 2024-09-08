@@ -61,6 +61,7 @@ public class StationServingComponent extends Component {
     public void submitMeal(ItemComponent item) {
 
         String[] bigTicketInfo = orderActions.getCurrentBigTicketInfo();
+        // TODO bigTicketInfo[0] is ALWAYS null, even when there is a ticket and it shouldn't. orderActions needs to be instantiated better, not sure how though
         if (bigTicketInfo[0] != null) {
             logger.info(bigTicketInfo[0]);
             logger.info(bigTicketInfo[1]);
@@ -70,13 +71,18 @@ public class StationServingComponent extends Component {
             // After successful submission, trigger removal of the big ticket
             //ServiceLocator.getDocketService().getEvents().trigger("removeOrder",
             //        MainGameOrderTicketDisplay.getTableArrayList().size() - 1);
-            ServiceLocator.getDocketService().getEvents().trigger("removeOrder", -1);
+            ServiceLocator.getDocketService().getEvents().trigger("removeOrder", -1); // removes the order from the orderaction list
+             // removes the order from the display list
+            ServiceLocator.getDocketService().getEvents().trigger("removeBigTicket");
 
             // NOTE: the current 'recipe name' is all the ingredients individually required (cucumber, tomato, lettuce)
-        } else {
-            logger.info("hello");
-            // Handle case where there's no current big ticket
-            // Maybe show an error message or ignore the submission
+        } else { // only enters this condition, when it shouldn't.  TODO
+            /*
+            TODO
+             DELETE THIS, it should only be seen in the IF clause (bigTicketInfo[0] != null), just here to show that it works.
+             */
+            ServiceLocator.getDocketService().getEvents().trigger("removeOrder", -1);
+            ServiceLocator.getDocketService().getEvents().trigger("removeBigTicket");
             return;
         }
     }

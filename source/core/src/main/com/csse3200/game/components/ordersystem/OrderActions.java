@@ -49,7 +49,7 @@ public class OrderActions extends InputComponent {
         entity.getEvents().addListener("changeColour", this::onChangeColour);
 
         ServiceLocator.getDocketService().getEvents().addListener("updateBigTicket", this::onUpdateBigTicket); // update big ticket values
-        ServiceLocator.getDocketService().getEvents().addListener("getTicketDetails", this::getCurrentBigTicketInfo); // dont like this but w/e for now
+        //ServiceLocator.getDocketService().getEvents().addListener("getTicketDetails", this::getCurrentBigTicketInfo); // dont like this but w/e for now
     }
 
     /**
