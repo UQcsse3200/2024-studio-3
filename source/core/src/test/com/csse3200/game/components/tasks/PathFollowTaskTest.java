@@ -8,7 +8,6 @@ import com.csse3200.game.entities.Entity;
 import com.csse3200.game.events.listeners.EventListener0;
 import com.csse3200.game.events.listeners.EventListener1;
 import com.csse3200.game.extensions.GameExtension;
-import com.csse3200.game.utils.math.Vector2Utils;
 import com.csse3200.game.physics.components.PhysicsMovementComponent;
 import com.csse3200.game.services.GameTime;
 import com.csse3200.game.services.ServiceLocator;
@@ -33,7 +32,7 @@ class PathFollowTaskTest {
     @Test
     void shouldTriggerWanderStartEvent() {
         Vector2 targetPosition = new Vector2(5f, 5f);
-        String customerId = "testCustomerId"; // Use a sample customer ID
+        int customerId = 123456; // Use a sample customer ID
         PathFollowTask pathFollowTask = new PathFollowTask(targetPosition, customerId);
 
         AITaskComponent aiTaskComponent = new AITaskComponent().addTask(pathFollowTask);
@@ -53,7 +52,7 @@ class PathFollowTaskTest {
     @Test
     void shouldTriggerLeaveEarlyEvent() {
         Vector2 targetPosition = new Vector2(5f, 5f);
-        String customerId = "testCustomerId";
+        int customerId = 123456; // Use a sample customer ID
         PathFollowTask pathFollowTask = new PathFollowTask(targetPosition, customerId);
 
         AITaskComponent aiTaskComponent = new AITaskComponent().addTask(pathFollowTask);
@@ -61,7 +60,7 @@ class PathFollowTaskTest {
         entity.create();
 
         // Register callbacks
-        EventListener1 leaveEarlyCallback = mock(EventListener1.class);
+        EventListener1<Integer> leaveEarlyCallback = mock(EventListener1.class);
         entity.getEvents().addListener("leaveEarly", leaveEarlyCallback);
 
         // Simulate an early leave event

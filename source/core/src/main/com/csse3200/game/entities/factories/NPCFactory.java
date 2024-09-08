@@ -4,9 +4,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.ai.tasks.AITaskComponent;
-import com.csse3200.game.areas.ForestGameArea;
 import com.csse3200.game.components.CombatStatsComponent;
-import com.csse3200.game.components.npc.CustomerComponent;
 import com.csse3200.game.components.npc.GhostAnimationController;
 import com.csse3200.game.components.TouchAttackComponent;
 import com.csse3200.game.components.tasks.PathFollowTask;
@@ -45,8 +43,8 @@ public class NPCFactory {
      * @param target entity to chase
      * @return entity
      */
-    public static Entity createGhost(Entity target, Vector2 targetPosition) {
-        Entity ghost = createBaseNPC(target, targetPosition);
+    public static Entity createGhost(Entity target, Vector2 targetPosition, int Customer_id) {
+        Entity ghost = createBaseNPC(target, targetPosition, Customer_id);
         BaseEntityConfig config = configs.ghost;
 
         AnimationRenderComponent animator =
@@ -72,8 +70,8 @@ public class NPCFactory {
      * @param targetPosition the target position on the screen where the ghost king should move
      * @return entity
      */
-    public static Entity createGhostKing(Entity target, Vector2 targetPosition) {
-        Entity ghostKing = createBaseNPC(target, targetPosition);
+    public static Entity createGhostKing(Entity target, Vector2 targetPosition, int Customer_id) {
+        Entity ghostKing = createBaseNPC(target, targetPosition, Customer_id);
         GhostKingConfig config = configs.ghostKing;
 
         AnimationRenderComponent animator =
@@ -92,8 +90,8 @@ public class NPCFactory {
         return ghostKing;
     }
 
-    public static Entity createCustomerPersonal(String name, Vector2 targetPosition) {
-        Entity customer = createBaseCustomer(targetPosition);
+    public static Entity createCustomerPersonal(String name, Vector2 targetPosition, int Customer_id) {
+        Entity customer = createBaseCustomer(targetPosition, Customer_id);
 
         CustomerPersonalityConfig config = switch (name) {
             case "Hank" -> personalCustomerConfig.Hank;
@@ -125,9 +123,9 @@ public class NPCFactory {
         return customer;
     }
 
-    public static Entity createBasicCustomer(String name, Vector2 targetPosition) {
+    public static Entity createBasicCustomer(String name, Vector2 targetPosition, int Customer_id) {
 
-        Entity customer = createBaseCustomer(targetPosition);
+        Entity customer = createBaseCustomer(targetPosition, Customer_id);
 
         BaseCustomerConfig config = switch (name) {
             case "Basic Chicken" -> personalCustomerConfig.Basic_Chicken;
@@ -150,10 +148,10 @@ public class NPCFactory {
         return customer;
     }
 
-    public static Entity createBaseCustomer(Vector2 targetPosition) {
+    public static Entity createBaseCustomer(Vector2 targetPosition, int Customer_id) {
         AITaskComponent aiComponent =
                 new AITaskComponent()
-                        .addTask(new PathFollowTask(targetPosition));
+                        .addTask(new PathFollowTask(targetPosition, Customer_id));
         Entity npc =
                 new Entity()
                         .addComponent(new PhysicsComponent())
@@ -173,10 +171,10 @@ public class NPCFactory {
      *
      * @return entity
      */
-    private static Entity createBaseNPC(Entity target, Vector2 targetPosition) {
+    private static Entity createBaseNPC(Entity target, Vector2 targetPosition, int Customer_id) {
         AITaskComponent aiComponent =
                 new AITaskComponent()
-                        .addTask(new PathFollowTask(targetPosition));
+                        .addTask(new PathFollowTask(targetPosition, Customer_id));
 
         Entity npc =
                 new Entity()
@@ -194,7 +192,7 @@ public class NPCFactory {
     private NPCFactory() {
         throw new IllegalStateException("Instantiating static util class");
     }
-    public static void createMultipleNPCs(Entity target) {
+   /* public static void createMultipleNPCs(Entity target) {
         // Different target positions for each NPC
         Vector2 targetPosition1 = new Vector2(5, 5);
         Vector2 targetPosition2 = new Vector2(10, 8);
@@ -210,4 +208,5 @@ public class NPCFactory {
         // ServiceLocator.getGameWorld().addEntity(ghost2);
         // ServiceLocator.getGameWorld().addEntity(ghostKing);
     }
+    */
 }

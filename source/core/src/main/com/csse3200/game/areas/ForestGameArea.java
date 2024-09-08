@@ -18,6 +18,8 @@ import com.csse3200.game.entities.factories.ItemFactory;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.utils.math.GridPoint2Utils;
+import com.csse3200.game.entities.configs.*;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -139,6 +141,7 @@ public class ForestGameArea extends GameArea {
     Entity customerSpawnController = spawnCustomerController();
     customerSpawnController.getEvents().trigger(personalCustomerEnums.MOONKI.name());
     customerSpawnController.getEvents().trigger(personalCustomerEnums.BASIC_CHICKEN.name());
+
 
     // Spawn the player
     player = spawnPlayer();
@@ -466,41 +469,60 @@ public class ForestGameArea extends GameArea {
     return spawnController;
   }
 
-  private void spawnCustomer(String name) {
+    private void spawnCustomer(int Customer_id, String customerName) {
         GridPoint2 position = new GridPoint2(1, 5);
         Vector2 targetPos = new Vector2(3, 5);
-        Entity customer = NPCFactory.createCustomerPersonal(name, targetPos);
+        Entity customer = NPCFactory.createCustomerPersonal(customerName, targetPos, Customer_id);
         spawnEntityAt(customer, position, true, true);
-  }
+    }
 
-  private void spawnBasicCustomer(String name) {
-    GridPoint2 position = new GridPoint2(1, 5);
-    Vector2 targetPos = new Vector2(3, 5);
-    Entity customer = NPCFactory.createBasicCustomer(name, targetPos);
-    spawnEntityAt(customer, position, true, true);
-  }
+    private void spawnBasicCustomer(int Customer_id, String customerName) {
+        GridPoint2 position = new GridPoint2(1, 5);
+        Vector2 targetPos = new Vector2(3, 5);
+        Entity customer = NPCFactory.createBasicCustomer(customerName, targetPos, Customer_id);
+        spawnEntityAt(customer, position, true, true);
+    }
 
-  private void spawnHank() {
-    spawnCustomer("Hank");
-  }
-  private void spawnLewis() {
-    spawnCustomer("Lewis");
-  }
-  private void spawnSilver() {
-    spawnCustomer("Silver");
-  }
-  private void spawnJohn() {
-    spawnCustomer("John");
-  }
-  private void spawnMoonki() {
-    spawnCustomer("Moonki");
-  }
-  private void spawnBasicChicken() {
-    spawnBasicCustomer("Basic Chicken");
-  }
-  private void spawnBasicSheep() {
-    spawnBasicCustomer("Basic Sheep");
-  }
+
+    private void spawnHank() {
+        CustomerPersonalityConfig customerPersonality = new CustomerPersonalityConfig();
+        spawnCustomer(customerPersonality.PersonalityCustomer_id, "Hank");
+    }
+
+    private void spawnLewis() {
+        CustomerPersonalityConfig customerPersonality = new CustomerPersonalityConfig();
+        spawnCustomer(customerPersonality.PersonalityCustomer_id, "Lewis");
+    }
+
+    private void spawnSilver() {
+        CustomerPersonalityConfig customerPersonality = new CustomerPersonalityConfig();
+        spawnCustomer(customerPersonality.PersonalityCustomer_id, "Silver");
+    }
+
+    private void spawnJohn() {
+        CustomerPersonalityConfig customerPersonality = new CustomerPersonalityConfig();
+        spawnCustomer(customerPersonality.PersonalityCustomer_id, "John");
+    }
+
+    private void spawnMoonki() {
+        CustomerPersonalityConfig customerPersonality = new CustomerPersonalityConfig();
+        spawnCustomer(customerPersonality.PersonalityCustomer_id, "Moonki");
+    }
+
+
+
+    private void spawnBasicChicken() {
+        // Assuming you have access to the BaseCustomerConfig instance here
+        BaseCustomerConfig baseCustomer = new BaseCustomerConfig();
+        spawnBasicCustomer(baseCustomer.Customer_id, "Basic Chicken");
+    }
+
+    private void spawnBasicSheep() {
+        // Assuming you have access to the BaseCustomerConfig instance here
+        BaseCustomerConfig baseCustomer = new BaseCustomerConfig();
+        spawnBasicCustomer(baseCustomer.Customer_id, "Basic Sheep");
+    }
+
 
 
   /**
