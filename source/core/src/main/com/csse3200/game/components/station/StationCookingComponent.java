@@ -16,6 +16,7 @@ public class StationCookingComponent extends Component  {
     public void create() {
         itemHandler = entity.getComponent(StationItemHandlerComponent.class);
         entity.getEvents().addListener("Cook Ingredient", this::cookIngredient);
+        entity.getEvents().addListener("Stop Cooking Ingredient", this::stopCookingIngredient);
     }
 
     /**
@@ -35,6 +36,21 @@ public class StationCookingComponent extends Component  {
         // TODO: modify the call to cookIngredient so that the correct timees
         // can be used for each ingerdient
         // May need to use the item handler for this
+    }
+
+    /**
+     * Function to spot the cooking of an ingredient within the station
+     */
+    public void stopCookingIngredient() {
+        if (itemHandler.peek() == null) {
+            return;
+        }
+
+        itemHandler
+            .peek()
+            .getEntity()
+            .getEvents()
+            .trigger("stopCookingIngredient");
     }
 
 }

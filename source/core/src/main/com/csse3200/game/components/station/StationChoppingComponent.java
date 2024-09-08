@@ -17,6 +17,7 @@ public class StationChoppingComponent extends Component {
     public void create() {
         itemHandler = entity.getComponent(StationItemHandlerComponent.class);
         entity.getEvents().addListener("Chop Ingredient", this::chopIngredient);
+        entity.getEvents().addListener("Stop Chopping Ingredient", this::stopChoppingIngredient);
     }
 
     /**
@@ -33,6 +34,21 @@ public class StationChoppingComponent extends Component {
             .getEntity()
             .getEvents()
             .trigger("chopIngredient");
+    }
+
+    /**
+     * Function to stop the chopping of an ingredient within a station
+     */
+    public void stopChoppingIngredient() {
+        if (itemHandler.peek() == null) {
+            return;
+        }
+
+        itemHandler
+            .peek()
+            .getEntity()
+            .getEvents()
+            .trigger("stopChoppingIngredient");
     }
     
 }
