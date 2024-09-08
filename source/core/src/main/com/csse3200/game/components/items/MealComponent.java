@@ -2,14 +2,6 @@ package com.csse3200.game.components.items;
 
 import java.util.List;
 
-/**
- * TODO: team 1
- * 
- * - add functionlity for adding items to a meal
- * - change initialisation of the component
- * - clarify how items will be added w/ the station people
- */
-
 public class MealComponent extends ItemComponent {
     private List<IngredientComponent> ingredients;
     private int quality;
@@ -32,6 +24,17 @@ public class MealComponent extends ItemComponent {
         this.quality = calculateQuality();
         this.price = price;
 
+    }
+
+    /**
+     * MVP constructor for MealComponent. Currently used in creating a meal on a station.
+     * 
+     * @param mealName - a string which is the name of the meal.
+     * @param ingredients - a list of IngredientComponent objects that make up the meal.
+     */
+    public MealComponent(String mealName, ItemType mealType, int weight, List<IngredientComponent> ingredients) {
+        super(mealName, mealType, weight);
+        this.ingredients = ingredients;
     }
 
     /**
