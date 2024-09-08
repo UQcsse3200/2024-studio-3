@@ -41,34 +41,9 @@ public class PlateComponent extends Component {
         entity.getEvents().addListener("interactWithPlate", this::interactWithPlate);
     }
 
-    public boolean isAvailable() {
-        return isAvailable;
-    }
-
-    //Method check isServable --check if it is a meal or not (extract from ItemType to extract meals)
-    //if isServable can be served to customers else, can only interact in kitchen
-    public boolean isServable() {
-        return isServable;
-    }
-
-    public boolean isWashed() {
-        return state == PlateState.CLEAN;
-    }
-
-    /* wait to be implemented with washing station
-    public void washPlate() {
-        if (state == PlateState.DIRTY) {
-            state = PlateState.WASHING;
-            washEndTime = timeSource.getTime() + 3000;
-            logger.info("Plate washing");
-        } else {
-            logger.warn("Cannot wash plate");
-        }
-    }
-    */
     @Override
     public void update() {
-
+        //still nothing here mate
     }
 
     public boolean addToPlate(String item) {
@@ -119,7 +94,6 @@ public class PlateComponent extends Component {
         }
     }
 
-
     public void pickup(Entity player) {
         InventoryComponent inventory = player.getComponent(InventoryComponent.class);
         if (isAvailable && inventory.isEmpty()) {
@@ -149,12 +123,24 @@ public class PlateComponent extends Component {
     }
 
     private boolean isPickedUp() {
-        return isPickedup == true;
+        return isPickedup;
     }
 
     public void dispose() {
         logger.info("Plate disposed");
         isAvailable = false;
+    }
+
+    public boolean isAvailable() {
+        return isAvailable;
+    }
+
+    public boolean isServable() {
+        return isServable;
+    }
+
+    public boolean isWashed() {
+        return state == PlateState.CLEAN;
     }
 
 }

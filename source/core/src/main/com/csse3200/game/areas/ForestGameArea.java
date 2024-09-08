@@ -1,5 +1,9 @@
 package com.csse3200.game.areas;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.csse3200.game.entities.benches.Bench;
 import com.csse3200.game.entities.configs.PlayerConfig;
 import org.slf4j.Logger;
@@ -90,7 +94,13 @@ public class ForestGameArea extends GameArea {
     "images/stations/benches/bench6-top.png",
     "images/fireExtinguisher/Fire_Extinguisher.png",
           "images/platecomponent/cleanplate.png",
-          "images/platecomponent/dirtyplate.png"
+          "images/platecomponent/dirtyplate.png",
+          "images/platecomponent/stackplate.png",
+          "images/platecomponent/stackedplates/1plates.png",
+          "images/platecomponent/stackedplates/2plates.png",
+          "images/platecomponent/stackedplates/3plates.png",
+          "images/platecomponent/stackedplates/4plates.png",
+          "images/platecomponent/stackedplates/5plates.png"
   };
   private static final String[] forestTextureAtlases = {"images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/ghostKing.atlas", "images/player.atlas", "images/fireExtinguisher/atlas/flame.atlas"};
   private static final String[] forestSounds = {"sounds/Impact4.ogg"};
@@ -133,7 +143,7 @@ public class ForestGameArea extends GameArea {
     spawnCustomer();
 
     //spawnplates
-    spawnPlate(); //single plate on grid
+    spawnPlate(2); //testplate spawn
     //spawnPlateBench(new GridPoint2(4, 4));
     //spawnPlates(3);
 
@@ -552,7 +562,7 @@ public class ForestGameArea extends GameArea {
 //    spawnEntityAt(ghostKing, randomPos, true, true);
 //  }
 
-
+/*
   private Entity spawnPlate() {
     GridPoint2 platePosition = new GridPoint2(6, 3);
     Entity newPlate = PlateFactory.createPlate();
@@ -564,13 +574,22 @@ public class ForestGameArea extends GameArea {
     return newPlate;
   }
 
-/*
+
   private Entity spawnPlateBench(GridPoint2 benchPosition) {
     Entity newPlate = PlateFactory.createPlate();
     spawnEntityAt(newPlate, benchPosition, true, true);
     newPlate.setScale(1.5f, 1.5f);
     return newPlate;
   }*/
+
+  private Entity spawnPlate(int quantity) {
+    Entity newPlate = PlateFactory.createPlate(quantity);
+    GridPoint2 platePosition = new GridPoint2(6, 3);
+    spawnEntityAt(newPlate, platePosition, true, false);
+    newPlate.setScale(1.3f, 1.3f);
+
+    return newPlate;
+  }
 
   private void playMusic() {
     Music music = ServiceLocator.getResourceService().getAsset(backgroundMusic, Music.class);

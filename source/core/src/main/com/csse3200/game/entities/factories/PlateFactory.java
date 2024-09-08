@@ -28,19 +28,34 @@ public class PlateFactory {
                 .addComponent(new PlateComponent());
     }
 
-    /**
-     * Create a plate item.
-     * The plate starts as dirty and can be cleaned before being used.
-     *
-     * @return A plate entity.
-     */
-    public static Entity createPlate() {
+    public static Entity createPlate(int quantity) {
+        if (quantity < 1 || quantity > 5) {
+            // no action
+        }
+        String texturePath = "images/platecomponent/stackedplates/" + quantity + "plates.png";
+
         Entity plate = createTemplatePlate()
                 .addComponent(new PlateComponent())
-                .addComponent(new TextureRenderComponent("images/platecomponent/cleanplate.png"));
+                .addComponent(new TextureRenderComponent(texturePath));
         PhysicsUtils.setScaledCollider(plate, 0.6f, 0.3f);
         plate.getComponent(ColliderComponent.class).setDensity(1.0f);
 
         return plate;
     }
+
+    //disposePlate method but unstestable waiting for actions hotkey activated
+    
+    public static void disposePlate(Entity plate, int quantity) {
+        if (quantity <= 1) {
+            plate.getComponent(TextureRenderComponent.class).setTexture(null);
+        } else {
+            int newQuantity = quantity - 1;
+            String newTexturePath = "images/platecomponent/stackedplates/" + newQuantity + "plates.png";
+
+            TextureRenderComponent textureRenderComponent = plate.getComponent(TextureRenderComponent.class);
+            textureRenderComponent.setTexture(null);
+            textureRenderComponent.setTexture(newTexturePath);
+        }
+    }
+
 }
