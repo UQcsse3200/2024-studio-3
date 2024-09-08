@@ -83,19 +83,14 @@ public class StationItemHandlerComponent extends Component {
         @param item that is being given to the station
      */
     public void giveItem(String item) {
-        inventoryComponent.addItem(item);
-        inventoryComponent.checkRecipe(item);
-
-        if (this.hasItem()) {
-            // This needs to send a fail trigger to player, plays full animation
-            // Doesn't receive item etc
-            return;
-        }
         if (!this.isItemAccepted(item)) {
             // This needs to send a different fail trigger to player, plays full animation
             // Doesn't receive item etc
             return;
         }
+
+        inventoryComponent.addItem(item);
+        inventoryComponent.checkRecipe(item);
 
         // Hi, from Team 2, as mentioned in the studio
         // We made the trigger for start cooking/chopping depending on the station

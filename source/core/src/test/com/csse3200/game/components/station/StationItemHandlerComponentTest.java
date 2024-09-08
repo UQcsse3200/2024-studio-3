@@ -82,17 +82,6 @@ public class StationItemHandlerComponentTest {
     }
 
     @Test
-    public void testGiveItem_whenStationIsNotEmpty() {
-        when(mockInventory.isItemPresent()).thenReturn(true);
-        handler.giveItem("meat");
-        // cant actually check handler
-        // as takeItem is void, include check later
-        // never() checks that no interaction actually occured, in this case
-        // we expect nothing to happen as station is full with one item
-        verify(mockInventory, never()).addItem(anyString());
-    }
-
-    @Test
     public void testGiveItem_whenItemNotAccepted() {
         when(mockInventory.isItemPresent()).thenReturn(false);
         handler.giveItem("stone");
