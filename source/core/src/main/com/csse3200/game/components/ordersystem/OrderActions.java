@@ -18,6 +18,11 @@ public class OrderActions extends InputComponent {
     private static final int SHIFT_LEFT_KEY = Input.Keys.LEFT_BRACKET; // Key for shifting left
     private static final int SHIFT_RIGHT_KEY = Input.Keys.RIGHT_BRACKET; // Key for shifting right
 
+    // key values of big ticket
+    private String currentOrderNumber;
+    private String currentMeal;
+    private String currentTimeLeft;
+
     /**
      * Constructs an OrderActions instance with a reference to the main game object. - Tia
      *
@@ -42,6 +47,9 @@ public class OrderActions extends InputComponent {
         ServiceLocator.getDocketService().getEvents().addListener(
                 "reorderDockets", MainGameOrderTicketDisplay::reorderDockets);
         entity.getEvents().addListener("changeColour", this::onChangeColour);
+
+        ServiceLocator.getDocketService().getEvents().addListener("updateBigTicket", this::onUpdateBigTicket); // update big ticket values
+        ServiceLocator.getDocketService().getEvents().addListener("getTicketDetails", this::getCurrentBigTicketInfo); // dont like this but w/e for now
     }
 
     /**
@@ -101,6 +109,9 @@ public class OrderActions extends InputComponent {
      */
     private void onRemoveOrder(int index) {
         logger.info("Remove order");
+        if (index == - 1) { // remove big ticket details
+            clearBigTicketInfo();
+        }
         ServiceLocator.getDocketService().getEvents().trigger("reorderDockets", index);
     }
 
@@ -110,5 +121,39 @@ public class OrderActions extends InputComponent {
     private void onChangeColour() {
         logger.info("Move order");
         // do something
+    }
+
+    /**
+     * Updates big ticket information
+     * @param orderNumber
+     * @param meal
+     * @param timeLeft
+     */
+    public void onUpdateBigTicket(String orderNumber, String meal, String timeLeft) {
+        this.currentOrderNumber = orderNumber;
+        this.currentMeal = meal;
+        this.currentTimeLeft = timeLeft;
+        //logger.info("Big ticket updated: Order {}, Meal: {}, Time Left: {}", orderNumber, meal, timeLeft);
+        // logs the correct details
+    }
+
+    /**
+     * Clears big ticket information
+     */
+    private void clearBigTicketInfo() {
+        this.currentOrderNumber = null;
+        this.currentMeal = null;
+        this.currentTimeLeft = null;
+        logger.info("Big ticket information cleared");
+    }
+
+    /**
+     * Returns current big ticket information
+     * @return String Array representation of big ticket details [orderNum, meal, time]
+     */
+    public String[] getCurrentBigTicketInfo() {
+        logger.info("Big ticket updated: Order {}, Meal: {}, Time Left: {}", currentOrderNumber, currentMeal, currentTimeLeft);
+        // logs null.
+        return new String[]{currentOrderNumber, currentMeal, currentTimeLeft};
     }
 }

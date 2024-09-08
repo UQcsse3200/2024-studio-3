@@ -1,6 +1,7 @@
 package com.csse3200.game.services;
 
 import com.csse3200.game.components.ordersystem.Docket;
+import com.csse3200.game.components.ordersystem.OrderActions;
 import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.input.InputService;
 import com.csse3200.game.physics.PhysicsService;
@@ -25,6 +26,8 @@ public class ServiceLocator {
   private static InputService inputService;
 
   private static ResourceService resourceService;
+
+  private static OrderActions orderActions; // ?
 
   //Me new stuff :)
 
@@ -56,6 +59,10 @@ public class ServiceLocator {
 
   public static DocketService getDocketService() {
     return docketService;
+  }
+
+  public static OrderActions getOrderActions() {
+    return orderActions;
   }
 
   public static void registerEntityService(EntityService service) {
@@ -99,6 +106,11 @@ public class ServiceLocator {
     resourceService = source;
   }
 
+  public static void registerOrderActions(OrderActions source) {
+    logger.debug("Registering order action {}", source);
+    orderActions = source;
+  }
+
 
   public static void clear() {
     entityService = null;
@@ -108,6 +120,7 @@ public class ServiceLocator {
     inputService = null;
     resourceService = null;
     docketService = null;
+    orderActions = null;
   }
 
   private ServiceLocator() {

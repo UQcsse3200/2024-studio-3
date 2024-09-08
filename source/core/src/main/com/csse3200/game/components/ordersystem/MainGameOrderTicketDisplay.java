@@ -1,12 +1,14 @@
 package com.csse3200.game.components.ordersystem;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Cell;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.SnapshotArray;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
@@ -290,6 +292,13 @@ public class MainGameOrderTicketDisplay extends UIComponent {
                 countdownLabelArrayList.remove(i);
             }
         }
+        if (!tableArrayList.isEmpty()) {
+            Table lastTable = tableArrayList.get(tableArrayList.size() - 1);
+            updateBigTicketInfo(lastTable);
+        } else {
+            ServiceLocator.getDocketService().getEvents().trigger("updateBigTicket", null, null, null);
+
+        }
 
 
         updateDocketPositions();
@@ -302,6 +311,44 @@ public class MainGameOrderTicketDisplay extends UIComponent {
     public void updateDocketDisplay() {
         // Implement logic to update the display
         updateDocketPositions();
+    }
+
+    private void updateBigTicketInfo(Table bigTicket) {
+
+        SnapshotArray<Actor> children = bigTicket.getChildren();
+        String orderNum = "";
+        String meal = "";
+        String timeLeft = "";
+
+        for (int i = 0; i < children.size; i++) {
+            Actor actor = children.get(i);
+            if (actor instanceof Label) {
+                Label label = (Label) actor;
+                String text = label.getText().toString();
+                if (i == 0) {
+                    orderNum = text.replace("Order ", "");
+                } else if (text.startsWith("Timer:")) {
+                    timeLeft = text.replace("Timer: ", "");
+                } else { // handling meal name
+                    // TODO
+                    // Overrides the current meal name with the last ingredient in the big ticket.
+                    // in future, this last ingredient should instead be the meal name
+                    // if you want to get the list of meal names as a string, and do it that way
+                    // you could just concatenate with something like meal = meal + " " + text;
+                    meal = text;
+                }
+            }
+        }
+
+        /*
+        Array<Label> labels = bigTicket.getChildren().filter(Label.class);
+        String orderNum = labels.get(0).getText().toString().replace("Order ", "");
+        String meal = labels.get(1).getText().toString();
+        String timeLeft = labels.get(labels.size - 1).getText().toString();
+
+         */
+        ServiceLocator.getDocketService().getEvents().trigger("updateBigTicket", orderNum, meal, timeLeft);
+        //orderActions.onUpdateBigTicket(orderNum, meal, timeLeft);
     }
 
     /**
