@@ -137,7 +137,7 @@ public class ForestGameArea extends GameArea {
     spawnStrawberry("chopped");
    spawnLettuce("chopped");
     Entity customerSpawnController = spawnCustomerController();
-    customerSpawnController.getEvents().trigger(personalCustomerEnums.HANK.name());
+    customerSpawnController.getEvents().trigger(personalCustomerEnums.MOONKI.name());
     customerSpawnController.getEvents().trigger(personalCustomerEnums.BASIC_CHICKEN.name());
 
     // Spawn the player

@@ -15,7 +15,7 @@
     "patience": 100,
     "preference": "bananaSplit",
     "reputation": 100,
-    "texture": "images/animal_images/gorilla.png"
+    "texture": "images/animal_images/gorilla.atlas"
   },
   "Lewis": {
     "name": "Lewis",
@@ -24,7 +24,7 @@
     "patience": 100,
     "preference": "acaiBowl",
     "reputation": 100,
-    "texture": "images/animal_images/goose.png"
+    "texture": "images/animal_images/goose.atlas"
   },
   "Silver": {
     "name": "Silver",
@@ -33,7 +33,7 @@
     "patience": 100,
     "preference": "steakMeal",
     "reputation": 100,
-    "texture": "images/animal_images/snow_wolf.png"
+    "texture": "images/animal_images/snow_wolf.atlas"
   },
   "John": {
     "name": "John",
@@ -42,7 +42,7 @@
     "patience": 100,
     "preference": "salad",
     "reputation": 100,
-    "texture": "images/animal_images/goat.png"
+    "texture": "images/animal_images/goat.atlas"
   },
   "Moonki": {
     "name": "Moonki",
@@ -51,7 +51,7 @@
     "patience": 100,
     "preference": "bananaSplit",
     "reputation": 100,
-    "texture": "images/animal_images/monkey.png"
+    "texture": "images/animal_images/monkey.atlas"
   },
   "Default": {
     "name": "Shouldn't be reachable>",
@@ -67,14 +67,14 @@
     "countDown": 30,
     "patience": 100,
     "preference": "salad",
-    "texture": "images/animal_images/monkey.png"
+    "texture": "images/animal_images/monkey.atlas"
   },
   "Basic_Sheep": {
     "type": "Sheep",
     "countDown": 40,
     "patience": 90,
     "preference": "salad",
-    "texture": "images/animal_images/monkey.png"
+    "texture": "images/animal_images/monkey.atlas"
   }
 }
 

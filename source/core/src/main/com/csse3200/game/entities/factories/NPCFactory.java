@@ -113,7 +113,7 @@ public class NPCFactory {
         AnimationRenderComponent animator =
                 new AnimationRenderComponent(
                         ServiceLocator.getResourceService()
-                                .getAsset("images/animal_images/gorilla.atlas", TextureAtlas.class));
+                                .getAsset(config.texture, TextureAtlas.class));
         animator.addAnimation("walk", 0.3f, Animation.PlayMode.LOOP);
         //animator.addAnimation("angry_float", 0.3f, Animation.PlayMode.LOOP);
 
