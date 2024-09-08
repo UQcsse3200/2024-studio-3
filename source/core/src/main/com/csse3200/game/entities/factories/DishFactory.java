@@ -1,11 +1,8 @@
-
 package com.csse3200.game.entities.factories;
-
 
 import com.csse3200.game.entities.configs.RecipeConfig;
 import com.csse3200.game.entities.configs.SingleStationRecipeConfig;
 import com.csse3200.game.entities.configs.MultiStationRecipeConfig;
-
 
 import com.csse3200.game.files.FileLoader;
 import org.slf4j.Logger;
@@ -119,15 +116,18 @@ public class DishFactory {
         // add all single station recipes
         for (Map.Entry<String, SingleStationRecipeConfig> single : getSingleStationRecipes().entrySet()) {
             allRecipes.put(single.getKey(), single.getValue());
+
+        }
         
         // add all multi station recipes
         for (Map.Entry<String, MultiStationRecipeConfig> multi : getMultiStationRecipes().entrySet()) {
             allRecipes.put(multi.getKey(), multi.getValue());   // cast down to a single station recipe bc what is this
         
-        return allRecipes;
+        }
+        return allRecipes;   
     }
 
-    
+}
 
 
 //    /**
@@ -179,4 +179,3 @@ public class DishFactory {
 //        return -1; // Return -1 if there's no burned time
 //    }
 //
-}

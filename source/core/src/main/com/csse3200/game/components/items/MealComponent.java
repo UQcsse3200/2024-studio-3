@@ -23,7 +23,6 @@ public class MealComponent extends ItemComponent {
         this.ingredients = ingredients;
         this.quality = calculateQuality();
         this.price = price;
-
     }
 
     /**
