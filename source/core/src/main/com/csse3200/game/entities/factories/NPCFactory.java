@@ -104,10 +104,10 @@ public class NPCFactory {
             default -> personalCustomerConfig.Default;
         };
 
-        System.out.println(name);
-        System.out.println(config.name);
-        System.out.println(config.type);
-        System.out.println(config.countDown);
+//        System.out.println(name);
+//        System.out.println(config.name);
+//        System.out.println(config.type);
+//        System.out.println(config.countDown);
 //        System.out.println(config.Customer_id);
 
         AnimationRenderComponent animator =
@@ -130,13 +130,10 @@ public class NPCFactory {
         Entity customer = createBaseCustomer(targetPosition);
 
         BaseCustomerConfig config = switch (name) {
-            case "Basic Chicken" -> personalCustomerConfig.Basic_Sheep;
-            case "Basic Sheep" -> personalCustomerConfig.Basic_Chicken;
+            case "Basic Chicken" -> personalCustomerConfig.Basic_Chicken;
+            case "Basic Sheep" -> personalCustomerConfig.Basic_Sheep;
             default -> personalCustomerConfig.Basic_Default;
         };
-
-        System.out.println(config.type);
-//        System.out.println(config.Customer_id);
 
         AnimationRenderComponent animator =
                 new AnimationRenderComponent(

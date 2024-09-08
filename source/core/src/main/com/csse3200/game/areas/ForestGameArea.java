@@ -136,7 +136,7 @@ public class ForestGameArea extends GameArea {
    spawnLettuce("chopped");
     Entity customerSpawnController = spawnCustomerController();
     customerSpawnController.getEvents().trigger(personalCustomerEnums.HANK.name());
-    //customerSpawnController.getEvents().trigger(personalCustomerEnums.BASIC_CHICKEN.name());
+    customerSpawnController.getEvents().trigger(personalCustomerEnums.BASIC_CHICKEN.name());
 
     // Spawn the player
     player = spawnPlayer();
@@ -459,8 +459,8 @@ public class ForestGameArea extends GameArea {
     spawnController.getEvents().addListener(personalCustomerEnums.SILVER.name(), this::spawnSilver);
     spawnController.getEvents().addListener(personalCustomerEnums.JOHN.name(), this::spawnJohn);
     spawnController.getEvents().addListener(personalCustomerEnums.MOONKI.name(), this::spawnMoonki);
-    spawnController.getEvents().addListener(personalCustomerEnums.BASIC_SHEEP.name(), this::spawnBaseSheep);
-    spawnController.getEvents().addListener(personalCustomerEnums.BASIC_CHICKEN.name(), this::spawnBaseChicken);
+    spawnController.getEvents().addListener(personalCustomerEnums.BASIC_SHEEP.name(), this::spawnBasicSheep);
+    spawnController.getEvents().addListener(personalCustomerEnums.BASIC_CHICKEN.name(), this::spawnBasicChicken);
     return spawnController;
   }
 
@@ -493,10 +493,10 @@ public class ForestGameArea extends GameArea {
   private void spawnMoonki() {
     spawnCustomer("Moonki");
   }
-  private void spawnBaseChicken() {
+  private void spawnBasicChicken() {
     spawnBasicCustomer("Basic Chicken");
   }
-  private void spawnBaseSheep() {
+  private void spawnBasicSheep() {
     spawnBasicCustomer("Basic Sheep");
   }
 

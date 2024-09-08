@@ -8,10 +8,9 @@ public class BaseCustomerConfig {
     public String type = "Consumer" + Math.random();
     public int countDown = 30; // in seconds
     public int patience = 100; // in seconds
-    public int spawnTimer = 100; // in seconds
 
     public String texture;
     public String preference = "placeholder"; //change to list of recipe or ingredients
 
-//    public int Customer_id = (int)(Math.random() * RANGE) + MIN;
+    public int Customer_id = (int)(Math.random() * RANGE) + MIN;
 }
