@@ -46,11 +46,11 @@ public class PlateComponent extends Component {
         //still nothing here mate
     }
 
-    public boolean addToPlate(String item) {
+    public boolean addMealToPlate(String meal) {
         if (state == PlateState.CLEAN && itemOnPlate == null) {
-            itemOnPlate = item;
+            itemOnPlate = meal;
             state = PlateState.IN_USE;
-            logger.info("Item '{}' added to the plate.", item);
+            logger.info("Item '{}' added to the plate.", meal);
             return true;
         }
         logger.warn("Cannot add item");
