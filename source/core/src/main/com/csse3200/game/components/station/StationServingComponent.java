@@ -55,27 +55,24 @@ public class StationServingComponent extends Component {
         }
     }
     /**
-     * Function which allows the StationServingComponent to be able to access 
-     * the inventory and serve a meal to one of the customers. 
+     * Function which calls to identify the current ticket info, as well as the item in the inventory
+     * Calls another function which grades the submission
+     * @param item reference to the item being submitted by the user
      */
     public void submitMeal(ItemComponent item) {
 
         String[] bigTicketInfo = orderActions.getCurrentBigTicketInfo();
         // TODO bigTicketInfo[0] is ALWAYS null, even when there is a ticket and it shouldn't. orderActions needs to be instantiated better, not sure how though
         if (bigTicketInfo[0] != null) {
-            logger.info(bigTicketInfo[0]);
-            logger.info(bigTicketInfo[1]);
-            logger.info(bigTicketInfo[2]);
+            logger.info(bigTicketInfo[0]); // order number ("5")
+            logger.info(bigTicketInfo[1]); // meal ("tomato")
+            logger.info(bigTicketInfo[2]); // time left ("32")
             // Call to other team's function with the big ticket info
             //TBD(item, bigTicketInfo[0], bigTicketInfo[1], bigTicketInfo[2]);
-            // After successful submission, trigger removal of the big ticket
-            //ServiceLocator.getDocketService().getEvents().trigger("removeOrder",
-            //        MainGameOrderTicketDisplay.getTableArrayList().size() - 1);
+            // remove ticket
             ServiceLocator.getDocketService().getEvents().trigger("removeOrder", -1); // removes the order from the orderaction list
-             // removes the order from the display list
-            ServiceLocator.getDocketService().getEvents().trigger("removeBigTicket");
+            ServiceLocator.getDocketService().getEvents().trigger("removeBigTicket"); // removes the order from the display list
 
-            // NOTE: the current 'recipe name' is all the ingredients individually required (cucumber, tomato, lettuce)
         } else { // only enters this condition, when it shouldn't.  TODO
             /*
             TODO

@@ -110,6 +110,11 @@ public class StationFactory {
     body.setUserData(apple);
     return apple;
   }
+
+  /**
+   * Creates the leg section of the bench table, a station where combinations of ingredients are done.
+   * @return Entity of type station with added components and references
+   */
   public static Entity createFeetBenchTable() {
     Entity benchTable = new Entity()
             .addComponent(new TextureRenderComponent("images/stations/bench_legs.png"))
@@ -126,6 +131,10 @@ public class StationFactory {
     return benchTable;
   }
 
+  /**
+   * Creates the top section of the bench table, a station where combinations of ingredients are done.
+   * @return Entity of type station with added components and references
+   */
   public static Entity createTopBenchTable() {
     Entity benchTable = new Entity()
             .addComponent(new TextureRenderComponent("images/stations/bench_top.png"))
@@ -150,6 +159,10 @@ public class StationFactory {
     return benchTable;
   }
 
+  /**
+   * Creates the main section of the bench table, a station where combinations of ingredients are done.
+   * @return Entity of type station with added components and references
+   */
   public static Entity createMainBenchTable() {
     Entity benchTable = new Entity()
             .addComponent(new TextureRenderComponent("images/stations/bench_middle.png"))
@@ -174,6 +187,10 @@ public class StationFactory {
     return benchTable;
   }
 
+  /**
+   * Creates the submission window, this is where submissions are made with dishes
+   * @return Entity of type station with added components and references
+   */
   public static Entity createSubmissionWindow() {
     Entity submission = new Entity()
             .addComponent(new TextureRenderComponent("images/stations/servery.png"))

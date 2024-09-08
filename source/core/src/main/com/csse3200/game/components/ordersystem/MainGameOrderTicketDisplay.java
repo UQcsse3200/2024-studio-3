@@ -305,6 +305,10 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         updateDocketPositions();
         updateDocketSizes();
     }
+
+    /**
+     * Removes the current big ticket from the UI, as well as its values in the array
+     */
     public void removeBigTicket(){
         int index = tableArrayList.size() - 1;
         Docket currBackground = backgroundArrayList.get(index);
@@ -325,6 +329,12 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         updateDocketPositions();
     }
 
+    /**
+     * Updates the details of the current info from the big ticket. It gets the order, timer and meal as string values
+     * and calls another function to save these values elsewhere.
+     * @param bigTicket The current ticket being prioritised by the user
+     *
+     */
     private void updateBigTicketInfo(Table bigTicket) {
 
         SnapshotArray<Actor> children = bigTicket.getChildren();
@@ -342,23 +352,14 @@ public class MainGameOrderTicketDisplay extends UIComponent {
                 } else if (text.startsWith("Timer:")) {
                     timeLeft = text.replace("Timer: ", "");
                 } else { // handling meal name
-                    // TODO
-                    // Overrides the current meal name with the last ingredient in the big ticket.
-                    // in future, this last ingredient should instead be the meal name
-                    // if you want to get the list of meal names as a string, and do it that way
-                    // you could just concatenate with something like meal = meal + " " + text;
+                    // TODO Overrides the current meal name with the last ingredient in the big ticket.
+                    // this last ingredient should instead be the meal name (ie "banana split")
+                    // alternatively for it to store all the ingredients, could concatenate it all with
+                    // meal = meal + " " + text;
                     meal = text;
                 }
             }
         }
-
-        /*
-        Array<Label> labels = bigTicket.getChildren().filter(Label.class);
-        String orderNum = labels.get(0).getText().toString().replace("Order ", "");
-        String meal = labels.get(1).getText().toString();
-        String timeLeft = labels.get(labels.size - 1).getText().toString();
-
-         */
         ServiceLocator.getDocketService().getEvents().trigger("updateBigTicket", orderNum, meal, timeLeft);
         //orderActions.onUpdateBigTicket(orderNum, meal, timeLeft);
     }
