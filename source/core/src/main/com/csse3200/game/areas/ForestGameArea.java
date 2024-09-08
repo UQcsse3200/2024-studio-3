@@ -111,6 +111,7 @@ public class ForestGameArea extends GameArea {
   /** Create the game area, including terrain, static entities (trees), dynamic entities (player) */
   @Override
   public void create() {
+
     loadAssets();
 
     displayUI();
@@ -125,7 +126,7 @@ public class ForestGameArea extends GameArea {
     // Spawn beef
     spawnBeef("cooked");
     spawnStrawberry("chopped");
-   spawnLettuce("chopped");
+    spawnLettuce("chopped");
     spawnCustomer();
 
     // Spawn the player
@@ -451,7 +452,8 @@ public class ForestGameArea extends GameArea {
     return newFruitSalad;
   }
 
-  private void spawnCustomer() {
+  public void spawnCustomer() {
+    logger.info("A customer has been spawned");
     GridPoint2 position = new GridPoint2(1, 5);
     //System.out.println("1");
 

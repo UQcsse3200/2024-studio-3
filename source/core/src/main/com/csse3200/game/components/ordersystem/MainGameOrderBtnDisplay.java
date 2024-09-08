@@ -31,19 +31,18 @@ public class MainGameOrderBtnDisplay extends UIComponent{
 		logger.info("order button created");
 	}
 
-	/**
-	 * Adds the button to the UI and sets up the event listener for the button click.
-	 * When the "Create Order" button is clicked, it triggers the "createOrder" event.
-	 */
-	private void addActors() {
-		table = new Table();
-		table.bottom().right();
-		table.setFillParent(true);
 
+    /**
+     * Adds the button to the UI and sets up the event listener for the button click.
+     * When the "Create Order" button is clicked, it triggers the "createOrder" event.
+     */
+    public void addActors() {
+        table = new Table();
+        table.bottom().right();
+        table.setFillParent(true);
+		// Triggers an event when the button is pressed.
 		TextButton createOrderBtn = new TextButton("Create Order", skin);
 		logger.info("Create Order button created");
-
-		// Triggers an event when the button is pressed.
 		createOrderBtn.addListener(
 		  new ChangeListener() {
 			  @Override
@@ -55,7 +54,6 @@ public class MainGameOrderBtnDisplay extends UIComponent{
 			  }
 		  });
 		table.add(createOrderBtn).padBottom(10f).padRight(10f);
-
 		stage.addActor(table);
 	}
 
@@ -87,14 +85,7 @@ public class MainGameOrderBtnDisplay extends UIComponent{
 		this.stage = stage;
 	}
 
-	/**
-	 * Removed the button
-	 */
-	@Override
-	public void dispose() {
-		table.clear();
-		super.dispose();
-	}
+
 
 	/**
 	 * Get the state of the button
@@ -104,5 +95,15 @@ public class MainGameOrderBtnDisplay extends UIComponent{
 	public boolean getState(){
 		return pressed;
 	}
+
+	/**
+	 * Removed the button
+	 */
+	@Override
+	public void dispose() {
+		table.clear();
+		super.dispose();
+	}
+
 }
 
