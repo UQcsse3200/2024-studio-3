@@ -114,12 +114,20 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="../Entity.html" title="class in com.csse3200.game.entities">Entity</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#createBaseCustomer(com.badlogic.gdx.math.Vector2)" class="member-name-link">createBaseCustomer</a><wbr>(com.badlogic.gdx.math.Vector2&nbsp;targetPosition)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#createBaseCharacter(com.badlogic.gdx.math.Vector2)" class="member-name-link">createBaseCharacter</a><wbr>(com.badlogic.gdx.math.Vector2&nbsp;targetPosition)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="../Entity.html" title="class in com.csse3200.game.entities">Entity</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#createBasicCustomer(java.lang.String,com.badlogic.gdx.math.Vector2)" class="member-name-link">createBasicCustomer</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
- com.badlogic.gdx.math.Vector2&nbsp;targetPosition)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#createBaseCustomer(com.badlogic.gdx.math.Vector2)" class="member-name-link">createBaseCustomer</a><wbr>(com.badlogic.gdx.math.Vector2&nbsp;targetPosition)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="../Entity.html" title="class in com.csse3200.game.entities">Entity</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#createBasicCustomer(java.lang.String,com.badlogic.gdx.math.Vector2)" class="member-name-link">createBasicCustomer</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
+ com.badlogic.gdx.math.Vector2&nbsp;targetPosition)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="../Entity.html" title="class in com.csse3200.game.entities">Entity</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#createBoss(com.badlogic.gdx.math.Vector2)" class="member-name-link">createBoss</a><wbr>(com.badlogic.gdx.math.Vector2&nbsp;targetPosition)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Creates a boss entity.</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="../Entity.html" title="class in com.csse3200.game.entities">Entity</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#createCustomerPersonal(java.lang.String,com.badlogic.gdx.math.Vector2)" class="member-name-link">createCustomerPersonal</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
  com.badlogic.gdx.math.Vector2&nbsp;targetPosition)</code></div>
@@ -171,6 +179,39 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
+<section class="detail" id="createBoss(com.badlogic.gdx.math.Vector2)">
+<h3>createBoss</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="../Entity.html" title="class in com.csse3200.game.entities">Entity</a></span>&nbsp;<span class="element-name">createBoss</span><wbr><span class="parameters">(com.badlogic.gdx.math.Vector2&nbsp;targetPosition)</span></div>
+<div class="block">Creates a boss entity.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>targetPosition</code> - Place to roam to</dd>
+<dt>Returns:</dt>
+<dd>entity
+
+    public static Entity createBoss(Entity target, Vector2 targetPosition) {
+        Entity boss = createBaseNPC(target, targetPosition);
+        BaseEntityConfig config = configs.ghost;
+
+        AnimationRenderComponent animator =
+                new AnimationRenderComponent(
+                        ServiceLocator.getResourceService().getAsset("images/ghost.atlas", TextureAtlas.class));
+        animator.addAnimation("angry_float", 0.1f, Animation.PlayMode.LOOP);
+        animator.addAnimation("float", 0.1f, Animation.PlayMode.LOOP);
+
+        boss
+                .addComponent(new CombatStatsComponent(config.health, config.baseAttack))
+                .addComponent(animator)
+                .addComponent(new GhostAnimationController());
+
+        boss.getComponent(AnimationRenderComponent.class).scaleEntity();
+
+        return boss;
+    }</dd>
+</dl>
+</section>
+</li>
+<li>
 <section class="detail" id="createGhostKing(com.csse3200.game.entities.Entity,com.badlogic.gdx.math.Vector2)">
 <h3>createGhostKing</h3>
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="../Entity.html" title="class in com.csse3200.game.entities">Entity</a></span>&nbsp;<span class="element-name">createGhostKing</span><wbr><span class="parameters">(<a href="../Entity.html" title="class in com.csse3200.game.entities">Entity</a>&nbsp;target,
@@ -203,6 +244,12 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="createBaseCustomer(com.badlogic.gdx.math.Vector2)">
 <h3>createBaseCustomer</h3>
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="../Entity.html" title="class in com.csse3200.game.entities">Entity</a></span>&nbsp;<span class="element-name">createBaseCustomer</span><wbr><span class="parameters">(com.badlogic.gdx.math.Vector2&nbsp;targetPosition)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="createBaseCharacter(com.badlogic.gdx.math.Vector2)">
+<h3>createBaseCharacter</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="../Entity.html" title="class in com.csse3200.game.entities">Entity</a></span>&nbsp;<span class="element-name">createBaseCharacter</span><wbr><span class="parameters">(com.badlogic.gdx.math.Vector2&nbsp;targetPosition)</span></div>
 </section>
 </li>
 <li>
