@@ -4,6 +4,7 @@ import com.csse3200.game.GdxGame;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.ordersystem.MainGameOrderTicketDisplay;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.entities.factories.PlayerFactory;
 import com.csse3200.game.entities.factories.UIFactory;
 import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
@@ -18,7 +19,7 @@ public class MainGameActions extends Component {
 	private static final Logger logger = LoggerFactory.getLogger(MainGameActions.class);
 	private GdxGame game;
 	private Entity ui = UIFactory.createDocketUI();
-//	private Entity ui = new Entity();
+//	private Entity ui = PlayerFactory.createPlayer();
 	private final MainGameOrderTicketDisplay docketDisplayer = ui.getComponent(MainGameOrderTicketDisplay.class);
 //	private final MainGameOrderTicketDisplay docketDisplayer = new MainGameOrderTicketDisplay();
 //	private final MainGameOrderTicketDisplay docketDisplayer = ui.getComponent(MainGameOrderTicketDisplay.class);
