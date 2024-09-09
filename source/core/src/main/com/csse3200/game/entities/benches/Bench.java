@@ -35,10 +35,13 @@ public class Bench extends Entity{
                 .addComponent(new PhysicsComponent())
                 .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
                 .addComponent(new StationItemHandlerComponent(type, new ArrayList<>()));
-       // float width  = 7f;
-        //float height = 7f;
-        //float scalefactor = 7f;
+        float width  = 1f;
+        float height = 1f;
+        float scalefactor = 7f;
+        bench.setScale(width, height);
         bench.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
+        PhysicsUtils.setScaledCollider(bench, 1.2f, 0.75f);
+
         return bench;
     }
 

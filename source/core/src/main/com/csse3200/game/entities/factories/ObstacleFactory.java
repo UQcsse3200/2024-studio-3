@@ -77,7 +77,7 @@ public class ObstacleFactory {
 
     float width=-1f,height=131.9f,scalefactor=11f;
     border.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
-    PhysicsUtils.setScaledCollider(border, 1.0F, 0.8F);
+    PhysicsUtils.setScaledCollider(border, 1.0F, 0.0F);
     border.setScale(width/scalefactor, height/scalefactor);
     PhysicsUtils.setScaledCollider(border, 1, (height - 5) / height);
     return border;

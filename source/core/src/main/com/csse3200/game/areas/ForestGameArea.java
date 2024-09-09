@@ -31,7 +31,7 @@ public class ForestGameArea extends GameArea {
   private static final int NUM_TREES = 7;
   private static final int NUM_GHOSTS = 2;
   private static final int NUM_CUSTOMERS_BASE = 1;
-  private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(5, 3);
+  private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(3, 3);
   private static final float WALL_WIDTH = 0.1f;
   private static final String[] forestTextures = {
     "images/meals/acai_bowl.png",
@@ -310,9 +310,10 @@ public class ForestGameArea extends GameArea {
     Entity flame = StationFactory.createFlame();
     spawnEntityAt(flame, flamePos, false, false);
 
-    GridPoint2 fireExtinguisherPos = new GridPoint2(3, 4);
+    GridPoint2 fireExtinguisherPos = new GridPoint2(3, 5);
     Entity fireExtinguisher = StationFactory.createFireExtinguisher();
     spawnEntityAt(fireExtinguisher, fireExtinguisherPos, false, false);
+
   }
 
 
@@ -344,15 +345,26 @@ public class ForestGameArea extends GameArea {
     Entity bench_extra_2 = Bench.createBench("right_border");
     spawnEntityAt(bench_extra_2, new GridPoint2( 13,3), false, false);
     bench_extra_2.setPosition(13, 3f);
-    Entity bench_extra_3 = Bench.createBench("left_border");
-    spawnEntityAt(bench_extra_3, new GridPoint2( 11,7), false, false);
+    for (int i = 4; i < 8; i++) {
+      Entity bench = Bench.createBench("vertical");
+      spawnEntityAt(bench, new GridPoint2(13, i), false, false);
+      bench.setPosition(13f, i);
+    }
+
+    Entity bench_extra_3 = Bench.createBench("middle");
+    spawnEntityAt(bench_extra_3, new GridPoint2( 11,8), false, false);
     bench_extra_3.setPosition(11, 7f);
+
+    Entity bench_extra_7 = Bench.createBench("top_fin");
+    spawnEntityAt(bench_extra_7, new GridPoint2( 11,4), false, false);
+    bench_extra_7.setPosition(11f, 4f);
     for (int i = 12; i < 13; i++) {
       Entity bench = Bench.createBench("middle");
       spawnEntityAt(bench, new GridPoint2(i, 7), false, false);
       bench.setPosition(i, 7f);
     }
-    Entity bench_extra_4 = Bench.createBench("right_border");
+
+    Entity bench_extra_4 = Bench.createBench("top_fin");
     spawnEntityAt(bench_extra_4, new GridPoint2( 13,7), false, false);
     bench_extra_4.setPosition(13, 7f);
 
@@ -384,25 +396,37 @@ public class ForestGameArea extends GameArea {
     Entity bench7 = Bench.createBench("bottom_shadow_final");
     spawnEntityAt(bench7, new GridPoint2(4,3), false, false);
     bench7.setPosition(4f, 3);
+    Entity bench_block = Bench.createBench("left_border");
+    spawnEntityAt(bench_block, new GridPoint2(9,8), false, false);
+    bench_block.setPosition(10f,8f);
     Entity bench8 = Bench.createBench("top_fin");
     spawnEntityAt(bench8, new GridPoint2(4,7), false, false);
     bench8.setPosition(4f, 7);
 
     //middle 1
-    for (int i = 2; i < 4; i++) {
+    for (int i = 2; i < 5; i++) {
       Entity bench = Bench.createBench("vertical");
       spawnEntityAt(bench, new GridPoint2(9, i), false, false);
       bench.setPosition(9f, i);
     }
+    for (int i = 4; i < 5; i++) {
+      Entity bench = Bench.createBench("vertical");
+      spawnEntityAt(bench, new GridPoint2(6, i), false, false);
+      bench.setPosition(6f, i);
+    }
+    Entity bench_bottom = Bench.createBench("bottom_fin");
+    spawnEntityAt(bench_bottom, new GridPoint2(6,2), false, false);
+    bench_bottom.setPosition(6f, 3f);
     Entity bench9 = Bench.createBench("top_fin");
     spawnEntityAt(bench9, new GridPoint2(9,4), false, false);
-    bench9.setPosition(9f, 4);
+    bench9.setPosition(9f, 5);
     //middle 2
     for (int i = 7; i < 9; i++) {
       Entity bench = Bench.createBench("vertical");
       spawnEntityAt(bench, new GridPoint2(9, i), false, false);
       bench.setPosition(9f, i);
     }
+
     Entity bench12 = Bench.createBench("vertical");
     spawnEntityAt(bench12, new GridPoint2(9,9), false, false);
     bench12.setPosition(9f, 9);
@@ -411,19 +435,28 @@ public class ForestGameArea extends GameArea {
     bench11.setPosition(9f, 10);
     Entity bench10 = Bench.createBench("bottom_shadow_final");
     spawnEntityAt(bench10, new GridPoint2(9,7), false, false);
-    bench10.setPosition(9f, 7);
-    Entity bench13 = Bench.createBench("top_fin");
+    bench10.setPosition(9f, 7f);
+    Entity bench20 = Bench.createBench("vertical");
+    spawnEntityAt(bench20, new GridPoint2(6,7), true, true);
+    bench20.setPosition(6f, 8f);
+    Entity bench21 = Bench.createBench("bench_test");
+    spawnEntityAt(bench21, new GridPoint2(9,10), false, false);
+    bench21.setPosition(6f, 10f);
+    Entity bench13 = Bench.createBench("vertical");
     spawnEntityAt(bench13, new GridPoint2(6,7), false, false);
-    bench13.setPosition(6f, 7);
-    Entity bench14 = Bench.createBench("bottom_fin");
-    spawnEntityAt(bench14, new GridPoint2(7,3), false, false);
-    bench14.setPosition(7f, 3);
+    bench13.setPosition(6f, 9f);
+    Entity bench14 = Bench.createBench("middle");
+    spawnEntityAt(bench14, new GridPoint2(7,5), true, true);
+    bench14.setPosition(7f, 5f);
+    Entity bench19 = Bench.createBench("middle");
+    spawnEntityAt(bench19, new GridPoint2(7,5), true, true);
+    bench19.setPosition(8f, 5f);
     Entity bench15 = Bench.createBench("bottom_shadow_final");
     spawnEntityAt(bench15, new GridPoint2(6,6), false, false);
-    bench15.setPosition(6f, 6);
-    Entity bench16 = Bench.createBench("top_fin");
-    spawnEntityAt(bench16, new GridPoint2(7,4), false, false);
-    bench16.setPosition(7f, 4);
+    bench15.setPosition(6f, 7f);
+    Entity bench16 = Bench.createBench("left_border");
+    spawnEntityAt(bench16, new GridPoint2(6,5), true, true);
+    bench16.setPosition(6f, 5f);
 
   }
 
@@ -453,8 +486,9 @@ public class ForestGameArea extends GameArea {
    */
   private Entity spawnBeef(String cookedLevel) {
     Entity newBeef = ItemFactory.createBeef(cookedLevel);
-    spawnEntityAt(newBeef, new GridPoint2(3, 3), true, true);
+    spawnEntityAt(newBeef, new GridPoint2(4, 4), true, true);
     newBeef.setScale(0.5f,0.5f);
+    newBeef.setPosition(9 + 0.2f, 8);
     return newBeef;
   }
 
@@ -501,8 +535,10 @@ public class ForestGameArea extends GameArea {
    */
   private Entity spawnStrawberry(String choppedLevel) {
     Entity newStrawberry = ItemFactory.createStrawberry(choppedLevel);
-    spawnEntityAt(newStrawberry, new GridPoint2(5, 5), true, true);
+    spawnEntityAt(newStrawberry, new GridPoint2(6, 4), true, false);
     newStrawberry.setScale(0.5f,0.5f);
+    newStrawberry.setPosition(7 + 0.2f, 4);
+
     return newStrawberry;
   }
 
@@ -513,8 +549,9 @@ public class ForestGameArea extends GameArea {
    */
   private Entity spawnLettuce(String choppedLevel) {
     Entity newLettuce = ItemFactory.createLettuce(choppedLevel);
-    spawnEntityAt(newLettuce, new GridPoint2(4, 4), true, true);
+    spawnEntityAt(newLettuce, new GridPoint2(5, 4), true, true);
     newLettuce.setScale(0.5f,0.5f);
+    newLettuce.setPosition(9 + 0.2f, 9);
     return newLettuce;
   }
 
