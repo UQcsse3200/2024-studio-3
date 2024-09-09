@@ -61,6 +61,7 @@ public class StationServingComponent extends Component {
      */
     public void submitMeal(ItemComponent item) {
 
+        /*
         String[] bigTicketInfo = orderActions.getCurrentBigTicketInfo();
         // TODO bigTicketInfo[0] is ALWAYS null, even when there is a ticket and it shouldn't. orderActions needs to be instantiated better, not sure how though
         if (bigTicketInfo[0] != null) {
@@ -77,11 +78,11 @@ public class StationServingComponent extends Component {
             /*
             TODO
              DELETE THIS, it should only be seen in the IF clause (bigTicketInfo[0] != null), just here to show that it works.
-             */
+             
             ServiceLocator.getDocketService().getEvents().trigger("removeOrder", -1);
             ServiceLocator.getDocketService().getEvents().trigger("removeBigTicket");
             return;
-        }
+        }*/
     }
     
 }
