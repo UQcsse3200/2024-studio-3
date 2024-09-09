@@ -1,5 +1,8 @@
 package com.csse3200.game.components.maingame;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
@@ -21,6 +24,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.screens.MainGameScreen;
+import com.csse3200.game.services.DayNightService;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
 
@@ -29,6 +33,8 @@ public class EndDayDisplay extends UIComponent {
     private boolean isVisible;
     private final MainGameScreen game;
     private Image dayEndImage;
+    private static final Logger logger = LoggerFactory.getLogger(EndDayDisplay.class);
+    
 
     public EndDayDisplay(MainGameScreen game) {
         super();
@@ -61,6 +67,12 @@ public class EndDayDisplay extends UIComponent {
 
         initializeUI();
         setupInputListener();
+
+        //from team 2, added the listener for when game day ends to toggle visibility
+        ServiceLocator.getDayNightService().getEvents().addListener("endOfDay", () -> {
+            logger.info("it is listened");
+            toggleVisibility();});
+        
     }
 
     private void initializeUI() {
@@ -123,6 +135,7 @@ public class EndDayDisplay extends UIComponent {
     public void toggleVisibility() {
         if (isVisible) {
             hide();
+
         } else {
             show();
         }

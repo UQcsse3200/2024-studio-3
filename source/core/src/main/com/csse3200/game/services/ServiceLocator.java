@@ -8,6 +8,7 @@ import com.csse3200.game.rendering.RenderService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+
 /**
  * A simplified implementation of the Service Locator pattern:
  * https://martinfowler.com/articles/injection.html#UsingAServiceLocator
@@ -28,7 +29,10 @@ public class ServiceLocator {
 
   //Me new stuff :)
 
+
   private static DocketService docketService;
+
+  private static DayNightService dayNightService; //new
 
   public static EntityService getEntityService() {
     return entityService;
@@ -57,6 +61,12 @@ public class ServiceLocator {
   public static DocketService getDocketService() {
     return docketService;
   }
+
+  public static DayNightService getDayNightService() { //new
+    return dayNightService;
+  }
+
+
 
   public static void registerEntityService(EntityService service) {
     logger.debug("Registering entity service {}", service);
@@ -99,6 +109,14 @@ public class ServiceLocator {
     resourceService = source;
   }
 
+  public static void registerDayNightService(DayNightService service) { //new
+    logger.debug("Registering day-night service: {}", service);
+    dayNightService = service;
+  }
+
+  
+
+
 
   public static void clear() {
     entityService = null;
@@ -108,6 +126,7 @@ public class ServiceLocator {
     inputService = null;
     resourceService = null;
     docketService = null;
+    dayNightService = null; //new
   }
 
   private ServiceLocator() {

@@ -19,6 +19,7 @@ import com.csse3200.game.physics.PhysicsEngine;
 import com.csse3200.game.physics.PhysicsService;
 import com.csse3200.game.rendering.RenderService;
 import com.csse3200.game.rendering.Renderer;
+import com.csse3200.game.services.DayNightService;
 import com.csse3200.game.services.DocketService;
 import com.csse3200.game.services.GameTime;
 import com.csse3200.game.services.ResourceService;
@@ -72,6 +73,7 @@ public class MainGameScreen extends ScreenAdapter {
 		ServiceLocator.registerEntityService(new EntityService());
 		ServiceLocator.registerRenderService(new RenderService());
 		ServiceLocator.registerDocketService(new DocketService());
+        ServiceLocator.registerDayNightService(new DayNightService());
 
 		renderer = RenderFactory.createRenderer();
 		renderer.getCamera().getEntity().setPosition(CAMERA_POSITION);
@@ -91,9 +93,11 @@ public class MainGameScreen extends ScreenAdapter {
 	public void render(float delta) {
 		if (!isPaused) {
 			physicsEngine.update();
+			ServiceLocator.getDayNightService().update();
 			ServiceLocator.getEntityService().update();
 		}
 		renderer.render();
+		
 	}
 
 	@Override
@@ -162,7 +166,7 @@ public class MainGameScreen extends ScreenAdapter {
 			.addComponent(new TerminalDisplay())
 			.addComponent(new OrderActions(this.game))
 			.addComponent(new MainGameOrderBtnDisplay())
-		        .addComponent(new EndDayDisplay(this));
+		    .addComponent(new EndDayDisplay(this));
 		ServiceLocator.getEntityService().register(ui);
 	}
 }
