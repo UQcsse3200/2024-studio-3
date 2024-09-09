@@ -10,13 +10,18 @@ import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.components.InteractionComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.rendering.TextureRenderComponent;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-
+/**
+ * PlateFactory is used to create manage plate entities in game with their textures
+ * methods such as spawn individual plates, spawn plate stacks and spawn plates with meals
+ * and also dipose plates also getmealtexture to limit meals
+ */
 public class PlateFactory {
-    private static final Logger logger = LoggerFactory.getLogger(PlateFactory.class);
-
+    /**
+     * Creates a template plate entity
+     *
+     * @return A template plate entity components such as physics, collider, and interaction
+     */
     public static Entity createTemplatePlate() {
         return new Entity()
                 .addComponent(new PhysicsComponent())
@@ -26,29 +31,38 @@ public class PlateFactory {
                 .addComponent(new TooltipsDisplay());
     }
 
+    /**
+     * Spawns an single plate with an ID obtained from array of stacked plates
+     *
+     * @param id The ID of the plate
+     * @return The spawned plate entity
+     */
     public static Entity spawnPlate(int id) {
         String texturePath = "images/platecomponent/stackedplates/1plates.png";
 
-        Entity singlePlate = createTemplatePlate()
+        Entity plate = createTemplatePlate()
                 .addComponent(new PlateComponent(1))
                 .addComponent(new TextureRenderComponent(texturePath));
 
-        PlateComponent plateComponent = singlePlate.getComponent(PlateComponent.class);
+        PlateComponent plateComponent = plate.getComponent(PlateComponent.class);
         plateComponent.setStacked(false);
         plateComponent.setId(id);
 
-        PhysicsUtils.setScaledCollider(singlePlate, 0.5f, 0.25f);
-        singlePlate.getComponent(ColliderComponent.class).setDensity(1.0f);
-        singlePlate.getComponent(InteractionComponent.class).setAsBox(singlePlate.getScale());
-        singlePlate.getComponent(InteractionComponent.class).create();
-        singlePlate.getComponent(InteractionComponent.class).getFixture().setUserData(singlePlate);
+        PhysicsUtils.setScaledCollider(plate, 0.5f, 0.25f);
+        plate.getComponent(ColliderComponent.class).setDensity(1.0f);
+        plate.getComponent(InteractionComponent.class).setAsBox(plate.getScale());
+        plate.getComponent(InteractionComponent.class).create();
+        plate.getComponent(InteractionComponent.class).getFixture().setUserData(plate);
 
-        //logger.info("Single plate id: {}", plateComponent.getId());
-
-        return singlePlate;
+        return plate;
     }
 
-
+    /**
+     * Spawns a stack of plates with a given amount of quantity
+     *
+     * @param quantity The number plates in stack ([1,5])
+     * @return The spawned plate stack entity
+     */
     public static Entity spawnPlateStack(int quantity) {
         if (quantity < 1 || quantity > 5) {
             //noone
@@ -81,6 +95,13 @@ public class PlateFactory {
         return plateStack;
     }
 
+    /**
+     * Spawns a plate with a meal on it, retaining plate ID when it was empty
+     *
+     * @param id       The ID of the plate
+     * @param mealType The mealType to place to plate
+     * @return The plate entity with the meal
+     */
     public static Entity spawnMealOnPlate(int id, String mealType) {
 
         String mealTexturePath = getMealTexturePath(mealType);
@@ -96,23 +117,32 @@ public class PlateFactory {
         plateComponent.setId(id);
         plateComponent.addMealToPlate(mealType);
 
-        //logger.info("mealplate id: {}", plateComponent.getId());
-
         return plate;
     }
 
+    /**
+     * Disposes of the plate stack or updates the texture based on the remaining quantity (for stacked)
+     *
+     * @param plate    The plate entity to dispose or update
+     * @param quantity The remaining number of plates in the stack
+     */
     public static void disposePlate(Entity plate, int quantity) {
         if (quantity == 0) {
             plate.dispose();
-            //logger.info("Disposed fr");
         } else {
             String newTexturePath = "images/platecomponent/stackedplates/" + quantity + "plates.png";
             TextureRenderComponent textureRenderComponent = plate.getComponent(TextureRenderComponent.class);
             textureRenderComponent.setTexture(newTexturePath);
-            //logger.info("rerendered");
         }
     }
 
+    /**
+     * Retrieves the texture path for the given mealType
+     *
+     * @param mealType The mealType to place to plate
+     *
+     * @return The texture path for the meal, or null if the type is unknown
+     */
     private static String getMealTexturePath(String mealType) {
         return switch (mealType.toLowerCase()) {
             case "acai bowl" -> "images/meals/acai_bowl.png";

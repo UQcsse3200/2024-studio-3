@@ -125,12 +125,14 @@ public class ForestGameArea extends GameArea {
     displayUI();
 
     spawnTerrain();
+
     // Spawn the restaurant
     spawnDoor();
     spawnWall();
     make_border();
     spawnBenches();
     spawnStations();
+
     // Spawn beef
     spawnBeef("cooked");
     spawnStrawberry("chopped");
@@ -138,8 +140,8 @@ public class ForestGameArea extends GameArea {
     spawnCustomer();
 
     //spawnplates
-    spawnPlate(5); //testplate spawn
-    //spawnPlatewithItem();
+    spawnStackPlate(5); //testplate spawn
+    //spawnPlatewithMeal();
 
     // Spawn the player
     player = spawnPlayer();
@@ -556,7 +558,12 @@ public class ForestGameArea extends GameArea {
 //    spawnEntityAt(ghostKing, randomPos, true, true);
 //  }
 
-  private Entity spawnPlate(int quantity) {
+  /**
+   * Spawn Stack Plate item.
+   * @param quantity - amount of stack.
+   * @return A newPlate entity.
+   */
+  private Entity spawnStackPlate(int quantity) {
     Entity newPlate = PlateFactory.spawnPlateStack(quantity);
     GridPoint2 platePosition = new GridPoint2(6, 1);
     spawnEntityAt(newPlate, platePosition, true, false);
@@ -565,8 +572,11 @@ public class ForestGameArea extends GameArea {
     return newPlate;
   }
 
-/*
-  private Entity spawnPlatewithItem() {
+  /**
+   * Spawn Stack Plate item but with meals.
+   * @return A newPlate entity with meal.
+   */
+  private Entity spawnPlatewithMeal() {
     Entity newPlate = PlateFactory.spawnMealOnPlate(1,"salad");
     GridPoint2 platePosition = new GridPoint2(6, 4);
     spawnEntityAt(newPlate, platePosition, true, false);
@@ -574,7 +584,7 @@ public class ForestGameArea extends GameArea {
 
     return newPlate;
   }
-*/
+
 
   private void playMusic() {
     Music music = ServiceLocator.getResourceService().getAsset(backgroundMusic, Music.class);

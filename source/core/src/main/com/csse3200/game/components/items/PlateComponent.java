@@ -5,14 +5,16 @@ import com.csse3200.game.components.Component;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.factories.PlateFactory;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.Arrays;
 
-
+/**
+ * PlateComponent manages everything about plates
+ * state of plate, item on plate, availability of plate, pickup status of plate
+ * servable status of plate, stacked status of plate, stackPlateArray to store id of plates in a stacked plates
+ * plate id (for single plates) and quantity of plates in a stack
+ */
 public class PlateComponent extends Component {
-    private static final Logger logger = LoggerFactory.getLogger(PlateComponent.class);
     private PlateState state;
     private String itemOnPlate;
     private boolean isAvailable;
@@ -23,10 +25,19 @@ public class PlateComponent extends Component {
     private int id;
     int quantity;
 
+    /**
+     * 3 possible states of plates
+     */
     public enum PlateState {
         CLEAN, DIRTY, WASHING
     }
 
+    /**
+     * Constructor for the PlateComponent (stack). Initializes the plate state, quantity,
+     * and sets up the stack array
+     *
+     * @param quantity the initial number of plates in the stack
+     */
     public PlateComponent(int quantity) {
         this.state = PlateState.CLEAN;
         this.itemOnPlate = null;
@@ -39,6 +50,11 @@ public class PlateComponent extends Component {
         initializePlateArray(quantity);
     }
 
+    /**
+     * Initializes the stack plate array with generated plate Id based on the quantity
+     *
+     * @param quantity the number of plates in the stack
+     */
     private void initializePlateArray(int quantity) {
         stackPlateArray = new int[quantity];
         for (int i = 0; i < quantity; i++) {
@@ -46,35 +62,53 @@ public class PlateComponent extends Component {
         }
     }
 
+    /**
+     * Creating the component. Sets up event listeners for plate
+     */
     @Override
     public void create() {
-        //logger.info("Plate stack create");
         this.isAvailable = true;
         entity.getEvents().addListener("interactWithPlate", this::interactWithPlate);
 
     }
 
+    /**
+     * Update plate
+     */
     @Override
     public void update() {
         //still nothing here mate
     }
 
+    /**
+     * Adds a meal to the plate
+     * if the state == clean and itemOnPlate == null
+     *
+     * @param meal name of meal to add to the plate
+     */
     public void addMealToPlate(String meal) {
         if (state == PlateState.CLEAN && itemOnPlate == null) {
             itemOnPlate = meal;
             isAvailable = false;
             isServable = true;
-            //logger.info("Item '{}' on plate.", meal);
-            return;
         }
-        //logger.warn("cannot add meal");
     }
 
+    /**
+     * Disposes of the plate, marking it as unavailable
+     */
     public void dispose() {
-        logger.info("Plate disposed");
         isAvailable = false;
     }
 
+    /**
+     * Handle interactions with the plate when a player interacts with it
+     *
+     * @param fixture the physics fixture involved in the interaction
+     * @param player  the player entity interacting with the plate
+     *
+     * @return true if the plate interaction is handled, false if not
+     */
     public static boolean handlePlateInteraction(Fixture fixture, Entity player) {
         if (fixture.getUserData() instanceof Entity plateEntity) {
             PlateComponent plateComponent = plateEntity.getComponent(PlateComponent.class);
@@ -86,6 +120,11 @@ public class PlateComponent extends Component {
         return false;
     }
 
+    /**
+     * Handles interaction logic when player interacts with the plate
+     *
+     * @param player the player interacting with the plate
+     */
     public void interactWithPlate(Entity player) {
         InventoryComponent inventory = player.getComponent(InventoryComponent.class);
         if (inventory == null) {
@@ -99,85 +138,132 @@ public class PlateComponent extends Component {
         }
     }
 
+    /**
+     * Handles the logic for picking up a plate from the stack
+     *
+     * @param player the player picking up the plate
+     */
     public void pickup(Entity player) {
         if (quantity > 0) {
 
             int plateId = stackPlateArray[0];
             stackPlateArray = Arrays.copyOfRange(stackPlateArray, 1, stackPlateArray.length);
             quantity--;
-            //logger.info("Plate picked up with ID {}. Remain: {}", plateId, quantity);
             PlateFactory.disposePlate(entity, quantity);
-            //logger.info("Remaining array IDs: {}", Arrays.toString(stackPlateArray));
 
             Entity singlePlate = PlateFactory.spawnPlate(plateId);
-            //Entity singlePlate = PlateFactory.spawnMealOnPlate(plateId, "salad"); //test sahaja
+            //Entity singlePlate = PlateFactory.spawnMealOnPlate(plateId, "salad"); //test spawnMealPlates
             PlateComponent singlePlateComponent = singlePlate.getComponent(PlateComponent.class);
             singlePlateComponent.setId(plateId);
 
             if (quantity == 0) {
                 isStacked = false;
-                /*PlateFactory.disposePlate(entity, 0);*/
-                //logger.info("Plate stack finished.");
-                //logger.info("Remaining array IDs: {}", Arrays.toString(stackPlateArray));
+                PlateFactory.disposePlate(entity, 0);
             }
 
-        } else {
-            //logger.warn("No plates left");
         }
     }
 
+    /**
+     * Handles logic to let down the plate after it has been picked up
+     *
+     * @param player the player putting down the plate
+     */
     public void letDown(Entity player) {
         //letdown simul
     }
 
+    /**
+     * Get Quantity of stack
+     *
+     * @return quantity
+     */
     public int getQuantity() {
         return quantity;
     }
 
+    /**
+     * Get Item on single plate
+     *
+     * @return item on Plate
+     */
     public String getItemOnPlate() {
         return itemOnPlate;
     }
 
+    /**
+     * Set Quantity of plate in stack
+     */
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
 
+    /**
+     * @return boolean isPickedUP
+     */
     private boolean isPickedUp() {
         return isPickedup;
     }
 
+    /**
+     * @return boolean isAvailable
+     */
     public boolean isAvailable() {
         return isAvailable;
     }
 
+    /**
+     * @return boolean isServable
+     */
     public boolean isServable() {
         return isServable;
     }
 
+    /**
+     * @return boolean isWashed
+     */
     public boolean isWashed() {
         return state == PlateState.CLEAN;
     }
 
+    /**
+     * @return boolean isStacked
+     */
     public boolean isStacked() {
         return isStacked;
     }
 
+    /**
+     * set stacked state
+     */
     public void setStacked(boolean isStacked) {
         this.isStacked = isStacked;
     }
 
+    /**
+     * @return stackPlateArray in a stacked plate entity
+     */
     public int[] getPlateArray() {
         return stackPlateArray;
     }
 
+    /**
+     * set Plate Array for a stacked plate entity
+     */
     public void setPlateArray(int[] plateArray) {
         this.stackPlateArray = plateArray;
     }
 
+    /**
+     * @return id of plate for a single plate
+     */
     public int getId() {
         return id;
     }
 
+    /**
+     * set Plate id for a single state
+     */
     public void setId(int id) {
         this.id = id;
     }
