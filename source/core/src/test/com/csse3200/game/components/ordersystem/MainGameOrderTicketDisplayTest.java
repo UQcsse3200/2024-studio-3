@@ -133,25 +133,32 @@ class MainGameOrderTicketDisplayTest {
 		assertEquals(0, (MainGameOrderTicketDisplay.getTableArrayList()).size());
 	}
 
-//	@Test
-//	void testEnlargementOfLastDocket() {
-//		for (int i = 0; i < 5; i++) {
-//			orderTicketDisplay.addActors();
-//		}
-//		orderTicketDisplay.updateDocketSizes();
-//		float viewportWidth = orderTicketDisplay.getViewportWidth();
-//		System.out.println("Viewport Width: " + viewportWidth);
-//		Table lastTable = MainGameOrderTicketDisplay.getTableArrayList().get(MainGameOrderTicketDisplay.getTableArrayList().size() - 1);
-//		assertEquals(170f * (orderTicketDisplay.getViewportWidth()/1920f), lastTable.getWidth(), 0.1f);
-//		assertEquals(200f * (orderTicketDisplay.getViewportHeight()/1080f), lastTable.getHeight(), 0.1f);
-//
-//		float expectedX = orderTicketDisplay.getViewportWidth() - 320f;
-//		float expectedY = 900f * (orderTicketDisplay.getViewportHeight()/1080f);
-//
-//		assertEquals(expectedX, lastTable.getX(), 0.1f);
-//		assertEquals(expectedY, lastTable.getY(), 0.1f);
-//
-//	}
+	@Test
+	public void testDocketSizes_normalAndEnlarged() {
+		orderTicketDisplay.addActors();
+		orderTicketDisplay.addActors();
+		orderTicketDisplay.addActors();
+
+		assertEquals(3, orderTicketDisplay.getTableArrayList().size());
+
+		orderTicketDisplay.updateDocketSizes();
+
+		float normalDocketWidth = 120f * (orderTicketDisplay.getViewportWidth() / 1920f);
+		float normalDocketHeight = 150f * (orderTicketDisplay.getViewportHeight() / 1080f);
+
+		float enlargedDocketWidth = 170f * (orderTicketDisplay.getViewportWidth() / 1920f);
+		float enlargedDocketHeight = 200f * (orderTicketDisplay.getViewportHeight() / 1080f);
+
+		for (int i = 0; i < orderTicketDisplay.getTableArrayList().size() - 1; i++) {
+			Table table = orderTicketDisplay.getTableArrayList().get(i);
+			assertEquals(normalDocketWidth, table.getWidth(), 0.1f);
+			assertEquals(normalDocketHeight, table.getHeight(), 0.1f);
+		}
+
+		Table lastTable = orderTicketDisplay.getTableArrayList().get(orderTicketDisplay.getTableArrayList().size() - 1);
+		assertEquals(enlargedDocketWidth, lastTable.getWidth(), 0.1f);
+		assertEquals(enlargedDocketHeight, lastTable.getHeight(), 0.1f);
+	}
 
 	/**
 	 * tests countdown decreases correctly
@@ -218,25 +225,26 @@ class MainGameOrderTicketDisplayTest {
 		assertEquals(ServiceLocator.getRenderService().getStage(), stage);
 	}
 
+	@Test
+	void testSingleDocketIsEnlarged() {
+		orderTicketDisplay.addActors();
+		orderTicketDisplay.updateDocketSizes();
 
-//	@Test
-//	void testEnlargementOfSingleDocket() {
-//		orderTicketDisplay.addActors();
-//		orderTicketDisplay.updateDocketSizes();
-//		Table singleTable = MainGameOrderTicketDisplay.getTableArrayList().get(0);
-//
-//		assertEquals(
-//		  170f * (orderTicketDisplay.getViewportWidth()/1920f), singleTable.getWidth(),
-//		  0.1f, "Docket width is incorrect.");
-//		assertEquals(200f * (orderTicketDisplay.getViewportHeight()/1080f), singleTable.getHeight(),
-//		  0.1f, "Docket height is incorrect.");
-//
-//		float expectedX = orderTicketDisplay.getViewportWidth() - 320f; //orderTicketDisplay.getViewportWidth() - 260f
-//		float expectedY = 900f * (orderTicketDisplay.getViewportHeight()/1080f);
-//
-//		assertEquals(expectedX, singleTable.getX(), 0.1f, "Docket X position is incorrect.");
-//		assertEquals(expectedY, singleTable.getY(), 0.1f, "Docket Y position is incorrect.");
-//	}
+		Table singleTable = MainGameOrderTicketDisplay.getTableArrayList().get(0);
+
+		float expectedWidth = 170f * (orderTicketDisplay.getViewportWidth() / 1920f);
+		float expectedHeight = 200f * (orderTicketDisplay.getViewportHeight() / 1080f);
+
+		assertEquals(expectedWidth, singleTable.getWidth(), 0.1f, "Docket width is incorrect.");
+		assertEquals(expectedHeight, singleTable.getHeight(), 0.1f, "Docket height is incorrect.");
+
+		float expectedX = orderTicketDisplay.getViewportWidth() - 320f * (orderTicketDisplay.getViewportWidth() / 1920f);
+		float expectedY = 900f * (orderTicketDisplay.getViewportHeight() / 1080f);
+
+		assertEquals(expectedX, singleTable.getX(), 0.1f, "Docket X position is incorrect.");
+		assertEquals(expectedY, singleTable.getY(), 0.1f, "Docket Y position is incorrect.");
+	}
+
 
 	@Test
 	void testNotEnlargedDocketSizes() {
