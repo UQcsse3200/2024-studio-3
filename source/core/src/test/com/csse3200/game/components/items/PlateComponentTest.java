@@ -32,7 +32,7 @@ class PlateComponentTest {
         assertArrayEquals(new int[]{1, 2, 3}, plateComponent.getPlateArray());
     }
 
-    /* Issues with Render/Physics Component
+    /* Issues with Render/Physics Component initialization
     @Test
     void shouldDecreaseQuantityAfterPickup() {
         plateComponent.setQuantity(1);

@@ -626,8 +626,8 @@ public class ForestGameArea extends GameArea {
   }
 
   /**
-   * Spawn Stack Plate item but with meals.
-   * @return A newPlate entity with meal.
+   * Spawn Stack Plate item but with meals
+   * @return A newPlate entity with meal
    */
   private Entity spawnPlatewithMeal() {
     Entity newPlate = PlateFactory.spawnMealOnPlate(1,"salad");

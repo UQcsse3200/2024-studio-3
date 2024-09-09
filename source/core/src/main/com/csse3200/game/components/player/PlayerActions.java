@@ -93,7 +93,7 @@ public class PlayerActions extends Component {
 
       boolean interactingWithPlate = PlateComponent.handlePlateInteraction(interactable, entity);
       if (interactingWithPlate) {
-        // Interaction handled by PlateComponent
+        // Interaction handled by PlateComponent for plates
         return;
       }
       entity.getEvents().trigger("startInteraction");

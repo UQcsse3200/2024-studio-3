@@ -98,7 +98,7 @@ public class PlateFactory {
     /**
      * Spawns a plate with a meal on it, retaining plate ID when it was empty
      *
-     * @param id       The ID of the plate
+     * @param id       The Id of the plate
      * @param mealType The mealType to place to plate
      * @return The plate entity with the meal
      */
