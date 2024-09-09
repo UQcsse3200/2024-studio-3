@@ -98,11 +98,21 @@ public class MainGameScreen extends ScreenAdapter {
 
 	@Override
 	public void render(float delta) {
+		if (isPaused) {
+			renderPauseMenu();
+			return;
+		}
 		if (!isPaused) {
 			physicsEngine.update();
 			ServiceLocator.getEntityService().update();
 		}
 		renderer.render();
+	}
+
+	private void renderPauseMenu() {
+		Stage stage = ServiceLocator.getRenderService().getStage();
+		stage.act();
+		stage.draw();
 	}
 
 	@Override
@@ -177,4 +187,5 @@ public class MainGameScreen extends ScreenAdapter {
 			.addComponent(new TextDisplay(this));
 		ServiceLocator.getEntityService().register(ui);
 	}
+
 }
