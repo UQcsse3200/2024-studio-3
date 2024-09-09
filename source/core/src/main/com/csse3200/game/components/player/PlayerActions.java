@@ -5,6 +5,8 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.csse3200.game.components.Component;
+import com.csse3200.game.components.station.FireExtinguisherHandlerComponent;
+import com.csse3200.game.entities.Entity;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.components.SensorComponent;
@@ -80,8 +82,15 @@ public class PlayerActions extends Component {
     Fixture interactable = interactionSensor.getClosestFixture();
     if (interactable != null) {
       // We need to notify the input that we are inside an interaction
-      entity.getEvents().trigger("startInteraction");
 
+
+      // Handle if it was a fire extinguisher
+      boolean interactingWithFireExtinguisher = FireExtinguisherHandlerComponent.handleFireExtinguisher(interactable, entity);
+      if (interactingWithFireExtinguisher) {
+        // No more interacting after this
+        return;
+      }
+      entity.getEvents().trigger("startInteraction");
       // Logic for what interaction even to call on the station
       entity.getEvents().trigger("Add Station Item");
     }

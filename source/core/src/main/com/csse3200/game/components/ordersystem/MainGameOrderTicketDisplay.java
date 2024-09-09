@@ -39,8 +39,13 @@ public class MainGameOrderTicketDisplay extends UIComponent {
     private static int orderNumb = 0;
     private static final long DEFAULT_TIMER = 10000;
     private Recipe recipe;
+    private ArrayList<String> ingredients;
+    private Integer burnedTime;
+    private String stationType;
+    private static long timer;
     private int gold = 0;
     private int recipeValue = 2;
+
 
     /**
      * Constructs an MainGameOrderTicketDisplay instance
@@ -189,7 +194,7 @@ public class MainGameOrderTicketDisplay extends UIComponent {
      * @param table  the table representing the docket.
      * @param index  the index of the docket.
      */
-    private void stageDispose(Docket docket, Table table, int index) {
+    public void stageDispose(Docket docket, Table table, int index) {
         table.setBackground((Drawable) null);
         table.clear();
         table.remove();
@@ -393,6 +398,26 @@ public class MainGameOrderTicketDisplay extends UIComponent {
      */
     public static ArrayList<Table> getTableArrayList() {
         return tableArrayList;
+    }
+
+    public static ArrayList<Long> getStartTimeArrayList() {
+        return startTimeArrayList;
+    }
+
+    public static ArrayList<Label> getCountdownLabelArrayList() {
+        return countdownLabelArrayList;
+    }
+
+    public static ArrayList<Docket> getBackgroundArrayList() {
+        return backgroundArrayList;
+    }
+
+    public static long getTimer() {
+        return timer;
+    }
+
+    public static ArrayList<Long> getRecipeTimeArrayList() {
+        return recipeTimeArrayList;
     }
 
 }

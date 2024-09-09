@@ -24,6 +24,8 @@ public class EntityService {
   }
 
 
+  public Array<Entity> getEntities() { return entities; }
+
   /**
    * Register a new entity with the entity service. The entity will be created and start updating.
    * @param entity new entity.
