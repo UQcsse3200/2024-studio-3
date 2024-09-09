@@ -28,7 +28,7 @@ public class Terminal extends Component {
 
   public Terminal(Map<String, Command> commands) {
     this.commands = commands;
-    addCommand("addQuestion", new MoralCommands());
+    addCommand("question", new MoralCommands());
     addCommand("debug", new DebugCommand());
   }
 

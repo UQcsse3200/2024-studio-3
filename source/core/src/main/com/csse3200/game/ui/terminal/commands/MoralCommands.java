@@ -7,27 +7,28 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class MoralCommands implements Command{
     private static final Logger logger = LoggerFactory.getLogger(MoralCommands.class);
-
     /**
-     * Toggles debug mode on or off if the corresponding argument is received.
+     * Adds a question to the moral decision component.
      * @param args command arguments
      */
     public boolean action(ArrayList<String> args) {
+
+        logger.debug("Received command: 'question' with arguments: {}", args);
         if (!isValid(args)) {
             logger.debug("Invalid arguments received for 'addQuestions' command: {}", args);
             return false;
         }
 
-        String question = args.getFirst();
-        boolean isGood = Boolean.parseBoolean(args.get(1));
-        int points = Integer.parseInt(args.get(2));
+        String question = String.join(" ", args);
         Entity moralScreen = ServiceLocator.getEntityService().getMoralScreen();
-        moralScreen.getComponent(MoralDecision.class).addQuestion(question, isGood, points);
+        moralScreen.getComponent(MoralDecision.class).addQuestion(question);
 
-        logger.debug("Added question: {} as {} for {} points", question, isGood?"good":"bad", points);
+        logger.debug("Added question: {}", question);
         return true;
     }
     /**
@@ -36,6 +37,6 @@ public class MoralCommands implements Command{
      * @return is valid
      */
     boolean isValid(ArrayList<String> args) {
-        return args.size() == 3;
+        return !args.isEmpty();
     }
 }
