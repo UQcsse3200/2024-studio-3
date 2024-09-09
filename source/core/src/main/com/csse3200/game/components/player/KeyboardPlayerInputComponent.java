@@ -78,11 +78,12 @@ public class KeyboardPlayerInputComponent extends InputComponent {
    * @return whether the input was processed
    * @see InputProcessor#keyUp(int)
    */
+
   @Override
   public boolean keyUp(int keycode) {
     keyFlags.put(keycode, 0);
     return switch (keycode) {
-      case Keys.W, Keys.S, Keys.A, Keys.D -> {
+      case Keys.W, Keys.A, Keys.S, Keys.D -> {
         triggerWalkEvent();
         yield true;
       }
@@ -165,22 +166,23 @@ public class KeyboardPlayerInputComponent extends InputComponent {
   }
 
   private Directions keysToDirection() {
-    int dirFlags = 0b0101 +
-            ((isPressed(Keys.W) ? 1 : 0) << 2) - ((isPressed(Keys.S) ? 1 : 0) << 2) +
-            (isPressed(Keys.D) ? 1 : 0) - (isPressed(Keys.A) ? 1 : 0);
-    return switch (dirFlags) {
-      case 0b1001 -> Directions.UP;
-      case 0b1010 -> Directions.UPRIGHT;
-      case 0b1000 -> Directions.UPLEFT;
-      case 0b0001 -> Directions.DOWN;
-      case 0b0010 -> Directions.DOWNRIGHT;
-      case 0b0000 -> Directions.DOWNLEFT;
-      case 0b0110 -> Directions.RIGHT;
-      case 0b0100 -> Directions.LEFT;
-      default -> Directions.NONE;
+    boolean up = isPressed(Keys.W);
+    boolean down = isPressed(Keys.S);
+    boolean left = isPressed(Keys.A);
+    boolean right = isPressed(Keys.D);
+
+    if (up && right) return Directions.UPRIGHT;
+    if (up && left) return Directions.UPLEFT;
+    if (down && right) return Directions.DOWNRIGHT;
+    if (down && left) return Directions.DOWNLEFT;
+    if (up) return Directions.UP;
+    if (down) return Directions.DOWN;
+    if (right) return Directions.RIGHT;
+    if (left) return Directions.LEFT;
+
+    return Directions.NONE;
     };
 
-  }
 
 
   @Override

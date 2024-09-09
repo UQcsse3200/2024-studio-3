@@ -9,7 +9,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Cell;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.csse3200.game.components.player.PlayerStatsDisplay;
-import com.csse3200.game.entities.Entity;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
 import org.slf4j.Logger;
@@ -39,9 +38,14 @@ public class MainGameOrderTicketDisplay extends UIComponent {
     private static ArrayList<Long> recipeTimeArrayList;
     private static int orderNumb = 0;
     private static final long DEFAULT_TIMER = 10000;
-    private static int recipeValue;
     private Recipe recipe;
+    private ArrayList<String> ingredients;
+    private Integer burnedTime;
+    private String stationType;
+    private static long timer;
     private int gold = 0;
+    private int recipeValue = 2;
+
 
     /**
      * Constructs an MainGameOrderTicketDisplay instance
@@ -52,8 +56,6 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         backgroundArrayList = new ArrayList<>();
         countdownLabelArrayList = new ArrayList<>();
         recipeTimeArrayList = new ArrayList<>();
-        setRecipeValue(2);
-        setGold(50);
     }
 
     /**
@@ -92,6 +94,7 @@ public class MainGameOrderTicketDisplay extends UIComponent {
     public void addActors() {
         Table table = new Table();
         long startTime = TimeUtils.millis();
+        long timer = getRecipe().getMakingTime() * DEFAULT_TIMER;
 
         startTimeArrayList.add(startTime);
         tableArrayList.add(table);
@@ -103,7 +106,8 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         float yVal = viewportHeight * viewPortHeightMultiplier;
         table.setPosition(xVal, yVal);
 //        logger.info("Position set for new table: ({}, {})", xVal, yVal);
-        Docket background = new Docket(getTimer());
+
+        Docket background = new Docket(timer);
         backgroundArrayList.add(background);
 //        logger.info("New docket background added. Total backgrounds: {}", backgroundArrayList.size());
         table.setBackground(background.getImage().getDrawable());
@@ -119,8 +123,9 @@ public class MainGameOrderTicketDisplay extends UIComponent {
             Label ingredientLabel = new Label(ingredient, skin);
             table.add(ingredientLabel).padLeft(10f).row();
         }
-        recipeTimeArrayList.add(getTimer());
-        Label countdownLabel = new Label("Timer: " + getTimer(), skin);
+
+        recipeTimeArrayList.add(timer);
+        Label countdownLabel = new Label("Timer: " + timer, skin);
         countdownLabelArrayList.add(countdownLabel);
         table.add(countdownLabel).padLeft(10f).row();
 
@@ -189,55 +194,16 @@ public class MainGameOrderTicketDisplay extends UIComponent {
      * @param table  the table representing the docket.
      * @param index  the index of the docket.
      */
-    public void stageDispose(Docket docket, Table table, int index) {
+    private void stageDispose(Docket docket, Table table, int index) {
         table.setBackground((Drawable) null);
         table.clear();
         table.remove();
         ServiceLocator.getDocketService().getEvents().trigger("removeOrder", index);
         docket.dispose();
-        addGold(2);
-
+        gold = gold + recipeValue;
+        PlayerStatsDisplay.updatePlayerGoldUI(gold);
+        ServiceLocator.getDocketService().getEvents().trigger("goldUpdated", gold);
     }
-
-    /**
-     * Sets the entity's gold. Gold has a minimum bound of 0.
-     *
-     * @param gold gold
-     */
-    public void setGold(int gold) {
-        this.gold = Math.max(gold, 0);
-        if (entity != null) {
-            entity.getEvents().trigger("updateGold", this.gold);
-        }
-    }
-
-    /**
-     * Adds to the player's gold. The amount added can be negative.
-     *
-     * @param gold gold to add
-     */
-    public void addGold(int gold) {
-        setGold(this.gold + gold);
-    }
-
-    /**
-     * Returns the entity's gold.
-     *
-     * @return entity's gold
-     */
-    public int getGold() {
-        return gold;
-    }
-
-
-    public void setRecipeValue(int index) {
-        recipeValue = index;
-    }
-
-    public static int getRecipeValue() {
-        return recipeValue;
-    }
-
 
     /**
      * Shifts the order tickets to the right by moving the last ticket to the beginning of the list.
@@ -336,7 +302,6 @@ public class MainGameOrderTicketDisplay extends UIComponent {
                 startTimeArrayList.remove(i);
                 countdownLabelArrayList.remove(i);
                 recipeTimeArrayList.remove(i);
-//                addGold(2);
             }
         }
 
@@ -447,8 +412,12 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         return backgroundArrayList;
     }
 
-    public long getTimer() {
-        return getRecipe().getMakingTime() * DEFAULT_TIMER;
+    public static long getTimer() {
+        return timer;
+    }
+
+    public static ArrayList<Long> getRecipeTimeArrayList() {
+        return recipeTimeArrayList;
     }
 
 }
