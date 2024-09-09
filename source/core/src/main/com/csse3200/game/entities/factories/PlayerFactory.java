@@ -76,7 +76,6 @@ public class PlayerFactory {
             .addComponent(new TooltipsDisplay())
             .addComponent(new PlayerStatsDisplay())
             .addComponent(new InteractionComponent(PhysicsLayer.INTERACTABLE))
-            .addComponent(new MainGameOrderTicketDisplay())
             .addComponent(new SensorComponent(PhysicsLayer.INTERACTABLE, 10f));
 
     player.scaleHeight(1.5f);
