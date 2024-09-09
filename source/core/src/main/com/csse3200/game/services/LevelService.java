@@ -106,8 +106,4 @@ public class LevelService {
         levelEventHandler.trigger("startSpawning", spawnCap);
         incrementLevel();
     }
-
-    public void resetEventHandler() {
-        levelEventHandler = new EventHandler();
-    }
 }
