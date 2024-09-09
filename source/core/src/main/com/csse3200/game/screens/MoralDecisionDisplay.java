@@ -15,6 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
 
 
@@ -27,6 +28,12 @@ public class MoralDecisionDisplay extends UIComponent {
     public MoralDecisionDisplay(MainGameScreen game) {
         super();
         this.game = game;
+        isVisible = false;
+    }
+
+    public MoralDecisionDisplay() {
+        super();
+        this.game = ServiceLocator.getGameScreen();
         isVisible = false;
     }
 

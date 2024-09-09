@@ -1,10 +1,12 @@
 package com.csse3200.game.services;
 
-import com.csse3200.game.components.ordersystem.Docket;
+import com.badlogic.gdx.Game;
+import com.csse3200.game.areas.GameArea;
 import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.input.InputService;
 import com.csse3200.game.physics.PhysicsService;
 import com.csse3200.game.rendering.RenderService;
+import com.csse3200.game.screens.MainGameScreen;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,6 +26,9 @@ public class ServiceLocator {
   private static GameTime timeSource;
   private static InputService inputService;
   private static PlayerService playerService;
+  private static GameArea gameArea;
+  private static MainGameScreen gameScreen;
+
 
   private static ResourceService resourceService;
 
@@ -66,6 +71,14 @@ public class ServiceLocator {
 
   public static LevelService getLevelService(){
     return levelService;
+  }
+
+  public static GameArea getGameArea() {
+    return gameArea;
+  }
+
+  public static MainGameScreen getGameScreen() {
+    return gameScreen;
   }
 
   public static void registerEntityService(EntityService service) {
@@ -128,6 +141,24 @@ public class ServiceLocator {
     }
   }
 
+  public static void registerGameArea(GameArea game) {
+    if (gameArea != null) {
+      logger.warn("Game is already registered!");
+    } else {
+      logger.debug("Registering game");
+      gameArea = game;
+    }
+  }
+
+  public static void registerGameScreen(MainGameScreen game) {
+    if (gameScreen != null) {
+      logger.warn("Game Screen is already registered!");
+    } else {
+      logger.debug("Registering game screen");
+      gameScreen = game;
+    }
+  }
+
   public static void clear() {
     entityService = null;
     renderService = null;
@@ -137,6 +168,7 @@ public class ServiceLocator {
     resourceService = null;
     docketService = null;
     playerService = null;
+    gameArea = null;
   }
 
   private ServiceLocator() {

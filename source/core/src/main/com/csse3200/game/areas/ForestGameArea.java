@@ -1,6 +1,7 @@
 package com.csse3200.game.areas;
 
 
+import com.csse3200.game.components.moral.MoralDecision;
 import com.csse3200.game.components.npc.PersonalCustomerEnums;
 import com.badlogic.gdx.utils.Null;
 import com.csse3200.game.components.cutscenes.GoodEnd;
@@ -8,6 +9,7 @@ import com.csse3200.game.components.maingame.TextDisplay;
 
 import com.csse3200.game.entities.benches.Bench;
 import com.csse3200.game.entities.configs.PlayerConfig;
+import com.csse3200.game.screens.MoralDecisionDisplay;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.badlogic.gdx.audio.Music;
@@ -135,6 +137,8 @@ public class ForestGameArea extends GameArea {
     super();
     this.terrainFactory = terrainFactory;
     //this.textDisplay = textDisplay;
+
+    ServiceLocator.registerGameArea(this);
   }
 
   /** Create the game area, including terrain, static entities (trees), dynamic entities (player) */
@@ -161,7 +165,7 @@ public class ForestGameArea extends GameArea {
     player = spawnPlayer();
     //ServiceLocator.getEntityService().getEvents().trigger("SetText", "Boss: Rent is due");
     //triggerFiredEnd();    // Trigger the fired (bad) ending
-
+    createMoralScreen();
     playMusic();
   }
 
@@ -740,6 +744,14 @@ public class ForestGameArea extends GameArea {
     for (Entity entity: ServiceLocator.getEntityService().getEntities()) {
       entity.getEvents().trigger("SetText", text);
     }
+  }
+
+  private void createMoralScreen() {
+    Entity moralScreen = new Entity();
+    moralScreen
+            .addComponent(new MoralDecisionDisplay())
+            .addComponent(new MoralDecision());
+    ServiceLocator.getEntityService().registerMoral(moralScreen);
   }
 
   private void triggerGoodEnd() {
