@@ -211,6 +211,7 @@ public class EndDayDisplay extends UIComponent {
     }
 
     public void show() {
+        ServiceLocator.getLevelService().togglePlayerFinishedLevel();
         isVisible = true;
         layout.setVisible(isVisible);
         birdImage.setVisible(true);
