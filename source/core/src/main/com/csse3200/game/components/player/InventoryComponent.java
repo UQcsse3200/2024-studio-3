@@ -23,6 +23,11 @@ public class InventoryComponent extends Component {
   private final String nullException = "Index in Inventory does not contain an Item.";
   private int gold;
 
+  /**
+   * Creates inventory component
+   * @param capacity the players inventory size
+   * @param gold the players gold
+   */
   public InventoryComponent(int capacity, int gold) {
     setCapacity(capacity);
     items = new ArrayList<>(capacity);
@@ -32,10 +37,6 @@ public class InventoryComponent extends Component {
     size = 0;
     setSelected(0);
     setGold(gold);
-  }
-
-  public InventoryComponent(int gold) {
-    addGold(gold);
   }
 
   /**

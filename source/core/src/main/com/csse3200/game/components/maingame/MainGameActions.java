@@ -18,10 +18,7 @@ public class MainGameActions extends Component {
 	private static final Logger logger = LoggerFactory.getLogger(MainGameActions.class);
 	private GdxGame game;
 	private Entity ui = UIFactory.createDocketUI();
-//	private Entity ui = new Entity();
 	private final MainGameOrderTicketDisplay docketDisplayer = ui.getComponent(MainGameOrderTicketDisplay.class);
-//	private final MainGameOrderTicketDisplay docketDisplayer = new MainGameOrderTicketDisplay();
-//	private final MainGameOrderTicketDisplay docketDisplayer = ui.getComponent(MainGameOrderTicketDisplay.class);
 	String[] recipeNames = {"acaiBowl", "salad", "fruitSalad", "steakMeal", "bananaSplit"};
 
 	/**
