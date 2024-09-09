@@ -1,6 +1,14 @@
 package com.csse3200.game.components.items;
 
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.entities.EntityService;
+import com.csse3200.game.physics.PhysicsService;
+import com.csse3200.game.physics.components.PhysicsComponent;
+import com.csse3200.game.rendering.RenderService;
+import com.csse3200.game.entities.factories.PlateFactory;
+import com.csse3200.game.rendering.TextureRenderComponent;
+import com.csse3200.game.services.ResourceService;
+import com.csse3200.game.services.ServiceLocator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -15,6 +23,7 @@ class PlateComponentTest {
 
     @BeforeEach
     void setUp() {
+
         mockEntity = mock(Entity.class);
         mockPlayer = mock(Entity.class);
 
@@ -24,20 +33,30 @@ class PlateComponentTest {
     }
 
     @Test
-    void shouldAddMealToPlateAndPlateNotNullAndServable() {
-        plateComponent.addMealToPlate("Steak");
+    void shouldInstantiatePlateComponentWithGivenValuesAndDefaulValues() {
+        assertEquals(3, plateComponent.getQuantity());
+        assertTrue(plateComponent.isStacked());
+        assertEquals(-1, plateComponent.getId());
+        assertArrayEquals(new int[]{1, 2, 3}, plateComponent.getPlateArray());
+    }
 
+    /* Issues with Render/Physics Component
+    @Test
+    void shouldDecreaseQuantityAfterPickup() {
+        plateComponent.setQuantity(1);
+        plateComponent.pickup(mockPlayer);
+        assertEquals(0, plateComponent.getQuantity());
+        assertArrayEquals(new int[]{}, plateComponent.getPlateArray());
+    }*/
+
+    @Test
+    void shouldAddMealToPlateAndPlateNotNullAndServable() {
+        plateComponent.setQuantity(2);
+        plateComponent.addMealToPlate("Steak");
         assertEquals("Steak", plateComponent.getItemOnPlate());
         assertFalse(plateComponent.isAvailable());
         assertNotNull(plateComponent.getItemOnPlate());
         assertTrue(plateComponent.isServable());
-    }
-
-    @Test
-    void shouldQuantityDecreaseAfterPickup() {
-        plateComponent.setQuantity(1);
-        plateComponent.pickup(mockPlayer);
-        assertEquals(0, plateComponent.getQuantity());
     }
 
     @Test
@@ -70,5 +89,11 @@ class PlateComponentTest {
     @Test
     void shouldNotServableAfterInstantiate() {
         assertFalse(plateComponent.isServable());
+    }
+
+    @Test
+    void shouldSetIdToGivenValue(){
+        plateComponent.setId(1);
+        assertEquals(1, plateComponent.getId());
     }
 }

@@ -8,6 +8,8 @@ import com.csse3200.game.entities.factories.PlateFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Arrays;
+
 
 public class PlateComponent extends Component {
     private static final Logger logger = LoggerFactory.getLogger(PlateComponent.class);
@@ -16,6 +18,9 @@ public class PlateComponent extends Component {
     private boolean isAvailable;
     private boolean isServable;
     private boolean isPickedup;
+    private boolean isStacked;
+    private int[] stackPlateArray;
+    private int id;
     int quantity;
 
     public enum PlateState {
@@ -28,13 +33,25 @@ public class PlateComponent extends Component {
         this.isAvailable = true;
         this.isServable = false;
         this.isPickedup = false;
+        this.isStacked = true;
         this.quantity = quantity;
+        this.id = -1;
+        initializePlateArray(quantity);
     }
+
+    private void initializePlateArray(int quantity) {
+        stackPlateArray = new int[quantity];
+        for (int i = 0; i < quantity; i++) {
+            stackPlateArray[i] = i + 1;
+        }
+    }
+
     @Override
     public void create() {
-        logger.info("Plate create");
+        //logger.info("Plate stack create");
         this.isAvailable = true;
         entity.getEvents().addListener("interactWithPlate", this::interactWithPlate);
+
     }
 
     @Override
@@ -47,20 +64,22 @@ public class PlateComponent extends Component {
             itemOnPlate = meal;
             isAvailable = false;
             isServable = true;
-            logger.info("Item '{}' on plate.", meal);
+            //logger.info("Item '{}' on plate.", meal);
             return;
         }
-        logger.warn("Cant add meal");
+        //logger.warn("cannot add meal");
+    }
+
+    public void dispose() {
+        logger.info("Plate disposed");
+        isAvailable = false;
     }
 
     public static boolean handlePlateInteraction(Fixture fixture, Entity player) {
-        //System.out.println("handlePlateInteraction trigger");
         if (fixture.getUserData() instanceof Entity plateEntity) {
             PlateComponent plateComponent = plateEntity.getComponent(PlateComponent.class);
-            //System.out.println("instance create");
             if (plateComponent != null) {
                 plateComponent.interactWithPlate(player);
-                //System.out.println("platecomp Null");
                 return true;
             }
         }
@@ -68,13 +87,9 @@ public class PlateComponent extends Component {
     }
 
     public void interactWithPlate(Entity player) {
-        //System.out.println("interactwithplate trigger");
         InventoryComponent inventory = player.getComponent(InventoryComponent.class);
         if (inventory == null) {
-            //logger.info("inventory invalid");
             return;
-        }else{
-            //logger.info("inventory valid");
         }
 
         if (isAvailable()) {
@@ -85,13 +100,29 @@ public class PlateComponent extends Component {
     }
 
     public void pickup(Entity player) {
-        if (quantity >= 1) {
+        if (quantity > 0) {
+
+            int plateId = stackPlateArray[0];
+            stackPlateArray = Arrays.copyOfRange(stackPlateArray, 1, stackPlateArray.length);
             quantity--;
-            logger.info("Plate picked up. Remaining: {}", quantity);
+            //logger.info("Plate picked up with ID {}. Remain: {}", plateId, quantity);
             PlateFactory.disposePlate(entity, quantity);
+            //logger.info("Remaining array IDs: {}", Arrays.toString(stackPlateArray));
+
+            Entity singlePlate = PlateFactory.spawnPlate(plateId);
+            //Entity singlePlate = PlateFactory.spawnMealOnPlate(plateId, "salad"); //test sahaja
+            PlateComponent singlePlateComponent = singlePlate.getComponent(PlateComponent.class);
+            singlePlateComponent.setId(plateId);
+
+            if (quantity == 0) {
+                isStacked = false;
+                /*PlateFactory.disposePlate(entity, 0);*/
+                //logger.info("Plate stack finished.");
+                //logger.info("Remaining array IDs: {}", Arrays.toString(stackPlateArray));
+            }
+
         } else {
-            PlateFactory.disposePlate(entity, 0);
-            logger.info("Plate stack finish");
+            //logger.warn("No plates left");
         }
     }
 
@@ -99,16 +130,11 @@ public class PlateComponent extends Component {
         //letdown simul
     }
 
-    public void dispose() {
-        logger.info("Plate disposed");
-        isAvailable = false;
-    }
-
     public int getQuantity() {
         return quantity;
     }
 
-    public String getItemOnPlate(){
+    public String getItemOnPlate() {
         return itemOnPlate;
     }
 
@@ -132,4 +158,27 @@ public class PlateComponent extends Component {
         return state == PlateState.CLEAN;
     }
 
+    public boolean isStacked() {
+        return isStacked;
+    }
+
+    public void setStacked(boolean isStacked) {
+        this.isStacked = isStacked;
+    }
+
+    public int[] getPlateArray() {
+        return stackPlateArray;
+    }
+
+    public void setPlateArray(int[] plateArray) {
+        this.stackPlateArray = plateArray;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 }

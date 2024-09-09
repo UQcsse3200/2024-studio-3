@@ -1,9 +1,6 @@
 package com.csse3200.game.areas;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+
 import com.csse3200.game.entities.benches.Bench;
 import com.csse3200.game.entities.configs.PlayerConfig;
 import org.slf4j.Logger;
@@ -15,7 +12,6 @@ import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.areas.terrain.TerrainFactory.TerrainType;
 import com.csse3200.game.components.gamearea.GameAreaDisplay;
 import com.csse3200.game.entities.Entity;
-import com.csse3200.game.components.items.PlateComponent;
 import com.csse3200.game.entities.factories.NPCFactory;
 import com.csse3200.game.entities.factories.ObstacleFactory;
 import com.csse3200.game.entities.factories.PlayerFactory;
@@ -25,11 +21,8 @@ import com.csse3200.game.entities.factories.PlateFactory;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.utils.math.GridPoint2Utils;
-import com.csse3200.game.components.items.PlateComponent;
-import com.csse3200.game.utils.math.RandomUtils;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /** Forest area for the demo game with trees, a player, and some enemies. */
@@ -145,7 +138,7 @@ public class ForestGameArea extends GameArea {
     spawnCustomer();
 
     //spawnplates
-    //spawnPlate(5); //testplate spawn
+    spawnPlate(5); //testplate spawn
     //spawnPlatewithItem();
 
     // Spawn the player
@@ -563,44 +556,25 @@ public class ForestGameArea extends GameArea {
 //    spawnEntityAt(ghostKing, randomPos, true, true);
 //  }
 
-/*
-  private Entity spawnPlate() {
-    GridPoint2 platePosition = new GridPoint2(6, 3);
-    Entity newPlate = PlateFactory.createPlate();
-    spawnEntityAt(newPlate, platePosition, true, false);
-    //newPlate.setPosition(newPlate.getPosition().x + 1.0f, newPlate.getPosition().y + 1.3f);
-
-    newPlate.setScale(1.75f, 1.75f);
-
-    return newPlate;
-  }
-
-
-  private Entity spawnPlateBench(GridPoint2 benchPosition) {
-    Entity newPlate = PlateFactory.createPlate();
-    spawnEntityAt(newPlate, benchPosition, true, true);
-    newPlate.setScale(1.5f, 1.5f);
-    return newPlate;
-  }*/
-
   private Entity spawnPlate(int quantity) {
-    Entity newPlate = PlateFactory.createPlate(quantity);
-    GridPoint2 platePosition = new GridPoint2(6, 2);
+    Entity newPlate = PlateFactory.spawnPlateStack(quantity);
+    GridPoint2 platePosition = new GridPoint2(6, 1);
     spawnEntityAt(newPlate, platePosition, true, false);
     newPlate.setScale(1.0f, 1.0f);
 
     return newPlate;
   }
 
-
+/*
   private Entity spawnPlatewithItem() {
-    Entity newPlate = PlateFactory.spawnMealOnPlate("salad");
+    Entity newPlate = PlateFactory.spawnMealOnPlate(1,"salad");
     GridPoint2 platePosition = new GridPoint2(6, 4);
     spawnEntityAt(newPlate, platePosition, true, false);
     newPlate.setScale(0.8f, 0.8f);
 
     return newPlate;
   }
+*/
 
   private void playMusic() {
     Music music = ServiceLocator.getResourceService().getAsset(backgroundMusic, Music.class);
