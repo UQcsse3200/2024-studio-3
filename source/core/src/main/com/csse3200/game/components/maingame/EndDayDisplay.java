@@ -44,12 +44,15 @@ public class EndDayDisplay extends UIComponent {
     private Timer.Task birdMoveTask;
     private int currentGold;
     private Label goldLabel;
+    private int startGold;
 
     public EndDayDisplay(MainGameScreen gameScreen, GdxGame game) {
         super();
         this.gameScreen = gameScreen;
         this.game = game;
         isVisible = false;
+        this.startGold = ServiceLocator.getLevelService().getCurrGold();
+        this.currentGold = this.startGold;
         ServiceLocator.getLevelService().getEvents().addListener("resetScreen", MainGameScreen::resetScreen);
     }
 
@@ -181,7 +184,7 @@ public class EndDayDisplay extends UIComponent {
 
     private void animateGoldChange() {
         float duration = 1.0f;
-        int startGold = 0;
+        //int startGold = ServiceLocator.getLevelService().getCurrGold();
         goldLabel.addAction(Actions.sequence(
                 Actions.run(() -> goldLabel.setText(String.valueOf(startGold))),
                 Actions.repeat(30, Actions.run(new Runnable() {
