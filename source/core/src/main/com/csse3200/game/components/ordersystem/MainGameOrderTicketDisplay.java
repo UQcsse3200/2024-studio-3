@@ -158,13 +158,11 @@ public class MainGameOrderTicketDisplay extends UIComponent {
             logger.warn("No dockets to shift left");
             return;
         }
-         Table firstTable = tableArrayList.remove(0);
-         tableArrayList.add(firstTable);
-         logger.info("First table moved to the end. New first table index: {}", tableArrayList.get(0));
+        Table firstTable = tableArrayList.remove(0);
+        tableArrayList.add(firstTable);
 
-         Docket firstDocket = backgroundArrayList.remove(0);
-         backgroundArrayList.add(firstDocket);
-         logger.info("First docket background moved to the end. New first docket index: {}", backgroundArrayList.get(0));
+        Docket firstDocket = backgroundArrayList.remove(0);
+        backgroundArrayList.add(firstDocket);
 
         Long firstStartTime = startTimeArrayList.remove(0);
         startTimeArrayList.add(firstStartTime);
@@ -173,12 +171,14 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         countdownLabelArrayList.add(firstCountdownLabel);
 
         long firstRecipeTime = recipeTimeArrayList.remove(0);
-        recipeTimeArrayList.add(0, firstRecipeTime);
+        recipeTimeArrayList.add(firstRecipeTime);
 
         updateDocketPositions();
         updateDocketSizes();
+
         logger.info("Docket positions updated after left shift");
     }
+
 
     /**
      * Removes and disposes of a docket from the stage and its associated resources.
