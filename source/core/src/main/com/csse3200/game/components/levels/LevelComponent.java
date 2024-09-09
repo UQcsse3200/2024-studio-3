@@ -3,10 +3,13 @@ package com.csse3200.game.components.levels;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.csse3200.game.areas.ForestGameArea;
 import com.csse3200.game.components.Component;
+import com.csse3200.game.components.npc.PersonalCustomerEnums;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.ArrayList;
 
 public class LevelComponent extends Component {
     private static final Logger logger = LoggerFactory.getLogger(LevelComponent.class);
@@ -17,11 +20,15 @@ public class LevelComponent extends Component {
     private int currentCustomersLinedUp = 0;
     private ForestGameArea gameArea;
     private Entity customerSpawnController;
+    private ArrayList<String> customerNameArray;
 
     public void create() {
         super.create();
         ServiceLocator.getLevelService().getEvents().addListener("startSpawning", this::initSpawning);
         ServiceLocator.getLevelService().getEvents().addListener("setGameArea", this::setGameArea);
+        for (PersonalCustomerEnums customer: PersonalCustomerEnums.values()) {
+            customerNameArray.add(customer.name());
+        }
     }
 
     @Override
