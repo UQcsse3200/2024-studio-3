@@ -133,8 +133,11 @@ class MainGameOrderTicketDisplayTest {
 		assertEquals(0, (MainGameOrderTicketDisplay.getTableArrayList()).size());
 	}
 
+	/**
+	 * Test docket sizes are sized correctly
+	 */
 	@Test
-	public void testDocketSizes_normalAndEnlarged() {
+	public void testDocketSizesNormalAndEnlarged() {
 		orderTicketDisplay.addActors();
 		orderTicketDisplay.addActors();
 		orderTicketDisplay.addActors();
@@ -225,6 +228,9 @@ class MainGameOrderTicketDisplayTest {
 		assertEquals(ServiceLocator.getRenderService().getStage(), stage);
 	}
 
+	/**
+	 * Test if only one docket is present, then it is enlarged
+	 */
 	@Test
 	void testSingleDocketIsEnlarged() {
 		orderTicketDisplay.addActors();
@@ -245,20 +251,6 @@ class MainGameOrderTicketDisplayTest {
 		assertEquals(expectedY, singleTable.getY(), 0.1f, "Docket Y position is incorrect.");
 	}
 
-
-	@Test
-	void testNotEnlargedDocketSizes() {
-		for (int i = 0; i < 5; i++) {
-			orderTicketDisplay.addActors();
-		}
-
-		orderTicketDisplay.updateDocketSizes();
-		for (int i = 0; i < MainGameOrderTicketDisplay.getTableArrayList().size() - 1; i++) {
-			Table table = MainGameOrderTicketDisplay.getTableArrayList().get(i);
-			assertEquals(120f * (orderTicketDisplay.getViewportWidth()/1920f), table.getWidth(), 0.1f);
-			assertEquals(150f * (orderTicketDisplay.getViewportHeight()/1080f), table.getHeight(), 0.1f);
-		}
-	}
 
 	@Test
 	void testGetZIndex() {

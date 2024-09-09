@@ -113,7 +113,7 @@ public class MainGameScreen extends ScreenAdapter {
 		renderer.resize(width, height);
 		docketLineDisplay.resize();
 		if (orderTicketDisplay != null) {
-			orderTicketDisplay.updateDocketSizes(); // Call updateDocketSizes() when resizing
+			orderTicketDisplay.updateDocketSizes();
 		}
 		logger.trace("Resized renderer: ({} x {})", width, height);
 	}

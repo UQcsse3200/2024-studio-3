@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.utils.Scaling;
 import com.csse3200.game.components.mainmenu.MainMenuDisplay;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
@@ -56,6 +55,9 @@ public class DocketLineDisplay extends UIComponent {
 		pinLine.setZIndex((int)getZIndex());
 	}
 
+	/**
+	 * Resizes the docket line display by removing image, clearing table and re-adding actors.
+	 */
 	public void resize() {
 		pinLine.remove();
 		table.clear();
