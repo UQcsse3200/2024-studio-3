@@ -43,6 +43,7 @@ public class LevelComponent extends Component {
             if (elapsedTimeSecs >= 3 && numbCustomersSpawned < levelSpawnCap && currentCustomersLinedUp < 5) {
                 setSpawnStartTime();
                 customerSpawned();
+                spawnCustomer();
                 //ServiceLocator.getLevelService().getEvents().trigger("createCustomer", gameArea);
                 logger.info("Spawned {} customer(s) so far", numbCustomersSpawned);
                 if (numbCustomersSpawned == levelSpawnCap) {
@@ -61,6 +62,8 @@ public class LevelComponent extends Component {
     }
 
     private void spawnCustomer() {
+        int index = rand.nextInt(7);
+        customerSpawnController.getEvents().trigger(customerNameArray.get(index));
     }
 
     public void setGameArea (ForestGameArea newGameArea) {
