@@ -211,7 +211,6 @@ public class EndDayDisplay extends UIComponent {
     }
 
     public void show() {
-        ServiceLocator.getLevelService().togglePlayerFinishedLevel();
         isVisible = true;
         layout.setVisible(isVisible);
         birdImage.setVisible(true);
@@ -239,6 +238,7 @@ public class EndDayDisplay extends UIComponent {
         pointImage2.setVisible(false);
         pointImage3.setVisible(false);*/
         /*gameScreen.resume(); // Resume the game when the display is hidden*/
+        ServiceLocator.getLevelService().togglePlayerFinishedLevel();
         game.setScreen(GdxGame.ScreenType.MAIN_GAME);
 
         //birdMoveTask.cancel(); // Cancel the task

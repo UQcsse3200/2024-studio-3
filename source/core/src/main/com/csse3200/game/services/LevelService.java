@@ -44,6 +44,10 @@ public class LevelService {
      * @return  the current level number
      */
     public int getCurrLevel() {
+        if (playerFinishedLevel) {
+            incrementLevel();
+            togglePlayerFinishedLevel();
+        }
         return currLevel;
     }
 
@@ -81,10 +85,6 @@ public class LevelService {
      */
     public void levelControl(int level) {
         int spawnCap = 0;
-        if (playerFinishedLevel) {
-            incrementLevel();
-            togglePlayerFinishedLevel();
-        }
         switch (level) {
             case 0:
                 spawnCap = 1;
