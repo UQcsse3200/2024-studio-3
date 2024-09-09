@@ -153,13 +153,15 @@ public class TutorialScreenDisplay extends UIComponent {
      */
     private void onPlayerMoved() {
 
-        if(i == 0) advanceTutorialStep();
-        i++;
+        if(i == 0)
+        {advanceTutorialStep();
+        i++;}
     }
     private void onInteraction() {
 
-        if(i == 1) advanceTutorialStep();//hacky way to implement tutorial
-        i++;
+        if(i == 1)
+        {advanceTutorialStep();//hacky way to implement tutorial
+        i++;}
 
     }
 
