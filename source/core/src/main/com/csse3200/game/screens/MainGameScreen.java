@@ -47,6 +47,8 @@ public class MainGameScreen extends ScreenAdapter {
 			"images/ordersystem/docket_background.png",
 			"images/ordersystem/pin_line.png",
 			"images/bird.png",
+			"images/point.png",
+			"images/coin.png",
 			"images/textbox.png"
 	};
 	// Modified the camera position to fix layout

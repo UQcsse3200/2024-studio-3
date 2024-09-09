@@ -202,6 +202,7 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         docket.dispose();
         gold = gold + recipeValue;
         PlayerStatsDisplay.updatePlayerGoldUI(gold);
+        ServiceLocator.getDocketService().getEvents().trigger("goldUpdated", gold);
     }
 
     /**
