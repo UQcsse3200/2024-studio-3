@@ -10,6 +10,8 @@ import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
 
+import javax.swing.*;
+
 /**
  * A ui component for displaying player stats, e.g. health.
  */
@@ -29,6 +31,7 @@ public class PlayerStatsDisplay extends UIComponent {
     addActors();
 
     entity.getEvents().addListener("updateHealth", this::updatePlayerHealthUI);
+    entity.getEvents().addListener("updateGold", this::updatePlayerGoldUI);
   }
 
   /**
@@ -54,13 +57,13 @@ public class PlayerStatsDisplay extends UIComponent {
     table.add(healthLabel);
     table.row();
 
-    // goldImage = new Image(ServiceLocator.getResourceService().getAsset("images/money.png", Texture.class));
-    // int gold = entity.getComponent(InventoryComponent.class).getGold(); // InventoryComponent doesn't have a getGold() function.
-    // CharSequence goldText = String.format("Cash: %d", gold);
-    // goldLabel = new Label(goldText, skin, "large");
+     goldImage = new Image(ServiceLocator.getResourceService().getAsset("images/money.png", Texture.class));
+     int gold = entity.getComponent(InventoryComponent.class).getGold();
+     CharSequence goldText = String.format("Cash: %d", gold);
+     goldLabel = new Label(goldText, skin, "large");
 
-    // table.add(goldImage).size(heartSideLength).pad(5);
-    // table.add(goldLabel);
+     table.add(goldImage).size(heartSideLength).pad(5);
+     table.add(goldLabel);
     stage.addActor(table);
   }
 
@@ -78,9 +81,13 @@ public class PlayerStatsDisplay extends UIComponent {
     healthLabel.setText(text);
   }
 
+  /**
+   *
+   * @param gold
+   */
   public void updatePlayerGoldUI(int gold) {
     CharSequence text = String.format("Gold: %d", gold);
-    healthLabel.setText(text);
+    goldLabel.setText(text);
   }
 
   @Override
@@ -88,6 +95,8 @@ public class PlayerStatsDisplay extends UIComponent {
     super.dispose();
     heartImage.remove();
     healthLabel.remove();
+    goldImage.remove();
+    goldLabel.remove();
   }
 
   @Override

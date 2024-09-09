@@ -16,4 +16,5 @@ public enum ItemType {
     SALAD,
     STEAKMEAL,
     BANANASPLIT,
+    FIREEXTINGUISHER,
 }

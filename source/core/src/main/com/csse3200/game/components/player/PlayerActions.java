@@ -7,6 +7,8 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.physics.BodyUserData;
+import com.csse3200.game.components.station.FireExtinguisherHandlerComponent;
+import com.csse3200.game.entities.Entity;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.components.SensorComponent;
@@ -92,6 +94,12 @@ public class PlayerActions extends Component {
       // too
       Entity station = ((BodyUserData) interactable.getBody().getUserData()).entity;
 
+      // Handle if it was a fire extinguisher
+      boolean interactingWithFireExtinguisher = FireExtinguisherHandlerComponent.handleFireExtinguisher(interactable, entity);
+      if (interactingWithFireExtinguisher) {
+        // No more interacting after this
+        return;
+      }
       // Logic for what interaction even to call on the station
       station.getEvents().trigger("Station Interaction", playerInventory, displayInventory);
     }

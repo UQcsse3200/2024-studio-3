@@ -24,6 +24,7 @@ public class ServiceLocator {
   private static PhysicsService physicsService;
   private static GameTime timeSource;
   private static InputService inputService;
+  private static PlayerService playerService;
 
   private static ResourceService resourceService;
 
@@ -32,6 +33,7 @@ public class ServiceLocator {
   //Me new stuff :)
 
   private static DocketService docketService;
+  private static LevelService levelService;
 
   public static EntityService getEntityService() {
     return entityService;
@@ -53,6 +55,10 @@ public class ServiceLocator {
     return inputService;
   }
 
+  public static PlayerService getPlayerService() {
+    return playerService;
+  }
+
   public static ResourceService getResourceService() {
     return resourceService;
   }
@@ -64,9 +70,12 @@ public class ServiceLocator {
   public static OrderActions getOrderActions() {
     return orderActions;
   }
+  public static LevelService getLevelService(){
+    return levelService;
+
+  }
 
   public static void registerEntityService(EntityService service) {
-    logger.debug("Registering entity service {}", service);
     entityService = service;
   }
 
@@ -101,6 +110,18 @@ public class ServiceLocator {
     inputService = service;
   }
 
+  /**
+   * Register player service
+   * @param service PlayerService
+   */
+  public static void registerPlayerService(PlayerService service) {
+    if (playerService != null) {
+      logger.warn("Player service is being overwritten!");
+    }
+    logger.debug("Registering player service {}", service);
+    playerService = service;
+  }
+
   public static void registerResourceService(ResourceService source) {
     logger.debug("Registering resource service {}", source);
     resourceService = source;
@@ -111,6 +132,13 @@ public class ServiceLocator {
     orderActions = source;
   }
 
+  public static void registerLevelService(LevelService source) {
+    if (levelService == null) {
+      levelService = source;
+    } else {
+      logger.warn("Level service is already assigned, ignoring register");
+    }
+  }
 
   public static void clear() {
     entityService = null;
@@ -121,6 +149,7 @@ public class ServiceLocator {
     resourceService = null;
     docketService = null;
     orderActions = null;
+    playerService = null;
   }
 
   private ServiceLocator() {

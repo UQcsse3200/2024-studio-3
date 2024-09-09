@@ -6,11 +6,13 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.areas.ForestGameArea;
 import com.csse3200.game.areas.terrain.TerrainFactory;
+import com.csse3200.game.components.levels.LevelComponent;
 import com.csse3200.game.components.maingame.MainGameActions;
 import com.csse3200.game.components.ordersystem.MainGameOrderBtnDisplay;
 import com.csse3200.game.components.ordersystem.OrderActions;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
+import com.csse3200.game.entities.factories.LevelFactory;
 import com.csse3200.game.entities.factories.RenderFactory;
 import com.csse3200.game.input.InputComponent;
 import com.csse3200.game.input.InputDecorator;
@@ -19,14 +21,12 @@ import com.csse3200.game.physics.PhysicsEngine;
 import com.csse3200.game.physics.PhysicsService;
 import com.csse3200.game.rendering.RenderService;
 import com.csse3200.game.rendering.Renderer;
-import com.csse3200.game.services.DocketService;
-import com.csse3200.game.services.GameTime;
-import com.csse3200.game.services.ResourceService;
-import com.csse3200.game.services.ServiceLocator;
+import com.csse3200.game.services.*;
 import com.csse3200.game.ui.terminal.Terminal;
 import com.csse3200.game.ui.terminal.TerminalDisplay;
 import com.csse3200.game.components.maingame.EndDayDisplay;
 import com.csse3200.game.components.maingame.MainGameExitDisplay;
+import com.csse3200.game.components.maingame.TextDisplay;
 import com.csse3200.game.components.gamearea.PerformanceDisplay;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -46,7 +46,10 @@ public class MainGameScreen extends ScreenAdapter {
 			// order system assets
 			"images/ordersystem/docket_background.png",
 			"images/ordersystem/pin_line.png",
-			"images/bird.png"
+			"images/bird.png",
+			"images/point.png",
+			"images/coin.png",
+			"images/textbox.png"
 	};
 	// Modified the camera position to fix layout
 	private static final Vector2 CAMERA_POSITION = new Vector2(7.5f, 6.0f);
@@ -67,12 +70,14 @@ public class MainGameScreen extends ScreenAdapter {
 		physicsEngine = physicsService.getPhysics();
 
 		ServiceLocator.registerInputService(new InputService());
+		ServiceLocator.registerPlayerService(new PlayerService());
 		ServiceLocator.registerResourceService(new ResourceService());
 		ServiceLocator.registerOrderActions(new OrderActions(game)); // ?
 
 		ServiceLocator.registerEntityService(new EntityService());
 		ServiceLocator.registerRenderService(new RenderService());
 		ServiceLocator.registerDocketService(new DocketService());
+		ServiceLocator.registerLevelService(new LevelService());
 
 		renderer = RenderFactory.createRenderer();
 		renderer.getCamera().getEntity().setPosition(CAMERA_POSITION);
@@ -85,8 +90,12 @@ public class MainGameScreen extends ScreenAdapter {
 		TerrainFactory terrainFactory = new TerrainFactory(renderer.getCamera());
 		ForestGameArea forestGameArea = new ForestGameArea(terrainFactory);
 		forestGameArea.create();
+		Entity spawnControllerEntity = LevelFactory.createSpawnControllerEntity();
+		ServiceLocator.getEntityService().register(spawnControllerEntity);
+		int currLevel = ServiceLocator.getLevelService().getCurrLevel();
+		ServiceLocator.getLevelService().getEvents().trigger("setGameArea", forestGameArea);
+		ServiceLocator.getLevelService().getEvents().trigger("startLevel", currLevel);
 	}
-
 
 	@Override
 	public void render(float delta) {
@@ -129,6 +138,13 @@ public class MainGameScreen extends ScreenAdapter {
 		ServiceLocator.clear();
 	}
 
+	public void resetScreen() {
+		EntityService entityService = ServiceLocator.getEntityService();
+		entityService.dispose();
+		ServiceLocator.registerEntityService(new EntityService());
+		createUI();
+	}
+
 	private void loadAssets() {
 		logger.debug("Loading assets");
 		ResourceService resourceService = ServiceLocator.getResourceService();
@@ -154,19 +170,17 @@ public class MainGameScreen extends ScreenAdapter {
 
 		Entity ui = new Entity();
 		ui.addComponent(new InputDecorator(stage, 10))
-
+		  .addComponent(new DocketLineDisplay())
 			.addComponent(new PerformanceDisplay())
 			.addComponent(new MainGameActions(this.game))
 			.addComponent(new MainGameExitDisplay())
 			.addComponent(new Terminal())
 			.addComponent(inputComponent)
 			.addComponent(new TerminalDisplay())
-			// order system
-			.addComponent(new DocketLineDisplay())
-			//.addComponent(new DocketDisplay())
 			.addComponent(new OrderActions(this.game))
 			.addComponent(new MainGameOrderBtnDisplay())
-		        .addComponent(new EndDayDisplay(this));
+		        .addComponent(new EndDayDisplay(this, this.game))
+				.addComponent(new TextDisplay(this));
 		ServiceLocator.getEntityService().register(ui);
 	}
 }
