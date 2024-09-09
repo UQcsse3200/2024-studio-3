@@ -10,9 +10,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class LevelComponent extends Component {
     private static final Logger logger = LoggerFactory.getLogger(LevelComponent.class);
+    private static final Random rand = new Random();
     private long spawnStartTime = 0;
     private boolean nowSpawning = false;
     private int levelSpawnCap = 0;
