@@ -28,7 +28,9 @@ public class LevelComponent extends Component {
         super.create();
         ServiceLocator.getLevelService().getEvents().addListener("startSpawning", this::initSpawning);
         ServiceLocator.getLevelService().getEvents().addListener("setGameArea", this::setGameArea);
+        customerNameArray = new ArrayList<>();
         for (PersonalCustomerEnums customer: PersonalCustomerEnums.values()) {
+            logger.info("{}", customer.name());
             customerNameArray.add(customer.name());
         }
     }
