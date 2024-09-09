@@ -1,6 +1,7 @@
 package com.csse3200.game.components.player;
 
 import com.csse3200.game.components.Component;
+import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.csse3200.game.components.items.ItemComponent;
@@ -90,6 +91,8 @@ public class InventoryComponent extends Component {
    */
   public void addGold(int gold) {
     setGold(this.gold + gold);
+    ServiceLocator.getLevelService().setCurrGold(this.gold);
+    ServiceLocator.getDocketService().getEvents().trigger("goldUpdated", this.gold);
   }
 
   /**

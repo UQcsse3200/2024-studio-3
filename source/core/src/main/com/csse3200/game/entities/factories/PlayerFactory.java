@@ -21,7 +21,6 @@ import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.components.InteractionComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.rendering.AnimationRenderComponent;
-import com.csse3200.game.rendering.TextureRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
 
 /**
@@ -69,7 +68,7 @@ public class PlayerFactory {
             .addComponent(new HitboxComponent().setLayer(PhysicsLayer.PLAYER))
             .addComponent(new PlayerActions())
             .addComponent(new CombatStatsComponent(config.health, config.baseAttack))
-            .addComponent(new InventoryComponent(config.inventorySize, config.gold))
+            .addComponent(new InventoryComponent(config.inventorySize, ServiceLocator.getLevelService().getCurrGold())) //config.gold
             .addComponent(new InventoryDisplay())
             .addComponent(inputComponent)
             .addComponent(animator)
