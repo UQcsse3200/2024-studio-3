@@ -29,7 +29,9 @@ public class TutorialScreenDisplay extends UIComponent {
     private  int  i = 0;
     private int tutorialStep = 0;  // tracks the current tutorial step
     private MainGameOrderTicketDisplay orderTicketDisplay;
-    private Image movementImage; // New image for movement tutorial
+    private Image movementImage;// New image for movement tutorial
+    private Image pickupImage;
+
     Table table = new Table();
 
     public TutorialScreenDisplay(GdxGame game) {
@@ -75,42 +77,6 @@ public class TutorialScreenDisplay extends UIComponent {
         stage.addActor(tutorialLabel);
         stage.addActor(table);
     }
-//    private void setupUI() {
-//        // Create a skin for loading textures
-//        skin = new Skin(Gdx.files.internal("flat-earth/skin/flat-earth-ui.json"));
-//
-//        // Clear previous content from the table if needed
-//       table.clear();
-//
-//        // Load the background texture for the table and add it to the skin
-//        skin.add("table_bg", new Texture(Gdx.files.internal("images/tutorial/img.png")));
-//        skin.add("tutorial_box", new Texture(Gdx.files.internal("images/tutorial/tutorial_box.png")));
-//        // Create a white box background
-//        tutorialBox = new Image(skin.getDrawable("tutorial_box"));
-//        tutorialBox.setSize(300, 150);
-//        float boxX = stage.getViewport().getWorldWidth() * 0.1f;
-//        float boxY = stage.getViewport().getWorldHeight() * 0.75f;
-//        tutorialBox.setPosition(boxX, boxY);
-//
-//        // Create a tutorial label and position it on top of the box
-//        tutorialLabel = new Label("", skin);
-//        tutorialLabel.setFontScale(1.2f);  // scale font size
-//        tutorialLabel.setPosition(boxX + 20, boxY + 80);
-//
-//        // Create a new table and set its background image
-//     table = new Table();
-//        table.setFillParent(true);  // Make table fill the entire stage
-//       table.center();  // Center the table on the screen
-//        table.setBackground(skin.getDrawable("table_bg"));  // Set the background image for the table
-//
-//        // Add the label and box to the table for proper layout
-//        table.add(tutorialBox).size(300, 150).pad(10);  // Add box to the table with padding
-//       table.row();  // Move to the next row
-//        table.add(tutorialLabel).pad(10);  // Add label to the next row with padding
-//
-//        // Add the table to the stage
-//     //  stage.addActor(table);
-//    }
 
 
     /**
@@ -134,7 +100,14 @@ public class TutorialScreenDisplay extends UIComponent {
         // Remove the movement image if it exists
         if (movementImage != null) {
             movementImage.remove();
-            movementImage = null;}
+            movementImage = null;
+        }
+
+        // Remove the pickup image if it exists
+        if (pickupImage != null) {
+            pickupImage.remove();
+            pickupImage = null;
+        }
 
         tutorialStep++;
         switch (tutorialStep) {
@@ -163,7 +136,7 @@ public class TutorialScreenDisplay extends UIComponent {
         // implement all other movement tutorial code here
 // Load and display the movement image
         if (movementImage == null) {
-            skin.add("movement_image", new Texture(Gdx.files.internal("images/tutorial/MOMENT TUT.png")));
+            skin.add("movement_image", new Texture(Gdx.files.internal("images/tutorial/MOMENT TUT.jpg")));
             movementImage = new Image(skin.getDrawable("movement_image"));
             movementImage.setSize(1100, 800);
             float imageX = stage.getViewport().getWorldWidth() * 0f; // Center image
@@ -219,21 +192,19 @@ public class TutorialScreenDisplay extends UIComponent {
     private void showItemPickupTutorial() {
         tutorialLabel.setText("Press E to pick up the item."); // NEEDS TO BE MODIFIED ONCE WE TALK TO OTHER TEAM
         // all other item pickup tutorial code to be implemend here
+// Load and display the pickup image
+        if (pickupImage == null) {
+            skin.add("pickup_image", new Texture(Gdx.files.internal("images/tutorial/PICKUP TUT.jpg")));
+            pickupImage = new Image(skin.getDrawable("pickup_image"));
+            pickupImage.setSize(1100, 800);  // Adjust size as necessary
+            float imageX = stage.getViewport().getWorldWidth() * 0f;  // Adjust position as necessary
+            float imageY = stage.getViewport().getWorldHeight() * 0.15f;
+            pickupImage.setPosition(imageX, imageY);
+            stage.addActor(pickupImage);
+        }
 
         ServiceLocator.getTutorialService().getEvents().addListener("itemPickedUp", this::onItemPickedUp);
     }
-//   private boolean onInputKey(int keycode) {
-//        if (keycode == Input.Keys.E) {s
-//            logger.info("'E' key pressed, attempting to pick up item.");
-//            // Trigger item pickup event
-//            ServiceLocator.getInputService().getEvents().trigger("itemPickedUp");
-//            return true;
-//        }
-//        else {
-//            return false;
-//        }
-//    }
-
 
 
     /**
