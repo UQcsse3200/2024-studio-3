@@ -10,6 +10,7 @@ public class LevelService {
     private EventHandler levelEventHandler;
     private int currLevel;
     private int currGold;
+    private boolean playerFinishedLevel;
 
     /**
      * Constructor method, initialises both private variables
@@ -21,6 +22,10 @@ public class LevelService {
         levelEventHandler.addListener("startLevel", this::levelControl);
         //levelEventHandler.addListener("createCustomer", ForestGameArea::spawnCustomer);
         //ServiceLocator.getLevelService().getEvents().addListener("spawnCustomer", this::spawnCustomer);
+    }
+
+    public void togglePlayerFinishedLevel() {
+        playerFinishedLevel = !playerFinishedLevel;
     }
 
     /**
