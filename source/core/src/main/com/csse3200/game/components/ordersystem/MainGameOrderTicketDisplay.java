@@ -193,13 +193,11 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         table.remove();
         ServiceLocator.getDocketService().getEvents().trigger("removeOrder", i);
         docket.dispose();
-
         tableArrayList.remove(i);
         backgroundArrayList.remove(i);
         startTimeArrayList.remove(i);
         countdownLabelArrayList.remove(i);
         recipeTimeArrayList.remove(i);
-
         inventoryComponent.addGold(getRecipeValue());
     }
 
