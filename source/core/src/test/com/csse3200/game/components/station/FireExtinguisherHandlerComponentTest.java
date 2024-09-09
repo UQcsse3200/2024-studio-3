@@ -1,4 +1,4 @@
-/*package com.csse3200.game.components.station;
+package com.csse3200.game.components.station;
 
 import com.csse3200.game.components.items.ItemType;
 import com.csse3200.game.components.player.InventoryComponent;
@@ -64,4 +64,3 @@ public class FireExtinguisherHandlerComponentTest {
         }
     }
 }
-*/
