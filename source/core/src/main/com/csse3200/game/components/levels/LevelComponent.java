@@ -3,6 +3,7 @@ package com.csse3200.game.components.levels;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.csse3200.game.areas.ForestGameArea;
 import com.csse3200.game.components.Component;
+import com.csse3200.game.entities.Entity;
 import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,6 +16,7 @@ public class LevelComponent extends Component {
     private int numbCustomersSpawned = 0;
     private int currentCustomersLinedUp = 0;
     private ForestGameArea gameArea;
+    private Entity customerSpawnController;
 
     public void create() {
         super.create();
@@ -32,7 +34,7 @@ public class LevelComponent extends Component {
             if (elapsedTimeSecs >= 3 && numbCustomersSpawned < levelSpawnCap && currentCustomersLinedUp < 5) {
                 setSpawnStartTime();
                 customerSpawned();
-                ServiceLocator.getLevelService().getEvents().trigger("createCustomer", gameArea);
+                //ServiceLocator.getLevelService().getEvents().trigger("createCustomer", gameArea);
                 logger.info("Spawned {} customer(s) so far", numbCustomersSpawned);
                 if (numbCustomersSpawned == levelSpawnCap) {
                     logger.info("Hit the spawn limit of {} with {}", getLevelSpawnCap(), getNumbCustomersSpawned());
@@ -51,6 +53,11 @@ public class LevelComponent extends Component {
 
     public void setGameArea (ForestGameArea newGameArea) {
         gameArea = newGameArea;
+        setCustomerSpawnController(gameArea.getCustomerSpawnController());
+    }
+
+    public void setCustomerSpawnController(Entity var) {
+        customerSpawnController = var;
     }
 
     public void setSpawnStartTime() {
@@ -83,6 +90,10 @@ public class LevelComponent extends Component {
 
     public ForestGameArea getGameArea() {
         return gameArea;
+    }
+
+    public Entity getCustomerSpawnController() {
+        return customerSpawnController;
     }
 
     public Long getSpawnStartTime() {
