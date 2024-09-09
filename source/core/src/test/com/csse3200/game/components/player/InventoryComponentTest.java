@@ -1,6 +1,7 @@
 package com.csse3200.game.components.player;
 
 import com.csse3200.game.extensions.GameExtension;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import static org.junit.jupiter.api.Assertions.*;
@@ -12,22 +13,28 @@ import java.util.Arrays;
 
 @ExtendWith(GameExtension.class)
 class InventoryComponentTest {
+  InventoryComponent inventory;
+
+  @BeforeEach
+  void setUp() {
+    inventory = new InventoryComponent(2, 50);
+  }
+
   @Test
   void shouldInitialize() {
-    InventoryComponent inventory = new InventoryComponent(2);
     assertEquals(2, inventory.getCapacity());
   }
 
   @Test
   void shouldNotInitialize() {
     IllegalArgumentException e = assertThrows(IllegalArgumentException.class, () -> {
-      new InventoryComponent(-1);
+      new InventoryComponent(-1,50);
     });
     
     assertEquals("Invalid size parameter. Must be an integer > 0.", e.getMessage());
 
     e = assertThrows(IllegalArgumentException.class, () -> {
-      new InventoryComponent(0);
+      new InventoryComponent(0,50);
     });
     
     assertEquals("Invalid size parameter. Must be an integer > 0.", e.getMessage());
@@ -35,13 +42,11 @@ class InventoryComponentTest {
 
   @Test
   void shouldGetSize() {
-    InventoryComponent inventory = new InventoryComponent(2);
     assertEquals(0, inventory.getSize());
   }
 
   @Test
   void shouldSetCapacity() {
-    InventoryComponent inventory = new InventoryComponent(2);
 
     inventory.setCapacity(3);
     assertEquals(3, inventory.getCapacity());
@@ -49,7 +54,6 @@ class InventoryComponentTest {
 
   @Test
   void shouldNotSetCapacity() {
-    InventoryComponent inventory = new InventoryComponent(2);
 
     IllegalArgumentException e = assertThrows(IllegalArgumentException.class, () -> {
       inventory.setCapacity(0);
@@ -66,7 +70,6 @@ class InventoryComponentTest {
 
   @Test
   void shouldIncreaseCapacity() {
-    InventoryComponent inventory = new InventoryComponent(2);
 
     inventory.increaseCapacity(3);
     assertEquals(3, inventory.getCapacity());
@@ -74,15 +77,13 @@ class InventoryComponentTest {
 
   @Test
   void shouldNotIncreaseCapacity() {
-    InventoryComponent inventory = new InventoryComponent(3);
-
+    inventory = new InventoryComponent(3, 50);
     inventory.increaseCapacity(1);
     assertEquals(3, inventory.getCapacity()); // Probably needs to be some kind of exception
   }
 
   @Test
   void shouldAddItem() {
-    InventoryComponent inventory = new InventoryComponent(2);
     ItemComponent item = new ItemComponent("Beef", ItemType.BEEF, 1);
     inventory.addItem(item);
     assertEquals(1, inventory.getSize());
@@ -90,13 +91,11 @@ class InventoryComponentTest {
 
   @Test
   void shouldBeEmpty() {
-    InventoryComponent inventory = new InventoryComponent(2);
     assertTrue(inventory.isEmpty());
   }
 
   @Test
   void shouldBeNotEmpty() {
-    InventoryComponent inventory = new InventoryComponent(2);
     ItemComponent item = new ItemComponent("Beef", ItemType.BEEF, 1);
     inventory.addItem(item);
     assertFalse(inventory.isEmpty());
@@ -104,7 +103,6 @@ class InventoryComponentTest {
 
   @Test
   void shouldBeFull() {
-    InventoryComponent inventory = new InventoryComponent(5);
     ItemComponent item;
     for (int i = 0; i < 5; i++) {
       item = new ItemComponent("Beef", ItemType.BEEF, 1);
@@ -115,7 +113,7 @@ class InventoryComponentTest {
 
   @Test
   void shouldBeNotFull() {
-    InventoryComponent inventory = new InventoryComponent(5);
+    inventory = new InventoryComponent(4, 50);
     assertFalse(inventory.isFull());
 
     ItemComponent item;
@@ -128,7 +126,6 @@ class InventoryComponentTest {
 
   @Test
   void shouldFindItem() {
-    InventoryComponent inventory = new InventoryComponent(5);
     assertTrue(inventory.find(null));
     
     ItemComponent item = new ItemComponent("Beef", ItemType.BEEF, 1);
@@ -138,7 +135,6 @@ class InventoryComponentTest {
 
   @Test
   void shouldNotFindItem() {
-    InventoryComponent inventory = new InventoryComponent(5);
 
     ItemComponent item = new ItemComponent("Beef", ItemType.BEEF, 1);
     assertFalse(inventory.find(item));
@@ -146,7 +142,6 @@ class InventoryComponentTest {
 
   @Test
   void shouldNotAddItem() {
-    InventoryComponent inventory = new InventoryComponent(5);
     ItemComponent item;
     for (int i = 0; i < 5; i++) {
       item = new ItemComponent("Beef", ItemType.BEEF, 1);
@@ -160,7 +155,7 @@ class InventoryComponentTest {
 
   @Test
   void shouldSetSelected() {
-    InventoryComponent inventory = new InventoryComponent(5);
+    inventory = new InventoryComponent(5, 50);
 
     inventory.setSelected(2);
     assertEquals(2, inventory.getSelectedIndex());
@@ -174,7 +169,6 @@ class InventoryComponentTest {
 
   @Test
   void shouldNotSetSelected() {
-    InventoryComponent inventory = new InventoryComponent(5);
 
     IllegalArgumentException e = assertThrows(IllegalArgumentException.class, () -> {
       inventory.setSelected(-1);
@@ -193,7 +187,6 @@ class InventoryComponentTest {
 
   @Test
   void shouldGetSelectedItem() {
-    InventoryComponent inventory = new InventoryComponent(5);
     ItemComponent item = new ItemComponent("Beef", ItemType.BEEF, 1);
     inventory.addItem(item);
 
@@ -206,7 +199,6 @@ class InventoryComponentTest {
 
   @Test
   void shouldGetEmptyItems() {
-    InventoryComponent inventory = new InventoryComponent(2);
     ArrayList<ItemComponent> items = inventory.getItems();
     assertNotNull(items);
     for (ItemComponent item : items) {
@@ -216,7 +208,6 @@ class InventoryComponentTest {
 
   @Test
   void shouldAddItems() {
-    InventoryComponent inventory = new InventoryComponent(2);
     ItemComponent chocolate = new ItemComponent("Chocolate", ItemType.CHOCOLATE, 1);
     ItemComponent beef = new ItemComponent("Beef", ItemType.BEEF, 1);
     inventory.addItem(chocolate);
@@ -229,7 +220,6 @@ class InventoryComponentTest {
 
   @Test
   void shouldReturnItemClone() {
-    InventoryComponent inventory = new InventoryComponent(2);
     ItemComponent chocolate = new ItemComponent("Chocolate", ItemType.CHOCOLATE, 1);
     ItemComponent beef = new ItemComponent("Beef", ItemType.BEEF, 1);
     inventory.addItem(chocolate);
@@ -243,7 +233,6 @@ class InventoryComponentTest {
   @Test
   void shouldBeEmptyAfterRemove() {
     // add and remove items
-    InventoryComponent inventory = new InventoryComponent(2);
     ItemComponent chocolate = new ItemComponent("Chocolate", ItemType.CHOCOLATE, 1);
     ItemComponent beef = new ItemComponent("Beef", ItemType.BEEF, 1);
     inventory.addItem(chocolate);
@@ -255,7 +244,6 @@ class InventoryComponentTest {
 
   @Test
   void shouldGetNull() {
-    InventoryComponent inventory = new InventoryComponent(2);
     ItemComponent beef = new ItemComponent("Beef", ItemType.BEEF, 1);
     inventory.addItem(beef);
     assertNull(inventory.getItemAt(1));
@@ -263,7 +251,6 @@ class InventoryComponentTest {
 
   @Test
   void shouldGetCorrectItem() {
-    InventoryComponent inventory = new InventoryComponent(2);
     ItemComponent beef = new ItemComponent("Beef", ItemType.BEEF, 1);
     inventory.addItem(beef);
     assertEquals(beef, inventory.getItemAt(0));
@@ -271,7 +258,6 @@ class InventoryComponentTest {
 
   @Test
   void shouldNotGetItemWithNegIndex() {
-    InventoryComponent inventory = new InventoryComponent(2);
     try {
       inventory.getItemAt(-1);
     } catch (IllegalArgumentException e) {
@@ -282,7 +268,6 @@ class InventoryComponentTest {
 
   @Test
   void shouldNotGetItemWithInvalidIndex() {
-    InventoryComponent inventory = new InventoryComponent(2);
     try {
       inventory.getItemAt(3);
     } catch (IllegalArgumentException e) {
@@ -293,13 +278,11 @@ class InventoryComponentTest {
 
   @Test
   void firstItemShouldBeNull() {
-    InventoryComponent inventory = new InventoryComponent(2);
     assertNull(inventory.getItemFirst());
   }
 
   @Test
   void shouldGetFirstItem() {
-    InventoryComponent inventory = new InventoryComponent(2);
     ItemComponent beef = new ItemComponent("Beef", ItemType.BEEF, 1);
     inventory.addItem(beef);
     assertEquals(beef, inventory.getItemFirst());
@@ -307,13 +290,11 @@ class InventoryComponentTest {
 
   @Test
   void lastItemShouldBeNull() {
-    InventoryComponent inventory = new InventoryComponent(2);
     assertNull(inventory.getItemLast());
   }
 
   @Test
   void shouldGetLastItem() {
-    InventoryComponent inventory = new InventoryComponent(2);
     ItemComponent chocolate = new ItemComponent("Chocolate", ItemType.CHOCOLATE, 1);
     ItemComponent beef = new ItemComponent("Beef", ItemType.BEEF, 1);
     inventory.addItem(chocolate);
@@ -323,7 +304,6 @@ class InventoryComponentTest {
 
   @Test
   void shouldIncreaseAndKeepExistingItems() {
-    InventoryComponent inventory = new InventoryComponent(2);
     ItemComponent chocolate = new ItemComponent("Chocolate", ItemType.CHOCOLATE, 1);
     inventory.addItem(chocolate);
     inventory.increaseCapacity(3);
@@ -333,7 +313,7 @@ class InventoryComponentTest {
 
   @Test
   void shouldAddToFirstSlot() {
-    InventoryComponent inventory = new InventoryComponent(3);
+    inventory = new InventoryComponent(3, 50);
     ItemComponent chocolate = new ItemComponent("Chocolate", ItemType.CHOCOLATE, 1);
     ItemComponent beef = new ItemComponent("Beef", ItemType.BEEF, 1);
     ItemComponent acai = new ItemComponent("Acai", ItemType.ACAI, 1);
@@ -345,7 +325,6 @@ class InventoryComponentTest {
 
   @Test
   void shouldAddItemAt() {
-    InventoryComponent inventory = new InventoryComponent(3);
     ItemComponent chocolate = new ItemComponent("Chocolate", ItemType.CHOCOLATE, 1);
     inventory.addItemAt(chocolate, 1);
     assertEquals(chocolate, inventory.getItemAt(1));
@@ -353,7 +332,6 @@ class InventoryComponentTest {
 
   @Test
   void shouldAddAndIncreaseSize() {
-    InventoryComponent inventory = new InventoryComponent(3);
     ItemComponent chocolate = new ItemComponent("Chocolate", ItemType.CHOCOLATE, 1);
     inventory.addItemAt(chocolate, 1);
     assertEquals(1, inventory.getSize());
@@ -361,7 +339,6 @@ class InventoryComponentTest {
 
   @Test
   void shouldNotAddAtNegativeIndex() {
-    InventoryComponent inventory = new InventoryComponent(2);
     ItemComponent chocolate = new ItemComponent("Chocolate", ItemType.CHOCOLATE, 1);
     try {
       inventory.addItemAt(chocolate,-3);
@@ -373,7 +350,6 @@ class InventoryComponentTest {
 
   @Test
   void shouldNotAddAtInvalidIndex() {
-    InventoryComponent inventory = new InventoryComponent(2);
     ItemComponent chocolate = new ItemComponent("Chocolate", ItemType.CHOCOLATE, 1);
     try {
       inventory.addItemAt(chocolate,3);
@@ -385,7 +361,6 @@ class InventoryComponentTest {
 
   @Test
   void shouldNotAddWhenAlreadyOccupied() {
-    InventoryComponent inventory = new InventoryComponent(2);
     ItemComponent chocolate = new ItemComponent("Chocolate", ItemType.CHOCOLATE, 1);
     ItemComponent acai = new ItemComponent("Acai", ItemType.ACAI, 1);
     inventory.addItemAt(chocolate,1);
@@ -399,7 +374,6 @@ class InventoryComponentTest {
 
   @Test
   void shouldRemoveAtIndex() {
-    InventoryComponent inventory = new InventoryComponent(2);
     ItemComponent chocolate = new ItemComponent("Chocolate", ItemType.CHOCOLATE, 1);
     inventory.addItemAt(chocolate,1);
     assertEquals(chocolate, inventory.removeAt(1));
@@ -407,7 +381,7 @@ class InventoryComponentTest {
 
   @Test
   void shouldDecreaseSize() {
-    InventoryComponent inventory = new InventoryComponent(5);
+    inventory = new InventoryComponent(3, 50);
     assertFalse(inventory.isFull());
 
     ItemComponent item;
@@ -421,7 +395,6 @@ class InventoryComponentTest {
 
   @Test
   void shouldNotRemoveAtNegativeIndex() {
-    InventoryComponent inventory = new InventoryComponent(2);
     try {
       inventory.removeAt(-1);
     } catch (IllegalArgumentException e) {
@@ -432,7 +405,6 @@ class InventoryComponentTest {
 
   @Test
   void shouldNotRemoveAt() {
-    InventoryComponent inventory = new InventoryComponent(2);
     try {
       inventory.removeAt(3);
     } catch (IllegalArgumentException e) {
@@ -443,7 +415,6 @@ class InventoryComponentTest {
 
   @Test
   void shouldNotRemoveEmptySlot() {
-    InventoryComponent inventory = new InventoryComponent(2);
     try {
       inventory.removeAt(0);
     } catch (IllegalArgumentException e) {
@@ -453,7 +424,7 @@ class InventoryComponentTest {
 
   @Test
   void shouldAddMultipleItemsAndRemove() {
-    InventoryComponent inventory = new InventoryComponent(3);
+    inventory = new InventoryComponent(3, 50);
     ItemComponent chocolate = new ItemComponent("Chocolate", ItemType.CHOCOLATE, 1);
     ItemComponent beef = new ItemComponent("Beef", ItemType.BEEF, 1);
     ItemComponent acai = new ItemComponent("Acai", ItemType.ACAI, 1);
@@ -471,7 +442,7 @@ class InventoryComponentTest {
 
   @Test
   void shouldFillInventoryRemoveAndAddAgain() {
-    InventoryComponent inventory = new InventoryComponent(3);
+    inventory = new InventoryComponent(3,50);
     ItemComponent chocolate = new ItemComponent("Chocolate", ItemType.CHOCOLATE, 1);
     ItemComponent beef = new ItemComponent("Beef", ItemType.BEEF, 1);
     ItemComponent acai = new ItemComponent("Acai", ItemType.ACAI, 1);
@@ -492,7 +463,7 @@ class InventoryComponentTest {
 
   @Test
   void shouldIncreaseCapacityAndAdd() {
-    InventoryComponent inventory = new InventoryComponent(1);
+    inventory = new InventoryComponent(1, 50);
     ItemComponent chocolate = new ItemComponent("Chocolate", ItemType.CHOCOLATE, 1);
     inventory.addItem(chocolate);
     assertTrue(inventory.isFull());

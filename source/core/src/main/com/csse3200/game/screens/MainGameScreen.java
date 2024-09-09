@@ -45,6 +45,8 @@ public class MainGameScreen extends ScreenAdapter {
 			"images/ordersystem/docket_background.png",
 			"images/ordersystem/pin_line.png",
 			"images/bird.png",
+			"images/point.png",
+			"images/coin.png",
 			"images/textbox.png"
 	};
 	// Modified the camera position to fix layout
@@ -66,6 +68,7 @@ public class MainGameScreen extends ScreenAdapter {
 		physicsEngine = physicsService.getPhysics();
 
 		ServiceLocator.registerInputService(new InputService());
+		ServiceLocator.registerPlayerService(new PlayerService());
 		ServiceLocator.registerResourceService(new ResourceService());
 
 		ServiceLocator.registerEntityService(new EntityService());
@@ -90,7 +93,6 @@ public class MainGameScreen extends ScreenAdapter {
 		ServiceLocator.getLevelService().getEvents().trigger("setGameArea", forestGameArea);
 		ServiceLocator.getLevelService().getEvents().trigger("startLevel", currLevel);
 	}
-
 
 	@Override
 	public void render(float delta) {
