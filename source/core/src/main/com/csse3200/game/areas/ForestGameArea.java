@@ -1,6 +1,11 @@
 package com.csse3200.game.areas;
 
+
 import com.csse3200.game.components.npc.PersonalCustomerEnums;
+import com.badlogic.gdx.utils.Null;
+import com.csse3200.game.components.cutscenes.GoodEnd;
+import com.csse3200.game.components.maingame.TextDisplay;
+
 import com.csse3200.game.entities.benches.Bench;
 import com.csse3200.game.entities.configs.PlayerConfig;
 import org.slf4j.Logger;
@@ -13,18 +18,21 @@ import com.csse3200.game.areas.terrain.TerrainFactory.TerrainType;
 import com.csse3200.game.components.gamearea.GameAreaDisplay;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.factories.NPCFactory;
+import com.csse3200.game.components.maingame.TextDisplay;
 import com.csse3200.game.entities.factories.ObstacleFactory;
+import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.entities.factories.PlayerFactory;
 import com.csse3200.game.entities.factories.StationFactory;
 import com.csse3200.game.entities.factories.ItemFactory;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.utils.math.GridPoint2Utils;
-import com.csse3200.game.utils.math.RandomUtils;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+//import java.util.concurrent.TimeUnit;
 
 /** Forest area for the demo game with trees, a player, and some enemies. */
 public class ForestGameArea extends GameArea {
@@ -35,6 +43,7 @@ public class ForestGameArea extends GameArea {
   private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(5, 3);
   private static final float WALL_WIDTH = 0.1f;
   private static final String[] forestTextures = {
+    "images/special_NPCs/boss.png",
     "images/meals/acai_bowl.png",
     "images/meals/banana_split.png",
     "images/meals/salad.png",
@@ -112,6 +121,7 @@ public class ForestGameArea extends GameArea {
   public ForestGameArea(TerrainFactory terrainFactory) {
     super();
     this.terrainFactory = terrainFactory;
+    //this.textDisplay = textDisplay;
   }
 
   /** Create the game area, including terrain, static entities (trees), dynamic entities (player) */
@@ -133,11 +143,10 @@ public class ForestGameArea extends GameArea {
     spawnStrawberry("chopped");
     spawnLettuce("chopped");
     customerSpawnController = spawnCustomerController();
-    /*customerSpawnController.getEvents().trigger(personalCustomerEnums.MOONKI.name());
-    customerSpawnController.getEvents().trigger(personalCustomerEnums.BASIC_CHICKEN.name());*/
-
     // Spawn the player
     player = spawnPlayer();
+    //ServiceLocator.getEntityService().getEvents().trigger("SetText", "Boss: Rent is due");
+    //triggerFiredEnd();    // Trigger the fired (bad) ending
 
     playMusic();
   }
@@ -245,19 +254,23 @@ public class ForestGameArea extends GameArea {
     GridPoint2 tileBounds = terrain.getMapBounds(0);
     Vector2 worldBounds = new Vector2(tileBounds.x * tileSize, tileBounds.y * tileSize);
 
+    /**
     //top border
     for(int x=0;x<(int)tileBounds.x; x++){
       GridPoint2 position=new GridPoint2(x,(int)tileBounds.y-1);
       Entity top = ObstacleFactory.createBorder("top_border",tileSize);
       spawnEntityAt(top,position,true,false);
     }
+     */
 
+    /**
     //left border
     for(int y=0;y<(int)tileBounds.y;y++){
       GridPoint2 position = new GridPoint2(0,y);
       Entity left = ObstacleFactory.createBorder("left_border",tileSize);
       spawnEntityAt(left,position,true,false);
     }
+     */
 
     //bottom border
     for(int x=0;x<(int)tileBounds.x; x++){
@@ -273,12 +286,14 @@ public class ForestGameArea extends GameArea {
       spawnEntityAt(right,position,true,false);
     }
 
+
     //separation border
     for(int y=0;y<(int)tileBounds.y;y++) {
-      GridPoint2 position = new GridPoint2(1,y);
-      Entity separate = ObstacleFactory.createBorder("right_border",tileSize);
+      GridPoint2 position = new GridPoint2(2,y);
+      Entity separate = ObstacleFactory.createBorder("left_border",tileSize);
       spawnEntityAt(separate,position,true,false);
     }
+
   }
 
   private void spawnStations() {
@@ -511,7 +526,6 @@ public class ForestGameArea extends GameArea {
     spawnBasicCustomer("Basic Sheep");
   }
 
-
   /**
    * Spawn an AcaiBowl item.
    * @return An AcaiBowl entity.
@@ -611,5 +625,40 @@ public class ForestGameArea extends GameArea {
     super.dispose();
     ServiceLocator.getResourceService().getAsset(backgroundMusic, Music.class).stop();
     this.unloadAssets();
+  }
+
+  private void spawnBoss() {
+    GridPoint2 position = new GridPoint2(1, 5);
+    Vector2 targetPos = new Vector2(2, 6); // Target position for ghost king
+    Entity boss = NPCFactory.createBoss(targetPos);
+    spawnEntityAt(boss, position, false, false);
+  }
+
+  private void triggerFiredEnd() {
+    ExecutorService executor = Executors.newSingleThreadExecutor();
+    executor.submit(() -> {
+      try {
+        Thread.sleep(10000);
+        spawnBoss();
+        createTextBox("You *oink* two-legged moron! You're ruining my business' *oink* reputation!. Get out!");
+
+      } catch (InterruptedException e) {
+        Thread.currentThread().interrupt();
+        System.out.println("Thread was interrupted");
+      }
+    });
+
+    // Shutdown the executor to prevent zombie threads
+    executor.shutdown();
+  }
+
+  private void createTextBox(String text) {
+    for (Entity entity: ServiceLocator.getEntityService().getEntities()) {
+      entity.getEvents().trigger("SetText", text);
+    }
+  }
+
+  private void triggerGoodEnd() {
+    // pain
   }
 }
