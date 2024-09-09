@@ -132,13 +132,13 @@ public class NPCFactory {
             case "Basic Sheep" -> personalCustomerConfig.Basic_Sheep;
             default -> personalCustomerConfig.Basic_Default;
         };
+        System.out.println(config.texture);
 
         AnimationRenderComponent animator =
                 new AnimationRenderComponent(
                         ServiceLocator.getResourceService()
-                                .getAsset("images/ghostKing.atlas", TextureAtlas.class));
-        animator.addAnimation("float", 0.3f, Animation.PlayMode.LOOP);
-        animator.addAnimation("angry_float", 0.3f, Animation.PlayMode.LOOP);
+                                .getAsset(config.texture, TextureAtlas.class));
+        animator.addAnimation("walk", 0.3f, Animation.PlayMode.LOOP);
 
         customer
                 .addComponent(animator)
