@@ -1,12 +1,14 @@
 package com.csse3200.game.components.ordersystem;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Cell;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.SnapshotArray;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.entities.Entity;
@@ -85,6 +87,9 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         entity.getEvents().addListener("createOrder", this::addActors);
         ServiceLocator.getDocketService().getEvents().addListener("shiftDocketsLeft", this::shiftDocketsLeft);
         ServiceLocator.getDocketService().getEvents().addListener("shiftDocketsRight", this::shiftDocketsRight);
+        // logger.info("Listeners added for shiftDocketsLeft and shiftDocketsRight events");
+        ServiceLocator.getDocketService().getEvents().addListener("removeBigTicket", this::removeBigTicket);
+
     }
 
     /**
@@ -312,9 +317,31 @@ public class MainGameOrderTicketDisplay extends UIComponent {
 
             }
         }
+        if (!tableArrayList.isEmpty()) {
+            Table lastTable = tableArrayList.get(tableArrayList.size() - 1);
+            updateBigTicketInfo(lastTable);
+        } else {
+            ServiceLocator.getDocketService().getEvents().trigger("updateBigTicket", null, null, null);
+
+        }
 
         updateDocketPositions();
         updateDocketSizes();
+    }
+
+    /**
+     * Removes the current big ticket from the UI, as well as its values in the array
+     */
+    public void removeBigTicket(){
+        int index = tableArrayList.size() - 1;
+        Docket currBackground = backgroundArrayList.get(index);
+        Table currTable = tableArrayList.get(index);
+
+        stageDispose(currBackground, currTable, index);
+        tableArrayList.remove(index);
+        backgroundArrayList.remove(index);
+        startTimeArrayList.remove(index);
+        countdownLabelArrayList.remove(index);
     }
 
     /**
@@ -323,6 +350,41 @@ public class MainGameOrderTicketDisplay extends UIComponent {
     public void updateDocketDisplay() {
         // Implement logic to update the display
         updateDocketPositions();
+    }
+
+    /**
+     * Updates the details of the current info from the big ticket. It gets the order, timer and meal as string values
+     * and calls another function to save these values elsewhere.
+     * @param bigTicket The current ticket being prioritised by the user
+     *
+     */
+    private void updateBigTicketInfo(Table bigTicket) {
+
+        SnapshotArray<Actor> children = bigTicket.getChildren();
+        String orderNum = "";
+        String meal = "";
+        String timeLeft = "";
+
+        for (int i = 0; i < children.size; i++) {
+            Actor actor = children.get(i);
+            if (actor instanceof Label) {
+                Label label = (Label) actor;
+                String text = label.getText().toString();
+                if (i == 0) {
+                    orderNum = text.replace("Order ", "");
+                } else if (text.startsWith("Timer:")) {
+                    timeLeft = text.replace("Timer: ", "");
+                } else { // handling meal name
+                    // TODO Overrides the current meal name with the last ingredient in the big ticket.
+                    // this last ingredient should instead be the meal name (ie "banana split")
+                    // alternatively for it to store all the ingredients, could concatenate it all with
+                    // meal = meal + " " + text;
+                    meal = text;
+                }
+            }
+        }
+        ServiceLocator.getDocketService().getEvents().trigger("updateBigTicket", orderNum, meal, timeLeft);
+        //orderActions.onUpdateBigTicket(orderNum, meal, timeLeft);
     }
 
     /**
