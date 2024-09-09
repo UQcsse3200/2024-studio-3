@@ -1,6 +1,5 @@
 package com.csse3200.game.areas;
 
-
 import com.badlogic.gdx.utils.Null;
 import com.csse3200.game.components.cutscenes.GoodEnd;
 import com.csse3200.game.components.maingame.TextDisplay;
@@ -22,7 +21,6 @@ import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.entities.factories.PlayerFactory;
 import com.csse3200.game.entities.factories.StationFactory;
 import com.csse3200.game.entities.factories.ItemFactory;
-import com.csse3200.game.entities.factories.PlateFactory;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.utils.math.GridPoint2Utils;
@@ -30,7 +28,6 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -89,23 +86,6 @@ public class ForestGameArea extends GameArea {
     "images/frame/top_border_wall.png",
     "images/frame/bottom_border_wall.png",
     "images/frame/border.png",
-    "images/stations/benches/bench7.png",
-    "images/stations/benches/bench2.png",
-    "images/stations/benches/bench3-5.png",
-    "images/stations/benches/bench4.png",
-    "images/stations/benches/bench6.png",
-    "images/stations/benches/bench1.png",
-    "images/stations/benches/bench6-bottom.png",
-    "images/stations/benches/bench6-top.png",
-    "images/fireExtinguisher/Fire_Extinguisher.png",
-    "images/platecomponent/cleanplate.png",
-    "images/platecomponent/dirtyplate.png",
-    "images/platecomponent/stackplate.png",
-    "images/platecomponent/stackedplates/1plates.png",
-    "images/platecomponent/stackedplates/2plates.png",
-    "images/platecomponent/stackedplates/3plates.png",
-    "images/platecomponent/stackedplates/4plates.png",
-    "images/platecomponent/stackedplates/5plates.png",
     "images/tooltip_bg.png",
     "images/fireExtinguisher/Fire_Extinguisher.png",
     "images/stations/benches/single.png",
@@ -160,12 +140,12 @@ public class ForestGameArea extends GameArea {
   public ForestGameArea(TerrainFactory terrainFactory) {
     super();
     this.terrainFactory = terrainFactory;
+    //this.textDisplay = textDisplay;
   }
 
   /** Create the game area, including terrain, static entities (trees), dynamic entities (player) */
   @Override
   public void create() {
-
     loadAssets();
 
     displayUI();
@@ -186,17 +166,12 @@ public class ForestGameArea extends GameArea {
     customerSpawnController.getEvents().trigger(personalCustomerEnums.MOONKI.name());
     customerSpawnController.getEvents().trigger(personalCustomerEnums.BASIC_CHICKEN.name());
 
-    //spawnplates
-    spawnStackPlate(5); //testplate spawn
-    //spawnPlatewithMeal();
-
     // Spawn the player
     player = spawnPlayer();
     //ServiceLocator.getEntityService().getEvents().trigger("SetText", "Boss: Rent is due");
     //triggerFiredEnd();    // Trigger the fired (bad) ending
 
     playMusic();
-    ServiceLocator.getLevelService().getEvents().addListener("spawnCustomer", this::spawnCustomer);
   }
 
   private void displayUI() {
@@ -703,34 +678,6 @@ public class ForestGameArea extends GameArea {
 //    Entity ghostKing = NPCFactory.createGhostKing(player);
 //    spawnEntityAt(ghostKing, randomPos, true, true);
 //  }
-
-  /**
-   * Spawn Stack Plate item.
-   * @param quantity - amount of stack.
-   * @return A newPlate entity.
-   */
-  private Entity spawnStackPlate(int quantity) {
-    Entity newPlate = PlateFactory.spawnPlateStack(quantity);
-    GridPoint2 platePosition = new GridPoint2(6, 1);
-    spawnEntityAt(newPlate, platePosition, true, false);
-    newPlate.setScale(1.0f, 1.0f);
-
-    return newPlate;
-  }
-
-  /**
-   * Spawn Stack Plate item but with meals.
-   * @return A newPlate entity with meal.
-   */
-  private Entity spawnPlatewithMeal() {
-    Entity newPlate = PlateFactory.spawnMealOnPlate(1,"salad");
-    GridPoint2 platePosition = new GridPoint2(6, 4);
-    spawnEntityAt(newPlate, platePosition, true, false);
-    newPlate.setScale(0.8f, 0.8f);
-
-    return newPlate;
-  }
-
 
   private void playMusic() {
     Music music = ServiceLocator.getResourceService().getAsset(backgroundMusic, Music.class);
