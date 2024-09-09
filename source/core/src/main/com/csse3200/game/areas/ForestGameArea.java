@@ -105,7 +105,7 @@ public class ForestGameArea extends GameArea {
     "images/platecomponent/stackedplates/2plates.png",
     "images/platecomponent/stackedplates/3plates.png",
     "images/platecomponent/stackedplates/4plates.png",
-    "images/platecomponent/stackedplates/5plates.png"
+    "images/platecomponent/stackedplates/5plates.png",
     "images/tooltip_bg.png",
     "images/fireExtinguisher/Fire_Extinguisher.png",
     "images/stations/benches/single.png",
