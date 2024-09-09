@@ -1,8 +1,11 @@
 package com.csse3200.game.areas;
 
+
+import com.csse3200.game.components.npc.PersonalCustomerEnums;
 import com.badlogic.gdx.utils.Null;
 import com.csse3200.game.components.cutscenes.GoodEnd;
 import com.csse3200.game.components.maingame.TextDisplay;
+
 import com.csse3200.game.entities.benches.Bench;
 import com.csse3200.game.entities.configs.PlayerConfig;
 import org.slf4j.Logger;
@@ -29,7 +32,7 @@ import java.util.concurrent.Executors;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
+//import java.util.concurrent.TimeUnit;
 
 /** Forest area for the demo game with trees, a player, and some enemies. */
 public class ForestGameArea extends GameArea {
@@ -117,20 +120,11 @@ public class ForestGameArea extends GameArea {
   private static final String[] forestSounds = {"sounds/Impact4.ogg"};
   private static final String backgroundMusic = "sounds/BGM_03_mp3.mp3";
   private static final String[] forestMusic = {backgroundMusic};
+  private static Entity customerSpawnController;
 
   private final TerrainFactory terrainFactory;
 
   private Entity player;
-
-  public enum personalCustomerEnums{
-    HANK,
-    LEWIS,
-    SILVER,
-    JOHN,
-    MOONKI,
-    BASIC_CHICKEN,
-    BASIC_SHEEP
-  }
 
   /**
    * Initialise this ForestGameArea to use the provided TerrainFactory.
@@ -162,16 +156,17 @@ public class ForestGameArea extends GameArea {
     spawnBeef("cooked");
     spawnStrawberry("chopped");
     spawnLettuce("chopped");
-    Entity customerSpawnController = spawnCustomerController();
-    customerSpawnController.getEvents().trigger(personalCustomerEnums.MOONKI.name());
-    customerSpawnController.getEvents().trigger(personalCustomerEnums.BASIC_CHICKEN.name());
-
+    customerSpawnController = spawnCustomerController();
     // Spawn the player
     player = spawnPlayer();
     //ServiceLocator.getEntityService().getEvents().trigger("SetText", "Boss: Rent is due");
     //triggerFiredEnd();    // Trigger the fired (bad) ending
 
     playMusic();
+  }
+
+  public Entity getCustomerSpawnController() {
+    return customerSpawnController;
   }
 
   private void displayUI() {
@@ -569,13 +564,13 @@ public class ForestGameArea extends GameArea {
 
   private Entity spawnCustomerController() {
     Entity spawnController = new Entity();
-    spawnController.getEvents().addListener(personalCustomerEnums.HANK.name(), this::spawnHank);
-    spawnController.getEvents().addListener(personalCustomerEnums.LEWIS.name(), this::spawnLewis);
-    spawnController.getEvents().addListener(personalCustomerEnums.SILVER.name(), this::spawnSilver);
-    spawnController.getEvents().addListener(personalCustomerEnums.JOHN.name(), this::spawnJohn);
-    spawnController.getEvents().addListener(personalCustomerEnums.MOONKI.name(), this::spawnMoonki);
-    spawnController.getEvents().addListener(personalCustomerEnums.BASIC_SHEEP.name(), this::spawnBasicSheep);
-    spawnController.getEvents().addListener(personalCustomerEnums.BASIC_CHICKEN.name(), this::spawnBasicChicken);
+    spawnController.getEvents().addListener(PersonalCustomerEnums.HANK.name(), this::spawnHank);
+    spawnController.getEvents().addListener(PersonalCustomerEnums.LEWIS.name(), this::spawnLewis);
+    spawnController.getEvents().addListener(PersonalCustomerEnums.SILVER.name(), this::spawnSilver);
+    spawnController.getEvents().addListener(PersonalCustomerEnums.JOHN.name(), this::spawnJohn);
+    spawnController.getEvents().addListener(PersonalCustomerEnums.MOONKI.name(), this::spawnMoonki);
+    spawnController.getEvents().addListener(PersonalCustomerEnums.BASIC_SHEEP.name(), this::spawnBasicSheep);
+    spawnController.getEvents().addListener(PersonalCustomerEnums.BASIC_CHICKEN.name(), this::spawnBasicChicken);
     return spawnController;
   }
 
