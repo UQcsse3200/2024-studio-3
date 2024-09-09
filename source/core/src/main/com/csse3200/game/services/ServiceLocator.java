@@ -81,6 +81,14 @@ public class ServiceLocator {
     docketService = service;
   }
 
+  /*public static void registerDayCycleService(DayCycleService service) {
+    if (dayCycleService != null) {
+      logger.warn("Day cycle service is being overwritten!");
+    }
+    logger.debug("Registering day cycle service {}", service);
+    dayCycleService = service;
+  }*/
+
   public static void registerRenderService(RenderService service) {
     logger.debug("Registering render service {}", service);
     renderService = service;
