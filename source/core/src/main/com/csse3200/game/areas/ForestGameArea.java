@@ -362,9 +362,6 @@ public class ForestGameArea extends GameArea {
      *         note: coordinates begin at bottom left of screen
      */
   private void spawnBench(String type, int x, int y) {
-    GridPoint2 coords = new GridPoint2(x,y);
-    stove.setPosition(stove.getPosition().x + 2.7f , stove.getPosition().y + 0.9f);
-
     //Spawn a flame, this is temporary and for testing purposes
     GridPoint2 flamePos = new GridPoint2(1,1);
     Entity flame = StationFactory.createFlame();
