@@ -29,6 +29,7 @@ public class TutorialScreenDisplay extends UIComponent {
     private  int  i = 0;
     private int tutorialStep = 0;  // tracks the current tutorial step
     private MainGameOrderTicketDisplay orderTicketDisplay;
+    private Image movementImage; // New image for movement tutorial
     Table table = new Table();
 
     public TutorialScreenDisplay(GdxGame game) {
@@ -130,6 +131,10 @@ public class TutorialScreenDisplay extends UIComponent {
      * Proceeds to the next tutorial step using a switch-case.
      */
     private void advanceTutorialStep() {
+        // Remove the movement image if it exists
+        if (movementImage != null) {
+            movementImage.remove();
+            movementImage = null;}
         tutorialStep++;
         switch (tutorialStep) {
             case 1:
@@ -154,13 +159,22 @@ public class TutorialScreenDisplay extends UIComponent {
      */
     private void showMovementTutorial() {
         tutorialLabel.setText("Use W/A/S/D to move around.");
-        // implement all other movement tutorial code here
 
+        // Load and display the movement image
+        if (movementImage == null) {
+            skin.add("movement_image", new Texture(Gdx.files.internal("images/tutorial/MOMENT TUT.png")));
+            movementImage = new Image(skin.getDrawable("movement_image"));
+            movementImage.setSize(1100, 800);
+            float imageX = stage.getViewport().getWorldWidth() * 0f; // Center image
+            float imageY = stage.getViewport().getWorldHeight() * 0.15f ;
+            movementImage.setPosition(imageX, imageY);
+            stage.addActor(movementImage);
+        }
         ServiceLocator.getInputService().getEvents().addListener("playerMoved", this::onPlayerMoved);
     }
 
     /**
-     * Called when the player moves. Proceeds to the next tutorial step.
+     * Called when the player moves. Proceeds to the nexat tutorial step.
      */
     private void onPlayerMoved() {
 
