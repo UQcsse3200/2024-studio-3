@@ -140,7 +140,7 @@ public class ForestGameArea extends GameArea {
     // Spawn beef
     spawnBeef("cooked");
     spawnStrawberry("chopped");
-   spawnLettuce("chopped");
+    spawnLettuce("chopped");
     customerSpawnController = spawnCustomerController();
     /*customerSpawnController.getEvents().trigger(personalCustomerEnums.MOONKI.name());
     customerSpawnController.getEvents().trigger(personalCustomerEnums.BASIC_CHICKEN.name());*/
