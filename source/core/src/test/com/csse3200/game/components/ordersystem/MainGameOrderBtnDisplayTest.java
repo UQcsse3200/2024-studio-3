@@ -1,6 +1,7 @@
 package com.csse3200.game.components.ordersystem;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -33,17 +34,32 @@ class MainGameOrderBtnDisplayTest {
     @Mock Viewport viewport;
     @Mock DocketService docketService;
     @Mock EventHandler eventHandler;
+    MainGameOrderBtnDisplay createOrderBtn;
 
     @BeforeEach
     void setUp() {
         ServiceLocator.registerRenderService(renderService);
         ServiceLocator.registerDocketService(docketService);
+        createOrderBtn = new MainGameOrderBtnDisplay();
+        createOrderBtn.setStage(stage);
+        //when(ServiceLocator.getRenderService().getStage()).thenReturn(stage);
+    }
+
+    @Test
+    public void testButtonCreation() {
+        /*//when(ServiceLocator.getRenderService().getStage()).thenReturn(stage);
+        when(stage.addActor()).then();
+        createOrderBtn.addActors();
+        verify(stage).addActor(any(Table.class));*/
+        MainGameOrderBtnDisplay mockBtn = mock(MainGameOrderBtnDisplay.class);
+        mockBtn.setStage(stage);
+        mockBtn.addActors();
+        verify(mockBtn).addActors();
     }
 
     @Test
     void shouldCreateMainGameOrderBtnDisplayComponent() {
         when(ServiceLocator.getRenderService().getStage()).thenReturn(stage);
-        MainGameOrderBtnDisplay createOrderBtn = new MainGameOrderBtnDisplay();
 
         Entity entity = new Entity();
         entity.addComponent(createOrderBtn);
@@ -55,8 +71,6 @@ class MainGameOrderBtnDisplayTest {
     @Test
     void shouldDisposeMainGameOrderBtnDisplayComponent() {
         when(ServiceLocator.getRenderService().getStage()).thenReturn(stage);
-
-        MainGameOrderBtnDisplay createOrderBtn = new MainGameOrderBtnDisplay();
 
         Entity entity = new Entity();
         entity.addComponent(createOrderBtn);

@@ -3,6 +3,7 @@ package com.csse3200.game.entities;
 import com.badlogic.gdx.utils.Array;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import com.csse3200.game.events.EventHandler;
 
 /**
  * Provides a global access point for entities to register themselves. This allows for iterating
@@ -16,6 +17,14 @@ public class EntityService {
   private static final int INITIAL_CAPACITY = 16;
 
   private final Array<Entity> entities = new Array<>(false, INITIAL_CAPACITY);
+  private final EventHandler entityEventHandler;
+
+  public EntityService() {
+    entityEventHandler = new EventHandler();
+  }
+
+
+  public Array<Entity> getEntities() { return entities; }
 
   /**
    * Register a new entity with the entity service. The entity will be created and start updating.
@@ -34,6 +43,10 @@ public class EntityService {
   public void unregister(Entity entity) {
     logger.debug("Unregistering {} in entity service", entity);
     entities.removeValue(entity, true);
+  }
+
+  public EventHandler getEvents() {
+    return entityEventHandler;
   }
 
   /**
