@@ -1,6 +1,7 @@
 package com.csse3200.game.components.station;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.items.IngredientComponent;
@@ -18,7 +19,7 @@ public class StationItemHandlerComponent extends Component {
      */
     protected final String type;
     protected InventoryComponent inventoryComponent;
-    protected final ArrayList<ItemComponent> acceptableItems;
+    protected final ArrayList<String> acceptableItems;
 
     // General TODO:
     // Add trigger calls to external for failed interactions
@@ -32,7 +33,7 @@ public class StationItemHandlerComponent extends Component {
      * @param type - storing type of station
      * @param acceptableItems - HashMap, HashSet etc of mappings for acceptable items based on station
      */
-    public StationItemHandlerComponent(String type, ArrayList<ItemComponent> acceptableItems) {
+    public StationItemHandlerComponent(String type, ArrayList<String> acceptableItems) {
         this.type = type;
         this.acceptableItems = acceptableItems;
 
@@ -59,22 +60,17 @@ public class StationItemHandlerComponent extends Component {
     /**
      * Checks if the item can be accepted
      * @param item to check if can be accepted
-     */
-    public boolean isItemAccepted(Entity item) {
-        String itemName = item
-                .getComponent(ItemComponent.class)
-                .getItemName();
-
-        return this.acceptableItems.contains(itemName);
-    }
-
-    /**
-     * Checks if the item can be accepted into the station
-     * @param item to check acceptance for
      * @return true if it can be acceptedd, false otherwise.
      */
-    public boolean isItemAccepted(String item) {
-        return this.acceptableItems.contains(item);
+    public boolean isItemAccepted(ItemComponent item) {
+        String itemName = item.getItemName();
+
+        for (String acceptableItem : this.acceptableItems) {
+            if (acceptableItem.equals(itemName)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
@@ -108,15 +104,6 @@ public class StationItemHandlerComponent extends Component {
         }
     }
 
-    /**
-     * Checks if the item can be accepted, True if it can be
-     * @param item to check if can be accepted
-     */
-    public boolean isItemAccepted(ItemComponent item) {
-        // This needs initialising by parsing given list and passed during factory
-        // Placeholder to accept everything
-        return true;
-    }
 
     /**
      *
@@ -135,7 +122,7 @@ public class StationItemHandlerComponent extends Component {
         ItemComponent item = inventoryComponent.getItemFirst();
 
         // Attempt to cook the ingredient if it is cookable
-        if (this.type == "oven" || this.type == "stove") {
+        if (Objects.equals(this.type, "oven") || Objects.equals(this.type, "stove")) {
             boolean isCookable = false;
 
             if (item.getEntity().getComponent(IngredientComponent.class) == null) {
@@ -157,7 +144,7 @@ public class StationItemHandlerComponent extends Component {
                 }
                 
             }
-        } else if (this.type == "cutting board" || this.type == "blender") {
+        } else if (Objects.equals(this.type, "cutting board") || Objects.equals(this.type, "blender")) {
             boolean isChoppable = false;
 
             if (item.getEntity().getComponent(IngredientComponent.class) == null) {
