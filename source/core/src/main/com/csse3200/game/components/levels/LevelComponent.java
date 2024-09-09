@@ -66,7 +66,7 @@ public class LevelComponent extends Component {
     }
 
     private void spawnCustomer() {
-        int index = rand.nextInt(customerNameArray.size() + 1);
+        int index = rand.nextInt(customerNameArray.size());
         customerSpawnController.getEvents().trigger(customerNameArray.get(index));
         logger.info("Spawned {}", customerNameArray.get(index));
     }
