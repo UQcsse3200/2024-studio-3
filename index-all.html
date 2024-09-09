@@ -209,13 +209,13 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/entities/configs/NPCConfigs.html#Basic_Chicken" class="member-name-link">Basic_Chicken</a> - Variable in class com.csse3200.game.entities.configs.<a href="com/csse3200/game/entities/configs/NPCConfigs.html" title="class in com.csse3200.game.entities.configs">NPCConfigs</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="com/csse3200/game/areas/ForestGameArea.personalCustomerEnums.html#BASIC_CHICKEN" class="member-name-link">BASIC_CHICKEN</a> - Enum constant in enum class com.csse3200.game.areas.<a href="com/csse3200/game/areas/ForestGameArea.personalCustomerEnums.html" title="enum class in com.csse3200.game.areas">ForestGameArea.personalCustomerEnums</a></dt>
+<dt><a href="com/csse3200/game/components/npc/PersonalCustomerEnums.html#BASIC_CHICKEN" class="member-name-link">BASIC_CHICKEN</a> - Enum constant in enum class com.csse3200.game.components.npc.<a href="com/csse3200/game/components/npc/PersonalCustomerEnums.html" title="enum class in com.csse3200.game.components.npc">PersonalCustomerEnums</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/entities/configs/NPCConfigs.html#Basic_Default" class="member-name-link">Basic_Default</a> - Variable in class com.csse3200.game.entities.configs.<a href="com/csse3200/game/entities/configs/NPCConfigs.html" title="class in com.csse3200.game.entities.configs">NPCConfigs</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/entities/configs/NPCConfigs.html#Basic_Sheep" class="member-name-link">Basic_Sheep</a> - Variable in class com.csse3200.game.entities.configs.<a href="com/csse3200/game/entities/configs/NPCConfigs.html" title="class in com.csse3200.game.entities.configs">NPCConfigs</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="com/csse3200/game/areas/ForestGameArea.personalCustomerEnums.html#BASIC_SHEEP" class="member-name-link">BASIC_SHEEP</a> - Enum constant in enum class com.csse3200.game.areas.<a href="com/csse3200/game/areas/ForestGameArea.personalCustomerEnums.html" title="enum class in com.csse3200.game.areas">ForestGameArea.personalCustomerEnums</a></dt>
+<dt><a href="com/csse3200/game/components/npc/PersonalCustomerEnums.html#BASIC_SHEEP" class="member-name-link">BASIC_SHEEP</a> - Enum constant in enum class com.csse3200.game.components.npc.<a href="com/csse3200/game/components/npc/PersonalCustomerEnums.html" title="enum class in com.csse3200.game.components.npc">PersonalCustomerEnums</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/items/ItemType.html#BEEF" class="member-name-link">BEEF</a> - Enum constant in enum class com.csse3200.game.components.items.<a href="com/csse3200/game/components/items/ItemType.html" title="enum class in com.csse3200.game.components.items">ItemType</a></dt>
 <dd>&nbsp;</dd>
@@ -1028,7 +1028,7 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/maingame/EndDayDisplay.html" class="type-name-link" title="class in com.csse3200.game.components.maingame">EndDayDisplay</a> - Class in <a href="com/csse3200/game/components/maingame/package-summary.html">com.csse3200.game.components.maingame</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="com/csse3200/game/components/maingame/EndDayDisplay.html#%3Cinit%3E(com.csse3200.game.screens.MainGameScreen)" class="member-name-link">EndDayDisplay(MainGameScreen)</a> - Constructor for class com.csse3200.game.components.maingame.<a href="com/csse3200/game/components/maingame/EndDayDisplay.html" title="class in com.csse3200.game.components.maingame">EndDayDisplay</a></dt>
+<dt><a href="com/csse3200/game/components/maingame/EndDayDisplay.html#%3Cinit%3E(com.csse3200.game.screens.MainGameScreen,com.csse3200.game.GdxGame)" class="member-name-link">EndDayDisplay(MainGameScreen, GdxGame)</a> - Constructor for class com.csse3200.game.components.maingame.<a href="com/csse3200/game/components/maingame/EndDayDisplay.html" title="class in com.csse3200.game.components.maingame">EndDayDisplay</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/Component.html#entity" class="member-name-link">entity</a> - Variable in class com.csse3200.game.components.<a href="com/csse3200/game/components/Component.html" title="class in com.csse3200.game.components">Component</a></dt>
 <dd>&nbsp;</dd>
@@ -1138,8 +1138,6 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Initialise this ForestGameArea to use the provided TerrainFactory.</div>
 </dd>
-<dt><a href="com/csse3200/game/areas/ForestGameArea.personalCustomerEnums.html" class="type-name-link" title="enum class in com.csse3200.game.areas">ForestGameArea.personalCustomerEnums</a> - Enum Class in <a href="com/csse3200/game/areas/package-summary.html">com.csse3200.game.areas</a></dt>
-<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/files/UserSettings.Settings.html#fps" class="member-name-link">fps</a> - Variable in class com.csse3200.game.files.<a href="com/csse3200/game/files/UserSettings.Settings.html" title="class in com.csse3200.game.files">UserSettings.Settings</a></dt>
 <dd>
 <div class="block">FPS cap of the game.</div>
@@ -1277,11 +1275,17 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Retrieves the name of the current drawable's texture.</div>
 </dd>
+<dt><a href="com/csse3200/game/services/LevelService.html#getCurrGold()" class="member-name-link">getCurrGold()</a> - Method in class com.csse3200.game.services.<a href="com/csse3200/game/services/LevelService.html" title="class in com.csse3200.game.services">LevelService</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/services/LevelService.html#getCurrLevel()" class="member-name-link">getCurrLevel()</a> - Method in class com.csse3200.game.services.<a href="com/csse3200/game/services/LevelService.html" title="class in com.csse3200.game.services">LevelService</a></dt>
 <dd>
 <div class="block">Gets the integer representation of the current level of the game</div>
 </dd>
 <dt><a href="com/csse3200/game/components/npc/CustomerComponent.html#getCustomer_id()" class="member-name-link">getCustomer_id()</a> - Method in class com.csse3200.game.components.npc.<a href="com/csse3200/game/components/npc/CustomerComponent.html" title="class in com.csse3200.game.components.npc">CustomerComponent</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/areas/ForestGameArea.html#getCustomerSpawnController()" class="member-name-link">getCustomerSpawnController()</a> - Method in class com.csse3200.game.areas.<a href="com/csse3200/game/areas/ForestGameArea.html" title="class in com.csse3200.game.areas">ForestGameArea</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/components/levels/LevelComponent.html#getCustomerSpawnController()" class="member-name-link">getCustomerSpawnController()</a> - Method in class com.csse3200.game.components.levels.<a href="com/csse3200/game/components/levels/LevelComponent.html" title="class in com.csse3200.game.components.levels">LevelComponent</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/entities/configs/MultiStationRecipeConfig.html#getCuttingBoard()" class="member-name-link">getCuttingBoard()</a> - Method in class com.csse3200.game.entities.configs.<a href="com/csse3200/game/entities/configs/MultiStationRecipeConfig.html" title="class in com.csse3200.game.entities.configs">MultiStationRecipeConfig</a></dt>
 <dd>&nbsp;</dd>
@@ -1760,7 +1764,7 @@ loadScripts(document, 'script');</script>
 </dd>
 <dt><a href="com/csse3200/game/entities/configs/NPCConfigs.html#Hank" class="member-name-link">Hank</a> - Variable in class com.csse3200.game.entities.configs.<a href="com/csse3200/game/entities/configs/NPCConfigs.html" title="class in com.csse3200.game.entities.configs">NPCConfigs</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="com/csse3200/game/areas/ForestGameArea.personalCustomerEnums.html#HANK" class="member-name-link">HANK</a> - Enum constant in enum class com.csse3200.game.areas.<a href="com/csse3200/game/areas/ForestGameArea.personalCustomerEnums.html" title="enum class in com.csse3200.game.areas">ForestGameArea.personalCustomerEnums</a></dt>
+<dt><a href="com/csse3200/game/components/npc/PersonalCustomerEnums.html#HANK" class="member-name-link">HANK</a> - Enum constant in enum class com.csse3200.game.components.npc.<a href="com/csse3200/game/components/npc/PersonalCustomerEnums.html" title="enum class in com.csse3200.game.components.npc">PersonalCustomerEnums</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/rendering/AnimationRenderComponent.html#hasAnimation(java.lang.String)" class="member-name-link">hasAnimation(String)</a> - Method in class com.csse3200.game.rendering.<a href="com/csse3200/game/rendering/AnimationRenderComponent.html" title="class in com.csse3200.game.rendering">AnimationRenderComponent</a></dt>
 <dd>
@@ -1950,7 +1954,7 @@ loadScripts(document, 'script');</script>
 </dd>
 <dt><a href="com/csse3200/game/entities/configs/NPCConfigs.html#John" class="member-name-link">John</a> - Variable in class com.csse3200.game.entities.configs.<a href="com/csse3200/game/entities/configs/NPCConfigs.html" title="class in com.csse3200.game.entities.configs">NPCConfigs</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="com/csse3200/game/areas/ForestGameArea.personalCustomerEnums.html#JOHN" class="member-name-link">JOHN</a> - Enum constant in enum class com.csse3200.game.areas.<a href="com/csse3200/game/areas/ForestGameArea.personalCustomerEnums.html" title="enum class in com.csse3200.game.areas">ForestGameArea.personalCustomerEnums</a></dt>
+<dt><a href="com/csse3200/game/components/npc/PersonalCustomerEnums.html#JOHN" class="member-name-link">JOHN</a> - Enum constant in enum class com.csse3200.game.components.npc.<a href="com/csse3200/game/components/npc/PersonalCustomerEnums.html" title="enum class in com.csse3200.game.components.npc">PersonalCustomerEnums</a></dt>
 <dd>&nbsp;</dd>
 </dl>
 <h2 class="title" id="I:K">K</h2>
@@ -2109,7 +2113,7 @@ loadScripts(document, 'script');</script>
 </dd>
 <dt><a href="com/csse3200/game/entities/configs/NPCConfigs.html#Lewis" class="member-name-link">Lewis</a> - Variable in class com.csse3200.game.entities.configs.<a href="com/csse3200/game/entities/configs/NPCConfigs.html" title="class in com.csse3200.game.entities.configs">NPCConfigs</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="com/csse3200/game/areas/ForestGameArea.personalCustomerEnums.html#LEWIS" class="member-name-link">LEWIS</a> - Enum constant in enum class com.csse3200.game.areas.<a href="com/csse3200/game/areas/ForestGameArea.personalCustomerEnums.html" title="enum class in com.csse3200.game.areas">ForestGameArea.personalCustomerEnums</a></dt>
+<dt><a href="com/csse3200/game/components/npc/PersonalCustomerEnums.html#LEWIS" class="member-name-link">LEWIS</a> - Enum constant in enum class com.csse3200.game.components.npc.<a href="com/csse3200/game/components/npc/PersonalCustomerEnums.html" title="enum class in com.csse3200.game.components.npc">PersonalCustomerEnums</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/services/ResourceService.html#loadAll()" class="member-name-link">loadAll()</a> - Method in class com.csse3200.game.services.<a href="com/csse3200/game/services/ResourceService.html" title="class in com.csse3200.game.services">ResourceService</a></dt>
 <dd>
@@ -2221,7 +2225,7 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/entities/configs/NPCConfigs.html#Moonki" class="member-name-link">Moonki</a> - Variable in class com.csse3200.game.entities.configs.<a href="com/csse3200/game/entities/configs/NPCConfigs.html" title="class in com.csse3200.game.entities.configs">NPCConfigs</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="com/csse3200/game/areas/ForestGameArea.personalCustomerEnums.html#MOONKI" class="member-name-link">MOONKI</a> - Enum constant in enum class com.csse3200.game.areas.<a href="com/csse3200/game/areas/ForestGameArea.personalCustomerEnums.html" title="enum class in com.csse3200.game.areas">ForestGameArea.personalCustomerEnums</a></dt>
+<dt><a href="com/csse3200/game/components/npc/PersonalCustomerEnums.html#MOONKI" class="member-name-link">MOONKI</a> - Enum constant in enum class com.csse3200.game.components.npc.<a href="com/csse3200/game/components/npc/PersonalCustomerEnums.html" title="enum class in com.csse3200.game.components.npc">PersonalCustomerEnums</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/input/InputComponent.html#mouseMoved(int,int)" class="member-name-link">mouseMoved(int, int)</a> - Method in class com.csse3200.game.input.<a href="com/csse3200/game/input/InputComponent.html" title="class in com.csse3200.game.input">InputComponent</a></dt>
 <dd>&nbsp;</dd>
@@ -2341,6 +2345,8 @@ loadScripts(document, 'script');</script>
 <div class="block">Displays performance stats about the game for debugging purposes.</div>
 </dd>
 <dt><a href="com/csse3200/game/components/gamearea/PerformanceDisplay.html#%3Cinit%3E()" class="member-name-link">PerformanceDisplay()</a> - Constructor for class com.csse3200.game.components.gamearea.<a href="com/csse3200/game/components/gamearea/PerformanceDisplay.html" title="class in com.csse3200.game.components.gamearea">PerformanceDisplay</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/components/npc/PersonalCustomerEnums.html" class="type-name-link" title="enum class in com.csse3200.game.components.npc">PersonalCustomerEnums</a> - Enum Class in <a href="com/csse3200/game/components/npc/package-summary.html">com.csse3200.game.components.npc</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/physics/components/PhysicsComponent.html" class="type-name-link" title="class in com.csse3200.game.physics.components">PhysicsComponent</a> - Class in <a href="com/csse3200/game/physics/components/package-summary.html">com.csse3200.game.physics.components</a></dt>
 <dd>
@@ -2659,7 +2665,7 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/levels/LevelComponent.html#resetCustomerSpawn()" class="member-name-link">resetCustomerSpawn()</a> - Method in class com.csse3200.game.components.levels.<a href="com/csse3200/game/components/levels/LevelComponent.html" title="class in com.csse3200.game.components.levels">LevelComponent</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="com/csse3200/game/services/LevelService.html#resetEventHandler()" class="member-name-link">resetEventHandler()</a> - Method in class com.csse3200.game.services.<a href="com/csse3200/game/services/LevelService.html" title="class in com.csse3200.game.services">LevelService</a></dt>
+<dt><a href="com/csse3200/game/screens/MainGameScreen.html#resetScreen()" class="member-name-link">resetScreen()</a> - Method in class com.csse3200.game.screens.<a href="com/csse3200/game/screens/MainGameScreen.html" title="class in com.csse3200.game.screens">MainGameScreen</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/rendering/Renderer.html#resize(int,int)" class="member-name-link">resize(int, int)</a> - Method in class com.csse3200.game.rendering.<a href="com/csse3200/game/rendering/Renderer.html" title="class in com.csse3200.game.rendering">Renderer</a></dt>
 <dd>
@@ -2788,10 +2794,14 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Set the current item within the station to the item provided.</div>
 </dd>
+<dt><a href="com/csse3200/game/services/LevelService.html#setCurrGold(int)" class="member-name-link">setCurrGold(int)</a> - Method in class com.csse3200.game.services.<a href="com/csse3200/game/services/LevelService.html" title="class in com.csse3200.game.services">LevelService</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/services/LevelService.html#setCurrLevel(int)" class="member-name-link">setCurrLevel(int)</a> - Method in class com.csse3200.game.services.<a href="com/csse3200/game/services/LevelService.html" title="class in com.csse3200.game.services">LevelService</a></dt>
 <dd>
 <div class="block">Manually set the level number</div>
 </dd>
+<dt><a href="com/csse3200/game/components/levels/LevelComponent.html#setCustomerSpawnController(com.csse3200.game.entities.Entity)" class="member-name-link">setCustomerSpawnController(Entity)</a> - Method in class com.csse3200.game.components.levels.<a href="com/csse3200/game/components/levels/LevelComponent.html" title="class in com.csse3200.game.components.levels">LevelComponent</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/rendering/RenderService.html#setDebug(com.csse3200.game.rendering.DebugRenderer)" class="member-name-link">setDebug(DebugRenderer)</a> - Method in class com.csse3200.game.rendering.<a href="com/csse3200/game/rendering/RenderService.html" title="class in com.csse3200.game.rendering">RenderService</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/physics/components/ColliderComponent.html#setDensity(float)" class="member-name-link">setDensity(float)</a> - Method in class com.csse3200.game.physics.components.<a href="com/csse3200/game/physics/components/ColliderComponent.html" title="class in com.csse3200.game.physics.components">ColliderComponent</a></dt>
@@ -3028,7 +3038,7 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/entities/configs/NPCConfigs.html#Silver" class="member-name-link">Silver</a> - Variable in class com.csse3200.game.entities.configs.<a href="com/csse3200/game/entities/configs/NPCConfigs.html" title="class in com.csse3200.game.entities.configs">NPCConfigs</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="com/csse3200/game/areas/ForestGameArea.personalCustomerEnums.html#SILVER" class="member-name-link">SILVER</a> - Enum constant in enum class com.csse3200.game.areas.<a href="com/csse3200/game/areas/ForestGameArea.personalCustomerEnums.html" title="enum class in com.csse3200.game.areas">ForestGameArea.personalCustomerEnums</a></dt>
+<dt><a href="com/csse3200/game/components/npc/PersonalCustomerEnums.html#SILVER" class="member-name-link">SILVER</a> - Enum constant in enum class com.csse3200.game.components.npc.<a href="com/csse3200/game/components/npc/PersonalCustomerEnums.html" title="enum class in com.csse3200.game.components.npc">PersonalCustomerEnums</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/physics/raycast/SingleHitCallback.html" class="type-name-link" title="class in com.csse3200.game.physics.raycast">SingleHitCallback</a> - Class in <a href="com/csse3200/game/physics/raycast/package-summary.html">com.csse3200.game.physics.raycast</a></dt>
 <dd>
@@ -3256,6 +3266,8 @@ loadScripts(document, 'script');</script>
 <div class="block">Toggles between the terminal being open and closed.</div>
 </dd>
 <dt><a href="com/csse3200/game/components/levels/LevelComponent.html#toggleNowSpawning()" class="member-name-link">toggleNowSpawning()</a> - Method in class com.csse3200.game.components.levels.<a href="com/csse3200/game/components/levels/LevelComponent.html" title="class in com.csse3200.game.components.levels">LevelComponent</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/services/LevelService.html#togglePlayerFinishedLevel()" class="member-name-link">togglePlayerFinishedLevel()</a> - Method in class com.csse3200.game.services.<a href="com/csse3200/game/services/LevelService.html" title="class in com.csse3200.game.services">LevelService</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/maingame/EndDayDisplay.html#toggleVisibility()" class="member-name-link">toggleVisibility()</a> - Method in class com.csse3200.game.components.maingame.<a href="com/csse3200/game/components/maingame/EndDayDisplay.html" title="class in com.csse3200.game.components.maingame">EndDayDisplay</a></dt>
 <dd>&nbsp;</dd>
@@ -3521,10 +3533,6 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Returns the enum constant of this class with the specified name.</div>
 </dd>
-<dt><a href="com/csse3200/game/areas/ForestGameArea.personalCustomerEnums.html#valueOf(java.lang.String)" class="member-name-link">valueOf(String)</a> - Static method in enum class com.csse3200.game.areas.<a href="com/csse3200/game/areas/ForestGameArea.personalCustomerEnums.html" title="enum class in com.csse3200.game.areas">ForestGameArea.personalCustomerEnums</a></dt>
-<dd>
-<div class="block">Returns the enum constant of this class with the specified name.</div>
-</dd>
 <dt><a href="com/csse3200/game/areas/terrain/TerrainComponent.TerrainOrientation.html#valueOf(java.lang.String)" class="member-name-link">valueOf(String)</a> - Static method in enum class com.csse3200.game.areas.terrain.<a href="com/csse3200/game/areas/terrain/TerrainComponent.TerrainOrientation.html" title="enum class in com.csse3200.game.areas.terrain">TerrainComponent.TerrainOrientation</a></dt>
 <dd>
 <div class="block">Returns the enum constant of this class with the specified name.</div>
@@ -3534,6 +3542,10 @@ loadScripts(document, 'script');</script>
 <div class="block">Returns the enum constant of this class with the specified name.</div>
 </dd>
 <dt><a href="com/csse3200/game/components/items/ItemType.html#valueOf(java.lang.String)" class="member-name-link">valueOf(String)</a> - Static method in enum class com.csse3200.game.components.items.<a href="com/csse3200/game/components/items/ItemType.html" title="enum class in com.csse3200.game.components.items">ItemType</a></dt>
+<dd>
+<div class="block">Returns the enum constant of this class with the specified name.</div>
+</dd>
+<dt><a href="com/csse3200/game/components/npc/PersonalCustomerEnums.html#valueOf(java.lang.String)" class="member-name-link">valueOf(String)</a> - Static method in enum class com.csse3200.game.components.npc.<a href="com/csse3200/game/components/npc/PersonalCustomerEnums.html" title="enum class in com.csse3200.game.components.npc">PersonalCustomerEnums</a></dt>
 <dd>
 <div class="block">Returns the enum constant of this class with the specified name.</div>
 </dd>
@@ -3562,11 +3574,6 @@ loadScripts(document, 'script');</script>
 <div class="block">Returns an array containing the constants of this enum class, in
 the order they are declared.</div>
 </dd>
-<dt><a href="com/csse3200/game/areas/ForestGameArea.personalCustomerEnums.html#values()" class="member-name-link">values()</a> - Static method in enum class com.csse3200.game.areas.<a href="com/csse3200/game/areas/ForestGameArea.personalCustomerEnums.html" title="enum class in com.csse3200.game.areas">ForestGameArea.personalCustomerEnums</a></dt>
-<dd>
-<div class="block">Returns an array containing the constants of this enum class, in
-the order they are declared.</div>
-</dd>
 <dt><a href="com/csse3200/game/areas/terrain/TerrainComponent.TerrainOrientation.html#values()" class="member-name-link">values()</a> - Static method in enum class com.csse3200.game.areas.terrain.<a href="com/csse3200/game/areas/terrain/TerrainComponent.TerrainOrientation.html" title="enum class in com.csse3200.game.areas.terrain">TerrainComponent.TerrainOrientation</a></dt>
 <dd>
 <div class="block">Returns an array containing the constants of this enum class, in
@@ -3578,6 +3585,11 @@ the order they are declared.</div>
 the order they are declared.</div>
 </dd>
 <dt><a href="com/csse3200/game/components/items/ItemType.html#values()" class="member-name-link">values()</a> - Static method in enum class com.csse3200.game.components.items.<a href="com/csse3200/game/components/items/ItemType.html" title="enum class in com.csse3200.game.components.items">ItemType</a></dt>
+<dd>
+<div class="block">Returns an array containing the constants of this enum class, in
+the order they are declared.</div>
+</dd>
+<dt><a href="com/csse3200/game/components/npc/PersonalCustomerEnums.html#values()" class="member-name-link">values()</a> - Static method in enum class com.csse3200.game.components.npc.<a href="com/csse3200/game/components/npc/PersonalCustomerEnums.html" title="enum class in com.csse3200.game.components.npc">PersonalCustomerEnums</a></dt>
 <dd>
 <div class="block">Returns an array containing the constants of this enum class, in
 the order they are declared.</div>
