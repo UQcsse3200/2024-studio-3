@@ -51,6 +51,9 @@ public class LevelComponent extends Component {
         toggleNowSpawning();
     }
 
+    private void spawnCustomer() {
+    }
+
     public void setGameArea (ForestGameArea newGameArea) {
         gameArea = newGameArea;
         setCustomerSpawnController(gameArea.getCustomerSpawnController());
