@@ -1,6 +1,5 @@
 package com.csse3200.game.components.player;
 
-import com.badlogic.gdx.utils.Null;
 import com.csse3200.game.components.Component;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,8 +21,14 @@ public class InventoryComponent extends Component {
   private final String sizeException = "Invalid size parameter. Must be an integer > 0.";
   private final String itemException = "Index in Inventory already occupied by an Item.";
   private final String nullException = "Index in Inventory does not contain an Item.";
+  private int gold;
 
-  public InventoryComponent(int capacity) {
+  /**
+   * Creates inventory component
+   * @param capacity the players inventory size
+   * @param gold the players gold
+   */
+  public InventoryComponent(int capacity, int gold) {
     setCapacity(capacity);
     items = new ArrayList<>(capacity);
     for (int i = 0; i < capacity; i++) {        
@@ -31,8 +36,8 @@ public class InventoryComponent extends Component {
     }
     size = 0;
     setSelected(0);
+    setGold(gold);
   }
-
 
   /**
    * Returns the capacity of this inventory component. I.e. the
@@ -47,7 +52,7 @@ public class InventoryComponent extends Component {
   /**
    * Returns the current number of items in the inventory component. 
 
-   * @return - the number of items in the inventoru.
+   * @return - the number of items in the inventory.
    */
   public int getSize() {
     return this.size;
@@ -64,6 +69,36 @@ public class InventoryComponent extends Component {
         throw new IllegalArgumentException(sizeException);
       }
       this.capacity = newCapacity;
+  }
+
+  /**
+   * Sets the entity's gold. Gold has a minimum bound of 0.
+   *
+   * @param gold gold
+   */
+  public void setGold(int gold) {
+    this.gold = Math.max(gold, 0);
+    if (entity != null) {
+      entity.getEvents().trigger("updateGold", this.gold);
+    }
+  }
+
+  /**
+   * Adds to the player's gold. The amount added can be negative.
+   *
+   * @param gold gold to add
+   */
+  public void addGold(int gold) {
+    setGold(this.gold + gold);
+  }
+
+  /**
+   * Returns the entity's gold.
+   *
+   * @return entity's gold
+   */
+  public int getGold() {
+    return gold;
   }
 
   /**
