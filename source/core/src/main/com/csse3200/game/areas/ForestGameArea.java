@@ -31,7 +31,7 @@ public class ForestGameArea extends GameArea {
   private static final int NUM_TREES = 7;
   private static final int NUM_GHOSTS = 2;
   private static final int NUM_CUSTOMERS_BASE = 1;
-  private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(3, 3);
+  private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(5, 4);
   private static final float WALL_WIDTH = 0.1f;
   private static final String[] forestTextures = {
     "images/meals/acai_bowl.png",
@@ -60,7 +60,7 @@ public class ForestGameArea extends GameArea {
     "images/ingredients/cooked_beef.png",
     "images/ingredients/burnt_beef.png",
     "images/tiles/orange_tile.png",
-          "images/tiles/bench_test.png",
+    "images/tiles/bench_test.png",
     "images/tiles/blue_tile.png",
     "images/stations/oven.png",
     "images/stations/stove.png",
@@ -79,31 +79,28 @@ public class ForestGameArea extends GameArea {
     "images/frame/top_border_wall.png",
     "images/frame/bottom_border_wall.png",
     "images/frame/border.png",
-          "images/tooltip_bg.png",
-    "images/stations/benches/bench6-bottom.png",
-    "images/stations/benches/bench6-top.png",
+    "images/tooltip_bg.png",
     "images/fireExtinguisher/Fire_Extinguisher.png",
-          "images/stations/benches/single.png",
-          "images/stations/benches/middle.png",
-          "images/stations/benches/left_border.png",
-            "images/stations/benches/right_border.png",
-            "images/stations/benches/vertical.png",
-            "images/stations/benches/top.png",
-          "images/stations/benches/final.png",
-          "images/stations/benches/bottom_shadow.png",
-            "images/stations/benches/shadow_bottom_top.png",
-            "images/stations/benches/left_shadow.png",
-          "images/stations/benches/left_corner_shadow.png",
-          "images/stations/benches/right_corner_shadow.png",
-          "images/stations/benches/top_shadows.png",
-    "images/stations/benches/bench6-top.png",
-          "images/frame/vertical_border.png",
-          "images/frame/horizontal_border.png",
-          "images/frame/topleft_door.png",
-          "images/frame/topright_door.png",
-          "images/frame/bottomleft_door.png",
-          "images/frame/bottomright_door.png",
-          "images/frame/wall.png"
+    "images/stations/benches/single.png",
+    "images/stations/benches/middle.png",
+    "images/stations/benches/left_border.png",
+    "images/stations/benches/right_border.png",
+    "images/stations/benches/vertical.png",
+    "images/stations/benches/top.png",
+    "images/stations/benches/final.png",
+    "images/stations/benches/bottom_shadow.png",
+    "images/stations/benches/shadow_bottom_top.png",
+    "images/stations/benches/left_shadow.png",
+    "images/stations/benches/left_corner_shadow.png",
+    "images/stations/benches/right_corner_shadow.png",
+    "images/stations/benches/top_shadows.png",
+    "images/frame/vertical_border.png",
+    "images/frame/horizontal_border.png",
+    "images/frame/topleft_door.png",
+    "images/frame/topright_door.png",
+    "images/frame/bottomleft_door.png",
+    "images/frame/bottomright_door.png",
+    "images/frame/wall.png"
   };
   private static final String[] forestTextureAtlases = {"images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/ghostKing.atlas", "images/player.atlas", "images/fireExtinguisher/atlas/flame.atlas"};
   private static final String[] forestSounds = {"sounds/Impact4.ogg"};
@@ -316,10 +313,12 @@ public class ForestGameArea extends GameArea {
   }
 
 
-
-
   /**
-   * Render and spawn all benches.
+   * @param type - The type of bench to spawn.
+   * @param startX - The x-coordinate to start spawning the bench.
+   * @param endX - The x-coordinate to end spawning the bench.
+   * @param y - The y-coordinate to spawn the bench.
+   * Spawns a row of benches of the specified type.
    */
   private void spawnBenchRow(String type, int startX, int endX, float y) {
     for (int i = startX; i <= endX; i++) {
@@ -329,6 +328,13 @@ public class ForestGameArea extends GameArea {
     }
   }
 
+  /**
+   * @param type - The type of bench to spawn.
+   * @param x - The x-coordinate to spawn the bench.
+   * @param startY - The y-coordinate to start spawning the bench.
+   * @param endY - The y-coordinate to end spawning the bench.
+   * Spawns a column of benches of the specified type.
+   */
   private void spawnBenchColumn(String type, float x, int startY, int endY) {
     for (int i = startY; i <= endY; i++) {
       Entity bench = Bench.createBench(type);
@@ -336,13 +342,20 @@ public class ForestGameArea extends GameArea {
       bench.setPosition(x, i);
     }
   }
-
+  /**
+   * @param type - The type of bench to spawn.
+   * @param x - The x-coordinate to spawn the bench.
+   * @param y - The y-coordinate to spawn the bench.
+   * Spawns a single bench tile of the specified type.
+   */
   private void spawnSingleBench(String type, float x, float y) {
     Entity bench = Bench.createBench(type);
     spawnEntityAt(bench, new GridPoint2((int) x, (int) y), false, false);
     bench.setPosition(x, y);
   }
-
+  /**
+   * Spawns benches around the restaurant
+   */
   private void spawnBenches() {
     // Bottom bench row
     spawnSingleBench("left_border", 4, 1f);
