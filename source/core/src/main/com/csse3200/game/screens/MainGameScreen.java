@@ -102,10 +102,9 @@ public class MainGameScreen extends ScreenAdapter {
 			renderPauseMenu();
 			return;
 		}
-		if (!isPaused) {
-			physicsEngine.update();
-			ServiceLocator.getEntityService().update();
-		}
+
+		physicsEngine.update();
+		ServiceLocator.getEntityService().update();
 		renderer.render();
 	}
 
