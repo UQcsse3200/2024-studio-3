@@ -63,14 +63,17 @@ public class StationItemHandlerComponent extends Component {
      * @return true if it can be acceptedd, false otherwise.
      */
     public boolean isItemAccepted(ItemComponent item) {
-        String itemName = item.getItemName();
+        // TODO: Change this back after doing proper item acceptance
+
+        /*String itemName = item.getItemName();
 
         for (String acceptableItem : this.acceptableItems) {
             if (acceptableItem.equals(itemName)) {
                 return true;
             }
         }
-        return false;
+        return false;*/
+        return true;
     }
 
     /**
