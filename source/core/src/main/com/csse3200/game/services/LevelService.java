@@ -11,6 +11,7 @@ import java.util.logging.Level;
 public class LevelService {
     private EventHandler levelEventHandler;
     private int currLevel;
+    private int currGold;
 
     /**
      * Constructor method, initialises both private variables
@@ -18,6 +19,7 @@ public class LevelService {
     public LevelService() {
         levelEventHandler = new EventHandler();
         currLevel = 1;
+        currGold = 0;
         levelEventHandler.addListener("startLevel", this::levelControl);
         //levelEventHandler.addListener("createCustomer", ForestGameArea::spawnCustomer);
         //ServiceLocator.getLevelService().getEvents().addListener("spawnCustomer", this::spawnCustomer);
