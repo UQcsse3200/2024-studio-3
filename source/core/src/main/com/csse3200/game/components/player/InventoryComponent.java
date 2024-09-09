@@ -92,6 +92,7 @@ public class InventoryComponent extends Component {
   public void addGold(int gold) {
     setGold(this.gold + gold);
     ServiceLocator.getLevelService().setCurrGold(this.gold);
+    ServiceLocator.getDocketService().getEvents().trigger("goldUpdated", this.gold);
   }
 
   /**
