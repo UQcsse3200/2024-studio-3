@@ -137,6 +137,13 @@ public class MainGameScreen extends ScreenAdapter {
 		ServiceLocator.clear();
 	}
 
+	public void resetScreen() {
+		EntityService entityService = ServiceLocator.getEntityService();
+		entityService.dispose();
+		ServiceLocator.registerEntityService(new EntityService());
+		createUI();
+	}
+
 	private void loadAssets() {
 		logger.debug("Loading assets");
 		ResourceService resourceService = ServiceLocator.getResourceService();
