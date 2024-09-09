@@ -222,7 +222,9 @@ loadScripts(document, 'script');</script>
 <dt><a href="com/csse3200/game/physics/PhysicsContactListener.html#beginContact(com.badlogic.gdx.physics.box2d.Contact)" class="member-name-link">beginContact(Contact)</a> - Method in class com.csse3200.game.physics.<a href="com/csse3200/game/physics/PhysicsContactListener.html" title="class in com.csse3200.game.physics">PhysicsContactListener</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/entities/benches/Bench.html" class="type-name-link" title="class in com.csse3200.game.entities.benches">Bench</a> - Class in <a href="com/csse3200/game/entities/benches/package-summary.html">com.csse3200.game.entities.benches</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">This class is responsible for creating benches in the game.</div>
+</dd>
 <dt><a href="com/csse3200/game/entities/benches/Bench.html#%3Cinit%3E(java.lang.String,int,int)" class="member-name-link">Bench(String, int, int)</a> - Constructor for class com.csse3200.game.entities.benches.<a href="com/csse3200/game/entities/benches/Bench.html" title="class in com.csse3200.game.entities.benches">Bench</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/physics/BodyUserData.html" class="type-name-link" title="class in com.csse3200.game.physics">BodyUserData</a> - Class in <a href="com/csse3200/game/physics/package-summary.html">com.csse3200.game.physics</a></dt>
@@ -615,10 +617,6 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Creates visible bench.</div>
 </dd>
-<dt><a href="com/csse3200/game/entities/benches/Bench.html#createBench(java.lang.String,float,float,float)" class="member-name-link">createBench(String, float, float, float)</a> - Static method in class com.csse3200.game.entities.benches.<a href="com/csse3200/game/entities/benches/Bench.html" title="class in com.csse3200.game.entities.benches">Bench</a></dt>
-<dd>
-<div class="block">Creates visible station.</div>
-</dd>
 <dt><a href="com/csse3200/game/physics/PhysicsEngine.html#createBody(com.badlogic.gdx.physics.box2d.BodyDef)" class="member-name-link">createBody(BodyDef)</a> - Method in class com.csse3200.game.physics.<a href="com/csse3200/game/physics/PhysicsEngine.html" title="class in com.csse3200.game.physics">PhysicsEngine</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/entities/factories/ObstacleFactory.html#createBorder(java.lang.String,float)" class="member-name-link">createBorder(String, float)</a> - Static method in class com.csse3200.game.entities.factories.<a href="com/csse3200/game/entities/factories/ObstacleFactory.html" title="class in com.csse3200.game.entities.factories">ObstacleFactory</a></dt>
@@ -941,6 +939,8 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Constructs a new DocketService instance.</div>
 </dd>
+<dt><a href="com/csse3200/game/entities/factories/ObstacleFactory.html#Door(java.lang.String)" class="member-name-link">Door(String)</a> - Static method in class com.csse3200.game.entities.factories.<a href="com/csse3200/game/entities/factories/ObstacleFactory.html" title="class in com.csse3200.game.entities.factories">ObstacleFactory</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/utils/math/Vector2Utils.html#DOWN" class="member-name-link">DOWN</a> - Static variable in class com.csse3200.game.utils.math.<a href="com/csse3200/game/utils/math/Vector2Utils.html" title="class in com.csse3200.game.utils.math">Vector2Utils</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/areas/terrain/TerrainComponent.html#draw(com.badlogic.gdx.graphics.g2d.SpriteBatch)" class="member-name-link">draw(SpriteBatch)</a> - Method in class com.csse3200.game.areas.terrain.<a href="com/csse3200/game/areas/terrain/TerrainComponent.html" title="class in com.csse3200.game.areas.terrain">TerrainComponent</a></dt>
@@ -1789,6 +1789,8 @@ loadScripts(document, 'script');</script>
 <div class="block">Physics comp</div>
 </dd>
 <dt><a href="com/csse3200/game/physics/components/HitboxComponent.html#%3Cinit%3E()" class="member-name-link">HitboxComponent()</a> - Constructor for class com.csse3200.game.physics.components.<a href="com/csse3200/game/physics/components/HitboxComponent.html" title="class in com.csse3200.game.physics.components">HitboxComponent</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/entities/factories/ObstacleFactory.html#horizontalSeparation()" class="member-name-link">horizontalSeparation()</a> - Static method in class com.csse3200.game.entities.factories.<a href="com/csse3200/game/entities/factories/ObstacleFactory.html" title="class in com.csse3200.game.entities.factories">ObstacleFactory</a></dt>
 <dd>&nbsp;</dd>
 </dl>
 <h2 class="title" id="I:I">I</h2>
@@ -3609,6 +3611,10 @@ the order they are declared.</div>
 <dd>
 <div class="block">Contains additional utility constants and functions for common Vector2 operations.</div>
 </dd>
+<dt><a href="com/csse3200/game/entities/factories/ObstacleFactory.html#verticalSeparation()" class="member-name-link">verticalSeparation()</a> - Static method in class com.csse3200.game.entities.factories.<a href="com/csse3200/game/entities/factories/ObstacleFactory.html" title="class in com.csse3200.game.entities.factories">ObstacleFactory</a></dt>
+<dd>
+<div class="block">Creates a separation border between customer and chef</div>
+</dd>
 <dt><a href="com/csse3200/game/files/UserSettings.Settings.html#vsync" class="member-name-link">vsync</a> - Variable in class com.csse3200.game.files.<a href="com/csse3200/game/files/UserSettings.Settings.html" title="class in com.csse3200.game.files">UserSettings.Settings</a></dt>
 <dd>&nbsp;</dd>
 </dl>
@@ -3619,6 +3625,8 @@ the order they are declared.</div>
 <div class="block">Task that does nothing other than waiting for a given time.</div>
 </dd>
 <dt><a href="com/csse3200/game/components/tasks/WaitTask.html#%3Cinit%3E(float)" class="member-name-link">WaitTask(float)</a> - Constructor for class com.csse3200.game.components.tasks.<a href="com/csse3200/game/components/tasks/WaitTask.html" title="class in com.csse3200.game.components.tasks">WaitTask</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/entities/factories/ObstacleFactory.html#wall()" class="member-name-link">wall()</a> - Static method in class com.csse3200.game.entities.factories.<a href="com/csse3200/game/entities/factories/ObstacleFactory.html" title="class in com.csse3200.game.entities.factories">ObstacleFactory</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/tasks/WanderTask.html" class="type-name-link" title="class in com.csse3200.game.components.tasks">WanderTask</a> - Class in <a href="com/csse3200/game/components/tasks/package-summary.html">com.csse3200.game.components.tasks</a></dt>
 <dd>

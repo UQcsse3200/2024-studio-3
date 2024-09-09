@@ -93,6 +93,8 @@ loadScripts(document, 'script');</script>
 <hr>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">Bench</span>
 <span class="extends-implements">extends <a href="../Entity.html" title="class in com.csse3200.game.entities">Entity</a></span></div>
+<div class="block">This class is responsible for creating benches in the game.
+ Benches are static entities that can be interacted with by the player.</div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -147,14 +149,6 @@ loadScripts(document, 'script');</script>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#createBench(java.lang.String)" class="member-name-link">createBench</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;type)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">Creates visible bench.</div>
-</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="../Entity.html" title="class in com.csse3200.game.entities">Entity</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#createBench(java.lang.String,float,float,float)" class="member-name-link">createBench</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;type,
- float&nbsp;height,
- float&nbsp;xScale,
- float&nbsp;yScale)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
-<div class="block">Creates visible station.</div>
 </div>
 </div>
 </div>
@@ -228,25 +222,6 @@ loadScripts(document, 'script');</script>
 <dd><code>type</code> - Type of bench</dd>
 <dt>Returns:</dt>
 <dd>Station entity of given width and height with relevant behaviors</dd>
-</dl>
-</section>
-</li>
-<li>
-<section class="detail" id="createBench(java.lang.String,float,float,float)">
-<h3>createBench</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="../Entity.html" title="class in com.csse3200.game.entities">Entity</a></span>&nbsp;<span class="element-name">createBench</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;type,
- float&nbsp;height,
- float&nbsp;xScale,
- float&nbsp;yScale)</span></div>
-<div class="block">Creates visible station.</div>
-<dl class="notes">
-<dt>Parameters:</dt>
-<dd><code>type</code> - Type of station</dd>
-<dd><code>height</code> - Station height in world units</dd>
-<dd><code>xScale</code> - Bench collision in x</dd>
-<dd><code>yScale</code> - Bench collision in y</dd>
-<dt>Returns:</dt>
-<dd>Station entity of given width and height with relavent behaviors</dd>
 </dl>
 </section>
 </li>
