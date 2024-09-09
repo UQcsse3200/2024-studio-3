@@ -43,6 +43,14 @@ public class LevelService {
         return currLevel;
     }
 
+    public int getCurrGold() {
+        return currGold;
+    }
+
+    public void setCurrGold(int gold) {
+        currGold = gold;
+    }
+
     /**
      * Increases the integer representing the current level by one
      */
