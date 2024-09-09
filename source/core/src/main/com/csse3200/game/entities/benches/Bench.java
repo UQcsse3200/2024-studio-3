@@ -13,6 +13,10 @@ import com.csse3200.game.physics.components.ColliderComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.rendering.TextureRenderComponent;
 
+/**
+ * This class is responsible for creating benches in the game.
+ * Benches are static entities that can be interacted with by the player.
+ */
 public class Bench extends Entity{
     public String type;
     public int x;
@@ -37,11 +41,9 @@ public class Bench extends Entity{
                 .addComponent(new StationItemHandlerComponent(type, new ArrayList<>()));
         float width  = 1f;
         float height = 1f;
-        float scalefactor = 7f;
         bench.setScale(width, height);
         bench.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
         PhysicsUtils.setScaledCollider(bench, 1.2f, 0.75f);
-
         return bench;
     }
 
