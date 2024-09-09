@@ -30,8 +30,10 @@ public class LevelComponent extends Component {
         ServiceLocator.getLevelService().getEvents().addListener("setGameArea", this::setGameArea);
         customerNameArray = new ArrayList<>();
         for (PersonalCustomerEnums customer: PersonalCustomerEnums.values()) {
-            logger.info("{}", customer.name());
-            customerNameArray.add(customer.name());
+            String name = customer.name();
+            if (name != "BASIC_SHEEP" && name != "BASIC_CHICKEN") {
+                customerNameArray.add(customer.name());
+            }
         }
     }
 
@@ -64,8 +66,9 @@ public class LevelComponent extends Component {
     }
 
     private void spawnCustomer() {
-        int index = rand.nextInt(7);
+        int index = rand.nextInt(customerNameArray.size() + 1);
         customerSpawnController.getEvents().trigger(customerNameArray.get(index));
+        logger.info("Spawned {}", customerNameArray.get(index));
     }
 
     public void setGameArea (ForestGameArea newGameArea) {
