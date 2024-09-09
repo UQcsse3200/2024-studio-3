@@ -97,6 +97,7 @@ public class ForestGameArea extends GameArea {
   private static final String[] forestSounds = {"sounds/Impact4.ogg"};
   private static final String backgroundMusic = "sounds/BGM_03_mp3.mp3";
   private static final String[] forestMusic = {backgroundMusic};
+  private static Entity customerSpawnController;
 
   private final TerrainFactory terrainFactory;
 
@@ -140,14 +141,18 @@ public class ForestGameArea extends GameArea {
     spawnBeef("cooked");
     spawnStrawberry("chopped");
    spawnLettuce("chopped");
-    Entity customerSpawnController = spawnCustomerController();
-    customerSpawnController.getEvents().trigger(personalCustomerEnums.MOONKI.name());
-    customerSpawnController.getEvents().trigger(personalCustomerEnums.BASIC_CHICKEN.name());
+    customerSpawnController = spawnCustomerController();
+    /*customerSpawnController.getEvents().trigger(personalCustomerEnums.MOONKI.name());
+    customerSpawnController.getEvents().trigger(personalCustomerEnums.BASIC_CHICKEN.name());*/
 
     // Spawn the player
     player = spawnPlayer();
 
     playMusic();
+  }
+
+  public Entity getCustomerSpawnController() {
+    return customerSpawnController;
   }
 
   private void displayUI() {
