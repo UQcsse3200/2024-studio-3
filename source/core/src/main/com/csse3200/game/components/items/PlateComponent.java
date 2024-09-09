@@ -151,8 +151,8 @@ public class PlateComponent extends Component {
             quantity--;
             PlateFactory.disposePlate(entity, quantity);
 
-            Entity singlePlate = PlateFactory.spawnPlate(plateId);
             //Entity singlePlate = PlateFactory.spawnMealOnPlate(plateId, "salad"); //test spawnMealPlates
+            Entity singlePlate = PlateFactory.spawnPlate(plateId);
             PlateComponent singlePlateComponent = singlePlate.getComponent(PlateComponent.class);
             singlePlateComponent.setId(plateId);
 
