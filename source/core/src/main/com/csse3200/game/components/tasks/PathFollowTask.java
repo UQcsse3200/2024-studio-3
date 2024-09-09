@@ -4,6 +4,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.ai.tasks.DefaultTask;
 import com.csse3200.game.ai.tasks.PriorityTask;
 import com.csse3200.game.ai.tasks.Task;
+import com.csse3200.game.entities.configs.BaseCustomerConfig; // Import the BaseCustomerConfig
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,17 +19,16 @@ public class PathFollowTask extends DefaultTask implements PriorityTask {
     private Vector2 currentTarget;
     private MovementTask movementTask;
     private Task currentTask;
+    private final int Customer_id; // Use int for customerId
 
-    /**
-     * Predefined coordinates where the NPC will move to when triggered.
-     */
-    private Vector2 predefinedTargetPos = new Vector2(15f, 20f); // Example coordinates, change as needed
+    private Vector2 predefinedTargetPos = new Vector2(-1f, 1f); // Example coordinates
+    private static final float WAIT_TIME = 15f; // 15 seconds
+    private float elapsedTime = 0f;
+    private boolean hasMovedToPredefined = false;
 
-    /**
-     * @param targetPos The target position on the screen where the NPC should move.
-     */
-    public PathFollowTask(Vector2 targetPos) {
+    public PathFollowTask(Vector2 targetPos, int Customer_id) {
         this.targetPos = targetPos;
+        this.Customer_id = Customer_id;
     }
 
     @Override
@@ -39,28 +39,45 @@ public class PathFollowTask extends DefaultTask implements PriorityTask {
     @Override
     public void start() {
         super.start();
+        this.elapsedTime = 0f;
+        this.hasMovedToPredefined = false;
 
-        // Start moving horizontally first
         Vector2 startPos = owner.getEntity().getPosition();
         currentTarget = new Vector2(targetPos.x, startPos.y);
 
         movementTask = new MovementTask(currentTarget);
         movementTask.create(owner);
-
         movementTask.start();
         currentTask = movementTask;
 
         this.owner.getEntity().getEvents().trigger("wanderStart");
+
+        // Assuming the event system can handle int
+        this.owner.getEntity().getEvents().addListener("leaveEarly", (Object idObj) -> {
+            if (idObj instanceof Integer) {
+                int id = (Integer) idObj;
+                if (this.Customer_id == id) {
+                    triggerMoveToPredefinedPosition();
+                    logger.debug("Customer {} is leaving early.", id);
+                }
+            }
+        });
     }
 
     @Override
     public void update() {
+        elapsedTime += getDeltaTime();
+
+        if (!hasMovedToPredefined && elapsedTime >= WAIT_TIME) {
+            logger.debug("Wait time elapsed. Moving to predefined position.");
+            triggerMoveToPredefinedPosition();
+            hasMovedToPredefined = true;
+        }
+
         if (currentTask.getStatus() != Status.ACTIVE) {
             if (currentTarget.epsilonEquals(targetPos)) {
-                // Stop when the target position is reached
                 currentTask.stop();
             } else if (currentTarget.epsilonEquals(targetPos.x, owner.getEntity().getPosition().y, 0.1f)) {
-                // Horizontal movement complete, start moving vertically
                 currentTarget.set(targetPos);
                 startMoving();
             }
@@ -69,7 +86,7 @@ public class PathFollowTask extends DefaultTask implements PriorityTask {
     }
 
     private void startMoving() {
-        logger.debug("Starting moving to next step");
+        logger.debug("Starting to move to the next step");
         movementTask.setTarget(currentTarget);
         swapTask(movementTask);
     }
@@ -82,22 +99,14 @@ public class PathFollowTask extends DefaultTask implements PriorityTask {
         currentTask.start();
     }
 
-    /**
-     * Private function to trigger NPC movement to a predefined position.
-     */
     private void triggerMoveToPredefinedPosition() {
         logger.debug("Triggering move to predefined position: {}", predefinedTargetPos);
-        this.targetPos = predefinedTargetPos; // Set target to predefined position
-        this.currentTarget = new Vector2(targetPos.x, owner.getEntity().getPosition().y); // Horizontal movement
-        startMoving(); // Start the movement to predefined position
+        this.targetPos = predefinedTargetPos;
+        this.currentTarget = new Vector2(targetPos.x, owner.getEntity().getPosition().y);
+        startMoving();
     }
 
-    /**
-     * Method to handle custom events for the NPC.
-     */
-    public void handleEvent(String event) {
-        if ("moveToPredefined".equals(event)) {
-            triggerMoveToPredefinedPosition();
-        }
+    private float getDeltaTime() {
+        return 1 / 60f; // Assuming 60 FPS
     }
 }
