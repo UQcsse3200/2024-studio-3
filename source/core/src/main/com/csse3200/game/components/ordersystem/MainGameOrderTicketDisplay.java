@@ -8,7 +8,8 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Cell;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
-import com.csse3200.game.components.player.PlayerStatsDisplay;
+import com.csse3200.game.components.player.InventoryComponent;
+import com.csse3200.game.entities.Entity;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
 import org.slf4j.Logger;
@@ -38,14 +39,9 @@ public class MainGameOrderTicketDisplay extends UIComponent {
     private static ArrayList<Long> recipeTimeArrayList;
     private static int orderNumb = 0;
     private static final long DEFAULT_TIMER = 10000;
+    private static int recipeValue;
     private Recipe recipe;
-    private ArrayList<String> ingredients;
-    private Integer burnedTime;
-    private String stationType;
-    private static long timer;
-    private int gold = 0;
-    private int recipeValue = 2;
-
+    public InventoryComponent inventoryComponent;
 
     /**
      * Constructs an MainGameOrderTicketDisplay instance
@@ -56,6 +52,10 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         backgroundArrayList = new ArrayList<>();
         countdownLabelArrayList = new ArrayList<>();
         recipeTimeArrayList = new ArrayList<>();
+        setRecipeValue(2);
+        ServiceLocator.getPlayerService().getEvents().addListener("playerCreated", (Entity player) -> {
+            inventoryComponent = player.getComponent(InventoryComponent.class);
+        });
     }
 
     /**
@@ -94,22 +94,17 @@ public class MainGameOrderTicketDisplay extends UIComponent {
     public void addActors() {
         Table table = new Table();
         long startTime = TimeUtils.millis();
-        long timer = getRecipe().getMakingTime() * DEFAULT_TIMER;
 
         startTimeArrayList.add(startTime);
         tableArrayList.add(table);
-//        logger.info("New table added. Total tables: {}", tableArrayList.size());
 
         table.setFillParent(false);
         table.setSize(viewportWidth * 3f / 32f, 5f / 27f * viewportHeight); // DEFAULT_HEIGHT
         float xVal = cntXval(tableArrayList.size());
         float yVal = viewportHeight * viewPortHeightMultiplier;
         table.setPosition(xVal, yVal);
-//        logger.info("Position set for new table: ({}, {})", xVal, yVal);
-
-        Docket background = new Docket(timer);
+        Docket background = new Docket(getTimer());
         backgroundArrayList.add(background);
-//        logger.info("New docket background added. Total backgrounds: {}", backgroundArrayList.size());
         table.setBackground(background.getImage().getDrawable());
 
         String orderNumStr = "Order" + " " + ++orderNumb;
@@ -123,9 +118,8 @@ public class MainGameOrderTicketDisplay extends UIComponent {
             Label ingredientLabel = new Label(ingredient, skin);
             table.add(ingredientLabel).padLeft(10f).row();
         }
-
-        recipeTimeArrayList.add(timer);
-        Label countdownLabel = new Label("Timer: " + timer, skin);
+        recipeTimeArrayList.add(getTimer());
+        Label countdownLabel = new Label("Timer: " + getTimer(), skin);
         countdownLabelArrayList.add(countdownLabel);
         table.add(countdownLabel).padLeft(10f).row();
 
@@ -140,7 +134,6 @@ public class MainGameOrderTicketDisplay extends UIComponent {
      * @return the x-position for the order ticket.
      */
     private float cntXval(int instanceCnt) {
-//        logger.info("instanceCnt" + instanceCnt);
         return 225f + (instanceCnt - 1) * (distance + viewportWidth * 3f / 32f);
     }
 
@@ -165,13 +158,11 @@ public class MainGameOrderTicketDisplay extends UIComponent {
             logger.warn("No dockets to shift left");
             return;
         }
-         Table firstTable = tableArrayList.remove(0);
-         tableArrayList.add(firstTable);
-         logger.info("First table moved to the end. New first table index: {}", tableArrayList.get(0));
+        Table firstTable = tableArrayList.remove(0);
+        tableArrayList.add(firstTable);
 
-         Docket firstDocket = backgroundArrayList.remove(0);
-         backgroundArrayList.add(firstDocket);
-         logger.info("First docket background moved to the end. New first docket index: {}", backgroundArrayList.get(0));
+        Docket firstDocket = backgroundArrayList.remove(0);
+        backgroundArrayList.add(firstDocket);
 
         Long firstStartTime = startTimeArrayList.remove(0);
         startTimeArrayList.add(firstStartTime);
@@ -180,29 +171,50 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         countdownLabelArrayList.add(firstCountdownLabel);
 
         long firstRecipeTime = recipeTimeArrayList.remove(0);
-        recipeTimeArrayList.add(0, firstRecipeTime);
+        recipeTimeArrayList.add(firstRecipeTime);
 
         updateDocketPositions();
         updateDocketSizes();
+
         logger.info("Docket positions updated after left shift");
     }
+
 
     /**
      * Removes and disposes of a docket from the stage and its associated resources.
      *
      * @param docket the docket to be disposed of.
      * @param table  the table representing the docket.
-     * @param index  the index of the docket.
+     * @param i  the index of the docket.
      */
-    public void stageDispose(Docket docket, Table table, int index) {
+    public void stageDispose(Docket docket, Table table, int i) {
         table.setBackground((Drawable) null);
         table.clear();
         table.remove();
-        ServiceLocator.getDocketService().getEvents().trigger("removeOrder", index);
+        ServiceLocator.getDocketService().getEvents().trigger("removeOrder", i);
         docket.dispose();
-        gold = gold + recipeValue;
-        PlayerStatsDisplay.updatePlayerGoldUI(gold);
-        ServiceLocator.getDocketService().getEvents().trigger("goldUpdated", gold);
+        tableArrayList.remove(i);
+        backgroundArrayList.remove(i);
+        startTimeArrayList.remove(i);
+        countdownLabelArrayList.remove(i);
+        recipeTimeArrayList.remove(i);
+        inventoryComponent.addGold(getRecipeValue());
+    }
+
+    /**
+     * Sets the recipe value
+     * @param value the price of the recipe
+     */
+    public void setRecipeValue(int value) {
+        recipeValue = value;
+    }
+
+    /**
+     * Gets the recipe value
+     * @return the recipe price
+     */
+    public static int getRecipeValue() {
+        return recipeValue;
     }
 
     /**
@@ -244,9 +256,9 @@ public class MainGameOrderTicketDisplay extends UIComponent {
             float xVal = cntXval(i + 1);
 
             table.setPosition(xVal, table.getY());
-//            logger.info("Updated position of docket {}: ({}, {})", i, xVal, table.getY());
         }
     }
+
     /**
      * Updates the sizes of all dockets. The last docket in the list is enlarged, while others remain the same size.
      */
@@ -297,11 +309,7 @@ public class MainGameOrderTicketDisplay extends UIComponent {
             } else {
                 // if order is successful
                 stageDispose(currBackground, currTable, i);
-                tableArrayList.remove(i);
-                backgroundArrayList.remove(i);
-                startTimeArrayList.remove(i);
-                countdownLabelArrayList.remove(i);
-                recipeTimeArrayList.remove(i);
+
             }
         }
 
@@ -400,20 +408,36 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         return tableArrayList;
     }
 
+    /**
+     * Gets the times that the recipes were created
+     * @return the start time array list
+     */
     public static ArrayList<Long> getStartTimeArrayList() {
         return startTimeArrayList;
     }
 
+    /**
+     * Gets the recipes' timer count down labels
+     * @return the countdown label array list
+     */
     public static ArrayList<Label> getCountdownLabelArrayList() {
         return countdownLabelArrayList;
     }
 
+    /**
+     * Gets the Docket's background displays
+     * @return the background array list
+     */
     public static ArrayList<Docket> getBackgroundArrayList() {
         return backgroundArrayList;
     }
 
-    public static long getTimer() {
-        return timer;
+    /**
+     * Gets the making time of the recipe multiplied by the default timer
+     * @return the recipe timer
+     */
+    public long getTimer() {
+        return getRecipe().getMakingTime() * DEFAULT_TIMER;
     }
 
     public static ArrayList<Long> getRecipeTimeArrayList() {
