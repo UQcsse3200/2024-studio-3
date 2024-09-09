@@ -1,5 +1,6 @@
 package com.csse3200.game.areas;
 
+import com.csse3200.game.components.npc.PersonalCustomerEnums;
 import com.csse3200.game.entities.benches.Bench;
 import com.csse3200.game.entities.configs.PlayerConfig;
 import org.slf4j.Logger;
@@ -102,16 +103,6 @@ public class ForestGameArea extends GameArea {
   private final TerrainFactory terrainFactory;
 
   private Entity player;
-
-  public enum personalCustomerEnums{
-    HANK,
-    LEWIS,
-    SILVER,
-    JOHN,
-    MOONKI,
-    BASIC_CHICKEN,
-    BASIC_SHEEP
-  }
 
   /**
    * Initialise this ForestGameArea to use the provided TerrainFactory.
@@ -474,13 +465,13 @@ public class ForestGameArea extends GameArea {
 
   private Entity spawnCustomerController() {
     Entity spawnController = new Entity();
-    spawnController.getEvents().addListener(personalCustomerEnums.HANK.name(), this::spawnHank);
-    spawnController.getEvents().addListener(personalCustomerEnums.LEWIS.name(), this::spawnLewis);
-    spawnController.getEvents().addListener(personalCustomerEnums.SILVER.name(), this::spawnSilver);
-    spawnController.getEvents().addListener(personalCustomerEnums.JOHN.name(), this::spawnJohn);
-    spawnController.getEvents().addListener(personalCustomerEnums.MOONKI.name(), this::spawnMoonki);
-    spawnController.getEvents().addListener(personalCustomerEnums.BASIC_SHEEP.name(), this::spawnBasicSheep);
-    spawnController.getEvents().addListener(personalCustomerEnums.BASIC_CHICKEN.name(), this::spawnBasicChicken);
+    spawnController.getEvents().addListener(PersonalCustomerEnums.HANK.name(), this::spawnHank);
+    spawnController.getEvents().addListener(PersonalCustomerEnums.LEWIS.name(), this::spawnLewis);
+    spawnController.getEvents().addListener(PersonalCustomerEnums.SILVER.name(), this::spawnSilver);
+    spawnController.getEvents().addListener(PersonalCustomerEnums.JOHN.name(), this::spawnJohn);
+    spawnController.getEvents().addListener(PersonalCustomerEnums.MOONKI.name(), this::spawnMoonki);
+    spawnController.getEvents().addListener(PersonalCustomerEnums.BASIC_SHEEP.name(), this::spawnBasicSheep);
+    spawnController.getEvents().addListener(PersonalCustomerEnums.BASIC_CHICKEN.name(), this::spawnBasicChicken);
     return spawnController;
   }
 
