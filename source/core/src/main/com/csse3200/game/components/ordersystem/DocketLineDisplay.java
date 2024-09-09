@@ -88,7 +88,6 @@ public class DocketLineDisplay extends UIComponent {
 
 	}
 
-
 	/**
 	 * Removes the table
 	 */

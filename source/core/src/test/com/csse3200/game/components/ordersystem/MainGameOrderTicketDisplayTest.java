@@ -6,12 +6,13 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.csse3200.game.components.player.PlayerStatsDisplay;
+import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.events.EventHandler;
 import com.csse3200.game.extensions.GameExtension;
 import com.csse3200.game.rendering.RenderService;
 import com.csse3200.game.services.DocketService;
+import com.csse3200.game.services.PlayerService;
 import com.csse3200.game.services.ServiceLocator;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
@@ -30,6 +31,9 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+/**
+ * Unit tests for the MainGameOrderTicketDisplay class.
+ */
 @ExtendWith(GameExtension.class)
 @ExtendWith(MockitoExtension.class)
 class MainGameOrderTicketDisplayTest {
@@ -38,19 +42,27 @@ class MainGameOrderTicketDisplayTest {
 	@Mock Stage stage;
 	@Mock Viewport viewport;
 	@Mock DocketService docketService;
+	@Mock PlayerService playerService;
 	@Mock EventHandler eventHandler;
+	@Mock EventHandler eventHandler2;
 	MainGameOrderTicketDisplay orderTicketDisplay;
+	@Mock InventoryComponent inventoryComponent;
 	private static final Logger logger = LoggerFactory.getLogger(MainGameOrderTicketDisplayTest.class);
 
+	/**
+	 * Sets up the environment before each test by initializing services and MainGameOrderTicketDisplay instance
+	 */
 	@BeforeEach
 	void setUp() {
 		ServiceLocator.registerRenderService(renderService);
 		ServiceLocator.registerDocketService(docketService);
+		ServiceLocator.registerPlayerService(playerService);
 
 		when(ServiceLocator.getRenderService().getStage()).thenReturn(stage);
 		when(ServiceLocator.getRenderService().getStage().getViewport()).thenReturn(viewport);
 		lenient().when(ServiceLocator.getRenderService().getStage().getViewport().getCamera()).thenReturn(camera);
 		when(ServiceLocator.getDocketService().getEvents()).thenReturn(eventHandler);
+		when(ServiceLocator.getPlayerService().getEvents()).thenReturn(eventHandler2);
 
 		orderTicketDisplay = new MainGameOrderTicketDisplay();
 //        String[] recipeNames = {"acaiBowl", "salad", "fruitSalad", "steakMeal", "bananaSplit"};
@@ -61,11 +73,17 @@ class MainGameOrderTicketDisplayTest {
 		orderTicketDisplay.create();
 	}
 
+	/**
+	 * Cleans up after each test by clearing the table array list.
+	 */
 	@AfterEach
 	void tearDown() {
 		MainGameOrderTicketDisplay.getTableArrayList().clear();
 	}
 
+	/**
+	 * Tests that create() are initializes UI components correctly
+	 */
 	@Test
 	public void testCreateInitializesComponents() {
 		orderTicketDisplay.create();
@@ -78,16 +96,21 @@ class MainGameOrderTicketDisplayTest {
 		  MainGameOrderTicketDisplay.getStartTimeArrayList(), "Start time should be set");
 	}
 
+	/**
+	 * test addActors() creates table
+	 */
 	@Test
 	public void testAddActorsAddsUIComponents() {
 		orderTicketDisplay.addActors();
 		verify(stage).addActor(any(Table.class));
 	}
 
+	/**
+	 * test addActors() timer label
+	 */
 	@Test
 	void testAddActors() {
 		orderTicketDisplay.addActors();
-
 		verify(stage).addActor(any(Table.class));
 
 		assertEquals(1, MainGameOrderTicketDisplay.getTableArrayList().size());
@@ -130,7 +153,9 @@ class MainGameOrderTicketDisplayTest {
 //
 //	}
 
-
+	/**
+	 * tests countdown decreases correctly
+	 */
 	@Test
 	public void testUpdateCountdownDecreasesCorrectly() {
 		orderTicketDisplay.create();
@@ -152,10 +177,14 @@ class MainGameOrderTicketDisplayTest {
 		verify(stage).dispose();
 	}
 
+	/**
+	 * test stage disposes
+	 */
 	@Test
 	void testStageDispose() {
 		orderTicketDisplay.addActors();
-//		PlayerStatsDisplay.updatePlayerGoldUI(0);
+		inventoryComponent = mock(InventoryComponent.class);
+		orderTicketDisplay.inventoryComponent = inventoryComponent;
 
 		Assertions.assertNotNull(MainGameOrderTicketDisplay.getTableArrayList(), "Table ArrayList should not be null");
 		assertFalse(MainGameOrderTicketDisplay.getTableArrayList().isEmpty(), "Table ArrayList should not be empty");
@@ -179,7 +208,9 @@ class MainGameOrderTicketDisplayTest {
 		assertTrue(hasChildrenBeforeDispose, "Table should have had children before dispose.");
 	}
 
-
+	/**
+	 * test stage sets
+	 */
 	@Test
 	void testSetStage() {
 		orderTicketDisplay.setStage(stage);
