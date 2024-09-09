@@ -34,7 +34,8 @@ import com.csse3200.game.entities.Entity;
 public class EndDayDisplay extends UIComponent {
     private Table layout; // Layout manager
     private boolean isVisible;
-    private final MainGameScreen game;
+    private final MainGameScreen gameScreen;
+    private final GdxGame game;
     private Image birdImage;
     private Image pointImage1;
     private Image pointImage2;
@@ -44,8 +45,9 @@ public class EndDayDisplay extends UIComponent {
     private int currentGold;
     private Label goldLabel;
 
-    public EndDayDisplay(MainGameScreen game) {
+    public EndDayDisplay(MainGameScreen gameScreen, GdxGame game) {
         super();
+        this.gameScreen = gameScreen;
         this.game = game;
         isVisible = false;
     }
@@ -214,7 +216,7 @@ public class EndDayDisplay extends UIComponent {
         pointImage1.setVisible(true);
         pointImage2.setVisible(true);
         pointImage3.setVisible(true);
-        game.pause(); // Pause the game when the display is shown
+        gameScreen.pause(); // Pause the game when the display is shown
 
         imageX = 3 * Gdx.graphics.getWidth() / 4; // Reset image position
         birdMoveTask = new Timer.Task() {
@@ -234,7 +236,7 @@ public class EndDayDisplay extends UIComponent {
         pointImage1.setVisible(false);
         pointImage2.setVisible(false);
         pointImage3.setVisible(false);
-        game.resume(); // Resume the game when the display is hidden
+        gameScreen.resume(); // Resume the game when the display is hidden
 
         birdMoveTask.cancel(); // Cancel the task
     }
