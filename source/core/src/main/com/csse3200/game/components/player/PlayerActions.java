@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.csse3200.game.components.Component;
+import com.csse3200.game.components.items.PlateComponent;
 import com.csse3200.game.components.station.FireExtinguisherHandlerComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.physics.components.PhysicsComponent;
@@ -83,11 +84,16 @@ public class PlayerActions extends Component {
     if (interactable != null) {
       // We need to notify the input that we are inside an interaction
 
-
       // Handle if it was a fire extinguisher
       boolean interactingWithFireExtinguisher = FireExtinguisherHandlerComponent.handleFireExtinguisher(interactable, entity);
       if (interactingWithFireExtinguisher) {
         // No more interacting after this
+        return;
+      }
+
+      boolean interactingWithPlate = PlateComponent.handlePlateInteraction(interactable, entity);
+      if (interactingWithPlate) {
+        // Interaction handled by PlateComponent
         return;
       }
       entity.getEvents().trigger("startInteraction");

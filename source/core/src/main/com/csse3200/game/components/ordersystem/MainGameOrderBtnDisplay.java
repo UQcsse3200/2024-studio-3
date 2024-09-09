@@ -6,6 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.csse3200.game.components.maingame.MainGameExitDisplay;
 import com.csse3200.game.ui.UIComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -84,6 +85,8 @@ public class MainGameOrderBtnDisplay extends UIComponent{
 	public void setStage(Stage mock) {
 		this.stage = stage;
 	}
+
+
 
 	/**
 	 * Get the state of the button
