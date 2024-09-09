@@ -68,7 +68,7 @@ public class PlayerFactory {
             .addComponent(new HitboxComponent().setLayer(PhysicsLayer.PLAYER))
             .addComponent(new PlayerActions())
             .addComponent(new CombatStatsComponent(config.health, config.baseAttack))
-            .addComponent(new InventoryComponent(config.inventorySize, config.gold))
+            .addComponent(new InventoryComponent(config.inventorySize, ServiceLocator.getLevelService().getCurrGold())) //config.gold
             .addComponent(new InventoryDisplay())
             .addComponent(inputComponent)
             .addComponent(animator)
