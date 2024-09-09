@@ -231,16 +231,16 @@ public class EndDayDisplay extends UIComponent {
     }
 
     public void hide() {
-        isVisible = false;
+        /*isVisible = false;
         layout.setVisible(isVisible);
         birdImage.setVisible(false);
         pointImage1.setVisible(false);
         pointImage2.setVisible(false);
-        pointImage3.setVisible(false);
+        pointImage3.setVisible(false);*/
         /*gameScreen.resume(); // Resume the game when the display is hidden*/
         game.setScreen(GdxGame.ScreenType.MAIN_GAME);
 
-        birdMoveTask.cancel(); // Cancel the task
+        //birdMoveTask.cancel(); // Cancel the task
     }
 
     public void toggleVisibility() {
