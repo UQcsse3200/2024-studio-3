@@ -78,7 +78,7 @@ public class TutorialScreenDisplay extends UIComponent {
     /**
      * Proceeds to the next tutorial step using a switch-case.
      */
-    private void advanceTutorialStep() {
+    public void advanceTutorialStep() {
 
         if (movementImage != null) {
             movementImage.remove();
@@ -223,7 +223,7 @@ public class TutorialScreenDisplay extends UIComponent {
         }
     }
 
-    private void onCreateOrderPressed() {
+    public void onCreateOrderPressed() {
         createOrderPressed = true;
         tutorialLabel.setText("Now use [ and ] keys to switch dockets.");
     }
