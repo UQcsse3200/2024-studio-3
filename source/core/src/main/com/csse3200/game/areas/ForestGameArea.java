@@ -1,5 +1,8 @@
 package com.csse3200.game.areas;
 
+import com.badlogic.gdx.utils.Null;
+import com.csse3200.game.components.cutscenes.GoodEnd;
+import com.csse3200.game.components.maingame.TextDisplay;
 import com.csse3200.game.entities.benches.Bench;
 import com.csse3200.game.entities.configs.PlayerConfig;
 import org.slf4j.Logger;
@@ -12,18 +15,21 @@ import com.csse3200.game.areas.terrain.TerrainFactory.TerrainType;
 import com.csse3200.game.components.gamearea.GameAreaDisplay;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.factories.NPCFactory;
+import com.csse3200.game.components.maingame.TextDisplay;
 import com.csse3200.game.entities.factories.ObstacleFactory;
+import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.entities.factories.PlayerFactory;
 import com.csse3200.game.entities.factories.StationFactory;
 import com.csse3200.game.entities.factories.ItemFactory;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.utils.math.GridPoint2Utils;
-import com.csse3200.game.utils.math.RandomUtils;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /** Forest area for the demo game with trees, a player, and some enemies. */
 public class ForestGameArea extends GameArea {
@@ -34,6 +40,7 @@ public class ForestGameArea extends GameArea {
   private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(5, 3);
   private static final float WALL_WIDTH = 0.1f;
   private static final String[] forestTextures = {
+    "images/special_NPCs/boss.png",
     "images/meals/acai_bowl.png",
     "images/meals/banana_split.png",
     "images/meals/salad.png",
@@ -89,7 +96,11 @@ public class ForestGameArea extends GameArea {
     "images/stations/benches/bench6-top.png",
     "images/fireExtinguisher/Fire_Extinguisher.png"
   };
-  private static final String[] forestTextureAtlases = {"images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/ghostKing.atlas", "images/player.atlas", "images/fireExtinguisher/atlas/flame.atlas"};
+  private static final String[] forestTextureAtlases = {
+    "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/ghostKing.atlas", "images/animal_images/gorilla.atlas",
+          "images/animal_images/goose.atlas", "images/animal_images/goat.atlas", "images/animal_images/monkey.atlas",
+          "images/animal_images/snow_wolf.atlas","images/player.atlas", "images/fireExtinguisher/atlas/flame.atlas"
+  };
   private static final String[] forestSounds = {"sounds/Impact4.ogg"};
   private static final String backgroundMusic = "sounds/BGM_03_mp3.mp3";
   private static final String[] forestMusic = {backgroundMusic};
@@ -97,6 +108,16 @@ public class ForestGameArea extends GameArea {
   private final TerrainFactory terrainFactory;
 
   private Entity player;
+
+  public enum personalCustomerEnums{
+    HANK,
+    LEWIS,
+    SILVER,
+    JOHN,
+    MOONKI,
+    BASIC_CHICKEN,
+    BASIC_SHEEP
+  }
 
   /**
    * Initialise this ForestGameArea to use the provided TerrainFactory.
@@ -106,6 +127,7 @@ public class ForestGameArea extends GameArea {
   public ForestGameArea(TerrainFactory terrainFactory) {
     super();
     this.terrainFactory = terrainFactory;
+    //this.textDisplay = textDisplay;
   }
 
   /** Create the game area, including terrain, static entities (trees), dynamic entities (player) */
@@ -125,11 +147,15 @@ public class ForestGameArea extends GameArea {
     // Spawn beef
     spawnBeef("cooked");
     spawnStrawberry("chopped");
-   spawnLettuce("chopped");
-    spawnCustomer();
+    spawnLettuce("chopped");
+    Entity customerSpawnController = spawnCustomerController();
+    customerSpawnController.getEvents().trigger(personalCustomerEnums.MOONKI.name());
+    customerSpawnController.getEvents().trigger(personalCustomerEnums.BASIC_CHICKEN.name());
 
     // Spawn the player
     player = spawnPlayer();
+    //ServiceLocator.getEntityService().getEvents().trigger("SetText", "Boss: Rent is due");
+    //triggerFiredEnd();    // Trigger the fired (bad) ending
 
     playMusic();
   }
@@ -233,19 +259,23 @@ public class ForestGameArea extends GameArea {
     GridPoint2 tileBounds = terrain.getMapBounds(0);
     Vector2 worldBounds = new Vector2(tileBounds.x * tileSize, tileBounds.y * tileSize);
 
+    /**
     //top border
     for(int x=0;x<(int)tileBounds.x; x++){
       GridPoint2 position=new GridPoint2(x,(int)tileBounds.y-1);
       Entity top = ObstacleFactory.createBorder("top_border",tileSize);
       spawnEntityAt(top,position,true,false);
     }
+     */
 
+    /**
     //left border
     for(int y=0;y<(int)tileBounds.y;y++){
       GridPoint2 position = new GridPoint2(0,y);
       Entity left = ObstacleFactory.createBorder("left_border",tileSize);
       spawnEntityAt(left,position,true,false);
     }
+     */
 
     //bottom border
     for(int x=0;x<(int)tileBounds.x; x++){
@@ -261,12 +291,14 @@ public class ForestGameArea extends GameArea {
       spawnEntityAt(right,position,true,false);
     }
 
+
     //separation border
     for(int y=0;y<(int)tileBounds.y;y++) {
-      GridPoint2 position = new GridPoint2(1,y);
-      Entity separate = ObstacleFactory.createBorder("right_border",tileSize);
+      GridPoint2 position = new GridPoint2(2,y);
+      Entity separate = ObstacleFactory.createBorder("left_border",tileSize);
       spawnEntityAt(separate,position,true,false);
     }
+
   }
 
   private void spawnStations() {
@@ -451,32 +483,53 @@ public class ForestGameArea extends GameArea {
     return newFruitSalad;
   }
 
-  private void spawnCustomer() {
-    GridPoint2 position = new GridPoint2(1, 5);
-    //System.out.println("1");
-
-    //System.out.println("2");
-    Vector2 targetPos3 = new Vector2(3, 5); // Target position for ghost king
-    Entity customer = NPCFactory.createGhostKing(player, targetPos3);
-    spawnEntityAt(customer, position, true, true);
-//    for (int i = 0; i < NUM_CUSTOMERS_BASE; i++) {
-//      customer = NPCFactory.createCustomer();
-//      spawnEntityAt(customer, position, true, true);
-//      System.out.println("Customer spawned");
-//    }
-
-    //System.out.println("3");
+  private Entity spawnCustomerController() {
+    Entity spawnController = new Entity();
+    spawnController.getEvents().addListener(personalCustomerEnums.HANK.name(), this::spawnHank);
+    spawnController.getEvents().addListener(personalCustomerEnums.LEWIS.name(), this::spawnLewis);
+    spawnController.getEvents().addListener(personalCustomerEnums.SILVER.name(), this::spawnSilver);
+    spawnController.getEvents().addListener(personalCustomerEnums.JOHN.name(), this::spawnJohn);
+    spawnController.getEvents().addListener(personalCustomerEnums.MOONKI.name(), this::spawnMoonki);
+    spawnController.getEvents().addListener(personalCustomerEnums.BASIC_SHEEP.name(), this::spawnBasicSheep);
+    spawnController.getEvents().addListener(personalCustomerEnums.BASIC_CHICKEN.name(), this::spawnBasicChicken);
+    return spawnController;
   }
 
-//    private void spawnCustomerPersonal() {
-//        GridPoint2 position = new GridPoint2(1, 5);
-//       //System.out.println("1");
-//        Entity customer = NPCFactory.createCustomer(targetPosition);
-//        //System.out.println("2");
-//        spawnEntityAt(customer, position, true, true);
-//        //System.out.println("3");
-//    }
+  private void spawnCustomer(String name) {
+        GridPoint2 position = new GridPoint2(1, 5);
+        Vector2 targetPos = new Vector2(3, 5);
+        Entity customer = NPCFactory.createCustomerPersonal(name, targetPos);
+        spawnEntityAt(customer, position, true, true);
+  }
 
+  private void spawnBasicCustomer(String name) {
+    GridPoint2 position = new GridPoint2(1, 5);
+    Vector2 targetPos = new Vector2(3, 5);
+    Entity customer = NPCFactory.createBasicCustomer(name, targetPos);
+    spawnEntityAt(customer, position, true, true);
+  }
+
+  private void spawnHank() {
+    spawnCustomer("Hank");
+  }
+  private void spawnLewis() {
+    spawnCustomer("Lewis");
+  }
+  private void spawnSilver() {
+    spawnCustomer("Silver");
+  }
+  private void spawnJohn() {
+    spawnCustomer("John");
+  }
+  private void spawnMoonki() {
+    spawnCustomer("Moonki");
+  }
+  private void spawnBasicChicken() {
+    spawnBasicCustomer("Basic Chicken");
+  }
+  private void spawnBasicSheep() {
+    spawnBasicCustomer("Basic Sheep");
+  }
 
   /**
    * Spawn an AcaiBowl item.
@@ -577,5 +630,40 @@ public class ForestGameArea extends GameArea {
     super.dispose();
     ServiceLocator.getResourceService().getAsset(backgroundMusic, Music.class).stop();
     this.unloadAssets();
+  }
+
+  private void spawnBoss() {
+    GridPoint2 position = new GridPoint2(1, 5);
+    Vector2 targetPos = new Vector2(2, 6); // Target position for ghost king
+    Entity boss = NPCFactory.createBoss(targetPos);
+    spawnEntityAt(boss, position, false, false);
+  }
+
+  private void triggerFiredEnd() {
+    ExecutorService executor = Executors.newSingleThreadExecutor();
+    executor.submit(() -> {
+      try {
+        Thread.sleep(10000);
+        spawnBoss();
+        createTextBox("You *oink* two-legged moron! You're ruining my business' *oink* reputation!. Get out!");
+
+      } catch (InterruptedException e) {
+        Thread.currentThread().interrupt();
+        System.out.println("Thread was interrupted");
+      }
+    });
+
+    // Shutdown the executor to prevent zombie threads
+    executor.shutdown();
+  }
+
+  private void createTextBox(String text) {
+    for (Entity entity: ServiceLocator.getEntityService().getEntities()) {
+      entity.getEvents().trigger("SetText", text);
+    }
+  }
+
+  private void triggerGoodEnd() {
+    // pain
   }
 }
