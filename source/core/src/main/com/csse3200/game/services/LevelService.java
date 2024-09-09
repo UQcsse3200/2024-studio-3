@@ -10,7 +10,7 @@ public class LevelService {
     private EventHandler levelEventHandler;
     private int currLevel;
     private int currGold;
-    private boolean playerFinishedLevel;
+    private boolean playerFinishedLevel = false;
 
     /**
      * Constructor method, initialises both private variables
