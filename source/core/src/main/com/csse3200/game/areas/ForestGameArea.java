@@ -1,7 +1,7 @@
 package com.csse3200.game.areas;
 
 import com.badlogic.gdx.utils.Null;
-import com.csse3200.game.components.cutscenes.GoodEnd;
+import com.csse3200.game.GdxGame;
 import com.csse3200.game.components.maingame.TextDisplay;
 import com.csse3200.game.entities.benches.Bench;
 import com.csse3200.game.entities.configs.PlayerConfig;
@@ -27,9 +27,16 @@ import com.csse3200.game.utils.math.GridPoint2Utils;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+
+import static com.badlogic.gdx.Gdx.app;
+
+
+
 
 /** Forest area for the demo game with trees, a player, and some enemies. */
 public class ForestGameArea extends GameArea {
@@ -105,6 +112,7 @@ public class ForestGameArea extends GameArea {
 
   private Entity player;
 
+
   /**
    * Initialise this ForestGameArea to use the provided TerrainFactory.
    * @param terrainFactory TerrainFactory used to create the terrain for the GameArea.
@@ -141,6 +149,8 @@ public class ForestGameArea extends GameArea {
     player = spawnPlayer();
     //ServiceLocator.getEntityService().getEvents().trigger("SetText", "Boss: Rent is due");
     //triggerFiredEnd();    // Trigger the fired (bad) ending
+    triggerRaiseEnd();    // Trigger the raise (good) ending
+
 
     playMusic();
   }
@@ -598,8 +608,10 @@ public class ForestGameArea extends GameArea {
       try {
         Thread.sleep(10000);
         spawnBoss();
-        createTextBox("You *oink* two-legged moron! You're ruining my business' *oink* reputation!. Get out!");
-
+        createTextBox("You *oink* two-legged moron! You're ruining my (enter)       " +
+                "business' *oink* reputation! Get out!");
+        Thread.sleep(20000);
+        app.exit();
       } catch (InterruptedException e) {
         Thread.currentThread().interrupt();
         System.out.println("Thread was interrupted");
@@ -608,6 +620,28 @@ public class ForestGameArea extends GameArea {
 
     // Shutdown the executor to prevent zombie threads
     executor.shutdown();
+
+  }
+
+  private void triggerRaiseEnd() {
+    ExecutorService executor = Executors.newSingleThreadExecutor();
+    executor.submit(() -> {
+      try {
+        Thread.sleep(10000);
+        spawnBoss();
+        createTextBox("You *oink* amazing critter! You're a master! (enter)         " +
+                "Enjoy a 40c raise for your efforts!");
+        Thread.sleep(20000);
+        app.exit();
+      } catch (InterruptedException e) {
+        Thread.currentThread().interrupt();
+        System.out.println("Thread was interrupted");
+      }
+    });
+
+    // Shutdown the executor to prevent zombie threads
+    executor.shutdown();
+
   }
 
   private void createTextBox(String text) {
@@ -616,7 +650,4 @@ public class ForestGameArea extends GameArea {
     }
   }
 
-  private void triggerGoodEnd() {
-    // pain
-  }
 }
