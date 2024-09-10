@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
@@ -14,12 +15,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * A ui component for displaying the Main menu.
+ * An ui component for displaying the Main menu.
  */
 public class MainMenuDisplay extends UIComponent {
   private static final Logger logger = LoggerFactory.getLogger(MainMenuDisplay.class);
   private static final float Z_INDEX = 2f;
   private Table table;
+  private Table logo;
+  private float scale_of_button = 1.5f;
 
   @Override
   public void create() {
@@ -27,20 +30,33 @@ public class MainMenuDisplay extends UIComponent {
     addActors();
   }
 
+  /**
+   * Adds the main title screen elements and buttons.
+   * */
   private void addActors() {
+    logo = new Table();
+    logo.setFillParent(true);
     table = new Table();
     table.setFillParent(true);
     Image title =
         new Image(
             ServiceLocator.getResourceService()
-                .getAsset("images/box_boy_title.png", Texture.class));
+                .getAsset("images/Beastly.png", Texture.class));
 
-    TextButton startBtn = new TextButton("Start", skin);
-    TextButton loadBtn = new TextButton("Load", skin);
-    TextButton settingsBtn = new TextButton("Settings", skin);
-    TextButton exitBtn = new TextButton("Exit", skin);
+    ImageTextButton startBtn = new ImageTextButton("Start", skin);
+    ImageTextButton loadBtn = new ImageTextButton("Load", skin);
+    ImageTextButton settingsBtn = new ImageTextButton("Settings", skin);
+    ImageTextButton exitBtn = new ImageTextButton("Exit", skin);
+    startBtn.setTransform(true);
+    startBtn.setScale(scale_of_button);
+    loadBtn.setTransform(true);
+    loadBtn.setScale(scale_of_button);
+    settingsBtn.setTransform(true);
+    settingsBtn.setScale(scale_of_button);
+    exitBtn.setTransform(true);
+    exitBtn.setScale(scale_of_button);
 
-    // Triggers an event when the button is pressed
+      // Triggers an event when the button is pressed
     startBtn.addListener(
         new ChangeListener() {
           @Override
@@ -77,16 +93,16 @@ public class MainMenuDisplay extends UIComponent {
           }
         });
 
-    table.add(title);
-    table.row();
-    table.add(startBtn).padTop(30f);
-    table.row();
-    table.add(loadBtn).padTop(15f);
-    table.row();
-    table.add(settingsBtn).padTop(15f);
-    table.row();
-    table.add(exitBtn).padTop(15f);
+    // Add logo and buttons
+    logo.add(title).pad(0,0,250,0);
+    table.add(startBtn).pad(600, 0, 0, 0).height(60);
+    table.add(loadBtn).pad(600, 95, 0, 0).height(60);
+    table.add(settingsBtn).pad(600, 90, 0, 0).height(60);
+    table.add(exitBtn).pad(600, 120, 0, 0).height(60);
+    table.center();
 
+    // Render logo and buttons
+    stage.addActor(logo);
     stage.addActor(table);
   }
 
