@@ -1,6 +1,7 @@
 package com.csse3200.game.components.ordersystem;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -13,6 +14,7 @@ import com.csse3200.game.extensions.GameExtension;
 import com.csse3200.game.rendering.RenderService;
 import com.csse3200.game.services.DocketService;
 import com.csse3200.game.services.PlayerService;
+import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
@@ -45,6 +47,8 @@ class MainGameOrderTicketDisplayTest {
 	@Mock PlayerService playerService;
 	@Mock EventHandler eventHandler;
 	@Mock EventHandler eventHandler2;
+	@Mock ResourceService resourceService;
+	@Mock Texture textureMock;
 	MainGameOrderTicketDisplay orderTicketDisplay;
 	@Mock InventoryComponent inventoryComponent;
 	private static final Logger logger = LoggerFactory.getLogger(MainGameOrderTicketDisplayTest.class);
@@ -57,6 +61,12 @@ class MainGameOrderTicketDisplayTest {
 		ServiceLocator.registerRenderService(renderService);
 		ServiceLocator.registerDocketService(docketService);
 		ServiceLocator.registerPlayerService(playerService);
+		resourceService = mock(ResourceService.class);
+		ServiceLocator.registerResourceService(resourceService);
+		textureMock = mock(Texture.class);
+
+		lenient().when(resourceService.getAsset("images/ordersystem/acai_bowl_docket.png", Texture.class)).thenReturn(textureMock);
+
 
 		when(ServiceLocator.getRenderService().getStage()).thenReturn(stage);
 		when(ServiceLocator.getRenderService().getStage().getViewport()).thenReturn(viewport);

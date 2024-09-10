@@ -2,12 +2,14 @@ package com.csse3200.game.components.ordersystem;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Cell;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.entities.Entity;
@@ -43,6 +45,8 @@ public class MainGameOrderTicketDisplay extends UIComponent {
     private static int recipeValue;
     private Recipe recipe;
     public InventoryComponent inventoryComponent;
+    private Image mealImage;
+    private DocketMealDisplay mealDisplay;
 
     /**
      * Constructs an MainGameOrderTicketDisplay instance
@@ -53,6 +57,7 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         backgroundArrayList = new ArrayList<>();
         countdownLabelArrayList = new ArrayList<>();
         recipeTimeArrayList = new ArrayList<>();
+        mealDisplay = new DocketMealDisplay();
         setRecipeValue(2);
         ServiceLocator.getPlayerService().getEvents().addListener("playerCreated", (Entity player) -> {
             inventoryComponent = player.getComponent(InventoryComponent.class);
@@ -115,10 +120,9 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         Label recipeNameLabel = new Label(getRecipe().getName(), skin);
         table.add(recipeNameLabel).padLeft(10f).row();
 
-        for (String ingredient : getRecipe().getIngredients()) {
-            Label ingredientLabel = new Label(ingredient, skin);
-            table.add(ingredientLabel).padLeft(10f).row();
-        }
+        mealImage = mealDisplay.getMealImage(getRecipe().getName());
+        table.add(mealImage).row();
+
         recipeTimeArrayList.add(getTimer());
         Label countdownLabel = new Label("Timer: " + getTimer(), skin);
         countdownLabelArrayList.add(countdownLabel);
@@ -266,11 +270,11 @@ public class MainGameOrderTicketDisplay extends UIComponent {
      * Updates the sizes of all dockets. The last docket in the list is enlarged, while others remain the same size.
      */
     public void updateDocketSizes() {
-        float widthAdjustment = 140f * (viewportWidth/1080f);
+        float widthAdjustment = 100f * (viewportWidth/1080f);
         float heightAdjustment = 40f * (viewportHeight/1080f); //155
 
-        float enlargedDocketWidth = 170f * (viewportWidth/1920f) ;
-        float enlargedDocketHeight = 200f * (viewportHeight/1080f);
+        float enlargedDocketWidth = 220 * (viewportWidth/1920f) ;
+        float enlargedDocketHeight = 350 * (viewportHeight/1080f);
 
         float enlargedWidth = Gdx.graphics.getWidth() - enlargedDocketWidth - widthAdjustment;
         float enlargedHeight = Gdx.graphics.getHeight() - enlargedDocketHeight - heightAdjustment;
@@ -289,18 +293,38 @@ public class MainGameOrderTicketDisplay extends UIComponent {
                 // Fixed position for enlarged docket
                 table.setPosition(enlargedWidth, enlargedHeight);
 
+                table.setZIndex(10);
                 // Apply enlarged font size
                 for (int j = 0; j < cells.size; j++) {
-                    Label label = (Label)cells.get(j).getActor();
-                    label.setFontScale(viewportWidth/1920f);
+                    if (cells.get(j).getActor() instanceof Label) {
+                        Label label = (Label) cells.get(j).getActor();
+                        label.setFontScale(viewportWidth / 1920f);
+                        if (label.getText().toString().contains("Timer")) {
+                            cells.get(j).padBottom(5f);
+                        }
+                    } else if (cells.get(j).getActor() instanceof Image) {
+                        Image image = (Image) cells.get(j).getActor();
+                        cells.get(j).padBottom(10f);
+                        image.setScaling(Scaling.fit);
+                    }
                 }
             } else { // Non-enlarged dockets
                 table.setSize(normalDocketWidth, normalDocketHeight);
                 float xVal = cntXval(i + 1);
                 table.setPosition(xVal, normalHeight);
+                table.setZIndex(5);
                 for (int j = 0; j < cells.size; j++) {
-                    Label label = (Label)cells.get(j).getActor();
-                    label.setFontScale(0.7f * (viewportWidth/1920f));
+                    if (cells.get(j).getActor() instanceof Label) {
+                        Label label = (Label) cells.get(j).getActor();
+                        label.setFontScale(0.7f * (viewportWidth / 1920f));
+                        if (label.getText().toString().contains("Timer")) {
+                            cells.get(j).padBottom(0f);
+                        }
+                    } else if (cells.get(j).getActor() instanceof Image) {
+                        Image image = (Image) cells.get(j).getActor();
+                        cells.get(j).padBottom(5f);
+                        image.setScaling(Scaling.fit);
+                    }
                 }
             }
         }
