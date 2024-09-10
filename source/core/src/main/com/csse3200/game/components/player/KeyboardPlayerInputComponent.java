@@ -62,7 +62,8 @@ public class KeyboardPlayerInputComponent extends InputComponent {
           triggerWalkEvent();
           return true;
         case Keys.M:
-          ServiceLocator.getEntityService().getMoralScreen().getEvents().trigger("triggerMoralScreen");
+          int day = 0;
+          ServiceLocator.getEntityService().getMoralScreen().getEvents().trigger("triggerMoralScreen",day);
           return true;
       }
     }

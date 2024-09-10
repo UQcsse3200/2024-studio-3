@@ -7,8 +7,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -17,9 +15,14 @@ import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 public class MoralDecisionDisplay extends UIComponent {
+
+    private static final Logger logger = LoggerFactory.getLogger(MoralDecisionDisplay.class);
+
     private Table layout; // Layout manager
     private boolean isVisible;
     private final MainGameScreen game;
@@ -107,7 +110,8 @@ public class MoralDecisionDisplay extends UIComponent {
         game.resume(); // Resume the game when the display is hidden
     }
 
-    public void toggleVisibility() {
+    public void toggleVisibility(int day) {
+        logger.debug(" Day - {}", day);
         if (isVisible) {
             hide();
         } else {
