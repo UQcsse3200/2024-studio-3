@@ -76,6 +76,22 @@ public class InventoryDisplay extends UIComponent {
         stage.addActor(table);
     }
 
+    private void updateLabel(ItemComponent item) {
+        // Update the label with the item information
+        String itemText = String.format("Current Item: %s", item != null ? item.getItemName() : "None");
+        if (label == null) {
+            label = new Label(itemText, skin);
+            label.setFontScale(2f);
+        } else {
+            label.setText(itemText); // Update the label text
+        }
+    }
+
+    // Method to update the UI with a new item
+    public void update() {
+        updateLabel(entity.getComponent(InventoryComponent.class).getItemFirst());
+    }
+
     @Override
     public void draw(SpriteBatch batch)  {
         // changing position on window resizing is handled by the stage

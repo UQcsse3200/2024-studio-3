@@ -1,6 +1,7 @@
 package com.csse3200.game.components.player;
 
 import com.csse3200.game.components.Component;
+import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.csse3200.game.components.items.ItemComponent;
@@ -37,6 +38,21 @@ public class InventoryComponent extends Component {
     size = 0;
     setSelected(0);
     setGold(gold);
+  }
+
+  /**
+   * Creates the inventory component for use by Stations
+   * @param capacity the inventory capacity
+   */
+  public InventoryComponent(int capacity) {
+    setCapacity(capacity);
+    items = new ArrayList<>(capacity);
+    for (int i = 0; i < capacity; i++) {        
+      items.add(null);
+    }
+    size = 0;
+    setSelected(0);
+    setGold(0);
   }
 
   /**
@@ -90,6 +106,8 @@ public class InventoryComponent extends Component {
    */
   public void addGold(int gold) {
     setGold(this.gold + gold);
+    ServiceLocator.getLevelService().setCurrGold(this.gold);
+    ServiceLocator.getDocketService().getEvents().trigger("goldUpdated", this.gold);
   }
 
   /**

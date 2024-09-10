@@ -73,6 +73,7 @@ public class MainGameScreen extends ScreenAdapter {
 		ServiceLocator.registerInputService(new InputService());
 		ServiceLocator.registerPlayerService(new PlayerService());
 		ServiceLocator.registerResourceService(new ResourceService());
+		ServiceLocator.registerOrderActions(new OrderActions(game)); // ?
 
 		ServiceLocator.registerEntityService(new EntityService());
 		ServiceLocator.registerRenderService(new RenderService());
@@ -138,6 +139,13 @@ public class MainGameScreen extends ScreenAdapter {
 		ServiceLocator.clear();
 	}
 
+	public void resetScreen() {
+		EntityService entityService = ServiceLocator.getEntityService();
+		entityService.dispose();
+		ServiceLocator.registerEntityService(new EntityService());
+		createUI();
+	}
+
 	private void loadAssets() {
 		logger.debug("Loading assets");
 		ResourceService resourceService = ServiceLocator.getResourceService();
@@ -172,7 +180,7 @@ public class MainGameScreen extends ScreenAdapter {
 			.addComponent(new TerminalDisplay())
 			.addComponent(new OrderActions(this.game))
 			.addComponent(new MainGameOrderBtnDisplay())
-		        .addComponent(new EndDayDisplay(this))
+		        .addComponent(new EndDayDisplay(this, this.game))
 				.addComponent(new TextDisplay(this));
 		ServiceLocator.getEntityService().register(ui);
 	}
