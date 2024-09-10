@@ -45,7 +45,13 @@ public class TextDisplay extends UIComponent {
     private Table table;
     private Image displayBox;
     private final MainGameScreen game;
-
+    public TextDisplay() {
+        super();
+        this.game = null;
+        this.table = new Table();
+        this.visible = true;
+        this.currentText = new StringBuilder();
+    }
     public TextDisplay(MainGameScreen game) {
         super();
         this.game = game;
@@ -57,6 +63,7 @@ public class TextDisplay extends UIComponent {
         super.create();
 
         // Create the table for layout control and stack for layering
+        setVisible(false);
         table.setFillParent(true);
         table.center().bottom();
         stage.addActor(table);
@@ -85,9 +92,8 @@ public class TextDisplay extends UIComponent {
 
         // Add the stack to the table with padding or alignment options
         table.add(stack).padBottom(70).padLeft(0).size((int)(Gdx.graphics.getWidth() * 0.5), (int)(Gdx.graphics.getHeight() * 0.2));
-
-        setText("Hello There Chat whats up with you guys. I just love CSSE3200 so much. Please send help");
         setupInputListener();
+        entity.getEvents().addListener("SetText", this::setText);
     }
     public void setText(String text) {
         setVisible(true);
@@ -117,7 +123,7 @@ public class TextDisplay extends UIComponent {
     @Override
     public void update() {
         long time = ServiceLocator.getTimeSource().getTime();
-        if (current_part != TextDisplay.this.text.size() && charIndex < this.text.get(current_part).length()) {
+        if (this.text != null && current_part < TextDisplay.this.text.size() && charIndex < this.text.get(current_part).length()) {
             if (time - lastUpdate >= delay) {
                 lastUpdate = time;
                 this.currentText.append(text.get(current_part).charAt(charIndex));

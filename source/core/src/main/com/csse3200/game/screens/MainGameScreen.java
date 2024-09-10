@@ -6,11 +6,13 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.areas.ForestGameArea;
 import com.csse3200.game.areas.terrain.TerrainFactory;
+import com.csse3200.game.components.levels.LevelComponent;
 import com.csse3200.game.components.maingame.MainGameActions;
 import com.csse3200.game.components.ordersystem.MainGameOrderBtnDisplay;
 import com.csse3200.game.components.ordersystem.OrderActions;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
+import com.csse3200.game.entities.factories.LevelFactory;
 import com.csse3200.game.entities.factories.RenderFactory;
 import com.csse3200.game.input.InputComponent;
 import com.csse3200.game.input.InputDecorator;
@@ -19,10 +21,7 @@ import com.csse3200.game.physics.PhysicsEngine;
 import com.csse3200.game.physics.PhysicsService;
 import com.csse3200.game.rendering.RenderService;
 import com.csse3200.game.rendering.Renderer;
-import com.csse3200.game.services.DocketService;
-import com.csse3200.game.services.GameTime;
-import com.csse3200.game.services.ResourceService;
-import com.csse3200.game.services.ServiceLocator;
+import com.csse3200.game.services.*;
 import com.csse3200.game.ui.terminal.Terminal;
 import com.csse3200.game.ui.terminal.TerminalDisplay;
 import com.csse3200.game.components.maingame.EndDayDisplay;
@@ -74,6 +73,7 @@ public class MainGameScreen extends ScreenAdapter {
 		ServiceLocator.registerEntityService(new EntityService());
 		ServiceLocator.registerRenderService(new RenderService());
 		ServiceLocator.registerDocketService(new DocketService());
+		ServiceLocator.registerLevelService(new LevelService());
 
 		renderer = RenderFactory.createRenderer();
 		renderer.getCamera().getEntity().setPosition(CAMERA_POSITION);
@@ -86,6 +86,11 @@ public class MainGameScreen extends ScreenAdapter {
 		TerrainFactory terrainFactory = new TerrainFactory(renderer.getCamera());
 		ForestGameArea forestGameArea = new ForestGameArea(terrainFactory);
 		forestGameArea.create();
+		Entity spawnControllerEntity = LevelFactory.createSpawnControllerEntity();
+		ServiceLocator.getEntityService().register(spawnControllerEntity);
+		int currLevel = ServiceLocator.getLevelService().getCurrLevel();
+		ServiceLocator.getLevelService().getEvents().trigger("setGameArea", forestGameArea);
+		ServiceLocator.getLevelService().getEvents().trigger("startLevel", currLevel);
 	}
 
 
