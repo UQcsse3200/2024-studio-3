@@ -6,7 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.csse3200.game.components.player.InventoryComponent;
+import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.events.EventHandler;
 import com.csse3200.game.extensions.GameExtension;
@@ -46,7 +46,7 @@ class MainGameOrderTicketDisplayTest {
 	@Mock EventHandler eventHandler;
 	@Mock EventHandler eventHandler2;
 	MainGameOrderTicketDisplay orderTicketDisplay;
-	@Mock InventoryComponent inventoryComponent;
+	@Mock CombatStatsComponent combatStatsComponent;
 	private static final Logger logger = LoggerFactory.getLogger(MainGameOrderTicketDisplayTest.class);
 
 	/**
@@ -172,8 +172,8 @@ class MainGameOrderTicketDisplayTest {
 	@Test
 	void testStageDispose() {
 		orderTicketDisplay.addActors();
-		inventoryComponent = mock(InventoryComponent.class);
-		orderTicketDisplay.inventoryComponent = inventoryComponent;
+		combatStatsComponent = mock(CombatStatsComponent.class);
+		orderTicketDisplay.combatStatsComponent = combatStatsComponent;
 
 		Assertions.assertNotNull(MainGameOrderTicketDisplay.getTableArrayList(), "Table ArrayList should not be null");
 		assertFalse(MainGameOrderTicketDisplay.getTableArrayList().isEmpty(), "Table ArrayList should not be empty");

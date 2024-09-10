@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Cell;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
+import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.services.ServiceLocator;
@@ -41,7 +42,7 @@ public class MainGameOrderTicketDisplay extends UIComponent {
     private static final long DEFAULT_TIMER = 10000;
     private static int recipeValue;
     private Recipe recipe;
-    public InventoryComponent inventoryComponent;
+    public CombatStatsComponent combatStatsComponent;
 
     /**
      * Constructs an MainGameOrderTicketDisplay instance
@@ -54,7 +55,7 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         recipeTimeArrayList = new ArrayList<>();
         setRecipeValue(2);
         ServiceLocator.getPlayerService().getEvents().addListener("playerCreated", (Entity player) -> {
-            inventoryComponent = player.getComponent(InventoryComponent.class);
+            combatStatsComponent = player.getComponent(CombatStatsComponent.class);
         });
     }
 
@@ -200,7 +201,7 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         countdownLabelArrayList.remove(i);
         recipeTimeArrayList.remove(i);
 
-        inventoryComponent.addGold(getRecipeValue());
+        combatStatsComponent.addGold(getRecipeValue());
     }
 
     /**
