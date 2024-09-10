@@ -106,7 +106,7 @@ public class MainGameOrderTicketDisplay extends UIComponent {
 
         table.setFillParent(false);
         table.setSize(viewportWidth * 3f / 32f, 5f / 27f * viewportHeight); // DEFAULT_HEIGHT
-        float xVal = cntXval(tableArrayList.size());
+        float xVal = cntXval(225f, tableArrayList.size());
         float yVal = viewportHeight * viewPortHeightMultiplier;
         table.setPosition(xVal, yVal);
         Docket background = new Docket(getTimer());
@@ -140,8 +140,8 @@ public class MainGameOrderTicketDisplay extends UIComponent {
      * @param instanceCnt the index of the order ticket.
      * @return the x-position for the order ticket.
      */
-    private float cntXval(int instanceCnt) {
-        return 225f + (instanceCnt - 1) * (distance + viewportWidth * 3f / 32f);
+    private float cntXval(float startPoint, int instanceCnt) {
+        return startPoint + (instanceCnt - 1) * (distance + viewportWidth * 3f / 32f);
     }
 
     /**
@@ -260,7 +260,7 @@ public class MainGameOrderTicketDisplay extends UIComponent {
     private void updateDocketPositions() {
         for (int i = 0; i < tableArrayList.size(); i++) {
             Table table = tableArrayList.get(i);
-            float xVal = cntXval(i + 1);
+            float xVal = cntXval(225f, i + 1);
 
             table.setPosition(xVal, table.getY());
         }
@@ -285,8 +285,12 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         float enlargedDocketWidth = normalDocketWidth * 1.2f;
         float enlargedDocketHeight = normalDocketHeight * 1.2f;
 
-        float dynamicDistancePercentage = 0.09f;
-        float dynamicDistance = viewportWidth * dynamicDistancePercentage;
+        float dynamicDistanceLeft = 0.175f;
+        float leftHandSideDistance = viewportWidth * dynamicDistanceLeft;
+        float dynamicDistanceRight = 0.09f; //115f
+        float dynamicDistance = viewportWidth * dynamicDistanceRight;
+
+
 
         float xPos = viewportWidth - enlargedDocketWidth - dynamicDistance;
         float yPos = (Gdx.graphics.getHeight() * 0.938f) - (enlargedDocketHeight - 15);
@@ -319,7 +323,7 @@ public class MainGameOrderTicketDisplay extends UIComponent {
                 }
             } else { // Non-enlarged dockets
                 table.setSize(normalDocketWidth, normalDocketHeight);
-                float xVal = cntXval(i + 1);
+                float xVal = cntXval(leftHandSideDistance,i + 1);
                 table.setPosition(xVal, normalHeight);
                 table.setZIndex(5);
                 for (int j = 0; j < cells.size; j++) {

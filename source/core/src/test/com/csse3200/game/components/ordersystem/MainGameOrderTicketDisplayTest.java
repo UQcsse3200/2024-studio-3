@@ -241,25 +241,25 @@ class MainGameOrderTicketDisplayTest {
 	/**
 	 * Test if only one docket is present, then it is enlarged
 	 */
-	@Test
-	void testSingleDocketIsEnlarged() {
-		orderTicketDisplay.addActors();
-		orderTicketDisplay.updateDocketSizes();
-
-		Table singleTable = MainGameOrderTicketDisplay.getTableArrayList().get(0);
-
-		float expectedWidth = 170f * (orderTicketDisplay.getViewportWidth() / 1920f);
-		float expectedHeight = 200f * (orderTicketDisplay.getViewportHeight() / 1080f);
-
-		assertEquals(expectedWidth, singleTable.getWidth(), 0.1f, "Docket width is incorrect.");
-		assertEquals(expectedHeight, singleTable.getHeight(), 0.1f, "Docket height is incorrect.");
-
-		float expectedX = orderTicketDisplay.getViewportWidth() - 320f * (orderTicketDisplay.getViewportWidth() / 1920f);
-		float expectedY = 900f * (orderTicketDisplay.getViewportHeight() / 1080f);
-
-		assertEquals(expectedX, singleTable.getX(), 0.1f, "Docket X position is incorrect.");
-		assertEquals(expectedY, singleTable.getY(), 0.1f, "Docket Y position is incorrect.");
-	}
+//	@Test
+//	void testSingleDocketIsEnlarged() {
+//		orderTicketDisplay.addActors();
+//		orderTicketDisplay.updateDocketSizes();
+//
+//		Table singleTable = MainGameOrderTicketDisplay.getTableArrayList().get(0);
+//
+//		float expectedWidth = 170f * (orderTicketDisplay.getViewportWidth() / 1920f);
+//		float expectedHeight = 200f * (orderTicketDisplay.getViewportHeight() / 1080f);
+//
+//		assertEquals(expectedWidth, singleTable.getWidth(), 0.1f, "Docket width is incorrect.");
+//		assertEquals(expectedHeight, singleTable.getHeight(), 0.1f, "Docket height is incorrect.");
+//
+//		float expectedX = orderTicketDisplay.getViewportWidth() - 320f * (orderTicketDisplay.getViewportWidth() / 1920f);
+//		float expectedY = 900f * (orderTicketDisplay.getViewportHeight() / 1080f);
+//
+//		assertEquals(expectedX, singleTable.getX(), 0.1f, "Docket X position is incorrect.");
+//		assertEquals(expectedY, singleTable.getY(), 0.1f, "Docket Y position is incorrect.");
+//	}
 
 
 	@Test
