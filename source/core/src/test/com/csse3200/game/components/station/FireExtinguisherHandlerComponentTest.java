@@ -22,7 +22,7 @@ public class FireExtinguisherHandlerComponentTest {
         // Create handler to test
         handler = new FireExtinguisherHandlerComponent();
         // Create a mock inventory to test handler against
-        inventory = new InventoryComponent(1,1);
+        inventory = new InventoryComponent(1);
         // Mock Entity and EventHandler so stuff actually runs
         mockEntity = mock(Entity.class);
         mockEvents = mock(EventHandler.class);

@@ -10,8 +10,6 @@ import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
 
-import javax.swing.*;
-
 /**
  * A ui component for displaying player stats, e.g. health.
  */
@@ -58,7 +56,7 @@ public class PlayerStatsDisplay extends UIComponent {
     table.row();
 
      goldImage = new Image(ServiceLocator.getResourceService().getAsset("images/money.png", Texture.class));
-     int gold = entity.getComponent(InventoryComponent.class).getGold();
+     int gold = entity.getComponent(CombatStatsComponent.class).getGold();
      CharSequence goldText = String.format("Cash: %d", gold);
      goldLabel = new Label(goldText, skin, "large");
 
@@ -82,8 +80,8 @@ public class PlayerStatsDisplay extends UIComponent {
   }
 
   /**
-   *
-   * @param gold
+   * Updates the player's gold on the ui.
+   * @param gold player gold
    */
   public void updatePlayerGoldUI(int gold) {
     CharSequence text = String.format("Gold: %d", gold);

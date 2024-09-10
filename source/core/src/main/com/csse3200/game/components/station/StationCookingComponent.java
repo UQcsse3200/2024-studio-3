@@ -4,7 +4,7 @@ import com.csse3200.game.components.Component;
 
 /**
  * StationCookingComponent.java
- * </p>
+ *
  * This class controls the cooking of items within a station. This is designed
  * to be used by cooking stations which include the stove and the over.
  */
