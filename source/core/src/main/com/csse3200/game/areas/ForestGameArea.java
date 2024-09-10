@@ -1,7 +1,7 @@
 package com.csse3200.game.areas;
 
 import com.badlogic.gdx.utils.Null;
-import com.csse3200.game.components.cutscenes.GoodEnd;
+import com.csse3200.game.GdxGame;
 import com.csse3200.game.components.maingame.TextDisplay;
 import com.csse3200.game.entities.benches.Bench;
 import com.csse3200.game.entities.configs.PlayerConfig;
@@ -27,9 +27,16 @@ import com.csse3200.game.utils.math.GridPoint2Utils;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+
+import static com.badlogic.gdx.Gdx.app;
+
+
+
 
 /** Forest area for the demo game with trees, a player, and some enemies. */
 public class ForestGameArea extends GameArea {
@@ -99,15 +106,17 @@ public class ForestGameArea extends GameArea {
   private static final String[] forestTextureAtlases = {
     "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/ghostKing.atlas", "images/animal_images/gorilla.atlas",
           "images/animal_images/goose.atlas", "images/animal_images/goat.atlas", "images/animal_images/monkey.atlas",
-          "images/animal_images/snow_wolf.atlas","images/player.atlas", "images/fireExtinguisher/atlas/flame.atlas"
+          "images/animal_images/snow_wolf.atlas","images/player.atlas", "images/fireExtinguisher/atlas/flame.atlas",
+          "images/special_NPCs/boss.atlas"
   };
   private static final String[] forestSounds = {"sounds/Impact4.ogg"};
-  private static final String backgroundMusic = "sounds/BGM_03_mp3.mp3";
+  private static final String backgroundMusic = "sounds/BB_BGM.mp3";
   private static final String[] forestMusic = {backgroundMusic};
 
   private final TerrainFactory terrainFactory;
 
   private Entity player;
+
 
   public enum personalCustomerEnums{
     HANK,
@@ -156,6 +165,8 @@ public class ForestGameArea extends GameArea {
     player = spawnPlayer();
     //ServiceLocator.getEntityService().getEvents().trigger("SetText", "Boss: Rent is due");
     //triggerFiredEnd();    // Trigger the fired (bad) ending
+    //triggerRaiseEnd();    // Trigger the raise (good) ending
+
 
     playMusic();
   }
@@ -645,8 +656,10 @@ public class ForestGameArea extends GameArea {
       try {
         Thread.sleep(10000);
         spawnBoss();
-        createTextBox("You *oink* two-legged moron! You're ruining my business' *oink* reputation!. Get out!");
-
+        createTextBox("You *oink* two-legged moron! You're ruining my " +
+                "business' *oink* reputation! Get out!");
+        Thread.sleep(20000);
+        app.exit();
       } catch (InterruptedException e) {
         Thread.currentThread().interrupt();
         System.out.println("Thread was interrupted");
@@ -655,6 +668,28 @@ public class ForestGameArea extends GameArea {
 
     // Shutdown the executor to prevent zombie threads
     executor.shutdown();
+
+  }
+
+  private void triggerRaiseEnd() {
+    ExecutorService executor = Executors.newSingleThreadExecutor();
+    executor.submit(() -> {
+      try {
+        Thread.sleep(10000);
+        spawnBoss();
+        createTextBox("You *oink* amazing critter! You're a master! " +
+                "Enjoy a 40c raise for your efforts!");
+        Thread.sleep(20000);
+        app.exit();
+      } catch (InterruptedException e) {
+        Thread.currentThread().interrupt();
+        System.out.println("Thread was interrupted");
+      }
+    });
+
+    // Shutdown the executor to prevent zombie threads
+    executor.shutdown();
+
   }
 
   private void createTextBox(String text) {
@@ -663,7 +698,4 @@ public class ForestGameArea extends GameArea {
     }
   }
 
-  private void triggerGoodEnd() {
-    // pain
-  }
 }
