@@ -89,7 +89,7 @@ public class StationItemHandlerComponent extends Component {
         if (full | empty) {
             // Throw an invalid interaction, red cross on station etc
             //entity.getEvents().trigger("showTooltip", "Why would you even try...");
-            inventoryDisplay.update();
+
         // Input to station
         } else if (playerInventoryComponent.isFull()) {
             ItemComponent item = playerInventoryComponent.getItemFirst();
@@ -195,7 +195,6 @@ public class StationItemHandlerComponent extends Component {
         this.inventoryComponent.addItemAt(item, 0);
         // 0 by default, same position as getItemFirst()
         playerInventoryComponent.removeAt(0);
-        inventoryDisplay.update();
         
         // Need timers and animation start here, for Animations and Timer task ticket
         this.updateItem(0);
@@ -222,7 +221,6 @@ public class StationItemHandlerComponent extends Component {
 
         ItemComponent item = inventoryComponent.getItemFirst();
         playerInventoryComponent.addItemAt(item,0);
-        inventoryDisplay.update();
         // Remove single item in station
         this.inventoryComponent.removeAt(0);
 
