@@ -1,0 +1,51 @@
+{
+  "Gorilla": {
+    "type": "Gorilla",
+    "countDown": 20,
+    "patience": 100,
+    "spawnTimer": 100,
+    "preference": 0,
+    "reputation": 100,
+    "texture": "images/animal_images/gorilla.atlas"
+  },
+
+  "Goose": {
+    "type": "Goose",
+    "countDown": 30,
+    "patience": 100,
+    "spawnTimer": 100,
+    "preference": 0,
+    "reputation": 100,
+    "texture": "images/animal_images/goose.png"
+  },
+
+  "Snow_fox": {
+    "type": "Snow_Fox",
+    "countDown": 50,
+    "patience": 100,
+    "spawnTimer": 100,
+    "preference": 0,
+    "reputation": 100,
+    "texture": "images/animal_images/snow_wolf.png"
+  },
+
+  "Goat": {
+    "type": "Goat",
+    "countDown": 50,
+    "patience": 100,
+    "spawnTimer": 100,
+    "preference": 0,
+    "reputation": 100,
+    "texture": "images/animal_images/goat.png"
+  },
+
+  "Monkey": {
+    "type": "Monkey",
+    "countDown": 40,
+    "patience": 100,
+    "spawnTimer": 100,
+    "preference": 0,
+    "reputation": 100,
+    "texture": "images/animal_images/monkey.png"
+  }
+}

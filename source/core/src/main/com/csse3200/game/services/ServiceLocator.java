@@ -1,6 +1,7 @@
 package com.csse3200.game.services;
 
 import com.csse3200.game.components.ordersystem.Docket;
+import com.csse3200.game.components.ordersystem.OrderActions;
 import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.input.InputService;
 import com.csse3200.game.physics.PhysicsService;
@@ -23,12 +24,16 @@ public class ServiceLocator {
   private static PhysicsService physicsService;
   private static GameTime timeSource;
   private static InputService inputService;
+  private static PlayerService playerService;
 
   private static ResourceService resourceService;
+
+  private static OrderActions orderActions; // ?
 
   //Me new stuff :)
 
   private static DocketService docketService;
+  private static LevelService levelService;
 
   private static TutorialService tutorialService;  // for tut service
 
@@ -53,6 +58,10 @@ public class ServiceLocator {
     return inputService;
   }
 
+  public static PlayerService getPlayerService() {
+    return playerService;
+  }
+
   public static ResourceService getResourceService() {
     return resourceService;
   }
@@ -61,6 +70,13 @@ public class ServiceLocator {
     return docketService;
   }
 
+  public static OrderActions getOrderActions() {
+    return orderActions;
+  }
+  public static LevelService getLevelService() {
+    return levelService;
+
+  }
   public static TutorialService getTutorialService() {
     return tutorialService;
   }
@@ -68,10 +84,13 @@ public class ServiceLocator {
   public static void registerTutorialService(TutorialService service) {
     logger.debug("Registering tutorial service {}", service);
     tutorialService = service;
+
   }
 
+
+
+
   public static void registerEntityService(EntityService service) {
-    logger.debug("Registering entity service {}", service);
     entityService = service;
   }
 
@@ -106,11 +125,35 @@ public class ServiceLocator {
     inputService = service;
   }
 
+  /**
+   * Register player service
+   * @param service PlayerService
+   */
+  public static void registerPlayerService(PlayerService service) {
+    if (playerService != null) {
+      logger.warn("Player service is being overwritten!");
+    }
+    logger.debug("Registering player service {}", service);
+    playerService = service;
+  }
+
   public static void registerResourceService(ResourceService source) {
     logger.debug("Registering resource service {}", source);
     resourceService = source;
   }
 
+  public static void registerOrderActions(OrderActions source) {
+    logger.debug("Registering order action {}", source);
+    orderActions = source;
+  }
+
+  public static void registerLevelService(LevelService source) {
+    if (levelService == null) {
+      levelService = source;
+    } else {
+      logger.warn("Level service is already assigned, ignoring register");
+    }
+  }
 
   public static void clear() {
     entityService = null;
@@ -120,6 +163,8 @@ public class ServiceLocator {
     inputService = null;
     resourceService = null;
     docketService = null;
+    orderActions = null;
+    playerService = null;
   }
 
   private ServiceLocator() {

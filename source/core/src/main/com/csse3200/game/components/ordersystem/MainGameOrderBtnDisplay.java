@@ -6,7 +6,6 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import com.csse3200.game.components.maingame.MainGameExitDisplay;
 import com.csse3200.game.ui.UIComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,7 +36,7 @@ public class MainGameOrderBtnDisplay extends UIComponent{
 	 * Adds the button to the UI and sets up the event listener for the button click.
 	 * When the "Create Order" button is clicked, it triggers the "createOrder" event.
 	 */
-	private void addActors() {
+	public void addActors() {
 		table = new Table();
 		table.bottom().right();
 		table.setFillParent(true);
@@ -45,7 +44,6 @@ public class MainGameOrderBtnDisplay extends UIComponent{
 		TextButton createOrderBtn = new TextButton("Create Order", skin);
 		logger.info("Create Order button created");
 
-		// Triggers an event when the button is pressed.
 		createOrderBtn.addListener(
 		  new ChangeListener() {
 			  @Override
@@ -90,21 +88,21 @@ public class MainGameOrderBtnDisplay extends UIComponent{
 	}
 
 	/**
-	 * Removed the button
-	 */
-	@Override
-	public void dispose() {
-		table.clear();
-		super.dispose();
-	}
-
-	/**
 	 * Get the state of the button
 	 *
 	 * @return true if button is pressed, false otherwise
 	 */
 	public boolean getState(){
 		return pressed;
+	}
+
+	/**
+	 * Removes the button
+	 */
+	@Override
+	public void dispose() {
+		table.clear();
+		super.dispose();
 	}
 }
 

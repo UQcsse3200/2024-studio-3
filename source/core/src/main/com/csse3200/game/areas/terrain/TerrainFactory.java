@@ -60,14 +60,8 @@ public class TerrainFactory {
         TextureRegion custTile =
             new TextureRegion(resourceService.getAsset("images/tiles/blue_tile.png", Texture.class));
         return createKitchenDemoTerrain(2f, orthoFloor, custTile);
-
         // leaving this code incase we decide to implement isometric instead
-      case KITCHEN_DEMO_ISO:
-        TextureRegion isoGrass =
-            new TextureRegion(resourceService.getAsset("images/iso_grass_1.png", Texture.class));
-        TextureRegion isoTuft =
-            new TextureRegion(resourceService.getAsset("images/iso_grass_2.png", Texture.class));
-        return createKitchenDemoTerrain(1f, isoGrass, isoTuft);
+
       default:
         return null;
     }
@@ -96,18 +90,22 @@ public class TerrainFactory {
   }
 
   private TiledMap createKitchenDemoTiles(
-      GridPoint2 tileSize, TextureRegion floor, TextureRegion customer_tiles) {
+      GridPoint2 tileSize,  TextureRegion floor, TextureRegion customer_tiles) {
     TiledMap tiledMap = new TiledMap();
     TerrainTile floorTile= new TerrainTile(floor);
     TerrainTile customerTile = new TerrainTile(customer_tiles);
     TiledMapTileLayer layer = new TiledMapTileLayer(MAP_SIZE.x, MAP_SIZE.y, tileSize.x , tileSize.y);
+
     // Size for blue tiles
     GridPoint2 modified_size = new GridPoint2(MAP_SIZE.x/4 , MAP_SIZE.y);
 
     // Create base orange tiles
     fillTiles(layer, MAP_SIZE, floorTile);
     // Create blue tiles with modified map size
+
     fillBlueTiles(layer, modified_size, customerTile, CUST_TILE_COUNT);
+
+    tiledMap.getLayers().add(layer);
     tiledMap.getLayers().add(layer);
     return tiledMap;
   }
@@ -131,6 +129,29 @@ public class TerrainFactory {
         layer.setCell(x, y, cell);
       }
     }
+  }
+
+  private static void createBenchGrid(TiledMapTileLayer layer, TerrainTile tile, GridPoint2 mapSize) {
+    for (int x = 0; x < mapSize.x; x++) {
+      for (int y = 0; y < mapSize.y; y++){
+        if (x == 0 || x == mapSize.x - 1 || y == 0 || y == mapSize.y - 1) {
+          Cell cell = new Cell();
+          cell.setTile(tile);
+          layer.setCell(x, y, cell);
+        }
+      }
+    }
+    for (int y=2; y < 4; y++){
+      Cell cell = new Cell();
+      cell.setTile(tile);
+      layer.setCell(2, y, cell);
+    }
+    Cell cell = new Cell();
+    cell.setTile(tile);
+    layer.setCell(4, 1, cell);
+
+    layer.setCell(4, 4,cell);
+
   }
 
   /**
