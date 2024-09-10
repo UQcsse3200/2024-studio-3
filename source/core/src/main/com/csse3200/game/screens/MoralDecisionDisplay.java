@@ -69,22 +69,23 @@ public class MoralDecisionDisplay extends UIComponent {
         // add racoon image to the table and shift it left by adjusting padding
         layout.add(characterImage).padRight(1000).center().row(); // Add padding to move left
 
-        setupInputListener();
+//        setupInputListener();
+        entity.getEvents().addListener("triggerMoralScreen", this::toggleVisibility);
     }
 
 
-    private void setupInputListener() {
-        stage.addListener(new InputListener() {
-            @Override
-            public boolean keyDown(InputEvent event, int keycode) {
-                if (keycode == com.badlogic.gdx.Input.Keys.M) {
-                    toggleVisibility();
-                    return true;
-                }
-                return false;
-            }
-        });
-    }
+//    private void setupInputListener() {
+//        stage.addListener(new InputListener() {
+//            @Override
+//            public boolean keyDown(InputEvent event, int keycode) {
+//                if (keycode == com.badlogic.gdx.Input.Keys.M) {
+//                    toggleVisibility();
+//                    return true;
+//                }
+//                return false;
+//            }
+//        });
+//    }
 
 
     private void initialiseUI() {
