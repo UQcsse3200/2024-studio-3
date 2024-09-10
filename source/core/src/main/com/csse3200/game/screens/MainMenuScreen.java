@@ -1,5 +1,6 @@
 package com.csse3200.game.screens;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.csse3200.game.GdxGame;
@@ -27,7 +28,11 @@ public class MainMenuScreen extends ScreenAdapter {
   private static final Logger logger = LoggerFactory.getLogger(MainMenuScreen.class);
   private final GdxGame game;
   private final Renderer renderer;
-  private static final String[] mainMenuTextures = {"images/Beastly.png"};
+  private static final String[] mainMenuTextures = {"images/Beastly.png",
+  "images/main_menu_animals/cat.png",
+  "images/main_menu_animals/duck.png",
+  "images/main_menu_animals/pig.png",
+  "images/main_menu_animals/meat.png"};
 
   public MainMenuScreen(GdxGame game) {
     this.game = game;
@@ -39,7 +44,6 @@ public class MainMenuScreen extends ScreenAdapter {
     ServiceLocator.registerRenderService(new RenderService());
 
     renderer = RenderFactory.createRenderer();
-
     loadAssets();
     createUI();
   }
