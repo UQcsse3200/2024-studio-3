@@ -34,7 +34,8 @@ import com.csse3200.game.entities.Entity;
 public class EndDayDisplay extends UIComponent {
     private Table layout; // Layout manager
     private boolean isVisible;
-    private final MainGameScreen game;
+    private final MainGameScreen gameScreen;
+    private final GdxGame game;
     private Image birdImage;
     private Image pointImage1;
     private Image pointImage2;
@@ -43,11 +44,16 @@ public class EndDayDisplay extends UIComponent {
     private Timer.Task birdMoveTask;
     private int currentGold;
     private Label goldLabel;
+    private int startGold;
 
-    public EndDayDisplay(MainGameScreen game) {
+    public EndDayDisplay(MainGameScreen gameScreen, GdxGame game) {
         super();
+        this.gameScreen = gameScreen;
         this.game = game;
         isVisible = false;
+        this.startGold = ServiceLocator.getLevelService().getCurrGold();
+        this.currentGold = this.startGold;
+        ServiceLocator.getLevelService().getEvents().addListener("resetScreen", MainGameScreen::resetScreen);
     }
 
     public void create() {
@@ -178,7 +184,7 @@ public class EndDayDisplay extends UIComponent {
 
     private void animateGoldChange() {
         float duration = 1.0f;
-        int startGold = 0;
+        //int startGold = ServiceLocator.getLevelService().getCurrGold();
         goldLabel.addAction(Actions.sequence(
                 Actions.run(() -> goldLabel.setText(String.valueOf(startGold))),
                 Actions.repeat(30, Actions.run(new Runnable() {
@@ -214,7 +220,7 @@ public class EndDayDisplay extends UIComponent {
         pointImage1.setVisible(true);
         pointImage2.setVisible(true);
         pointImage3.setVisible(true);
-        game.pause(); // Pause the game when the display is shown
+        gameScreen.pause(); // Pause the game when the display is shown
 
         imageX = 3 * Gdx.graphics.getWidth() / 4; // Reset image position
         birdMoveTask = new Timer.Task() {
@@ -228,15 +234,17 @@ public class EndDayDisplay extends UIComponent {
     }
 
     public void hide() {
-        isVisible = false;
+        /*isVisible = false;
         layout.setVisible(isVisible);
         birdImage.setVisible(false);
         pointImage1.setVisible(false);
         pointImage2.setVisible(false);
-        pointImage3.setVisible(false);
-        game.resume(); // Resume the game when the display is hidden
+        pointImage3.setVisible(false);*/
+        /*gameScreen.resume(); // Resume the game when the display is hidden*/
+        ServiceLocator.getLevelService().togglePlayerFinishedLevel();
+        game.setScreen(GdxGame.ScreenType.MAIN_GAME);
 
-        birdMoveTask.cancel(); // Cancel the task
+        //birdMoveTask.cancel(); // Cancel the task
     }
 
     public void toggleVisibility() {

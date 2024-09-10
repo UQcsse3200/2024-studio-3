@@ -1,16 +1,16 @@
 package com.csse3200.game.services;
 
-import com.csse3200.game.areas.ForestGameArea;
 import com.csse3200.game.events.EventHandler;
-import com.csse3200.game.screens.MainGameScreen;
+import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.logging.Level;
 
 /**Allows for global access and control of the game levels*/
 public class LevelService {
+    private static final Logger logger = LoggerFactory.getLogger(LevelService.class);
     private EventHandler levelEventHandler;
     private int currLevel;
+    private int currGold;
+    private boolean playerFinishedLevel;
 
     /**
      * Constructor method, initialises both private variables
@@ -18,9 +18,15 @@ public class LevelService {
     public LevelService() {
         levelEventHandler = new EventHandler();
         currLevel = 1;
+        currGold = 50;
+        playerFinishedLevel = false;
         levelEventHandler.addListener("startLevel", this::levelControl);
-//        levelEventHandler.addListener("createCustomer", ForestGameArea::spawnCustomer);
+        //levelEventHandler.addListener("createCustomer", ForestGameArea::spawnCustomer);
         //ServiceLocator.getLevelService().getEvents().addListener("spawnCustomer", this::spawnCustomer);
+    }
+
+    public void togglePlayerFinishedLevel() {
+        playerFinishedLevel = !playerFinishedLevel;
     }
 
     /**
@@ -38,7 +44,20 @@ public class LevelService {
      * @return  the current level number
      */
     public int getCurrLevel() {
+        if (playerFinishedLevel) {
+            incrementLevel();
+            togglePlayerFinishedLevel();
+        }
         return currLevel;
+    }
+
+    public int getCurrGold() {
+        return currGold;
+    }
+
+    public void setCurrGold(int gold) {
+        currGold = gold;
+        logger.info("Gold is {}", getCurrGold());
     }
 
     /**
@@ -102,10 +121,5 @@ public class LevelService {
                 break;
         }
         levelEventHandler.trigger("startSpawning", spawnCap);
-        incrementLevel();
-    }
-
-    public void resetEventHandler() {
-        levelEventHandler = new EventHandler();
     }
 }
