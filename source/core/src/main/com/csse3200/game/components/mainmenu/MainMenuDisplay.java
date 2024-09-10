@@ -33,14 +33,15 @@ public class MainMenuDisplay extends UIComponent {
     Image title =
         new Image(
             ServiceLocator.getResourceService()
-                .getAsset("images/box_boy_title.png", Texture.class));
+                .getAsset("images/Beastly.png", Texture.class));
 
     TextButton startBtn = new TextButton("Start", skin);
     TextButton loadBtn = new TextButton("Load", skin);
     TextButton settingsBtn = new TextButton("Settings", skin);
     TextButton exitBtn = new TextButton("Exit", skin);
 
-    // Triggers an event when the button is pressed
+
+      // Triggers an event when the button is pressed
     startBtn.addListener(
         new ChangeListener() {
           @Override
@@ -79,13 +80,10 @@ public class MainMenuDisplay extends UIComponent {
 
     table.add(title);
     table.row();
-    table.add(startBtn).padTop(30f);
-    table.row();
-    table.add(loadBtn).padTop(15f);
-    table.row();
-    table.add(settingsBtn).padTop(15f);
-    table.row();
-    table.add(exitBtn).padTop(15f);
+    table.add(startBtn).pad(50, 50, 0, 0);
+    table.add(loadBtn).pad(50, 50, 0, 0);
+    table.add(settingsBtn).pad(50, 50, 0, 0);
+    table.add(exitBtn).pad(50, 50, 0, 0);
 
     stage.addActor(table);
   }
