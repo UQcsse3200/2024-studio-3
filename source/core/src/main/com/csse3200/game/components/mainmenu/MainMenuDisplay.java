@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Timer;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
@@ -36,18 +37,32 @@ public class MainMenuDisplay extends UIComponent {
   private String list_of_animals[]={"cat","pig","duck","meat"};
   private int animal_on_screen=2;
 
-  private Timer.Task birdMoveTask;
+
+  private float width_of_screen=Gdx.graphics.getWidth(),height_of_screen=Gdx.graphics.getHeight();
+
+  private Timer.Task animalMoveTask,clearstage;
 
   @Override
   public void create() {
     super.create();
-    birdMoveTask = new Timer.Task() {
+    animalMoveTask = new Timer.Task() {
       public void run() {
         background();
         addActors();
       }
     };
-    Timer.schedule(birdMoveTask,0,2);
+    Timer.schedule(animalMoveTask,0,2);
+    clearstage = new Timer.Task() {
+      public void run() {
+        Array<Actor> actors=stage.getActors();
+        for (Actor actor : actors) {
+          if(actor.getX()<-230 || actor.getX()>width_of_screen+230 || actor.getY()<-230 || actor.getY()>height_of_screen+230){
+            actor.remove();
+          }
+        }
+      }
+    };
+    Timer.schedule(clearstage,0,6);
   }
 
   public int randomGenerator(int min,int max) {
@@ -57,8 +72,6 @@ public class MainMenuDisplay extends UIComponent {
 
   public void background(){
 
-    float width_of_screen=Gdx.graphics.getWidth();
-    float height_of_screen=Gdx.graphics.getHeight();
 
     float height,width;
     for(int x=1;x<=animal_on_screen;x++) {
@@ -139,7 +152,7 @@ public class MainMenuDisplay extends UIComponent {
           @Override
           public void changed(ChangeEvent changeEvent, Actor actor) {
             logger.debug("Start button clicked");
-            birdMoveTask.cancel();
+            animalMoveTask.cancel();
             entity.getEvents().trigger("start");
           }
         });
@@ -149,7 +162,7 @@ public class MainMenuDisplay extends UIComponent {
           @Override
           public void changed(ChangeEvent changeEvent, Actor actor) {
             logger.debug("Load button clicked");
-            birdMoveTask.cancel();
+            animalMoveTask.cancel();
             entity.getEvents().trigger("load");
           }
         });
@@ -159,7 +172,7 @@ public class MainMenuDisplay extends UIComponent {
           @Override
           public void changed(ChangeEvent changeEvent, Actor actor) {
             logger.debug("Settings button clicked");
-            birdMoveTask.cancel();
+            animalMoveTask.cancel();
             entity.getEvents().trigger("settings");
           }
         });
@@ -169,7 +182,7 @@ public class MainMenuDisplay extends UIComponent {
           @Override
           public void changed(ChangeEvent changeEvent, Actor actor) {
             logger.debug("Exit button clicked");
-            birdMoveTask.cancel();
+            animalMoveTask.cancel();
             entity.getEvents().trigger("exit");
           }
         });
