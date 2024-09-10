@@ -20,6 +20,7 @@ public class MainMenuDisplay extends UIComponent {
   private static final Logger logger = LoggerFactory.getLogger(MainMenuDisplay.class);
   private static final float Z_INDEX = 2f;
   private Table table;
+  private Table table2;
 
   @Override
   public void create() {
@@ -28,6 +29,8 @@ public class MainMenuDisplay extends UIComponent {
   }
 
   private void addActors() {
+    table2 = new Table();
+    table2.setFillParent(true);
     table = new Table();
     table.setFillParent(true);
     Image title =
@@ -78,13 +81,13 @@ public class MainMenuDisplay extends UIComponent {
           }
         });
 
-    table.add(title);
-    table.row();
-    table.add(startBtn).pad(50, 50, 0, 0);
-    table.add(loadBtn).pad(50, 50, 0, 0);
-    table.add(settingsBtn).pad(50, 50, 0, 0);
-    table.add(exitBtn).pad(50, 50, 0, 0);
+    table2.add(title).pad(0,0,250,0);
+    table.add(startBtn).pad(600, 50, 0, 0);
+    table.add(loadBtn).pad(600, 50, 0, 0);
+    table.add(settingsBtn).pad(600, 50, 0, 0);
+    table.add(exitBtn).pad(600, 50, 0, 0);
 
+    stage.addActor(table2);
     stage.addActor(table);
   }
 

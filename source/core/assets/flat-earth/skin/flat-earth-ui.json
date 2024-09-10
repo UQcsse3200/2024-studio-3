@@ -24,10 +24,10 @@ com.badlogic.gdx.graphics.Color: {
 		a: 1
 	}
 	color: {
-		r: 0.3372549
-		g: 0.8
-		b: 0.44705883
-		a: 1
+		r: 0
+		g: 0
+		b: 0
+		a: 0
 	}
 	gray: {
 		r: 0.5
@@ -36,9 +36,9 @@ com.badlogic.gdx.graphics.Color: {
 		a: 1
 	}
 	highlight: {
-		r: 0.42156863
-		g: 1
-		b: 0.5552286
+		r: 0.207
+		g: 0
+		b: 0.15
 		a: 1
 	}
 	pressed: {
