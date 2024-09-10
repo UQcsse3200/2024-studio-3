@@ -180,8 +180,10 @@ public class ForestGameArea extends GameArea {
     spawnStrawberry("chopped");
     spawnLettuce("chopped");
     customerSpawnController = spawnCustomerController();
+
     // Spawn the player
     player = spawnPlayer();
+
     //ServiceLocator.getEntityService().getEvents().trigger("SetText", "Boss: Rent is due");
     //triggerFiredEnd();    // Trigger the fired (bad) ending
     //triggerRaiseEnd();    // Trigger the raise (good) ending
