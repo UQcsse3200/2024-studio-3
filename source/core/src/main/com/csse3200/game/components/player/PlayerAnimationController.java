@@ -26,7 +26,7 @@ public class PlayerAnimationController extends Component {
         entity.getEvents().addListener("walkStopAnimation", this::animateStop);
 
 
-        //Add animation update (for ingredients) listeners
+        //Add animation update listeners (for ingredients)
         entity.getEvents().addListener("updateAnimationEmptyInventory",
                 this::updateAnimationEmptyInventory);
         entity.getEvents().addListener("updateAnimationRawAcai", this::updateAnimationRawAcai);
@@ -59,7 +59,7 @@ public class PlayerAnimationController extends Component {
                 this::updateAnimationRawFish);
         entity.getEvents().addListener("updateAnimationCookedFish", this::updateAnimationCookedFish);
 
-        //Add animation update (for meals) listeners
+        //Add animation update listeners (for meals)
         entity.getEvents().addListener("updateAnimationAcaiBowl", this::updateAnimationAcaiBowl);
         entity.getEvents().addListener("updateAnimationBananaSplit", this::updateAnimationBananaSplit);
         entity.getEvents().addListener("updateAnimationFruitSalad", this::updateAnimationFruitSalad);
@@ -136,8 +136,11 @@ public class PlayerAnimationController extends Component {
     void updateAnimationSalad(){updateAnimation("salad.atlas");}
     void updateAnimationSteak(){updateAnimation("steak.atlas");}
 
-
-    void updateAnimation(String atlasPath) {
+    /**
+     * Updates player animation to use given atlas, removes and reloads walk cycle
+     * @param atlasPath new atlas to update player animation with
+     */
+    public void updateAnimation(String atlasPath) {
         //Removes all animations
         animator.removeAnimation("Character_StandDown");
         animator.removeAnimation("Character_StandUp");

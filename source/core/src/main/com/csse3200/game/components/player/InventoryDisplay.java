@@ -50,11 +50,12 @@ public class InventoryDisplay extends UIComponent {
             label.setFontScale(2f);
         } else {
             label.setText(itemText); // Update the label text
-            //animation update event trigger
+            //Update player sprite
             if (item != null) {
                 if (item instanceof IngredientComponent) {
                     switch (item.getItemType()) {
                         case ItemType.ACAI:
+                            //Updates player sprite back to hold fish (raw or chopped)
                             if (((IngredientComponent) item).getItemState().equals("raw")) {
                                 entity.getEvents().trigger("updateAnimationRawAcai");
                             } else {
@@ -62,6 +63,7 @@ public class InventoryDisplay extends UIComponent {
                             }
                             break;
                         case ItemType.BEEF:
+                            //Updates player sprite back to hold fish (raw, cooked, burnt)
                             if (((IngredientComponent) item).getItemState().equals("raw")) {
                                 entity.getEvents().trigger("updateAnimationRawBeef");
                             } else if (((IngredientComponent) item).getItemState().equals("cooked")) {
@@ -70,6 +72,7 @@ public class InventoryDisplay extends UIComponent {
                                 entity.getEvents().trigger("updateAnimationBurntBeef");
                             }
                         case ItemType.BANANA:
+                            //Updates player sprite back to hold fish (raw or chopped)
                             if (((IngredientComponent) item).getItemState().equals("raw")) {
                                 entity.getEvents().trigger("updateAnimationRawBanana");
                             } else {
@@ -77,6 +80,7 @@ public class InventoryDisplay extends UIComponent {
                             }
                             break;
                         case ItemType.LETTUCE:
+                            //Updates player sprite back to hold fish (raw or chopped)
                             if (((IngredientComponent) item).getItemState().equals("raw")) {
                                 entity.getEvents().trigger("updateAnimationRawLettuce");
                             } else {
@@ -84,6 +88,7 @@ public class InventoryDisplay extends UIComponent {
                             }
                             break;
                         case ItemType.CUCUMBER:
+                            //Updates player sprite back to hold fish (raw or chopped)
                             if (((IngredientComponent) item).getItemState().equals("raw")) {
                                 entity.getEvents().trigger("updateAnimationRawCucumber");
                             } else {
@@ -91,6 +96,7 @@ public class InventoryDisplay extends UIComponent {
                             }
                             break;
                         case ItemType.TOMATO:
+                            //Updates player sprite back to hold fish (raw or chopped)
                             if (((IngredientComponent) item).getItemState().equals("raw")) {
                                 entity.getEvents().trigger("updateAnimationRawTomato");
                             } else {
@@ -98,6 +104,7 @@ public class InventoryDisplay extends UIComponent {
                             }
                             break;
                         case ItemType.STRAWBERRY:
+                            //Updates player sprite back to hold fish (raw or chopped)
                             if (((IngredientComponent) item).getItemState().equals("raw")) {
                                 entity.getEvents().trigger("updateAnimationRawStrawberry");
                             } else {
@@ -105,6 +112,7 @@ public class InventoryDisplay extends UIComponent {
                             }
                             break;
                         case ItemType.CHOCOLATE:
+                            //Updates player sprite back to hold fish (raw or chopped)
                             if (((IngredientComponent) item).getItemState().equals("raw")) {
                                 entity.getEvents().trigger("updateAnimationRawChocolate");
                             } else {
@@ -112,6 +120,7 @@ public class InventoryDisplay extends UIComponent {
                             }
                             break;
                         case ItemType.FISH:
+                            //Updates player sprite back to hold fish (raw or cooked)
                             if (((IngredientComponent) item).getItemState().equals("raw")) {
                                 entity.getEvents().trigger("updateAnimationRawFish");
                             } else {
@@ -119,26 +128,33 @@ public class InventoryDisplay extends UIComponent {
                             }
                             break;
                         case ItemType.ACAIBOWL:
+                            //Updates player sprite back to hold acai bowl
                             entity.getEvents().trigger("updateAnimationAcaiBowl");
                             break;
                         case ItemType.BANANASPLIT:
+                            //Updates player sprite back to hold banana split
                             entity.getEvents().trigger("updateAnimationBananaSplit");
                             break;
                         case ItemType.FRUITSALAD:
+                            //Updates player sprite back to hold fruit salad
                             entity.getEvents().trigger("updateAnimationFruitSalad");
                             break;
                         case ItemType.SALAD:
+                            //Updates player sprite back to hold salad
                             entity.getEvents().trigger("updateAnimationSalad");
                             break;
                         case ItemType.STEAKMEAL:
+                            //Updates player sprite back to hold steak meal
                             entity.getEvents().trigger("updateAnimationSteak");
                             break;
                         default:
+                            //Updates player sprite back to default
                             entity.getEvents().trigger("updateAnimationEmptyInventory");
                             break;
                     }
                 }
             } else {
+                //Updates player sprite back to default
                 entity.getEvents().trigger("updateAnimationEmptyInventory");
             }
         }
