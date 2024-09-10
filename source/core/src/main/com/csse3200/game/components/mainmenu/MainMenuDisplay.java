@@ -21,6 +21,7 @@ public class MainMenuDisplay extends UIComponent {
   private static final float Z_INDEX = 2f;
   private Table table;
   private Table table2;
+  private float scale_of_button = 1.75f;
 
   @Override
   public void create() {
@@ -39,9 +40,17 @@ public class MainMenuDisplay extends UIComponent {
                 .getAsset("images/Beastly.png", Texture.class));
 
     TextButton startBtn = new TextButton("Start", skin);
+    startBtn.setTransform(true);
+    startBtn.setScale(scale_of_button);
     TextButton loadBtn = new TextButton("Load", skin);
+    loadBtn.setTransform(true);
+    loadBtn.setScale(scale_of_button);
     TextButton settingsBtn = new TextButton("Settings", skin);
+    settingsBtn.setTransform(true);
+    settingsBtn.setScale(scale_of_button);
     TextButton exitBtn = new TextButton("Exit", skin);
+    exitBtn.setTransform(true);
+    exitBtn.setScale(scale_of_button);
 
 
       // Triggers an event when the button is pressed
@@ -82,11 +91,11 @@ public class MainMenuDisplay extends UIComponent {
         });
 
     table2.add(title).pad(0,0,250,0);
-    table.add(startBtn).pad(600, 50, 0, 0);
-    table.add(loadBtn).pad(600, 50, 0, 0);
-    table.add(settingsBtn).pad(600, 50, 0, 0);
-    table.add(exitBtn).pad(600, 50, 0, 0);
-
+    table.add(startBtn).pad(600, 75, 0, 75);
+    table.add(loadBtn).pad(600, 75, 0, 75);
+    table.add(settingsBtn).pad(600, 75, 0, 75);
+    table.add(exitBtn).pad(600, 75, 0, 75);
+    table.center();
     stage.addActor(table2);
     stage.addActor(table);
   }
