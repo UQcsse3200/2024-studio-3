@@ -6,6 +6,7 @@ import com.badlogic.gdx.utils.Null;
 import com.csse3200.game.components.cutscenes.GoodEnd;
 import com.csse3200.game.components.maingame.TextDisplay;
 
+import com.csse3200.game.components.ordersystem.TicketDetails;
 import com.csse3200.game.entities.benches.Bench;
 import com.csse3200.game.entities.configs.PlayerConfig;
 import org.slf4j.Logger;
@@ -156,6 +157,8 @@ public class ForestGameArea extends GameArea {
     spawnBenches();
     make_border();
 
+    //ticketDetails();
+
     spawnStations();
     // Spawn beef
     spawnBeef("cooked");
@@ -179,6 +182,13 @@ public class ForestGameArea extends GameArea {
     ui.addComponent(new GameAreaDisplay("Kitchen"));
     spawnEntity(ui);
   }
+  /*
+  private void ticketDetails(){
+    Entity ticket = new Entity();
+    ticket.addComponent(new TicketDetails());
+    spawnEntity(ticket);
+
+  }*/
 
   private void spawnTerrain() {
     // Background terrain

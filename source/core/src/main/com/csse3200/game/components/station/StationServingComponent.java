@@ -3,8 +3,10 @@ package com.csse3200.game.components.station;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.items.ItemComponent;
 import com.csse3200.game.components.ordersystem.OrderActions;
+import com.csse3200.game.components.ordersystem.TicketDetails;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.components.player.InventoryDisplay;
+import com.csse3200.game.physics.components.InteractionComponent;
 import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,9 +29,10 @@ public class StationServingComponent extends Component {
 
     // itemHandler allows acess for serving component to see the inventory of
     // the station.
-    protected StationItemHandlerComponent itemHandler;
     private static final Logger logger = LoggerFactory.getLogger(StationServingComponent.class);
-    private OrderActions orderActions;
+
+    TicketDetails bigTicket;
+
 
     /**
      * On creation a listener for Submit Meal will be added to the station.
@@ -37,8 +40,7 @@ public class StationServingComponent extends Component {
     @Override
     public void create() {
         entity.getEvents().addListener("Station Interaction", this::handleInteraction);
-        //orderActions = entity.getComponent(OrderActions.class);
-        orderActions = ServiceLocator.getOrderActions(); // ? doesn't seem to work...
+        bigTicket = ServiceLocator.getTicketDetails();
     }
 
     /**
@@ -61,28 +63,20 @@ public class StationServingComponent extends Component {
      */
     public void submitMeal(ItemComponent item) {
 
-
-        String[] bigTicketInfo = orderActions.getCurrentBigTicketInfo();
-        // TODO bigTicketInfo[0] is ALWAYS null, even when there is a ticket and it shouldn't. orderActions needs to be instantiated better, not sure how though
+        String[] bigTicketInfo = bigTicket.getCurrentBigTicketInfo();
         if (bigTicketInfo[0] != null) {
             logger.info(bigTicketInfo[0]); // order number ("5")
-            logger.info(bigTicketInfo[1]); // meal ("tomato")
+            logger.info(bigTicketInfo[1]); // meal ("tomato soup")
             logger.info(bigTicketInfo[2]); // time left ("32")
-            // Call to other team's function with the big ticket info
+
+            // Call to team 1's function with the big ticket info
             //TBD(item, bigTicketInfo[0], bigTicketInfo[1], bigTicketInfo[2]);
             // remove ticket
             ServiceLocator.getDocketService().getEvents().trigger("removeOrder", -1); // removes the order from the orderaction list
             ServiceLocator.getDocketService().getEvents().trigger("removeBigTicket"); // removes the order from the display list
 
-        } else { // only enters this condition, when it shouldn't.  TODO
-
-            //TODO
-            // DELETE THIS, it should only be seen in the IF clause (bigTicketInfo[0] != null), just here to show that it works.
-
-            ServiceLocator.getDocketService().getEvents().trigger("removeOrder", -1);
-
-            // running an error now for some reason
-            ServiceLocator.getDocketService().getEvents().trigger("removeBigTicket");
+        } else {
+            logger.info("no ticket when submitting"); // team 1 can decide if they want to handle this edge case
             return;
 
 

@@ -11,6 +11,7 @@ import com.csse3200.game.components.FlameComponent;
 import com.csse3200.game.components.TooltipsDisplay;
 import com.csse3200.game.components.items.ItemComponent;
 import com.csse3200.game.components.items.ItemType;
+import com.csse3200.game.components.ordersystem.TicketDetails;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.components.station.IngredientStationHandlerComponent;
 import com.csse3200.game.components.station.StationCollectionComponent;
@@ -216,6 +217,8 @@ public class StationFactory {
    * @return Entity of type station with added components and references
    */
   public static Entity createSubmissionWindow() {
+
+
     Entity submission = new Entity()
             .addComponent(new TextureRenderComponent("images/stations/servery.png"))
             .addComponent(new PhysicsComponent())
@@ -224,6 +227,8 @@ public class StationFactory {
             .addComponent(new TooltipsDisplay())
             .addComponent(new InventoryComponent(1, 0))
             .addComponent(new StationServingComponent());
+
+
     submission.getComponent(InteractionComponent.class).setAsBox(submission.getScale());
     submission.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
     submission.getComponent(TextureRenderComponent.class).scaleEntity();

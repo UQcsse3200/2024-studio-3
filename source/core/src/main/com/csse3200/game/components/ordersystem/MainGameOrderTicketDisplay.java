@@ -320,11 +320,7 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         if (!tableArrayList.isEmpty()) {
             Table lastTable = tableArrayList.get(tableArrayList.size() - 1);
             updateBigTicketInfo(lastTable);
-        } else {
-            ServiceLocator.getDocketService().getEvents().trigger("updateBigTicket", null, null, null);
-
         }
-
         updateDocketPositions();
         updateDocketSizes();
     }
@@ -360,7 +356,7 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         String orderNum = "";
         String meal = "";
         String timeLeft = "";
-
+        boolean ingredientBool = false;
         for (int i = 0; i < children.size; i++) {
             Actor actor = children.get(i);
             if (actor instanceof Label) {
@@ -371,16 +367,18 @@ public class MainGameOrderTicketDisplay extends UIComponent {
                 } else if (text.startsWith("Timer:")) {
                     timeLeft = text.replace("Timer: ", "");
                 } else { // handling meal name
-                    // TODO Overrides the current meal name with the last ingredient in the big ticket.
-                    // this last ingredient should instead be the meal name (ie "banana split")
-                    // alternatively for it to store all the ingredients, could concatenate it all with
-                    // meal = meal + " " + text;
-                    meal = text;
+                    if (ingredientBool == false) { // only handles the ingredient meal
+                        meal = text;
+                        ingredientBool = true;
+                    } else {
+                        //if you want to parse the individual ingredients of the recipe, factor the text value here
+                        continue;
+                    }
+
                 }
             }
         }
-        ServiceLocator.getDocketService().getEvents().trigger("updateBigTicket", orderNum, meal, timeLeft);
-        //orderActions.onUpdateBigTicket(orderNum, meal, timeLeft);
+        ServiceLocator.getTicketDetails().onUpdateBigTicket(orderNum, meal, timeLeft);
     }
 
     /**

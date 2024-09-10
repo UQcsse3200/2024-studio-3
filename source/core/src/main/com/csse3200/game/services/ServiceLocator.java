@@ -2,6 +2,7 @@ package com.csse3200.game.services;
 
 import com.csse3200.game.components.ordersystem.Docket;
 import com.csse3200.game.components.ordersystem.OrderActions;
+import com.csse3200.game.components.ordersystem.TicketDetails;
 import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.input.InputService;
 import com.csse3200.game.physics.PhysicsService;
@@ -28,8 +29,7 @@ public class ServiceLocator {
 
   private static ResourceService resourceService;
 
-  private static OrderActions orderActions; // ?
-
+  private static TicketDetails ticketDetails;
   //Me new stuff :)
 
   private static DocketService docketService;
@@ -67,9 +67,10 @@ public class ServiceLocator {
     return docketService;
   }
 
-  public static OrderActions getOrderActions() {
-    return orderActions;
+  public static TicketDetails getTicketDetails() {
+    return ticketDetails;
   }
+
   public static LevelService getLevelService(){
     return levelService;
 
@@ -127,10 +128,7 @@ public class ServiceLocator {
     resourceService = source;
   }
 
-  public static void registerOrderActions(OrderActions source) {
-    logger.debug("Registering order action {}", source);
-    orderActions = source;
-  }
+
 
   public static void registerLevelService(LevelService source) {
     if (levelService == null) {
@@ -138,6 +136,10 @@ public class ServiceLocator {
     } else {
       logger.warn("Level service is already assigned, ignoring register");
     }
+  }
+  public static void registerTicketDetails(TicketDetails source){
+    logger.debug("Registering resource service {}", source);
+    ticketDetails = source;
   }
 
   public static void clear() {
@@ -148,8 +150,8 @@ public class ServiceLocator {
     inputService = null;
     resourceService = null;
     docketService = null;
-    orderActions = null;
     playerService = null;
+    ticketDetails = null;
   }
 
   private ServiceLocator() {
