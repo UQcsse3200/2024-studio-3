@@ -747,7 +747,7 @@ public class ForestGameArea extends GameArea {
    */
   private Entity spawnStackPlate(int quantity) {
     Entity newPlate = PlateFactory.spawnPlateStack(quantity);
-    GridPoint2 platePosition = new GridPoint2(3, 1);
+    GridPoint2 platePosition = new GridPoint2(3, 2);
     spawnEntityAt(newPlate, platePosition, true, false);
     newPlate.setScale(1.0f, 1.0f);
 
