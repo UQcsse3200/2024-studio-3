@@ -1,118 +1,79 @@
 /*package com.csse3200.game.components.tasks;
 
-import static org.mockito.ArgumentMatchers.argThat;
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.*;
-
-import com.csse3200.game.ai.tasks.AITaskComponent;
-import com.csse3200.game.entities.Entity;
-import com.csse3200.game.events.listeners.EventListener0;
-import com.csse3200.game.events.listeners.EventListener1;
-import com.csse3200.game.physics.components.PhysicsComponent;
-import com.csse3200.game.services.GameTime;
-import com.csse3200.game.services.ServiceLocator;
+import com.badlogic.gdx.math.Vector2;
+import com.csse3200.game.ai.tasks.Task;
+import com.csse3200.game.ai.tasks.TaskRunner;
+import com.csse3200.game.entities.configs.BaseCustomerConfig;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
-import com.badlogic.gdx.math.Vector2;
+import org.mockito.MockitoAnnotations;
 
-@ExtendWith(MockitoExtension.class)
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
+
 class PathFollowTaskTest {
     @Mock
-    private GameTime gameTime;
+    private TaskRunner taskRunner;
 
     @Mock
-    private PhysicsComponent physicsComponent;
+    private Task movementTask;
 
-    private Entity entity;
     private PathFollowTask pathFollowTask;
 
     @BeforeEach
     void setUp() {
-        ServiceLocator.registerTimeSource(gameTime);
-
-        // Create entity and add components
-        AITaskComponent aiTaskComponent = new AITaskComponent();
-        entity = new Entity().addComponent(aiTaskComponent).addComponent(physicsComponent);
-        entity.create();
-
-        // Initialize PathFollowTask with the entity
-        pathFollowTask = new PathFollowTask(new Vector2(5f, 5f), 1f); // Example waitTime
-        aiTaskComponent.addTask(pathFollowTask);
+        MockitoAnnotations.openMocks(this);
+        pathFollowTask = new PathFollowTask(new Vector2(10, 10), 1234);
+        pathFollowTask.create(taskRunner);
+        pathFollowTask.movementTask = (MovementTask) movementTask; // Inject the mock movement task
     }
 
     @Test
-    void shouldTriggerEventOnStart() {
-        // Register callbacks
-        EventListener0 wanderStartCallback = mock(EventListener0.class);
-        entity.getEvents().addListener("wanderStart", wanderStartCallback);
-
-        // Start the task
+    void testStart() {
         pathFollowTask.start();
 
-        // Simulate some game time to allow the task to start
-        when(gameTime.getDeltaTime()).thenReturn(0.1f);
+        verify(taskRunner, times(1)).getEntity(); // Verify interactions with the taskRunner
+        verify(movementTask, times(1)).create(taskRunner);
+        verify(movementTask, times(1)).start();
+    }
+
+    @Test
+    void testUpdate_MoveToPredefinedPosition() {
+        pathFollowTask.start();
+        pathFollowTask.elapsedTime = 15f; // Simulate time passing
+
         pathFollowTask.update();
 
-        // Verify the event was triggered
-        verify(wanderStartCallback).handle();
+        verify(movementTask, times(1)).stop();
+        verify(movementTask, times(1)).setTarget(any(Vector2.class));
     }
 
     @Test
-    void shouldMoveToPredefinedPositionAfterWaitTime() {
-        // Set up a short wait time for testing
-        pathFollowTask = new PathFollowTask(new Vector2(5f, 5f), 0.5f);
-        AITaskComponent aiTaskComponent = entity.getComponent(AITaskComponent.class);
-        aiTaskComponent.addTask(pathFollowTask);
+    void testTriggerMoveToPredefinedPosition() {
+        pathFollowTask.triggerMoveToPredefinedPosition();
 
-        // Register event listener for setPosition
-        entity.getEvents().addListener("setPosition", (Vector2 pos) -> {
-            // Verify position in event listener
-            if (pos.equals(new Vector2(-1f, 1f))) {
-                // Test success
-            }
-        });
-
-        // Start the task
-        pathFollowTask.start();
-
-        // Simulate game time before the wait time
-        when(gameTime.getDeltaTime()).thenReturn(0.4f);
-        pathFollowTask.update(); // Simulate time passing
-
-        // Ensure no move has happened yet
-        verify(entity.getEvents(), never()).trigger(eq("setPosition"), any(Vector2.class));
-
-        // Simulate additional game time to surpass the wait time
-        when(gameTime.getDeltaTime()).thenReturn(0.2f);
-        pathFollowTask.update(); // Simulate time passing
-
-        // Verify that the task has moved to the predefined position
-        Vector2 expectedPosition = new Vector2(-1f, 1f);
-        verify(entity.getEvents()).trigger(eq("setPosition"), argThat(vector -> vector.equals(expectedPosition)));
+        verify(movementTask, times(1)).stop();
+        assert pathFollowTask.targetPos.equals(new Vector2(-1f, 1f));
     }
 
     @Test
-    void shouldHandleEarlyExit() {
-        // Register callbacks
-        EventListener1<Integer> earlyExitCallback = mock(EventListener1.class);
-        entity.getEvents().addListener("leaveEarly", earlyExitCallback);
-
-        // Start the task
+    void testAddListener_TriggerMoveEarly() {
         pathFollowTask.start();
+        pathFollowTask.owner.getEntity().getEvents().trigger("leaveEarly", 1234);
 
-        // Simulate early exit event
-        entity.getEvents().trigger("leaveEarly", 1); // Passing an example ID
+        verify(movementTask, times(1)).stop();
+        verify(movementTask, times(1)).setTarget(any(Vector2.class));
+    }
 
-        // Simulate some game time to allow the task to update
-        when(gameTime.getDeltaTime()).thenReturn(0.1f);
-        pathFollowTask.update();
+    @Test
+    void testSwapTask() {
+        Task newTask = mock(Task.class);
+        pathFollowTask.swapTask(newTask);
 
-        // Verify that the early exit was handled
-        Vector2 expectedPosition = new Vector2(5f, 5f);
-        verify(entity.getEvents()).trigger(eq("setPosition"), argThat(vector -> vector.equals(expectedPosition)));
+        verify(movementTask, times(1)).stop();
+        verify(newTask, times(1)).start();
+        assert pathFollowTask.currentTask == newTask;
     }
 }
 */

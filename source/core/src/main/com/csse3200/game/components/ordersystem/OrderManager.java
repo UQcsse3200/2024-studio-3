@@ -11,7 +11,7 @@ import java.util.Map;
 
 public class OrderManager {
     private static final Logger logger = LoggerFactory.getLogger(OrderManager.class);
-    private static Map<String, Recipe> recipes = new HashMap<>();
+    static Map<String, Recipe> recipes = new HashMap<>();
 
     static {
         try {
@@ -21,7 +21,7 @@ public class OrderManager {
         }
     }
 
-    private static Map<String, Recipe> loadRecipes() {
+    static Map<String, Recipe> loadRecipes() {
         Map<String, Recipe> loadedRecipes = FileLoader.readClass(Map.class, "configs/recipe.json");
         if (loadedRecipes == null) {
             logger.error("Loaded recipes map is null. Initializing with empty map.");
