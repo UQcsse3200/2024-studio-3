@@ -42,7 +42,6 @@ public class MainGameOrderBtnDisplay extends UIComponent{
 		TextButton createOrderBtn = new TextButton("Create Order", skin);
 		logger.info("Create Order button created");
 
-		// Triggers an event when the button is pressed.
 		createOrderBtn.addListener(
 		  new ChangeListener() {
 			  @Override
@@ -87,21 +86,21 @@ public class MainGameOrderBtnDisplay extends UIComponent{
 	}
 
 	/**
-	 * Removed the button
-	 */
-	@Override
-	public void dispose() {
-		table.clear();
-		super.dispose();
-	}
-
-	/**
 	 * Get the state of the button
 	 *
 	 * @return true if button is pressed, false otherwise
 	 */
 	public boolean getState(){
 		return pressed;
+	}
+
+	/**
+	 * Removes the button
+	 */
+	@Override
+	public void dispose() {
+		table.clear();
+		super.dispose();
 	}
 }
 

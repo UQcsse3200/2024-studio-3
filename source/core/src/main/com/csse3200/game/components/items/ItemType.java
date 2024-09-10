@@ -2,6 +2,7 @@ package com.csse3200.game.components.items;
 
 public enum ItemType {
     FISH,
+    APPLE,
     BANANA,
     BEEF,
     ACAI,
@@ -15,4 +16,5 @@ public enum ItemType {
     SALAD,
     STEAKMEAL,
     BANANASPLIT,
+    FIREEXTINGUISHER,
 }
