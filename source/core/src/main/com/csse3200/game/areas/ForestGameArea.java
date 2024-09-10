@@ -103,7 +103,11 @@ public class ForestGameArea extends GameArea {
     "images/stations/benches/bench6-top.png",
     "images/fireExtinguisher/Fire_Extinguisher.png"
   };
-  private static final String[] forestTextureAtlases = {"images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/ghostKing.atlas", "images/player.atlas", "images/fireExtinguisher/atlas/flame.atlas", "images/special_NPCs/boss.atlas"};
+  private static final String[] forestTextureAtlases = {
+    "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/ghostKing.atlas", "images/animal_images/gorilla.atlas",
+          "images/animal_images/goose.atlas", "images/animal_images/goat.atlas", "images/animal_images/monkey.atlas",
+          "images/animal_images/snow_wolf.atlas","images/player.atlas", "images/fireExtinguisher/atlas/flame.atlas"
+  };
   private static final String[] forestSounds = {"sounds/Impact4.ogg"};
   private static final String backgroundMusic = "sounds/BGM_03_mp3.mp3";
   private static final String[] forestMusic = {backgroundMusic};
@@ -112,6 +116,16 @@ public class ForestGameArea extends GameArea {
 
   private Entity player;
 
+
+  public enum personalCustomerEnums{
+    HANK,
+    LEWIS,
+    SILVER,
+    JOHN,
+    MOONKI,
+    BASIC_CHICKEN,
+    BASIC_SHEEP
+  }
 
   /**
    * Initialise this ForestGameArea to use the provided TerrainFactory.
@@ -127,7 +141,6 @@ public class ForestGameArea extends GameArea {
   /** Create the game area, including terrain, static entities (trees), dynamic entities (player) */
   @Override
   public void create() {
-
     loadAssets();
 
     displayUI();
@@ -143,7 +156,9 @@ public class ForestGameArea extends GameArea {
     spawnBeef("cooked");
     spawnStrawberry("chopped");
     spawnLettuce("chopped");
-    spawnCustomer();
+    Entity customerSpawnController = spawnCustomerController();
+    customerSpawnController.getEvents().trigger(personalCustomerEnums.MOONKI.name());
+    customerSpawnController.getEvents().trigger(personalCustomerEnums.BASIC_CHICKEN.name());
 
     // Spawn the player
     player = spawnPlayer();
@@ -478,21 +493,53 @@ public class ForestGameArea extends GameArea {
     return newFruitSalad;
   }
 
-  public void spawnCustomer() {
-    logger.info("A customer has been spawned");
+  private Entity spawnCustomerController() {
+    Entity spawnController = new Entity();
+    spawnController.getEvents().addListener(personalCustomerEnums.HANK.name(), this::spawnHank);
+    spawnController.getEvents().addListener(personalCustomerEnums.LEWIS.name(), this::spawnLewis);
+    spawnController.getEvents().addListener(personalCustomerEnums.SILVER.name(), this::spawnSilver);
+    spawnController.getEvents().addListener(personalCustomerEnums.JOHN.name(), this::spawnJohn);
+    spawnController.getEvents().addListener(personalCustomerEnums.MOONKI.name(), this::spawnMoonki);
+    spawnController.getEvents().addListener(personalCustomerEnums.BASIC_SHEEP.name(), this::spawnBasicSheep);
+    spawnController.getEvents().addListener(personalCustomerEnums.BASIC_CHICKEN.name(), this::spawnBasicChicken);
+    return spawnController;
+  }
+
+  private void spawnCustomer(String name) {
+        GridPoint2 position = new GridPoint2(1, 5);
+        Vector2 targetPos = new Vector2(3, 5);
+        Entity customer = NPCFactory.createCustomerPersonal(name, targetPos);
+        spawnEntityAt(customer, position, true, true);
+  }
+
+  private void spawnBasicCustomer(String name) {
     GridPoint2 position = new GridPoint2(1, 5);
-    Vector2 targetPos = new Vector2(3, 5); // Target position for ghost king
-    Entity customer = NPCFactory.createCustomer(targetPos);
+    Vector2 targetPos = new Vector2(3, 5);
+    Entity customer = NPCFactory.createBasicCustomer(name, targetPos);
     spawnEntityAt(customer, position, true, true);
   }
 
-    private void spawnCustomerPersonal() {
-        GridPoint2 position = new GridPoint2(1, 5);
-        Vector2 targetPos = new Vector2(3, 5);
-        Entity customer = NPCFactory.createCustomerPersonal(targetPos);
-        spawnEntityAt(customer, position, true, true);
-    }
-
+  private void spawnHank() {
+    spawnCustomer("Hank");
+  }
+  private void spawnLewis() {
+    spawnCustomer("Lewis");
+  }
+  private void spawnSilver() {
+    spawnCustomer("Silver");
+  }
+  private void spawnJohn() {
+    spawnCustomer("John");
+  }
+  private void spawnMoonki() {
+    spawnCustomer("Moonki");
+  }
+  private void spawnBasicChicken() {
+    spawnBasicCustomer("Basic Chicken");
+  }
+  private void spawnBasicSheep() {
+    spawnBasicCustomer("Basic Sheep");
+  }
 
   /**
    * Spawn an AcaiBowl item.
