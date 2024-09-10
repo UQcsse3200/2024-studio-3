@@ -3,6 +3,9 @@ com.badlogic.gdx.graphics.g2d.BitmapFont: {
 	button: {
 		file: fonts/pixel_18.fnt
 	}
+	image-text-button: {
+		file: fonts/pixel_32.fnt
+	}
 	font: {
 		file: fonts/pixel_18.fnt
 	}
@@ -36,9 +39,15 @@ com.badlogic.gdx.graphics.Color: {
 		a: 1
 	}
 	highlight: {
-		r: 0.207
-		g: 0
-		b: 0.15
+		r: 0.42156863
+		g: 1
+		b: 0.5552286
+		a: 1
+	}
+	red: {
+		r: 2.07
+		g: 0.19
+		b: 0.19
 		a: 1
 	}
 	pressed: {
@@ -82,6 +91,14 @@ com.badlogic.gdx.scenes.scene2d.ui.Skin$TintedDrawable: {
 	button-h: {
 		name: button
 		color: highlight
+	}
+	menu-image-button-h: {
+		name: button
+		color: red
+	}
+	menu-image2-button-h: {
+		name: button
+		color: black
 	}
 	checkbox-c: {
 		name: checkbox
@@ -289,13 +306,13 @@ com.badlogic.gdx.scenes.scene2d.ui.ImageButton$ImageButtonStyle: {
 }
 com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton$ImageTextButtonStyle: {
 	default: {
-		font: button
+		font: image-text-button
 		fontColor: white
-		downFontColor: white
-		overFontColor: gray
-		up: button-c
-		down: button-p
-		over: button-h
+		downFontColor: black
+		overFontColor: black
+		up: menu-image2-button-h
+		down: menu-image-button-h
+		over: menu-image-button-h
 	}
 	check: {
 		imageUp: checkbox-c

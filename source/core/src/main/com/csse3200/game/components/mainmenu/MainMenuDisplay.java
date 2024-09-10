@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
@@ -38,11 +39,10 @@ public class MainMenuDisplay extends UIComponent {
             ServiceLocator.getResourceService()
                 .getAsset("images/Beastly.png", Texture.class));
 
-    TextButton startBtn = new TextButton("Start", skin);
-    TextButton loadBtn = new TextButton("Load", skin);
-    TextButton settingsBtn = new TextButton("Settings", skin);
-    TextButton exitBtn = new TextButton("Exit", skin);
-
+    ImageTextButton startBtn = new ImageTextButton("Start", skin);
+    ImageTextButton loadBtn = new ImageTextButton("Load", skin);
+    ImageTextButton settingsBtn = new ImageTextButton("Settings", skin);
+    ImageTextButton exitBtn = new ImageTextButton("Exit", skin);
 
       // Triggers an event when the button is pressed
     startBtn.addListener(
@@ -82,10 +82,11 @@ public class MainMenuDisplay extends UIComponent {
         });
 
     table2.add(title).pad(0,0,250,0);
-    table.add(startBtn).pad(600, 50, 0, 0);
-    table.add(loadBtn).pad(600, 50, 0, 0);
-    table.add(settingsBtn).pad(600, 50, 0, 0);
-    table.add(exitBtn).pad(600, 50, 0, 0);
+    table.add(startBtn).pad(600, 10, 0, 0).size(180,100);
+    table.add(loadBtn).pad(600, 10, 0, 0).size(180,100);
+    table.add(settingsBtn).pad(600, 10, 0, 0).size(180,100);
+    table.add(exitBtn).pad(600, 10, 0, 0).size(180,100);
+    table.center();
 
     stage.addActor(table2);
     stage.addActor(table);
