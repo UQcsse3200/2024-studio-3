@@ -27,6 +27,10 @@ import java.util.List;
 import java.util.ArrayList;
 import com.badlogic.gdx.utils.Align;
 
+/***
+ * The UIComponent to create textbox which are drawn to the bottom of the screen
+ */
+
 public class TextDisplay extends UIComponent {
     //String building variables
     private List<String> text;
@@ -49,7 +53,7 @@ public class TextDisplay extends UIComponent {
         super();
         this.game = null;
         this.table = new Table();
-        this.visible = true;
+        this.visible = false;
         this.currentText = new StringBuilder();
     }
     public TextDisplay(MainGameScreen game) {
@@ -59,6 +63,30 @@ public class TextDisplay extends UIComponent {
         this.visible = true;
         this.currentText = new StringBuilder();
     }
+
+    /***
+     * Gets the delay of each character printing on the screen
+     * @return a long
+     */
+    public long getDelay() {
+        return delay;
+    }
+
+    /***
+     * Sets the delay of each character printing on the screen
+     * @param A long which is the time it takes
+     */
+    public void setDelay(long delay) {
+        this.delay = delay;
+    }
+
+    /***
+     * This function will
+     *     - create a table where the UI components will be placed on
+     *     - render the textbox and stack text on top using the stack
+     *     - position the table in the correct place
+     *     - add keyinput listeners and events
+     */
     public void create() {
         super.create();
 
@@ -94,32 +122,66 @@ public class TextDisplay extends UIComponent {
         table.add(stack).padBottom(70).padLeft(0).size((int)(Gdx.graphics.getWidth() * 0.5), (int)(Gdx.graphics.getHeight() * 0.2));
         setupInputListener();
         entity.getEvents().addListener("SetText", this::setText);
+
+        setText("The shimmering moonlight cast a silvery glow over the tranquil ocean waves, gently lapping against the sandy shore as a soft breeze carried the scent of saltwater and seaweed through the air, while distant stars twinkled faintly in the vast, dark sky above, their light barely penetrating the velvety blackness that enveloped the world in a quiet, peaceful embrace, where the occasional call");
     }
+
+    /***
+     * Sets the text in allocated blocks based on
+     * @param text
+     */
     public void setText(String text) {
         setVisible(true);
         current_part = 0;
         List<String> new_text = new ArrayList<>();
         text_length = text.length();
         String temp = "";
+        String current = "";
         for (int i = 0; i < text_length; i++) {
+            if (text.charAt(i) == ' ') {
+                temp += current;
+                current = "";
+            }
+
             if (i != 0 && i % textLimit == 0) {
+                temp += " (enter to continue)";
                 new_text.add(temp);
                 temp = "";
             }
-            temp += text.charAt(i);
+            current += text.charAt(i);
         }
+        temp += current + " (enter to continue)";
         new_text.add(temp);
         System.out.println(new_text);
         this.text = new_text;
     }
+
+    /***
+     * Gets the text in the blocks allocated by the algorithm
+     * @return an array of strings which is the text
+     */
     public List<String> getText() {
         return text;
     }
+
+    /***
+     * Set visiblility of the textbox
+     * @param True or False if the textbox is visible
+     */
     public void setVisible(boolean value) {
         this.visible = value;
         table.setVisible(value);
     }
+
+    /***
+     * Gets the visibility of the textbox on the screen
+     * @return boolean which is the visibility of the status
+     */
     public boolean getVisible() {return this.visible;}
+
+    /***
+     * This function will add text after a certain amount of time given the delay constant
+     */
     @Override
     public void update() {
         long time = ServiceLocator.getTimeSource().getTime();
@@ -133,6 +195,10 @@ public class TextDisplay extends UIComponent {
         }
     }
 
+    /***
+     * Sets up the key input listener for the ENTER keyword to either move to the next section
+     * of the text or clear the textbox from the screen
+     */
     private void setupInputListener() {
         stage.addListener(new InputListener() {
             @Override
