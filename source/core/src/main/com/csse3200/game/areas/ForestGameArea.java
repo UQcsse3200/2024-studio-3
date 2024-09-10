@@ -165,6 +165,11 @@ public class ForestGameArea extends GameArea {
     playMusic();
   }
 
+  /**
+   * Get the Entity containing the customer spawn events
+   *
+   * @return the Entity handling all customer spawn events
+   */
   public Entity getCustomerSpawnController() {
     return customerSpawnController;
   }
