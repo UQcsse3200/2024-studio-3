@@ -132,63 +132,99 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#create()" class="member-name-link">create</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Called when the entity is created and registered.</div>
+<div class="block">Initialises the component to add necessary listeners to the LevelService and initialise an array with customer
+ names</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#customerJoinedLineUp()" class="member-name-link">customerJoinedLineUp</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Update that a customer joined the line</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#customerLeftLineUp()" class="member-name-link">customerLeftLineUp</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Update that a customer left the line</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#customerSpawned()" class="member-name-link">customerSpawned</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Add one to the total number of customers spawned</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getCurrentCustomersLinedUp()" class="member-name-link">getCurrentCustomersLinedUp</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Get the current number of customers in the line</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../../entities/Entity.html" title="class in com.csse3200.game.entities">Entity</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getCustomerSpawnController()" class="member-name-link">getCustomerSpawnController</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Get the Entity that handles all of the customer spawning events</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../../areas/ForestGameArea.html" title="class in com.csse3200.game.areas">ForestGameArea</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getGameArea()" class="member-name-link">getGameArea</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Get the current GameArea/Map</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getLevelSpawnCap()" class="member-name-link">getLevelSpawnCap</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Get the number of customers required to spawn in the level</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getNowSpawning()" class="member-name-link">getNowSpawning</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Is the game spawning customers?</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getNumbCustomersSpawned()" class="member-name-link">getNumbCustomersSpawned</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Get the total number of customers that have been spawned in the level currently</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getSpawnStartTime()" class="member-name-link">getSpawnStartTime</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Get the time that the most recent customer spawned</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#initSpawning(int)" class="member-name-link">initSpawning</a><wbr>(int&nbsp;spawnCap)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Ensures that all private attributes are set to default and then enables spawning</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#resetCustomerSpawn()" class="member-name-link">resetCustomerSpawn</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Set the number of customers that have spawned to 0</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setCustomerSpawnController(com.csse3200.game.entities.Entity)" class="member-name-link">setCustomerSpawnController</a><wbr>(<a href="../../entities/Entity.html" title="class in com.csse3200.game.entities">Entity</a>&nbsp;var)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Gets the Entity responsible for storing and handling all customer spawn events</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setGameArea(com.csse3200.game.areas.ForestGameArea)" class="member-name-link">setGameArea</a><wbr>(<a href="../../areas/ForestGameArea.html" title="class in com.csse3200.game.areas">ForestGameArea</a>&nbsp;newGameArea)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Sets and stores the current GameArea/map in a private attribute</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setLevelSpawnCap(int)" class="member-name-link">setLevelSpawnCap</a><wbr>(int&nbsp;cap)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Stores the new levels spawn capacity in the levelSpawnCap attribute</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setSpawnStartTime()" class="member-name-link">setSpawnStartTime</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Make the private attribute spawnStartTime store the time when the most recently spawned customer was
+ actually spawned</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#toggleNowSpawning()" class="member-name-link">toggleNowSpawning</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Inverses the boolean value of nowSpawning attribute</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#update()" class="member-name-link">update</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Called once per frame of the game, and should be used for most component logic.</div>
+<div class="block">Checks if the level should be spawning.</div>
 </div>
 </div>
 </div>
@@ -228,9 +264,8 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="create()">
 <h3>create</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">create</span>()</div>
-<div class="block"><span class="description-from-type-label">Description copied from class:&nbsp;<code><a href="../Component.html#create()">Component</a></code></span></div>
-<div class="block">Called when the entity is created and registered. Initial logic such as calls to GetComponent
- should be made here, not in the constructor which is called before an entity is finished.</div>
+<div class="block">Initialises the component to add necessary listeners to the LevelService and initialise an array with customer
+ names</div>
 <dl class="notes">
 <dt>Overrides:</dt>
 <dd><code><a href="../Component.html#create()">create</a></code>&nbsp;in class&nbsp;<code><a href="../Component.html" title="class in com.csse3200.game.components">Component</a></code></dd>
@@ -241,9 +276,9 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="update()">
 <h3>update</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">update</span>()</div>
-<div class="block"><span class="description-from-type-label">Description copied from class:&nbsp;<code><a href="../Component.html#update()">Component</a></code></span></div>
-<div class="block">Called once per frame of the game, and should be used for most component logic. Not called if
- component is disabled.</div>
+<div class="block">Checks if the level should be spawning. If it is, then it calculates the seconds since the last customer spawned,
+ and if it has been more than three seconds and the spawn capacity of the level has not been reached yet, then
+ spawn another customer</div>
 <dl class="notes">
 <dt>Overrides:</dt>
 <dd><code><a href="../Component.html#update()">update</a></code>&nbsp;in class&nbsp;<code><a href="../Component.html" title="class in com.csse3200.game.components">Component</a></code></dd>
@@ -254,102 +289,164 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="initSpawning(int)">
 <h3>initSpawning</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">initSpawning</span><wbr><span class="parameters">(int&nbsp;spawnCap)</span></div>
+<div class="block">Ensures that all private attributes are set to default and then enables spawning</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>spawnCap</code> - the number of customers that need to be spawned in the current level</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="setGameArea(com.csse3200.game.areas.ForestGameArea)">
 <h3>setGameArea</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setGameArea</span><wbr><span class="parameters">(<a href="../../areas/ForestGameArea.html" title="class in com.csse3200.game.areas">ForestGameArea</a>&nbsp;newGameArea)</span></div>
+<div class="block">Sets and stores the current GameArea/map in a private attribute</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>newGameArea</code> - the new game area that needs to be stored</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="setCustomerSpawnController(com.csse3200.game.entities.Entity)">
 <h3>setCustomerSpawnController</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setCustomerSpawnController</span><wbr><span class="parameters">(<a href="../../entities/Entity.html" title="class in com.csse3200.game.entities">Entity</a>&nbsp;var)</span></div>
+<div class="block">Gets the Entity responsible for storing and handling all customer spawn events</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>var</code> - the Entity with all spawning events</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="setSpawnStartTime()">
 <h3>setSpawnStartTime</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setSpawnStartTime</span>()</div>
+<div class="block">Make the private attribute spawnStartTime store the time when the most recently spawned customer was
+ actually spawned</div>
 </section>
 </li>
 <li>
 <section class="detail" id="toggleNowSpawning()">
 <h3>toggleNowSpawning</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">toggleNowSpawning</span>()</div>
+<div class="block">Inverses the boolean value of nowSpawning attribute</div>
 </section>
 </li>
 <li>
 <section class="detail" id="setLevelSpawnCap(int)">
 <h3>setLevelSpawnCap</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setLevelSpawnCap</span><wbr><span class="parameters">(int&nbsp;cap)</span></div>
+<div class="block">Stores the new levels spawn capacity in the levelSpawnCap attribute</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>cap</code> - the number of customers that must be spawned</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="getCurrentCustomersLinedUp()">
 <h3>getCurrentCustomersLinedUp</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">getCurrentCustomersLinedUp</span>()</div>
+<div class="block">Get the current number of customers in the line</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>the current number of customers in the line</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="getNumbCustomersSpawned()">
 <h3>getNumbCustomersSpawned</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">getNumbCustomersSpawned</span>()</div>
+<div class="block">Get the total number of customers that have been spawned in the level currently</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>the number of customers that have spawned</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="getNowSpawning()">
 <h3>getNowSpawning</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">getNowSpawning</span>()</div>
+<div class="block">Is the game spawning customers?</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>whether or not the game is spawning customers</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="getLevelSpawnCap()">
 <h3>getLevelSpawnCap</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">getLevelSpawnCap</span>()</div>
+<div class="block">Get the number of customers required to spawn in the level</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>the number of customers that must spawn in the level</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="getGameArea()">
 <h3>getGameArea</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../../areas/ForestGameArea.html" title="class in com.csse3200.game.areas">ForestGameArea</a></span>&nbsp;<span class="element-name">getGameArea</span>()</div>
+<div class="block">Get the current GameArea/Map</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>the current ForestGameArea</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="getCustomerSpawnController()">
 <h3>getCustomerSpawnController</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../../entities/Entity.html" title="class in com.csse3200.game.entities">Entity</a></span>&nbsp;<span class="element-name">getCustomerSpawnController</span>()</div>
+<div class="block">Get the Entity that handles all of the customer spawning events</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>the Entity with all customer spawning events</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="getSpawnStartTime()">
 <h3>getSpawnStartTime</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a></span>&nbsp;<span class="element-name">getSpawnStartTime</span>()</div>
+<div class="block">Get the time that the most recent customer spawned</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>when the latest customer spawned</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="customerJoinedLineUp()">
 <h3>customerJoinedLineUp</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">customerJoinedLineUp</span>()</div>
+<div class="block">Update that a customer joined the line</div>
 </section>
 </li>
 <li>
 <section class="detail" id="customerLeftLineUp()">
 <h3>customerLeftLineUp</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">customerLeftLineUp</span>()</div>
+<div class="block">Update that a customer left the line</div>
 </section>
 </li>
 <li>
 <section class="detail" id="customerSpawned()">
 <h3>customerSpawned</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">customerSpawned</span>()</div>
+<div class="block">Add one to the total number of customers spawned</div>
 </section>
 </li>
 <li>
 <section class="detail" id="resetCustomerSpawn()">
 <h3>resetCustomerSpawn</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">resetCustomerSpawn</span>()</div>
+<div class="block">Set the number of customers that have spawned to 0</div>
 </section>
 </li>
 </ul>
