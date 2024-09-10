@@ -7,6 +7,8 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.csse3200.game.components.items.IngredientComponent;
+import com.csse3200.game.components.items.ItemType;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
 import org.slf4j.Logger;
@@ -49,6 +51,96 @@ public class InventoryDisplay extends UIComponent {
         } else {
             label.setText(itemText); // Update the label text
             //animation update event trigger
+            if (item != null) {
+                if (item instanceof IngredientComponent) {
+                    switch (item.getItemType()) {
+                        case ItemType.ACAI:
+                            if (((IngredientComponent) item).getItemState().equals("raw")) {
+                                entity.getEvents().trigger("updateAnimationRawAcai");
+                            } else {
+                                entity.getEvents().trigger("updateAnimationChoppedAcai");
+                            }
+                            break;
+                        case ItemType.BEEF:
+                            if (((IngredientComponent) item).getItemState().equals("raw")) {
+                                entity.getEvents().trigger("updateAnimationRawBeef");
+                            } else if (((IngredientComponent) item).getItemState().equals("cooked")) {
+                                entity.getEvents().trigger("updateAnimationCookedBeef");
+                            } else {
+                                entity.getEvents().trigger("updateAnimationBurntBeef");
+                            }
+                        case ItemType.BANANA:
+                            if (((IngredientComponent) item).getItemState().equals("raw")) {
+                                entity.getEvents().trigger("updateAnimationRawBanana");
+                            } else {
+                                entity.getEvents().trigger("updateAnimationChoppedBanana");
+                            }
+                            break;
+                        case ItemType.LETTUCE:
+                            if (((IngredientComponent) item).getItemState().equals("raw")) {
+                                entity.getEvents().trigger("updateAnimationRawLettuce");
+                            } else {
+                                entity.getEvents().trigger("updateAnimationChoppedLettuce");
+                            }
+                            break;
+                        case ItemType.CUCUMBER:
+                            if (((IngredientComponent) item).getItemState().equals("raw")) {
+                                entity.getEvents().trigger("updateAnimationRawCucumber");
+                            } else {
+                                entity.getEvents().trigger("updateAnimationChoppedCucumber");
+                            }
+                            break;
+                        case ItemType.TOMATO:
+                            if (((IngredientComponent) item).getItemState().equals("raw")) {
+                                entity.getEvents().trigger("updateAnimationRawTomato");
+                            } else {
+                                entity.getEvents().trigger("updateAnimationChoppedTomato");
+                            }
+                            break;
+                        case ItemType.STRAWBERRY:
+                            if (((IngredientComponent) item).getItemState().equals("raw")) {
+                                entity.getEvents().trigger("updateAnimationRawStrawberry");
+                            } else {
+                                entity.getEvents().trigger("updateAnimationChoppedStrawberry");
+                            }
+                            break;
+                        case ItemType.CHOCOLATE:
+                            if (((IngredientComponent) item).getItemState().equals("raw")) {
+                                entity.getEvents().trigger("updateAnimationRawChocolate");
+                            } else {
+                                entity.getEvents().trigger("updateAnimationChoppedChocolate");
+                            }
+                            break;
+                        case ItemType.FISH:
+                            if (((IngredientComponent) item).getItemState().equals("raw")) {
+                                entity.getEvents().trigger("updateAnimationRawFish");
+                            } else {
+                                entity.getEvents().trigger("updateAnimationCookedFish");
+                            }
+                            break;
+                        case ItemType.ACAIBOWL:
+                            entity.getEvents().trigger("updateAnimationAcaiBowl");
+                            break;
+                        case ItemType.BANANASPLIT:
+                            entity.getEvents().trigger("updateAnimationBananaSplit");
+                            break;
+                        case ItemType.FRUITSALAD:
+                            entity.getEvents().trigger("updateAnimationFruitSalad");
+                            break;
+                        case ItemType.SALAD:
+                            entity.getEvents().trigger("updateAnimationSalad");
+                            break;
+                        case ItemType.STEAKMEAL:
+                            entity.getEvents().trigger("updateAnimationSteak");
+                            break;
+                        default:
+                            entity.getEvents().trigger("updateAnimationEmptyInventory");
+                            break;
+                    }
+                }
+            } else {
+                entity.getEvents().trigger("updateAnimationEmptyInventory");
+            }
         }
 
     }

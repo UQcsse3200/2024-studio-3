@@ -27,6 +27,8 @@ public class PlayerAnimationController extends Component {
 
 
         //Add animation update (for ingredients) listeners
+        entity.getEvents().addListener("updateAnimationEmptyInventory",
+                this::updateAnimationEmptyInventory);
         entity.getEvents().addListener("updateAnimationRawAcai", this::updateAnimationRawAcai);
         entity.getEvents().addListener("updateAnimationChoppedAcai",
                 this::updateAnimationChoppedAcai);
@@ -105,6 +107,8 @@ public class PlayerAnimationController extends Component {
     void animateStandUp() { animator.startAnimation("Character_StandUp");}
 
     //Update animation to hold ingredients
+    void updateAnimationEmptyInventory(){updateAnimation("player.atlas");}
+
     void updateAnimationRawAcai(){updateAnimation("rawAcai.atlas");}
     void updateAnimationChoppedAcai(){updateAnimation("choppedAcai.atlas");}
     void updateAnimationRawBeef(){updateAnimation("rawBeef.atlas");}
