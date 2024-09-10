@@ -80,4 +80,16 @@ class LevelServiceTest {
             verify(mockEventListener, atMost(11)).handle(anyInt());
         }
     }
+
+    @Test
+    void shouldCorrectlyReturnAndSetGold() {
+        int gold = levelServiceSpy.getCurrGold();
+        //Test default value
+        assertEquals(50, gold);
+        //Check that it updates and retrieves correctly
+        levelServiceSpy.setCurrGold(100);
+        verify(levelServiceSpy).setCurrGold(100);
+        gold = levelServiceSpy.getCurrGold();
+        assertEquals(100, gold);
+    }
 }
