@@ -31,6 +31,11 @@ public class InventoryDisplay extends UIComponent {
     @Override
     public void create() {
         super.create();
+
+        if (entity != null) {
+            // listener for when the InventoryComponent attached to this entity is updated
+            entity.getEvents().addListener("updateInventory", this::update);
+        }
         addActors();
     }
 
@@ -78,6 +83,7 @@ public class InventoryDisplay extends UIComponent {
 
     private void updateLabel(ItemComponent item) {
         // Update the label with the item information
+        /*
         String itemText = String.format("Current Item: %s", item != null ? item.getItemName() : "None");
         if (label == null) {
             label = new Label(itemText, skin);
@@ -85,11 +91,36 @@ public class InventoryDisplay extends UIComponent {
         } else {
             label.setText(itemText); // Update the label text
         }
+
+         */
+    }
+    private void updateDisplay() {
+        for (int i = 0; i < slots.size(); i++) {
+            Stack currentStack = slots.get(i);
+            currentStack.clear();
+            currentStack.add(new Image(ServiceLocator.getResourceService().getAsset("images/inventory_ui/slot.png", Texture.class)));
+
+            // add item image if there is an item in the slot
+            ItemComponent item = entity.getComponent(InventoryComponent.class).getItemAt(i);
+            if (item != null) {
+                Table itemPadding = new Table();
+                //N! See addActors
+
+                //String itemTexturePath = item.entity.getComponent(TextureRenderComponent.class).getTexturePath();
+                //Image itemImage = new Image(ServiceLocator.getResourceService().getAsset(itemTexturePath, Texture.class));
+
+                // placeholder beef image for now
+                Image itemImage = new Image(ServiceLocator.getResourceService().getAsset("images/ingredients/cooked_beef.png", Texture.class));
+                itemPadding.add(itemImage).pad(20);
+                currentStack.add(itemPadding);
+            }
+        }
     }
 
     // Method to update the UI with a new item
     public void update() {
-        updateLabel(entity.getComponent(InventoryComponent.class).getItemFirst());
+        // updateLabel(entity.getComponent(InventoryComponent.class).getItemFirst());
+        updateDisplay();
     }
 
     @Override

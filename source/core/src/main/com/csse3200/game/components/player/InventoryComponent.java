@@ -85,6 +85,10 @@ public class InventoryComponent extends Component {
         throw new IllegalArgumentException(sizeException);
       }
       this.capacity = newCapacity;
+      if (entity != null) {
+          entity.getEvents().trigger("updateInventory");
+      }
+
   }
 
   /**
@@ -130,6 +134,9 @@ public class InventoryComponent extends Component {
       throw new IllegalArgumentException(indexException);
     }
     this.selected = index;
+    if (entity != null) {
+      entity.getEvents().trigger("updateInventory");
+    }
   }
 
   /**
@@ -255,7 +262,11 @@ public class InventoryComponent extends Component {
       }
       items.set(i, item);
       size++;
-    } 
+      if (entity != null) {
+        entity.getEvents().trigger("updateInventory");
+      }
+    }
+
   }
   
     /**
@@ -276,7 +287,11 @@ public class InventoryComponent extends Component {
     if (!this.isFull()) {
       items.set(index, item);
       size++;
-    } 
+      if (entity != null) {
+        entity.getEvents().trigger("updateInventory");
+      }
+    }
+
   }
 
     /**
@@ -299,7 +314,11 @@ public class InventoryComponent extends Component {
       items.set(index, null);
       size--;
 
-      return item; 
+      if (entity != null) {
+        entity.getEvents().trigger("updateInventory");
+      }
+      return item;
+
     }
     return null;
   }
