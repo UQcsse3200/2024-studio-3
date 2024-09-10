@@ -123,7 +123,7 @@ public class TextDisplay extends UIComponent {
         setupInputListener();
         entity.getEvents().addListener("SetText", this::setText);
 
-        setText("The shimmering moonlight cast a silvery glow over the tranquil ocean waves, gently lapping against the sandy shore as a soft breeze carried the scent of saltwater and seaweed through the air, while distant stars twinkled faintly in the vast, dark sky above, their light barely penetrating the velvety blackness that enveloped the world in a quiet, peaceful embrace, where the occasional call");
+        //setText("The shimmering moonlight cast a silvery glow over the tranquil ocean waves, gently lapping against the sandy shore as a soft breeze carried the scent of saltwater and seaweed through the air, while distant stars twinkled faintly in the vast, dark sky above, their light barely penetrating the velvety blackness that enveloped the world in a quiet, peaceful embrace, where the occasional call");
     }
 
     /***
