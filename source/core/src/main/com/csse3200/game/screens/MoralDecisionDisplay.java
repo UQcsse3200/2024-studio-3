@@ -69,7 +69,8 @@ public class MoralDecisionDisplay extends UIComponent {
         // add racoon image to the table and shift it left by adjusting padding
         layout.add(characterImage).padRight(1000).center().row(); // Add padding to move left
 
-        setupInputListener();
+//        setupInputListener();
+        entity.getEvents().addListener("triggerMoralScreen", this::toggleVisibility);
     }
 
 
