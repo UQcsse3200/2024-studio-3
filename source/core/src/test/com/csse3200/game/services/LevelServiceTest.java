@@ -61,6 +61,16 @@ class LevelServiceTest {
     }
 
     @Test
+    void shouldIncrementLevelMultipleTimesByTrigger() {
+        int level = 0;
+        for (int i = 0; i < 4; i++) {
+            levelServiceSpy.togglePlayerFinishedLevel();
+            level = levelServiceSpy.getCurrLevel();
+        }
+        assertEquals(5, level);
+    }
+
+    @Test
     void shouldManuallySetLevel() {
         levelServiceSpy.setCurrLevel(5);
         assertEquals(levelServiceSpy.getCurrLevel(),5);
