@@ -1,25 +1,31 @@
 package com.csse3200.game.components.maingame;
 
+import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.Component;
+import com.csse3200.game.entities.Entity;
+import com.csse3200.game.services.ServiceLocator;
 
 public class CheckWinLoseComponent extends Component {
 
-    private float totalMoneyMade;
+    private CombatStatsComponent combatStatsComponent;
     private float winAmount;
     private float loseThreshold;
     private float mealQuality;
     private int storeRating;
 
-    public CheckWinLoseComponent(float totalMoneyMade, float winAmount, float loseThreshold, float mealQuality) {
-        this.totalMoneyMade = totalMoneyMade;
+    public CheckWinLoseComponent(float winAmount, float loseThreshold, float mealQuality) {
         this.winAmount = winAmount;
         this.loseThreshold = loseThreshold;
         this.mealQuality = mealQuality;
-        this.storeRating = calculateStoreRating(); // can have this displayed on the screen 'at all times'?
+        this.storeRating = calculateStoreRating();
+
+        // Listen for player creation and retrieve the CombatStatsComponent
+        ServiceLocator.getPlayerService().getEvents().addListener("playerCreated", (Entity player) -> {
+            this.combatStatsComponent = player.getComponent(CombatStatsComponent.class);
+        });
     }
 
-    public void updateGameState(float totalMoneyMade, float mealQuality) {
-        this.totalMoneyMade = totalMoneyMade;
+    public void updateGameState(float mealQuality) {
         this.mealQuality = mealQuality;
         this.storeRating = calculateStoreRating();
     }
@@ -39,6 +45,10 @@ public class CheckWinLoseComponent extends Component {
     }
 
     public String checkGameState() {
+        if (combatStatsComponent == null) {
+            return "GAME_IN_PROGRESS";  // Ensuring combatStatsComponent is initialized
+        }
+
         if (checkLose()) {
             triggerLoseState();
             return "LOSE";
@@ -54,14 +64,14 @@ public class CheckWinLoseComponent extends Component {
         if (storeRating <= 2) {
             return true;
         }
-        if (totalMoneyMade < loseThreshold) {
+        if (combatStatsComponent.getGold() < loseThreshold) {
             return true;
         }
         return false;
     }
 
     private boolean checkWin() {
-        if (totalMoneyMade >= winAmount) {
+        if (combatStatsComponent.getGold() >= winAmount) {
             return true;
         }
         return false;
