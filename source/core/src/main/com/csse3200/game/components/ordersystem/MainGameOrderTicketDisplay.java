@@ -270,19 +270,28 @@ public class MainGameOrderTicketDisplay extends UIComponent {
      * Updates the sizes of all dockets. The last docket in the list is enlarged, while others remain the same size.
      */
     public void updateDocketSizes() {
-        float widthAdjustment = 100f * (viewportWidth/1080f);
-        float heightAdjustment = 40f * (viewportHeight/1080f); //155
 
-        float enlargedDocketWidth = 220 * (viewportWidth/1920f) ;
-        float enlargedDocketHeight = 350 * (viewportHeight/1080f);
+        float viewportWidth = Gdx.graphics.getWidth();
+        float viewportHeight = Gdx.graphics.getHeight();
 
-        float enlargedWidth = Gdx.graphics.getWidth() - enlargedDocketWidth - widthAdjustment;
-        float enlargedHeight = Gdx.graphics.getHeight() - enlargedDocketHeight - heightAdjustment;
+        // Calculate the scaling factor
+        float scaleFactor = getScalingFactor(viewportWidth, viewportHeight);
+        float docketWidthRatio = 0.12f;
+        float docketHeightRatio = 0.25f;
 
-        float normalDocketWidth = 120f * (viewportWidth/1920f);
-        float normalDocketHeight = 150f * (viewportHeight/1080f);
+        float normalDocketWidth = 1280f * docketWidthRatio * scaleFactor;
+        float normalDocketHeight = 800f * docketHeightRatio * scaleFactor;
 
-        float normalHeight = Gdx.graphics.getHeight() - normalDocketHeight- heightAdjustment;
+        float enlargedDocketWidth = normalDocketWidth * 1.2f;
+        float enlargedDocketHeight = normalDocketHeight * 1.2f;
+
+        float dynamicDistancePercentage = 0.09f;
+        float dynamicDistance = viewportWidth * dynamicDistancePercentage;
+
+        float xPos = viewportWidth - enlargedDocketWidth - dynamicDistance;
+        float yPos = (Gdx.graphics.getHeight() * 0.938f) - (enlargedDocketHeight - 15);
+
+        float normalHeight = (Gdx.graphics.getHeight() * 0.938f) - (normalDocketHeight - 15);
 
         for (int i = 0; i < tableArrayList.size(); i++) {
             Table table = tableArrayList.get(i);
@@ -291,7 +300,7 @@ public class MainGameOrderTicketDisplay extends UIComponent {
             if (i == tableArrayList.size() - 1) { // Tail docket
                 table.setSize(enlargedDocketWidth, enlargedDocketHeight);
                 // Fixed position for enlarged docket
-                table.setPosition(enlargedWidth, enlargedHeight);
+                table.setPosition(xPos, yPos);
 
                 table.setZIndex(10);
                 // Apply enlarged font size
@@ -328,6 +337,12 @@ public class MainGameOrderTicketDisplay extends UIComponent {
                 }
             }
         }
+    }
+
+    private static float getScalingFactor(float currentWidth, float currentHeight) {
+        float widthFactor = currentWidth / 1920;
+        float heightFactor = currentHeight / 1080;
+        return Math.min(widthFactor, heightFactor); // Use the smaller factor to maintain aspect ratio
     }
 
     /**
