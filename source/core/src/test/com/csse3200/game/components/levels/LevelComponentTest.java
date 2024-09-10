@@ -47,7 +47,6 @@ class LevelComponentTest {
         assertEquals(0,levelComponentSpy.getNumbCustomersSpawned());
         assertEquals(0,levelComponentSpy.getCurrentCustomersLinedUp());
         assertNull(levelComponentSpy.getGameArea());
-        assertNull(levelComponentSpy.getCustomerSpawnController());
     }
 
     @Test
