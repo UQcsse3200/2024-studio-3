@@ -1,5 +1,6 @@
 package com.csse3200.game.components;
 
+import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -105,6 +106,8 @@ public class CombatStatsComponent extends Component {
     this.gold = Math.max(gold, 0);
     if (entity != null) {
       entity.getEvents().trigger("updateGold", this.gold);
+      ServiceLocator.getLevelService().setCurrGold(this.gold);
+      ServiceLocator.getDocketService().getEvents().trigger("goldUpdated", this.gold);
     }
   }
 
