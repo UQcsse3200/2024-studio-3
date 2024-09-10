@@ -120,7 +120,8 @@ public class ForestGameArea extends GameArea {
   private static final String[] forestTextureAtlases = {
     "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/ghostKing.atlas", "images/animal_images/gorilla.atlas",
           "images/animal_images/goose.atlas", "images/animal_images/goat.atlas", "images/animal_images/monkey.atlas",
-          "images/animal_images/snow_wolf.atlas","images/player.atlas", "images/fireExtinguisher/atlas/flame.atlas"
+          "images/animal_images/snow_wolf.atlas","images/player.atlas", "images/fireExtinguisher/atlas/flame.atlas",
+          "images/stations/Servery_Animation/servery.atlas"
   };
   private static final String[] forestSounds = {"sounds/Impact4.ogg"};
   private static final String backgroundMusic = "sounds/BGM_03_mp3.mp3";
@@ -332,10 +333,13 @@ public class ForestGameArea extends GameArea {
     spawnEntityAt(appleTree, appleTreePos, false, false);
     appleTree.setPosition(appleTree.getPosition().x + 4.2f , appleTree.getPosition().y - 1.3f);
 
-    GridPoint2 serveryPos = new GridPoint2(3,0);
+    GridPoint2 serveryPos = new GridPoint2(2,3);
     Entity servery = StationFactory.createSubmissionWindow();
     spawnEntityAt(servery, serveryPos, false, false);
-    servery.setPosition(servery.getPosition().x, servery.getPosition().y + 1.3f);
+    servery.setPosition(servery.getPosition().x + 1, servery.getPosition().y);
+    servery = StationFactory.createSubmissionWindow();
+    spawnEntityAt(servery, serveryPos, false, false);
+    servery.setPosition(servery.getPosition().x + 1, servery.getPosition().y - 0.5f);
 
     // Bench
     GridPoint2 middlePos = new GridPoint2(5,4);

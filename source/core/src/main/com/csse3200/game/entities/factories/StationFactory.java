@@ -217,7 +217,6 @@ public class StationFactory {
    */
   public static Entity createSubmissionWindow() {
     Entity submission = new Entity()
-            .addComponent(new TextureRenderComponent("images/stations/servery.png"))
             .addComponent(new PhysicsComponent())
             .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
             .addComponent(new InteractionComponent(PhysicsLayer.INTERACTABLE))
@@ -226,9 +225,14 @@ public class StationFactory {
             .addComponent(new StationServingComponent());
     submission.getComponent(InteractionComponent.class).setAsBox(submission.getScale());
     submission.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
-    submission.getComponent(TextureRenderComponent.class).scaleEntity();
-    submission.scaleHeight(2f);
     PhysicsUtils.setScaledCollider(submission, 0.3f, 0.2f);
+
+    AnimationRenderComponent animator =
+            new AnimationRenderComponent(
+                    ServiceLocator.getResourceService().getAsset("images/stations/Servery_Animation/servery.atlas", TextureAtlas.class));
+    animator.addAnimation("servery_idle", 0.1f, Animation.PlayMode.LOOP);
+
+    submission.addComponent(animator);
 
     // Add station reference
     PhysicsComponent physicsComponent = submission.getComponent(PhysicsComponent.class);
@@ -268,9 +272,7 @@ public class StationFactory {
     AnimationRenderComponent animator =
             new AnimationRenderComponent(
                     ServiceLocator.getResourceService().getAsset("images/fireExtinguisher/atlas/flame.atlas", TextureAtlas.class));
-    System.out.println("Adding flame animation");
     animator.addAnimation("flame", 0.1f, Animation.PlayMode.LOOP);
-    System.out.println("Done adding flame animation");
 
     flame.addComponent(animator);
 

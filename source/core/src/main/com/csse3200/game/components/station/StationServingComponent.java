@@ -5,6 +5,7 @@ import com.csse3200.game.components.items.ItemComponent;
 import com.csse3200.game.components.ordersystem.OrderActions;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.components.player.InventoryDisplay;
+import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,6 +31,7 @@ public class StationServingComponent extends Component {
     protected StationItemHandlerComponent itemHandler;
     private static final Logger logger = LoggerFactory.getLogger(StationServingComponent.class);
     private OrderActions orderActions;
+    AnimationRenderComponent animator;
 
     /**
      * On creation a listener for Submit Meal will be added to the station.
@@ -39,6 +41,8 @@ public class StationServingComponent extends Component {
         entity.getEvents().addListener("Station Interaction", this::handleInteraction);
         //orderActions = entity.getComponent(OrderActions.class);
         orderActions = ServiceLocator.getOrderActions(); // ? doesn't seem to work...
+        animator = this.entity.getComponent(AnimationRenderComponent.class);
+        animator.startAnimation("servery_idle");
     }
 
     /**
