@@ -15,14 +15,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * A ui component for displaying the Main menu.
+ * An ui component for displaying the Main menu.
  */
 public class MainMenuDisplay extends UIComponent {
   private static final Logger logger = LoggerFactory.getLogger(MainMenuDisplay.class);
   private static final float Z_INDEX = 2f;
   private Table table;
-  private Table table2;
-  private float scale_of_button = 1.75f;
+  private Table logo;
+  private float scale_of_button = 1.5f;
 
   @Override
   public void create() {
@@ -30,9 +30,12 @@ public class MainMenuDisplay extends UIComponent {
     addActors();
   }
 
+  /**
+   * Adds the main title screen elements and buttons.
+   * */
   private void addActors() {
-    table2 = new Table();
-    table2.setFillParent(true);
+    logo = new Table();
+    logo.setFillParent(true);
     table = new Table();
     table.setFillParent(true);
     Image title =
@@ -44,6 +47,14 @@ public class MainMenuDisplay extends UIComponent {
     ImageTextButton loadBtn = new ImageTextButton("Load", skin);
     ImageTextButton settingsBtn = new ImageTextButton("Settings", skin);
     ImageTextButton exitBtn = new ImageTextButton("Exit", skin);
+    startBtn.setTransform(true);
+    startBtn.setScale(scale_of_button);
+    loadBtn.setTransform(true);
+    loadBtn.setScale(scale_of_button);
+    settingsBtn.setTransform(true);
+    settingsBtn.setScale(scale_of_button);
+    exitBtn.setTransform(true);
+    exitBtn.setScale(scale_of_button);
 
       // Triggers an event when the button is pressed
     startBtn.addListener(
@@ -82,14 +93,16 @@ public class MainMenuDisplay extends UIComponent {
           }
         });
 
-    table2.add(title).pad(0,0,250,0);
-    table.add(startBtn).pad(600, 10, 0, 0).size(180,100);
-    table.add(loadBtn).pad(600, 10, 0, 0).size(180,100);
-    table.add(settingsBtn).pad(600, 10, 0, 0).size(180,100);
-    table.add(exitBtn).pad(600, 10, 0, 0).size(180,100);
+    // Add logo and buttons
+    logo.add(title).pad(0,0,250,0);
+    table.add(startBtn).pad(600, 0, 0, 0).height(60);
+    table.add(loadBtn).pad(600, 95, 0, 0).height(60);
+    table.add(settingsBtn).pad(600, 90, 0, 0).height(60);
+    table.add(exitBtn).pad(600, 120, 0, 0).height(60);
     table.center();
 
-    stage.addActor(table2);
+    // Render logo and buttons
+    stage.addActor(logo);
     stage.addActor(table);
   }
 
