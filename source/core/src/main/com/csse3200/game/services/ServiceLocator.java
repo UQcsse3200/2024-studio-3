@@ -87,9 +87,6 @@ public class ServiceLocator {
 
   }
 
-
-
-
   public static void registerEntityService(EntityService service) {
     entityService = service;
   }

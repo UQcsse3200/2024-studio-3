@@ -19,11 +19,7 @@ import com.csse3200.game.physics.PhysicsEngine;
 import com.csse3200.game.physics.PhysicsService;
 import com.csse3200.game.rendering.RenderService;
 import com.csse3200.game.rendering.Renderer;
-import com.csse3200.game.services.DocketService;
-import com.csse3200.game.services.GameTime;
-import com.csse3200.game.services.ResourceService;
-import com.csse3200.game.services.TutorialService;
-import com.csse3200.game.services.ServiceLocator;
+import com.csse3200.game.services.*;
 import com.csse3200.game.ui.terminal.Terminal;
 import com.csse3200.game.ui.terminal.TerminalDisplay;
 import com.csse3200.game.components.maingame.EndDayDisplay;
@@ -68,6 +64,8 @@ public class TutorialScreen extends ScreenAdapter {
 
         ServiceLocator.registerInputService(new InputService());
         ServiceLocator.registerResourceService(new ResourceService());
+        ServiceLocator.registerLevelService(new LevelService());
+        ServiceLocator.registerPlayerService(new PlayerService());
 
         ServiceLocator.registerEntityService(new EntityService());
         ServiceLocator.registerRenderService(new RenderService());
@@ -161,7 +159,6 @@ public class TutorialScreen extends ScreenAdapter {
                 .addComponent(new Terminal())
                 .addComponent(inputComponent)
                 .addComponent(new TerminalDisplay())
-                // order system
                 .addComponent(new DocketLineDisplay())
                 .addComponent(new OrderActions(this.game))
                 .addComponent(new MainGameOrderBtnDisplay())
