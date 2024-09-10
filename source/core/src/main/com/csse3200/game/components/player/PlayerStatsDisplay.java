@@ -10,6 +10,8 @@ import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
 
+
+
 import javax.swing.*;
 
 /**
@@ -21,6 +23,8 @@ public class PlayerStatsDisplay extends UIComponent {
   private Image goldImage;
   private Label healthLabel;
   private static Label goldLabel;
+  private static Label dayLabel;
+  private static int currentday;
 
   /**
    * Creates reusable ui styles and adds actors to the stage.
@@ -31,6 +35,8 @@ public class PlayerStatsDisplay extends UIComponent {
     addActors();
 
     entity.getEvents().addListener("updateHealth", this::updatePlayerHealthUI);
+    ServiceLocator.getDayNightService().getEvents().addListener("newday", () -> {
+            updateDay();});
   }
 
   /**
@@ -57,13 +63,19 @@ public class PlayerStatsDisplay extends UIComponent {
     table.row();
 
      goldImage = new Image(ServiceLocator.getResourceService().getAsset("images/money.png", Texture.class));
-//     int gold = entity.getComponent(InventoryComponent.class).getGold(); // InventoryComponent doesn't have a getGold() function.
-//     CharSequence goldText = String.format("Cash: %d", gold);
-//     goldLabel = new Label(goldText, skin, "large");
+    // int gold = entity.getComponent(InventoryComponent.class).getGold(); // InventoryComponent doesn't have a getGold() function.
+    // CharSequence goldText = String.format("Cash: %d", gold);
+    // goldLabel = new Label(goldText, skin, "large");
      goldLabel = new Label("gold", skin, "large");
 
      table.add(goldImage).size(heartSideLength).pad(5);
      table.add(goldLabel);
+     table.row();
+
+    //Label for the Current Day
+    CharSequence dayText = String.format("Day: %d", currentday); // Start with Day 1
+    dayLabel = new Label(dayText, skin, "large");
+    table.add(dayLabel);
     stage.addActor(table);
   }
 
@@ -85,6 +97,15 @@ public class PlayerStatsDisplay extends UIComponent {
     CharSequence text = String.format("Gold: %d", gold);
     goldLabel.setText(text);
   }
+
+  //used to update the day 
+  public static void updateDay() {
+    currentday++; 
+    CharSequence dayText = String.format("Day: %d", currentday);
+    dayLabel.setText(dayText);
+  }
+
+
 
   @Override
   public void dispose() {
