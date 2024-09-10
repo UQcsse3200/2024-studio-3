@@ -6,7 +6,9 @@ import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.ai.tasks.AITaskComponent;
 import com.csse3200.game.areas.ForestGameArea;
 import com.csse3200.game.components.CombatStatsComponent;
+import com.csse3200.game.components.CustomerBehaviorComponent;
 import com.csse3200.game.components.npc.CustomerComponent;
+import com.csse3200.game.components.ordersystem.OrderManager;
 import com.csse3200.game.components.npc.GhostAnimationController;
 import com.csse3200.game.components.npc.SpecialNPCAnimationController;
 import com.csse3200.game.components.TouchAttackComponent;
@@ -24,14 +26,19 @@ import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.physics.components.PhysicsMovementComponent;
 import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 
 /**
  * Factory to create non-playable character (NPC) entities with predefined components.
  */
 public class NPCFactory {
+
     private static final NPCConfigs configs =
             FileLoader.readClass(NPCConfigs.class, "configs/NPCs.json");
 
+    private static final Logger logger = LoggerFactory.getLogger(NPCFactory.class);
     /**
      * Creates a ghost entity.
      *
@@ -101,6 +108,9 @@ public class NPCFactory {
             default -> configs.Default;
         };
 
+        // Ensure CustomerComponent is added
+        customer.addComponent(new CustomerComponent(config));
+
         AnimationRenderComponent animator =
                 new AnimationRenderComponent(
                         ServiceLocator.getResourceService()
@@ -113,9 +123,20 @@ public class NPCFactory {
 
         customer.getComponent(AnimationRenderComponent.class).scaleEntity();
 
+        // Set the recipe preference in CustomerComponent
+        CustomerComponent customerComponent = customer.getComponent(CustomerComponent.class);
+        if (customerComponent != null) {
+            customerComponent.setPreference(config.preference); // Assuming this sets the preference
+        } else {
+            logger.error("CustomerComponent is not added to the customer entity.");
+        }
+
         // Set the countdown in the PathFollowTask
         AITaskComponent aiComponent = customer.getComponent(AITaskComponent.class);
         aiComponent.addTask(new PathFollowTask(targetPosition, config.countDown));
+
+        // Display the order for the customer
+        OrderManager.displayOrder(customer);
 
         return customer;
     }
@@ -128,6 +149,9 @@ public class NPCFactory {
             case "Basic Sheep" -> configs.Basic_Sheep;
             default -> configs.Default;
         };
+
+        // Ensure CustomerComponent is added
+        customer.addComponent(new CustomerComponent(config));
 
         AnimationRenderComponent animator =
                 new AnimationRenderComponent(
@@ -142,17 +166,31 @@ public class NPCFactory {
 
         customer.getComponent(AnimationRenderComponent.class).scaleEntity();
 
+        // Set the recipe preference in CustomerComponent
+        CustomerComponent customerComponent = customer.getComponent(CustomerComponent.class);
+        if (customerComponent != null) {
+            customerComponent.setPreference(config.preference); // Assuming this sets the preference
+        } else {
+            logger.error("CustomerComponent is not added to the customer entity.");
+        }
+
         // Set the countdown in the PathFollowTask
         AITaskComponent aiComponent = customer.getComponent(AITaskComponent.class);
         aiComponent.addTask(new PathFollowTask(targetPosition, config.countDown));
 
+        // Display the order for the customer
+        OrderManager.displayOrder(customer);
+
         return customer;
     }
 
+
+
+
+
     public static Entity createBaseCustomer(Vector2 targetPosition) {
         AITaskComponent aiComponent =
-                new AITaskComponent()
-                        .addTask(new PathFollowTask(targetPosition, 30)); // Default countdown
+                new AITaskComponent();
         Entity npc =
                 new Entity()
                         .addComponent(new PhysicsComponent())
@@ -160,6 +198,7 @@ public class NPCFactory {
                         .addComponent(new ColliderComponent())
                         .addComponent(new HitboxComponent().setLayer(PhysicsLayer.NPC))
                         .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 1.5f))
+                        .addComponent(new CustomerBehaviorComponent())
                         .addComponent(aiComponent);
         PhysicsUtils.setScaledCollider(npc, 0.9f, 0.4f);
         return npc;

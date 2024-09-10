@@ -1,5 +1,7 @@
 package com.csse3200.game.entities.configs;
 
+import java.util.List;
+
 public class BaseCustomerConfig {
     private static final int MAX = 999999;
     private static final int MIN = 100000;
@@ -10,7 +12,8 @@ public class BaseCustomerConfig {
     public int patience = 100; // in seconds
 
     public String texture;
-    public String preference; //change to list of recipe or ingredients
+    public List<String> preferences; // Updated to list of recipes or ingredients
 
     public int Customer_id = (int)(Math.random() * RANGE) + MIN;
+    public String preference;
 }

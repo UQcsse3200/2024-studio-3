@@ -73,7 +73,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
     }
 
         if (keycode == Keys.L) {
-            entity.getEvents().trigger("leaveEarly");
+            ServiceLocator.getPlayerService().getEvents().trigger("leaveEarly");
             return true;
         }
 

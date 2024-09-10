@@ -6,7 +6,8 @@ import com.csse3200.game.components.npc.PersonalCustomerEnums;
 import com.badlogic.gdx.utils.Null;
 import com.csse3200.game.components.cutscenes.GoodEnd;
 import com.csse3200.game.components.maingame.TextDisplay;
-
+import java.util.HashSet;
+import java.util.Set;
 import com.csse3200.game.entities.benches.Bench;
 import com.csse3200.game.entities.configs.PlayerConfig;
 import com.csse3200.game.screens.MoralDecisionDisplay;
@@ -18,6 +19,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.areas.terrain.TerrainFactory.TerrainType;
 import com.csse3200.game.components.gamearea.GameAreaDisplay;
+import com.csse3200.game.components.ordersystem.OrderManager;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.factories.NPCFactory;
 import com.csse3200.game.components.maingame.TextDisplay;
@@ -39,6 +41,7 @@ import java.util.List;
 /** Forest area for the demo game with trees, a player, and some enemies. */
 public class ForestGameArea extends GameArea {
   private static final Logger logger = LoggerFactory.getLogger(ForestGameArea.class);
+  private List<String> currentlySpawningAnimals = new ArrayList<>();
   private static final int NUM_TREES = 7;
   private static final int NUM_GHOSTS = 2;
   private static final int NUM_CUSTOMERS_BASE = 1;
@@ -631,21 +634,35 @@ public class ForestGameArea extends GameArea {
     return spawnController;
   }
 
-  private void spawnCustomer(String name) {
+    private void spawnCustomer(String name) {
         GridPoint2 position = new GridPoint2(1, 5);
         Vector2 targetPos = new Vector2(3, 5);
         Entity customer = NPCFactory.createCustomerPersonal(name, targetPos);
         spawnEntityAt(customer, position, true, true);
-  }
 
-  private void spawnBasicCustomer(String name) {
-    GridPoint2 position = new GridPoint2(1, 5);
-    Vector2 targetPos = new Vector2(3, 5);
-    Entity customer = NPCFactory.createBasicCustomer(name, targetPos);
-    spawnEntityAt(customer, position, true, true);
-  }
+        // Add to the list of currently spawning animals
+        currentlySpawningAnimals.add(name);
 
-  private void spawnHank() {
+        // Display the order based on customer preference
+        OrderManager.displayOrder(customer);
+    }
+
+    private void spawnBasicCustomer(String name) {
+        GridPoint2 position = new GridPoint2(1, 5);
+        Vector2 targetPos = new Vector2(3, 5);
+        Entity customer = NPCFactory.createBasicCustomer(name, targetPos);
+        spawnEntityAt(customer, position, true, true);
+
+        // Add to the list of currently spawning animals
+        currentlySpawningAnimals.add(name);
+
+        // Display the order based on customer preference
+        OrderManager.displayOrder(customer);
+    }
+
+
+
+    private void spawnHank() {
     spawnCustomer("Hank");
   }
   private void spawnLewis() {

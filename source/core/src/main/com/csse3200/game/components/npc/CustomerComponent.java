@@ -3,115 +3,69 @@ package com.csse3200.game.components.npc;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.entities.configs.BaseCustomerConfig;
 import com.csse3200.game.entities.configs.CustomerPersonalityConfig;
-import com.csse3200.game.components.tasks.PathFollowTask;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import com.badlogic.gdx.math.Vector2;
-import com.csse3200.game.ai.tasks.TaskRunner;
-import com.csse3200.game.entities.Entity;
 
-/**
- * CustomerComponent controls the behavior and state of a customer entity,
- * including countdown logic, position updates, and recipe preference display.
- */
-public class CustomerComponent extends Component implements TaskRunner {
+public class CustomerComponent extends Component {
     private static final Logger logger = LoggerFactory.getLogger(CustomerComponent.class);
 
     private int countDown;
+    private int reputation;
     private int patience;
-    private String preference;  // Recipe preference of the customer
+    private int spawnTimer;
+    private int Customer_id;
+    private String type;
     private String name;
+    private String preference;
 
-    private CountdownManager countdownManager;
-    private Vector2 targetPosition = new Vector2(); // Current target position for movement
-    private PathFollowTask pathFollowTask; // Task for path following
-
-    /**
-     * Constructor for customers using the BaseCustomerConfig.
-     *
-     * @param config Configuration for basic customers.
-     */
     public CustomerComponent(BaseCustomerConfig config) {
+        this.type = config.type;
         this.patience = config.patience;
         this.countDown = config.countDown;
-        this.preference = config.preference;  // Fetch the recipe preference
-        this.countdownManager = new CountdownManager(this.countDown);
     }
 
-    /**
-     * Constructor for customers using the CustomerPersonalityConfig.
-     *
-     * @param config Configuration for personality-based customers.
-     */
     public CustomerComponent(CustomerPersonalityConfig config) {
+        this.name = config.name;
+        this.type = config.type;
         this.patience = config.patience;
         this.countDown = config.countDown;
+        this.reputation = config.reputation;
         this.preference = config.preference;
-        this.name = config.name;
-        this.countdownManager = new CountdownManager(this.countDown);
+        this.Customer_id = config.Customer_id;
     }
 
-    @Override
-    public void create() {
-        super.create();
-        countdownManager.start();
-        initializePathFollowTask();
-
-        // Display the customer's preference (recipe) when created
-        displayRecipePreference();
-    }
-
-    @Override
-    public void update() {
-        super.update();
-        countdownManager.update();
-
-        if (countdownManager.isCountdownComplete()) {
-            handleCountdownComplete();
-            countdownManager.reset(); // Reset or adjust countdown if necessary
+    public void setReputation(int reputation) {
+        if (this.reputation < 0) {
+            logger.error("Reputation cannot be set for general customers");
+        } else if (reputation > 100 || reputation < 0) {
+            logger.error("Reputation needs to be between 0 and 100");
+        } else {
+            this.reputation = reputation;
         }
     }
 
-    /**
-     * Displays the recipe preference of the customer.
-     */
-    private void displayRecipePreference() {
-        logger.info("Customer {} has a recipe preference for: {}", name, preference);
-        // Here you can add additional logic to show the recipe in the game's UI
-        // Example: displayRecipeOnTicket(preference);
+    public int getReputation() {
+        return this.reputation;
     }
 
-    private void initializePathFollowTask() {
-        // Initialize path follow task with the initial target position
-        pathFollowTask = new PathFollowTask(targetPosition, 5f); // Example waitTime
-        pathFollowTask.create(this);
+    public void setPatience(int patience) {
+        this.patience = patience;
     }
 
-    private void handleCountdownComplete() {
-        logger.info("Countdown complete for {}! Moving the customer to a new position.", name);
-
-        // Determine and set the new target position
-        Vector2 newPosition = determineNewPosition(); // Implement this method as needed
-        setTargetPosition(newPosition);
-
-        // Initialize and start the PathFollowTask with the new target position
-        if (pathFollowTask != null) {
-            pathFollowTask.stop();
-        }
-        pathFollowTask = new PathFollowTask(targetPosition, 5f); // Example waitTime
-        pathFollowTask.create(this);
-        pathFollowTask.start();
+    public int getPatience() {
+        return this.patience;
     }
 
-    private Vector2 determineNewPosition() {
-        // Implement logic to determine the new target position for the customer
-        // Example placeholder implementation:
-        return new Vector2(10f, 10f); // Replace with actual logic
+    public void setSpawnTimer(int spawnTimer) {
+        this.spawnTimer = spawnTimer;
+    }
+
+    public int getSpawnTimer() {
+        return this.spawnTimer;
     }
 
     public void setCountDown(int countDown) {
         this.countDown = countDown;
-        countdownManager.setCountDown(countDown);
     }
 
     public int getCountDown() {
@@ -126,16 +80,15 @@ public class CustomerComponent extends Component implements TaskRunner {
         return this.name;
     }
 
+    public void setPreference(String preference) {
+        this.preference = preference;
+    }
+
     public String getPreference() {
         return this.preference;
     }
 
-    public void setTargetPosition(Vector2 newPosition) {
-        this.targetPosition.set(newPosition);
-    }
-
-    @Override
-    public Entity getEntity() {
-        return super.getEntity(); // Ensure this correctly returns the entity associated with this component
+    public int getCustomer_id() {
+        return this.Customer_id;
     }
 }
