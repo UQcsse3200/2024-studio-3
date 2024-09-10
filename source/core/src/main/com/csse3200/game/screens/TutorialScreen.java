@@ -7,6 +7,7 @@ import com.csse3200.game.GdxGame;
 import com.csse3200.game.areas.ForestGameArea;
 import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.components.maingame.MainGameActions;
+import com.csse3200.game.components.maingame.TextDisplay;
 import com.csse3200.game.components.ordersystem.MainGameOrderBtnDisplay;
 import com.csse3200.game.components.ordersystem.OrderActions;
 import com.csse3200.game.entities.Entity;
@@ -26,6 +27,7 @@ import com.csse3200.game.components.maingame.EndDayDisplay;
 import com.csse3200.game.components.maingame.MainGameExitDisplay;
 import com.csse3200.game.components.gamearea.PerformanceDisplay;
 import com.csse3200.game.components.tutorial.TutorialScreenDisplay;
+import com.csse3200.game.components.tutorial.TutorialTextDisplay;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.csse3200.game.components.ordersystem.DocketLineDisplay;
@@ -42,18 +44,26 @@ public class TutorialScreen extends ScreenAdapter {
             "images/heart.png",
             "images/ordersystem/docket_background.png",
             "images/ordersystem/pin_line.png",
-            "images/bird.png"
+            "images/bird.png",
+            "images/textbox.png"
     };
-    // Modified the camera position to fix layout
+
     private static final Vector2 CAMERA_POSITION = new Vector2(7.5f, 6.0f);
 
     private final GdxGame game;
     private final Renderer renderer;
     private final PhysicsEngine physicsEngine;
     private boolean isPaused = false;
+    private ResourceService resourceService;
 
     public TutorialScreen(GdxGame game) {
         this.game = game;
+
+        // Register ResourceService before calling loadAssets
+        ServiceLocator.registerResourceService(new ResourceService());
+        this.resourceService = ServiceLocator.getResourceService(); // Now it's initialized
+
+        loadAssets(); // You can now load the assets safely
 
         logger.debug("Initialising tutorial screen services");
         ServiceLocator.registerTimeSource(new GameTime());
@@ -63,7 +73,6 @@ public class TutorialScreen extends ScreenAdapter {
         physicsEngine = physicsService.getPhysics();
 
         ServiceLocator.registerInputService(new InputService());
-        ServiceLocator.registerResourceService(new ResourceService());
         ServiceLocator.registerLevelService(new LevelService());
         ServiceLocator.registerPlayerService(new PlayerService());
 
@@ -76,15 +85,13 @@ public class TutorialScreen extends ScreenAdapter {
         renderer.getCamera().getEntity().setPosition(CAMERA_POSITION);
         renderer.getDebug().renderPhysicsWorld(physicsEngine.getWorld());
 
-        loadAssets();
-        createUI();
+        createUI();  // Create the UI after loading the assets
 
         logger.debug("Initialising tutorial screen entities");
         TerrainFactory terrainFactory = new TerrainFactory(renderer.getCamera());
         ForestGameArea forestGameArea = new ForestGameArea(terrainFactory);
         forestGameArea.create();
     }
-
 
     @Override
     public void render(float delta) {
@@ -129,30 +136,27 @@ public class TutorialScreen extends ScreenAdapter {
 
     private void loadAssets() {
         logger.debug("Loading assets");
-        ResourceService resourceService = ServiceLocator.getResourceService();
+
         resourceService.loadTextures(mainGameTextures);
-        ServiceLocator.getResourceService().loadAll();
+        resourceService.loadAll();
     }
 
     private void unloadAssets() {
         logger.debug("Unloading assets");
-        ResourceService resourceService = ServiceLocator.getResourceService();
         resourceService.unloadAssets(mainGameTextures);
     }
 
     /**
-     * Creates the main game's ui including components for rendering ui elements to the screen and
-     * capturing and handling ui input.
+     * Creates the main game's UI, including components for rendering UI elements to the screen and
+     * capturing and handling UI input.
      */
     private void createUI() {
-        logger.debug("Creating ui");
+        logger.debug("Creating UI");
         Stage stage = ServiceLocator.getRenderService().getStage();
-        InputComponent inputComponent =
-                ServiceLocator.getInputService().getInputFactory().createForTerminal();
+        InputComponent inputComponent = ServiceLocator.getInputService().getInputFactory().createForTerminal();
 
         Entity ui = new Entity();
         ui.addComponent(new InputDecorator(stage, 10))
-
                 .addComponent(new PerformanceDisplay())
                 .addComponent(new MainGameActions(this.game))
                 .addComponent(new MainGameExitDisplay())
@@ -162,7 +166,9 @@ public class TutorialScreen extends ScreenAdapter {
                 .addComponent(new DocketLineDisplay())
                 .addComponent(new OrderActions(this.game))
                 .addComponent(new MainGameOrderBtnDisplay())
-                .addComponent(new TutorialScreenDisplay(this.game));
+                .addComponent(new TutorialScreenDisplay(this.game))
+                .addComponent(new TutorialTextDisplay(this));
+
         ServiceLocator.getEntityService().register(ui);
     }
 }

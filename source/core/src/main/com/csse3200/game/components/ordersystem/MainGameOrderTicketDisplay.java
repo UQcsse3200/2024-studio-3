@@ -193,17 +193,44 @@ public class MainGameOrderTicketDisplay extends UIComponent {
      * @param i  the index of the docket.
      */
     public void stageDispose(Docket docket, Table table, int i) {
-        table.setBackground((Drawable) null);
-        table.clear();
-        table.remove();
+//        table.setBackground((Drawable) null);
+//        table.clear();
+//        table.remove();
+//        ServiceLocator.getDocketService().getEvents().trigger("removeOrder", i);
+//        docket.dispose();
+//        tableArrayList.remove(i);
+//        backgroundArrayList.remove(i);
+//        startTimeArrayList.remove(i);
+//        countdownLabelArrayList.remove(i);
+//        recipeTimeArrayList.remove(i);
+//        inventoryComponent.addGold(getRecipeValue());
+
+        if (table != null) {
+            table.setBackground((Drawable) null);
+            table.clear(); // Null check before calling clear
+            table.remove();
+        } else {
+            logger.error("Table is null in stageDispose.");
+        }
+
+        if (docket != null) {
+            docket.dispose();
+        } else {
+            logger.error("Docket is null in stageDispose.");
+        }
+
         ServiceLocator.getDocketService().getEvents().trigger("removeOrder", i);
-        docket.dispose();
-        tableArrayList.remove(i);
-        backgroundArrayList.remove(i);
-        startTimeArrayList.remove(i);
-        countdownLabelArrayList.remove(i);
-        recipeTimeArrayList.remove(i);
-        inventoryComponent.addGold(getRecipeValue());
+
+        // Remove from respective lists
+        if (i < tableArrayList.size()) tableArrayList.remove(i);
+        if (i < backgroundArrayList.size()) backgroundArrayList.remove(i);
+        if (i < startTimeArrayList.size()) startTimeArrayList.remove(i);
+        if (i < countdownLabelArrayList.size()) countdownLabelArrayList.remove(i);
+        if (i < recipeTimeArrayList.size()) recipeTimeArrayList.remove(i);
+
+        if (inventoryComponent != null) {
+            inventoryComponent.addGold(getRecipeValue());
+        }
     }
 
     /**
@@ -428,8 +455,12 @@ public class MainGameOrderTicketDisplay extends UIComponent {
     public void dispose() {
         // Cleanup resources
         for (Table table : tableArrayList) {
-            table.clear();
-            table.remove();
+            if (table != null) { // Null check
+                table.clear();
+                table.remove();
+            } else {
+                logger.error("Table is null in dispose method.");
+            }
         }
         tableArrayList.clear();
         startTimeArrayList.clear();

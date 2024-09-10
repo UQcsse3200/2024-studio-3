@@ -12,25 +12,22 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
+import com.csse3200.game.components.tutorial.TutorialTextDisplay;
 
 /**
- * Displays tutorial-related UI components and manages tutorial flow.
+ * Displays tutorial-related UI components and manages tutorial flow using textDisplay.
  */
 public class TutorialScreenDisplay extends UIComponent {
     private static final Logger logger = LoggerFactory.getLogger(TutorialScreenDisplay.class);
     private final GdxGame game;
-    private Label tutorialLabel;
-    private Image tutorialBox;
     private Skin skin;
     private int tutorialStep = 0;
     private MainGameOrderTicketDisplay orderTicketDisplay;
     private MainGameOrderBtnDisplay orderBtnDisplay;
-    private Image movementImage;
-    private Image pickupImage;
     private boolean createOrderPressed = false;
     private boolean docketsShifted = false;
-    Table table = new Table();
+    private Table table;
+    private TutorialTextDisplay textDisplay;
 
     public TutorialScreenDisplay(GdxGame game) {
         this.game = game;
@@ -41,54 +38,39 @@ public class TutorialScreenDisplay extends UIComponent {
     @Override
     public void create() {
         super.create();
+
+        if (table == null) {
+            table = new Table();  // Ensure table is initialized
+        }
+
+
         setupUI();
-        advanceTutorialStep();
+
+        // Initialize the textDisplay before using it, but don't manually call create()
+        textDisplay = new TutorialTextDisplay();
+        textDisplay.setVisible(false);  // Initially hidden
+        stage.addActor(textDisplay.getTable());  // Add it to the stage
+
+        advanceTutorialStep();  // Ensure textDisplay is initialized before calling this method
 
         entity.getEvents().addListener("createOrder", this::onCreateOrderPressed);
         ServiceLocator.getInputService().getEvents().addListener("createOrder", this::onCreateOrderPressed);
 
-
-//
+        stage.addActor(table);
     }
 
+
     /**
-     * Sets up the tutorial UI components.
+     * Sets up the UI components (textDisplay only).
      */
     private void setupUI() {
-        skin = new Skin(Gdx.files.internal("flat-earth/skin/flat-earth-ui.json"));
-
-        skin.add("tutorial_box", new Texture(Gdx.files.internal("images/tutorial/tutorial_box.png")));
-
-
-        tutorialBox = new Image(skin.getDrawable("tutorial_box"));
-        tutorialBox.setSize(300, 150);
-        float boxX = stage.getViewport().getWorldWidth() * 0.1f;
-        float boxY = stage.getViewport().getWorldHeight() * 0.75f;
-        tutorialBox.setPosition(boxX, boxY);
-
-        tutorialLabel = new Label("", skin);
-        tutorialLabel.setFontScale(1.2f);  // scale font size
-        tutorialLabel.setPosition(boxX + 20, boxY + 80);
-
-        stage.addActor(tutorialBox);
-        stage.addActor(tutorialLabel);
-        stage.addActor(table);
+        // Only using textDisplay for now, so no need for tutorialBox
     }
 
     /**
      * Proceeds to the next tutorial step using a switch-case.
      */
     public void advanceTutorialStep() {
-
-        if (movementImage != null) {
-            movementImage.remove();
-            movementImage = null;
-        }
-        if (pickupImage != null) {
-            pickupImage.remove();
-            pickupImage = null;
-        }
-
         tutorialStep++;
         switch (tutorialStep) {
             case 1:
@@ -110,45 +92,38 @@ public class TutorialScreenDisplay extends UIComponent {
 
     /**
      * Displays the movement tutorial. The player needs to use W/A/S/D to move.
+     * This now only uses textDisplay to show the instructions.
      */
     private void showMovementTutorial() {
-        // Load and display the movement image
-        if (movementImage == null) {
-            skin.add("movement_image", new Texture(Gdx.files.internal("images/tutorial/MOMENT TUT.jpg")));
-            movementImage = new Image(skin.getDrawable("movement_image"));
-            movementImage.setSize(1100, 800);
-            float imageX = stage.getViewport().getWorldWidth() * 0f; // Center image
-            float imageY = stage.getViewport().getWorldHeight() * 0.15f;
-            movementImage.setPosition(imageX, imageY);
-            stage.addActor(movementImage);
-        }
+        // Set tutorial text using textDisplay
+        textDisplay.setVisible(true);
+        textDisplay.setText("Use W/A/S/D to move around.");
+
     }
 
     /**
      * Displays the item pickup tutorial. The player needs to press E to pick up an item.
+     * This now only uses textDisplay to show the instructions.
      */
     private void showItemPickupTutorial() {
+        // Set tutorial text using textDisplay
+        textDisplay.setVisible(true);
+        textDisplay.setText("Press E to pick up items.");
 
-        if (pickupImage == null) {
-            skin.add("pickup_image", new Texture(Gdx.files.internal("images/tutorial/PICKUP TUT.jpg")));
-            pickupImage = new Image(skin.getDrawable("pickup_image"));
-            pickupImage.setSize(1100, 800);  // Adjust size as necessary
-            float imageX = stage.getViewport().getWorldWidth() * 0f;  // Adjust position as necessary
-            float imageY = stage.getViewport().getWorldHeight() * 0.15f;
-            pickupImage.setPosition(imageX, imageY);
-            stage.addActor(pickupImage);
-        }
     }
 
     /**
-     * Displays the docket switching tutorial. The player needs to use [ and ] to switch dockets.
+     * Displays the ordering tutorial. The player needs to use [ and ] to switch dockets.
      */
     private void showOrderingTutorial() {
-        tutorialLabel.setText("To begin, press the 'Create Order' button."); // Wait for button press
+        // Set tutorial text using textDisplay
+        textDisplay.setVisible(true);
+        textDisplay.setText("To begin, press the 'Create Order' button.");
+
 
         // Wait for the button press (handled by onCreateOrderPressed)
         if (createOrderPressed) {
-            tutorialLabel.setText("Now use [ and ] keys to switch dockets.");
+            textDisplay.setText("Now use [ and ] keys to switch dockets.");
 
             // Check if the user presses [ or ]
             if (Gdx.input.isKeyJustPressed(Input.Keys.LEFT_BRACKET) || Gdx.input.isKeyJustPressed(Input.Keys.RIGHT_BRACKET)) {
@@ -163,46 +138,30 @@ public class TutorialScreenDisplay extends UIComponent {
 
     /**
      * Completes the tutorial and informs the player that they can continue.
+     * This now only uses textDisplay to show the completion message.
      */
     private void completeTutorial() {
-        tutorialLabel.setText("Tutorial Complete! Press ENTER to continue.");
-    }
-
-    /**
-     * Starts the main game after the tutorial is complete.
-     */
-    private void startGame() {
-        game.setScreen(GdxGame.ScreenType.MAIN_GAME);  // Transition to the main game
+        textDisplay.setText("Tutorial Complete! Press ENTER to continue.");
+        textDisplay.setVisible(true);
     }
 
     @Override
     public void update() {
-
         switch (tutorialStep) {
             case 1:
-
                 if (Gdx.input.isKeyJustPressed(Input.Keys.W) || Gdx.input.isKeyJustPressed(Input.Keys.A) ||
                         Gdx.input.isKeyJustPressed(Input.Keys.S) || Gdx.input.isKeyJustPressed(Input.Keys.D)) {
-                    movementImage.remove();
-                    movementImage = null;
                     advanceTutorialStep();
                 }
                 break;
-
             case 2:
-
                 if (Gdx.input.isKeyJustPressed(Input.Keys.E)) {
-
-                    pickupImage.remove();
-                    pickupImage = null;
                     advanceTutorialStep();
                 }
                 break;
-
             case 3:
-
                 if (createOrderPressed) {
-                    tutorialLabel.setText("Now use [ and ] keys to switch dockets.");
+                    textDisplay.setText("Now use [ and ] keys to switch dockets.");
 
                     // Check if the user presses [ or ]
                     if (Gdx.input.isKeyJustPressed(Input.Keys.LEFT_BRACKET) || Gdx.input.isKeyJustPressed(Input.Keys.RIGHT_BRACKET)) {
@@ -214,7 +173,6 @@ public class TutorialScreenDisplay extends UIComponent {
                     }
                 }
                 break;
-
             case 4:
                 if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
                     startGame();
@@ -225,16 +183,36 @@ public class TutorialScreenDisplay extends UIComponent {
 
     public void onCreateOrderPressed() {
         createOrderPressed = true;
-        tutorialLabel.setText("Now use [ and ] keys to switch dockets.");
+        textDisplay.setText("Now use [ and ] keys to switch dockets.");
+    }
+
+    /**
+     * Starts the main game after the tutorial is complete.
+     */
+    private void startGame() {
+        if (table != null) {
+            table.clear();  // Safely clear the table
+        }
+        game.setScreen(GdxGame.ScreenType.MAIN_GAME);  // Transition to the main game
     }
 
     @Override
     public void dispose() {
         super.dispose();
-        tutorialLabel.remove();
-        if (movementImage != null) movementImage.remove();
-        if (pickupImage != null) pickupImage.remove();
-        orderBtnDisplay.dispose(); // Dispose the order button
+
+
+        if (table != null) {
+            table.clear();
+        }
+
+        if (orderBtnDisplay != null) {
+            orderBtnDisplay.dispose();
+        }
+
+        if (textDisplay != null) {
+            textDisplay.setVisible(false);
+            textDisplay.getTable().clear();
+        }
     }
 
     public void draw(SpriteBatch batch) {
@@ -250,9 +228,3 @@ public class TutorialScreenDisplay extends UIComponent {
         this.stage = stage;
     }
 }
-
-
-
-
-
-
