@@ -49,7 +49,8 @@ public class MainGameScreen extends ScreenAdapter {
 			"images/bird.png",
 			"images/point.png",
 			"images/coin.png",
-			"images/textbox.png"
+			"images/textbox.png",
+			"images/inventory_ui/slot.png"
 	};
 	// Modified the camera position to fix layout
 	private static final Vector2 CAMERA_POSITION = new Vector2(7.5f, 6.0f);
@@ -72,6 +73,7 @@ public class MainGameScreen extends ScreenAdapter {
 		ServiceLocator.registerInputService(new InputService());
 		ServiceLocator.registerPlayerService(new PlayerService());
 		ServiceLocator.registerResourceService(new ResourceService());
+		ServiceLocator.registerOrderActions(new OrderActions(game)); // ?
 
 		ServiceLocator.registerEntityService(new EntityService());
 		ServiceLocator.registerRenderService(new RenderService());
