@@ -75,7 +75,12 @@ public class ForestGameArea extends GameArea {
     "images/tiles/blue_tile.png",
     "images/stations/oven.png",
     "images/stations/stove.png",
+          "images/stations/apple_tree.png",
+          "images/stations/bench_middle.png",
+          "images/stations/bench_legs.png",
+          "images/stations/bench_top.png",
     "images/stations/bench.png",
+    "images/stations/servery.png",
     "images/chef_player.png",
     "images/frame/top_border.png",
     "images/frame/left_border.png",
@@ -333,8 +338,43 @@ public class ForestGameArea extends GameArea {
     GridPoint2 stovePos = new GridPoint2(5,4);
     Entity stove = StationFactory.createStove();
     spawnEntityAt(stove, stovePos, false, false);
-    stove.setPosition(stove.getPosition().x + 2.7f , stove.getPosition().y + 0.9f);
+    stove.setPosition(stove.getPosition().x + 2.7f , stove.getPosition().y + 1.3f);
 
+    GridPoint2 appleTreePos = new GridPoint2( 5, 4);
+    Entity appleTree = StationFactory.createAppleTree();
+    spawnEntityAt(appleTree, appleTreePos, false, false);
+    appleTree.setPosition(appleTree.getPosition().x + 4.2f , appleTree.getPosition().y - 1.3f);
+
+    GridPoint2 serveryPos = new GridPoint2(3,0);
+    Entity servery = StationFactory.createSubmissionWindow();
+    spawnEntityAt(servery, serveryPos, false, false);
+    servery.setPosition(servery.getPosition().x, servery.getPosition().y + 1.3f);
+
+    // Bench
+    GridPoint2 middlePos = new GridPoint2(5,4);
+    Entity middle = StationFactory.createMainBenchTable();
+    spawnEntityAt(middle, middlePos, false, false);
+    middle.setPosition(middle.getPosition().x - 2.6f, middle.getPosition().y - 1.3f);
+
+    GridPoint2 topPos = new GridPoint2(5,4);
+    Entity top = StationFactory.createTopBenchTable();
+    spawnEntityAt(top, topPos, false, false);
+    top.setPosition(top.getPosition().x - 2.6f, top.getPosition().y);
+
+    GridPoint2 bottomPos = new GridPoint2(5,4);
+    Entity bottom = StationFactory.createFeetBenchTable();
+    spawnEntityAt(bottom, bottomPos, false, false);
+    bottom.setPosition(bottom.getPosition().x - 2.6f, bottom.getPosition().y - 2.6f);
+  }
+
+    /**
+     * spawn a bench
+     * @param type: bench filename
+     * @param x: x coordinate
+     * @param y: y coordinate
+     *         note: coordinates begin at bottom left of screen
+     */
+  private void spawnBench(String type, int x, int y) {
     //Spawn a flame, this is temporary and for testing purposes
     GridPoint2 flamePos = new GridPoint2(1,1);
     Entity flame = StationFactory.createFlame();
@@ -390,6 +430,19 @@ public class ForestGameArea extends GameArea {
    * Spawns benches around the restaurant
    */
   private void spawnBenches() {
+      List<Bench> benches = new ArrayList<Bench>();
+      benches.add(new Bench("bench3-5", 98, 224));
+      benches.add(new Bench("bench7", 98, 25));
+      benches.add(new Bench("bench2", 96, 72));
+      //benches.add(new Bench("bench6-bottom", 343,27));
+      //benches.add(new Bench("bench6-top", 343,131));
+      //benches.add(new Bench("bench4", 217, 160));
+      //benches.add(new Bench("bench1", 217, 26));
+
+      for (int i = 0; i < benches.size(); i++) {
+          Bench bench = benches.get(i);
+          spawnBench(bench.type, bench.x, bench.y);
+      }
     // Bottom bench row
     spawnSingleBench("left_border", 4, 1f);
     spawnBenchRow("middle", 5, 14, 1f);
