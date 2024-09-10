@@ -80,6 +80,9 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         entity.getEvents().addListener("createOrder", this::addActors);
         ServiceLocator.getDocketService().getEvents().addListener("shiftDocketsLeft", this::shiftDocketsLeft);
         ServiceLocator.getDocketService().getEvents().addListener("shiftDocketsRight", this::shiftDocketsRight);
+        //From team 2, i used your dispose method here when listening for a new day, so current dockets get removed
+        //when the end of day occurs
+        ServiceLocator.getDocketService().getEvents().addListener("Dispose", this::dispose);
     }
 
     /**
@@ -160,13 +163,13 @@ public class MainGameOrderTicketDisplay extends UIComponent {
             logger.warn("No dockets to shift left");
             return;
         }
-         Table firstTable = tableArrayList.remove(0);
-         tableArrayList.add(firstTable);
-         logger.info("First table moved to the end. New first table index: {}", tableArrayList.get(0));
+        Table firstTable = tableArrayList.remove(0);
+        tableArrayList.add(firstTable);
+        logger.info("First table moved to the end. New first table index: {}", tableArrayList.get(0));
 
-         Docket firstDocket = backgroundArrayList.remove(0);
-         backgroundArrayList.add(firstDocket);
-         logger.info("First docket background moved to the end. New first docket index: {}", backgroundArrayList.get(0));
+        Docket firstDocket = backgroundArrayList.remove(0);
+        backgroundArrayList.add(firstDocket);
+        logger.info("First docket background moved to the end. New first docket index: {}", backgroundArrayList.get(0));
 
         Long firstStartTime = startTimeArrayList.remove(0);
         startTimeArrayList.add(firstStartTime);
@@ -351,6 +354,8 @@ public class MainGameOrderTicketDisplay extends UIComponent {
     @Override
     public void dispose() {
         // Cleanup resources
+        //from team 2, i reset the ordernumb back to 0, for each new day when dispose is called
+        orderNumb = 0;
         for (Table table : tableArrayList) {
             table.clear();
             table.remove();

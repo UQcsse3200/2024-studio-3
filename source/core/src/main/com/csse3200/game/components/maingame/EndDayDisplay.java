@@ -34,7 +34,7 @@ public class EndDayDisplay extends UIComponent {
     private final MainGameScreen game;
     private Image dayEndImage;
     private static final Logger logger = LoggerFactory.getLogger(EndDayDisplay.class);
-    
+
 
     public EndDayDisplay(MainGameScreen game) {
         super();
@@ -66,13 +66,13 @@ public class EndDayDisplay extends UIComponent {
         layout.add(dayEndImage).center().padTop(10).row();
 
         initializeUI();
-        setupInputListener();
+        // setupInputListener();
 
         //from team 2, added the listener for when game day ends to toggle visibility
         ServiceLocator.getDayNightService().getEvents().addListener("endOfDay", () -> {
-            logger.info("it is listened");
+            logger.info("it is listened in end day");
             toggleVisibility();});
-        
+
     }
 
     private void initializeUI() {
@@ -106,19 +106,21 @@ public class EndDayDisplay extends UIComponent {
         });
         layout.add(closeBtn).padTop(20).row();
     }
+    //from team 2, i commeneted out this section so end of day is only activated
+    //by the endofday event listener, and exited when clicking the close button
 
-    private void setupInputListener() {
-        stage.addListener(new InputListener() {
-            @Override
-            public boolean keyDown(InputEvent event, int keycode) {
-                if (keycode == com.badlogic.gdx.Input.Keys.P) {
-                    toggleVisibility();
-                    return true;
-                }
-                return false;
-            }
-        });
-    }
+    // private void setupInputListener() {
+    //     stage.addListener(new InputListener() {
+    //         @Override
+    //         public boolean keyDown(InputEvent event, int keycode) {
+    //             if (keycode == com.badlogic.gdx.Input.Keys.P) {
+    //                 toggleVisibility();
+    //                 return true;
+    //             }
+    //             return false;
+    //         }
+    //     });
+    // }
 
     public void show() {
         isVisible = true;
@@ -135,6 +137,8 @@ public class EndDayDisplay extends UIComponent {
     public void toggleVisibility() {
         if (isVisible) {
             hide();
+            //From Team 2, when screen is exited, trigger listener for moral display to be shown
+            ServiceLocator.getDayNightService().getEvents().trigger("TOMORAL");
 
         } else {
             show();
