@@ -22,6 +22,7 @@ public class MainMenuDisplay extends UIComponent {
   private static final float Z_INDEX = 2f;
   private Table table;
   private Table table2;
+  private float scale_of_button = 1.75f;
 
   @Override
   public void create() {
