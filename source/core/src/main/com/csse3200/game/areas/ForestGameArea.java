@@ -1,6 +1,7 @@
 package com.csse3200.game.areas;
 
 
+import com.csse3200.game.components.maingame.CheckWinLoseComponent;
 import com.csse3200.game.components.npc.PersonalCustomerEnums;
 import com.badlogic.gdx.utils.Null;
 import com.csse3200.game.GdxGame;
@@ -138,6 +139,11 @@ public class ForestGameArea extends GameArea {
   private final TerrainFactory terrainFactory;
 
   private Entity player;
+  private CheckWinLoseComponent winLoseComponent;  // Reference to CheckWinLoseComponent
+
+  // Define the win/lose conditions
+  private int winAmount = 60;      // Example value for winning gold amount
+  private int loseThreshold = 50;   // Example value for losing threshold
 
   public enum personalCustomerEnums{
     HANK,
@@ -184,12 +190,26 @@ public class ForestGameArea extends GameArea {
     // Spawn the player
     player = spawnPlayer();
 
-    //ServiceLocator.getEntityService().getEvents().trigger("SetText", "Boss: Rent is due");
-    //triggerFiredEnd();    // Trigger the fired (bad) ending
-    //triggerRaiseEnd();    // Trigger the raise (good) ending
+    // Attach CheckWinLoseComponent to the player with the win/lose conditions
+    winLoseComponent = new CheckWinLoseComponent(winAmount, loseThreshold);
+    player.addComponent(winLoseComponent);  // Attach component to player entity
 
+    //ServiceLocator.getEntityService().getEvents().trigger("SetText", "Boss: Rent is due");
+
+    // Check and trigger win/lose state
+    checkEndOfDayGameState();
 
     playMusic();
+  }
+
+  private void checkEndOfDayGameState() {
+    String gameState = winLoseComponent.checkGameState();
+
+    if ("LOSE".equals(gameState)) {
+      triggerFiredEnd();  // Trigger the fired (bad) ending
+    } else if ("WIN".equals(gameState)) {
+      triggerRaiseEnd();  // Trigger the raise (good) ending
+    }
   }
 
   public Entity getCustomerSpawnController() {

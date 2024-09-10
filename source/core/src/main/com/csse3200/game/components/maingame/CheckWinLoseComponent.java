@@ -8,10 +8,10 @@ import com.csse3200.game.services.ServiceLocator;
 public class CheckWinLoseComponent extends Component {
 
     private CombatStatsComponent combatStatsComponent;
-    private float winAmount;
-    private float loseThreshold;
+    private int winAmount;
+    private int loseThreshold;
 
-    public CheckWinLoseComponent(float winAmount, float loseThreshold) {
+    public CheckWinLoseComponent(int winAmount, int loseThreshold) {
         this.winAmount = winAmount;
         this.loseThreshold = loseThreshold;
 
@@ -21,41 +21,34 @@ public class CheckWinLoseComponent extends Component {
         });
     }
 
+    /**
+     * Public method to check the game state and return "WIN", "LOSE", or "GAME_IN_PROGRESS".
+     */
     public String checkGameState() {
         if (combatStatsComponent == null) {
-            return "GAME_IN_PROGRESS";  // Ensuring combatStatsComponent is initialized
+            return "GAME_IN_PROGRESS";  // Ensuring combatStatsComponent is initialised
         }
 
-        if (checkLose()) {
-            triggerLoseState();
+        if (hasLost()) {
             return "LOSE";
-        } else if (checkWin()) {
-            triggerWinState();
+        } else if (hasWon()) {
             return "WIN";
         } else {
             return "GAME_IN_PROGRESS";
         }
     }
 
-    private boolean checkLose() {
-        if (combatStatsComponent.getGold() < loseThreshold) {
-            return true;
-        }
-        return false;
+    /**
+     * Returns true if the player has lost (gold < loseThreshold).
+     */
+    public boolean hasLost() {
+        return combatStatsComponent != null && combatStatsComponent.getGold() < loseThreshold;
     }
 
-    private boolean checkWin() {
-        if (combatStatsComponent.getGold() >= winAmount) {
-            return true;
-        }
-        return false;
-    }
-
-    private void triggerLoseState() {
-        // Need to add logic for losing (trigger cutscenes, end game)
-    }
-
-    private void triggerWinState() {
-        // Need to add logic for winning (trigger cutscenes, end game)
+    /**
+     * Returns true if the player has won (gold >= winAmount).
+     */
+    public boolean hasWon() {
+        return combatStatsComponent != null && combatStatsComponent.getGold() >= winAmount;
     }
 }
