@@ -41,6 +41,21 @@ public class InventoryComponent extends Component {
   }
 
   /**
+   * Creates the inventory component for use by Stations
+   * @param capacity the inventory capacity
+   */
+  public InventoryComponent(int capacity) {
+    setCapacity(capacity);
+    items = new ArrayList<>(capacity);
+    for (int i = 0; i < capacity; i++) {        
+      items.add(null);
+    }
+    size = 0;
+    setSelected(0);
+    setGold(0);
+  }
+
+  /**
    * Returns the capacity of this inventory component. I.e. the
    * maximum number of items it can hold.
 
