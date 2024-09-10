@@ -48,7 +48,9 @@ public class InventoryDisplay extends UIComponent {
             label.setFontScale(2f);
         } else {
             label.setText(itemText); // Update the label text
+            //animation update event trigger
         }
+
     }
 
     // Method to update the UI with a new item

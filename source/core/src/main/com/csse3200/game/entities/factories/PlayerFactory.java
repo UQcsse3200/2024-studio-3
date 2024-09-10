@@ -36,6 +36,7 @@ public class PlayerFactory {
   public static Entity createPlayer(){
     return createPlayer(config);
   }
+
   /**
    * Create a player entity.
    * @return entity
@@ -45,7 +46,8 @@ public class PlayerFactory {
         ServiceLocator.getInputService().getInputFactory().createForPlayer();
 
     AnimationRenderComponent animator =
-            new AnimationRenderComponent(ServiceLocator.getResourceService().getAsset("images/player.atlas", TextureAtlas.class));
+            new AnimationRenderComponent(ServiceLocator.getResourceService().getAsset(
+                    "images/player/" + "player.atlas", TextureAtlas.class));
 
     animator.addAnimation("Character_StandDown", 0.2f);
     animator.addAnimation("Character_StandUp", 0.2f);
@@ -87,6 +89,7 @@ public class PlayerFactory {
     animator.startAnimation("Character_StandUp");
     return player;
   }
+
 
   private PlayerFactory() {
     throw new IllegalStateException("Instantiating static util class");
