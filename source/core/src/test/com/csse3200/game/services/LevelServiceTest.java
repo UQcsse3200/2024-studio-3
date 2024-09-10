@@ -31,10 +31,6 @@ class LevelServiceTest {
         assertNotNull(levelService.getCurrLevel());
         assertNotNull(levelService.getEvents());
         EventListener0 mockListener = mock(EventListener0.class);
-        /*levelServiceSpy.getEvents().trigger("startLevel", 1);
-        levelServiceSpy.getEvents().trigger("createCustomer");
-        verify(levelServiceSpy).getEvents().trigger("startLevel", 1);
-        verify(levelServiceSpy).getEvents().trigger("createCustomer");*/
         levelServiceSpy.getEvents().addListener("mockEvent",mockListener);
         levelServiceSpy.getEvents().trigger("mockEvent");
         verify(mockListener).handle();
@@ -50,6 +46,12 @@ class LevelServiceTest {
     @Test
     void shouldReturnDefaultLevelValueOfOneFromGetCurrLevel() {
         assertEquals(levelServiceSpy.getCurrLevel(),1);
+    }
+
+    @Test
+    void shouldIncrementLevelByOneIfTriggerIsTrue() {
+        levelServiceSpy.togglePlayerFinishedLevel();
+        assertEquals(levelServiceSpy.getCurrLevel(), 2);
     }
 
     @Test
