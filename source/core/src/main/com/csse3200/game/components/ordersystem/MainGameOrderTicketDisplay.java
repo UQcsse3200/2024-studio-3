@@ -338,10 +338,6 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         Table currTable = tableArrayList.get(index);
 
         stageDispose(currBackground, currTable, index);
-        tableArrayList.remove(index);
-        backgroundArrayList.remove(index);
-        startTimeArrayList.remove(index);
-        countdownLabelArrayList.remove(index);
     }
 
     /**
