@@ -572,7 +572,7 @@ public class ForestGameArea extends GameArea {
 
   private void spawnBoss() {
     GridPoint2 position = new GridPoint2(1, 5);
-    Vector2 targetPos = new Vector2(2, 6); // Target position for ghost king
+    Vector2 targetPos = new Vector2(2, 6);
     Entity boss = NPCFactory.createBoss(targetPos);
     spawnEntityAt(boss, position, false, false);
   }
@@ -581,8 +581,9 @@ public class ForestGameArea extends GameArea {
     ExecutorService executor = Executors.newSingleThreadExecutor();
     executor.submit(() -> {
       try {
-        Thread.sleep(10000);
         spawnBoss();
+        Thread.sleep(10000);
+        // I need text box stuff here...
 
       } catch (InterruptedException e) {
         Thread.currentThread().interrupt();
