@@ -74,18 +74,18 @@ public class MoralDecisionDisplay extends UIComponent {
     }
 
 
-    private void setupInputListener() {
-        stage.addListener(new InputListener() {
-            @Override
-            public boolean keyDown(InputEvent event, int keycode) {
-                if (keycode == com.badlogic.gdx.Input.Keys.M) {
-                    toggleVisibility();
-                    return true;
-                }
-                return false;
-            }
-        });
-    }
+//    private void setupInputListener() {
+//        stage.addListener(new InputListener() {
+//            @Override
+//            public boolean keyDown(InputEvent event, int keycode) {
+//                if (keycode == com.badlogic.gdx.Input.Keys.M) {
+//                    toggleVisibility();
+//                    return true;
+//                }
+//                return false;
+//            }
+//        });
+//    }
 
 
     private void initialiseUI() {
