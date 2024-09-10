@@ -10,7 +10,7 @@ public class BaseCustomerConfig {
     public int patience = 100; // in seconds
 
     public String texture;
-    public String preference = "placeholder"; //change to list of recipe or ingredients
+    public String preference; //change to list of recipe or ingredients
 
     public int Customer_id = (int)(Math.random() * RANGE) + MIN;
 }
