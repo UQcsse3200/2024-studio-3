@@ -65,6 +65,9 @@ public class KeyboardPlayerInputComponent extends InputComponent {
           int day = 0;
           ServiceLocator.getEntityService().getMoralScreen().getEvents().trigger("triggerMoralScreen",day);
           return true;
+        case Keys.P:
+          ServiceLocator.getEntityService().getEvents().trigger("toggleEndDayScreen");
+          return true;
       }
     }
 

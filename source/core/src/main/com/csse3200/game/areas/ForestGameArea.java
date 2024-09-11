@@ -1,6 +1,7 @@
 package com.csse3200.game.areas;
 
 
+import com.csse3200.game.components.maingame.EndDayDisplay;
 import com.csse3200.game.components.moral.MoralDecision;
 import com.csse3200.game.components.npc.PersonalCustomerEnums;
 import com.badlogic.gdx.utils.Null;
@@ -196,6 +197,7 @@ public class ForestGameArea extends GameArea {
     //ServiceLocator.getEntityService().getEvents().trigger("SetText", "Boss: Rent is due");
     //triggerFiredEnd();    // Trigger the fired (bad) ending
     createMoralScreen();
+    createEndDayScreen();
     playMusic();
   }
 
@@ -864,6 +866,13 @@ public class ForestGameArea extends GameArea {
             .addComponent(new MoralDecisionDisplay())
             .addComponent(new MoralDecision());
     ServiceLocator.getEntityService().registerMoral(moralScreen);
+  }
+
+  private void createEndDayScreen() {
+    Entity endDayScreen = new Entity();
+    endDayScreen
+            .addComponent(new EndDayDisplay());
+    ServiceLocator.getEntityService().registerEndDay(endDayScreen);
   }
 
   private void triggerGoodEnd() {
