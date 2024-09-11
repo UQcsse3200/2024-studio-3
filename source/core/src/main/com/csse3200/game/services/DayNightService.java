@@ -8,7 +8,8 @@ import com.csse3200.game.events.EventHandler;
 
 public class DayNightService {
     private static final Logger logger = LoggerFactory.getLogger(DayNightService.class);
-    private static final long FIVE_MINUTES = 5 * 60 * 1000; //5*60*1000; // 5 minutes in milliseconds
+    //private static final long FIVE_MINUTES = 5 * 60 * 1000; //5*60*1000; // 5 minutes in milliseconds
+    private static final long FIVE_MINUTES = 5 * 1000;
     private long lastCheckTime;
     private final GameTime gameTime;
     private boolean endOfDayTriggered = false;
@@ -45,6 +46,7 @@ public class DayNightService {
      * Starts a new day, updating the day counter, resuming the game time, and resetting orders.
      */
     private void startNewDay() {
+        ServiceLocator.getDayNightService().getEvents().trigger("endGame");
         logger.info("It's a new Day!");
         enddayEventHandler.trigger("newday");
         // // Resume the game time and reset the last check time

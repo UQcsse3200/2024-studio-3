@@ -38,7 +38,6 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFont
 
 import java.util.ArrayList;
 
-
 public class EndDayDisplay extends UIComponent {
     private Table layout; // Layout manager
     private boolean isVisible;
