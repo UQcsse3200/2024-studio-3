@@ -7,7 +7,8 @@ import com.badlogic.gdx.utils.Disposable;
 import com.csse3200.game.utils.SortedIntMap;
 
 /**
- * Globally accessible service for registering renderable components. Any renderable registered with
+ * Globally accessible service for registering renderable components. Any
+ * renderable registered with
  * this service has render() called once per frame.
  */
 public class RenderService implements Disposable {
@@ -17,10 +18,10 @@ public class RenderService implements Disposable {
   private DebugRenderer debugRenderer;
 
   /**
-   * Map from layer to list of renderables, allows us to render each layer in the correct order
+   * Map from layer to list of renderables, allows us to render each layer in the
+   * correct order
    */
-  private final SortedIntMap<Array<Renderable>> renderables =
-      new SortedIntMap<>(INITIAL_LAYER_CAPACITY);
+  private final SortedIntMap<Array<Renderable>> renderables = new SortedIntMap<>(INITIAL_LAYER_CAPACITY);
 
   /**
    * Register a new renderable.
@@ -49,7 +50,8 @@ public class RenderService implements Disposable {
   }
 
   /**
-   * Trigger rendering on the given batch. This should be called only from the main renderer.
+   * Trigger rendering on the given batch. This should be called only from the
+   * main renderer.
    *
    * @param batch batch to render to.
    */

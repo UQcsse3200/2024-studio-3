@@ -1,6 +1,8 @@
 package com.csse3200.game.screens;
 
 import com.badlogic.gdx.ScreenAdapter;
+import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.csse3200.game.GdxGame;
@@ -27,6 +29,7 @@ import com.csse3200.game.ui.terminal.TerminalDisplay;
 import com.csse3200.game.components.maingame.EndDayDisplay;
 import com.csse3200.game.components.maingame.MainGameExitDisplay;
 import com.csse3200.game.components.maingame.TextDisplay;
+import com.csse3200.game.components.CameraComponent;
 import com.csse3200.game.components.gamearea.PerformanceDisplay;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,10 +37,14 @@ import com.csse3200.game.components.ordersystem.DocketLineDisplay;
 import com.csse3200.game.components.player.InventoryDisplay;
 import java.util.Arrays;
 
+import com.csse3200.game.components.scoreSystem.HoverBoxComponent;
+
 /**
  * The game screen containing the main game.
  *
- * <p>Details on libGDX screens: https://happycoding.io/tutorials/libgdx/game-screens
+ * <p>
+ * Details on libGDX screens:
+ * https://happycoding.io/tutorials/libgdx/game-screens
  */
 public class MainGameScreen extends ScreenAdapter {
 	private static final Logger logger = LoggerFactory.getLogger(MainGameScreen.class);
@@ -55,10 +62,10 @@ public class MainGameScreen extends ScreenAdapter {
 	// Modified the camera position to fix layout
 	private static final Vector2 CAMERA_POSITION = new Vector2(7.5f, 6.0f);
 
-  private final GdxGame game;
-  private final Renderer renderer;
-  private final PhysicsEngine physicsEngine;
-  private boolean isPaused = false;
+	private final GdxGame game;
+	private final Renderer renderer;
+	private final PhysicsEngine physicsEngine;
+	private boolean isPaused = false;
 
 	public MainGameScreen(GdxGame game) {
 		this.game = game;
@@ -100,6 +107,13 @@ public class MainGameScreen extends ScreenAdapter {
 
 	@Override
 	public void render(float delta) {
+		CameraComponent cameraComponent = renderer.getCamera();
+		Camera camera = cameraComponent.getCamera();
+		System.out.println("Camera position: (" + camera.position.x + ", " + camera.position.y + ")");
+		if (camera instanceof OrthographicCamera) {
+			System.out.println("Camera zoom: " + ((OrthographicCamera) camera).zoom);
+		}
+
 		if (!isPaused) {
 			physicsEngine.update();
 			ServiceLocator.getEntityService().update();
@@ -160,28 +174,32 @@ public class MainGameScreen extends ScreenAdapter {
 	}
 
 	/**
-	 * Creates the main game's ui including components for rendering ui elements to the screen and
+	 * Creates the main game's ui including components for rendering ui elements to
+	 * the screen and
 	 * capturing and handling ui input.
 	 */
 	private void createUI() {
 		logger.debug("Creating ui");
 		Stage stage = ServiceLocator.getRenderService().getStage();
-		InputComponent inputComponent =
-				ServiceLocator.getInputService().getInputFactory().createForTerminal();
+		InputComponent inputComponent = ServiceLocator.getInputService().getInputFactory().createForTerminal();
 
 		Entity ui = new Entity();
 		ui.addComponent(new InputDecorator(stage, 10))
-		  .addComponent(new DocketLineDisplay())
-			.addComponent(new PerformanceDisplay())
-			.addComponent(new MainGameActions(this.game))
-			.addComponent(new MainGameExitDisplay())
-			.addComponent(new Terminal())
-			.addComponent(inputComponent)
-			.addComponent(new TerminalDisplay())
-			.addComponent(new OrderActions(this.game))
-			.addComponent(new MainGameOrderBtnDisplay())
-		        .addComponent(new EndDayDisplay(this, this.game))
+				.addComponent(new DocketLineDisplay())
+				.addComponent(new PerformanceDisplay())
+				.addComponent(new HoverBoxComponent())
+				.addComponent(new MainGameActions(this.game))
+				.addComponent(new MainGameExitDisplay())
+				.addComponent(new Terminal())
+				.addComponent(inputComponent)
+				.addComponent(new TerminalDisplay())
+				.addComponent(new OrderActions(this.game))
+				.addComponent(new MainGameOrderBtnDisplay())
+				.addComponent(new EndDayDisplay(this, this.game))
 				.addComponent(new TextDisplay(this));
+
+		System.out.println("Added HoverBoxComponent to UI entity");
+
 		ServiceLocator.getEntityService().register(ui);
 	}
 }

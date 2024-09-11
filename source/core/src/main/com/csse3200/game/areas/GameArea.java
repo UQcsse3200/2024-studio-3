@@ -11,10 +11,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Represents an area in the game, such as a level, indoor area, etc. An area has a terrain and
+ * Represents an area in the game, such as a level, indoor area, etc. An area
+ * has a terrain and
  * other entities to spawn on that terrain.
  *
- * <p>Support for enabling/disabling game areas could be added by making this a Component instead.
+ * <p>
+ * Support for enabling/disabling game areas could be added by making this a
+ * Component instead.
  */
 public abstract class GameArea implements Disposable {
   protected TerrainComponent terrain;
@@ -47,10 +50,12 @@ public abstract class GameArea implements Disposable {
   /**
    * Spawn entity on a given tile. Requires the terrain to be set first.
    *
-   * @param entity Entity (not yet registered)
+   * @param entity  Entity (not yet registered)
    * @param tilePos tile position to spawn at
-   * @param centerX true to center entity X on the tile, false to align the bottom left corner
-   * @param centerY true to center entity Y on the tile, false to align the bottom left corner
+   * @param centerX true to center entity X on the tile, false to align the bottom
+   *                left corner
+   * @param centerY true to center entity Y on the tile, false to align the bottom
+   *                left corner
    */
   protected void spawnEntityAt(
       Entity entity, GridPoint2 tilePos, boolean centerX, boolean centerY) {
