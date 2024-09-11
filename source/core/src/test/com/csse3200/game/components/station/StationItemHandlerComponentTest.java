@@ -49,7 +49,7 @@ public class StationItemHandlerComponentTest {
         when(mockEntity.getComponent(InventoryComponent.class)).thenReturn(mockInventory);
         when(mockEntity.getEvents()).thenReturn(mockEvents);
 
-        playerInventory = new InventoryComponent(1, 1);
+        playerInventory = new InventoryComponent(1);
     }
 
     @Test

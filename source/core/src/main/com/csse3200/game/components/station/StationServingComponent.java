@@ -14,14 +14,14 @@ import java.security.Provider;
 
 /**
  * StationServingComponent.java
- * </p>
+ *
  * StationServingComponent gives the station the ability to submit a meal to be 
  * able to be served to a customer. This will specifically be used by the 
  * serving bench 'station'.
- * </p>
+ *
  * {@link #submitMeal(ItemComponent)}: Function which controls the submission of a meal by the
  * class.
- * </p>
+ *
  * This component is currently incomplete and will need to be finished.
  */
 public class StationServingComponent extends Component {
