@@ -48,6 +48,40 @@ public class DishFactory {
     }
 
     /**
+     Get the recipe for associated ingredients
+
+     @param ingredient needed to make the dish (specify in the recipe.json)
+     @return list of recipes that contain associated ingredients
+     */
+    public static List<String> getRecipe (List<String> ingredient) {
+        List<String> recipes = new ArrayList<>();
+
+        if (configs == null) {
+            return recipes;
+        }
+
+        for (Map.Entry<String, SingleStationRecipeConfig> entry : getSingleStationRecipes().entrySet()) {
+            String recipe = entry.getKey();
+            SingleStationRecipeConfig recipeConfig = entry.getValue();
+
+            if (new HashSet<>(recipeConfig.ingredient).containsAll(ingredient)) {
+                recipes.add(recipe);
+            }
+        }
+
+        for (Map.Entry<String, MultiStationRecipeConfig> entry : getMultiStationRecipes().entrySet()) {
+            String recipe = entry.getKey();
+            MultiStationRecipeConfig recipeConfig = entry.getValue();
+
+            if (new HashSet<>(recipeConfig.ingredient).containsAll(ingredient)) {
+                recipes.add(recipe);
+            }
+        }
+        return recipes;
+    }
+
+
+    /**
     Get the list of possible recipes for associated ingredients
 
      @param ingredients needed to make the dish (specify in the recipe.json)
