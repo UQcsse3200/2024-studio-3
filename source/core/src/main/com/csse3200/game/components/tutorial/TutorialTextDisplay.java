@@ -92,6 +92,7 @@ public class TutorialTextDisplay extends UIComponent {
         table.add(stack).padBottom(70).padLeft(0).size((int) (Gdx.graphics.getWidth() * 0.5), (int) (Gdx.graphics.getHeight() * 0.2));
 
         setupInputListener();
+        entity.getEvents().addListener("SetText", this::setText);
     }
 
     public void setText(String text) {

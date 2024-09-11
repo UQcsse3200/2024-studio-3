@@ -5,6 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.components.ordersystem.MainGameOrderBtnDisplay;
+import com.csse3200.game.entities.Entity;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
 import com.csse3200.game.components.ordersystem.MainGameOrderTicketDisplay;
@@ -97,7 +98,7 @@ public class TutorialScreenDisplay extends UIComponent {
     private void showMovementTutorial() {
         // Set tutorial text using textDisplay
         textDisplay.setVisible(true);
-        textDisplay.setText("Use W/A/S/D to move around.");
+        createTextBox("Use W/A/S/D to move around.");
 
     }
 
@@ -108,7 +109,7 @@ public class TutorialScreenDisplay extends UIComponent {
     private void showItemPickupTutorial() {
         // Set tutorial text using textDisplay
         textDisplay.setVisible(true);
-        textDisplay.setText("Press E to pick up items.");
+        createTextBox("Press E to pick up items.");
 
     }
 
@@ -118,12 +119,12 @@ public class TutorialScreenDisplay extends UIComponent {
     private void showOrderingTutorial() {
         // Set tutorial text using textDisplay
         textDisplay.setVisible(true);
-        textDisplay.setText("To begin, press the 'Create Order' button.");
+        createTextBox("To begin, press the 'Create Order' button.");
 
 
         // Wait for the button press (handled by onCreateOrderPressed)
         if (createOrderPressed) {
-            textDisplay.setText("Now use [ and ] keys to switch dockets.");
+            createTextBox("Now use [ and ] keys to switch dockets.");
 
             // Check if the user presses [ or ]
             if (Gdx.input.isKeyJustPressed(Input.Keys.LEFT_BRACKET) || Gdx.input.isKeyJustPressed(Input.Keys.RIGHT_BRACKET)) {
@@ -141,7 +142,7 @@ public class TutorialScreenDisplay extends UIComponent {
      * This now only uses textDisplay to show the completion message.
      */
     private void completeTutorial() {
-        textDisplay.setText("Tutorial Complete! Press ENTER to continue.");
+        createTextBox("Tutorial Complete! Press ENTER to continue.");
         textDisplay.setVisible(true);
     }
 
@@ -184,6 +185,16 @@ public class TutorialScreenDisplay extends UIComponent {
     public void onCreateOrderPressed() {
         createOrderPressed = true;
         textDisplay.setText("Now use [ and ] keys to switch dockets.");
+    }
+
+    /**
+     * Creates tutorial text box. Calls set text.
+     * @param text being displayed into textbox.
+     */
+    private void createTextBox(String text) {
+        for (Entity entity: ServiceLocator.getEntityService().getEntities()) {
+            entity.getEvents().trigger("SetText", text);
+        }
     }
 
     /**

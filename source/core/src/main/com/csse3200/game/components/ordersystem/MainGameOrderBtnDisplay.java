@@ -101,7 +101,10 @@ public class MainGameOrderBtnDisplay extends UIComponent{
 	 */
 	@Override
 	public void dispose() {
-		table.clear();
+
+		if (table != null) {
+			table.clear();
+		}
 		super.dispose();
 	}
 }
