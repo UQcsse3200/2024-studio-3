@@ -115,4 +115,7 @@ public class CustomerSensorComponent extends Component {
     public Fixture getClosestCustomer() {
         return closestFixture;
     }
+    public InteractionComponent getInteractionComponent() {
+      return interactionComponent;
+  }
 }
