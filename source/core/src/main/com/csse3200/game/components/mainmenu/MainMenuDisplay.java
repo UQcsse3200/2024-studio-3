@@ -30,14 +30,16 @@ public class MainMenuDisplay extends UIComponent {
   private Table logo;
   private float scale_of_button = 1.5f;
 
+  // Animation variables
   private float startX=0,startY=0,endX=500,endY=500,duration=8,degrees=1000,rotate_duration=10;
+
 
   private int number_of_animals=10;
   private Image animals[]=new Image[number_of_animals];
+  // List of animals to be displayed
   private String list_of_animals[]={"thegoat","goos","gorill","monki","wolf","raw_acai","raw_banana","chopped_strawb","chopped_chocolate","salad"};
   private int animal_on_screen=2;
-
-
+ // private int animal_on_screen=5;
   private float width_of_screen=Gdx.graphics.getWidth(),height_of_screen=Gdx.graphics.getHeight();
 
   private Timer.Task animalMoveTask,clearstage;
@@ -69,9 +71,14 @@ public class MainMenuDisplay extends UIComponent {
     Random rand = new Random();
     return rand.nextInt(max-min+1)+min;
   }
+  /**
+   * Creates the background of the main menu.
+   * This function adds the animals to the screen by randomly selecting a start and end position and
+   * animating the animal to move from the start to the end position.
+   * The animal will also rotate as it moves.
+   * */
 
   public void background(){
-
 
     float height,width;
     for(int x=1;x<=animal_on_screen;x++) {
