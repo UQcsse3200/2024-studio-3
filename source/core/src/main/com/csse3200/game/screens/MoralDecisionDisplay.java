@@ -125,6 +125,12 @@ public class MoralDecisionDisplay extends UIComponent {
 
 
         entity.getEvents().addListener("triggerMoralScreen", this::toggleVisibility);
+
+        //from team 2, added the listener for when game day ends to toggle visibility
+        ServiceLocator.getDayNightService().getEvents().addListener("TOMORAL", () -> {
+            logger.info("TOMORAL event received in MoralDecisionDisplay");
+            show();
+        });
     }
 
 
@@ -141,6 +147,10 @@ public class MoralDecisionDisplay extends UIComponent {
 //        });
 //    }
 
+
+    /**
+     * Initialise the User Interface
+     */
     private void initialiseUI() {
         Label titleLabel = new Label("moral deiciosn", new Label.LabelStyle(new BitmapFont(), Color.PINK));
         layout.add(titleLabel).pad(10).row();
@@ -186,12 +196,14 @@ public class MoralDecisionDisplay extends UIComponent {
         isVisible = false;
         layout.setVisible(isVisible);
         game.resume(); // Resume the game when the display is hidden
+        ServiceLocator.getDayNightService().getEvents().trigger("decisionDone");
+
     }
 
     /**
      * Toggles the visibility of the moral decision screen.
      */
-    public void toggleVisibility(int day) {
+    private void toggleVisibility(int day) {
         logger.debug(" Day - {}", day);
 //        this.update();
         if (isVisible) {

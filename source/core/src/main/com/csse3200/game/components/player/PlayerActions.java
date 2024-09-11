@@ -7,6 +7,7 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.physics.BodyUserData;
+import com.csse3200.game.components.items.PlateComponent;
 import com.csse3200.game.components.station.FireExtinguisherHandlerComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.physics.components.PhysicsComponent;
@@ -100,6 +101,14 @@ public class PlayerActions extends Component {
         // No more interacting after this
         return;
       }
+
+      boolean interactingWithPlate = PlateComponent.handlePlateInteraction(interactable, entity);
+      if (interactingWithPlate) {
+        // Interaction handled by PlateComponent for plates
+        return;
+      }
+      // Code to freeze player, not a current feature
+      // entity.getEvents().trigger("startInteraction");
       // Logic for what interaction even to call on the station
       station.getEvents().trigger("Station Interaction", playerInventory, displayInventory);
     }
