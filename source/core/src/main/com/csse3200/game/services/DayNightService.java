@@ -55,8 +55,8 @@ public class DayNightService {
      */
     public void create() {
         // ***Working version of Day cycle used "decisionDone"***
-        enddayEventHandler.addListener("decisionDone", this::startNewDay);
-        // enddayEventHandler.addListener("animationDone", this::startNewDay);
+        // enddayEventHandler.addListener("decisionDone", this::startNewDay);
+        enddayEventHandler.addListener("animationDone", this::startNewDay);
 
         enddayEventHandler.addListener("callpastsecond", this::updatepastSecond);
     }
@@ -96,7 +96,7 @@ public class DayNightService {
         enddayEventHandler.trigger("newday");
 
         // ***Working version of day cycle used the following commented out lastCheckTime update***
-        lastCheckTime = gameTime.getTime();
+        // lastCheckTime = gameTime.getTime();
         endOfDayTriggered = false;
         gameTime.setTimeScale(1); // Resume game time
     }
