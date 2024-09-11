@@ -3,6 +3,7 @@ package com.csse3200.game.components.tutorial;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.utils.Array;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.components.ordersystem.MainGameOrderBtnDisplay;
 import com.csse3200.game.entities.Entity;
@@ -192,10 +193,17 @@ public class TutorialScreenDisplay extends UIComponent {
      * @param text being displayed into textbox.
      */
     private void createTextBox(String text) {
-        for (Entity entity: ServiceLocator.getEntityService().getEntities()) {
+        Array<Entity> entities = ServiceLocator.getEntityService().getEntities();
+
+        for (int i = 0; i < entities.size; i++) {
+            Entity entity = entities.get(i);
             entity.getEvents().trigger("SetText", text);
         }
     }
+
+    // set a loop where count starts from 0, incrementing by 1 each time and the loop
+    // is terminated once youve pressed the key i = 0 number of text boxes (4)
+
 
     /**
      * Starts the main game after the tutorial is complete.
