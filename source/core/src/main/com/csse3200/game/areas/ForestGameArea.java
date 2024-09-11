@@ -144,55 +144,55 @@ public class ForestGameArea extends GameArea {
           "images/platecomponent/stackedplates/5plates.png"
   };
   private static final String[] forestTextureAtlases = {
-    "images/terrain_iso_grass.atlas", 
-    "images/ghost.atlas", 
-    "images/ghostKing.atlas", 
+    "images/terrain_iso_grass.atlas",
+    "images/ghost.atlas",
+    "images/ghostKing.atlas",
     "images/animal_images/gorilla.atlas",
-    "images/animal_images/goose.atlas", 
-    "images/animal_images/goat.atlas", 
+    "images/animal_images/goose.atlas",
+    "images/animal_images/goat.atlas",
     "images/animal_images/monkey.atlas",
     "images/animal_images/snow_wolf.atlas",
-    "images/player.atlas", 
-    "images/fireExtinguisher/atlas/flame.atlas", 
+    "images/player.atlas",
+    "images/fireExtinguisher/atlas/flame.atlas",
     "images/stations/oven/oven.atlas",
-    "images/terrain_iso_grass.atlas", 
-    "images/ghost.atlas", 
-    "images/ghostKing.atlas", 
+    "images/terrain_iso_grass.atlas",
+    "images/ghost.atlas",
+    "images/ghostKing.atlas",
     "images/animal_images/gorilla.atlas",
-    "images/animal_images/goose.atlas", 
-    "images/animal_images/goat.atlas", 
+    "images/animal_images/goose.atlas",
+    "images/animal_images/goat.atlas",
     "images/animal_images/monkey.atlas",
-    "images/animal_images/snow_wolf.atlas", 
-    "images/fireExtinguisher/atlas/flame.atlas", 
+    "images/animal_images/snow_wolf.atlas",
+    "images/fireExtinguisher/atlas/flame.atlas",
     "images/player/player.atlas",
-    "images/player/acaiBowl.atlas", 
+    "images/player/acaiBowl.atlas",
     "images/player/bananaSplit.atlas",
-    "images/player/burntBeef.atlas", 
-    "images/player/choppedAcai.atlas", 
-    "images/player/choppedBanana.atlas", 
-    "images/player/choppedChocolate.atlas", 
-    "images/player/choppedCucumber.atlas", 
-    "images/player/choppedLettuce.atlas", 
-    "images/player/choppedStrawberry.atlas", 
-    "images/player/choppedTomato.atlas", 
-    "images/player/cookedBeef.atlas", 
-    "images/player/cookedFish.atlas", 
-    "images/player/fruitSalad.atlas", 
-    "images/player/rawAcai.atlas", 
-    "images/player/rawBanana.atlas", 
-    "images/player/rawBeef.atlas", 
-    "images/player/rawChocolate.atlas", 
-    "images/player/rawCucumber.atlas", 
-    "images/player/rawFish.atlas", 
-    "images/player/rawLettuce.atlas", 
-    "images/player/rawStrawberry.atlas", 
-    "images/player/rawTomato.atlas", 
+    "images/player/burntBeef.atlas",
+    "images/player/choppedAcai.atlas",
+    "images/player/choppedBanana.atlas",
+    "images/player/choppedChocolate.atlas",
+    "images/player/choppedCucumber.atlas",
+    "images/player/choppedLettuce.atlas",
+    "images/player/choppedStrawberry.atlas",
+    "images/player/choppedTomato.atlas",
+    "images/player/cookedBeef.atlas",
+    "images/player/cookedFish.atlas",
+    "images/player/fruitSalad.atlas",
+    "images/player/rawAcai.atlas",
+    "images/player/rawBanana.atlas",
+    "images/player/rawBeef.atlas",
+    "images/player/rawChocolate.atlas",
+    "images/player/rawCucumber.atlas",
+    "images/player/rawFish.atlas",
+    "images/player/rawLettuce.atlas",
+    "images/player/rawStrawberry.atlas",
+    "images/player/rawTomato.atlas",
     "images/player/salad.atlas",
-    "images/player/steak.atlas", 
-    "images/player/playerPlate.atlas", 
+    "images/player/steak.atlas",
+    "images/player/playerPlate.atlas",
     "images/player/playerDirtyPlate.atlas",
           "images/player/playerFireExtinguisher.atlas",
-          "images/special_NPCs/boss.atlas"
+          "images/special_NPCs/boss.atlas", "images/stations/Servery_Animation/servery.atlas"
 
   };
   private static final String[] forestSounds = {"sounds/Impact4.ogg"};
@@ -463,10 +463,13 @@ public class ForestGameArea extends GameArea {
     spawnEntityAt(appleTree, appleTreePos, false, false);
     appleTree.setPosition(appleTree.getPosition().x + 4.2f , appleTree.getPosition().y - 1.3f);
 
-    GridPoint2 serveryPos = new GridPoint2(3,0);
+    GridPoint2 serveryPos = new GridPoint2(1,1);
     Entity servery = StationFactory.createSubmissionWindow();
     spawnEntityAt(servery, serveryPos, false, false);
-    servery.setPosition(servery.getPosition().x, servery.getPosition().y + 1.3f);
+    servery.setPosition(servery.getPosition().x + 2, servery.getPosition().y + 0.5f);
+    servery = StationFactory.createSubmissionWindow();
+    spawnEntityAt(servery, serveryPos, false, false);
+    servery.setPosition(servery.getPosition().x + 2, servery.getPosition().y);
 
     // Bench
     GridPoint2 middlePos = new GridPoint2(5,4);

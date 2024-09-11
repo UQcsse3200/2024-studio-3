@@ -224,7 +224,6 @@ public class StationFactory {
 
 
     Entity submission = new Entity()
-            .addComponent(new TextureRenderComponent("images/stations/servery.png"))
             .addComponent(new PhysicsComponent())
             .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
             .addComponent(new InteractionComponent(PhysicsLayer.INTERACTABLE))
@@ -235,9 +234,14 @@ public class StationFactory {
 
     submission.getComponent(InteractionComponent.class).setAsBox(submission.getScale());
     submission.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
-    submission.getComponent(TextureRenderComponent.class).scaleEntity();
-    submission.scaleHeight(2f);
-    PhysicsUtils.setScaledCollider(submission, 0.3f, 0.2f);
+    PhysicsUtils.setScaledCollider(submission, 1f, 1f);
+
+    AnimationRenderComponent animator =
+            new AnimationRenderComponent(
+                    ServiceLocator.getResourceService().getAsset("images/stations/Servery_Animation/servery.atlas", TextureAtlas.class));
+    animator.addAnimation("servery_idle", 0.1f, Animation.PlayMode.LOOP);
+
+    submission.addComponent(animator);
 
     // Add station reference
     PhysicsComponent physicsComponent = submission.getComponent(PhysicsComponent.class);
