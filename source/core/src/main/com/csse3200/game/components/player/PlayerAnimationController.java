@@ -9,7 +9,12 @@ import com.csse3200.game.services.ServiceLocator;
 
 public class PlayerAnimationController extends Component {
     AnimationRenderComponent animator;
-    
+
+    /**
+     * Creates the player animation controller
+     * Adds listeners for walk cycle animations
+     * Adds listeners for ingredient animations
+     */
     @Override
     public void create() {
         super.create();

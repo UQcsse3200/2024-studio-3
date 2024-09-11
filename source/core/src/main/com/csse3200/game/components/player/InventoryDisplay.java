@@ -93,6 +93,10 @@ public class InventoryDisplay extends UIComponent {
 
         stage.addActor(table);
     }
+    /**
+     * Updates the label to reflect the current item in the first slot of the inventory.
+     * @param item the item in the first slot of the inventory
+     */
 
     private void updateLabel(ItemComponent item) {
         // Update the label with the item information
