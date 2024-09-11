@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Stack;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.csse3200.game.components.items.IngredientComponent;
 import com.csse3200.game.components.items.ItemType;
+import com.csse3200.game.components.items.PlateComponent;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
 import org.slf4j.Logger;
@@ -194,6 +195,16 @@ public class InventoryDisplay extends UIComponent {
                     default:
                         //Updates player sprite back to default
                         entity.getEvents().trigger("updateAnimationEmptyInventory");
+                        break;
+                }
+            } else {
+                switch(item.getItemType()) {
+                    case PLATE:
+                        entity.getEvents().trigger("updateAnimationPlate");
+                        break;
+                    case FIREEXTINGUISHER:
+                        entity.getEvents().trigger(
+                            "updateAnimationFireExtinguisher");
                         break;
                 }
             }
