@@ -1,6 +1,6 @@
 package com.csse3200.game.entities.factories;
 
-import com.csse3200.game.components.scoreSystem.HoverBoxComponent;
+import com.csse3200.game.components.ScoreSystem.HoverBoxComponent;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;

@@ -37,7 +37,7 @@ import com.csse3200.game.components.ordersystem.DocketLineDisplay;
 import com.csse3200.game.components.player.InventoryDisplay;
 import java.util.Arrays;
 
-import com.csse3200.game.components.scoreSystem.HoverBoxComponent;
+import com.csse3200.game.components.ScoreSystem.HoverBoxComponent;
 
 /**
  * The game screen containing the main game.

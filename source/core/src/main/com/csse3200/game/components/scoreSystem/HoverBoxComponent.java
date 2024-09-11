@@ -1,4 +1,4 @@
-package com.csse3200.game.components.scoreSystem;
+package com.csse3200.game.components.ScoreSystem;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -118,7 +118,6 @@ public class HoverBoxComponent extends RenderComponent {
 
     @Override
     public void setStage(Stage mock) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setStage'");
+
     }
 }
