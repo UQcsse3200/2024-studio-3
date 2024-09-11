@@ -38,25 +38,12 @@ public class Entity {
     private Vector2 scale = new Vector2(1, 1);
     private Array<Component> createdComponents;
 
-    // Add a name field
-    private String name;
-
     public Entity() {
         id = nextId;
         nextId++;
 
         components = new IntMap<>(4);
         eventHandler = new EventHandler();
-    }
-
-    // Getter for the name
-    public String getName() {
-        return name;
-    }
-
-    // Setter for the name
-    public void setName(String name) {
-        this.name = name;
     }
 
     /**

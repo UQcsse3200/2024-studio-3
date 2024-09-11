@@ -25,17 +25,6 @@ public class EntityService {
         entityEventHandler = new EventHandler();
     }
 
-    public Entity getEntityByName(String name) {
-        for (Entity entity : entities) {
-            if (entity.getName().equals(name)) {
-                return entity;
-            }
-        }
-        return null; // Return null if no entity with the given name is found
-    }
-
-
-
 
     public Array<Entity> getEntities() { return entities; }
 

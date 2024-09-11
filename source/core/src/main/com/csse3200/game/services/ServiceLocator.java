@@ -96,6 +96,14 @@ public class ServiceLocator {
         entityService = service;
     }
 
+    public static void registerDocketService(DocketService service) {
+        if (docketService != null) {
+            logger.warn("Docket service is being overwritten!");
+        }
+        logger.debug("Registering docket service {}", service);
+        docketService = service;
+    }
+
     public static void registerRenderService(RenderService service) {
         logger.debug("Registering render service {}", service);
         renderService = service;
@@ -135,14 +143,6 @@ public class ServiceLocator {
     public static void registerOrderActions(OrderActions service) {
         logger.debug("Registering order action {}", service);
         orderActions = service;
-    }
-
-    public static void registerDocketService(DocketService service) {
-        if (docketService != null) {
-            logger.warn("Docket service is being overwritten!");
-        }
-        logger.debug("Registering docket service {}", service);
-        docketService = service;
     }
 
     public static void registerLevelService(LevelService service) {

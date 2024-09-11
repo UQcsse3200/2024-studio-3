@@ -45,7 +45,6 @@ public class MainGameActions extends Component {
         int orderCount = MainGameOrderTicketDisplay.getTableArrayList().size();
 
         if (orderCount < ORDER_LIMIT) {
-            // Retrieve the preferred recipe from currently spawning animals
             String preferredRecipe = getPreferredRecipeFromSpawningAnimals();
             if (preferredRecipe == null || preferredRecipe.isEmpty()) {
                 logger.warn("No recipe preference set. Falling back to random recipe.");
@@ -71,26 +70,18 @@ public class MainGameActions extends Component {
     }
 
     private String getRecipePreferenceForAnimal(String animalName) {
-        // Get the Entity related to the spawning animal
-        Entity customerEntity = ServiceLocator.getEntityService().getEntityByName(animalName);
+        // Iterate over all entities to find the one with the matching name
+        for (Entity entity : ServiceLocator.getEntityService().getEntities()) {
+            CustomerComponent customerComponent = entity.getComponent(CustomerComponent.class);
 
-        if (customerEntity != null) {
-            // Retrieve the CustomerComponent from the entity
-            CustomerComponent customerComponent = customerEntity.getComponent(CustomerComponent.class);
-
-            if (customerComponent != null) {
-                // Return the customer's preference from the CustomerComponent
+            if (customerComponent != null && animalName.equals(customerComponent.getName())) {
                 return customerComponent.getPreference();
-            } else {
-                logger.warn("CustomerComponent not found for animal: {}", animalName);
             }
-        } else {
-            logger.warn("Entity not found for animal: {}", animalName);
         }
 
+        logger.warn("Entity with name '{}' not found", animalName);
         return null;
     }
-
 
     private void onOrderDone() {
         if (ui != null) {
