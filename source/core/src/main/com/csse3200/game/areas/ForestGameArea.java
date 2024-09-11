@@ -143,7 +143,8 @@ public class ForestGameArea extends GameArea {
           "/rawBeef.atlas", "images/player/rawChocolate.atlas", "images/player/rawCucumber.atlas"
           , "images/player/rawFish.atlas", "images/player/rawLettuce.atlas", "images/player" +
           "/rawStrawberry.atlas", "images/player/rawTomato.atlas", "images/player/salad.atlas",
-          "images/player/steak.atlas"
+          "images/player/steak.atlas", "images/player/playerPlate.atlas", "images/player" +
+          "/playerDirtyPlate.atlas", "images/player/playerFireExtinguisher.atlas"
   };
   private static final String[] forestSounds = {"sounds/Impact4.ogg"};
   private static final String backgroundMusic = "sounds/BGM_03_mp3.mp3";
