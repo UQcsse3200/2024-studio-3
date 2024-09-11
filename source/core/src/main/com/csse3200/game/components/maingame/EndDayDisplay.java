@@ -46,16 +46,19 @@ public class EndDayDisplay extends UIComponent {
     private Label goldLabel;
     private int startGold;
 
-    public EndDayDisplay(MainGameScreen gameScreen, GdxGame game) {
-        super();
-        this.gameScreen = gameScreen;
-        this.game = game;
-        isVisible = false;
-        this.startGold = ServiceLocator.getLevelService().getCurrGold();
-        this.currentGold = this.startGold;
-        ServiceLocator.getLevelService().getEvents().addListener("resetScreen", MainGameScreen::resetScreen);
-    }
+//    public EndDayDisplay(MainGameScreen gameScreen, GdxGame game) {
+//        super();
+//        this.gameScreen = gameScreen;
+//        this.game = game;
+//        isVisible = false;
+//        this.startGold = ServiceLocator.getLevelService().getCurrGold();
+//        this.currentGold = this.startGold;
+//        ServiceLocator.getLevelService().getEvents().addListener("resetScreen", MainGameScreen::resetScreen);
+//    }
 
+    /**
+     * Constructor for the EndDayDisplay
+     */
     public EndDayDisplay() {
         super();
         this.gameScreen = ServiceLocator.getGameScreen();
@@ -66,6 +69,9 @@ public class EndDayDisplay extends UIComponent {
         ServiceLocator.getLevelService().getEvents().addListener("resetScreen", MainGameScreen::resetScreen);
     }
 
+    /**
+     * Create the EndDayDisplay
+     */
     public void create() {
         super.create();
         layout = new Table();
@@ -92,15 +98,26 @@ public class EndDayDisplay extends UIComponent {
 //        setupInputListener();
     }
 
+    /**
+     * Handle the gold update
+     * @param gold The gold to update
+     */
     private void handleGoldUpdate(int gold) {
         currentGold = gold;
         goldLabel.setText(currentGold);
     }
 
+    /**
+     * Update the customer list
+     * @param customer The customer to update
+     */
     private void updateCustomerList(Entity customer) {
         System.out.println("999");
     }
 
+    /**
+     * Setup the images
+     */
     private void setupImages() {
         // Load the image
         Texture imgTexture = ServiceLocator.getResourceService()
@@ -130,6 +147,9 @@ public class EndDayDisplay extends UIComponent {
         stage.addActor(pointImage3);
     }
 
+    /**
+     * Initialize the UI
+     */
     private void initializeUI() {
         Table spacer = new Table();
         spacer.add().height(3 * birdImage.getHeight() / 5);
@@ -181,6 +201,10 @@ public class EndDayDisplay extends UIComponent {
         layout.add(closeBtn).padTop(20).row();
     }
 
+    /**
+     * Update the bird position
+     * @param delta The delta distance
+     */
     private void updateBirdPosition(float delta) {
         imageX -= 200 * delta;
         if (imageX + birdImage.getWidth() < 0) {
@@ -193,6 +217,9 @@ public class EndDayDisplay extends UIComponent {
         pointImage3.setPosition(imageX + birdImage.getWidth() + 2 * pointImage1.getWidth(), pointImage3.getY());
     }
 
+    /**
+     * Animate the gold change
+     */
     private void animateGoldChange() {
         float duration = 1.0f;
         //int startGold = ServiceLocator.getLevelService().getCurrGold();
@@ -211,19 +238,22 @@ public class EndDayDisplay extends UIComponent {
         ));
     }
 
-    private void setupInputListener() {
-        stage.addListener(new InputListener() {
-            @Override
-            public boolean keyDown(InputEvent event, int keycode) {
-                if (keycode == com.badlogic.gdx.Input.Keys.P) {
-                    toggleVisibility();
-                    return true;
-                }
-                return false;
-            }
-        });
-    }
+//    private void setupInputListener() {
+//        stage.addListener(new InputListener() {
+//            @Override
+//            public boolean keyDown(InputEvent event, int keycode) {
+//                if (keycode == com.badlogic.gdx.Input.Keys.P) {
+//                    toggleVisibility();
+//                    return true;
+//                }
+//                return false;
+//            }
+//        });
+//    }
 
+    /**
+     * Show the display
+     */
     public void show() {
         isVisible = true;
         layout.setVisible(isVisible);
@@ -244,6 +274,9 @@ public class EndDayDisplay extends UIComponent {
         this.animateGoldChange();
     }
 
+    /**
+     * Hide the display and triggers the Moral Screen
+     */
     public void hide() {
         /*isVisible = false;
         layout.setVisible(isVisible);
@@ -258,6 +291,9 @@ public class EndDayDisplay extends UIComponent {
         //birdMoveTask.cancel(); // Cancel the task
     }
 
+    /**
+     * Toggle the visibility of the display
+     */
     public void toggleVisibility() {
         if (isVisible) {
             hide();

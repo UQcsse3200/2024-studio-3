@@ -801,6 +801,9 @@ public class ForestGameArea extends GameArea {
     }
   }
 
+  /**
+   * Create the moral decision screen
+   */
   private void createMoralScreen() {
     Entity moralScreen = new Entity();
     moralScreen
@@ -809,6 +812,9 @@ public class ForestGameArea extends GameArea {
     ServiceLocator.getEntityService().registerMoral(moralScreen);
   }
 
+  /**
+   * Create the end day screen
+   */
   private void createEndDayScreen() {
     Entity endDayScreen = new Entity();
     endDayScreen
