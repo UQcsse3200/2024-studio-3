@@ -153,9 +153,9 @@ public class ServiceLocator {
 
   public static void registerGameArea(GameArea game) {
     if (gameArea != null) {
-      logger.warn("Game is already registered!");
+      logger.warn("Game Area is already registered!");
     } else {
-      logger.debug("Registering game");
+      logger.debug("Registering Game Area");
       gameArea = game;
     }
   }
