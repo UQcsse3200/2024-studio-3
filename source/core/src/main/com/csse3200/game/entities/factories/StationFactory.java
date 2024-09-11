@@ -225,7 +225,7 @@ public class StationFactory {
             .addComponent(new StationServingComponent());
     submission.getComponent(InteractionComponent.class).setAsBox(submission.getScale());
     submission.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
-    PhysicsUtils.setScaledCollider(submission, 0.3f, 0.2f);
+    PhysicsUtils.setScaledCollider(submission, 1f, 1f);
 
     AnimationRenderComponent animator =
             new AnimationRenderComponent(
