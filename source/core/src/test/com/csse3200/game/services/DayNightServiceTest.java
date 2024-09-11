@@ -32,7 +32,15 @@ public class DayNightServiceTest {
         verify(mockEndDayEventHandler).trigger("endOfDay");
     }
 
-    @Test
+
+    /**
+     * *********This tests whether the day cycle loop continues for the new day, BUT:********
+     *
+     * This test is commented out since a new day would not get triggered as per
+     * team 6 request. It was a working test prior to this design change. It would work when team 6
+     * extends functionality for multiple days.
+     */
+/*    @Test
     public void testDecisionAndAnimationDone() {
         GameTime gameTime = mock(GameTime.class);
         ServiceLocator.registerTimeSource(gameTime);
@@ -46,10 +54,9 @@ public class DayNightServiceTest {
             isNewDay.set(true);
         });
 
-        // Using "animationDone" as per Team 6 request. Not originally intended.
+        // These don't get triggered as per Team 6 request. Not originally intended.
         enddayEventHandler.trigger("decisionDone");
         enddayEventHandler.trigger("animationDone");
         Assertions.assertTrue(isNewDay.get());
-    }
-
+    }*/
 }

@@ -13,7 +13,7 @@ import com.csse3200.game.events.EventHandler;
  */
 public class DayNightService {
     private static final Logger logger = LoggerFactory.getLogger(DayNightService.class);
-    public  long FIVE_MINUTES = 5 * 60 * 1000; // 5 minutes in milliseconds
+    public  long FIVE_MINUTES = 10 * 1000; // 5 minutes in milliseconds
     public long lastCheckTime;
     public long lastCheckTime2;
     private final GameTime gameTime;
@@ -47,8 +47,8 @@ public class DayNightService {
     /**
      * Sets up event listeners for handling end-of-day and timer-related events.
      *
-     * Our working version was with the "decisionDone" listener, however, we limited our
-     * Day cycle to end for just one day on request of Team 6 and added an "animationDone" listener
+     * Our working version was with the "decisionDone" listener, however, we commented it out and
+     * limited our Day cycle to end for just one day on request of Team 6 and added an "animationDone" listener
      * instead for when team 6 extends their functionality for multiple days.
      * This should listen to a trigger for when the animation is done executing at the end of a day,
      * but currently team 6 has decided to keep it simple and end the game in one day.
@@ -56,7 +56,7 @@ public class DayNightService {
     public void create() {
         // ***Working version of Day cycle used "decisionDone"***
         // enddayEventHandler.addListener("decisionDone", this::startNewDay);
-        enddayEventHandler.addListener("animationDone", this::startNewDay);
+        // enddayEventHandler.addListener("animationDone", this::startNewDay);
 
         enddayEventHandler.addListener("callpastsecond", this::updatepastSecond);
     }
