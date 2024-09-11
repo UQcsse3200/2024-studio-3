@@ -223,11 +223,11 @@ public class ForestGameArea extends GameArea {
     winLoseComponent = new CheckWinLoseComponent(winAmount, loseThreshold);
     player.addComponent(winLoseComponent);  // Attach component to player entity
 
-    //ServiceLocator.getEntityService().getEvents().trigger("SetText", "Boss: Rent is due");
+    ServiceLocator.getPlayerService().getEvents().addListener("endGame", this::checkEndOfDayGameState);
 
 
     // Check and trigger win/lose state
-    checkEndOfDayGameState();
+    //checkEndOfDayGameState();
 
     createMoralScreen();
     createEndDayScreen();
