@@ -661,6 +661,10 @@ public class ForestGameArea extends GameArea {
     spawnController.getEvents().addListener(PersonalCustomerEnums.MOONKI.name(), this::spawnMoonki);
     spawnController.getEvents().addListener(PersonalCustomerEnums.BASIC_SHEEP.name(), this::spawnBasicSheep);
     spawnController.getEvents().addListener(PersonalCustomerEnums.BASIC_CHICKEN.name(), this::spawnBasicChicken);
+
+    // Called on the game area as this can happen in any game area
+    spawnController.getEvents().addListener("SpawnFlame", this::spawnFlame);
+
     return spawnController;
   }
 
