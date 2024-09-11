@@ -69,8 +69,8 @@ public class PlayerFactory {
             .addComponent(new ColliderComponent())
             .addComponent(new HitboxComponent().setLayer(PhysicsLayer.PLAYER))
             .addComponent(new PlayerActions())
-            .addComponent(new CombatStatsComponent(config.health, config.baseAttack))
-            .addComponent(new InventoryComponent(config.inventorySize, ServiceLocator.getLevelService().getCurrGold())) //config.gold
+            .addComponent(new CombatStatsComponent(config.health, config.baseAttack, ServiceLocator.getLevelService().getCurrGold()))
+            .addComponent(new InventoryComponent(config.inventorySize))
             .addComponent(new InventoryDisplay())
             .addComponent(inputComponent)
             .addComponent(animator)
