@@ -82,7 +82,11 @@ public class EndDayDisplay extends UIComponent {
         stage.addActor(layout);
 
         ServiceLocator.getDocketService().getEvents().addListener("goldUpdated", this::handleGoldUpdate);
-        ServiceLocator.getEntityService().getEvents().addListener("spawnCustomer", this::updateCustomerList);
+        //ServiceLocator.getEntityService().getEvents().addListener("spawnCustomer", this::updateCustomerList);
+
+        ServiceLocator.getLevelService().getEvents().addListener("customerSpawned", this::updateCustomerList);
+
+
         ServiceLocator.getEntityService().getEvents().addListener("toggleEndDayScreen", this::toggleVisibility);
 
         // Create a background
@@ -95,6 +99,7 @@ public class EndDayDisplay extends UIComponent {
         layout.setBackground(whiteBackground);
 
         setupImages();
+
 
         initializeUI();
 
@@ -118,6 +123,34 @@ public class EndDayDisplay extends UIComponent {
 //        System.out.println("999");
 //    }
 
+
+
+    private void setupCustomerLists() {
+        // Customer lists
+        List<String> passedCustomers = new List<>(skin);
+        List<String> failedCustomers = new List<>(skin);
+        customerList = new List<>(skin);
+        Table listTable = new Table();
+
+        Label passedLabel = new Label("Passed Customers", skin);
+        passedLabel.setFontScale(1.2f);
+        Label failedLabel = new Label("Failed Customers", skin);
+        failedLabel.setFontScale(1.2f);
+
+        listTable.add(passedLabel).pad(10).center();
+        listTable.add(failedLabel).pad(10).center().row();
+
+        ScrollPane passedScrollPane = new ScrollPane(passedCustomers, skin);
+        passedScrollPane.setSmoothScrolling(true);
+
+        ScrollPane failedScrollPane = new ScrollPane(customerList, skin);
+        failedScrollPane.setSmoothScrolling(true);
+
+        listTable.add(passedScrollPane).pad(10).expand().width(400).fillY();
+        listTable.add(failedScrollPane).pad(10).expand().width(400).fillY().row();
+
+        layout.add(listTable).expand().fill().row();
+    }
     private void updateCustomerList(String customerName) {
         customerNameArray.add(customerName);
         customerList.setItems(customerNameArray.toArray(new String[0]));
@@ -193,30 +226,33 @@ public class EndDayDisplay extends UIComponent {
 //
 //        layout.add(listTable).expand().fill().row();
 
-        // Customer lists
-        List<String> passedCustomers = new List<>(skin);
-        List<String> failedCustomers = new List<>(skin);
-        customerList = new List<>(skin);
-        Table listTable = new Table();
+//        // Customer lists
+//        List<String> passedCustomers = new List<>(skin);
+//        List<String> failedCustomers = new List<>(skin);
+//        customerList = new List<>(skin);
+//        Table listTable = new Table();
+//
+//        Label passedLabel = new Label("Passed Customers", skin);
+//        passedLabel.setFontScale(1.2f);
+//        Label failedLabel = new Label("Failed Customers", skin);
+//        failedLabel.setFontScale(1.2f);
+//
+//        listTable.add(passedLabel).pad(10).center();
+//        listTable.add(failedLabel).pad(10).center().row();
+//
+//        ScrollPane passedScrollPane = new ScrollPane(passedCustomers, skin);
+//        passedScrollPane.setSmoothScrolling(true);
+//
+//        ScrollPane failedScrollPane = new ScrollPane(customerList, skin);
+//        failedScrollPane.setSmoothScrolling(true);
+//
+//        listTable.add(passedScrollPane).pad(10).expand().width(400).fillY();
+//        listTable.add(failedScrollPane).pad(10).expand().width(400).fillY().row();
+//
+//        layout.add(listTable).expand().fill().row();
 
-        Label passedLabel = new Label("Passed Customers", skin);
-        passedLabel.setFontScale(1.2f);
-        Label failedLabel = new Label("Failed Customers", skin);
-        failedLabel.setFontScale(1.2f);
-
-        listTable.add(passedLabel).pad(10).center();
-        listTable.add(failedLabel).pad(10).center().row();
-
-        ScrollPane passedScrollPane = new ScrollPane(passedCustomers, skin);
-        passedScrollPane.setSmoothScrolling(true);
-
-        ScrollPane failedScrollPane = new ScrollPane(customerList, skin);
-        failedScrollPane.setSmoothScrolling(true);
-
-        listTable.add(passedScrollPane).pad(10).expand().width(400).fillY();
-        listTable.add(failedScrollPane).pad(10).expand().width(400).fillY().row();
-
-        layout.add(listTable).expand().fill().row();
+        //Csutomer try
+        setupCustomerLists();
 
 
         // Close button
