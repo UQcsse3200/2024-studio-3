@@ -46,7 +46,7 @@ public class StationFactory {
         .addComponent(new TooltipsDisplay())
         .addComponent(new StationCookingComponent())
         .addComponent(new StationItemHandlerComponent("oven", new ArrayList<>()))
-        .addComponent(new InventoryComponent(1, 0));
+        .addComponent(new InventoryComponent(1));
 
     
     oven.scaleHeight(0.64f);
@@ -73,7 +73,7 @@ public class StationFactory {
         .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
         .addComponent(new InteractionComponent(PhysicsLayer.INTERACTABLE))
         .addComponent(new TooltipsDisplay())
-        .addComponent(new InventoryComponent(1, 0))
+        .addComponent(new InventoryComponent(1))
         .addComponent(new StationCookingComponent())  
         .addComponent(new StationItemHandlerComponent("stove", new ArrayList<>()));
 
@@ -119,7 +119,7 @@ public class StationFactory {
             .addComponent(new InteractionComponent(PhysicsLayer.INTERACTABLE))
             .addComponent(new TooltipsDisplay())
             .addComponent(new StationCollectionComponent())
-            .addComponent(new InventoryComponent(1, 0))
+            .addComponent(new InventoryComponent(1))
             .addComponent(new IngredientStationHandlerComponent("apples"));
 
     //apple.getComponent(InventoryComponent.class).addItem(new ItemComponent("Apples", ItemType.APPLE, 1));
@@ -169,7 +169,7 @@ public class StationFactory {
             .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
             .addComponent(new InteractionComponent(PhysicsLayer.INTERACTABLE))
             .addComponent(new TooltipsDisplay())
-            .addComponent(new InventoryComponent(1, 0));
+            .addComponent(new InventoryComponent(1));
             // Change this handler to the combining one
             //.addComponent(new StationItemHandlerComponent("benchTop", new ArrayList<>()));
 
@@ -197,7 +197,7 @@ public class StationFactory {
             .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
             .addComponent(new InteractionComponent(PhysicsLayer.INTERACTABLE))
             .addComponent(new TooltipsDisplay())
-            .addComponent(new InventoryComponent(1, 0));
+            .addComponent(new InventoryComponent(1));
             // Change this handler to the combining one
             //.addComponent(new StationItemHandlerComponent("benchMiddle", new ArrayList<>()));
 
@@ -227,7 +227,7 @@ public class StationFactory {
             .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
             .addComponent(new InteractionComponent(PhysicsLayer.INTERACTABLE))
             .addComponent(new TooltipsDisplay())
-            .addComponent(new InventoryComponent(1, 0))
+            .addComponent(new InventoryComponent(1))
             .addComponent(new StationServingComponent());
 
 
@@ -256,7 +256,7 @@ public class StationFactory {
         .addComponent(new PhysicsComponent())
         .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
         .addComponent(new StationItemHandlerComponent(type, new ArrayList<>()))
-        .addComponent(new InventoryComponent(1,0));
+        .addComponent(new InventoryComponent(1));
 
     station.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
     station.getComponent(TextureRenderComponent.class).scaleEntity();

@@ -1,6 +1,8 @@
 package com.csse3200.game.areas;
 
 
+import com.csse3200.game.components.maingame.EndDayDisplay;
+import com.csse3200.game.components.moral.MoralDecision;
 import com.csse3200.game.components.npc.PersonalCustomerEnums;
 import com.badlogic.gdx.utils.Null;
 import com.csse3200.game.components.cutscenes.GoodEnd;
@@ -9,6 +11,7 @@ import com.csse3200.game.components.maingame.TextDisplay;
 import com.csse3200.game.components.ordersystem.TicketDetails;
 import com.csse3200.game.entities.benches.Bench;
 import com.csse3200.game.entities.configs.PlayerConfig;
+import com.csse3200.game.screens.MoralDecisionDisplay;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.badlogic.gdx.audio.Music;
@@ -25,6 +28,7 @@ import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.entities.factories.PlayerFactory;
 import com.csse3200.game.entities.factories.StationFactory;
 import com.csse3200.game.entities.factories.ItemFactory;
+import com.csse3200.game.entities.factories.PlateFactory;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.utils.math.GridPoint2Utils;
@@ -32,8 +36,9 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
-//import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeUnit;
 
 /** Forest area for the demo game with trees, a player, and some enemies. */
 public class ForestGameArea extends GameArea {
@@ -41,7 +46,7 @@ public class ForestGameArea extends GameArea {
   private static final int NUM_TREES = 7;
   private static final int NUM_GHOSTS = 2;
   private static final int NUM_CUSTOMERS_BASE = 1;
-  private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(5, 4);
+  private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(5, 3);
   private static final float WALL_WIDTH = 0.1f;
   private static final String[] forestTextures = {
     "images/special_NPCs/boss.png",
@@ -71,7 +76,6 @@ public class ForestGameArea extends GameArea {
     "images/ingredients/cooked_beef.png",
     "images/ingredients/burnt_beef.png",
     "images/tiles/orange_tile.png",
-    "images/tiles/bench_test.png",
     "images/tiles/blue_tile.png",
     "images/stations/oven.png",
     "images/stations/stove.png",
@@ -116,7 +120,15 @@ public class ForestGameArea extends GameArea {
     "images/frame/topright_door.png",
     "images/frame/bottomleft_door.png",
     "images/frame/bottomright_door.png",
-    "images/frame/wall.png"
+    "images/frame/wall.png",
+          "images/platecomponent/cleanplate.png",
+          "images/platecomponent/dirtyplate.png",
+          "images/platecomponent/stackplate.png",
+          "images/platecomponent/stackedplates/1plates.png",
+          "images/platecomponent/stackedplates/2plates.png",
+          "images/platecomponent/stackedplates/3plates.png",
+          "images/platecomponent/stackedplates/4plates.png",
+          "images/platecomponent/stackedplates/5plates.png"
   };
   private static final String[] forestTextureAtlases = {
     "images/terrain_iso_grass.atlas", 
@@ -130,6 +142,44 @@ public class ForestGameArea extends GameArea {
     "images/player.atlas", 
     "images/fireExtinguisher/atlas/flame.atlas", 
     "images/stations/oven/oven.atlas"
+    "images/terrain_iso_grass.atlas", 
+    "images/ghost.atlas", 
+    "images/ghostKing.atlas", 
+    "images/animal_images/gorilla.atlas",
+    "images/animal_images/goose.atlas", 
+    "images/animal_images/goat.atlas", 
+    "images/animal_images/monkey.atlas",
+    "images/animal_images/snow_wolf.atlas", 
+    "images/fireExtinguisher/atlas/flame.atlas", 
+    "images/player/player.atlas",
+    "images/player/acaiBowl.atlas", 
+    "images/player/bananaSplit.atlas",
+    "images/player/burntBeef.atlas", 
+    "images/player/choppedAcai.atlas", 
+    "images/player/choppedBanana.atlas", 
+    "images/player/choppedChocolate.atlas", 
+    "images/player/choppedCucumber.atlas", 
+    "images/player/choppedLettuce.atlas", 
+    "images/player/choppedStrawberry.atlas", 
+    "images/player/choppedTomato.atlas", 
+    "images/player/cookedBeef.atlas", 
+    "images/player/cookedFish.atlas", 
+    "images/player/fruitSalad.atlas", 
+    "images/player/rawAcai.atlas", 
+    "images/player/rawBanana.atlas", 
+    "images/player/rawBeef.atlas", 
+    "images/player/rawChocolate.atlas", 
+    "images/player/rawCucumber.atlas", 
+    "images/player/rawFish.atlas", 
+    "images/player/rawLettuce.atlas", 
+    "images/player/rawStrawberry.atlas", 
+    "images/player/rawTomato.atlas", 
+    "images/player/salad.atlas",
+    "images/player/steak.atlas", 
+    "images/player/playerPlate.atlas", 
+    "images/player/playerDirtyPlate.atlas", 
+    "images/player/playerFireExtinguisher.atlas"
+
   };
   private static final String[] forestSounds = {"sounds/Impact4.ogg"};
   private static final String backgroundMusic = "sounds/BGM_03_mp3.mp3";
@@ -149,6 +199,8 @@ public class ForestGameArea extends GameArea {
     super();
     this.terrainFactory = terrainFactory;
     //this.textDisplay = textDisplay;
+
+    ServiceLocator.registerGameArea(this);
   }
 
   /** Create the game area, including terrain, static entities (trees), dynamic entities (player) */
@@ -162,10 +214,13 @@ public class ForestGameArea extends GameArea {
     // Spawn the restaurant
     spawnDoor();
     spawnWall();
-    spawnBenches();
     make_border();
 
+
     //ticketDetails();
+
+
+    spawnBenches();
 
     spawnStations();
     // Spawn beef
@@ -173,14 +228,25 @@ public class ForestGameArea extends GameArea {
     spawnStrawberry("chopped");
     spawnLettuce("chopped");
     customerSpawnController = spawnCustomerController();
+
+    //spawnplates
+      spawnStackPlate(5); //testplate spawn
+      //spawnPlatewithMeal();
+
     // Spawn the player
     player = spawnPlayer();
     //ServiceLocator.getEntityService().getEvents().trigger("SetText", "Boss: Rent is due");
     //triggerFiredEnd();    // Trigger the fired (bad) ending
-
+    createMoralScreen();
+    createEndDayScreen();
     playMusic();
   }
 
+  /**
+   * Get the Entity containing the customer spawn events
+   *
+   * @return the Entity handling all customer spawn events
+   */
   public Entity getCustomerSpawnController() {
     return customerSpawnController;
   }
@@ -379,7 +445,7 @@ public class ForestGameArea extends GameArea {
      * @param y: y coordinate
      *         note: coordinates begin at bottom left of screen
      */
-  private void spawnBench(String type, int x, int y) {
+  private void spawnBench() {
     //Spawn a flame, this is temporary and for testing purposes
     GridPoint2 flamePos = new GridPoint2(1,1);
     Entity flame = StationFactory.createFlame();
@@ -435,19 +501,8 @@ public class ForestGameArea extends GameArea {
    * Spawns benches around the restaurant
    */
   private void spawnBenches() {
-      List<Bench> benches = new ArrayList<Bench>();
-      benches.add(new Bench("bench3-5", 98, 224));
-      benches.add(new Bench("bench7", 98, 25));
-      benches.add(new Bench("bench2", 96, 72));
-      //benches.add(new Bench("bench6-bottom", 343,27));
-      //benches.add(new Bench("bench6-top", 343,131));
-      //benches.add(new Bench("bench4", 217, 160));
-      //benches.add(new Bench("bench1", 217, 26));
+     spawnBench(); // temporary, spawns a fire extinguisher and a fire (?)
 
-      for (int i = 0; i < benches.size(); i++) {
-          Bench bench = benches.get(i);
-          spawnBench(bench.type, bench.x, bench.y);
-      }
     // Bottom bench row
     spawnSingleBench("left_border", 4, 1f);
     spawnBenchRow("middle", 5, 14, 1f);
@@ -510,6 +565,7 @@ public class ForestGameArea extends GameArea {
     spawnEntityAt(newPlayer, PLAYER_SPAWN, true, true);
     return newPlayer;
   }
+
 
   /**
    * Spawn a fish item.
@@ -745,10 +801,38 @@ public class ForestGameArea extends GameArea {
 //    spawnEntityAt(ghostKing, randomPos, true, true);
 //  }
 
+  /**
+   * Spawn Stack Plate item.
+   * @param quantity - amount of stack.
+   * @return A newPlate entity.
+   */
+  private Entity spawnStackPlate(int quantity) {
+    Entity newPlate = PlateFactory.spawnPlateStack(quantity);
+    GridPoint2 platePosition = new GridPoint2(3, 2);
+    spawnEntityAt(newPlate, platePosition, true, false);
+    newPlate.setScale(1.0f, 1.0f);
+
+    return newPlate;
+  }
+
+  /**
+   * Spawn Stack Plate item but with meals
+   * @return A newPlate entity with meal
+   */
+  private Entity spawnPlatewithMeal() {
+    Entity newPlate = PlateFactory.spawnMealOnPlate(1,"salad");
+    GridPoint2 platePosition = new GridPoint2(6, 4);
+    spawnEntityAt(newPlate, platePosition, true, false);
+    newPlate.setScale(0.8f, 0.8f);
+
+    return newPlate;
+  }
+
+
   private void playMusic() {
     Music music = ServiceLocator.getResourceService().getAsset(backgroundMusic, Music.class);
     music.setLooping(true);
-    music.setVolume(0.3f);
+    music.setVolume(0.008f);
     music.play();
   }
 
@@ -811,6 +895,21 @@ public class ForestGameArea extends GameArea {
     for (Entity entity: ServiceLocator.getEntityService().getEntities()) {
       entity.getEvents().trigger("SetText", text);
     }
+  }
+
+  private void createMoralScreen() {
+    Entity moralScreen = new Entity();
+    moralScreen
+            .addComponent(new MoralDecisionDisplay())
+            .addComponent(new MoralDecision());
+    ServiceLocator.getEntityService().registerMoral(moralScreen);
+  }
+
+  private void createEndDayScreen() {
+    Entity endDayScreen = new Entity();
+    endDayScreen
+            .addComponent(new EndDayDisplay());
+    ServiceLocator.getEntityService().registerEndDay(endDayScreen);
   }
 
   private void triggerGoodEnd() {
