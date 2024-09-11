@@ -11,6 +11,7 @@ import com.csse3200.game.components.ordersystem.*;
 import com.csse3200.game.components.moral.MoralDecision;
 import com.csse3200.game.components.ordersystem.MainGameOrderBtnDisplay;
 import com.csse3200.game.components.ordersystem.OrderActions;
+import com.csse3200.game.components.ordersystem.TicketDetails;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.entities.factories.LevelFactory;
@@ -76,7 +77,6 @@ public class MainGameScreen extends ScreenAdapter {
 		ServiceLocator.registerInputService(new InputService());
 		ServiceLocator.registerPlayerService(new PlayerService());
 		ServiceLocator.registerResourceService(new ResourceService());
-		ServiceLocator.registerOrderActions(new OrderActions(game)); // ?
 
 		ServiceLocator.registerEntityService(new EntityService());
 		ServiceLocator.registerRenderService(new RenderService());
@@ -84,6 +84,8 @@ public class MainGameScreen extends ScreenAdapter {
         ServiceLocator.registerDayNightService(new DayNightService());
 		ServiceLocator.registerLevelService(new LevelService());
 		ServiceLocator.registerGameScreen(this);
+
+		ServiceLocator.registerTicketDetails(new TicketDetails());
 
 		renderer = RenderFactory.createRenderer();
 		renderer.getCamera().getEntity().setPosition(CAMERA_POSITION);
