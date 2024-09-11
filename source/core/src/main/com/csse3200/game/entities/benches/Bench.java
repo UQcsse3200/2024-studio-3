@@ -43,7 +43,7 @@ public class Bench extends Entity{
         float height = 1f;
         bench.setScale(width, height);
         bench.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
-        PhysicsUtils.setScaledCollider(bench, 1.2f, 0.75f);
+        PhysicsUtils.setScaledCollider(bench, 1.05f, 0.75f);
         return bench;
     }
 

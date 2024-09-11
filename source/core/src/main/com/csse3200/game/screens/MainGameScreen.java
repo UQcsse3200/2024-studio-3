@@ -9,6 +9,7 @@ import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.components.maingame.*;
 import com.csse3200.game.components.levels.LevelComponent;
 import com.csse3200.game.components.maingame.MainGameActions;
+import com.csse3200.game.components.moral.MoralDecision;
 import com.csse3200.game.components.ordersystem.MainGameOrderBtnDisplay;
 import com.csse3200.game.components.ordersystem.OrderActions;
 import com.csse3200.game.entities.Entity;
@@ -25,7 +26,6 @@ import com.csse3200.game.rendering.Renderer;
 import com.csse3200.game.services.*;
 import com.csse3200.game.ui.terminal.Terminal;
 import com.csse3200.game.ui.terminal.TerminalDisplay;
-
 import com.csse3200.game.components.maingame.EndDayDisplay;
 import com.csse3200.game.components.maingame.MainGameExitDisplay;
 import com.csse3200.game.components.maingame.TextDisplay;
@@ -100,20 +100,11 @@ public class MainGameScreen extends ScreenAdapter {
 
 	@Override
 	public void render(float delta) {
-		if (isPaused) {
-			renderPauseMenu();
-			return;
+		if (!isPaused) {
+			physicsEngine.update();
+			ServiceLocator.getEntityService().update();
 		}
-
-		physicsEngine.update();
-		ServiceLocator.getEntityService().update();
 		renderer.render();
-	}
-
-	private void renderPauseMenu() {
-		Stage stage = ServiceLocator.getRenderService().getStage();
-		stage.act();
-		stage.draw();
 	}
 
 	@Override
@@ -189,12 +180,8 @@ public class MainGameScreen extends ScreenAdapter {
 			.addComponent(new TerminalDisplay())
 			.addComponent(new OrderActions(this.game))
 			.addComponent(new MainGameOrderBtnDisplay())
-			.addComponent(new PauseMenuDisplay(this))
-			.addComponent(new PauseMenuActions(this.game))
-			.addComponent(new TextDisplay(this))
 		        .addComponent(new EndDayDisplay(this, this.game))
 				.addComponent(new TextDisplay(this));
 		ServiceLocator.getEntityService().register(ui);
 	}
-
 }
