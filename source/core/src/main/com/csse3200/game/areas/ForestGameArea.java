@@ -229,7 +229,9 @@ public class ForestGameArea extends GameArea {
     playMusic();
   }
 
-
+  /***
+   * Checks using the checkWinLoseComponent if to call a cutscene and which one to call
+   */
   private void checkEndOfDayGameState() {
     String gameState = player.getComponent(CheckWinLoseComponent.class).checkGameState();
 
