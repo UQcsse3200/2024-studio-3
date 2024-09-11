@@ -32,10 +32,10 @@ public class MainMenuDisplay extends UIComponent {
 
   private float startX=0,startY=0,endX=500,endY=500,duration=8,degrees=1000,rotate_duration=10;
 
-  private int number_of_animals=4;
+  private int number_of_animals=10;
   private Image animals[]=new Image[number_of_animals];
-  private String list_of_animals[]={"cat","pig","duck","meat"};
-  private int animal_on_screen=2;
+  private String list_of_animals[]={"thegoat","goos","gorill","monki","wolf","raw_acai","raw_banana","chopped_strawb","chopped_chocolate","salad"};
+  private int animal_on_screen=3;
 
 
   private float width_of_screen=Gdx.graphics.getWidth(),height_of_screen=Gdx.graphics.getHeight();

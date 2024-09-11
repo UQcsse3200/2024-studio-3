@@ -29,10 +29,19 @@ public class MainMenuScreen extends ScreenAdapter {
   private final GdxGame game;
   private final Renderer renderer;
   private static final String[] mainMenuTextures = {"images/Beastly.png",
-  "images/main_menu_animals/cat.png",
-  "images/main_menu_animals/duck.png",
-  "images/main_menu_animals/pig.png",
-  "images/main_menu_animals/meat.png"};
+  "images/main_menu_animals/goos.png",
+  "images/main_menu_animals/gorill.png",
+  "images/main_menu_animals/monki.png",
+  "images/main_menu_animals/wolf.png",
+  "images/main_menu_animals/thegoat.png",
+  "images/main_menu_animals/raw_acai.png",
+  "images/main_menu_animals/raw_banana.png",
+  "images/main_menu_animals/chopped_strawb.png",
+  "images/main_menu_animals/chopped_chocolate.png",
+  "images/main_menu_animals/acai_bowl.png",
+  "images/main_menu_animals/salad.png",
+  };
+
 
   public MainMenuScreen(GdxGame game) {
     this.game = game;
