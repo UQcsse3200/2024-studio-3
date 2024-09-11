@@ -53,6 +53,7 @@ public class LevelComponent extends Component {
                 if (numbCustomersSpawned == levelSpawnCap) {
                     logger.info("Hit the spawn limit of {} with {}", getLevelSpawnCap(), getNumbCustomersSpawned());
                     toggleNowSpawning();
+                    triggerEndDayDisplay();
                 }
             }
         }
@@ -69,9 +70,10 @@ public class LevelComponent extends Component {
         int index = rand.nextInt(customerNameArray.size());
         customerSpawnController.getEvents().trigger(customerNameArray.get(index));
         logger.info("Spawned {}", customerNameArray.get(index));
+        ServiceLocator.getLevelService().getEvents().trigger("customerSpawned", customerNameArray.get(index));
     }
 
-    public void setGameArea (ForestGameArea newGameArea) {
+    public void setGameArea(ForestGameArea newGameArea) {
         gameArea = newGameArea;
         setCustomerSpawnController(gameArea.getCustomerSpawnController());
     }
@@ -134,5 +136,10 @@ public class LevelComponent extends Component {
 
     public void resetCustomerSpawn() {
         numbCustomersSpawned = 0;
+    }
+
+    private void triggerEndDayDisplay() {
+        logger.info("Triggering EndDayDisplay as the day has ended or all customers spawned.");
+        ServiceLocator.getLevelService().getEvents().trigger("endDayDisplay"); // Trigger an event for the display
     }
 }
