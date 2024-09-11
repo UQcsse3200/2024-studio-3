@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Stack;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.csse3200.game.components.items.IngredientComponent;
 import com.csse3200.game.components.items.ItemType;
+import com.csse3200.game.components.items.PlateComponent;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
 import org.slf4j.Logger;
@@ -92,6 +93,10 @@ public class InventoryDisplay extends UIComponent {
 
         stage.addActor(table);
     }
+    /**
+     * Updates the label to reflect the current item in the first slot of the inventory.
+     * @param item the item in the first slot of the inventory
+     */
 
     private void updateLabel(ItemComponent item) {
         // Update the label with the item information
@@ -205,6 +210,16 @@ public class InventoryDisplay extends UIComponent {
                         entity.getEvents().trigger("updateAnimationEmptyInventory");
                         break;
                 }
+            } else {
+                switch(item.getItemType()) {
+                    case PLATE:
+                        entity.getEvents().trigger("updateAnimationPlate");
+                        break;
+                    case FIREEXTINGUISHER:
+                        entity.getEvents().trigger(
+                            "updateAnimationFireExtinguisher");
+                        break;
+                }
             }
         } else {
             //Updates player sprite back to default
@@ -271,6 +286,6 @@ public class InventoryDisplay extends UIComponent {
 
     @Override
     public void setStage(Stage mock) {
-        
+        this.stage = mock;
     }
 }
