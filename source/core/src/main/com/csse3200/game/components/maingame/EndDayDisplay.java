@@ -8,7 +8,6 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -72,7 +71,6 @@ public class EndDayDisplay extends UIComponent {
         createBackground();
         setupImages();
         setupUI();
-        setupInputListener();
 
         ServiceLocator.getDocketService().getEvents().addListener("goldUpdated", this::handleGoldUpdate);
         ServiceLocator.getLevelService().getEvents().addListener("customerSpawned", this::updateCustomerList);
@@ -111,19 +109,6 @@ public class EndDayDisplay extends UIComponent {
         setupGoldDisplay();
         setupCustomerLists();
         addCloseButton();
-    }
-
-    private void setupInputListener() {
-        stage.addListener(new InputListener() {
-            @Override
-            public boolean keyDown(InputEvent event, int keycode) {
-                if (keycode == com.badlogic.gdx.Input.Keys.P) {
-                    toggleVisibility();
-                    return true;
-                }
-                return false;
-            }
-        });
     }
 
     private void addSpacer() {
@@ -238,7 +223,6 @@ public class EndDayDisplay extends UIComponent {
 
     private void animateGoldChange() {
         float duration = 1.0f;
-        //int startGold = ServiceLocator.getLevelService().getCurrGold();
         goldLabel.addAction(Actions.sequence(
                 Actions.run(() -> goldLabel.setText(String.valueOf(STARTING_GOLD))),
                 Actions.repeat(30, Actions.run(new Runnable() {
