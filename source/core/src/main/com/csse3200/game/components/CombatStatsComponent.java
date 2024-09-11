@@ -1,5 +1,6 @@
 package com.csse3200.game.components;
 
+import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12,11 +13,18 @@ public class CombatStatsComponent extends Component {
 
   private static final Logger logger = LoggerFactory.getLogger(CombatStatsComponent.class);
   private int health;
+  private int gold;
   private int baseAttack;
 
   public CombatStatsComponent(int health, int baseAttack) {
     setHealth(health);
     setBaseAttack(baseAttack);
+  }
+
+  public CombatStatsComponent(int health, int baseAttack, int gold) {
+    setHealth(health);
+    setBaseAttack(baseAttack);
+    setGold(gold);
   }
 
   /**
@@ -87,5 +95,37 @@ public class CombatStatsComponent extends Component {
   public void hit(CombatStatsComponent attacker) {
     int newHealth = getHealth() - attacker.getBaseAttack();
     setHealth(newHealth);
+  }
+
+  /**
+   * Sets the entity's gold. Gold has a minimum bound of 0.
+   *
+   * @param gold gold
+   */
+  public void setGold(int gold) {
+    this.gold = Math.max(gold, 0);
+    if (entity != null) {
+      entity.getEvents().trigger("updateGold", this.gold);
+      ServiceLocator.getLevelService().setCurrGold(this.gold);
+      ServiceLocator.getDocketService().getEvents().trigger("goldUpdated", this.gold);
+    }
+  }
+
+  /**
+   * Adds to the player's gold. The amount added can be negative.
+   *
+   * @param gold gold to add
+   */
+  public void addGold(int gold) {
+    setGold(this.gold + gold);
+  }
+
+  /**
+   * Returns the entity's gold.
+   *
+   * @return entity's gold
+   */
+  public int getGold() {
+    return gold;
   }
 }

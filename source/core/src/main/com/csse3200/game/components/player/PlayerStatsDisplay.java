@@ -10,8 +10,6 @@ import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
 
-import javax.swing.*;
-
 /**
  * A ui component for displaying player stats, e.g. health.
  */
@@ -20,7 +18,9 @@ public class PlayerStatsDisplay extends UIComponent {
   private Image heartImage;
   private Image goldImage;
   private Label healthLabel;
-  private static Label goldLabel;
+  private Label goldLabel;
+  private static Label dayLabel;
+  private static int currentday;
 
   /**
    * Creates reusable ui styles and adds actors to the stage.
@@ -31,6 +31,9 @@ public class PlayerStatsDisplay extends UIComponent {
     addActors();
 
     entity.getEvents().addListener("updateHealth", this::updatePlayerHealthUI);
+    entity.getEvents().addListener("updateGold", this::updatePlayerGoldUI);
+    ServiceLocator.getDayNightService().getEvents().addListener("newday", () -> {
+            updateDay();});
   }
 
   /**
@@ -57,13 +60,18 @@ public class PlayerStatsDisplay extends UIComponent {
     table.row();
 
      goldImage = new Image(ServiceLocator.getResourceService().getAsset("images/money.png", Texture.class));
-//     int gold = entity.getComponent(InventoryComponent.class).getGold(); // InventoryComponent doesn't have a getGold() function.
-//     CharSequence goldText = String.format("Cash: %d", gold);
-//     goldLabel = new Label(goldText, skin, "large");
-     goldLabel = new Label("gold", skin, "large");
+     int gold = entity.getComponent(CombatStatsComponent.class).getGold();
+     CharSequence goldText = String.format("Cash: %d", gold);
+     goldLabel = new Label(goldText, skin, "large");
 
      table.add(goldImage).size(heartSideLength).pad(5);
      table.add(goldLabel);
+     table.row();
+
+    //Label for the Current Day
+    CharSequence dayText = String.format("Day: %d", currentday); // Start with Day 1
+    dayLabel = new Label(dayText, skin, "large");
+    table.add(dayLabel);
     stage.addActor(table);
   }
 
@@ -81,16 +89,31 @@ public class PlayerStatsDisplay extends UIComponent {
     healthLabel.setText(text);
   }
 
-  public static void updatePlayerGoldUI(int gold) {
+  /**
+   * Updates the player's gold on the ui.
+   * @param gold player gold
+   */
+  public void updatePlayerGoldUI(int gold) {
     CharSequence text = String.format("Gold: %d", gold);
     goldLabel.setText(text);
   }
+
+  //used to update the day
+  public static void updateDay() {
+    currentday++;
+    CharSequence dayText = String.format("Day: %d", currentday);
+    dayLabel.setText(dayText);
+  }
+
+
 
   @Override
   public void dispose() {
     super.dispose();
     heartImage.remove();
     healthLabel.remove();
+    goldImage.remove();
+    goldLabel.remove();
   }
 
   @Override

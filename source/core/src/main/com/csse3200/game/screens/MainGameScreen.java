@@ -6,8 +6,8 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.areas.ForestGameArea;
 import com.csse3200.game.areas.terrain.TerrainFactory;
-import com.csse3200.game.components.levels.LevelComponent;
 import com.csse3200.game.components.maingame.MainGameActions;
+import com.csse3200.game.components.moral.MoralDecision;
 import com.csse3200.game.components.ordersystem.MainGameOrderBtnDisplay;
 import com.csse3200.game.components.ordersystem.OrderActions;
 import com.csse3200.game.entities.Entity;
@@ -31,8 +31,6 @@ import com.csse3200.game.components.gamearea.PerformanceDisplay;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.csse3200.game.components.ordersystem.DocketLineDisplay;
-import com.csse3200.game.components.player.InventoryDisplay;
-import java.util.Arrays;
 
 /**
  * The game screen containing the main game.
@@ -47,7 +45,10 @@ public class MainGameScreen extends ScreenAdapter {
 			"images/ordersystem/docket_background.png",
 			"images/ordersystem/pin_line.png",
 			"images/bird.png",
-			"images/textbox.png"
+			"images/point.png",
+			"images/coin.png",
+			"images/textbox.png",
+			"images/inventory_ui/slot.png"
 	};
 	// Modified the camera position to fix layout
 	private static final Vector2 CAMERA_POSITION = new Vector2(7.5f, 6.0f);
@@ -68,12 +69,16 @@ public class MainGameScreen extends ScreenAdapter {
 		physicsEngine = physicsService.getPhysics();
 
 		ServiceLocator.registerInputService(new InputService());
+		ServiceLocator.registerPlayerService(new PlayerService());
 		ServiceLocator.registerResourceService(new ResourceService());
+		ServiceLocator.registerOrderActions(new OrderActions(game)); // ?
 
 		ServiceLocator.registerEntityService(new EntityService());
 		ServiceLocator.registerRenderService(new RenderService());
 		ServiceLocator.registerDocketService(new DocketService());
+        ServiceLocator.registerDayNightService(new DayNightService());
 		ServiceLocator.registerLevelService(new LevelService());
+		ServiceLocator.registerGameScreen(this);
 
 		renderer = RenderFactory.createRenderer();
 		renderer.getCamera().getEntity().setPosition(CAMERA_POSITION);
@@ -93,14 +98,15 @@ public class MainGameScreen extends ScreenAdapter {
 		ServiceLocator.getLevelService().getEvents().trigger("startLevel", currLevel);
 	}
 
-
 	@Override
 	public void render(float delta) {
 		if (!isPaused) {
 			physicsEngine.update();
+			ServiceLocator.getDayNightService().update();
 			ServiceLocator.getEntityService().update();
 		}
 		renderer.render();
+
 	}
 
 	@Override
@@ -135,6 +141,13 @@ public class MainGameScreen extends ScreenAdapter {
 		ServiceLocator.clear();
 	}
 
+	public void resetScreen() {
+		EntityService entityService = ServiceLocator.getEntityService();
+		entityService.dispose();
+		ServiceLocator.registerEntityService(new EntityService());
+		createUI();
+	}
+
 	private void loadAssets() {
 		logger.debug("Loading assets");
 		ResourceService resourceService = ServiceLocator.getResourceService();
@@ -146,6 +159,10 @@ public class MainGameScreen extends ScreenAdapter {
 		logger.debug("Unloading assets");
 		ResourceService resourceService = ServiceLocator.getResourceService();
 		resourceService.unloadAssets(mainGameTextures);
+	}
+
+	public GdxGame getGame() {
+		return game;
 	}
 
 	/**
@@ -169,8 +186,10 @@ public class MainGameScreen extends ScreenAdapter {
 			.addComponent(new TerminalDisplay())
 			.addComponent(new OrderActions(this.game))
 			.addComponent(new MainGameOrderBtnDisplay())
-		        .addComponent(new EndDayDisplay(this))
 				.addComponent(new TextDisplay(this));
+		//temporary moral display
+//			.addComponent(new MoralDisplayTemp(this));
 		ServiceLocator.getEntityService().register(ui);
+		ServiceLocator.registerGameScreen(this);
 	}
 }

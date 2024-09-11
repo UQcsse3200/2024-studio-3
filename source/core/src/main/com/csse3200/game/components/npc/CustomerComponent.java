@@ -18,7 +18,6 @@ public class CustomerComponent extends Component {
     private String name;
     private String preference;
 
-
     public CustomerComponent(BaseCustomerConfig config) {
         this.type = config.type;
         this.patience = config.patience;
@@ -43,7 +42,7 @@ public class CustomerComponent extends Component {
         } else {
             this.reputation = reputation;
         }
-    } //test
+    }
 
     public int getReputation() {
         return this.reputation;
@@ -81,6 +80,15 @@ public class CustomerComponent extends Component {
         return this.name;
     }
 
-    public String getPreference(){return this.preference;}
-    public int getCustomer_id(){return this.Customer_id;}
+    public void setPreference(String preference) {
+        this.preference = preference;
+    }
+
+    public String getPreference() {
+        return this.preference;
+    }
+
+    public int getCustomer_id() {
+        return this.Customer_id;
+    }
 }
