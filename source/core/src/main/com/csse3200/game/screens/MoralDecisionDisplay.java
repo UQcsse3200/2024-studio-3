@@ -13,6 +13,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.csse3200.game.GdxGame;
+import com.badlogic.gdx.utils.TimeUtils;
+import com.csse3200.game.components.Component;
+import com.csse3200.game.entities.Entity;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
 import org.slf4j.Logger;
@@ -28,12 +31,19 @@ public class MoralDecisionDisplay extends UIComponent {
     private final MainGameScreen game;
     private Image characterImage;
     private String question = "Set Question";
+    private Label timerLabel; // Timer label
+    private long startTime; // Track the start time
 
-    public MoralDecisionDisplay(MainGameScreen game) {
-        super();
-        this.game = game;
-        isVisible = false;
-    }
+    private static final long DEFAULT_TIMER = 10000; // 10 seconds (in milliseconds)
+    private long remainingTime; // Remaining time in milliseconds
+
+
+
+//    public MoralDecisionDisplay(MainGameScreen game) {
+//        super();
+//        this.game = game;
+//        isVisible = false;
+//    }
 
     public MoralDecisionDisplay() {
         super();
@@ -101,6 +111,11 @@ public class MoralDecisionDisplay extends UIComponent {
         // add the secondary table to the main table
         layout.add(questionSet).padRight(100).right().row();
 //        setupInputListener();
+        // Timer label setup - Initialize with default timer
+        timerLabel = new Label("Timer: " + (DEFAULT_TIMER / 1000) + "s", skin);
+        layout.add(timerLabel).padLeft(10f).row(); // Add timer label to the layout
+
+
         entity.getEvents().addListener("triggerMoralScreen", this::toggleVisibility);
     }
 
@@ -118,11 +133,16 @@ public class MoralDecisionDisplay extends UIComponent {
 //        });
 //    }
 
-
     private void initialiseUI() {
         Label titleLabel = new Label("moral deiciosn", new Label.LabelStyle(new BitmapFont(), Color.PINK));
         layout.add(titleLabel).pad(10).row();
+    }
 
+
+    private void updateTimerLabel(Label timerLabel, long remainingTime) {
+        // Convert remaining time to seconds and update the label's text
+        String timeLeft = "Timer: " + (remainingTime / 1000) + "s";
+        timerLabel.setText(timeLeft);
     }
 
     public boolean setQuestion(String question) {
@@ -135,6 +155,9 @@ public class MoralDecisionDisplay extends UIComponent {
         isVisible = true;
         layout.setVisible(isVisible);
         game.pause(); // Pause the game when the display is shown
+        startTime = TimeUtils.millis(); // Set the start time when shown
+        remainingTime = DEFAULT_TIMER; // Reset timer to the default value
+
     }
 
     public void hide() {
@@ -153,11 +176,35 @@ public class MoralDecisionDisplay extends UIComponent {
         }
     }
 
+    public boolean getVisible() {
+        return this.isVisible;
+    }
+
     @Override
     public void update() {
         super.update();
         layout.clear();
         this.create();
+
+
+        // time stuff
+        if (isVisible) {
+            // Calculate the elapsed time since the moral decision screen was shown
+            long elapsedTime = TimeUtils.timeSinceMillis(startTime);
+
+            // Calculate the remaining time by subtracting the elapsed time from the default timer
+            remainingTime = DEFAULT_TIMER - elapsedTime;
+
+            // If there's still time left, update the label with the remaining time in seconds
+            if (remainingTime > 0) {
+                // Replace the timer text in the timer label
+                updateTimerLabel(timerLabel, remainingTime);
+
+            } else {
+                // If the time has expired, hide the moral decision screen
+                hide();
+            }
+        }
     }
 
     @Override
