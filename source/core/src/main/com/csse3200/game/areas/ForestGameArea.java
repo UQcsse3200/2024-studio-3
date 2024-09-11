@@ -830,7 +830,9 @@ public class ForestGameArea extends GameArea {
     return newPlate;
   }
 
-
+  /**
+   * Plays the background music
+   */
   private void playMusic() {
     Music music = ServiceLocator.getResourceService().getAsset(backgroundMusic, Music.class);
     music.setLooping(true);
@@ -886,7 +888,10 @@ public class ForestGameArea extends GameArea {
     executor.submit(() -> {
       try {
         spawnBoss();
-        Thread.sleep(20000);
+        Thread.sleep(10000);
+        createTextBox("You *oink* two-legged moron! You're ruining my " +
+                "business' *oink* reputation! Get out!");
+        Thread.sleep(10000);
         app.exit();
       } catch (InterruptedException e) {
         Thread.currentThread().interrupt();
@@ -904,7 +909,10 @@ public class ForestGameArea extends GameArea {
     executor.submit(() -> {
       try {
         spawnBoss();
-        Thread.sleep(5000);
+        Thread.sleep(10000);
+        createTextBox("You *oink* amazing critter! You're a master! " +
+                "Enjoy a 40c raise for your efforts!");
+        Thread.sleep(10000);
         app.exit();
       } catch (InterruptedException e) {
         Thread.currentThread().interrupt();
