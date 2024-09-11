@@ -35,7 +35,7 @@ public class MainMenuDisplay extends UIComponent {
   private int number_of_animals=10;
   private Image animals[]=new Image[number_of_animals];
   private String list_of_animals[]={"thegoat","goos","gorill","monki","wolf","raw_acai","raw_banana","chopped_strawb","chopped_chocolate","salad"};
-  private int animal_on_screen=3;
+  private int animal_on_screen=2;
 
 
   private float width_of_screen=Gdx.graphics.getWidth(),height_of_screen=Gdx.graphics.getHeight();
