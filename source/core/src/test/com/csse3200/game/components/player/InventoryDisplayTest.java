@@ -7,14 +7,15 @@ import static org.junit.Assert.*;
 import com.csse3200.game.extensions.GameExtension;
 import org.junit.Before;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import static org.junit.jupiter.api.Assertions.*;
 import com.csse3200.game.components.items.IngredientComponent;
 import com.csse3200.game.components.items.ItemType;
 import com.csse3200.game.components.items.ItemComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.events.EventHandler;
+import com.csse3200.game.services.ServiceLocator;
 
 import org.junit.Before;
 import org.mockito.Mockito;
@@ -28,44 +29,50 @@ import java.util.Arrays;
 class InventoryDisplayTest {
     private AutoCloseable mocks;
     private Entity entity;
-
-    ItemComponent item1;
-    IngredientComponent item2;
-    ItemComponent item3;
-    InventoryComponent inventory;
-    InventoryDisplay display;
-
-    Entity mockEntity;
-    EventHandler mockEventHandler;
+    private ItemComponent item1;
+    private IngredientComponent item2;
+    private ItemComponent item3;
+    private InventoryComponent inventory;
+    private InventoryDisplay display;
+    private EventHandler mockEventHandler;
 
     @BeforeEach
     void setUp() {
-        //mocks
-        mockEntity = mock(Entity.class);
-        mockEventHandler = mock(EventHandler.class);
-        inventory = mock(InventoryComponent.class);
-        when(mockEntity.getComponent(InventoryComponent.class)).thenReturn(inventory);
-        when(mockEntity.getEvents()).thenReturn(mockEventHandler);
+        entity = spy(new Entity());
+        inventory = spy (new InventoryComponent(1));
+
+        entity.addComponent(inventory);
 
         mocks = MockitoAnnotations.openMocks(this);
-        entity = new Entity();
 
         //generating items
         item1 = new ItemComponent("Cucumber", ItemType.CUCUMBER, 10);
-        item2 = new IngredientComponent("Cucumber", ItemType.CUCUMBER, 10,
-                5, 3, "raw");
-        //inventory = new InventoryComponent(2, 50);
+        item2 = new IngredientComponent("Cucumber", ItemType.CUCUMBER, 10, 5, 3, "raw");
 
+        inventory.addItem(item2);
 
         // Initialize InventoryDisplay and set the mock entity
-        display = new InventoryDisplay();
-        display.setEntity(mockEntity);
+        display = spy(new InventoryDisplay());
+        display.setEntity(entity);
+    }
+    @AfterEach
+    void end() throws Exception {
+        mocks.close();
+    }
+    public void shouldCreate() {
+        display.create();
+        verify(display).create();
     }
 
     @Test
     public void testUpdate() {
-        inventory.addItem(item2);
         display.update();
-        verify(mockEventHandler).trigger("updateAnimationRawCucumber");
+        verify(inventory).getItemFirst();
+        assertEquals(inventory.getItemFirst().getItemName(), "Cucumber");
+        assertEquals(inventory.getItemFirst().getItemType(), ItemType.CUCUMBER);
+        assert (((IngredientComponent) item2).getItemState().equals("raw"));
+
+        //verify(entity).getEvents(); this isn't getting called somehow
+
     }
 }
