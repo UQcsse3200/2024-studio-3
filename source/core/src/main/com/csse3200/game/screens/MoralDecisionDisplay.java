@@ -23,7 +23,6 @@ public class MoralDecisionDisplay extends UIComponent {
     private Table layout; // Layout manager
     private boolean isVisible;
     private final MainGameScreen game;
-
     private Image characterImage;
     private Label timerLabel; // Timer label
     private long startTime; // Track the start time
@@ -79,8 +78,60 @@ public class MoralDecisionDisplay extends UIComponent {
         timerLabel = new Label("Timer: " + (DEFAULT_TIMER / 1000) + "s", new Label.LabelStyle(font, Color.RED));
         layout.add(timerLabel).padLeft(10f).row(); // Add timer label to the layout
 
+
         entity.getEvents().addListener("triggerMoralScreen", this::toggleVisibility);
     }
+
+//    @Override
+//    public void update() {
+//        if (isVisible) {
+//            // Calculate elapsed time since the moral decision screen was shown
+//            long elapsedTime = TimeUtils.timeSinceMillis(startTime);
+//
+//            // Calculate remaining time by subtracting the elapsed time from the default timer
+//            remainingTime = DEFAULT_TIMER - elapsedTime;
+//
+//
+//            // Update the timer and background if there's still time left
+//            if (remainingTime > 0) {
+//                // Update the label with remaining time in seconds
+//                timerLabel.setText("Timer: " + (remainingTime / 1000) + "s");
+//
+//                // Optionally, update the visual background here if needed
+//            } else {
+//                // If the time has expired, hide the moral decision screen
+//                hide();
+//            }
+//        }
+//    }
+
+    @Override
+    public void update() {
+        if (isVisible) {
+            // Calculate the elapsed time since the moral decision screen was shown
+            long elapsedTime = TimeUtils.timeSinceMillis(startTime);
+
+            // Calculate the remaining time by subtracting the elapsed time from the default timer
+            remainingTime = DEFAULT_TIMER - elapsedTime;
+
+            // If there's still time left, update the label with the remaining time in seconds
+            if (remainingTime > 0) {
+                // Replace the timer text in the timer label
+                updateTimerLabel(timerLabel, remainingTime);
+
+            } else {
+                // If the time has expired, hide the moral decision screen
+                hide();
+            }
+        }
+    }
+
+    private void updateTimerLabel(Label timerLabel, long remainingTime) {
+        // Convert remaining time to seconds and update the label's text
+        String timeLeft = "Timer: " + (remainingTime / 1000) + "s";
+        timerLabel.setText(timeLeft);
+    }
+
 
     public void show() {
         isVisible = true;
@@ -88,6 +139,7 @@ public class MoralDecisionDisplay extends UIComponent {
         game.pause(); // Pause the game when the display is shown
         startTime = TimeUtils.millis(); // Set the start time when shown
         remainingTime = DEFAULT_TIMER; // Reset timer to the default value
+
     }
 
     public void hide() {
@@ -111,29 +163,6 @@ public class MoralDecisionDisplay extends UIComponent {
 
     @Override
     public void setStage(Stage stage) {
-    }
-
-    @Override
-    public void update() {
-        // Only one timer and background in the moral decision, no need for arrays or loops
-        if (isVisible) {
-            // Calculate elapsed time since the moral decision screen was shown
-            long elapsedTime = TimeUtils.timeSinceMillis(startTime);
-
-            // Calculate remaining time by subtracting the elapsed time from the default timer
-            remainingTime = DEFAULT_TIMER - elapsedTime;
-
-            // Update the timer and background if there's still time left
-            if (remainingTime > 0) {
-                // Update the label with remaining time in seconds
-                timerLabel.setText("Timer: " + (remainingTime / 1000) + "s");
-
-                // Optionally, update the visual background here if needed
-            } else {
-                // If the time has expired, hide the moral decision screen
-                hide();
-            }
-        }
     }
 
 }
