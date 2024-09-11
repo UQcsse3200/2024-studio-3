@@ -262,19 +262,13 @@ public class StationFactory {
 
   public static Entity createFlame() {
     Entity flame = new Entity()
-            .addComponent(new FlameComponent())
-            .addComponent(new PhysicsComponent())
-            .addComponent(new InteractionComponent(PhysicsLayer.INTERACTABLE));
+            .addComponent(new FlameComponent());
     AnimationRenderComponent animator =
             new AnimationRenderComponent(
                     ServiceLocator.getResourceService().getAsset("images/fireExtinguisher/atlas/flame.atlas", TextureAtlas.class));
-    System.out.println("Adding flame animation");
     animator.addAnimation("flame", 0.1f, Animation.PlayMode.LOOP);
-    System.out.println("Done adding flame animation");
 
     flame.addComponent(animator);
-
-    flame.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
     return flame;
   }
 }
