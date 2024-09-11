@@ -261,7 +261,9 @@ class MainGameOrderTicketDisplayTest {
 		assertTrue(Math.abs(lastDocketHeight - expectedEnlargedHeight) < 1.0f, "Docket height is not as expected");
 	}
 
-
+	/**
+	 * Tests getting recipe name.
+	 */
 	@Test
 	void testGetRecipeName() {
 		Recipe recipe = orderTicketDisplay.getRecipe();
@@ -269,15 +271,10 @@ class MainGameOrderTicketDisplayTest {
 		assertEquals("acaiBowl", recipe.getName(), "The recipe name should be 'acaiBowl'");
 	}
 
-
-
 	@Test
 	void testGetZIndex() {
 		assertEquals(3f, orderTicketDisplay.getZIndex());
 	}
-
-	// LEFT AND RIGHT DOCKET SHIFT
-
 }
 
 
