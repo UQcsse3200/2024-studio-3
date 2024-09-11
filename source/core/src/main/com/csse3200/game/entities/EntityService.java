@@ -57,7 +57,8 @@ public class EntityService {
    * Update all registered entities. Should only be called from the main game loop.
    */
   public void update() {
-    for (Entity entity : entities) {
+    Array<Entity> entitiesCopy = new Array<>(entities);
+    for (Entity entity : entitiesCopy) {
       entity.earlyUpdate();
       entity.update();
     }
