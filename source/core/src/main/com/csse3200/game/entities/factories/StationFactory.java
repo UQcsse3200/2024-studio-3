@@ -15,6 +15,7 @@ import com.csse3200.game.components.station.StationCollectionComponent;
 import com.csse3200.game.components.station.StationCookingComponent;
 import com.csse3200.game.components.station.StationItemHandlerComponent;
 import com.csse3200.game.components.station.StationServingComponent;
+import com.csse3200.game.components.station.StationMealComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.PhysicsUtils;
@@ -197,7 +198,8 @@ public class StationFactory {
             .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
             .addComponent(new InteractionComponent(PhysicsLayer.INTERACTABLE))
             .addComponent(new TooltipsDisplay())
-            .addComponent(new InventoryComponent(1));
+            .addComponent(new InventoryComponent(1))
+            .addComponent(new StationMealComponent("combining", new ArrayList<>()));
             // Change this handler to the combining one
             //.addComponent(new StationItemHandlerComponent("benchMiddle", new ArrayList<>()));
 
