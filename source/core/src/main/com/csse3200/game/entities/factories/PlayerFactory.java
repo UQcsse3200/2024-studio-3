@@ -79,7 +79,7 @@ public class PlayerFactory {
             .addComponent(new TooltipsDisplay())
             .addComponent(new PlayerStatsDisplay())
             .addComponent(new InteractionComponent(PhysicsLayer.INTERACTABLE))
-            .addComponent(new CheckWinLoseComponent(60, 50))
+            .addComponent(new CheckWinLoseComponent(55, 55))
             .addComponent(new SensorComponent(PhysicsLayer.INTERACTABLE, 10f));
 
     player.scaleHeight(1.5f);
