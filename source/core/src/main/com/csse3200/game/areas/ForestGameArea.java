@@ -221,8 +221,6 @@ public class ForestGameArea extends GameArea {
     // Spawn the player
     player = spawnPlayer();
 
-    //ServiceLocator.getEntityService().getEvents().trigger("SetText", "Boss: Rent is due");
-
     // Check and trigger win/lose state
     ServiceLocator.getDayNightService().getEvents().addListener("endGame", this::checkEndOfDayGameState);
 
@@ -234,10 +232,13 @@ public class ForestGameArea extends GameArea {
 
   private void checkEndOfDayGameState() {
     String gameState = player.getComponent(CheckWinLoseComponent.class).checkGameState();
-
     if ("LOSE".equals(gameState)) {
+      createTextBox("You *oink* two-legged moron! You're ruining my " +
+              "business' *oink* reputation! Get out!");
       triggerFiredEnd();  // Trigger the fired (bad) ending
     } else if ("WIN".equals(gameState)) {
+      createTextBox("You *oink* amazing critter! You're a master! " +
+              "Enjoy a 40c raise for your efforts!");
       triggerRaiseEnd();  // Trigger the raise (good) ending
     }
   }
@@ -884,9 +885,6 @@ public class ForestGameArea extends GameArea {
     executor.submit(() -> {
       try {
         spawnBoss();
-        Thread.sleep(10000);
-        createTextBox("You *oink* two-legged moron! You're ruining my " +
-                "business' *oink* reputation! Get out!");
         Thread.sleep(20000);
         app.exit();
       } catch (InterruptedException e) {
@@ -904,11 +902,8 @@ public class ForestGameArea extends GameArea {
     ExecutorService executor = Executors.newSingleThreadExecutor();
     executor.submit(() -> {
       try {
-        Thread.sleep(10000);
         spawnBoss();
-        createTextBox("You *oink* amazing critter! You're a master! " +
-                "Enjoy a 40c raise for your efforts!");
-        Thread.sleep(20000);
+        Thread.sleep(5000);
         app.exit();
       } catch (InterruptedException e) {
         Thread.currentThread().interrupt();
