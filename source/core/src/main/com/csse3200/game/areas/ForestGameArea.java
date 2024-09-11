@@ -333,13 +333,13 @@ public class ForestGameArea extends GameArea {
     spawnEntityAt(appleTree, appleTreePos, false, false);
     appleTree.setPosition(appleTree.getPosition().x + 4.2f , appleTree.getPosition().y - 1.3f);
 
-    GridPoint2 serveryPos = new GridPoint2(2,3);
+    GridPoint2 serveryPos = new GridPoint2(1,1);
     Entity servery = StationFactory.createSubmissionWindow();
     spawnEntityAt(servery, serveryPos, false, false);
-    servery.setPosition(servery.getPosition().x + 1, servery.getPosition().y);
+    servery.setPosition(servery.getPosition().x + 2, servery.getPosition().y);
     servery = StationFactory.createSubmissionWindow();
     spawnEntityAt(servery, serveryPos, false, false);
-    servery.setPosition(servery.getPosition().x + 1, servery.getPosition().y - 0.5f);
+    servery.setPosition(servery.getPosition().x + 2, servery.getPosition().y - 0.5f);
 
     // Bench
     GridPoint2 middlePos = new GridPoint2(5,4);
