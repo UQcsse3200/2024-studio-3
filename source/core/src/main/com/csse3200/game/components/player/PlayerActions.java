@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.csse3200.game.components.Component;
+import com.csse3200.game.components.TooltipsDisplay;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.components.SensorComponent;
@@ -49,18 +50,19 @@ public class PlayerActions extends Component {
     interactionSensor.update();
     Fixture interactable = interactionSensor.getClosestFixture();
     if (interactable != null) {
+      Vector2 objectPosition = interactable.getBody().getPosition();  // Get object position
+//      System.out.println("Interactable object found at: " + objectPosition);
+      String interactionKey = "Press E";
+      String itemName = "to interact";
+      // Create a TooltipInfo object with the text and position
+      TooltipsDisplay.TooltipInfo tooltipInfo = new TooltipsDisplay.TooltipInfo(interactionKey + " " + itemName, objectPosition);
 
-      //This is where you show the tooltip / outline for the closest station
-      String interactionKey = "Press E ";  // Hardcoded for simplicity, could be dynamic
-      String itemName = "Some Task";  // Placeholder for actual item name
-      // Trigger show tooltip event with interaction details
-      entity.getEvents().trigger("showTooltip", interactionKey + ": " + itemName);
+      // Trigger the event with the TooltipInfo object
+      entity.getEvents().trigger("showTooltip", tooltipInfo);
 
     } else {
-      // Hide tooltip if no interactable is nearby
       entity.getEvents().trigger("hideTooltip");
     }
-
   }
 
   private void updateSpeed() {
