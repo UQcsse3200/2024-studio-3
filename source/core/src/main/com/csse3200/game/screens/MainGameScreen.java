@@ -6,8 +6,8 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.areas.ForestGameArea;
 import com.csse3200.game.areas.terrain.TerrainFactory;
-import com.csse3200.game.components.levels.LevelComponent;
 import com.csse3200.game.components.maingame.MainGameActions;
+import com.csse3200.game.components.moral.MoralDecision;
 import com.csse3200.game.components.ordersystem.MainGameOrderBtnDisplay;
 import com.csse3200.game.components.ordersystem.OrderActions;
 import com.csse3200.game.entities.Entity;
@@ -31,8 +31,6 @@ import com.csse3200.game.components.gamearea.PerformanceDisplay;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.csse3200.game.components.ordersystem.DocketLineDisplay;
-import com.csse3200.game.components.player.InventoryDisplay;
-import java.util.Arrays;
 
 /**
  * The game screen containing the main game.
@@ -49,7 +47,8 @@ public class MainGameScreen extends ScreenAdapter {
 			"images/bird.png",
 			"images/point.png",
 			"images/coin.png",
-			"images/textbox.png"
+			"images/textbox.png",
+			"images/inventory_ui/slot.png"
 	};
 	// Modified the camera position to fix layout
 	private static final Vector2 CAMERA_POSITION = new Vector2(7.5f, 6.0f);
@@ -179,8 +178,10 @@ public class MainGameScreen extends ScreenAdapter {
 			.addComponent(new TerminalDisplay())
 			.addComponent(new OrderActions(this.game))
 			.addComponent(new MainGameOrderBtnDisplay())
+//                .addComponent(new MoralDecisionDisplay(this))
 		        .addComponent(new EndDayDisplay(this, this.game))
 				.addComponent(new TextDisplay(this));
 		ServiceLocator.getEntityService().register(ui);
+		ServiceLocator.registerGameScreen(this);
 	}
 }
