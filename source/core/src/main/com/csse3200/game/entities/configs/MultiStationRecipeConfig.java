@@ -6,7 +6,9 @@ import java.util.List;
 public class MultiStationRecipeConfig extends SingleStationRecipeConfig {
     public List<String> fryingPan = new ArrayList<>();
     public List<String> oven = new ArrayList<>();
+    public List<String> blender = new ArrayList<>();
     public int burnedTime = 0;
+
     public List<String> ingredient;
     public List<String> cuttingBoard;
     public int makingTime;
