@@ -70,6 +70,7 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         this.recipe = new Recipe(recipeName);
     }
 
+
     /**
      * Gets recipe data
      *
@@ -78,6 +79,10 @@ public class MainGameOrderTicketDisplay extends UIComponent {
     public Recipe getRecipe() {
         return this.recipe;
     }
+    public String getCurrentRecipeName() {
+        return recipe != null ? recipe.getName() : null;
+    }
+
 
     /**
      * Initialises the display and sets up event listeners for creating and shifting orders.

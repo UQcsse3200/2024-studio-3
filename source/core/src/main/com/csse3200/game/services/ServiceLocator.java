@@ -39,9 +39,13 @@ public class ServiceLocator {
   private static DocketService docketService;
   private static LevelService levelService;
 
-  public static EntityService getEntityService() {
-    return entityService;
-  }
+    // New services (e.g. CustomerMovementService, DialogueService)
+    private static CustomerMovementService customerMovementService;
+
+    // Getters for services
+    public static EntityService getEntityService() {
+        return entityService;
+    }
 
   public static RenderService getRenderService() {
     return renderService;
@@ -86,9 +90,16 @@ public class ServiceLocator {
     return gameScreen;
   }
 
-  public static void registerEntityService(EntityService service) {
-    entityService = service;
-  }
+    // New getters for additional services
+    public static CustomerMovementService getCustomerMovementService() {
+        return customerMovementService;
+    }
+
+
+    // Register methods for services
+    public static void registerEntityService(EntityService service) {
+        entityService = service;
+    }
 
   public static void registerDocketService(DocketService service) {
     if (docketService != null) {
@@ -153,9 +164,9 @@ public class ServiceLocator {
 
   public static void registerGameArea(GameArea game) {
     if (gameArea != null) {
-      logger.warn("Game Area is already registered!");
+      logger.warn("Game is already registered!");
     } else {
-      logger.debug("Registering Game Area");
+      logger.debug("Registering game");
       gameArea = game;
     }
   }
@@ -169,19 +180,31 @@ public class ServiceLocator {
     }
   }
 
-  public static void clear() {
-    entityService = null;
-    renderService = null;
-    physicsService = null;
-    timeSource = null;
-    inputService = null;
-    resourceService = null;
-    docketService = null;
-    orderActions = null;
-    playerService = null;
-    gameArea = null;
-    gameScreen = null;
-  }
+    // New register methods for additional services
+    public static void registerCustomerMovementService(CustomerMovementService service) {
+        if (customerMovementService != null) {
+            logger.warn("CustomerMovementService is being overwritten!");
+        }
+        logger.debug("Registering customer movement service {}", service);
+        customerMovementService = service;
+    }
+
+
+    // Clear all services
+    public static void clear() {
+        entityService = null;
+        renderService = null;
+        physicsService = null;
+        timeSource = null;
+        inputService = null;
+        resourceService = null;
+        docketService = null;
+        orderActions = null;
+        playerService = null;
+        gameArea = null;
+        gameScreen = null;
+        customerMovementService = null;
+    }
 
   private ServiceLocator() {
     throw new IllegalStateException("Instantiating static util class");
