@@ -349,7 +349,7 @@ public class MainGameOrderTicketDisplay extends UIComponent {
      * @param currentHeight current height of the game window screen.
      * @return
      */
-    public static float getScalingFactor(float currentWidth, float currentHeight) {
+    private static float getScalingFactor(float currentWidth, float currentHeight) {
         float widthFactor = currentWidth / 1920;
         float heightFactor = currentHeight / 1080;
         return Math.min(widthFactor, heightFactor);
