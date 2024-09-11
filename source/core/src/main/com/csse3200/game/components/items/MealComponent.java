@@ -17,8 +17,7 @@ public class MealComponent extends ItemComponent {
      * @param ingredients - a list of IngredientComponent objects that make up the meal
      * @param price - an integer representing the price of the meal
      */
-    public MealComponent(String mealName, ItemType mealType, int weight, List<IngredientComponent> ingredients,
-                         int price) {
+    public MealComponent(String mealName, ItemType mealType, int weight, List<IngredientComponent> ingredients, int price) {
         super(mealName, mealType, weight);
         this.ingredients = ingredients;
         this.quality = calculateQuality();
