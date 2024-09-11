@@ -49,8 +49,8 @@ public class StationFactory {
         .addComponent(new InventoryComponent(1, 0));
 
     
-    oven.scaleHeight(1.5f);
-    PhysicsUtils.setScaledCollider(oven, 0.3f, 0.2f);
+    oven.scaleHeight(0.64f);
+    PhysicsUtils.setScaledCollider(oven, 1f, 1f);
 
     // Add station reference
     PhysicsComponent physicsComponent = oven.getComponent(PhysicsComponent.class);

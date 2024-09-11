@@ -20,5 +20,5 @@ public class StationAnimationController extends Component{
 
     
     void animateActive() {animator.startAnimation("Oven");}
-    void animateInactive() {animator.startAnimation("Inactive/Oven");}
+    void animateInactive() {animator.startAnimation("OvenDefault");}
 }
