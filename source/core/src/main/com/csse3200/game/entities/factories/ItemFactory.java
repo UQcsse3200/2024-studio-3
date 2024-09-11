@@ -1,12 +1,18 @@
 package com.csse3200.game.entities.factories;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+
+import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.csse3200.game.components.TooltipsDisplay;
+import com.csse3200.game.components.station.StationItemHandlerComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.components.items.*;
 import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.PhysicsUtils;
 import com.csse3200.game.physics.components.ColliderComponent;
 import com.csse3200.game.physics.components.HitboxComponent;
+import com.csse3200.game.physics.components.InteractionComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.rendering.TextureRenderComponent;
 import java.util.List;
@@ -48,6 +54,7 @@ public class ItemFactory {
                 .addComponent(new IngredientComponent("Beef", ItemType.BEEF, 2, 10,
                         0, cookedLevel))
                 .addComponent(new TextureRenderComponent(String.format("images/ingredients/%s_beef.png", cookedLevel)));
+        beef.getComponent(PhysicsComponent.class).setBodyType(BodyDef.BodyType.StaticBody);
         beef.addComponent(new CookIngredientComponent());
         PhysicsUtils.setScaledCollider(beef, 0.6f, 0.3f);
         beef.getComponent(ColliderComponent.class).setDensity(1.5f);
@@ -109,6 +116,8 @@ public class ItemFactory {
                 .addComponent(new IngredientComponent("Strawberry", ItemType.STRAWBERRY, 1, 3,
                         10, chopLevel))
                 .addComponent(new TextureRenderComponent(String.format("images/ingredients/%s_strawberry.png", chopLevel)));
+
+        strawberry.getComponent(PhysicsComponent.class).setBodyType(BodyDef.BodyType.StaticBody);
         PhysicsUtils.setScaledCollider(strawberry, 0.6f, 0.3f);
         strawberry.getComponent(ColliderComponent.class).setDensity(1.5f);
         return strawberry;
@@ -123,6 +132,7 @@ public class ItemFactory {
         Entity lettuce = createTemplateItem()
                 .addComponent(new IngredientComponent("Lettuce", ItemType.LETTUCE, 1, 10, 10, chopLevel))
                 .addComponent(new TextureRenderComponent(String.format("images/ingredients/%s_lettuce.png", chopLevel)));
+        lettuce.getComponent(PhysicsComponent.class).setBodyType(BodyDef.BodyType.StaticBody);
         PhysicsUtils.setScaledCollider(lettuce, 0.6f, 0.3f);
         lettuce.getComponent(ColliderComponent.class).setDensity(1.5f);
         return lettuce;
@@ -217,6 +227,7 @@ public class ItemFactory {
         Entity steakMeal = createTemplateItem()
                 .addComponent(new TextureRenderComponent("images/meals/steak_meal.png"))
                 .addComponent(new MealComponent("Steak Meal", ItemType.STEAKMEAL, 3, ingredients, 10));
+
         PhysicsUtils.setScaledCollider(steakMeal, 0.6f, 0.3f);
         steakMeal.getComponent(ColliderComponent.class).setDensity(1.5f);
         return steakMeal;
