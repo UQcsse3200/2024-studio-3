@@ -55,6 +55,7 @@ public class TextDisplay extends UIComponent {
         this.table = new Table();
         this.visible = false;
         this.currentText = new StringBuilder();
+        this.text = new ArrayList<>(); //N! to fix crashing when pressing Enter
     }
     public TextDisplay(MainGameScreen game) {
         super();
@@ -62,6 +63,7 @@ public class TextDisplay extends UIComponent {
         this.table = new Table();
         this.visible = true;
         this.currentText = new StringBuilder();
+        this.text = new ArrayList<>(); //N! to fix crashing when pressing Enter
     }
 
     /***
@@ -127,8 +129,8 @@ public class TextDisplay extends UIComponent {
     }
 
     /***
-     * Sets the text in allocated blocks based on
-     * @param text
+     * Sets the text in allocated blocks based on text limit
+     * @param text - a string which is the text to be displayed
      */
     public void setText(String text) {
         setVisible(true);

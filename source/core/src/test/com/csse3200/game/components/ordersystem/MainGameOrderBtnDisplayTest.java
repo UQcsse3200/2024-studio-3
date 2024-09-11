@@ -42,9 +42,14 @@ class MainGameOrderBtnDisplayTest {
         ServiceLocator.registerDocketService(docketService);
         createOrderBtn = new MainGameOrderBtnDisplay();
         createOrderBtn.setStage(stage);
-        //when(ServiceLocator.getRenderService().getStage()).thenReturn(stage);
+//        when(ServiceLocator.getRenderService().getStage()).thenReturn(stage);
     }
 
+//    @Test
+//    public void testButtonCreation() {
+//        createOrderBtn.addActors();
+//        verify(stage).addActor(any(Table.class));
+//    }
     @Test
     public void testButtonCreation() {
         /*//when(ServiceLocator.getRenderService().getStage()).thenReturn(stage);
@@ -80,5 +85,4 @@ class MainGameOrderBtnDisplayTest {
         createOrderBtn.dispose();
         assertFalse(createOrderBtn.table.hasChildren());
     }
-
 }
