@@ -12,7 +12,7 @@ public class DayNightService {
     private long lastCheckTime;
     private final GameTime gameTime;
     private boolean endOfDayTriggered = false;
-    private final EventHandler enddayEventHandler; 
+    private final EventHandler enddayEventHandler;
 
     public DayNightService() {
         gameTime = ServiceLocator.getTimeSource(); 
@@ -26,7 +26,8 @@ public class DayNightService {
      * Use the create method to set up event listeners for the end-of-day cycle.
      */
     public void create() {
-    enddayEventHandler.addListener("temp", this::startNewDay);
+//        enddayEventHandler.addListener("temp", this::startNewDay);
+        enddayEventHandler.addListener("decisionDone", this::startNewDay);
     }
 
     public void update() {
@@ -44,7 +45,7 @@ public class DayNightService {
      * Starts a new day, updating the day counter, resuming the game time, and resetting orders.
      */
     private void startNewDay() {
-        logger.info("it has been triggered");
+        logger.info("It's a new Day!");
         enddayEventHandler.trigger("newday");
         // // Resume the game time and reset the last check time
         lastCheckTime = gameTime.getTime(); // Reset lastCheckTime to the current time
@@ -55,6 +56,10 @@ public class DayNightService {
     public EventHandler getEvents() {
         return enddayEventHandler;
       }
+
+    public boolean getEndOfDayTriggered() {
+        return endOfDayTriggered;
+    }
 }
 
 

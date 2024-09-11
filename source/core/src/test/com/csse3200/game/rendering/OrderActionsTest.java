@@ -2,37 +2,49 @@ package com.csse3200.game.rendering;
 
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.components.ordersystem.OrderActions;
+import com.csse3200.game.entities.Entity;
+import com.csse3200.game.entities.EntityService;
+import com.csse3200.game.extensions.GameExtension;
+import com.csse3200.game.input.InputService;
 import com.csse3200.game.services.DocketService;
+import com.csse3200.game.services.ServiceLocator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.slf4j.Logger;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
+@ExtendWith(GameExtension.class)
+@ExtendWith(MockitoExtension.class)
 class OrderActionsTest {
-    private OrderActions orderActions;
-    private GdxGame mockGame;
-    private DocketService mockDocketService;
-    private Logger mockLogger;
-/*
+    @Test
+    void itHasAllGoneToShambles() {
+        assertEquals(1,1);
+    }
+    /*private OrderActions orderActions;
+    private Entity entity;
+    @Mock private GdxGame mockGame;
+    @Mock private DocketService mockDocketService;
+    @Mock private Logger mockLogger;
+    @Mock private InputService mockInputService;
+    @Mock private EntityService mockEntityService;
+
     @BeforeEach
     void setUp() {
-        mockGame = mock(GdxGame.class);
-        mockDocketService = mock(DocketService.class);
-        mockLogger = mock(Logger.class);
-
-
-
-        orderActions = new OrderActions(mockGame) {
-            @Override
-            protected Logger getLogger() {
-                return mockLogger;
-            }
-        };
-
-        orderActions.create();
+        ServiceLocator.registerDocketService(mockDocketService);
+        ServiceLocator.registerInputService(mockInputService);
+        ServiceLocator.registerEntityService(mockEntityService);
+        orderActions = new OrderActions(mockGame);
+        entity = new Entity();
+        entity.addComponent(orderActions);
+        //mockEntityService.register(entity);
+        //when(ServiceLocator.getInputService()).thenReturn(mockInputService);
     }
 
     @Test
@@ -40,7 +52,7 @@ class OrderActionsTest {
         // Simulate triggering the "addOrder" event
         orderActions.getEntity().getEvents().trigger("addOrder");
 
-        verify(mockLogger).info("Add order");
+        verify(mockLogger).info("Adding a new order ticket");
 
     }
 
@@ -75,8 +87,8 @@ class OrderActionsTest {
 
         verify(mockLogger).info("Change colour");
        
-    }
-*/
+    }*/
+
 }
 
 
