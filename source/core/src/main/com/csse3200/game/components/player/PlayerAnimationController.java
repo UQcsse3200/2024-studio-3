@@ -9,7 +9,12 @@ import com.csse3200.game.services.ServiceLocator;
 
 public class PlayerAnimationController extends Component {
     AnimationRenderComponent animator;
-    
+
+    /**
+     * Creates the player animation controller
+     * Adds listeners for walk cycle animations
+     * Adds listeners for ingredient animations
+     */
     @Override
     public void create() {
         super.create();
@@ -65,6 +70,12 @@ public class PlayerAnimationController extends Component {
         entity.getEvents().addListener("updateAnimationFruitSalad", this::updateAnimationFruitSalad);
         entity.getEvents().addListener("updateAnimationSalad", this::updateAnimationSalad);
         entity.getEvents().addListener("updateAnimationSteak", this::updateAnimationSteak);
+
+        entity.getEvents().addListener("updateAnimationPlate", this::updateAnimationPlate);
+        entity.getEvents().addListener("updateAnimationDirtyPlate",
+                this::updateAnimationDirtyPlate);
+        entity.getEvents().addListener("updateAnimationFireExtinguisher",
+                this::updateAnimationFireExtinguisher);
     }
     
     void animateLeft() {animator.startAnimation("Character_Left");}
@@ -135,6 +146,10 @@ public class PlayerAnimationController extends Component {
     void updateAnimationFruitSalad(){updateAnimation("fruitSalad.atlas");}
     void updateAnimationSalad(){updateAnimation("salad.atlas");}
     void updateAnimationSteak(){updateAnimation("steak.atlas");}
+
+    void updateAnimationPlate(){updateAnimation("playerPlate.atlas");}
+    void updateAnimationDirtyPlate(){updateAnimation("playerDirtyPlate.atlas");}
+    void updateAnimationFireExtinguisher(){updateAnimation("playerFireExtinguisher.atlas");}
 
     /**
      * Updates player animation to use given atlas, removes and reloads walk cycle
