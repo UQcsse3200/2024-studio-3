@@ -117,13 +117,11 @@ public class TutorialScreenDisplay extends UIComponent {
     /**
      * Displays the ordering tutorial. The player needs to use [ and ] to switch dockets.
      */
-    private void showOrderingTutorial() {
-        // Set tutorial text using textDisplay
+    public void showOrderingTutorial() {
         textDisplay.setVisible(true);
         createTextBox("To begin, press the 'Create Order' button.");
 
-
-        // Wait for the button press (handled by onCreateOrderPressed)
+        // Check if the order has been created
         if (createOrderPressed) {
             createTextBox("Now use [ and ] keys to switch dockets.");
 

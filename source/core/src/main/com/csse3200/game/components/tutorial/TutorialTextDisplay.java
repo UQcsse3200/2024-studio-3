@@ -22,13 +22,11 @@ import java.util.List;
 import java.util.ArrayList;
 import com.badlogic.gdx.utils.Align;
 
+
 public class TutorialTextDisplay extends UIComponent {
 
-    private List<String> text;
-    private int current_part = 0;
-    private int text_length = 0;
+    private String text;
     private StringBuilder currentText;
-    private int textLimit = 60;
     private int charIndex = 0;
     private long lastUpdate = 0L;
     private long delay = 100L;
@@ -60,14 +58,13 @@ public class TutorialTextDisplay extends UIComponent {
     public void create() {
         super.create();
 
-
         setVisible(false);
         table.setFillParent(true);
         table.center().bottom();
         stage.addActor(table);
         Stack stack = new Stack();
 
-
+        // Load texture for the background box
         Texture textboxTexture = ServiceLocator.getResourceService()
                 .getAsset("images/textbox.png", Texture.class);
         Drawable textboxDrawable = new TextureRegionDrawable(textboxTexture);
@@ -75,21 +72,23 @@ public class TutorialTextDisplay extends UIComponent {
         textboxImage.setScale(1.25f);
         stack.add(textboxImage);
 
-
+        // Configure font and label
         BitmapFont defaultFont = new BitmapFont();
         Label.LabelStyle labelStyle = new Label.LabelStyle(defaultFont, Color.BLACK);
         label = new Label("", labelStyle);
         label.setFontScale(3.0f);
-        label.setWrap(true);
+        label.setWrap(true);  // Enable wrapping for long text
         label.setAlignment(Align.top | Align.left);
 
+        // Ensure label takes enough space for text to wrap properly
         Table labelTable = new Table();
         labelTable.add(label).padLeft(140).padBottom(10).size(
                 (int) (Gdx.graphics.getWidth() * 0.5), (int) (Gdx.graphics.getHeight() * 0.2));
         stack.add(labelTable);
 
-
-        table.add(stack).padBottom(70).padLeft(0).size((int) (Gdx.graphics.getWidth() * 0.5), (int) (Gdx.graphics.getHeight() * 0.2));
+        // Add everything to the main table
+        table.add(stack).padBottom(70).padLeft(0).size(
+                (int) (Gdx.graphics.getWidth() * 0.5), (int) (Gdx.graphics.getHeight() * 0.2));
 
         setupInputListener();
         entity.getEvents().addListener("SetText", this::setText);
@@ -97,24 +96,9 @@ public class TutorialTextDisplay extends UIComponent {
 
     public void setText(String text) {
         setVisible(true);
-        current_part = 0;
-        List<String> new_text = new ArrayList<>();
-        text_length = text.length();
-        String temp = "";
-        for (int i = 0; i < text_length; i++) {
-            if (i != 0 && i % textLimit == 0) {
-                new_text.add(temp);
-                temp = "";
-            }
-            temp += text.charAt(i);
-        }
-        new_text.add(temp);
-        this.text = new_text;
-        this.currentText.setLength(0);
-    }
-
-    public List<String> getText() {
-        return text;
+        this.text = text;
+        this.currentText.setLength(0);  // Reset current text
+        this.charIndex = 0;  // Start typing from the beginning
     }
 
     public void setVisible(boolean value) {
@@ -129,10 +113,10 @@ public class TutorialTextDisplay extends UIComponent {
     @Override
     public void update() {
         long time = ServiceLocator.getTimeSource().getTime();
-        if (this.text != null && current_part < this.text.size() && charIndex < this.text.get(current_part).length()) {
+        if (this.text != null && charIndex < this.text.length()) {
             if (time - lastUpdate >= delay) {
                 lastUpdate = time;
-                this.currentText.append(text.get(current_part).charAt(charIndex));
+                this.currentText.append(text.charAt(charIndex));
                 label.setText(currentText.toString());
                 charIndex++;
             }
@@ -144,14 +128,9 @@ public class TutorialTextDisplay extends UIComponent {
             @Override
             public boolean keyDown(InputEvent event, int keycode) {
                 if (keycode == com.badlogic.gdx.Input.Keys.ENTER) {
-                    current_part++;
-                    charIndex = 0;
-                    lastUpdate = 0;
-                    currentText.setLength(0);
-
-                    if (current_part == text.size()) {
-                        setVisible(false);
-                    }
+                    // If ENTER is pressed, skip to the full text
+                    label.setText(text);
+                    charIndex = text.length();  // Set charIndex to the end
                     return true;
                 }
                 return false;
@@ -173,3 +152,4 @@ public class TutorialTextDisplay extends UIComponent {
         return table;
     }
 }
+
