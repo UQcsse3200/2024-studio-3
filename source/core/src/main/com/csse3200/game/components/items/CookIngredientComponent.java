@@ -1,5 +1,7 @@
 package com.csse3200.game.components.items;
 
+import com.badlogic.gdx.math.Vector2;
+import com.csse3200.game.areas.GameArea;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.services.GameTime;
 import com.csse3200.game.services.ServiceLocator;
@@ -45,14 +47,24 @@ public class CookIngredientComponent extends Component {
             long current_time = timesource.getTime();
 
             // If 15 seconds have passed since the item was cooked,
-            // the item gets burnt
+            // the item gets burnt and flame is made
             if (current_time >= cookEndTime + 15 * 1000L) {
                 ingredient.burnItem();
+                this.setFire();
                 stopCookingIngredient();
             } else if (current_time >= cookEndTime) {
                 ingredient.cookItem();
             }
         }
+    }
+
+    /**
+     * Creates a flame at the given stations position
+     */
+    void setFire() {
+        Vector2 pos = entity.getPosition();
+        GameArea.setStaticXY((int) pos.x, (int) pos.y);
+        entity.getEvents().trigger("StartFlame");
     }
 
     /**
