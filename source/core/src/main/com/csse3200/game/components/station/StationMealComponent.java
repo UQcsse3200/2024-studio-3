@@ -116,9 +116,11 @@ public class StationMealComponent extends Component {
      * @param inventoryDisplay - reference to UI for inventory display
      */
     public void stationReceiveItem(ItemComponent item, InventoryComponent playerInventoryComponent, InventoryDisplay inventoryDisplay) {
-        // increase the capacity of the inventory and add the new item
-        this.inventoryComponent.increaseCapacity(this.inventoryComponent.getCapacity() + 1);
-        this.inventoryComponent.addItemAt(item, this.inventoryComponent.getSize() - 1);
+        // increase the capacity of the inventory if needed
+        if (this.inventoryComponent.isFull()) {
+            this.inventoryComponent.increaseCapacity(this.inventoryComponent.getCapacity() + 1);
+        }
+        this.inventoryComponent.addItemAt(item, this.inventoryComponent.getSize());
         playerInventoryComponent.removeAt(0);
         
         // processes a meal from the station inventory if possible
