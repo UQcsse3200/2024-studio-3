@@ -52,15 +52,15 @@ public class EndDayDisplay extends UIComponent {
     private Label goldLabel;
     private int startGold;
 
-    public EndDayDisplay(MainGameScreen gameScreen, GdxGame game) {
-        super();
-        this.gameScreen = gameScreen;
-        this.game = game;
-        isVisible = false;
-        this.startGold = ServiceLocator.getLevelService().getCurrGold();
-        this.currentGold = this.startGold;
-        ServiceLocator.getLevelService().getEvents().addListener("resetScreen", MainGameScreen::resetScreen);
-    }
+//    public EndDayDisplay(MainGameScreen gameScreen, GdxGame game) {
+//        super();
+//        this.gameScreen = gameScreen;
+//        this.game = game;
+//        isVisible = false;
+//        this.startGold = ServiceLocator.getLevelService().getCurrGold();
+//        this.currentGold = this.startGold;
+//        ServiceLocator.getLevelService().getEvents().addListener("resetScreen", MainGameScreen::resetScreen);
+//    }
 
     public EndDayDisplay() {
         super();
@@ -98,7 +98,7 @@ public class EndDayDisplay extends UIComponent {
 
         //From Team2, we made some changes here to follow the logic of the day cycle transitions
         // but please talk to me if you have any issues
-        setupInputListener();
+//        setupInputListener();
 
         //from team 2, added the listener for when game day ends to toggle visibility
         ServiceLocator.getDayNightService().getEvents().addListener("endOfDay", () -> {
@@ -229,20 +229,20 @@ public class EndDayDisplay extends UIComponent {
     //From Team2, we made some changes here to follow the logic of the day cycle transitions
     // but please talk to me if you have any issues. We want to only close with P. Currently it
     // is opening it as well.
-    private void setupInputListener() {
-        stage.addListener(new InputListener() {
-            @Override
-            public boolean keyDown(InputEvent event, int keycode) {
-                if (keycode == com.badlogic.gdx.Input.Keys.P) {
-                    if (isVisible) {
-                        hide();
-                        return true;
-                    }
-                }
-                return false;
-            }
-        });
-    }
+//    private void setupInputListener() {
+//        stage.addListener(new InputListener() {
+//            @Override
+//            public boolean keyDown(InputEvent event, int keycode) {
+//                if (keycode == com.badlogic.gdx.Input.Keys.P) {
+//                    if (isVisible) {
+//                        hide();
+//                        return true;
+//                    }
+//                }
+//                return false;
+//            }
+//        });
+//    }
 
     public void show() {
         isVisible = true;
