@@ -1,10 +1,10 @@
-package com.csse3200.game.components.scoreSystem;
+package com.csse3200.game.components.ScoreSystem;
 
 import java.util.List;
 import java.util.Arrays;
 import com.csse3200.game.components.Component;
 
-public class ScoreSystem extends Component {
+public class ScoreSystemComponent extends Component {
     public static int compareLists(List<String> playerIngredients, List<String> orderIngredients) {
         // Determine the size of the longer ingredient list
         int longerIngredientList = Math.max(playerIngredients.size(), orderIngredients.size());
