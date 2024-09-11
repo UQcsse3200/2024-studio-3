@@ -1,5 +1,8 @@
 package com.csse3200.game.services;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.csse3200.game.areas.GameArea;
 import com.csse3200.game.components.ordersystem.OrderActions;
 import com.csse3200.game.components.ordersystem.TicketDetails;
@@ -8,8 +11,6 @@ import com.csse3200.game.input.InputService;
 import com.csse3200.game.physics.PhysicsService;
 import com.csse3200.game.rendering.RenderService;
 import com.csse3200.game.screens.MainGameScreen;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 
 /**
@@ -41,7 +42,8 @@ public class ServiceLocator {
   private static DocketService docketService;
   private static LevelService levelService;
 
-  private static DayNightService dayNightService; //new
+  private static DayNightService dayNightService;
+  private static OrderActions orderActions; //new
 
   // New services (e.g. CustomerMovementService, DialogueService)
   private static CustomerMovementService customerMovementService;
@@ -81,6 +83,7 @@ public class ServiceLocator {
 
   public static TicketDetails getTicketDetails() {
     return ticketDetails;
+  }
 
   public static DayNightService getDayNightService() { //new
     return dayNightService;
@@ -191,17 +194,6 @@ public class ServiceLocator {
     ticketDetails = source;
   }
 
-
-  public static void clear() {
-    entityService = null;
-    renderService = null;
-    physicsService = null;
-    timeSource = null;
-    inputService = null;
-    resourceService = null;
-    docketService = null;
-    playerService = null;
-    ticketDetails = null;
 
   public static void registerGameArea(GameArea game) {
     if (gameArea != null) {

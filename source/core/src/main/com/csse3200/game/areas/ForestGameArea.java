@@ -1,44 +1,34 @@
 package com.csse3200.game.areas;
 
 
-import com.csse3200.game.components.maingame.EndDayDisplay;
-import com.csse3200.game.components.moral.MoralDecision;
-import com.csse3200.game.components.npc.PersonalCustomerEnums;
-import com.badlogic.gdx.utils.Null;
-import com.csse3200.game.components.cutscenes.GoodEnd;
-import com.csse3200.game.components.maingame.TextDisplay;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
-import com.csse3200.game.components.ordersystem.TicketDetails;
-import com.csse3200.game.entities.benches.Bench;
-import com.csse3200.game.entities.configs.PlayerConfig;
-import com.csse3200.game.screens.MoralDecisionDisplay;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.areas.terrain.TerrainFactory.TerrainType;
 import com.csse3200.game.components.gamearea.GameAreaDisplay;
+import com.csse3200.game.components.maingame.EndDayDisplay;
+import com.csse3200.game.components.moral.MoralDecision;
+import com.csse3200.game.components.npc.PersonalCustomerEnums;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.entities.benches.Bench;
+import com.csse3200.game.entities.configs.PlayerConfig;
+import com.csse3200.game.entities.factories.ItemFactory;
 import com.csse3200.game.entities.factories.NPCFactory;
-import com.csse3200.game.components.maingame.TextDisplay;
 import com.csse3200.game.entities.factories.ObstacleFactory;
-import com.csse3200.game.entities.EntityService;
+import com.csse3200.game.entities.factories.PlateFactory;
 import com.csse3200.game.entities.factories.PlayerFactory;
 import com.csse3200.game.entities.factories.StationFactory;
-import com.csse3200.game.entities.factories.ItemFactory;
-import com.csse3200.game.entities.factories.PlateFactory;
+import com.csse3200.game.screens.MoralDecisionDisplay;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.utils.math.GridPoint2Utils;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 /** Forest area for the demo game with trees, a player, and some enemies. */
 public class ForestGameArea extends GameArea {
@@ -141,7 +131,7 @@ public class ForestGameArea extends GameArea {
     "images/animal_images/snow_wolf.atlas",
     "images/player.atlas", 
     "images/fireExtinguisher/atlas/flame.atlas", 
-    "images/stations/oven/oven.atlas"
+    "images/stations/oven/oven.atlas",
     "images/terrain_iso_grass.atlas", 
     "images/ghost.atlas", 
     "images/ghostKing.atlas", 
