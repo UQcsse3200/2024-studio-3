@@ -30,6 +30,8 @@ public class MoralDecisionDisplay extends UIComponent {
     private static final long DEFAULT_TIMER = 10000; // 10 seconds (in milliseconds)
     private long remainingTime; // Remaining time in milliseconds
 
+
+
     public MoralDecisionDisplay(MainGameScreen game) {
         super();
         this.game = game;
@@ -82,7 +84,7 @@ public class MoralDecisionDisplay extends UIComponent {
         entity.getEvents().addListener("triggerMoralScreen", this::toggleVisibility);
     }
 
-//    @Override
+//    @Overridex
 //    public void update() {
 //        if (isVisible) {
 //            // Calculate elapsed time since the moral decision screen was shown
@@ -148,12 +150,17 @@ public class MoralDecisionDisplay extends UIComponent {
         game.resume(); // Resume the game when the display is hidden
     }
 
-    public void toggleVisibility() {
+    public boolean toggleVisibility() {
         if (isVisible) {
             hide();
         } else {
             show();
         }
+        return true;
+    }
+
+    public boolean getVisible() {
+        return this.isVisible;
     }
 
     @Override
