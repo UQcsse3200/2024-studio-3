@@ -40,7 +40,7 @@ import com.csse3200.game.components.moral.MoralDecision;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
+//import java.util.concurrent.TimeUnit;
 
 import static com.badlogic.gdx.Gdx.app;
 
@@ -164,11 +164,6 @@ public class ForestGameArea extends GameArea {
   private Entity player;
   private CheckWinLoseComponent winLoseComponent;  // Reference to CheckWinLoseComponent
 
-
-  // Define the win/lose conditions
-  private int winAmount = 60;      // Example value for winning gold amount
-  private int loseThreshold = 50;   // Example value for losing threshold
-
   public enum personalCustomerEnums{
     HANK,
     LEWIS,
@@ -218,10 +213,6 @@ public class ForestGameArea extends GameArea {
 
     // Spawn the player
     player = spawnPlayer();
-
-    // Attach CheckWinLoseComponent to the player with the win/lose conditions
-    winLoseComponent = new CheckWinLoseComponent(winAmount, loseThreshold);
-    player.addComponent(winLoseComponent);  // Attach component to player entity
 
     //ServiceLocator.getEntityService().getEvents().trigger("SetText", "Boss: Rent is due");
 
