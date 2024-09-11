@@ -3,6 +3,7 @@ package com.csse3200.game.entities.factories;
 import java.util.ArrayList;
 
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.csse3200.game.components.OutlineComponent;
 import com.csse3200.game.components.TooltipsDisplay;
 import com.csse3200.game.components.station.StationItemHandlerComponent;
 import com.csse3200.game.entities.Entity;
@@ -25,6 +26,7 @@ public class StationFactory {
         .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
         .addComponent(new InteractionComponent(PhysicsLayer.INTERACTABLE))
             .addComponent(new TooltipsDisplay())
+            .addComponent(new OutlineComponent())
         .addComponent(new StationItemHandlerComponent("oven", new ArrayList<>()));
 
 
@@ -35,7 +37,7 @@ public class StationFactory {
     oven.scaleHeight(1.5f);
 
     PhysicsUtils.setScaledCollider(oven, 0.3f, 0.2f);
-    
+
     return oven;
   }
 
@@ -51,6 +53,7 @@ public class StationFactory {
         .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
         .addComponent(new InteractionComponent(PhysicsLayer.INTERACTABLE))
             .addComponent(new TooltipsDisplay())
+            .addComponent(new OutlineComponent())
         .addComponent(new StationItemHandlerComponent("stove", new ArrayList<>()));
 
 
@@ -60,7 +63,7 @@ public class StationFactory {
     stove.scaleHeight(1.5f);
 
     PhysicsUtils.setScaledCollider(stove, 0.3f, 0.2f);
-    
+
     return stove;
   }
 

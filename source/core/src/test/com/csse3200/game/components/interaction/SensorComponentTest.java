@@ -204,4 +204,45 @@ class SensorComponentTest {
         target.create();
         return target;
     }
+    private Entity createTargetWithOutline(float x, float y) {
+        Entity target = new Entity();
+        target.setPosition(x, y);
+        InteractionComponent interactionComponent = new InteractionComponent(PhysicsLayer.INTERACTABLE);
+        target.addComponent(new PhysicsComponent());
+        target.addComponent(interactionComponent);
+        target.addComponent(new OutlineComponent());  // Add the OutlineComponent to the target entity
+        target.create();
+        return target;
+    }
+    @Test
+    void shouldAddOutlineToEntityOnCollision() {
+        Entity entity = createEntity(0, 0);
+        Entity target = createTargetWithOutline(0, 0);
+
+        Fixture entityFixture = entity.getComponent(InteractionComponent.class).getFixture();
+        Fixture targetFixture = target.getComponent(InteractionComponent.class).getFixture();
+
+        sensorComponent.onCollisionStart(entityFixture, targetFixture);
+
+        OutlineComponent outline = target.getComponent(OutlineComponent.class);
+        assertNotNull(outline, "The target entity should have an OutlineComponent.");
+        assertTrue(outline.isOutlined(), "The outline should be applied when collision starts.");
+    }
+
+    @Test
+    void shouldRemoveOutlineFromEntityOnCollisionEnd() {
+        Entity entity = createEntity(0, 0);
+        Entity target = createTargetWithOutline(0, 0);
+
+        Fixture entityFixture = entity.getComponent(InteractionComponent.class).getFixture();
+        Fixture targetFixture = target.getComponent(InteractionComponent.class).getFixture();
+
+        sensorComponent.onCollisionStart(entityFixture, targetFixture);
+        sensorComponent.onCollisionEnd(entityFixture, targetFixture);
+
+        OutlineComponent outline = target.getComponent(OutlineComponent.class);
+        assertNotNull(outline, "The target entity should have an OutlineComponent.");
+        assertFalse(outline.isOutlined(), "The outline should be removed when collision ends.");
+    }
+
 }

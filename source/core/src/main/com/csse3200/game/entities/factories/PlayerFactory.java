@@ -1,6 +1,7 @@
 package com.csse3200.game.entities.factories;
 
 import com.csse3200.game.components.CombatStatsComponent;
+import com.csse3200.game.components.OutlineComponent;
 import com.csse3200.game.components.TooltipsDisplay;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.components.player.PlayerActions;
@@ -48,6 +49,7 @@ public class PlayerFactory {
             .addComponent(new InventoryComponent(stats.gold))
             .addComponent(inputComponent)
                 .addComponent(new TooltipsDisplay())
+                .addComponent(new OutlineComponent())
             .addComponent(new PlayerStatsDisplay())
             .addComponent(new InteractionComponent(PhysicsLayer.INTERACTABLE))
             .addComponent(new SensorComponent(PhysicsLayer.INTERACTABLE, 10f));
