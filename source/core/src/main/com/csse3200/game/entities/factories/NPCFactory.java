@@ -185,9 +185,6 @@ public class NPCFactory {
     }
 
 
-
-
-
     public static Entity createBaseCustomer(Vector2 targetPosition) {
         AITaskComponent aiComponent =
                 new AITaskComponent();

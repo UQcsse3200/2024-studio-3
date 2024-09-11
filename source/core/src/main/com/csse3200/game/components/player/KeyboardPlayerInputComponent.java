@@ -65,6 +65,9 @@ public class KeyboardPlayerInputComponent extends InputComponent {
           int day = 0;
           ServiceLocator.getEntityService().getMoralScreen().getEvents().trigger("triggerMoralScreen",day);
           return true;
+        case Keys.P:
+          ServiceLocator.getEntityService().getEvents().trigger("toggleEndDayScreen");
+          return true;
       }
     }
 
@@ -194,7 +197,9 @@ public class KeyboardPlayerInputComponent extends InputComponent {
   public void create() {
     super.create();
     entity.getEvents().addListener("interactionEnd", this::whenInteractionEnds);
-    entity.getEvents().addListener("startInteraction", this::startInteraction);
+    // Meant to restrict movement on some stations, not a current feature and clashing
+    // with existing system
+    //entity.getEvents().addListener("startInteraction", this::startInteraction);
   }
 
   /**

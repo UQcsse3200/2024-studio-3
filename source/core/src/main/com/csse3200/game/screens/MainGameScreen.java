@@ -47,7 +47,8 @@ public class MainGameScreen extends ScreenAdapter {
 			"images/bird.png",
 			"images/point.png",
 			"images/coin.png",
-			"images/textbox.png"
+			"images/textbox.png",
+			"images/inventory_ui/slot.png"
 	};
 	// Modified the camera position to fix layout
 	private static final Vector2 CAMERA_POSITION = new Vector2(7.5f, 6.0f);
@@ -156,6 +157,10 @@ public class MainGameScreen extends ScreenAdapter {
 		resourceService.unloadAssets(mainGameTextures);
 	}
 
+	public GdxGame getGame() {
+		return game;
+	}
+
 	/**
 	 * Creates the main game's ui including components for rendering ui elements to the screen and
 	 * capturing and handling ui input.
@@ -178,7 +183,7 @@ public class MainGameScreen extends ScreenAdapter {
 			.addComponent(new OrderActions(this.game))
 			.addComponent(new MainGameOrderBtnDisplay())
 //                .addComponent(new MoralDecisionDisplay(this))
-		        .addComponent(new EndDayDisplay(this, this.game))
+//		        .addComponent(new EndDayDisplay(this, this.game))
 				.addComponent(new TextDisplay(this));
 		ServiceLocator.getEntityService().register(ui);
 		ServiceLocator.registerGameScreen(this);
