@@ -238,18 +238,19 @@ public class Entity {
         }
     }
 
-    /**
-     * Perform an update on all components. This is called by the entity service and should not be
-     * called manually.
-     */
-    public void update() {
-        if (!enabled) {
-            return;
-        }
-        for (Component component : createdComponents) {
-            component.triggerUpdate();
-        }
+  /**
+   * Perform an update on all components. This is called by the entity service and should not be
+   * called manually.
+   */
+  public void update() {
+    if (!enabled) {
+      return;
     }
+    getEvents().update();
+    for (Component component : createdComponents) {
+      component.triggerUpdate();
+    }
+  }
 
     /**
      * This entity's unique ID. Used for equality checks
