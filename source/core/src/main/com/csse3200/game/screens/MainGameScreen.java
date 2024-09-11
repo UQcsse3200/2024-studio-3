@@ -156,6 +156,10 @@ public class MainGameScreen extends ScreenAdapter {
 		resourceService.unloadAssets(mainGameTextures);
 	}
 
+	public GdxGame getGame() {
+		return game;
+	}
+
 	/**
 	 * Creates the main game's ui including components for rendering ui elements to the screen and
 	 * capturing and handling ui input.
@@ -178,7 +182,7 @@ public class MainGameScreen extends ScreenAdapter {
 			.addComponent(new OrderActions(this.game))
 			.addComponent(new MainGameOrderBtnDisplay())
 //                .addComponent(new MoralDecisionDisplay(this))
-		        .addComponent(new EndDayDisplay(this, this.game))
+//		        .addComponent(new EndDayDisplay(this, this.game))
 				.addComponent(new TextDisplay(this));
 		ServiceLocator.getEntityService().register(ui);
 		ServiceLocator.registerGameScreen(this);
