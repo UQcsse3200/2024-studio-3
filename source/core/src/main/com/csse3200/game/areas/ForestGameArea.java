@@ -75,10 +75,10 @@ public class ForestGameArea extends GameArea {
     "images/tiles/blue_tile.png",
     "images/stations/oven.png",
     "images/stations/stove.png",
-          "images/stations/apple_tree.png",
-          "images/stations/bench_middle.png",
-          "images/stations/bench_legs.png",
-          "images/stations/bench_top.png",
+    "images/stations/apple_tree.png",
+    "images/stations/bench_middle.png",
+    "images/stations/bench_legs.png",
+    "images/stations/bench_top.png",
     "images/stations/bench.png",
     "images/stations/servery.png",
     "images/chef_player.png",
@@ -119,9 +119,17 @@ public class ForestGameArea extends GameArea {
     "images/frame/wall.png"
   };
   private static final String[] forestTextureAtlases = {
-    "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/ghostKing.atlas", "images/animal_images/gorilla.atlas",
-          "images/animal_images/goose.atlas", "images/animal_images/goat.atlas", "images/animal_images/monkey.atlas",
-          "images/animal_images/snow_wolf.atlas","images/player.atlas", "images/fireExtinguisher/atlas/flame.atlas", "images/stations/oven/oven.atlas"
+    "images/terrain_iso_grass.atlas", 
+    "images/ghost.atlas", 
+    "images/ghostKing.atlas", 
+    "images/animal_images/gorilla.atlas",
+    "images/animal_images/goose.atlas", 
+    "images/animal_images/goat.atlas", 
+    "images/animal_images/monkey.atlas",
+    "images/animal_images/snow_wolf.atlas",
+    "images/player.atlas", 
+    "images/fireExtinguisher/atlas/flame.atlas", 
+    "images/stations/oven/oven.atlas"
   };
   private static final String[] forestSounds = {"sounds/Impact4.ogg"};
   private static final String backgroundMusic = "sounds/BGM_03_mp3.mp3";

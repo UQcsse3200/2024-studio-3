@@ -2,21 +2,17 @@ package com.csse3200.game.entities.factories;
 
 import java.util.ArrayList;
 
-
-import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.csse3200.game.components.FlameComponent;
 import com.csse3200.game.components.TooltipsDisplay;
-import com.csse3200.game.components.items.ItemComponent;
-import com.csse3200.game.components.items.ItemType;
-import com.csse3200.game.components.ordersystem.TicketDetails;
 import com.csse3200.game.components.player.InventoryComponent;
+import com.csse3200.game.components.station.FireExtinguisherHandlerComponent;
 import com.csse3200.game.components.station.IngredientStationHandlerComponent;
 import com.csse3200.game.components.station.StationCollectionComponent;
 import com.csse3200.game.components.station.StationCookingComponent;
-import com.csse3200.game.components.station.FireExtinguisherHandlerComponent;
 import com.csse3200.game.components.station.StationItemHandlerComponent;
 import com.csse3200.game.components.station.StationServingComponent;
 import com.csse3200.game.entities.Entity;
@@ -35,8 +31,15 @@ public class StationFactory {
    * @return Oven entity with relavent behaviors 
    */
   public static Entity createOven() {
+    AnimationRenderComponent animator =
+            new AnimationRenderComponent(ServiceLocator.getResourceService().getAsset("images/stations/oven/oven.atlas", TextureAtlas.class));
+    System.out.println("Adding Oven animation");
+    animator.addAnimation("Oven", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("OvenDefault", 0.2f, Animation.PlayMode.LOOP);
+    
+    
     Entity oven = new Entity()
-        .addComponent(new TextureRenderComponent("images/stations/oven.png"))
+       
         .addComponent(new PhysicsComponent())
         .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
         .addComponent(new InteractionComponent(PhysicsLayer.INTERACTABLE))
@@ -45,17 +48,16 @@ public class StationFactory {
         .addComponent(new StationItemHandlerComponent("oven", new ArrayList<>()))
         .addComponent(new InventoryComponent(1, 0));
 
-    oven.getComponent(InteractionComponent.class).setAsBox(oven.getScale());
-
-    oven.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
-    oven.getComponent(TextureRenderComponent.class).scaleEntity();
+    
     oven.scaleHeight(1.5f);
-
     PhysicsUtils.setScaledCollider(oven, 0.3f, 0.2f);
+
     // Add station reference
     PhysicsComponent physicsComponent = oven.getComponent(PhysicsComponent.class);
     Body body = physicsComponent.getBody();
     body.setUserData(oven);
+    oven.addComponent(animator);
+    animator.startAnimation("Oven");
     return oven;
   }
 
