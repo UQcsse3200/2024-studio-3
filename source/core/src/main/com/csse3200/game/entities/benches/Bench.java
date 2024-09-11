@@ -35,15 +35,6 @@ public class Bench extends Entity{
         this.x    = x;
         this.y    = y;
     }
-
-    /**
-     * Sets the item for the current bench
-     * @param item
-     */
-    public void setItem(ItemComponent item) {
-        this.item = item;
-    }
-
     /**
      * Creates visible bench.
      *

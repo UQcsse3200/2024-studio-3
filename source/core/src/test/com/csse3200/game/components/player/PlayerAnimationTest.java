@@ -26,7 +26,7 @@ public class PlayerAnimationTest {
     private Entity entity;
     private PlayerAnimationController pac;
     private AnimationRenderComponent animator;
-    private TextureAtlas atlas = new TextureAtlas(Gdx.files.internal("images/player.atlas"));
+    private TextureAtlas atlas = new TextureAtlas(Gdx.files.internal("images/player/player.atlas"));
 
     @BeforeEach
     void init() {
