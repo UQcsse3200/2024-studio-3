@@ -47,7 +47,6 @@ public class DayNightServiceTest {
         });
 
         // Using "animationDone" as per Team 6 request. Not originally intended.
-        // TODO(Team6): Comment out "decisionDone" when you are finished.
         enddayEventHandler.trigger("decisionDone");
         enddayEventHandler.trigger("animationDone");
         Assertions.assertTrue(isNewDay.get());
