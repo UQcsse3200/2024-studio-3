@@ -205,6 +205,7 @@ public class InventoryDisplay extends UIComponent {
 
 
     private void updateDisplay() {
+
         for (int i = 0; i < slots.size(); i++) {
             Stack currentStack = slots.get(i);
             currentStack.clear();
@@ -225,11 +226,13 @@ public class InventoryDisplay extends UIComponent {
                 currentStack.add(itemPadding);
             }
         }
+
         }
     // Method to update the UI with a new item
     public void update() {
         // updateLabel(entity.getComponent(InventoryComponent.class).getItemFirst());
         updateDisplay();
+        updateLabel(entity.getComponent(InventoryComponent.class).getItemFirst());
     }
 
     @Override
