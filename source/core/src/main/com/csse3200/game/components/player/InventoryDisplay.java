@@ -251,6 +251,6 @@ public class InventoryDisplay extends UIComponent {
 
     @Override
     public void setStage(Stage mock) {
-        
+        this.stage = mock;
     }
 }
