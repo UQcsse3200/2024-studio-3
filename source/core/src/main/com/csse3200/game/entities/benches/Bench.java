@@ -11,6 +11,8 @@ import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.PhysicsUtils;
 import com.csse3200.game.physics.components.ColliderComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
+import com.csse3200.game.components.items.ItemType;
+import com.csse3200.game.components.items.ItemComponent;
 import com.csse3200.game.rendering.TextureRenderComponent;
 
 /**
@@ -19,12 +21,27 @@ import com.csse3200.game.rendering.TextureRenderComponent;
  */
 public class Bench extends Entity{
     public String type;
-    public int x;
-    public int y;
+    public float x;
+    public float y;
+
     public Bench(String type, int x, int y) {
         this.type = type;
         this.x    = x;
         this.y    = y;
+    }
+
+    public Bench(String type, float x, float y) {
+        this.type = type;
+        this.x    = x;
+        this.y    = y;
+    }
+
+    /**
+     * Sets the item for the current bench
+     * @param item
+     */
+    public void setItem(ItemComponent item) {
+        this.item = item;
     }
 
     /**
@@ -45,6 +62,19 @@ public class Bench extends Entity{
         bench.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
         PhysicsUtils.setScaledCollider(bench, 1.05f, 0.75f);
         return bench;
+    }
+    public void create() {
+        addComponent(new TextureRenderComponent("images/stations/benches/" + type + ".png"));
+        addComponent(new PhysicsComponent());
+        addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
+        addComponent(new StationItemHandlerComponent(type, new ArrayList<>()));
+
+        float width  = 1f;
+        float height = 1f;
+
+        setScale(width, height);
+        getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
+        PhysicsUtils.setScaledCollider(this, 1.2f, 0.75f);
     }
 
 }
