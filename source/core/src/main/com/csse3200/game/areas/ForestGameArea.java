@@ -396,7 +396,7 @@ public class ForestGameArea extends GameArea {
      * @param y: y coordinate
      *         note: coordinates begin at bottom left of screen
      */
-  private void spawnBench(String type, int x, int y) {
+  private void spawnBench() {
     //Spawn a flame, this is temporary and for testing purposes
     GridPoint2 flamePos = new GridPoint2(1,1);
     Entity flame = StationFactory.createFlame();
@@ -452,19 +452,8 @@ public class ForestGameArea extends GameArea {
    * Spawns benches around the restaurant
    */
   private void spawnBenches() {
-      List<Bench> benches = new ArrayList<Bench>();
-      benches.add(new Bench("bench3-5", 98, 224));
-      benches.add(new Bench("bench7", 98, 25));
-      benches.add(new Bench("bench2", 96, 72));
-      //benches.add(new Bench("bench6-bottom", 343,27));
-      //benches.add(new Bench("bench6-top", 343,131));
-      //benches.add(new Bench("bench4", 217, 160));
-      //benches.add(new Bench("bench1", 217, 26));
+     spawnBench(); // temporary, spawns a fire extinguisher and a fire (?)
 
-      for (int i = 0; i < benches.size(); i++) {
-          Bench bench = benches.get(i);
-          spawnBench(bench.type, bench.x, bench.y);
-      }
     // Bottom bench row
     spawnSingleBench("left_border", 4, 1f);
     spawnBenchRow("middle", 5, 14, 1f);
