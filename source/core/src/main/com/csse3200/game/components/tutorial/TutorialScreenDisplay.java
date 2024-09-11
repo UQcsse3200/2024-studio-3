@@ -45,22 +45,21 @@ public class TutorialScreenDisplay extends UIComponent {
             table = new Table();  // Ensure table is initialized
         }
 
-
         setupUI();
 
-        // Initialize the textDisplay before using it, but don't manually call create()
+        // Initialise the textDisplay before using it
         textDisplay = new TutorialTextDisplay();
         textDisplay.setVisible(false);  // Initially hidden
         stage.addActor(textDisplay.getTable());  // Add it to the stage
 
         advanceTutorialStep();  // Ensure textDisplay is initialized before calling this method
 
+        // Add event listeners for create order
         entity.getEvents().addListener("createOrder", this::onCreateOrderPressed);
         ServiceLocator.getInputService().getEvents().addListener("createOrder", this::onCreateOrderPressed);
 
         stage.addActor(table);
     }
-
 
     /**
      * Sets up the UI components (textDisplay only).
@@ -94,51 +93,64 @@ public class TutorialScreenDisplay extends UIComponent {
 
     /**
      * Displays the movement tutorial. The player needs to use W/A/S/D to move.
-     * This now only uses textDisplay to show the instructions.
      */
     private void showMovementTutorial() {
-        // Set tutorial text using textDisplay
         textDisplay.setVisible(true);
         createTextBox("Use W/A/S/D to move around.");
-
     }
 
     /**
      * Displays the item pickup tutorial. The player needs to press E to pick up an item.
-     * This now only uses textDisplay to show the instructions.
      */
     private void showItemPickupTutorial() {
-        // Set tutorial text using textDisplay
         textDisplay.setVisible(true);
         createTextBox("Press E to pick up items.");
-
     }
 
     /**
      * Displays the ordering tutorial. The player needs to use [ and ] to switch dockets.
      */
+//    public void showOrderingTutorial() {
+//        textDisplay.setVisible(true);
+//        createTextBox("To begin, press the 'Create Order' button.");
+//
+//        // Wait for the createOrderPressed to be true, which is triggered when the button is pressed
+//        if (createOrderPressed) {
+//            createTextBox("Now use [ and ] keys to switch dockets.");
+//
+//            // Check if the user presses [ or ] keys to shift dockets
+//            if (Gdx.input.isKeyJustPressed(Input.Keys.LEFT_BRACKET) || Gdx.input.isKeyJustPressed(Input.Keys.RIGHT_BRACKET)) {
+//                docketsShifted = true;
+//                logger.debug("Dockets shifted");
+//            }
+//
+//            if (docketsShifted) {
+//                logger.debug("Advancing tutorial after dockets shifted");
+//                advanceTutorialStep();  // Advance tutorial when both conditions are met
+//            }
+//        }
+//    }
+
     public void showOrderingTutorial() {
         textDisplay.setVisible(true);
-        createTextBox("To begin, press the 'Create Order' button.");
 
-        // Check if the order has been created
-        if (createOrderPressed) {
-            createTextBox("Now use [ and ] keys to switch dockets.");
+        // Combine both instructions into one
+        createTextBox("Press 'Create Order' and then use [ and ] keys to switch dockets.");
 
-            // Check if the user presses [ or ]
-            if (Gdx.input.isKeyJustPressed(Input.Keys.LEFT_BRACKET) || Gdx.input.isKeyJustPressed(Input.Keys.RIGHT_BRACKET)) {
-                docketsShifted = true;
-            }
+        // Check if both the order button is pressed and the dockets are shifted
+        if (createOrderPressed &&
+                (Gdx.input.isKeyJustPressed(Input.Keys.LEFT_BRACKET) || Gdx.input.isKeyJustPressed(Input.Keys.RIGHT_BRACKET))) {
 
-            if (createOrderPressed && docketsShifted) {
-                advanceTutorialStep();
-            }
+            docketsShifted = true;
+            logger.debug("Dockets shifted and create order pressed");
+
+            // Advance the tutorial as both conditions are now met
+            advanceTutorialStep();
         }
     }
 
     /**
      * Completes the tutorial and informs the player that they can continue.
-     * This now only uses textDisplay to show the completion message.
      */
     private void completeTutorial() {
         createTextBox("Tutorial Complete! Press ENTER to continue.");
@@ -166,9 +178,11 @@ public class TutorialScreenDisplay extends UIComponent {
                     // Check if the user presses [ or ]
                     if (Gdx.input.isKeyJustPressed(Input.Keys.LEFT_BRACKET) || Gdx.input.isKeyJustPressed(Input.Keys.RIGHT_BRACKET)) {
                         docketsShifted = true;
+                        logger.debug("Dockets shifted");
                     }
 
                     if (createOrderPressed && docketsShifted) {
+                        logger.debug("Advancing tutorial after dockets shifted");
                         advanceTutorialStep();
                     }
                 }
@@ -183,6 +197,7 @@ public class TutorialScreenDisplay extends UIComponent {
 
     public void onCreateOrderPressed() {
         createOrderPressed = true;
+        logger.debug("Create order button pressed, createOrderPressed set to true");
         textDisplay.setText("Now use [ and ] keys to switch dockets.");
     }
 
@@ -199,10 +214,6 @@ public class TutorialScreenDisplay extends UIComponent {
         }
     }
 
-    // set a loop where count starts from 0, incrementing by 1 each time and the loop
-    // is terminated once youve pressed the key i = 0 number of text boxes (4)
-
-
     /**
      * Starts the main game after the tutorial is complete.
      */
@@ -216,7 +227,6 @@ public class TutorialScreenDisplay extends UIComponent {
     @Override
     public void dispose() {
         super.dispose();
-
 
         if (table != null) {
             table.clear();
