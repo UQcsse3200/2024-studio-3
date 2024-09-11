@@ -227,7 +227,8 @@ public class EndDayDisplay extends UIComponent {
     }
 
     //From Team2, we made some changes here to follow the logic of the day cycle transitions
-    // but please talk to me if you have any issues
+    // but please talk to me if you have any issues. We want to only close with P. Currently it
+    // is opening it as well.
     private void setupInputListener() {
         stage.addListener(new InputListener() {
             @Override
@@ -235,7 +236,6 @@ public class EndDayDisplay extends UIComponent {
                 if (keycode == com.badlogic.gdx.Input.Keys.P) {
                     if (isVisible) {
                         hide();
-
                         return true;
                     }
                 }
