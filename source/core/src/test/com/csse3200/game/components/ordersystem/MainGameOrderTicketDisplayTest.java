@@ -263,9 +263,20 @@ class MainGameOrderTicketDisplayTest {
 
 
 	@Test
+	void testGetRecipeName() {
+		Recipe recipe = orderTicketDisplay.getRecipe();
+
+		assertEquals("acaiBowl", recipe.getName(), "The recipe name should be 'acaiBowl'");
+	}
+
+
+
+	@Test
 	void testGetZIndex() {
 		assertEquals(3f, orderTicketDisplay.getZIndex());
 	}
+
+	// LEFT AND RIGHT DOCKET SHIFT
 
 }
 
