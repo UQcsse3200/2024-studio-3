@@ -67,14 +67,14 @@
     "countDown": 30,
     "patience": 100,
     "preference": "salad",
-    "texture": "images/animal_images/monkey.atlas"
+    "texture": "images/animal_images/chicken.atlas"
   },
   "Basic_Sheep": {
     "type": "Sheep",
     "countDown": 40,
     "patience": 90,
     "preference": "salad",
-    "texture": "images/animal_images/monkey.atlas"
+    "texture": "images/animal_images/sheep.atlas"
   }
 }
 

@@ -1,8 +1,10 @@
 package com.csse3200.game.entities.configs;
 
-import java.util.List;
+public class CustomerPersonalityConfig extends BaseCustomerConfig{
+    private static final int MAX = 999999;
+    private static final int MIN = 100000;
+    private static final int RANGE = MAX - MIN + 1;
 
-public class CustomerPersonalityConfig extends BaseCustomerConfig {
     public String name;
     public int reputation = -1;
 }

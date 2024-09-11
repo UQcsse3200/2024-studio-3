@@ -33,10 +33,11 @@ import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.utils.math.GridPoint2Utils;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import com.csse3200.game.entities.configs.*;
+
 
 import java.util.ArrayList;
 import java.util.List;
-//import java.util.concurrent.TimeUnit;
 
 /** Forest area for the demo game with trees, a player, and some enemies. */
 public class ForestGameArea extends GameArea {
@@ -45,10 +46,9 @@ public class ForestGameArea extends GameArea {
   private static final int NUM_TREES = 7;
   private static final int NUM_GHOSTS = 2;
   private static final int NUM_CUSTOMERS_BASE = 1;
-  private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(5, 4);
+  private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(5, 3);
   private static final float WALL_WIDTH = 0.1f;
   private static final String[] forestTextures = {
-    "images/special_NPCs/boss.png",
     "images/meals/acai_bowl.png",
     "images/meals/banana_split.png",
     "images/meals/salad.png",
@@ -75,16 +75,10 @@ public class ForestGameArea extends GameArea {
     "images/ingredients/cooked_beef.png",
     "images/ingredients/burnt_beef.png",
     "images/tiles/orange_tile.png",
-    "images/tiles/bench_test.png",
     "images/tiles/blue_tile.png",
     "images/stations/oven.png",
     "images/stations/stove.png",
-          "images/stations/apple_tree.png",
-          "images/stations/bench_middle.png",
-          "images/stations/bench_legs.png",
-          "images/stations/bench_top.png",
     "images/stations/bench.png",
-    "images/stations/servery.png",
     "images/chef_player.png",
     "images/frame/top_border.png",
     "images/frame/left_border.png",
@@ -99,33 +93,20 @@ public class ForestGameArea extends GameArea {
     "images/frame/top_border_wall.png",
     "images/frame/bottom_border_wall.png",
     "images/frame/border.png",
-    "images/tooltip_bg.png",
-    "images/fireExtinguisher/Fire_Extinguisher.png",
-    "images/stations/benches/single.png",
-    "images/stations/benches/middle.png",
-    "images/stations/benches/left_border.png",
-    "images/stations/benches/right_border.png",
-    "images/stations/benches/vertical.png",
-    "images/stations/benches/top.png",
-    "images/stations/benches/final.png",
-    "images/stations/benches/bottom_shadow.png",
-    "images/stations/benches/shadow_bottom_top.png",
-    "images/stations/benches/left_shadow.png",
-    "images/stations/benches/left_corner_shadow.png",
-    "images/stations/benches/right_corner_shadow.png",
-    "images/stations/benches/top_shadows.png",
-    "images/frame/vertical_border.png",
-    "images/frame/horizontal_border.png",
-    "images/frame/topleft_door.png",
-    "images/frame/topright_door.png",
-    "images/frame/bottomleft_door.png",
-    "images/frame/bottomright_door.png",
-    "images/frame/wall.png"
+    "images/stations/benches/bench7.png",
+    "images/stations/benches/bench2.png",
+    "images/stations/benches/bench3-5.png",
+    "images/stations/benches/bench4.png",
+    "images/stations/benches/bench6.png",
+    "images/stations/benches/bench1.png",
+          "images/tooltip_bg.png",
+    "images/stations/benches/bench6-bottom.png",
+    "images/stations/benches/bench6-top.png"
   };
   private static final String[] forestTextureAtlases = {
     "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/ghostKing.atlas", "images/animal_images/gorilla.atlas",
           "images/animal_images/goose.atlas", "images/animal_images/goat.atlas", "images/animal_images/monkey.atlas",
-          "images/animal_images/snow_wolf.atlas","images/player.atlas", "images/fireExtinguisher/atlas/flame.atlas"
+          "images/animal_images/snow_wolf.atlas","images/animal_images/chicken.atlas","images/animal_images/sheep.atlas"
   };
   private static final String[] forestSounds = {"sounds/Impact4.ogg"};
   private static final String backgroundMusic = "sounds/BGM_03_mp3.mp3";
@@ -136,6 +117,16 @@ public class ForestGameArea extends GameArea {
 
   private Entity player;
 
+  public enum personalCustomerEnums{
+    HANK,
+    LEWIS,
+    SILVER,
+    JOHN,
+    MOONKI,
+    BASIC_CHICKEN,
+    BASIC_SHEEP
+  }
+
   /**
    * Initialise this ForestGameArea to use the provided TerrainFactory.
    * @param terrainFactory TerrainFactory used to create the terrain for the GameArea.
@@ -144,9 +135,6 @@ public class ForestGameArea extends GameArea {
   public ForestGameArea(TerrainFactory terrainFactory) {
     super();
     this.terrainFactory = terrainFactory;
-    //this.textDisplay = textDisplay;
-
-    ServiceLocator.registerGameArea(this);
   }
 
   /** Create the game area, including terrain, static entities (trees), dynamic entities (player) */
@@ -160,20 +148,20 @@ public class ForestGameArea extends GameArea {
     // Spawn the restaurant
     spawnDoor();
     spawnWall();
-    spawnBenches();
     make_border();
-
+    spawnBenches();
     spawnStations();
     // Spawn beef
     spawnBeef("cooked");
     spawnStrawberry("chopped");
-    spawnLettuce("chopped");
-    customerSpawnController = spawnCustomerController();
+   spawnLettuce("chopped");
+    Entity customerSpawnController = spawnCustomerController();
+    customerSpawnController.getEvents().trigger(personalCustomerEnums.MOONKI.name());
+    customerSpawnController.getEvents().trigger(personalCustomerEnums.BASIC_CHICKEN.name());
+
     // Spawn the player
     player = spawnPlayer();
-    //ServiceLocator.getEntityService().getEvents().trigger("SetText", "Boss: Rent is due");
-    //triggerFiredEnd();    // Trigger the fired (bad) ending
-    createMoralScreen();
+
     playMusic();
   }
 
@@ -222,143 +210,110 @@ public class ForestGameArea extends GameArea {
    * Spawns the entry and exit doors of the restaurant
    */
   private void spawnDoor() {
-    GridPoint2 coords;
-    Vector2 pos;
-    Entity top_left_door = ObstacleFactory.Door("topleft_door");
-    coords = new GridPoint2(0,264);
-    spawnEntityAt(top_left_door, coords, true, true);
-    pos = top_left_door.getPosition();
-    top_left_door.setPosition((pos.x / (24 * (terrain.getTileSize()))) + 0.02f, pos.y / (24 * (terrain.getTileSize())));
+    float tileSize = terrain.getTileSize();
+    GridPoint2 tileBounds = terrain.getMapBounds(0);
+    Vector2 worldBounds = new Vector2(tileBounds.x * tileSize, tileBounds.y * tileSize);
 
-    Entity top_right_door = ObstacleFactory.Door("topright_door");
-    coords = new GridPoint2(48,264);
-    spawnEntityAt(top_right_door, coords, true, true);
-    pos = top_right_door.getPosition();
-    top_right_door.setPosition((pos.x / (24 * (terrain.getTileSize()))) + 0.02f, pos.y / (24 * (terrain.getTileSize())));
+    //Entry door
+    GridPoint2 position = new GridPoint2(0,(int)tileBounds.y-1);
+    Entity door = ObstacleFactory.createDoor("top_door_left_part",tileSize);
+    spawnEntityAt(door,position,true,false);
 
-    Entity bottom_left_door = ObstacleFactory.Door("bottomleft_door");
-    coords = new GridPoint2(0,1);
-    spawnEntityAt(bottom_left_door, coords, true, true);
-    pos = bottom_left_door.getPosition();
-    bottom_left_door.setPosition((pos.x / (24 * (terrain.getTileSize()))) + 0.02f, pos.y / (24 * (terrain.getTileSize())));
+    position = new GridPoint2(1,(int)tileBounds.y-1);
+    door = ObstacleFactory.createDoor("top_door_right_part",tileSize);
+    spawnEntityAt(door,position,true,false);
 
-    Entity bottom_right_door = ObstacleFactory.Door("bottomright_door");
-    coords = new GridPoint2(48,1);
-    spawnEntityAt(bottom_right_door, coords, true, true);
-    pos = bottom_right_door.getPosition();
-    bottom_right_door.setPosition((pos.x / (24 * (terrain.getTileSize()))) + 0.02f, pos.y / (24 * (terrain.getTileSize())));
+    //Exit door
+    position = new GridPoint2(0,0);
+    door = ObstacleFactory.createDoor("bottom_left_inv",tileSize);
+    spawnEntityAt(door,position,true,false);
+
+    position = new GridPoint2(1,0);
+    door = ObstacleFactory.createDoor("bottom_right_inv",tileSize);
+    spawnEntityAt(door,position,true,false);
   }
 
   /**
    * Spawns the wall around the restaurant
    */
   private void spawnWall() {
-    GridPoint2 coords;
-    Vector2 pos;
-    Entity top_wall = ObstacleFactory.wall();
-    coords = new GridPoint2(99,264);
-    spawnEntityAt(top_wall, coords, true, true);
-    pos = top_wall.getPosition();
-    top_wall.setPosition((pos.x / (24 * (terrain.getTileSize()))) + 0.02f, pos.y / (24 * (terrain.getTileSize())));
+    float tileSize = terrain.getTileSize();
+    GridPoint2 tileBounds = terrain.getMapBounds(0);
+    Vector2 worldBounds = new Vector2(tileBounds.x * tileSize, tileBounds.y * tileSize);
 
-    Entity bottom_wall = ObstacleFactory.wall();
-    coords = new GridPoint2(99,1);
-    spawnEntityAt(bottom_wall, coords, true, true);
-    pos = bottom_wall.getPosition();
-    bottom_wall.setPosition((pos.x / (24 * (terrain.getTileSize()))) + 0.02f, pos.y / (24 * (terrain.getTileSize())));
+    for(int x=0;x<2;x++){
+      GridPoint2 position = new GridPoint2(x,0);
+      Entity left = ObstacleFactory.createBorder("border",tileSize);
+      spawnEntityAt(left,position,true,false);
+    }
+
+    for(int x=2;x<(int)tileBounds.x;x++){
+      GridPoint2 position = new GridPoint2(x,(int)tileBounds.y-1);
+      Entity top = ObstacleFactory.createBorder("top_border_wall",tileSize);
+      spawnEntityAt(top,position,true,false);
+
+
+      position = new GridPoint2(x,0);
+      Entity bottom = ObstacleFactory.createBorder("bottom_border_wall",tileSize);
+      spawnEntityAt(bottom,position,true,false);
+    }
+
   }
 
   /**
    * Renders a black border around the restaurant
    */
   private void make_border(){
-    GridPoint2 coords = new GridPoint2(0,0);
-    Vector2 pos;
+    float tileSize = terrain.getTileSize();
+    GridPoint2 tileBounds = terrain.getMapBounds(0);
+    Vector2 worldBounds = new Vector2(tileBounds.x * tileSize, tileBounds.y * tileSize);
 
     //top border
-    Entity top_border = ObstacleFactory.horizontalSeparation();
-    coords = new GridPoint2(2,286);
-    spawnEntityAt(top_border, coords, true, true);
-    pos = top_border.getPosition();
-    top_border.setPosition((pos.x / (24 * (terrain.getTileSize()))) + 0.02f, pos.y / (24 * (terrain.getTileSize())));
-
-    Entity top_down_border = ObstacleFactory.horizontalSeparation();
-    coords = new GridPoint2(2,263);
-    spawnEntityAt(top_down_border, coords, true, true);
-    pos = top_down_border.getPosition();
-    top_down_border.setPosition((pos.x / (24 * (terrain.getTileSize()))) + 0.02f, pos.y / (24 * (terrain.getTileSize())));
-
-    //bottom border
-    Entity bottom_border = ObstacleFactory.horizontalSeparation();
-    coords = new GridPoint2(2,-1);
-    spawnEntityAt(bottom_border, coords, true, true);
-    pos = bottom_border.getPosition();
-    bottom_border.setPosition((pos.x / (24 * (terrain.getTileSize()))) + 0.02f, pos.y / (24 * (terrain.getTileSize())));
-
-    Entity bottom_up_border = ObstacleFactory.horizontalSeparation();
-    coords = new GridPoint2(2,23);
-    spawnEntityAt(bottom_up_border, coords, true, true);
-    pos = bottom_up_border.getPosition();
-    bottom_up_border.setPosition((pos.x / (24 * (terrain.getTileSize()))) + 0.02f, pos.y / (24 * (terrain.getTileSize())));
+    for(int x=0;x<(int)tileBounds.x; x++){
+      GridPoint2 position=new GridPoint2(x,(int)tileBounds.y-1);
+      Entity top = ObstacleFactory.createBorder("top_border",tileSize);
+      spawnEntityAt(top,position,true,false);
+    }
 
     //left border
-    Entity left_border = ObstacleFactory.verticalSeparation();
-    coords = new GridPoint2(0,3);
-    spawnEntityAt(left_border, coords, true, true);
-    pos = left_border.getPosition();
-    left_border.setPosition((pos.x / (24 * (terrain.getTileSize()))) + 0.02f, pos.y / (24 * (terrain.getTileSize())));
+    for(int y=0;y<(int)tileBounds.y;y++){
+      GridPoint2 position = new GridPoint2(0,y);
+      Entity left = ObstacleFactory.createBorder("left_border",tileSize);
+      spawnEntityAt(left,position,true,false);
+    }
+
+    //bottom border
+    for(int x=0;x<(int)tileBounds.x; x++){
+      GridPoint2 positon = new GridPoint2(x,0);
+      Entity bottom = ObstacleFactory.createBorder("bottom_border",tileSize);
+      spawnEntityAt(bottom,positon,true,false);
+    }
 
     //right border
-    Entity right_border = ObstacleFactory.verticalSeparation();
-    coords = new GridPoint2(385,3);
-    spawnEntityAt(right_border, coords, true, true);
-    pos = right_border.getPosition();
-    right_border.setPosition((pos.x / (24 * (terrain.getTileSize()))) + 0.02f, pos.y / (24 * (terrain.getTileSize())));
+    for(int y=0;y<(int)tileBounds.y;y++){
+      GridPoint2 position = new GridPoint2((int)tileBounds.x-1,y);
+      Entity right = ObstacleFactory.createBorder("right_border",tileSize);
+      spawnEntityAt(right,position,true,false);
+    }
 
     //separation border
-    Entity sep_border = ObstacleFactory.verticalSeparation();
-    coords = new GridPoint2(96,3);
-    spawnEntityAt(sep_border, coords, true, true);
-    pos = sep_border.getPosition();
-    sep_border.setPosition((pos.x / (24 * (terrain.getTileSize()))) + 0.02f, pos.y / (24 * (terrain.getTileSize())));
+    for(int y=0;y<(int)tileBounds.y;y++) {
+      GridPoint2 position = new GridPoint2(1,y);
+      Entity separate = ObstacleFactory.createBorder("right_border",tileSize);
+      spawnEntityAt(separate,position,true,false);
+    }
   }
 
   private void spawnStations() {
     GridPoint2 ovenPos = new GridPoint2(5,4);
     Entity oven = StationFactory.createOven();
     spawnEntityAt(oven, ovenPos, true, false);
-    oven.setPosition(oven.getPosition().x , oven.getPosition().y + 0.9f);
+    oven.setPosition(oven.getPosition().x , oven.getPosition().y + 1.3f);
 
     GridPoint2 stovePos = new GridPoint2(5,4);
     Entity stove = StationFactory.createStove();
     spawnEntityAt(stove, stovePos, false, false);
     stove.setPosition(stove.getPosition().x + 2.7f , stove.getPosition().y + 1.3f);
-
-    GridPoint2 appleTreePos = new GridPoint2( 5, 4);
-    Entity appleTree = StationFactory.createAppleTree();
-    spawnEntityAt(appleTree, appleTreePos, false, false);
-    appleTree.setPosition(appleTree.getPosition().x + 4.2f , appleTree.getPosition().y - 1.3f);
-
-    GridPoint2 serveryPos = new GridPoint2(3,0);
-    Entity servery = StationFactory.createSubmissionWindow();
-    spawnEntityAt(servery, serveryPos, false, false);
-    servery.setPosition(servery.getPosition().x, servery.getPosition().y + 1.3f);
-
-    // Bench
-    GridPoint2 middlePos = new GridPoint2(5,4);
-    Entity middle = StationFactory.createMainBenchTable();
-    spawnEntityAt(middle, middlePos, false, false);
-    middle.setPosition(middle.getPosition().x - 2.6f, middle.getPosition().y - 1.3f);
-
-    GridPoint2 topPos = new GridPoint2(5,4);
-    Entity top = StationFactory.createTopBenchTable();
-    spawnEntityAt(top, topPos, false, false);
-    top.setPosition(top.getPosition().x - 2.6f, top.getPosition().y);
-
-    GridPoint2 bottomPos = new GridPoint2(5,4);
-    Entity bottom = StationFactory.createFeetBenchTable();
-    spawnEntityAt(bottom, bottomPos, false, false);
-    bottom.setPosition(bottom.getPosition().x - 2.6f, bottom.getPosition().y - 2.6f);
   }
 
     /**
@@ -369,127 +324,31 @@ public class ForestGameArea extends GameArea {
      *         note: coordinates begin at bottom left of screen
      */
   private void spawnBench(String type, int x, int y) {
-    //Spawn a flame, this is temporary and for testing purposes
-    GridPoint2 flamePos = new GridPoint2(1,1);
-    Entity flame = StationFactory.createFlame();
-    spawnEntityAt(flame, flamePos, false, false);
-
-    GridPoint2 fireExtinguisherPos = new GridPoint2(3, 4);
-    Entity fireExtinguisher = StationFactory.createFireExtinguisher();
-    spawnEntityAt(fireExtinguisher, fireExtinguisherPos, false, false);
-  }
-
-
-  /**
-   * @param type - The type of bench to spawn.
-   * @param startX - The x-coordinate to start spawning the bench.
-   * @param endX - The x-coordinate to end spawning the bench.
-   * @param y - The y-coordinate to spawn the bench.
-   * Spawns a row of benches of the specified type.
-   */
-  private void spawnBenchRow(String type, int startX, int endX, float y) {
-    for (int i = startX; i <= endX; i++) {
+      GridPoint2 coords = new GridPoint2(x,y);
       Entity bench = Bench.createBench(type);
-      spawnEntityAt(bench, new GridPoint2(i, (int) y), false, false);
-      bench.setPosition(i, y);
-    }
-  }
+      spawnEntityAt(bench, coords, true, true);
+      Vector2 pos = bench.getPosition();
 
-  /**
-   * @param type - The type of bench to spawn.
-   * @param x - The x-coordinate to spawn the bench.
-   * @param startY - The y-coordinate to start spawning the bench.
-   * @param endY - The y-coordinate to end spawning the bench.
-   * Spawns a column of benches of the specified type.
-   */
-  private void spawnBenchColumn(String type, float x, int startY, int endY) {
-    for (int i = startY; i <= endY; i++) {
-      Entity bench = Bench.createBench(type);
-      spawnEntityAt(bench, new GridPoint2((int) x, i), false, false);
-      bench.setPosition(x, i);
-    }
+      // this is very scuffed but it aligns.
+      bench.setPosition((pos.x / (24 * (terrain.getTileSize()))) + 0.02f, pos.y / (24 * (terrain.getTileSize())));
   }
   /**
-   * @param type - The type of bench to spawn.
-   * @param x - The x-coordinate to spawn the bench.
-   * @param y - The y-coordinate to spawn the bench.
-   * Spawns a single bench tile of the specified type.
-   */
-  private void spawnSingleBench(String type, float x, float y) {
-    Entity bench = Bench.createBench(type);
-    spawnEntityAt(bench, new GridPoint2((int) x, (int) y), false, false);
-    bench.setPosition(x, y);
-  }
-  /**
-   * Spawns benches around the restaurant
+   * Render and spawn all benches.
    */
   private void spawnBenches() {
       List<Bench> benches = new ArrayList<Bench>();
       benches.add(new Bench("bench3-5", 98, 224));
       benches.add(new Bench("bench7", 98, 25));
       benches.add(new Bench("bench2", 96, 72));
-      //benches.add(new Bench("bench6-bottom", 343,27));
-      //benches.add(new Bench("bench6-top", 343,131));
-      //benches.add(new Bench("bench4", 217, 160));
-      //benches.add(new Bench("bench1", 217, 26));
+      benches.add(new Bench("bench6-bottom", 343,27));
+      benches.add(new Bench("bench6-top", 343,131));
+      benches.add(new Bench("bench4", 217, 160));
+      benches.add(new Bench("bench1", 217, 26));
 
       for (int i = 0; i < benches.size(); i++) {
           Bench bench = benches.get(i);
           spawnBench(bench.type, bench.x, bench.y);
       }
-    // Bottom bench row
-    spawnSingleBench("left_border", 4, 1f);
-    spawnBenchRow("middle", 5, 14, 1f);
-    spawnSingleBench("right_border", 15, 1f);
-
-    // Top shadow bench row
-    spawnBenchRow("shadow_bottom_top", 5, 14, 10f);
-    spawnSingleBench("left_shadow", 4, 10f);
-
-    // Middle vertical benches (long bench setup)
-    spawnSingleBench("single", 9f, 10f); // Middle part of long bench
-    spawnBenchColumn("vertical", 9f, 7, 9);  // Middle vertical section
-    spawnSingleBench("left_corner_shadow", 9f, 7f); // Bottom-left corner shadow
-
-    // Top horizontal shadows near middle
-    spawnBenchRow("top_shadows", 10, 12, 7f);
-
-    // Long bench bottom part (left shadow + right shadow)
-    spawnSingleBench("left_corner_shadow", 11, 3f);
-    spawnSingleBench("top_shadows", 12, 3f);
-    spawnSingleBench("right_corner_shadow", 13, 3f);
-
-    // Right side of long bench (vertical and top fin)
-    spawnSingleBench("top", 13f, 7f);
-    spawnBenchColumn("vertical", 13f, 4, 6);
-
-    // Left side of long bench (final vertical + top fin)
-    spawnSingleBench("vertical", 11f, 4f); // Left vertical part of the long bench
-    spawnSingleBench("top", 11f, 5f); // Top left fin for long bench
-
-    // Right vertical bench column
-    spawnBenchColumn("vertical", 15f, 2, 9);
-    spawnSingleBench("top", 15f, 10f);
-
-    // Left vertical bench column
-    spawnBenchColumn("vertical", 4f, 4, 6);
-    spawnSingleBench("bottom_shadow", 4f, 3f);
-    spawnSingleBench("top", 4f, 7f);
-
-    // Middle long bench (vertical section)
-    spawnBenchColumn("vertical", 9f, 2, 4);
-    spawnSingleBench("final", 7f, 3f);
-    spawnSingleBench("top", 9f, 5f);
-
-    // Additional benches near middle area
-    spawnSingleBench("middle", 7f, 5f);
-    spawnSingleBench("middle", 8f, 5f);
-    spawnSingleBench("left_border", 6f, 5f);
-
-    // Top left section
-    spawnSingleBench("bottom_shadow", 6f, 7f);
-    spawnBenchColumn("vertical", 6f, 8, 9);
-    spawnSingleBench("single", 6f, 10f);
   }
 
   private Entity spawnPlayer() {
@@ -518,9 +377,8 @@ public class ForestGameArea extends GameArea {
    */
   private Entity spawnBeef(String cookedLevel) {
     Entity newBeef = ItemFactory.createBeef(cookedLevel);
-    spawnEntityAt(newBeef, new GridPoint2(4, 4), true, true);
+    spawnEntityAt(newBeef, new GridPoint2(3, 3), true, true);
     newBeef.setScale(0.5f,0.5f);
-    newBeef.setPosition(9.2f, 8);
     return newBeef;
   }
 
@@ -567,10 +425,8 @@ public class ForestGameArea extends GameArea {
    */
   private Entity spawnStrawberry(String choppedLevel) {
     Entity newStrawberry = ItemFactory.createStrawberry(choppedLevel);
-    spawnEntityAt(newStrawberry, new GridPoint2(6, 5), false, true);
+    spawnEntityAt(newStrawberry, new GridPoint2(5, 5), true, true);
     newStrawberry.setScale(0.5f,0.5f);
-    newStrawberry.setPosition(7.3f, 5f);
-
     return newStrawberry;
   }
 
@@ -581,9 +437,8 @@ public class ForestGameArea extends GameArea {
    */
   private Entity spawnLettuce(String choppedLevel) {
     Entity newLettuce = ItemFactory.createLettuce(choppedLevel);
-    spawnEntityAt(newLettuce, new GridPoint2(5, 4), true, true);
+    spawnEntityAt(newLettuce, new GridPoint2(4, 4), true, true);
     newLettuce.setScale(0.5f,0.5f);
-    newLettuce.setPosition(9 + 0.2f, 9);
     return newLettuce;
   }
 
@@ -624,13 +479,13 @@ public class ForestGameArea extends GameArea {
 
   private Entity spawnCustomerController() {
     Entity spawnController = new Entity();
-    spawnController.getEvents().addListener(PersonalCustomerEnums.HANK.name(), this::spawnHank);
-    spawnController.getEvents().addListener(PersonalCustomerEnums.LEWIS.name(), this::spawnLewis);
-    spawnController.getEvents().addListener(PersonalCustomerEnums.SILVER.name(), this::spawnSilver);
-    spawnController.getEvents().addListener(PersonalCustomerEnums.JOHN.name(), this::spawnJohn);
-    spawnController.getEvents().addListener(PersonalCustomerEnums.MOONKI.name(), this::spawnMoonki);
-    spawnController.getEvents().addListener(PersonalCustomerEnums.BASIC_SHEEP.name(), this::spawnBasicSheep);
-    spawnController.getEvents().addListener(PersonalCustomerEnums.BASIC_CHICKEN.name(), this::spawnBasicChicken);
+    spawnController.getEvents().addListener(personalCustomerEnums.HANK.name(), this::spawnHank);
+    spawnController.getEvents().addListener(personalCustomerEnums.LEWIS.name(), this::spawnLewis);
+    spawnController.getEvents().addListener(personalCustomerEnums.SILVER.name(), this::spawnSilver);
+    spawnController.getEvents().addListener(personalCustomerEnums.JOHN.name(), this::spawnJohn);
+    spawnController.getEvents().addListener(personalCustomerEnums.MOONKI.name(), this::spawnMoonki);
+    spawnController.getEvents().addListener(personalCustomerEnums.BASIC_SHEEP.name(), this::spawnBasicSheep);
+    spawnController.getEvents().addListener(personalCustomerEnums.BASIC_CHICKEN.name(), this::spawnBasicChicken);
     return spawnController;
   }
 
@@ -683,6 +538,7 @@ public class ForestGameArea extends GameArea {
   private void spawnBasicSheep() {
     spawnBasicCustomer("Basic Sheep");
   }
+
 
   /**
    * Spawn an AcaiBowl item.
@@ -783,48 +639,5 @@ public class ForestGameArea extends GameArea {
     super.dispose();
     ServiceLocator.getResourceService().getAsset(backgroundMusic, Music.class).stop();
     this.unloadAssets();
-  }
-
-  private void spawnBoss() {
-    GridPoint2 position = new GridPoint2(1, 5);
-    Vector2 targetPos = new Vector2(2, 6); // Target position for ghost king
-    Entity boss = NPCFactory.createBoss(targetPos);
-    spawnEntityAt(boss, position, false, false);
-  }
-
-  private void triggerFiredEnd() {
-    ExecutorService executor = Executors.newSingleThreadExecutor();
-    executor.submit(() -> {
-      try {
-        Thread.sleep(10000);
-        spawnBoss();
-        createTextBox("You *oink* two-legged moron! You're ruining my business' *oink* reputation!. Get out!");
-
-      } catch (InterruptedException e) {
-        Thread.currentThread().interrupt();
-        System.out.println("Thread was interrupted");
-      }
-    });
-
-    // Shutdown the executor to prevent zombie threads
-    executor.shutdown();
-  }
-
-  private void createTextBox(String text) {
-    for (Entity entity: ServiceLocator.getEntityService().getEntities()) {
-      entity.getEvents().trigger("SetText", text);
-    }
-  }
-
-  private void createMoralScreen() {
-    Entity moralScreen = new Entity();
-    moralScreen
-            .addComponent(new MoralDecisionDisplay())
-            .addComponent(new MoralDecision());
-    ServiceLocator.getEntityService().registerMoral(moralScreen);
-  }
-
-  private void triggerGoodEnd() {
-    // pain
   }
 }

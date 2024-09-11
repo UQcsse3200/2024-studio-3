@@ -10,7 +10,7 @@ import com.csse3200.game.ai.tasks.AITaskComponent;
 
 /**
  * Component that manages the positions of ghosts and handles their movement to available spots.
-
+ */
 public class GhostPositionManagerComponent extends Component {
     private static final Vector2[] ghostPositions = {
             new Vector2(0f, 0f),   // Position 1
@@ -25,7 +25,7 @@ public class GhostPositionManagerComponent extends Component {
      * Adds a ghost to the manager and assigns it to the next available position.
      *
      * @param ghost The ghost entity
-
+     */
     public void addGhost(Entity ghost) {
         int positionIndex = getNextAvailablePosition();
         if (positionIndex != -1) {
@@ -68,4 +68,3 @@ public class GhostPositionManagerComponent extends Component {
         }
     }
 }
-**/
