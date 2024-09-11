@@ -225,6 +225,7 @@ public class ForestGameArea extends GameArea {
 
     //ServiceLocator.getEntityService().getEvents().trigger("SetText", "Boss: Rent is due");
 
+    ServiceLocator.getDayNightService().getEvents().addListener("endGame", this::checkEndOfDayGameState);
 
     // Check and trigger win/lose state
     checkEndOfDayGameState();
