@@ -1,5 +1,6 @@
 package com.csse3200.game.components.ordersystem;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
@@ -18,7 +19,8 @@ public class DocketLineDisplay extends UIComponent {
 	private static final Logger logger = LoggerFactory.getLogger(DocketLineDisplay.class);
 	private static final float Z_INDEX = 2f;
 	private Table table;
-    private Image pineLine;
+	private Image pinLine;
+
 
 	/**
 	 * Initializes the DocketLineDisplay component by creating and adding its actors to the stage.
@@ -33,20 +35,33 @@ public class DocketLineDisplay extends UIComponent {
 	 * Adds the actors to the table and sets up the layout.
 	 */
 	private void addActors() {
-		table = new Table();
-		table.top().left();
-		table.setFillParent(true);
-		table.padTop(18f).padLeft(200f).padRight(120f);
+		table = new Table();table.setFillParent(true);
 
-		pineLine =
-		  new Image(
-			ServiceLocator.getResourceService()
-			  .getAsset("images/ordersystem/pin_line.png", Texture.class));
+		pinLine =
+				new Image(
+						ServiceLocator.getResourceService()
+								.getAsset("images/ordersystem/pin_line.png", Texture.class));
 
-		table.add(pineLine).pad(5);
-		table.row();
 
+		pinLine.setWidth(Gdx.graphics.getWidth() * 0.7958f);
+		pinLine.setHeight(30);
+		pinLine.setPosition(Gdx.graphics.getWidth() * 0.128f, Gdx.graphics.getHeight() * 0.938f);
+
+
+		table.add(pinLine);
 		stage.addActor(table);
+		stage.addActor(pinLine);
+		table.setZIndex((int)getZIndex());
+		pinLine.setZIndex((int)getZIndex());
+	}
+
+	/**
+	 * Resizes the docket line display by removing image, clearing table and re-adding actors.
+	 */
+	public void resize() {
+		pinLine.remove();
+		table.clear();
+		addActors();
 	}
 
 	/**
