@@ -1,7 +1,7 @@
 package com.csse3200.game.components.player;
 
-import com.badlogic.gdx.utils.Null;
 import com.csse3200.game.components.Component;
+import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.csse3200.game.components.items.ItemComponent;
@@ -23,6 +23,10 @@ public class InventoryComponent extends Component {
   private final String itemException = "Index in Inventory already occupied by an Item.";
   private final String nullException = "Index in Inventory does not contain an Item.";
 
+  /**
+   * Creates inventory component
+   * @param capacity the players inventory size
+   */
   public InventoryComponent(int capacity) {
     setCapacity(capacity);
     items = new ArrayList<>(capacity);
@@ -32,7 +36,6 @@ public class InventoryComponent extends Component {
     size = 0;
     setSelected(0);
   }
-
 
   /**
    * Returns the capacity of this inventory component. I.e. the
@@ -47,7 +50,7 @@ public class InventoryComponent extends Component {
   /**
    * Returns the current number of items in the inventory component. 
 
-   * @return - the number of items in the inventoru.
+   * @return - the number of items in the inventory.
    */
   public int getSize() {
     return this.size;
@@ -64,6 +67,10 @@ public class InventoryComponent extends Component {
         throw new IllegalArgumentException(sizeException);
       }
       this.capacity = newCapacity;
+      if (entity != null) {
+          entity.getEvents().trigger("updateInventory");
+      }
+
   }
 
   /**
@@ -77,6 +84,9 @@ public class InventoryComponent extends Component {
       throw new IllegalArgumentException(indexException);
     }
     this.selected = index;
+    if (entity != null) {
+      entity.getEvents().trigger("updateInventory");
+    }
   }
 
   /**
@@ -202,7 +212,11 @@ public class InventoryComponent extends Component {
       }
       items.set(i, item);
       size++;
-    } 
+      if (entity != null) {
+        entity.getEvents().trigger("updateInventory");
+      }
+    }
+
   }
   
     /**
@@ -223,7 +237,11 @@ public class InventoryComponent extends Component {
     if (!this.isFull()) {
       items.set(index, item);
       size++;
-    } 
+      if (entity != null) {
+        entity.getEvents().trigger("updateInventory");
+      }
+    }
+
   }
 
     /**
@@ -246,8 +264,71 @@ public class InventoryComponent extends Component {
       items.set(index, null);
       size--;
 
-      return item; 
+      if (entity != null) {
+        entity.getEvents().trigger("updateInventory");
+      }
+      return item;
+
     }
     return null;
+  }
+
+  /**
+   * Returns the names of all items present in the list, in order.
+   *
+   * @return - the list of names of items in the inventory, null if empty.
+   */
+  /**
+   * Returns the names of all items present in the list, in order.
+   *
+   * @return - the list of names of items in the inventory, null if empty.
+   */
+  public ArrayList<String> getItemNames() {
+    ArrayList<String> itemNames = new ArrayList();
+
+    if (!this.isEmpty()) {
+      for (ItemComponent item : items) {
+        if (item != null) {
+          itemNames.add(item.getItemName());
+        }
+      }
+    }
+
+    return itemNames;
+  }
+
+  /**
+   * Returns true if the itemName is in the inventory, false otherwise.
+   *
+   * @param itemName - the item being checked for in this inventory.
+   * @return - true if item is in the inventory, false otherwise.
+   */
+  public boolean findName(String itemName) {
+    return this.getItemNames().contains(itemName);
+  }
+
+  /**
+   * Removes the first instance of the item with itemName from the Inventory.
+   *
+   * @param itemName - the name of the item to be removed.
+   * @return - the removed item i, null if not present.
+   */
+  public ItemComponent removeItemName(String itemName) {
+    ItemComponent currentItem = null;
+
+    if (this.findName(itemName)) {
+      for (int i = 0; i < this.items.size(); i++) {
+        currentItem = items.get(i);
+
+        if (currentItem != null && currentItem.getItemName().equals(itemName)) {
+          this.items.set(i, null);
+          break;
+        }
+      }
+    }
+    if (entity != null) {
+      entity.getEvents().trigger("updateInventory");
+    }
+    return currentItem;
   }
 }

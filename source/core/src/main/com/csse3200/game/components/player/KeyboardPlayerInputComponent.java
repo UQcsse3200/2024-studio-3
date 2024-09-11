@@ -5,6 +5,7 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.input.InputComponent;
+import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.utils.math.Vector2Utils;
 
 import java.util.HashMap;
@@ -60,6 +61,10 @@ public class KeyboardPlayerInputComponent extends InputComponent {
           walkDirection.add(Vector2Utils.RIGHT);
           triggerWalkEvent();
           return true;
+        case Keys.M:
+          int day = 0;
+          ServiceLocator.getEntityService().getMoralScreen().getEvents().trigger("triggerMoralScreen",day);
+          return true;
       }
     }
 
@@ -78,6 +83,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
    * @return whether the input was processed
    * @see InputProcessor#keyUp(int)
    */
+
   @Override
   public boolean keyUp(int keycode) {
     keyFlags.put(keycode, 0);

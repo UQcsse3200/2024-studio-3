@@ -1,10 +1,12 @@
 package com.csse3200.game.services;
 
-import com.csse3200.game.components.ordersystem.Docket;
+import com.csse3200.game.areas.GameArea;
+import com.csse3200.game.components.ordersystem.OrderActions;
 import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.input.InputService;
 import com.csse3200.game.physics.PhysicsService;
 import com.csse3200.game.rendering.RenderService;
+import com.csse3200.game.screens.MainGameScreen;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,13 +26,20 @@ public class ServiceLocator {
   private static PhysicsService physicsService;
   private static GameTime timeSource;
   private static InputService inputService;
+  private static PlayerService playerService;
+  private static GameArea gameArea;
+  private static MainGameScreen gameScreen;
+
 
   private static ResourceService resourceService;
+
+  private static OrderActions orderActions; // ?
 
   //Me new stuff :)
 
 
   private static DocketService docketService;
+  private static LevelService levelService;
 
   private static DayNightService dayNightService; //new
 
@@ -54,6 +63,10 @@ public class ServiceLocator {
     return inputService;
   }
 
+  public static PlayerService getPlayerService() {
+    return playerService;
+  }
+
   public static ResourceService getResourceService() {
     return resourceService;
   }
@@ -68,8 +81,22 @@ public class ServiceLocator {
 
 
 
+  public static OrderActions getOrderActions() {
+    return orderActions;
+  }
+  public static LevelService getLevelService(){
+    return levelService;
+  }
+
+  public static GameArea getGameArea() {
+    return gameArea;
+  }
+
+  public static MainGameScreen getGameScreen() {
+    return gameScreen;
+  }
+
   public static void registerEntityService(EntityService service) {
-    logger.debug("Registering entity service {}", service);
     entityService = service;
   }
 
@@ -80,14 +107,6 @@ public class ServiceLocator {
     logger.debug("Registering docket service {}", service);
     docketService = service;
   }
-
-  /*public static void registerDayCycleService(DayCycleService service) {
-    if (dayCycleService != null) {
-      logger.warn("Day cycle service is being overwritten!");
-    }
-    logger.debug("Registering day cycle service {}", service);
-    dayCycleService = service;
-  }*/
 
   public static void registerRenderService(RenderService service) {
     logger.debug("Registering render service {}", service);
@@ -112,6 +131,18 @@ public class ServiceLocator {
     inputService = service;
   }
 
+  /**
+   * Register player service
+   * @param service PlayerService
+   */
+  public static void registerPlayerService(PlayerService service) {
+    if (playerService != null) {
+      logger.warn("Player service is being overwritten!");
+    }
+    logger.debug("Registering player service {}", service);
+    playerService = service;
+  }
+
   public static void registerResourceService(ResourceService source) {
     logger.debug("Registering resource service {}", source);
     resourceService = source;
@@ -122,9 +153,39 @@ public class ServiceLocator {
     dayNightService = service;
   }
 
-  
 
 
+
+  public static void registerOrderActions(OrderActions source) {
+    logger.debug("Registering order action {}", source);
+    orderActions = source;
+  }
+
+  public static void registerLevelService(LevelService source) {
+    if (levelService == null) {
+      levelService = source;
+    } else {
+      logger.warn("Level service is already assigned, ignoring register");
+    }
+  }
+
+  public static void registerGameArea(GameArea game) {
+    if (gameArea != null) {
+      logger.warn("Game is already registered!");
+    } else {
+      logger.debug("Registering game");
+      gameArea = game;
+    }
+  }
+
+  public static void registerGameScreen(MainGameScreen game) {
+    if (gameScreen != null) {
+      logger.warn("Game Screen is already registered!");
+    } else {
+      logger.debug("Registering game screen");
+      gameScreen = game;
+    }
+  }
 
   public static void clear() {
     entityService = null;
@@ -135,6 +196,10 @@ public class ServiceLocator {
     resourceService = null;
     docketService = null;
     dayNightService = null; //new
+    orderActions = null;
+    playerService = null;
+    gameArea = null;
+    gameScreen = null;
   }
 
   private ServiceLocator() {
