@@ -40,7 +40,7 @@ import com.csse3200.game.components.moral.MoralDecision;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
+//import java.util.concurrent.TimeUnit;
 
 import static com.badlogic.gdx.Gdx.app;
 
@@ -219,16 +219,10 @@ public class ForestGameArea extends GameArea {
     // Spawn the player
     player = spawnPlayer();
 
-    // Attach CheckWinLoseComponent to the player with the win/lose conditions
-    winLoseComponent = new CheckWinLoseComponent(winAmount, loseThreshold);
-    player.addComponent(winLoseComponent);  // Attach component to player entity
-
     //ServiceLocator.getEntityService().getEvents().trigger("SetText", "Boss: Rent is due");
 
-    ServiceLocator.getDayNightService().getEvents().addListener("endGame", this::checkEndOfDayGameState);
-
     // Check and trigger win/lose state
-    checkEndOfDayGameState();
+    ServiceLocator.getDayNightService().getEvents().addListener("endGame", this::checkEndOfDayGameState);
 
     createMoralScreen();
     createEndDayScreen();
@@ -237,7 +231,8 @@ public class ForestGameArea extends GameArea {
 
 
   private void checkEndOfDayGameState() {
-    String gameState = winLoseComponent.checkGameState();
+
+    String gameState = player.getComponent(CheckWinLoseComponent.class).checkGameState();
 
     if ("LOSE".equals(gameState)) {
       triggerFiredEnd();  // Trigger the fired (bad) ending
