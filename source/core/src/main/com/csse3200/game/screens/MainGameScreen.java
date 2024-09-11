@@ -162,6 +162,10 @@ public class MainGameScreen extends ScreenAdapter {
 		resourceService.unloadAssets(mainGameTextures);
 	}
 
+	public GdxGame getGame() {
+		return game;
+	}
+
 	/**
 	 * Creates the main game's ui including components for rendering ui elements to the screen and
 	 * capturing and handling ui input.

@@ -62,6 +62,16 @@ public class EndDayDisplay extends UIComponent {
         ServiceLocator.getLevelService().getEvents().addListener("resetScreen", MainGameScreen::resetScreen);
     }
 
+    public EndDayDisplay() {
+        super();
+        this.gameScreen = ServiceLocator.getGameScreen();
+        this.game = ServiceLocator.getGameScreen().getGame();
+        isVisible = false;
+        this.startGold = ServiceLocator.getLevelService().getCurrGold();
+        this.currentGold = this.startGold;
+        ServiceLocator.getLevelService().getEvents().addListener("resetScreen", MainGameScreen::resetScreen);
+    }
+
     public void create() {
         super.create();
         layout = new Table();
@@ -71,6 +81,7 @@ public class EndDayDisplay extends UIComponent {
 
         ServiceLocator.getDocketService().getEvents().addListener("goldUpdated", this::handleGoldUpdate);
         ServiceLocator.getEntityService().getEvents().addListener("spawnCustomer", this::updateCustomerList);
+        ServiceLocator.getEntityService().getEvents().addListener("toggleEndDayScreen", this::toggleVisibility);
 
         // Create a background
         Pixmap pixmap = new Pixmap(1, 1, Pixmap.Format.RGBA8888);

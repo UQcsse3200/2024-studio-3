@@ -43,6 +43,9 @@ public class ServiceLocator {
 
   private static DayNightService dayNightService; //new
 
+  // New services (e.g. CustomerMovementService, DialogueService)
+  private static CustomerMovementService customerMovementService;
+
   public static EntityService getEntityService() {
     return entityService;
   }
@@ -96,9 +99,16 @@ public class ServiceLocator {
     return gameScreen;
   }
 
-  public static void registerEntityService(EntityService service) {
-    entityService = service;
-  }
+    // New getters for additional services
+    public static CustomerMovementService getCustomerMovementService() {
+        return customerMovementService;
+    }
+
+
+    // Register methods for services
+    public static void registerEntityService(EntityService service) {
+        entityService = service;
+    }
 
   public static void registerDocketService(DocketService service) {
     if (docketService != null) {
@@ -187,20 +197,32 @@ public class ServiceLocator {
     }
   }
 
-  public static void clear() {
-    entityService = null;
-    renderService = null;
-    physicsService = null;
-    timeSource = null;
-    inputService = null;
-    resourceService = null;
-    docketService = null;
-    dayNightService = null; //new
-    orderActions = null;
-    playerService = null;
-    gameArea = null;
-    gameScreen = null;
-  }
+    // New register methods for additional services
+    public static void registerCustomerMovementService(CustomerMovementService service) {
+        if (customerMovementService != null) {
+            logger.warn("CustomerMovementService is being overwritten!");
+        }
+        logger.debug("Registering customer movement service {}", service);
+        customerMovementService = service;
+    }
+
+
+    // Clear all services
+    public static void clear() {
+        entityService = null;
+        renderService = null;
+        physicsService = null;
+        timeSource = null;
+        inputService = null;
+        resourceService = null;
+        docketService = null;
+        orderActions = null;
+        playerService = null;
+        gameArea = null;
+        gameScreen = null;
+        customerMovementService = null;
+        dayNightService = null;
+    }
 
   private ServiceLocator() {
     throw new IllegalStateException("Instantiating static util class");

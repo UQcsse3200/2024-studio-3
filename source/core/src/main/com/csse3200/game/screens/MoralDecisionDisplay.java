@@ -7,14 +7,14 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.csse3200.game.GdxGame;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
 import org.slf4j.Logger;
@@ -29,6 +29,7 @@ public class MoralDecisionDisplay extends UIComponent {
     private boolean isVisible;
     private final MainGameScreen game;
     private Image characterImage;
+    private String question = "Set Question";
 
     public MoralDecisionDisplay(MainGameScreen game) {
         super();
@@ -53,6 +54,7 @@ public class MoralDecisionDisplay extends UIComponent {
         layout = new Table();
         layout.setFillParent(true);
         layout.setVisible(isVisible);
+        layout.setSkin(skin);
         stage.addActor(layout);
 
         // create gray background
@@ -65,8 +67,8 @@ public class MoralDecisionDisplay extends UIComponent {
         layout.setBackground(blackBackground);
 
         // set up the label using table layout
-        BitmapFont font = new BitmapFont();
-        Label titleLabel = new Label("Moral Decision", new Label.LabelStyle(font, Color.WHITE));
+//        BitmapFont font = new BitmapFont();
+        Label titleLabel = new Label("Moral Decision",skin);
         layout.add(titleLabel).pad(10).row();
 
         // load and position the racoon image slightly to the left
@@ -75,8 +77,34 @@ public class MoralDecisionDisplay extends UIComponent {
         characterImage = new Image(imgDrawable);
 
         // add racoon image to the table and shift it left by adjusting padding
-        layout.add(characterImage).padRight(1000).center().row(); // Add padding to move left
+        layout.add(characterImage).left();
 
+        // Add a secondary table to the left side of the view.
+        Table questionSet = new Table();
+        Label questionLabel = new Label("Do you want to save the racoon?", skin);
+        questionSet.add(questionLabel).pad(10).row();
+
+        Label testingLabel = new Label("TestinvfHQ ETAAHWRVFBJWGEE HAET NVBbwegvkjER AHT QTHJTRAJ RTJRTg", skin);
+//        layout.add(testingLabel).padRight(100).right().row();
+
+        // add another table inside the existing table, in order to show the Decision question and buttons for yes/no
+        Table decisionTable = new Table();
+        Skin btnSkin = skin;
+        btnSkin.setScale(2);
+        Label decisionLabel = new Label(question, btnSkin);
+        decisionTable.add(decisionLabel).pad(10).row();
+        Actor button = new Actor();
+        button.setHeight(50);
+        button.setWidth(100);
+        button.setColor(Color.GREEN);
+        Button.ButtonStyle buttonStyle = new Button.ButtonStyle();
+        Button noButton = new Button(button, buttonStyle);
+//        decisionTable.add(yesButton).pad(10);
+        decisionTable.add(noButton).pad(10).row();
+//        layout.add(decisionTable).center().row();
+
+        // add the secondary table to the main table
+        layout.add(questionSet).padRight(100).right().row();
         setupInputListener();
         entity.getEvents().addListener("triggerMoralScreen", this::toggleVisibility);
 
@@ -115,6 +143,11 @@ public class MoralDecisionDisplay extends UIComponent {
 
     }
 
+    public boolean setQuestion(String question) {
+        this.question = question;
+        return true;
+    }
+
 
     public void show() {
         isVisible = true;
@@ -132,12 +165,20 @@ public class MoralDecisionDisplay extends UIComponent {
 
     public void toggleVisibility(int day) {
         logger.debug(" Day - {}", day);
+//        this.update();
         if (isVisible) {
             hide();
 //            ServiceLocator.getDayNightService().getEvents().trigger("decisionDone");
         } else {
             show();
         }
+    }
+
+    @Override
+    public void update() {
+        super.update();
+        layout.clear();
+        this.create();
     }
 
     @Override
