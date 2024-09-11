@@ -60,6 +60,8 @@ public class StationServingComponent extends Component {
      * @param item reference to the item being submitted by the user
      */
     public void submitMeal(ItemComponent item) {
+        //ServiceLocator.getLevelService.getCurrGold() + 2;
+        ServiceLocator.getLevelService().setCurrGold(ServiceLocator.getLevelService().getCurrGold() + 2);
         /*
         String[] bigTicketInfo = orderActions.getCurrentBigTicketInfo();
         // TODO bigTicketInfo[0] is ALWAYS null, even when there is a ticket and it shouldn't. orderActions needs to be instantiated better, not sure how though
