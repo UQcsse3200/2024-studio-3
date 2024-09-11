@@ -233,7 +233,6 @@ public class ForestGameArea extends GameArea {
 
 
   private void checkEndOfDayGameState() {
-
     String gameState = player.getComponent(CheckWinLoseComponent.class).checkGameState();
 
     if ("LOSE".equals(gameState)) {
