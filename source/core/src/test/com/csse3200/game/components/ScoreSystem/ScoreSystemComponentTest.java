@@ -69,4 +69,19 @@ public class ScoreSystemComponentTest {
         assertEquals("Angry Face", ScoreSystemComponent.getScoreDescription(19));
         assertEquals("Angry Face", ScoreSystemComponent.getScoreDescription(0));
     }
+
+    @Test
+    void testGetScoreDescriptionIllegalScore() {
+        IllegalArgumentException e = assertThrows(IllegalArgumentException.class, () -> {
+            ScoreSystemComponent.getScoreDescription(-1);
+        });
+    
+        assertEquals("Invalid score parameter. Must be an integer between 0 and 100 (inclusive).", e.getMessage());
+
+        e = assertThrows(IllegalArgumentException.class, () -> {
+            ScoreSystemComponent.getScoreDescription(101);
+        });
+    
+        assertEquals("Invalid score parameter. Must be an integer between 0 and 100 (inclusive).", e.getMessage());
+    }
 }
