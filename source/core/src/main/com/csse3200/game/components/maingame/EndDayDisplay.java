@@ -84,12 +84,15 @@ public class EndDayDisplay extends UIComponent {
         setupImages();
 
         initializeUI();
+
+        //From Team2, we made some changes here to follow the logic of the day cycle transitions
+        // but please talk to me if you have any issues
         setupInputListener();
 
         //from team 2, added the listener for when game day ends to toggle visibility
         ServiceLocator.getDayNightService().getEvents().addListener("endOfDay", () -> {
             logger.info("it is listened in end day");
-            toggleVisibility();});
+            show();});
 
     }
 
@@ -176,7 +179,7 @@ public class EndDayDisplay extends UIComponent {
         closeBtn.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                toggleVisibility();
+                hide();
             }
         });
         layout.add(closeBtn).padTop(20).row();
@@ -212,13 +215,18 @@ public class EndDayDisplay extends UIComponent {
         ));
     }
 
+    //From Team2, we made some changes here to follow the logic of the day cycle transitions
+    // but please talk to me if you have any issues
     private void setupInputListener() {
         stage.addListener(new InputListener() {
             @Override
             public boolean keyDown(InputEvent event, int keycode) {
                 if (keycode == com.badlogic.gdx.Input.Keys.P) {
-                    toggleVisibility();
-                    return true;
+                    if (isVisible) {
+                        hide();
+
+                        return true;
+                    }
                 }
                 return false;
             }
@@ -255,6 +263,7 @@ public class EndDayDisplay extends UIComponent {
         /*gameScreen.resume(); // Resume the game when the display is hidden*/
         ServiceLocator.getLevelService().togglePlayerFinishedLevel();
         game.setScreen(GdxGame.ScreenType.MAIN_GAME);
+        ServiceLocator.getDayNightService().getEvents().trigger("TOMORAL");
 
         //birdMoveTask.cancel(); // Cancel the task
     }
@@ -263,7 +272,7 @@ public class EndDayDisplay extends UIComponent {
         if (isVisible) {
             hide();
             //From Team 2, when screen is exited, trigger listener for moral display to be shown
-            ServiceLocator.getDayNightService().getEvents().trigger("TOMORAL");
+//            ServiceLocator.getDayNightService().getEvents().trigger("TOMORAL");
 
         } else {
             show();

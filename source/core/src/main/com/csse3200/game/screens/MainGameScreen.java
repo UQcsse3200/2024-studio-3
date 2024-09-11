@@ -79,6 +79,7 @@ public class MainGameScreen extends ScreenAdapter {
 		ServiceLocator.registerDocketService(new DocketService());
         ServiceLocator.registerDayNightService(new DayNightService());
 		ServiceLocator.registerLevelService(new LevelService());
+		ServiceLocator.registerGameScreen(this);
 
 		renderer = RenderFactory.createRenderer();
 		renderer.getCamera().getEntity().setPosition(CAMERA_POSITION);
@@ -182,7 +183,7 @@ public class MainGameScreen extends ScreenAdapter {
 			.addComponent(new TerminalDisplay())
 			.addComponent(new OrderActions(this.game))
 			.addComponent(new MainGameOrderBtnDisplay())
-//                .addComponent(new MoralDecisionDisplay(this))
+                .addComponent(new MoralDecisionDisplay(this))
 		        .addComponent(new EndDayDisplay(this, this.game))
 				.addComponent(new TextDisplay(this));
 		//temporary moral display
