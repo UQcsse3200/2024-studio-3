@@ -203,6 +203,7 @@ public class ForestGameArea extends GameArea {
     // Spawn the restaurant
     spawnDoor();
     spawnWall();
+    spawnBenches();
     make_border();
     spawnBenches();
     spawnStations();
@@ -215,6 +216,7 @@ public class ForestGameArea extends GameArea {
     //spawnplates
       spawnStackPlate(5); //testplate spawn
       //spawnPlatewithMeal();
+
 
     // Spawn the player
     player = spawnPlayer();
@@ -865,19 +867,25 @@ public class ForestGameArea extends GameArea {
     this.unloadAssets();
   }
 
+  /**
+   * Spawns a boss entity
+   */
   private void spawnBoss() {
     GridPoint2 position = new GridPoint2(1, 5);
-    Vector2 targetPos = new Vector2(2, 6); // Target position for ghost king
+    Vector2 targetPos = new Vector2(2, 6);
     Entity boss = NPCFactory.createBoss(targetPos);
     spawnEntityAt(boss, position, false, false);
   }
 
+  /**
+   * Triggers the Fired cutscene
+   */
   private void triggerFiredEnd() {
     ExecutorService executor = Executors.newSingleThreadExecutor();
     executor.submit(() -> {
       try {
-        Thread.sleep(10000);
         spawnBoss();
+        Thread.sleep(10000);
         createTextBox("You *oink* two-legged moron! You're ruining my " +
                 "business' *oink* reputation! Get out!");
         Thread.sleep(20000);
@@ -887,12 +895,12 @@ public class ForestGameArea extends GameArea {
         System.out.println("Thread was interrupted");
       }
     });
-
-    // Shutdown the executor to prevent zombie threads
     executor.shutdown();
-
   }
 
+  /**
+   * Triggers the Raise cutscene
+   */
   private void triggerRaiseEnd() {
     ExecutorService executor = Executors.newSingleThreadExecutor();
     executor.submit(() -> {
@@ -908,12 +916,13 @@ public class ForestGameArea extends GameArea {
         System.out.println("Thread was interrupted");
       }
     });
-
-    // Shutdown the executor to prevent zombie threads
     executor.shutdown();
-
   }
 
+  /**
+   * Creates a text box on the screen
+   * @param text A string with desired text to appear
+   */
   private void createTextBox(String text) {
     for (Entity entity: ServiceLocator.getEntityService().getEntities()) {
       entity.getEvents().trigger("SetText", text);
@@ -935,8 +944,5 @@ public class ForestGameArea extends GameArea {
             .addComponent(new EndDayDisplay());
     ServiceLocator.getEntityService().registerEndDay(endDayScreen);
   }
-
-  private void triggerGoodEnd() {
-    // pain
-  }
 }
+
