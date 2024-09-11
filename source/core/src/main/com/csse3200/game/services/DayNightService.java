@@ -8,8 +8,7 @@ import com.csse3200.game.events.EventHandler;
 
 public class DayNightService {
     private static final Logger logger = LoggerFactory.getLogger(DayNightService.class);
-    //private static final long FIVE_MINUTES = 1 * 60 * 1000; //5*60*1000; // 5 minutes in milliseconds
-    private static final long FIVE_MINUTES = 1000 * 5;
+    private static final long FIVE_MINUTES = 1 * 60 * 1000; //5*60*1000; // 5 minutes in milliseconds
     private long lastCheckTime;
     private final GameTime gameTime;
     private boolean endOfDayTriggered = false;
