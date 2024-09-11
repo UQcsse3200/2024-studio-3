@@ -212,46 +212,8 @@ public class EndDayDisplay extends UIComponent {
         // Add the sub-table to the main layout, centered horizontally
         layout.add(coinAndGoldLayout).expandX().fillX().center().row();
 
-//        // Customer lists
-//        List<String> passedCustomers = new List<>(skin);
-//        passedCustomers.setItems("Customer A", "Customer B", "Customer C");
-//        List<String> failedCustomers = new List<>(skin);
-//        failedCustomers.setItems("Customer X", "Customer Y");
-//
-//        Table listTable = new Table();
-//        listTable.add(new Label("Passed Customers", skin)).pad(10);
-//        listTable.add(new Label("Failed Customers", skin)).pad(10).row();
-//        listTable.add(new ScrollPane(passedCustomers, skin)).pad(10);
-//        listTable.add(new ScrollPane(failedCustomers, skin)).pad(10);
-//
-//        layout.add(listTable).expand().fill().row();
 
-//        // Customer lists
-//        List<String> passedCustomers = new List<>(skin);
-//        List<String> failedCustomers = new List<>(skin);
-//        customerList = new List<>(skin);
-//        Table listTable = new Table();
-//
-//        Label passedLabel = new Label("Passed Customers", skin);
-//        passedLabel.setFontScale(1.2f);
-//        Label failedLabel = new Label("Failed Customers", skin);
-//        failedLabel.setFontScale(1.2f);
-//
-//        listTable.add(passedLabel).pad(10).center();
-//        listTable.add(failedLabel).pad(10).center().row();
-//
-//        ScrollPane passedScrollPane = new ScrollPane(passedCustomers, skin);
-//        passedScrollPane.setSmoothScrolling(true);
-//
-//        ScrollPane failedScrollPane = new ScrollPane(customerList, skin);
-//        failedScrollPane.setSmoothScrolling(true);
-//
-//        listTable.add(passedScrollPane).pad(10).expand().width(400).fillY();
-//        listTable.add(failedScrollPane).pad(10).expand().width(400).fillY().row();
-//
-//        layout.add(listTable).expand().fill().row();
-
-        //Csutomer try
+        // Customer lists
         setupCustomerLists();
 
 
