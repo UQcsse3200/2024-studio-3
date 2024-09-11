@@ -76,10 +76,10 @@ public class StationMealComponent extends Component {
      */
     public void handleInteraction(InventoryComponent playerInventoryComponent, InventoryDisplay inventoryDisplay) {
         // Pre calcs
-        boolean full = playerInventoryComponent.isFull() & this.inventoryComponent.isFull();
+        // boolean full = playerInventoryComponent.isFull() & this.inventoryComponent.isFull();
         boolean empty = playerInventoryComponent.isEmpty() & this.inventoryComponent.isEmpty();
 
-        if (full | empty) {
+        if (empty) {
             // nothing should happen, neither can do anything
         } else if (playerInventoryComponent.isFull()) {
             // Input to station
@@ -94,11 +94,10 @@ public class StationMealComponent extends Component {
             }
         
         } else if (inventoryComponent.isFull()) {
-            // Ppayer wants meal from station, if possible results in meal in player inventory
+            // Player wants meal from station, if possible results in meal in player inventory
             this.stationGiveItem(playerInventoryComponent, inventoryDisplay);
         }
     }
-
 
     /**
      * Gets a look at the current item being stored.
@@ -127,7 +126,7 @@ public class StationMealComponent extends Component {
             this.processMeal();
         }
 
-        // do i need to end the interaction here?
+        // do i need to end the interaction here? --> nope
     }
 
     /**
@@ -139,6 +138,7 @@ public class StationMealComponent extends Component {
     public void stationGiveItem(InventoryComponent playerInventoryComponent, InventoryDisplay inventoryDisplay) {
         // check if there is a meal in the inventory
         int mealIndex = this.mealExists();
+        
         if (mealIndex > 0) {
             // item swapping
             ItemComponent item = inventoryComponent.getItemAt(mealIndex);
@@ -153,8 +153,10 @@ public class StationMealComponent extends Component {
     }
 
     /**
+     * Checks if there is a meal component in the station inventoru, and returns the
+     * index if present.
      * 
-     * @return
+     * @return - the index of the meal component in the inventory, if it exists.
      */
     private int mealExists() {
         for (int index = 0; index < this.inventoryComponent.getCapacity(); index++) {
@@ -168,7 +170,8 @@ public class StationMealComponent extends Component {
     }
 
     /**
-     * 
+     * If possible, creates a meal from the current items in the station inventory
+     * and return it to the station inventory.
      */
     private void processMeal() {
         List<String> possibleRecipes = mealFactory.getRecipe(this.inventoryComponent.getItemNames());
