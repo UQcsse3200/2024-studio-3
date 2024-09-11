@@ -107,7 +107,8 @@ public class PlayerActions extends Component {
         // Interaction handled by PlateComponent for plates
         return;
       }
-      entity.getEvents().trigger("startInteraction");
+      // Code to freeze player, not a current feature
+      // entity.getEvents().trigger("startInteraction");
       // Logic for what interaction even to call on the station
       station.getEvents().trigger("Station Interaction", playerInventory, displayInventory);
     }
