@@ -77,12 +77,12 @@ public class EndDayDisplay extends UIComponent {
         createBackground();
         setupImages();
         setupUI();
-        setupInputListener();
 
         ServiceLocator.getDocketService().getEvents().addListener("goldUpdated", this::handleGoldUpdate);
         ServiceLocator.getLevelService().getEvents().addListener("customerSpawned", this::updateCustomerList);
         ServiceLocator.getLevelService().getEvents().addListener("endDayDisplay", this::show);
         ServiceLocator.getLevelService().getEvents().addListener("resetScreen", MainGameScreen::resetScreen);
+        ServiceLocator.getEntityService().getEvents().addListener("toggleEndDayScreen", this::toggleVisibility);
 
         ServiceLocator.getDayNightService().getEvents().addListener("endOfDay", () -> {
             logger.info("it is listened in end day");
@@ -252,6 +252,7 @@ public class EndDayDisplay extends UIComponent {
     public void hide() {
         ServiceLocator.getLevelService().togglePlayerFinishedLevel();
         game.setScreen(GdxGame.ScreenType.MAIN_GAME);
+        ServiceLocator.getDayNightService().getEvents().trigger("TOMORAL");
     }
 
     public void toggleVisibility() {
@@ -271,21 +272,5 @@ public class EndDayDisplay extends UIComponent {
     @Override
     public void setStage(Stage mock) {
 
-    }
-
-    private void setupInputListener() {
-        stage.addListener(new InputListener() {
-            @Override
-            public boolean keyDown(InputEvent event, int keycode) {
-                if (keycode == com.badlogic.gdx.Input.Keys.P) {
-                    if (isVisible) {
-                        hide();
-                        return true;
-                    }
-                    show();
-                }
-                return false;
-            }
-        });
     }
 }
