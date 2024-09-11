@@ -1,18 +1,21 @@
 package com.csse3200.game.components.station;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.items.IngredientComponent;
 import com.csse3200.game.components.items.CookIngredientComponent;
 import com.csse3200.game.components.items.ItemComponent;
+import com.csse3200.game.components.items.ItemType;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.components.player.InventoryDisplay;
 import com.csse3200.game.components.items.MealComponent;
+import com.csse3200.game.entities.factories.DishFactory;;
 
-public class StationItemHandlerComponent extends Component {
+public class StationMealComponent extends Component {
     /**
      * String type - storing type of station
      * StationInventoryComponent inventorycomponent - instance of inventory for this station
@@ -21,6 +24,7 @@ public class StationItemHandlerComponent extends Component {
     protected final String type;
     protected InventoryComponent inventoryComponent;
     protected final ArrayList<String> acceptableItems;
+    private final DishFactory mealFactory;
 
     /**
      * General constructor
@@ -28,9 +32,10 @@ public class StationItemHandlerComponent extends Component {
      * @param type - storing type of station
      * @param acceptableItems - HashMap, HashSet etc of mappings for acceptable items based on station
      */
-    public StationItemHandlerComponent(String type, ArrayList<String> acceptableItems) {
+    public StationMealComponent(String type, ArrayList<String> acceptableItems) {
         this.type = type;
         this.acceptableItems = acceptableItems;
+        this.mealFactory = new DishFactory();
     }
 
     /**
@@ -112,11 +117,12 @@ public class StationItemHandlerComponent extends Component {
      * @param inventoryDisplay - reference to UI for inventory display
      */
     public void stationReceiveItem(ItemComponent item, InventoryComponent playerInventoryComponent, InventoryDisplay inventoryDisplay) {
-        // item swapping
-        this.inventoryComponent.addItemAt(item, 0);
+        // increase the capacity of the inventory and add the new item
+        this.inventoryComponent.increaseCapacity(this.inventoryComponent.getCapacity() + 1);
+        this.inventoryComponent.addItemAt(item, this.inventoryComponent.getSize() - 1);
         playerInventoryComponent.removeAt(0);
         
-        // TODO perform checks on station inventory for a valid recipe
+        // processes a meal from the station inventory if possible
         if (this.inventoryComponent.getSize() > 1) {
             this.processMeal();
         }
@@ -161,7 +167,29 @@ public class StationItemHandlerComponent extends Component {
         return -1;
     }
 
+    /**
+     * 
+     */
     private void processMeal() {
+        List<String> possibleRecipes = mealFactory.getRecipe(this.inventoryComponent.getItemNames());
         
+        if (!possibleRecipes.isEmpty()) {
+            // get first valid recipe
+            // String currentRecipe = possibleRecipes.getFirst();
+            List<IngredientComponent> ingredients = new ArrayList<>();
+
+            // process items to be IngredientComponents
+            for (int index = 0; index < this.inventoryComponent.getCapacity(); index++) {
+                ItemComponent item = this.inventoryComponent.getItemAt(index);
+                if (item != null) {
+                    this.inventoryComponent.removeAt(index);
+                    ingredients.add((IngredientComponent) item);
+                }
+            }
+            
+            // create and return the first possible meal
+            MealComponent meal = new MealComponent(possibleRecipes.getFirst(), ItemType.MEAL, 0, ingredients, 0);
+            this.inventoryComponent.addItem(meal);
+        }
     }
 }
