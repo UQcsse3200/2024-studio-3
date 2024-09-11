@@ -1,18 +1,21 @@
 package com.csse3200.game.components.ordersystem;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.csse3200.game.components.player.InventoryComponent;
+import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.events.EventHandler;
 import com.csse3200.game.extensions.GameExtension;
 import com.csse3200.game.rendering.RenderService;
 import com.csse3200.game.services.DocketService;
 import com.csse3200.game.services.PlayerService;
+import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
@@ -45,8 +48,10 @@ class MainGameOrderTicketDisplayTest {
 	@Mock PlayerService playerService;
 	@Mock EventHandler eventHandler;
 	@Mock EventHandler eventHandler2;
+	@Mock ResourceService resourceService;
+	@Mock Texture textureMock;
 	MainGameOrderTicketDisplay orderTicketDisplay;
-	@Mock InventoryComponent inventoryComponent;
+	@Mock CombatStatsComponent combatStatsComponent;
 	private static final Logger logger = LoggerFactory.getLogger(MainGameOrderTicketDisplayTest.class);
 
 	/**
@@ -57,6 +62,12 @@ class MainGameOrderTicketDisplayTest {
 		ServiceLocator.registerRenderService(renderService);
 		ServiceLocator.registerDocketService(docketService);
 		ServiceLocator.registerPlayerService(playerService);
+		resourceService = mock(ResourceService.class);
+		ServiceLocator.registerResourceService(resourceService);
+		textureMock = mock(Texture.class);
+
+		lenient().when(resourceService.getAsset("images/ordersystem/acai_bowl_docket.png", Texture.class)).thenReturn(textureMock);
+
 
 		when(ServiceLocator.getRenderService().getStage()).thenReturn(stage);
 		when(ServiceLocator.getRenderService().getStage().getViewport()).thenReturn(viewport);
@@ -133,22 +144,34 @@ class MainGameOrderTicketDisplayTest {
 		assertEquals(0, (MainGameOrderTicketDisplay.getTableArrayList()).size());
 	}
 
+	/**
+	 * Test docket sizes are sized correctly
+	 */
 	@Test
-	void testEnlargementOfLastDocket() {
-		for (int i = 0; i < 5; i++) {
-			orderTicketDisplay.addActors();
-		}
+	public void testDocketSizesNormalAndEnlarged() {
+		orderTicketDisplay.addActors();
+		orderTicketDisplay.addActors();
+		orderTicketDisplay.addActors();
+
+		assertEquals(3, orderTicketDisplay.getTableArrayList().size());
+
 		orderTicketDisplay.updateDocketSizes();
-		Table lastTable = MainGameOrderTicketDisplay.getTableArrayList().get(MainGameOrderTicketDisplay.getTableArrayList().size() - 1);
-		assertEquals(170f * (orderTicketDisplay.getViewportWidth()/1920f), lastTable.getWidth(), 0.1f);
-		assertEquals(200f * (orderTicketDisplay.getViewportHeight()/1080f), lastTable.getHeight(), 0.1f);
 
-		float expectedX = orderTicketDisplay.getViewportWidth() - 320f;
-		float expectedY = 900f * (orderTicketDisplay.getViewportHeight()/1080f);
+		float normalDocketWidth = 120f * (orderTicketDisplay.getViewportWidth() / 1920f);
+		float normalDocketHeight = 150f * (orderTicketDisplay.getViewportHeight() / 1080f);
 
-		assertEquals(expectedX, lastTable.getX(), 0.1f);
-		assertEquals(expectedY, lastTable.getY(), 0.1f);
+		float enlargedDocketWidth = 170f * (orderTicketDisplay.getViewportWidth() / 1920f);
+		float enlargedDocketHeight = 200f * (orderTicketDisplay.getViewportHeight() / 1080f);
 
+		for (int i = 0; i < orderTicketDisplay.getTableArrayList().size() - 1; i++) {
+			Table table = orderTicketDisplay.getTableArrayList().get(i);
+			assertEquals(normalDocketWidth, table.getWidth(), 0.1f);
+			assertEquals(normalDocketHeight, table.getHeight(), 0.1f);
+		}
+
+		Table lastTable = orderTicketDisplay.getTableArrayList().get(orderTicketDisplay.getTableArrayList().size() - 1);
+		assertEquals(enlargedDocketWidth, lastTable.getWidth(), 0.1f);
+		assertEquals(enlargedDocketHeight, lastTable.getHeight(), 0.1f);
 	}
 
 	/**
@@ -181,8 +204,8 @@ class MainGameOrderTicketDisplayTest {
 	@Test
 	void testStageDispose() {
 		orderTicketDisplay.addActors();
-		inventoryComponent = mock(InventoryComponent.class);
-		orderTicketDisplay.inventoryComponent = inventoryComponent;
+		combatStatsComponent = mock(CombatStatsComponent.class);
+		orderTicketDisplay.combatStatsComponent = combatStatsComponent;
 
 		Assertions.assertNotNull(MainGameOrderTicketDisplay.getTableArrayList(), "Table ArrayList should not be null");
 		assertFalse(MainGameOrderTicketDisplay.getTableArrayList().isEmpty(), "Table ArrayList should not be empty");
@@ -216,45 +239,42 @@ class MainGameOrderTicketDisplayTest {
 		assertEquals(ServiceLocator.getRenderService().getStage(), stage);
 	}
 
-
+	/**
+	 * Tests if only one docket is present, then checks if it has enlarged docket dimensions.
+	 */
 	@Test
-	void testEnlargementOfSingleDocket() {
+	public void testDocketEnlargement() {
+		// Add a new docket
 		orderTicketDisplay.addActors();
+
 		orderTicketDisplay.updateDocketSizes();
-		Table singleTable = MainGameOrderTicketDisplay.getTableArrayList().get(0);
 
-		assertEquals(
-		  170f * (orderTicketDisplay.getViewportWidth()/1920f), singleTable.getWidth(),
-		  0.1f, "Docket width is incorrect.");
-		assertEquals(200f * (orderTicketDisplay.getViewportHeight()/1080f), singleTable.getHeight(),
-		  0.1f, "Docket height is incorrect.");
+		Table lastDocketTable = MainGameOrderTicketDisplay.getTableArrayList().get(MainGameOrderTicketDisplay.getTableArrayList().size() - 1);
 
-		float expectedX = orderTicketDisplay.getViewportWidth() - 320f; //orderTicketDisplay.getViewportWidth() - 260f
-		float expectedY = 900f * (orderTicketDisplay.getViewportHeight()/1080f);
+		float lastDocketWidth = lastDocketTable.getWidth();
+		float lastDocketHeight = lastDocketTable.getHeight();
 
-		assertEquals(expectedX, singleTable.getX(), 0.1f, "Docket X position is incorrect.");
-		assertEquals(expectedY, singleTable.getY(), 0.1f, "Docket Y position is incorrect.");
+		float expectedEnlargedWidth = 1280f * 0.08f * orderTicketDisplay.getScalingFactor(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()) * 1.7f;
+		float expectedEnlargedHeight = 800f * 0.25f * orderTicketDisplay.getScalingFactor(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()) * 1.7f;
+
+		assertTrue(Math.abs(lastDocketWidth - expectedEnlargedWidth) < 1.0f, "Docket width is not as expected");
+		assertTrue(Math.abs(lastDocketHeight - expectedEnlargedHeight) < 1.0f, "Docket height is not as expected");
 	}
 
+	/**
+	 * Tests getting recipe name.
+	 */
 	@Test
-	void testNotEnlargedDocketSizes() {
-		for (int i = 0; i < 5; i++) {
-			orderTicketDisplay.addActors();
-		}
+	void testGetRecipeName() {
+		Recipe recipe = orderTicketDisplay.getRecipe();
 
-		orderTicketDisplay.updateDocketSizes();
-		for (int i = 0; i < MainGameOrderTicketDisplay.getTableArrayList().size() - 1; i++) {
-			Table table = MainGameOrderTicketDisplay.getTableArrayList().get(i);
-			assertEquals(120f * (orderTicketDisplay.getViewportWidth()/1920f), table.getWidth(), 0.1f);
-			assertEquals(150f * (orderTicketDisplay.getViewportHeight()/1080f), table.getHeight(), 0.1f);
-		}
+		assertEquals("acaiBowl", recipe.getName(), "The recipe name should be 'acaiBowl'");
 	}
 
 	@Test
 	void testGetZIndex() {
-		assertEquals(2f, orderTicketDisplay.getZIndex());
+		assertEquals(3f, orderTicketDisplay.getZIndex());
 	}
-
 }
 
 

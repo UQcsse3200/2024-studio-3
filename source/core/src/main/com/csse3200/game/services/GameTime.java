@@ -44,4 +44,8 @@ public class GameTime {
   public long getTimeSince(long lastTime) {
     return getTime() - lastTime;
   }
+
+  public float getTimeScale() {
+    return timeScale;
+  }
 }

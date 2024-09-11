@@ -45,7 +45,8 @@ public class TutorialScreen extends ScreenAdapter {
             "images/ordersystem/docket_background.png",
             "images/ordersystem/pin_line.png",
             "images/bird.png",
-            "images/textbox.png"
+            "images/textbox.png",
+            "images/inventory_ui/slot.png",
     };
 
     private static final Vector2 CAMERA_POSITION = new Vector2(7.5f, 6.0f);
@@ -79,7 +80,11 @@ public class TutorialScreen extends ScreenAdapter {
         ServiceLocator.registerEntityService(new EntityService());
         ServiceLocator.registerRenderService(new RenderService());
         ServiceLocator.registerDocketService(new DocketService());
-        ServiceLocator.registerTutorialService(new TutorialService());
+
+        ServiceLocator.registerDayNightService(new DayNightService());
+
+        MainGameScreen mainGameScreen = new MainGameScreen(game);
+        ServiceLocator.registerGameScreen(mainGameScreen);
 
         renderer = RenderFactory.createRenderer();
         renderer.getCamera().getEntity().setPosition(CAMERA_POSITION);
