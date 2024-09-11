@@ -10,6 +10,7 @@ import com.csse3200.game.screens.MainGameScreen;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+
 /**
  * A simplified implementation of the Service Locator pattern:
  * https://martinfowler.com/articles/injection.html#UsingAServiceLocator
@@ -36,16 +37,18 @@ public class ServiceLocator {
 
   //Me new stuff :)
 
+
   private static DocketService docketService;
   private static LevelService levelService;
 
-    // New services (e.g. CustomerMovementService, DialogueService)
-    private static CustomerMovementService customerMovementService;
+  private static DayNightService dayNightService; //new
 
-    // Getters for services
-    public static EntityService getEntityService() {
-        return entityService;
-    }
+  // New services (e.g. CustomerMovementService, DialogueService)
+  private static CustomerMovementService customerMovementService;
+
+  public static EntityService getEntityService() {
+    return entityService;
+  }
 
   public static RenderService getRenderService() {
     return renderService;
@@ -74,6 +77,12 @@ public class ServiceLocator {
   public static DocketService getDocketService() {
     return docketService;
   }
+
+  public static DayNightService getDayNightService() { //new
+    return dayNightService;
+  }
+
+
 
   public static OrderActions getOrderActions() {
     return orderActions;
@@ -149,6 +158,14 @@ public class ServiceLocator {
     resourceService = source;
   }
 
+  public static void registerDayNightService(DayNightService service) { //new
+    logger.debug("Registering day-night service: {}", service);
+    dayNightService = service;
+  }
+
+
+
+
   public static void registerOrderActions(OrderActions source) {
     logger.debug("Registering order action {}", source);
     orderActions = source;
@@ -204,6 +221,7 @@ public class ServiceLocator {
         gameArea = null;
         gameScreen = null;
         customerMovementService = null;
+        dayNightService = null;
     }
 
   private ServiceLocator() {

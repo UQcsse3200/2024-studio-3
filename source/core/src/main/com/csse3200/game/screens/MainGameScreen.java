@@ -78,7 +78,9 @@ public class MainGameScreen extends ScreenAdapter {
 		ServiceLocator.registerEntityService(new EntityService());
 		ServiceLocator.registerRenderService(new RenderService());
 		ServiceLocator.registerDocketService(new DocketService());
+        ServiceLocator.registerDayNightService(new DayNightService());
 		ServiceLocator.registerLevelService(new LevelService());
+		ServiceLocator.registerGameScreen(this);
 
 		renderer = RenderFactory.createRenderer();
 		renderer.getCamera().getEntity().setPosition(CAMERA_POSITION);
@@ -102,9 +104,11 @@ public class MainGameScreen extends ScreenAdapter {
 	public void render(float delta) {
 		if (!isPaused) {
 			physicsEngine.update();
+			ServiceLocator.getDayNightService().update();
 			ServiceLocator.getEntityService().update();
 		}
 		renderer.render();
+
 	}
 
 	@Override
@@ -181,7 +185,8 @@ public class MainGameScreen extends ScreenAdapter {
 			.addComponent(new OrderActions(this.game))
 			.addComponent(new MainGameOrderBtnDisplay())
 		        .addComponent(new EndDayDisplay(this, this.game))
-				.addComponent(new TextDisplay(this));
+		//temporary moral display
+//			.addComponent(new MoralDisplayTemp(this));
 		ServiceLocator.getEntityService().register(ui);
 	}
 }
