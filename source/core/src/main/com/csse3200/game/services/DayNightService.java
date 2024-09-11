@@ -13,7 +13,7 @@ import com.csse3200.game.events.EventHandler;
  */
 public class DayNightService {
     private static final Logger logger = LoggerFactory.getLogger(DayNightService.class);
-    public  long FIVE_MINUTES = 5000;//5 * 60 * 1000; // 5 minutes in milliseconds
+    public  long FIVE_MINUTES = 5 * 60 * 1000; // 5 minutes in milliseconds
     public long lastCheckTime;
     public long lastCheckTime2;
     private final GameTime gameTime;
