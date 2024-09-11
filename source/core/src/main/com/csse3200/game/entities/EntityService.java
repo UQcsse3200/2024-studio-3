@@ -21,6 +21,8 @@ public class EntityService {
 
   private Entity moralScreen;
 
+  private Entity endDayScreen;
+
   public EntityService() {
     entityEventHandler = new EventHandler();
   }
@@ -84,5 +86,19 @@ public class EntityService {
     unregister(moralScreen);
     this.moralScreen = null;
 
+  }
+
+  public void registerEndDay(Entity endDayScreen) {
+    register(endDayScreen);
+    this.endDayScreen = endDayScreen;
+  }
+
+  public void unregisterEndDay(){
+    unregister(endDayScreen);
+    this.endDayScreen = null;
+  }
+
+  public Entity getEndDayScreen() {
+    return this.endDayScreen;
   }
 }

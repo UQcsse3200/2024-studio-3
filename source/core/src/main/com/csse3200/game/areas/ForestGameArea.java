@@ -1,6 +1,7 @@
 package com.csse3200.game.areas;
 
 
+import com.csse3200.game.components.maingame.EndDayDisplay;
 import com.csse3200.game.components.moral.MoralDecision;
 import com.csse3200.game.components.npc.PersonalCustomerEnums;
 import com.badlogic.gdx.utils.Null;
@@ -131,7 +132,19 @@ public class ForestGameArea extends GameArea {
   private static final String[] forestTextureAtlases = {
     "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/ghostKing.atlas", "images/animal_images/gorilla.atlas",
           "images/animal_images/goose.atlas", "images/animal_images/goat.atlas", "images/animal_images/monkey.atlas",
-          "images/animal_images/snow_wolf.atlas","images/player.atlas", "images/fireExtinguisher/atlas/flame.atlas"
+          "images/animal_images/snow_wolf.atlas", "images" +
+          "/fireExtinguisher/atlas/flame.atlas", "images/player/player.atlas",
+          "images/player/acaiBowl.atlas", "images/player/bananaSplit.atlas",
+          "images/player/burntBeef.atlas", "images/player/choppedAcai.atlas", "images/player" +
+          "/choppedBanana.atlas", "images/player/choppedChocolate.atlas", "images/player" +
+          "/choppedCucumber.atlas", "images/player/choppedLettuce.atlas", "images/player" +
+          "/choppedStrawberry.atlas", "images/player/choppedTomato.atlas", "images/player" +
+          "/cookedBeef.atlas", "images/player/cookedFish.atlas", "images/player/fruitSalad.atlas"
+          , "images/player/rawAcai.atlas", "images/player/rawBanana.atlas", "images/player" +
+          "/rawBeef.atlas", "images/player/rawChocolate.atlas", "images/player/rawCucumber.atlas"
+          , "images/player/rawFish.atlas", "images/player/rawLettuce.atlas", "images/player" +
+          "/rawStrawberry.atlas", "images/player/rawTomato.atlas", "images/player/salad.atlas",
+          "images/player/steak.atlas"
   };
   private static final String[] forestSounds = {"sounds/Impact4.ogg"};
   private static final String backgroundMusic = "sounds/BGM_03_mp3.mp3";
@@ -184,6 +197,7 @@ public class ForestGameArea extends GameArea {
     //ServiceLocator.getEntityService().getEvents().trigger("SetText", "Boss: Rent is due");
     //triggerFiredEnd();    // Trigger the fired (bad) ending
     createMoralScreen();
+    createEndDayScreen();
     playMusic();
   }
 
@@ -514,6 +528,7 @@ public class ForestGameArea extends GameArea {
     spawnEntityAt(newPlayer, PLAYER_SPAWN, true, true);
     return newPlayer;
   }
+
 
   /**
    * Spawn a fish item.
@@ -851,6 +866,13 @@ public class ForestGameArea extends GameArea {
             .addComponent(new MoralDecisionDisplay())
             .addComponent(new MoralDecision());
     ServiceLocator.getEntityService().registerMoral(moralScreen);
+  }
+
+  private void createEndDayScreen() {
+    Entity endDayScreen = new Entity();
+    endDayScreen
+            .addComponent(new EndDayDisplay());
+    ServiceLocator.getEntityService().registerEndDay(endDayScreen);
   }
 
   private void triggerGoodEnd() {
