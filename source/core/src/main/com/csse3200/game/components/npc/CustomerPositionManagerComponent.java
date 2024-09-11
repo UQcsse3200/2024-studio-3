@@ -1,4 +1,4 @@
-package com.csse3200.game.components.npc;
+/*package com.csse3200.game.components.npc;
 
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.components.Component;
@@ -10,7 +10,7 @@ import com.csse3200.game.ai.tasks.AITaskComponent;
 
 /**
  * Component that manages the positions of customers and handles their movement to available spots.
- */
+
 public class CustomerPositionManagerComponent extends Component {
     private static final Vector2[] customerPositions = {
             new Vector2(0f, 0f),   // Position 1
@@ -25,7 +25,7 @@ public class CustomerPositionManagerComponent extends Component {
      * Adds a customer to the manager and assigns it to the next available position.
      *
      * @param customer The customer entity
-     */
+
     public void addCustomer(Entity customer) {
         int positionIndex = getNextAvailablePosition();
         if (positionIndex != -1) {
@@ -72,3 +72,4 @@ public class CustomerPositionManagerComponent extends Component {
         }
     }
 }
+*/

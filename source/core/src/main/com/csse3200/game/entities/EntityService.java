@@ -19,6 +19,10 @@ public class EntityService {
   private final Array<Entity> entities = new Array<>(false, INITIAL_CAPACITY);
   private final EventHandler entityEventHandler;
 
+  private Entity moralScreen;
+
+  private Entity endDayScreen;
+
   public EntityService() {
     entityEventHandler = new EventHandler();
   }
@@ -66,5 +70,35 @@ public class EntityService {
     for (Entity entity : entities) {
       entity.dispose();
     }
+  }
+
+  public Entity getMoralScreen() {
+      return this.moralScreen;
+  }
+
+
+  public void registerMoral(Entity moralScreen) {
+    register(moralScreen);
+    this.moralScreen = moralScreen;
+  }
+
+  public void unregisterMoral(){
+    unregister(moralScreen);
+    this.moralScreen = null;
+
+  }
+
+  public void registerEndDay(Entity endDayScreen) {
+    register(endDayScreen);
+    this.endDayScreen = endDayScreen;
+  }
+
+  public void unregisterEndDay(){
+    unregister(endDayScreen);
+    this.endDayScreen = null;
+  }
+
+  public Entity getEndDayScreen() {
+    return this.endDayScreen;
   }
 }

@@ -3,6 +3,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.TooltipsDisplay;
+import com.csse3200.game.components.maingame.CheckWinLoseComponent;
 import com.csse3200.game.components.ordersystem.MainGameOrderTicketDisplay;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.components.player.InventoryDisplay;
@@ -36,6 +37,7 @@ public class PlayerFactory {
   public static Entity createPlayer(){
     return createPlayer(config);
   }
+
   /**
    * Create a player entity.
    * @return entity
@@ -45,7 +47,8 @@ public class PlayerFactory {
         ServiceLocator.getInputService().getInputFactory().createForPlayer();
 
     AnimationRenderComponent animator =
-            new AnimationRenderComponent(ServiceLocator.getResourceService().getAsset("images/player.atlas", TextureAtlas.class));
+            new AnimationRenderComponent(ServiceLocator.getResourceService().getAsset(
+                    "images/player/" + "player.atlas", TextureAtlas.class));
 
     animator.addAnimation("Character_StandDown", 0.2f);
     animator.addAnimation("Character_StandUp", 0.2f);
@@ -76,6 +79,7 @@ public class PlayerFactory {
             .addComponent(new TooltipsDisplay())
             .addComponent(new PlayerStatsDisplay())
             .addComponent(new InteractionComponent(PhysicsLayer.INTERACTABLE))
+            .addComponent(new CheckWinLoseComponent(60, 50))
             .addComponent(new SensorComponent(PhysicsLayer.INTERACTABLE, 10f));
 
     player.scaleHeight(1.5f);
@@ -87,6 +91,7 @@ public class PlayerFactory {
     animator.startAnimation("Character_StandUp");
     return player;
   }
+
 
   private PlayerFactory() {
     throw new IllegalStateException("Instantiating static util class");

@@ -10,6 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Cell;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.SnapshotArray;
 import com.badlogic.gdx.utils.TimeUtils;
+import com.csse3200.game.components.player.PlayerStatsDisplay;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.entities.Entity;
@@ -70,6 +71,7 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         this.recipe = new Recipe(recipeName);
     }
 
+
     /**
      * Gets recipe data
      *
@@ -78,6 +80,10 @@ public class MainGameOrderTicketDisplay extends UIComponent {
     public Recipe getRecipe() {
         return this.recipe;
     }
+    public String getCurrentRecipeName() {
+        return recipe != null ? recipe.getName() : null;
+    }
+
 
     /**
      * Initialises the display and sets up event listeners for creating and shifting orders.
@@ -91,6 +97,9 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         // logger.info("Listeners added for shiftDocketsLeft and shiftDocketsRight events");
         ServiceLocator.getDocketService().getEvents().addListener("removeBigTicket", this::removeBigTicket);
 
+        //From team 2, i used your dispose method here when listening for a new day, so current dockets get removed
+        //when the end of day occurs
+        ServiceLocator.getDocketService().getEvents().addListener("Dispose", this::dispose);
     }
 
     /**
@@ -428,6 +437,8 @@ public class MainGameOrderTicketDisplay extends UIComponent {
     @Override
     public void dispose() {
         // Cleanup resources
+        //from team 2, i reset the ordernumb back to 0, for each new day when dispose is called
+//        orderNumb = 0;
         for (Table table : tableArrayList) {
             table.clear();
             table.remove();
