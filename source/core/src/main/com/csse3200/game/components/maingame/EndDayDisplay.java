@@ -35,6 +35,8 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
 import com.csse3200.game.entities.Entity;
 
+import java.util.ArrayList;
+
 public class EndDayDisplay extends UIComponent {
     private Table layout; // Layout manager
     private boolean isVisible;
@@ -52,15 +54,10 @@ public class EndDayDisplay extends UIComponent {
     private Label goldLabel;
     private int startGold;
 
-//    public EndDayDisplay(MainGameScreen gameScreen, GdxGame game) {
-//        super();
-//        this.gameScreen = gameScreen;
-//        this.game = game;
-//        isVisible = false;
-//        this.startGold = ServiceLocator.getLevelService().getCurrGold();
-//        this.currentGold = this.startGold;
-//        ServiceLocator.getLevelService().getEvents().addListener("resetScreen", MainGameScreen::resetScreen);
-//    }
+
+    private final ArrayList<String> customerNameArray;
+    private List<String> customerList;
+
 
     public EndDayDisplay() {
         super();
@@ -70,6 +67,11 @@ public class EndDayDisplay extends UIComponent {
         this.startGold = ServiceLocator.getLevelService().getCurrGold();
         this.currentGold = this.startGold;
         ServiceLocator.getLevelService().getEvents().addListener("resetScreen", MainGameScreen::resetScreen);
+
+
+        this.customerNameArray = new ArrayList<>();
+
+
     }
 
     public void create() {
@@ -112,8 +114,13 @@ public class EndDayDisplay extends UIComponent {
         goldLabel.setText(currentGold);
     }
 
-    private void updateCustomerList(Entity customer) {
-        System.out.println("999");
+//    private void updateCustomerList(Entity customer) {
+//        System.out.println("999");
+//    }
+
+    private void updateCustomerList(String customerName) {
+        customerNameArray.add(customerName);
+        customerList.setItems(customerNameArray.toArray(new String[0]));
     }
 
     private void setupImages() {
@@ -172,20 +179,47 @@ public class EndDayDisplay extends UIComponent {
         // Add the sub-table to the main layout, centered horizontally
         layout.add(coinAndGoldLayout).expandX().fillX().center().row();
 
+//        // Customer lists
+//        List<String> passedCustomers = new List<>(skin);
+//        passedCustomers.setItems("Customer A", "Customer B", "Customer C");
+//        List<String> failedCustomers = new List<>(skin);
+//        failedCustomers.setItems("Customer X", "Customer Y");
+//
+//        Table listTable = new Table();
+//        listTable.add(new Label("Passed Customers", skin)).pad(10);
+//        listTable.add(new Label("Failed Customers", skin)).pad(10).row();
+//        listTable.add(new ScrollPane(passedCustomers, skin)).pad(10);
+//        listTable.add(new ScrollPane(failedCustomers, skin)).pad(10);
+//
+//        layout.add(listTable).expand().fill().row();
+
         // Customer lists
         List<String> passedCustomers = new List<>(skin);
-        passedCustomers.setItems("Customer A", "Customer B", "Customer C");
         List<String> failedCustomers = new List<>(skin);
-        failedCustomers.setItems("Customer X", "Customer Y");
-
+        customerList = new List<>(skin);
         Table listTable = new Table();
-        listTable.add(new Label("Passed Customers", skin)).pad(10);
-        listTable.add(new Label("Failed Customers", skin)).pad(10).row();
-        listTable.add(new ScrollPane(passedCustomers, skin)).pad(10);
-        listTable.add(new ScrollPane(failedCustomers, skin)).pad(10);
+
+        Label passedLabel = new Label("Passed Customers", skin);
+        passedLabel.setFontScale(1.2f);
+        Label failedLabel = new Label("Failed Customers", skin);
+        failedLabel.setFontScale(1.2f);
+
+        listTable.add(passedLabel).pad(10).center();
+        listTable.add(failedLabel).pad(10).center().row();
+
+        ScrollPane passedScrollPane = new ScrollPane(passedCustomers, skin);
+        passedScrollPane.setSmoothScrolling(true);
+
+        ScrollPane failedScrollPane = new ScrollPane(customerList, skin);
+        failedScrollPane.setSmoothScrolling(true);
+
+        listTable.add(passedScrollPane).pad(10).expand().width(400).fillY();
+        listTable.add(failedScrollPane).pad(10).expand().width(400).fillY().row();
 
         layout.add(listTable).expand().fill().row();
 
+
+        // Close button
         TextButton closeBtn = new TextButton("Close", skin);
         closeBtn.addListener(new ClickListener() {
             @Override
