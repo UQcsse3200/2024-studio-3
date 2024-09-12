@@ -8,7 +8,6 @@ import com.csse3200.game.areas.ForestGameArea;
 import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.components.maingame.MainGameActions;
 import com.csse3200.game.components.maingame.TextDisplay;
-import com.csse3200.game.components.ordersystem.DocketMealDisplay;
 import com.csse3200.game.components.ordersystem.MainGameOrderBtnDisplay;
 import com.csse3200.game.components.ordersystem.OrderActions;
 import com.csse3200.game.entities.Entity;
@@ -63,8 +62,9 @@ public class TutorialScreen extends ScreenAdapter {
 
         // Register ResourceService before calling loadAssets
         ServiceLocator.registerResourceService(new ResourceService());
-        this.resourceService = ServiceLocator.getResourceService(); // Now it's initialised
+        this.resourceService = ServiceLocator.getResourceService(); // Now it's initialized
 
+        loadAssets(); // You can now load the assets safely
 
         logger.debug("Initialising tutorial screen services");
         ServiceLocator.registerTimeSource(new GameTime());
@@ -90,13 +90,12 @@ public class TutorialScreen extends ScreenAdapter {
         renderer.getCamera().getEntity().setPosition(CAMERA_POSITION);
         renderer.getDebug().renderPhysicsWorld(physicsEngine.getWorld());
 
-        loadAssets();
         createUI();  // Create the UI after loading the assets
 
         logger.debug("Initialising tutorial screen entities");
         TerrainFactory terrainFactory = new TerrainFactory(renderer.getCamera());
-//        ForestGameArea forestGameArea = new ForestGameArea(terrainFactory);
-//        forestGameArea.create();
+        ForestGameArea forestGameArea = new ForestGameArea(terrainFactory);
+        forestGameArea.create();
     }
 
     @Override
@@ -145,15 +144,11 @@ public class TutorialScreen extends ScreenAdapter {
 
         resourceService.loadTextures(mainGameTextures);
         resourceService.loadAll();
-        resourceService.loadTextures(DocketMealDisplay.getMealDocketTextures());
-        ServiceLocator.getResourceService().loadAll();
     }
 
     private void unloadAssets() {
         logger.debug("Unloading assets");
         resourceService.unloadAssets(mainGameTextures);
-        resourceService.unloadAssets(mainGameTextures);
-        resourceService.unloadAssets(DocketMealDisplay.getMealDocketTextures());
     }
 
     /**
