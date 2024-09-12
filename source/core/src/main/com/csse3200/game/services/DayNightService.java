@@ -52,11 +52,14 @@ public class DayNightService {
      * instead for when team 6 extends their functionality for multiple days.
      * This should listen to a trigger for when the animation is done executing at the end of a day,
      * but currently team 6 has decided to keep it simple and end the game in one day.
+     *
+     * Okay, when resolving merge conflict, seems team 6 kept our "decisionDone" listener,
+     * So I'm going to keep that in for now.
      */
     public void create() {
         // ***Working version of Day cycle used "decisionDone"***
-        // enddayEventHandler.addListener("decisionDone", this::startNewDay);
-        enddayEventHandler.addListener("animationDone", this::startNewDay);
+        enddayEventHandler.addListener("decisionDone", this::startNewDay);
+        // enddayEventHandler.addListener("animationDone", this::startNewDay);
 
         enddayEventHandler.addListener("callpastsecond", this::updatepastSecond);
     }
@@ -92,11 +95,11 @@ public class DayNightService {
      * time updates
      */
     private void startNewDay() {
+        ServiceLocator.getDayNightService().getEvents().trigger("endGame");
         logger.info("It's a new Day!");
         enddayEventHandler.trigger("newday");
-
-        // ***Working version of day cycle used the following commented out lastCheckTime update***
-        // lastCheckTime = gameTime.getTime();
+        // // Resume the game time and reset the last check time
+        lastCheckTime = gameTime.getTime(); // Reset lastCheckTime to the current time
         endOfDayTriggered = false;
         gameTime.setTimeScale(1); // Resume game time
     }
