@@ -485,6 +485,10 @@ loadScripts(document, 'script');</script>
 </dd>
 <dt><a href="com/csse3200/game/utils/SortedIntMap.html#containsKey(int)" class="member-name-link">containsKey(int)</a> - Method in class com.csse3200.game.utils.<a href="com/csse3200/game/utils/SortedIntMap.html" title="class in com.csse3200.game.utils">SortedIntMap</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/components/player/PlayerStatsDisplay.html#convertDigital(long)" class="member-name-link">convertDigital(long)</a> - Static method in class com.csse3200.game.components.player.<a href="com/csse3200/game/components/player/PlayerStatsDisplay.html" title="class in com.csse3200.game.components.player">PlayerStatsDisplay</a></dt>
+<dd>
+<div class="block">Converts a time value in milliseconds into a formatted digital time (MM:SS).</div>
+</dd>
 <dt><a href="com/csse3200/game/events/CookingAndServingHandler.html" class="type-name-link" title="class in com.csse3200.game.events">CookingAndServingHandler</a> - Class in <a href="com/csse3200/game/events/package-summary.html">com.csse3200.game.events</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/events/CookingAndServingHandler.html#%3Cinit%3E(com.csse3200.game.services.GameTime)" class="member-name-link">CookingAndServingHandler(GameTime)</a> - Constructor for class com.csse3200.game.events.<a href="com/csse3200/game/events/CookingAndServingHandler.html" title="class in com.csse3200.game.events">CookingAndServingHandler</a></dt>
@@ -689,7 +693,7 @@ loadScripts(document, 'script');</script>
 </dd>
 <dt><a href="com/csse3200/game/services/DayNightService.html#create()" class="member-name-link">create()</a> - Method in class com.csse3200.game.services.<a href="com/csse3200/game/services/DayNightService.html" title="class in com.csse3200.game.services">DayNightService</a></dt>
 <dd>
-<div class="block">Use the create method to set up event listeners for the end-of-day cycle.</div>
+<div class="block">Sets up event listeners for handling end-of-day and timer-related events.</div>
 </dd>
 <dt><a href="com/csse3200/game/ui/terminal/KeyboardTerminalInputComponent.html#create()" class="member-name-link">create()</a> - Method in class com.csse3200.game.ui.terminal.<a href="com/csse3200/game/ui/terminal/KeyboardTerminalInputComponent.html" title="class in com.csse3200.game.ui.terminal">KeyboardTerminalInputComponent</a></dt>
 <dd>&nbsp;</dd>
@@ -947,8 +951,16 @@ loadScripts(document, 'script');</script>
 <h2 class="title" id="I:D">D</h2>
 <dl class="index">
 <dt><a href="com/csse3200/game/services/DayNightService.html" class="type-name-link" title="class in com.csse3200.game.services">DayNightService</a> - Class in <a href="com/csse3200/game/services/package-summary.html">com.csse3200.game.services</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">The DayNightService class handles the day-night cycle within the game.</div>
+</dd>
 <dt><a href="com/csse3200/game/services/DayNightService.html#%3Cinit%3E()" class="member-name-link">DayNightService()</a> - Constructor for class com.csse3200.game.services.<a href="com/csse3200/game/services/DayNightService.html" title="class in com.csse3200.game.services">DayNightService</a></dt>
+<dd>
+<div class="block">Constructs a new DayNightService.</div>
+</dd>
+<dt><a href="com/csse3200/game/services/DayNightService.html#%3Cinit%3E(com.csse3200.game.events.EventHandler)" class="member-name-link">DayNightService(EventHandler)</a> - Constructor for class com.csse3200.game.services.<a href="com/csse3200/game/services/DayNightService.html" title="class in com.csse3200.game.services">DayNightService</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/services/DayNightService.html#%3Cinit%3E(com.csse3200.game.events.EventHandler,com.csse3200.game.events.EventHandler)" class="member-name-link">DayNightService(EventHandler, EventHandler)</a> - Constructor for class com.csse3200.game.services.<a href="com/csse3200/game/services/DayNightService.html" title="class in com.csse3200.game.services">DayNightService</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/ui/terminal/commands/DebugCommand.html" class="type-name-link" title="class in com.csse3200.game.ui.terminal.commands">DebugCommand</a> - Class in <a href="com/csse3200/game/ui/terminal/commands/package-summary.html">com.csse3200.game.ui.terminal.commands</a></dt>
 <dd>
@@ -1327,6 +1339,8 @@ loadScripts(document, 'script');</script>
 <dt><a href="com/csse3200/game/components/station/FireExtinguisherHandlerComponent.html#%3Cinit%3E()" class="member-name-link">FireExtinguisherHandlerComponent()</a> - Constructor for class com.csse3200.game.components.station.<a href="com/csse3200/game/components/station/FireExtinguisherHandlerComponent.html" title="class in com.csse3200.game.components.station">FireExtinguisherHandlerComponent</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/items/ItemType.html#FISH" class="member-name-link">FISH</a> - Enum constant in enum class com.csse3200.game.components.items.<a href="com/csse3200/game/components/items/ItemType.html" title="enum class in com.csse3200.game.components.items">ItemType</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/services/DayNightService.html#FIVE_MINUTES" class="member-name-link">FIVE_MINUTES</a> - Variable in class com.csse3200.game.services.<a href="com/csse3200/game/services/DayNightService.html" title="class in com.csse3200.game.services">DayNightService</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/physics/raycast/RaycastHit.html#fixture" class="member-name-link">fixture</a> - Variable in class com.csse3200.game.physics.raycast.<a href="com/csse3200/game/physics/raycast/RaycastHit.html" title="class in com.csse3200.game.physics.raycast">RaycastHit</a></dt>
 <dd>
@@ -2495,6 +2509,10 @@ loadScripts(document, 'script');</script>
 </dl>
 <h2 class="title" id="I:L">L</h2>
 <dl class="index">
+<dt><a href="com/csse3200/game/services/DayNightService.html#lastCheckTime" class="member-name-link">lastCheckTime</a> - Variable in class com.csse3200.game.services.<a href="com/csse3200/game/services/DayNightService.html" title="class in com.csse3200.game.services">DayNightService</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/services/DayNightService.html#lastCheckTime2" class="member-name-link">lastCheckTime2</a> - Variable in class com.csse3200.game.services.<a href="com/csse3200/game/services/DayNightService.html" title="class in com.csse3200.game.services">DayNightService</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/concurrency/JobSystem.html#launch(java.util.function.Supplier)" class="member-name-link">launch(Supplier&lt;T&gt;)</a> - Static method in class com.csse3200.game.concurrency.<a href="com/csse3200/game/concurrency/JobSystem.html" title="class in com.csse3200.game.concurrency">JobSystem</a></dt>
 <dd>
 <div class="block">Launch an asynchronous job which may be run on a separate thread.</div>
@@ -4009,6 +4027,8 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/areas/terrain/TerrainComponent.html#tileToWorldPosition(com.badlogic.gdx.math.GridPoint2)" class="member-name-link">tileToWorldPosition(GridPoint2)</a> - Method in class com.csse3200.game.areas.terrain.<a href="com/csse3200/game/areas/terrain/TerrainComponent.html" title="class in com.csse3200.game.areas.terrain">TerrainComponent</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/components/player/PlayerStatsDisplay.html#timer" class="member-name-link">timer</a> - Static variable in class com.csse3200.game.components.player.<a href="com/csse3200/game/components/player/PlayerStatsDisplay.html" title="class in com.csse3200.game.components.player">PlayerStatsDisplay</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/ui/terminal/Terminal.html#toggleIsOpen()" class="member-name-link">toggleIsOpen()</a> - Method in class com.csse3200.game.ui.terminal.<a href="com/csse3200/game/ui/terminal/Terminal.html" title="class in com.csse3200.game.ui.terminal">Terminal</a></dt>
 <dd>
 <div class="block">Toggles between the terminal being open and closed.</div>
@@ -4295,7 +4315,10 @@ loadScripts(document, 'script');</script>
 <div class="block">Updates the moral decision screen.</div>
 </dd>
 <dt><a href="com/csse3200/game/services/DayNightService.html#update()" class="member-name-link">update()</a> - Method in class com.csse3200.game.services.<a href="com/csse3200/game/services/DayNightService.html" title="class in com.csse3200.game.services">DayNightService</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Updates the game state by checking if enough time has passed to trigger
+ end-of-day events or timer-related events.</div>
+</dd>
 <dt><a href="com/csse3200/game/components/player/PlayerAnimationController.html#updateAnimation(java.lang.String)" class="member-name-link">updateAnimation(String)</a> - Method in class com.csse3200.game.components.player.<a href="com/csse3200/game/components/player/PlayerAnimationController.html" title="class in com.csse3200.game.components.player">PlayerAnimationController</a></dt>
 <dd>
 <div class="block">Updates player animation to use given atlas, removes and reloads walk cycle</div>
@@ -4305,7 +4328,9 @@ loadScripts(document, 'script');</script>
 <div class="block">Update the atlas being used by the animation component</div>
 </dd>
 <dt><a href="com/csse3200/game/components/player/PlayerStatsDisplay.html#updateDay()" class="member-name-link">updateDay()</a> - Static method in class com.csse3200.game.components.player.<a href="com/csse3200/game/components/player/PlayerStatsDisplay.html" title="class in com.csse3200.game.components.player">PlayerStatsDisplay</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Updates the displayed current day on the UI.</div>
+</dd>
 <dt><a href="com/csse3200/game/components/ordersystem/MainGameOrderTicketDisplay.html#updateDocketDisplay()" class="member-name-link">updateDocketDisplay()</a> - Method in class com.csse3200.game.components.ordersystem.<a href="com/csse3200/game/components/ordersystem/MainGameOrderTicketDisplay.html" title="class in com.csse3200.game.components.ordersystem">MainGameOrderTicketDisplay</a></dt>
 <dd>
 <div class="block">Updates the display for all dockets.</div>
@@ -4322,6 +4347,8 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Updates the movement target position for a customer.</div>
 </dd>
+<dt><a href="com/csse3200/game/services/DayNightService.html#updatepastSecond()" class="member-name-link">updatepastSecond()</a> - Method in class com.csse3200.game.services.<a href="com/csse3200/game/services/DayNightService.html" title="class in com.csse3200.game.services">DayNightService</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/player/PlayerStatsDisplay.html#updatePlayerGoldUI(int)" class="member-name-link">updatePlayerGoldUI(int)</a> - Method in class com.csse3200.game.components.player.<a href="com/csse3200/game/components/player/PlayerStatsDisplay.html" title="class in com.csse3200.game.components.player">PlayerStatsDisplay</a></dt>
 <dd>
 <div class="block">Updates the player's gold on the ui.</div>
@@ -4332,6 +4359,10 @@ loadScripts(document, 'script');</script>
 </dd>
 <dt><a href="com/csse3200/game/events/CookingAndServingHandler.html#updateState()" class="member-name-link">updateState()</a> - Method in class com.csse3200.game.events.<a href="com/csse3200/game/events/CookingAndServingHandler.html" title="class in com.csse3200.game.events">CookingAndServingHandler</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/components/player/PlayerStatsDisplay.html#updateTime()" class="member-name-link">updateTime()</a> - Static method in class com.csse3200.game.components.player.<a href="com/csse3200/game/components/player/PlayerStatsDisplay.html" title="class in com.csse3200.game.components.player">PlayerStatsDisplay</a></dt>
+<dd>
+<div class="block">Updates the remaining time for the current day on the UI.</div>
+</dd>
 <dt><a href="com/csse3200/game/files/UserSettings.html" class="type-name-link" title="class in com.csse3200.game.files">UserSettings</a> - Class in <a href="com/csse3200/game/files/package-summary.html">com.csse3200.game.files</a></dt>
 <dd>
 <div class="block">Reading, Writing, and applying user settings in the game.</div>

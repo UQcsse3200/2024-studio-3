@@ -38,7 +38,7 @@ loadScripts(document, 'script');</script>
 <p>Summary:</p>
 <ul>
 <li>Nested</li>
-<li>Field</li>
+<li><a href="#field-summary">Field</a></li>
 <li><a href="#constructor-summary">Constr</a></li>
 <li><a href="#method-summary">Method</a></li>
 </ul>
@@ -46,7 +46,7 @@ loadScripts(document, 'script');</script>
 <li>
 <p>Detail:</p>
 <ul>
-<li>Field</li>
+<li><a href="#field-detail">Field</a></li>
 <li><a href="#constructor-detail">Constr</a></li>
 <li><a href="#method-detail">Method</a></li>
 </ul>
@@ -58,13 +58,13 @@ loadScripts(document, 'script');</script>
 <ul class="sub-nav-list">
 <li>Summary:&nbsp;</li>
 <li>Nested&nbsp;|&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#field-summary">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor-summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method-summary">Method</a></li>
 </ul>
 <ul class="sub-nav-list">
 <li>Detail:&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#field-detail">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor-detail">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method-detail">Method</a></li>
 </ul>
@@ -91,9 +91,34 @@ loadScripts(document, 'script');</script>
 <hr>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">DayNightService</span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span></div>
+<div class="block">The DayNightService class handles the day-night cycle within the game. It keeps track
+ of game time and triggers events when certain time thresholds, such as the end of a day,
+ are reached. It utilizes an event handler to manage day transitions and in-game events
+ triggered by time changes.</div>
 </section>
 <section class="summary">
 <ul class="summary-list">
+<!-- =========== FIELD SUMMARY =========== -->
+<li>
+<section class="field-summary" id="field-summary">
+<h2>Field Summary</h2>
+<div class="caption"><span>Fields</span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Field</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>long</code></div>
+<div class="col-second even-row-color"><code><a href="#FIVE_MINUTES" class="member-name-link">FIVE_MINUTES</a></code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>long</code></div>
+<div class="col-second odd-row-color"><code><a href="#lastCheckTime" class="member-name-link">lastCheckTime</a></code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>long</code></div>
+<div class="col-second even-row-color"><code><a href="#lastCheckTime2" class="member-name-link">lastCheckTime2</a></code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+</div>
+</section>
+</li>
 <!-- ======== CONSTRUCTOR SUMMARY ======== -->
 <li>
 <section class="constructor-summary" id="constructor-summary">
@@ -103,6 +128,13 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Constructor</div>
 <div class="table-header col-last">Description</div>
 <div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E()" class="member-name-link">DayNightService</a>()</code></div>
+<div class="col-last even-row-color">
+<div class="block">Constructs a new DayNightService.</div>
+</div>
+<div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(com.csse3200.game.events.EventHandler)" class="member-name-link">DayNightService</a><wbr>(<a href="../events/EventHandler.html" title="class in com.csse3200.game.events">EventHandler</a>&nbsp;enddayEventHandler)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(com.csse3200.game.events.EventHandler,com.csse3200.game.events.EventHandler)" class="member-name-link">DayNightService</a><wbr>(<a href="../events/EventHandler.html" title="class in com.csse3200.game.events">EventHandler</a>&nbsp;enddayEventHandler,
+ <a href="../events/EventHandler.html" title="class in com.csse3200.game.events">EventHandler</a>&nbsp;docketServiceEventHandler)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 </div>
 </section>
@@ -121,7 +153,7 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#create()" class="member-name-link">create</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Use the create method to set up event listeners for the end-of-day cycle.</div>
+<div class="block">Sets up event listeners for handling end-of-day and timer-related events.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getEndOfDayTriggered()" class="member-name-link">getEndOfDayTriggered</a>()</code></div>
@@ -131,7 +163,13 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#update()" class="member-name-link">update</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Updates the game state by checking if enough time has passed to trigger
+ end-of-day events or timer-related events.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#updatepastSecond()" class="member-name-link">updatepastSecond</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 </div>
 </div>
 </div>
@@ -144,6 +182,32 @@ loadScripts(document, 'script');</script>
 </section>
 <section class="details">
 <ul class="details-list">
+<!-- ============ FIELD DETAIL =========== -->
+<li>
+<section class="field-details" id="field-detail">
+<h2>Field Details</h2>
+<ul class="member-list">
+<li>
+<section class="detail" id="FIVE_MINUTES">
+<h3>FIVE_MINUTES</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name">FIVE_MINUTES</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="lastCheckTime">
+<h3>lastCheckTime</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name">lastCheckTime</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="lastCheckTime2">
+<h3>lastCheckTime2</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name">lastCheckTime2</span></div>
+</section>
+</li>
+</ul>
+</section>
+</li>
 <!-- ========= CONSTRUCTOR DETAIL ======== -->
 <li>
 <section class="constructor-details" id="constructor-detail">
@@ -153,6 +217,21 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="&lt;init&gt;()">
 <h3>DayNightService</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">DayNightService</span>()</div>
+<div class="block">Constructs a new DayNightService. Initializes the game time and event handler,
+ and sets up the day-night cycle tracking.</div>
+</section>
+</li>
+<li>
+<section class="detail" id="&lt;init&gt;(com.csse3200.game.events.EventHandler)">
+<h3>DayNightService</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">DayNightService</span><wbr><span class="parameters">(<a href="../events/EventHandler.html" title="class in com.csse3200.game.events">EventHandler</a>&nbsp;enddayEventHandler)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="&lt;init&gt;(com.csse3200.game.events.EventHandler,com.csse3200.game.events.EventHandler)">
+<h3>DayNightService</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">DayNightService</span><wbr><span class="parameters">(<a href="../events/EventHandler.html" title="class in com.csse3200.game.events">EventHandler</a>&nbsp;enddayEventHandler,
+ <a href="../events/EventHandler.html" title="class in com.csse3200.game.events">EventHandler</a>&nbsp;docketServiceEventHandler)</span></div>
 </section>
 </li>
 </ul>
@@ -167,13 +246,24 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="create()">
 <h3>create</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">create</span>()</div>
-<div class="block">Use the create method to set up event listeners for the end-of-day cycle.</div>
+<div class="block">Sets up event listeners for handling end-of-day and timer-related events.
+
+ Our working version was with the "decisionDone" listener, however, we limited our
+ Day cycle to end for just one day on request of Team 6 and added an "animationDone" listener
+ instead for when team 6 extends their functionality for multiple days.
+ This should listen to a trigger for when the animation is done executing at the end of a day,
+ but currently team 6 has decided to keep it simple and end the game in one day.
+
+ Okay, when resolving merge conflict, seems team 6 kept our "decisionDone" listener,
+ So I'm going to keep that in for now.</div>
 </section>
 </li>
 <li>
 <section class="detail" id="update()">
 <h3>update</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">update</span>()</div>
+<div class="block">Updates the game state by checking if enough time has passed to trigger
+ end-of-day events or timer-related events.</div>
 </section>
 </li>
 <li>
@@ -186,6 +276,12 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="getEndOfDayTriggered()">
 <h3>getEndOfDayTriggered</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">getEndOfDayTriggered</span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="updatepastSecond()">
+<h3>updatepastSecond</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">updatepastSecond</span>()</div>
 </section>
 </li>
 </ul>
