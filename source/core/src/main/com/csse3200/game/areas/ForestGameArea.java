@@ -1,15 +1,10 @@
 package com.csse3200.game.areas;
 
-
-
-
 import com.csse3200.game.components.maingame.CheckWinLoseComponent;
 import com.csse3200.game.components.npc.PersonalCustomerEnums;
 import com.badlogic.gdx.utils.Null;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.components.maingame.TextDisplay;
-
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.util.concurrent.ExecutorService;
@@ -40,13 +35,9 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import com.csse3200.game.components.maingame.EndDayDisplay;
 import com.csse3200.game.components.moral.MoralDecision;
-
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-//import java.util.concurrent.TimeUnit;
-
 import static com.badlogic.gdx.Gdx.app;
 
 
@@ -982,6 +973,9 @@ public class ForestGameArea extends GameArea {
   }
 
 
+  /**
+   * Create the moral decision screen
+   */
   private void createMoralScreen() {
     Entity moralScreen = new Entity();
     moralScreen
@@ -990,6 +984,9 @@ public class ForestGameArea extends GameArea {
     ServiceLocator.getEntityService().registerMoral(moralScreen);
   }
 
+  /**
+   * Create the end day screen
+   */
   private void createEndDayScreen() {
     Entity endDayScreen = new Entity();
     endDayScreen
