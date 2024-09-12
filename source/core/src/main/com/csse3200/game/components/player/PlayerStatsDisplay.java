@@ -134,7 +134,7 @@ public class PlayerStatsDisplay extends UIComponent {
     // timer;
     timer -= 1000;
     System.out.println(timer);
-    CharSequence TimerText = String.format("Time Left: \n    %s", convertDigital(timer));
+    CharSequence TimerText = String.format("Time Left: \n   %s", convertDigital(timer));
     timerLabel.setText(TimerText);
     ServiceLocator.getDayNightService().getEvents().trigger("callpastsecond");
 
