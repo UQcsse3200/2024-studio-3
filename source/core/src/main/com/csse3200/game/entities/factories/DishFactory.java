@@ -29,6 +29,7 @@ public class DishFactory {
      */
     private static Map<String, SingleStationRecipeConfig> getSingleStationRecipes() {
         Map<String, SingleStationRecipeConfig> singleStationRecipes = new HashMap<>();
+        singleStationRecipes.put("acaiBowl", configs.acaiBowl);
         singleStationRecipes.put("salad", configs.salad);
         singleStationRecipes.put("fruitSalad", configs.fruitSalad);
         singleStationRecipes.put("bananaSplit", configs.bananaSplit);
@@ -42,13 +43,11 @@ public class DishFactory {
     private static Map<String, MultiStationRecipeConfig> getMultiStationRecipes() {
         Map<String, MultiStationRecipeConfig> multiStationRecipes = new HashMap<>();
         multiStationRecipes.put("steakMeal", configs.steakMeal);
-        multiStationRecipes.put("acaiBowl", configs.acaiBowl);
-
         return multiStationRecipes;
     }
 
     /**
-     Get the recipe for associated ingredients
+    Get the recipe for associated ingredients
 
      @param ingredient needed to make the dish (specify in the recipe.json)
      @return list of recipes that contain associated ingredients
@@ -78,73 +77,6 @@ public class DishFactory {
             }
         }
         return recipes;
-    }
-
-
-    /**
-    Get the list of possible recipes for associated ingredients
-
-     @param ingredients needed to make the dish (specify in the recipe.json)
-     @return list of recipes that contain associated ingredients
-     */
-    public static List<String> getPossibleRecipes (List<String> ingredients) {
-        List<String> recipes = new ArrayList<>();
-
-        if (configs == null) {
-            return recipes;
-        }
-
-        for (Map.Entry<String, SingleStationRecipeConfig> entry : getSingleStationRecipes().entrySet()) {
-            String recipe = entry.getKey();
-            SingleStationRecipeConfig recipeConfig = entry.getValue();
-
-            if (!recipeConfig.ingredient.isEmpty() &&
-                    new HashSet<>(recipeConfig.ingredient).containsAll(ingredients)) {
-                recipes.add(recipe);
-            }
-        }
-
-        for (Map.Entry<String, MultiStationRecipeConfig> entry : getMultiStationRecipes().entrySet()) {
-            String recipe = entry.getKey();
-            MultiStationRecipeConfig recipeConfig = entry.getValue();
-
-            if (!recipeConfig.ingredient.isEmpty() &&
-                    new HashSet<>(recipeConfig.ingredient).containsAll(ingredients)) {
-                recipes.add(recipe);
-            }
-        }
-        return recipes;
-    }
-
-    /**
-     Gets a recipe if and only if it matches exactly the list of ingredients
-
-     @param ingredients needed to make the dish (specify in the recipe.json)
-     @return name of recipe that contain associated ingredients
-     */
-    public static Optional<String> getDefinitiveRecipe (List<String> ingredients) {
-        if (ingredients.size() >= 1) {
-            for (Map.Entry<String, SingleStationRecipeConfig> entry : getSingleStationRecipes().entrySet()) {
-                String recipe = entry.getKey();
-                SingleStationRecipeConfig recipeConfig = entry.getValue();
-
-                if (recipeConfig.ingredient.containsAll(ingredients)
-                        && recipeConfig.ingredient.size() == ingredients.size()) {
-                    return Optional.of(recipe);
-                }
-            }
-
-            for (Map.Entry<String, MultiStationRecipeConfig> entry : getMultiStationRecipes().entrySet()) {
-                String recipe = entry.getKey();
-                MultiStationRecipeConfig recipeConfig = entry.getValue();
-
-                if (recipeConfig.ingredient.containsAll(ingredients)
-                        && recipeConfig.ingredient.size() == ingredients.size()) {
-                    return Optional.of(recipe);
-                }
-            }
-        }
-        return Optional.empty();
     }
 
     public static SingleStationRecipeConfig getSingleStationRecipe(String recipeName) {
