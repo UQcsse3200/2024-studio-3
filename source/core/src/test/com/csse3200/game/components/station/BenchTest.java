@@ -35,35 +35,35 @@ public class BenchTest {
 
     @Test
     public void testCreateBench() {
-        Entity oven = Bench.createBench("left_border");
-        assertNotNull(oven);
-        assertNotNull(oven.getComponent(TextureRenderComponent.class));
-        assertNotNull(oven.getComponent(PhysicsComponent.class));
-        assertNotNull(oven.getComponent(ColliderComponent.class));
-        assertNotNull(oven.getComponent(StationItemHandlerComponent.class));
+        Entity bench = Bench.createBench("left_border");
+        assertNotNull(bench);
+        assertNotNull(bench.getComponent(TextureRenderComponent.class));
+        assertNotNull(bench.getComponent(PhysicsComponent.class));
+        assertNotNull(bench.getComponent(ColliderComponent.class));
+        assertNotNull(bench.getComponent(StationItemHandlerComponent.class));
 
-        assertEquals(BodyDef.BodyType.StaticBody, oven.getComponent(PhysicsComponent.class).getBody().getType());
+        assertEquals(BodyDef.BodyType.StaticBody, bench.getComponent(PhysicsComponent.class).getBody().getType());
     }
     @Test
     public void testCreateBench2() {
-        Entity oven = Bench.createBench("middle");
-        assertNotNull(oven);
-        assertNotNull(oven.getComponent(TextureRenderComponent.class));
-        assertNotNull(oven.getComponent(PhysicsComponent.class));
-        assertNotNull(oven.getComponent(ColliderComponent.class));
-        assertNotNull(oven.getComponent(StationItemHandlerComponent.class));
+        Entity bench = Bench.createBench("middle");
+        assertNotNull(bench);
+        assertNotNull(bench.getComponent(TextureRenderComponent.class));
+        assertNotNull(bench.getComponent(PhysicsComponent.class));
+        assertNotNull(bench.getComponent(ColliderComponent.class));
+        assertNotNull(bench.getComponent(StationItemHandlerComponent.class));
 
-        assertEquals(BodyDef.BodyType.StaticBody, oven.getComponent(PhysicsComponent.class).getBody().getType());
+        assertEquals(BodyDef.BodyType.StaticBody, bench.getComponent(PhysicsComponent.class).getBody().getType());
     }
     @Test
     public void testCreateBench3() {
-        Entity oven = Bench.createBench("single");
-        assertNotNull(oven);
-        assertNotNull(oven.getComponent(TextureRenderComponent.class));
-        assertNotNull(oven.getComponent(PhysicsComponent.class));
-        assertNotNull(oven.getComponent(ColliderComponent.class));
-        assertNotNull(oven.getComponent(StationItemHandlerComponent.class));
+        Entity bench = Bench.createBench("single");
+        assertNotNull(bench);
+        assertNotNull(bench.getComponent(TextureRenderComponent.class));
+        assertNotNull(bench.getComponent(PhysicsComponent.class));
+        assertNotNull(bench.getComponent(ColliderComponent.class));
+        assertNotNull(bench.getComponent(StationItemHandlerComponent.class));
 
-        assertEquals(BodyDef.BodyType.StaticBody, oven.getComponent(PhysicsComponent.class).getBody().getType());
+        assertEquals(BodyDef.BodyType.StaticBody, bench.getComponent(PhysicsComponent.class).getBody().getType());
     }
 }
