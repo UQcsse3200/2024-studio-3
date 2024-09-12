@@ -20,8 +20,6 @@ public class IngredientStationHandlerComponent extends Component {
     protected StationCollectionComponent collectionComponent;
     private final String[] ingredientList = {"acai", "beef", "banana", "lettuce", "cucumber", "tomato", "strawberry", "chocolate", "fish"};
 
-
-    
     // General TODO:
     // Add trigger calls to external for failed interactions
     // Introduce an actual structure for acceptable items, json parsing etc
