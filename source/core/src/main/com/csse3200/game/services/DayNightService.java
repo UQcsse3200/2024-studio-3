@@ -96,8 +96,8 @@ public class DayNightService {
         enddayEventHandler.trigger("newday");
 
         // ***Working version of day cycle used the following commented out lastCheckTime update***
-        // lastCheckTime = gameTime.getTime();
-        // endOfDayTriggered = false;
+        lastCheckTime = gameTime.getTime();
+        endOfDayTriggered = false;
         gameTime.setTimeScale(1); // Resume game time
     }
 
