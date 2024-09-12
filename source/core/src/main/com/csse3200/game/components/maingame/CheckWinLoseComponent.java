@@ -39,7 +39,7 @@ public class CheckWinLoseComponent extends Component {
     }
 
     /**
-     * Returns true if the player has lost i.e. gold more than loseThreshold.
+     * Returns true if the player has lost (gold less than loseThreshold).
      */
     public boolean hasLost() {
         return combatStatsComponent != null && combatStatsComponent.getGold() < loseThreshold;
