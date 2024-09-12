@@ -1,15 +1,16 @@
 package com.csse3200.game.services;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.csse3200.game.areas.GameArea;
-import com.csse3200.game.components.mainmenu.MainMenuDisplay;
 import com.csse3200.game.components.ordersystem.OrderActions;
+import com.csse3200.game.components.ordersystem.TicketDetails;
 import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.input.InputService;
 import com.csse3200.game.physics.PhysicsService;
 import com.csse3200.game.rendering.RenderService;
 import com.csse3200.game.screens.MainGameScreen;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 
 /**
@@ -30,20 +31,19 @@ public class ServiceLocator {
   private static PlayerService playerService;
   private static GameArea gameArea;
   private static MainGameScreen gameScreen;
-  private static MainMenuDisplay mainMenuDisplay;
 
 
   private static ResourceService resourceService;
 
-  private static OrderActions orderActions; // ?
-
+  private static TicketDetails ticketDetails;
   //Me new stuff :)
 
 
   private static DocketService docketService;
   private static LevelService levelService;
 
-  private static DayNightService dayNightService; //new
+  private static DayNightService dayNightService;
+  private static OrderActions orderActions; //new
 
   // New services (e.g. CustomerMovementService, DialogueService)
   private static CustomerMovementService customerMovementService;
@@ -80,6 +80,11 @@ public class ServiceLocator {
     return docketService;
   }
 
+
+  public static TicketDetails getTicketDetails() {
+    return ticketDetails;
+  }
+
   public static DayNightService getDayNightService() { //new
     return dayNightService;
   }
@@ -88,7 +93,9 @@ public class ServiceLocator {
 
   public static OrderActions getOrderActions() {
     return orderActions;
+
   }
+
   public static LevelService getLevelService(){
     return levelService;
   }
@@ -160,6 +167,7 @@ public class ServiceLocator {
     resourceService = source;
   }
 
+
   public static void registerDayNightService(DayNightService service) { //new
     logger.debug("Registering day-night service: {}", service);
     dayNightService = service;
@@ -173,6 +181,7 @@ public class ServiceLocator {
     orderActions = source;
   }
 
+
   public static void registerLevelService(LevelService source) {
     if (levelService == null) {
       levelService = source;
@@ -180,6 +189,11 @@ public class ServiceLocator {
       logger.warn("Level service is already assigned, ignoring register");
     }
   }
+  public static void registerTicketDetails(TicketDetails source){
+    logger.debug("Registering resource service {}", source);
+    ticketDetails = source;
+  }
+
 
   public static void registerGameArea(GameArea game) {
     if (gameArea != null) {
@@ -188,6 +202,7 @@ public class ServiceLocator {
       logger.debug("Registering game");
       gameArea = game;
     }
+
   }
 
   public static void registerGameScreen(MainGameScreen game) {
@@ -197,10 +212,6 @@ public class ServiceLocator {
       logger.debug("Registering game screen");
       gameScreen = game;
     }
-  }
-
-  public static void registerMainMenuDisplay(MainMenuDisplay display) {
-    mainMenuDisplay = display;
   }
 
     // New register methods for additional services
@@ -232,9 +243,5 @@ public class ServiceLocator {
 
   private ServiceLocator() {
     throw new IllegalStateException("Instantiating static util class");
-  }
-
-  public static MainMenuDisplay getMainMenuDisplay() {
-    return mainMenuDisplay;
   }
 }
