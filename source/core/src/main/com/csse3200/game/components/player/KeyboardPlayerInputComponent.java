@@ -37,6 +37,15 @@ public class KeyboardPlayerInputComponent extends InputComponent {
   @Override
   public boolean keyDown(int keycode) {
     keyFlags.put(keycode, 1);
+
+    if (keycode == Keys.O) {
+      System.out.println("O clicked");
+
+      entity.getEvents().trigger("createOrder");
+      return true;
+    }
+
+    
     if (keycode == Keys.E) {
       // Trigger an interaction attempt
       entity.getEvents().trigger("interact");
