@@ -83,6 +83,7 @@ public class ForestGameArea extends GameArea {
     "images/tiles/blue_tile.png",
     "images/stations/oven.png",
     "images/stations/stove.png",
+    "images/stations/bin.png",
     "images/stations/apple_tree.png",
     "images/stations/bench_middle.png",
     "images/stations/bench_legs.png",
@@ -450,10 +451,15 @@ public class ForestGameArea extends GameArea {
     spawnEntityAt(stove, stovePos, false, false);
     stove.setPosition(stove.getPosition().x + 2.7f , stove.getPosition().y + 1.3f);
 
+    GridPoint2 binPos = new GridPoint2(5,4);
+    Entity bin = StationFactory.createBin();
+    spawnEntityAt(bin, binPos, false, false);
+    bin.setPosition(bin.getPosition().x + 1.7f , bin.getPosition().y - 2f);
+
     GridPoint2 appleTreePos = new GridPoint2( 5, 4);
     Entity appleTree = StationFactory.createAppleTree();
     spawnEntityAt(appleTree, appleTreePos, false, false);
-    appleTree.setPosition(appleTree.getPosition().x + 4.2f , appleTree.getPosition().y - 1.3f);
+    appleTree.setPosition(appleTree.getPosition().x + 4.2f , appleTree.getPosition().y - 3f);
 
     GridPoint2 serveryPos = new GridPoint2(1,1);
     Entity servery = StationFactory.createSubmissionWindow();

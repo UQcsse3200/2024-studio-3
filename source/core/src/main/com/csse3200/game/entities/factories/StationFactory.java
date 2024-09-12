@@ -90,6 +90,31 @@ public class StationFactory {
     body.setUserData(stove);
     return stove;
   }
+
+  public static Entity createBin() {
+    Entity bin = new Entity()
+        .addComponent(new TextureRenderComponent("images/stations/bin.png"))
+        .addComponent(new PhysicsComponent())
+        .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
+        .addComponent(new InteractionComponent(PhysicsLayer.INTERACTABLE))
+        .addComponent(new TooltipsDisplay())
+        .addComponent(new InventoryComponent(1))
+        .addComponent(new StationCookingComponent())  
+        .addComponent(new StationItemHandlerComponent("stove", new ArrayList<>()));
+
+    bin.getComponent(InteractionComponent.class).setAsBox(bin.getScale());
+    bin.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
+    bin.getComponent(TextureRenderComponent.class).scaleEntity();
+    bin.scaleHeight(1.5f);
+
+    PhysicsUtils.setScaledCollider(bin, 0.3f, 0.2f);
+    // Add station reference
+    PhysicsComponent physicsComponent = bin.getComponent(PhysicsComponent.class);
+    Body body = physicsComponent.getBody();
+    body.setUserData(bin);
+    return bin;
+  }
+
   public static Entity createFireExtinguisher() {
     Entity fireExtinguisher = new Entity()
             .addComponent(new TextureRenderComponent("images/fireExtinguisher/Fire_Extinguisher.png"))
