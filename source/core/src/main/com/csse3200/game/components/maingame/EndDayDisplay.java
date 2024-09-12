@@ -81,7 +81,7 @@ public class EndDayDisplay extends UIComponent {
 
         ServiceLocator.getDocketService().getEvents().addListener("goldUpdated", this::handleGoldUpdate);
         ServiceLocator.getEntityService().getEvents().addListener("spawnCustomer", this::updateCustomerList);
-        ServiceLocator.getEntityService().getEvents().addListener("toggleEndDayScreen", this::toggleVisibility);
+        // ServiceLocator.getEntityService().getEvents().addListener("toggleEndDayScreen", this::toggleVisibility);
 
         // Create a background
         Pixmap pixmap = new Pixmap(1, 1, Pixmap.Format.RGBA8888);
