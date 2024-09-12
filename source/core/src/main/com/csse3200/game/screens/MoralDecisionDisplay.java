@@ -45,12 +45,21 @@ public class MoralDecisionDisplay extends UIComponent {
 //        isVisible = false;
 //    }
 
+
+    /**
+     * Constructor for the MoralDecisionDisplay class.
+     * Initializes the display and sets its visibility to false.
+     * Retrieves the main game screen from the ServiceLocator.
+     */
     public MoralDecisionDisplay() {
         super();
         this.game = ServiceLocator.getGameScreen();
         isVisible = false;
     }
 
+    /**
+     * Creates the moral decision screen.
+     */
     @Override
     public void create() {
         super.create();
@@ -140,24 +149,39 @@ public class MoralDecisionDisplay extends UIComponent {
 //    }
 
 
+
+    /**
+     * Initialise the User Interface
+     */
     private void initialiseUI() {
         Label titleLabel = new Label("moral deiciosn", new Label.LabelStyle(new BitmapFont(), Color.PINK));
         layout.add(titleLabel).pad(10).row();
     }
 
-
+    /**
+     * Updates the timer label with the remaining time in seconds.
+     * @param timerLabel the label to update
+     * @param remainingTime the remaining time in milliseconds
+     */
     private void updateTimerLabel(Label timerLabel, long remainingTime) {
         // Convert remaining time to seconds and update the label's text
         String timeLeft = "Timer: " + (remainingTime / 1000) + "s";
         timerLabel.setText(timeLeft);
     }
 
+    /**
+     * Sets the question to be displayed on the moral decision screen.
+     * @param question the question to display
+     * @return true if the question was set successfully
+     */
     public boolean setQuestion(String question) {
         this.question = question;
         return true;
     }
 
-
+    /**
+     * Shows the moral decision screen.
+     */
     private void show() {
         isVisible = true;
         layout.setVisible(isVisible);
@@ -167,6 +191,9 @@ public class MoralDecisionDisplay extends UIComponent {
 
     }
 
+    /**
+     * Hides the moral decision screen.
+     */
     private void hide() {
         isVisible = false;
         layout.setVisible(isVisible);
@@ -175,6 +202,9 @@ public class MoralDecisionDisplay extends UIComponent {
 
     }
 
+    /**
+     * Toggles the visibility of the moral decision screen.
+     */
     private void toggleVisibility(int day) {
         logger.debug(" Day - {}", day);
 //        this.update();
@@ -185,10 +215,17 @@ public class MoralDecisionDisplay extends UIComponent {
         }
     }
 
+    /**
+     * Returns the visibility of the moral decision screen.
+     * @return true if the screen is visible
+     */
     public boolean getVisible() {
         return this.isVisible;
     }
 
+    /**
+     * Updates the moral decision screen.
+     */
     @Override
     public void update() {
         super.update();

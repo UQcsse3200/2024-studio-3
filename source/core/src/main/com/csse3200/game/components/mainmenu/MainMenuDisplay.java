@@ -79,6 +79,7 @@ public class MainMenuDisplay extends UIComponent {
    * animating the animal to move from the start to the end position.
    * The animal will also rotate as it moves.
    * */
+
   public void background(){
 
     float height,width;
@@ -146,6 +147,7 @@ public class MainMenuDisplay extends UIComponent {
     ImageTextButton settingsBtn = new ImageTextButton("Settings", skin);
     ImageTextButton exitBtn = new ImageTextButton("Exit", skin);
     ImageTextButton tutBtn = new ImageTextButton("Start Tutorial", skin);
+
     startBtn.setTransform(true);
     startBtn.setScale(scale_of_button);
     loadBtn.setTransform(true);

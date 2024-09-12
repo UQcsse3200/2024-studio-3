@@ -6,11 +6,16 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.areas.ForestGameArea;
 import com.csse3200.game.areas.terrain.TerrainFactory;
+
+import com.csse3200.game.components.maingame.*;
+import com.csse3200.game.components.levels.LevelComponent;
+
 import com.csse3200.game.components.maingame.MainGameActions;
 import com.csse3200.game.components.ordersystem.*;
 import com.csse3200.game.components.moral.MoralDecision;
 import com.csse3200.game.components.ordersystem.MainGameOrderBtnDisplay;
 import com.csse3200.game.components.ordersystem.OrderActions;
+import com.csse3200.game.components.ordersystem.TicketDetails;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.entities.factories.LevelFactory;
@@ -31,6 +36,10 @@ import com.csse3200.game.components.maingame.TextDisplay;
 import com.csse3200.game.components.gamearea.PerformanceDisplay;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.csse3200.game.components.player.InventoryDisplay;
+import java.util.Arrays;
+import com.csse3200.game.components.ordersystem.DocketLineDisplay;
 import com.csse3200.game.components.player.InventoryDisplay;
 import java.util.Arrays;
 import com.csse3200.game.components.ordersystem.DocketLineDisplay;
@@ -78,7 +87,6 @@ public class MainGameScreen extends ScreenAdapter {
 		ServiceLocator.registerInputService(new InputService());
 		ServiceLocator.registerPlayerService(new PlayerService());
 		ServiceLocator.registerResourceService(new ResourceService());
-		ServiceLocator.registerOrderActions(new OrderActions(game)); // ?
 
 		ServiceLocator.registerEntityService(new EntityService());
 		ServiceLocator.registerRenderService(new RenderService());
@@ -86,6 +94,8 @@ public class MainGameScreen extends ScreenAdapter {
         ServiceLocator.registerDayNightService(new DayNightService());
 		ServiceLocator.registerLevelService(new LevelService());
 		ServiceLocator.registerGameScreen(this);
+
+		ServiceLocator.registerTicketDetails(new TicketDetails());
 
 		renderer = RenderFactory.createRenderer();
 		renderer.getCamera().getEntity().setPosition(CAMERA_POSITION);
@@ -175,7 +185,6 @@ public class MainGameScreen extends ScreenAdapter {
 	}
 
 
-
 	public GdxGame getGame() {
 		return game;
 	}
@@ -203,7 +212,7 @@ public class MainGameScreen extends ScreenAdapter {
 			.addComponent(new TerminalDisplay())
 			.addComponent(new OrderActions(this.game))
 			.addComponent(new MainGameOrderBtnDisplay())
-				.addComponent(new TextDisplay(this));
+		        .addComponent(new EndDayDisplay());
 		//temporary moral display
 //			.addComponent(new MoralDisplayTemp(this));
 		ServiceLocator.getEntityService().register(ui);
