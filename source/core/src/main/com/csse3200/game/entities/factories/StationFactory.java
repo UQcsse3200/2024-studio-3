@@ -2,20 +2,22 @@ package com.csse3200.game.entities.factories;
 
 import java.util.ArrayList;
 
+
+import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.csse3200.game.components.FlameComponent;
 import com.csse3200.game.components.TooltipsDisplay;
+import com.csse3200.game.components.items.ItemComponent;
+import com.csse3200.game.components.items.ItemType;
 import com.csse3200.game.components.player.InventoryComponent;
-import com.csse3200.game.components.station.FireExtinguisherHandlerComponent;
 import com.csse3200.game.components.station.IngredientStationHandlerComponent;
 import com.csse3200.game.components.station.StationCollectionComponent;
 import com.csse3200.game.components.station.StationCookingComponent;
+import com.csse3200.game.components.station.FireExtinguisherHandlerComponent;
 import com.csse3200.game.components.station.StationItemHandlerComponent;
 import com.csse3200.game.components.station.StationServingComponent;
-import com.csse3200.game.components.station.StationMealComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.PhysicsUtils;
@@ -32,15 +34,8 @@ public class StationFactory {
    * @return Oven entity with relavent behaviors 
    */
   public static Entity createOven() {
-    AnimationRenderComponent animator =
-            new AnimationRenderComponent(ServiceLocator.getResourceService().getAsset("images/stations/oven/oven.atlas", TextureAtlas.class));
-    System.out.println("Adding Oven animation");
-    animator.addAnimation("Oven", 0.2f, Animation.PlayMode.LOOP);
-    animator.addAnimation("OvenDefault", 0.2f, Animation.PlayMode.LOOP);
-    
-    
     Entity oven = new Entity()
-       
+        .addComponent(new TextureRenderComponent("images/stations/oven.png"))
         .addComponent(new PhysicsComponent())
         .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
         .addComponent(new InteractionComponent(PhysicsLayer.INTERACTABLE))
@@ -49,16 +44,17 @@ public class StationFactory {
         .addComponent(new StationItemHandlerComponent("oven", new ArrayList<>()))
         .addComponent(new InventoryComponent(1));
 
-    
-    oven.scaleHeight(0.64f);
-    PhysicsUtils.setScaledCollider(oven, 1f, 1f);
+    oven.getComponent(InteractionComponent.class).setAsBox(oven.getScale());
 
+    oven.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
+    oven.getComponent(TextureRenderComponent.class).scaleEntity();
+    oven.scaleHeight(1.5f);
+
+    PhysicsUtils.setScaledCollider(oven, 0.3f, 0.2f);
     // Add station reference
     PhysicsComponent physicsComponent = oven.getComponent(PhysicsComponent.class);
     Body body = physicsComponent.getBody();
     body.setUserData(oven);
-    oven.addComponent(animator);
-    animator.startAnimation("Oven");
     return oven;
   }
 
@@ -198,8 +194,7 @@ public class StationFactory {
             .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
             .addComponent(new InteractionComponent(PhysicsLayer.INTERACTABLE))
             .addComponent(new TooltipsDisplay())
-            .addComponent(new InventoryComponent(1))
-            .addComponent(new StationMealComponent("combining", new ArrayList<>()));
+            .addComponent(new InventoryComponent(1));
             // Change this handler to the combining one
             //.addComponent(new StationItemHandlerComponent("benchMiddle", new ArrayList<>()));
 
@@ -221,27 +216,19 @@ public class StationFactory {
    * @return Entity of type station with added components and references
    */
   public static Entity createSubmissionWindow() {
-
-
     Entity submission = new Entity()
+            .addComponent(new TextureRenderComponent("images/stations/servery.png"))
             .addComponent(new PhysicsComponent())
             .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
             .addComponent(new InteractionComponent(PhysicsLayer.INTERACTABLE))
             .addComponent(new TooltipsDisplay())
             .addComponent(new InventoryComponent(1))
             .addComponent(new StationServingComponent());
-
-
     submission.getComponent(InteractionComponent.class).setAsBox(submission.getScale());
     submission.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
-    PhysicsUtils.setScaledCollider(submission, 1f, 1f);
-
-    AnimationRenderComponent animator =
-            new AnimationRenderComponent(
-                    ServiceLocator.getResourceService().getAsset("images/stations/Servery_Animation/servery.atlas", TextureAtlas.class));
-    animator.addAnimation("servery_idle", 0.1f, Animation.PlayMode.LOOP);
-
-    submission.addComponent(animator);
+    submission.getComponent(TextureRenderComponent.class).scaleEntity();
+    submission.scaleHeight(2f);
+    PhysicsUtils.setScaledCollider(submission, 0.3f, 0.2f);
 
     // Add station reference
     PhysicsComponent physicsComponent = submission.getComponent(PhysicsComponent.class);
@@ -275,13 +262,19 @@ public class StationFactory {
 
   public static Entity createFlame() {
     Entity flame = new Entity()
-            .addComponent(new FlameComponent());
+            .addComponent(new FlameComponent())
+            .addComponent(new PhysicsComponent())
+            .addComponent(new InteractionComponent(PhysicsLayer.INTERACTABLE));
     AnimationRenderComponent animator =
             new AnimationRenderComponent(
                     ServiceLocator.getResourceService().getAsset("images/fireExtinguisher/atlas/flame.atlas", TextureAtlas.class));
+    System.out.println("Adding flame animation");
     animator.addAnimation("flame", 0.1f, Animation.PlayMode.LOOP);
+    System.out.println("Done adding flame animation");
 
     flame.addComponent(animator);
+
+    flame.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
     return flame;
   }
 }

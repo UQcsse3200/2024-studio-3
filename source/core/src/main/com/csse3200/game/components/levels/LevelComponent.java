@@ -86,7 +86,6 @@ public class LevelComponent extends Component {
         int index = rand.nextInt(customerNameArray.size());
         customerSpawnController.getEvents().trigger(customerNameArray.get(index));
         logger.info("Spawned {}", customerNameArray.get(index));
-        ServiceLocator.getLevelService().getEvents().trigger("customerSpawned", customerNameArray.get(index));
     }
 
     /**
