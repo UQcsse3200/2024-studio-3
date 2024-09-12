@@ -93,13 +93,13 @@ public class StationFactory {
 
   public static Entity createBin() {
     Entity bin = new Entity()
-        .addComponent(new TextureRenderComponent("images/stations/bin.png"))
+        .addComponent(new TextureRenderComponent("images/stations/refrigerator.png"))
         .addComponent(new PhysicsComponent())
         .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
         .addComponent(new InteractionComponent(PhysicsLayer.INTERACTABLE))
         .addComponent(new TooltipsDisplay())
         .addComponent(new InventoryComponent(1))
-        .addComponent(new StationCookingComponent())  
+        .addComponent(new StationCookingComponent())
         .addComponent(new StationItemHandlerComponent("stove", new ArrayList<>()));
 
     bin.getComponent(InteractionComponent.class).setAsBox(bin.getScale());
