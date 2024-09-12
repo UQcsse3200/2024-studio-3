@@ -645,6 +645,10 @@ loadScripts(document, 'script');</script>
 </dd>
 <dt><a href="com/csse3200/game/components/station/StationAnimationController.html#create()" class="member-name-link">create()</a> - Method in class com.csse3200.game.components.station.<a href="com/csse3200/game/components/station/StationAnimationController.html" title="class in com.csse3200.game.components.station">StationAnimationController</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/components/station/StationBinComponent.html#create()" class="member-name-link">create()</a> - Method in class com.csse3200.game.components.station.<a href="com/csse3200/game/components/station/StationBinComponent.html" title="class in com.csse3200.game.components.station">StationBinComponent</a></dt>
+<dd>
+<div class="block">On creation a listener for Submit Meal will be added to the station.</div>
+</dd>
 <dt><a href="com/csse3200/game/components/station/StationChoppingComponent.html#create()" class="member-name-link">create()</a> - Method in class com.csse3200.game.components.station.<a href="com/csse3200/game/components/station/StationChoppingComponent.html" title="class in com.csse3200.game.components.station">StationChoppingComponent</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/station/StationCookingComponent.html#create()" class="member-name-link">create()</a> - Method in class com.csse3200.game.components.station.<a href="com/csse3200/game/components/station/StationCookingComponent.html" title="class in com.csse3200.game.components.station">StationCookingComponent</a></dt>
@@ -2132,6 +2136,11 @@ loadScripts(document, 'script');</script>
 <div class="block">Handles getting and putting back the fire extinguisher when the player interacts</div>
 </dd>
 <dt><a href="com/csse3200/game/components/station/IngredientStationHandlerComponent.html#handleInteraction(com.csse3200.game.components.player.InventoryComponent,com.csse3200.game.components.player.InventoryDisplay)" class="member-name-link">handleInteraction(InventoryComponent, InventoryDisplay)</a> - Method in class com.csse3200.game.components.station.<a href="com/csse3200/game/components/station/IngredientStationHandlerComponent.html" title="class in com.csse3200.game.components.station">IngredientStationHandlerComponent</a></dt>
+<dd>
+<div class="block">Handles any interaction with station, using current state of player and station
+ inventory to determine intended interaction</div>
+</dd>
+<dt><a href="com/csse3200/game/components/station/StationBinComponent.html#handleInteraction(com.csse3200.game.components.player.InventoryComponent,com.csse3200.game.components.player.InventoryDisplay)" class="member-name-link">handleInteraction(InventoryComponent, InventoryDisplay)</a> - Method in class com.csse3200.game.components.station.<a href="com/csse3200/game/components/station/StationBinComponent.html" title="class in com.csse3200.game.components.station">StationBinComponent</a></dt>
 <dd>
 <div class="block">Handles any interaction with station, using current state of player and station
  inventory to determine intended interaction</div>
@@ -3817,6 +3826,15 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/station/StationAnimationController.html#%3Cinit%3E()" class="member-name-link">StationAnimationController()</a> - Constructor for class com.csse3200.game.components.station.<a href="com/csse3200/game/components/station/StationAnimationController.html" title="class in com.csse3200.game.components.station">StationAnimationController</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/components/station/StationBinComponent.html" class="type-name-link" title="class in com.csse3200.game.components.station">StationBinComponent</a> - Class in <a href="com/csse3200/game/components/station/package-summary.html">com.csse3200.game.components.station</a></dt>
+<dd>
+<div class="block">StationServingComponent.java
+
+ StationServingComponent gives the station the ability to submit a meal to be 
+ able to be served to a customer.</div>
+</dd>
+<dt><a href="com/csse3200/game/components/station/StationBinComponent.html#%3Cinit%3E()" class="member-name-link">StationBinComponent()</a> - Constructor for class com.csse3200.game.components.station.<a href="com/csse3200/game/components/station/StationBinComponent.html" title="class in com.csse3200.game.components.station">StationBinComponent</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/station/StationChoppingComponent.html" class="type-name-link" title="class in com.csse3200.game.components.station">StationChoppingComponent</a> - Class in <a href="com/csse3200/game/components/station/package-summary.html">com.csse3200.game.components.station</a></dt>
 <dd>
 <div class="block">StationChoppingComponent.java
@@ -3927,6 +3945,11 @@ loadScripts(document, 'script');</script>
 <dt><a href="com/csse3200/game/utils/StringDecorator.html#%3Cinit%3E(T,java.util.function.Function)" class="member-name-link">StringDecorator(T, Function&lt;T, String&gt;)</a> - Constructor for class com.csse3200.game.utils.<a href="com/csse3200/game/utils/StringDecorator.html" title="class in com.csse3200.game.utils">StringDecorator</a></dt>
 <dd>
 <div class="block">Create a string-decorated object.</div>
+</dd>
+<dt><a href="com/csse3200/game/components/station/StationBinComponent.html#submitMeal(com.csse3200.game.components.items.ItemComponent)" class="member-name-link">submitMeal(ItemComponent)</a> - Method in class com.csse3200.game.components.station.<a href="com/csse3200/game/components/station/StationBinComponent.html" title="class in com.csse3200.game.components.station">StationBinComponent</a></dt>
+<dd>
+<div class="block">Function which calls to identify the current ticket info, as well as the item in the inventory
+ Calls another function which grades the submission</div>
 </dd>
 <dt><a href="com/csse3200/game/components/station/StationServingComponent.html#submitMeal(com.csse3200.game.components.items.ItemComponent)" class="member-name-link">submitMeal(ItemComponent)</a> - Method in class com.csse3200.game.components.station.<a href="com/csse3200/game/components/station/StationServingComponent.html" title="class in com.csse3200.game.components.station">StationServingComponent</a></dt>
 <dd>
