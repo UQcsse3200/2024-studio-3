@@ -132,7 +132,8 @@ public class ForestGameArea extends GameArea {
           "images/platecomponent/stackedplates/2plates.png",
           "images/platecomponent/stackedplates/3plates.png",
           "images/platecomponent/stackedplates/4plates.png",
-          "images/platecomponent/stackedplates/5plates.png"
+          "images/platecomponent/stackedplates/5plates.png",
+          "images/inventory_ui/slot.png"
   };
   private static final String[] forestTextureAtlases = {
     "images/terrain_iso_grass.atlas",
