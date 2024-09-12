@@ -1,15 +1,10 @@
 package com.csse3200.game.areas;
 
-
-
-
 import com.csse3200.game.components.maingame.CheckWinLoseComponent;
 import com.csse3200.game.components.npc.PersonalCustomerEnums;
 import com.badlogic.gdx.utils.Null;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.components.maingame.TextDisplay;
-
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.util.concurrent.ExecutorService;
@@ -40,13 +35,9 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import com.csse3200.game.components.maingame.EndDayDisplay;
 import com.csse3200.game.components.moral.MoralDecision;
-
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-//import java.util.concurrent.TimeUnit;
-
 import static com.badlogic.gdx.Gdx.app;
 
 
@@ -92,12 +83,14 @@ public class ForestGameArea extends GameArea {
     "images/tiles/blue_tile.png",
     "images/stations/oven.png",
     "images/stations/stove.png",
+    "images/stations/bin.png",
     "images/stations/apple_tree.png",
     "images/stations/bench_middle.png",
     "images/stations/bench_legs.png",
     "images/stations/bench_top.png",
     "images/stations/bench.png",
     "images/stations/servery.png",
+    "images/stations/refrigerator.png",
     "images/chef_player.png",
     "images/frame/top_border.png",
     "images/frame/left_border.png",
@@ -141,58 +134,59 @@ public class ForestGameArea extends GameArea {
           "images/platecomponent/stackedplates/2plates.png",
           "images/platecomponent/stackedplates/3plates.png",
           "images/platecomponent/stackedplates/4plates.png",
-          "images/platecomponent/stackedplates/5plates.png"
+          "images/platecomponent/stackedplates/5plates.png",
+          "images/inventory_ui/slot.png"
   };
   private static final String[] forestTextureAtlases = {
-    "images/terrain_iso_grass.atlas", 
-    "images/ghost.atlas", 
-    "images/ghostKing.atlas", 
+    "images/terrain_iso_grass.atlas",
+    "images/ghost.atlas",
+    "images/ghostKing.atlas",
     "images/animal_images/gorilla.atlas",
-    "images/animal_images/goose.atlas", 
-    "images/animal_images/goat.atlas", 
+    "images/animal_images/goose.atlas",
+    "images/animal_images/goat.atlas",
     "images/animal_images/monkey.atlas",
     "images/animal_images/snow_wolf.atlas",
-    "images/player.atlas", 
-    "images/fireExtinguisher/atlas/flame.atlas", 
+    "images/player.atlas",
+    "images/fireExtinguisher/atlas/flame.atlas",
     "images/stations/oven/oven.atlas",
-    "images/terrain_iso_grass.atlas", 
-    "images/ghost.atlas", 
-    "images/ghostKing.atlas", 
+    "images/terrain_iso_grass.atlas",
+    "images/ghost.atlas",
+    "images/ghostKing.atlas",
     "images/animal_images/gorilla.atlas",
-    "images/animal_images/goose.atlas", 
-    "images/animal_images/goat.atlas", 
+    "images/animal_images/goose.atlas",
+    "images/animal_images/goat.atlas",
     "images/animal_images/monkey.atlas",
-    "images/animal_images/snow_wolf.atlas", 
-    "images/fireExtinguisher/atlas/flame.atlas", 
+    "images/animal_images/snow_wolf.atlas",
+    "images/fireExtinguisher/atlas/flame.atlas",
     "images/player/player.atlas",
-    "images/player/acaiBowl.atlas", 
+    "images/player/acaiBowl.atlas",
     "images/player/bananaSplit.atlas",
-    "images/player/burntBeef.atlas", 
-    "images/player/choppedAcai.atlas", 
-    "images/player/choppedBanana.atlas", 
-    "images/player/choppedChocolate.atlas", 
-    "images/player/choppedCucumber.atlas", 
-    "images/player/choppedLettuce.atlas", 
-    "images/player/choppedStrawberry.atlas", 
-    "images/player/choppedTomato.atlas", 
-    "images/player/cookedBeef.atlas", 
-    "images/player/cookedFish.atlas", 
-    "images/player/fruitSalad.atlas", 
-    "images/player/rawAcai.atlas", 
-    "images/player/rawBanana.atlas", 
-    "images/player/rawBeef.atlas", 
-    "images/player/rawChocolate.atlas", 
-    "images/player/rawCucumber.atlas", 
-    "images/player/rawFish.atlas", 
-    "images/player/rawLettuce.atlas", 
-    "images/player/rawStrawberry.atlas", 
-    "images/player/rawTomato.atlas", 
+    "images/player/burntBeef.atlas",
+    "images/player/choppedAcai.atlas",
+    "images/player/choppedBanana.atlas",
+    "images/player/choppedChocolate.atlas",
+    "images/player/choppedCucumber.atlas",
+    "images/player/choppedLettuce.atlas",
+    "images/player/choppedStrawberry.atlas",
+    "images/player/choppedTomato.atlas",
+    "images/player/cookedBeef.atlas",
+    "images/player/cookedFish.atlas",
+    "images/player/fruitSalad.atlas",
+    "images/player/rawAcai.atlas",
+    "images/player/rawBanana.atlas",
+    "images/player/rawBeef.atlas",
+    "images/player/rawChocolate.atlas",
+    "images/player/rawCucumber.atlas",
+    "images/player/rawFish.atlas",
+    "images/player/rawLettuce.atlas",
+    "images/player/rawStrawberry.atlas",
+    "images/player/rawTomato.atlas",
     "images/player/salad.atlas",
-    "images/player/steak.atlas", 
-    "images/player/playerPlate.atlas", 
+    "images/player/steak.atlas",
+    "images/player/playerPlate.atlas",
     "images/player/playerDirtyPlate.atlas",
           "images/player/playerFireExtinguisher.atlas",
-          "images/special_NPCs/boss.atlas"
+          "images/special_NPCs/boss.atlas", "images/stations/Servery_Animation/servery.atlas"
 
   };
   private static final String[] forestSounds = {"sounds/Impact4.ogg"};
@@ -458,15 +452,23 @@ public class ForestGameArea extends GameArea {
     spawnEntityAt(stove, stovePos, false, false);
     stove.setPosition(stove.getPosition().x + 2.7f , stove.getPosition().y + 1.3f);
 
+    GridPoint2 binPos = new GridPoint2(5,4);
+    Entity bin = StationFactory.createBin();
+    spawnEntityAt(bin, binPos, false, false);
+    bin.setPosition(bin.getPosition().x + 1.7f , bin.getPosition().y - 2f);
+
     GridPoint2 appleTreePos = new GridPoint2( 5, 4);
     Entity appleTree = StationFactory.createAppleTree();
     spawnEntityAt(appleTree, appleTreePos, false, false);
-    appleTree.setPosition(appleTree.getPosition().x + 4.2f , appleTree.getPosition().y - 1.3f);
+    appleTree.setPosition(appleTree.getPosition().x + 4.2f , appleTree.getPosition().y - 3f);
 
-    GridPoint2 serveryPos = new GridPoint2(3,0);
+    GridPoint2 serveryPos = new GridPoint2(1,1);
     Entity servery = StationFactory.createSubmissionWindow();
     spawnEntityAt(servery, serveryPos, false, false);
-    servery.setPosition(servery.getPosition().x, servery.getPosition().y + 1.3f);
+    servery.setPosition(servery.getPosition().x + 2, servery.getPosition().y + 0.5f);
+    servery = StationFactory.createSubmissionWindow();
+    spawnEntityAt(servery, serveryPos, false, false);
+    servery.setPosition(servery.getPosition().x + 2, servery.getPosition().y);
 
     // Bench
     GridPoint2 middlePos = new GridPoint2(5,4);
@@ -979,6 +981,9 @@ public class ForestGameArea extends GameArea {
   }
 
 
+  /**
+   * Create the moral decision screen
+   */
   private void createMoralScreen() {
     Entity moralScreen = new Entity();
     moralScreen
@@ -987,6 +992,9 @@ public class ForestGameArea extends GameArea {
     ServiceLocator.getEntityService().registerMoral(moralScreen);
   }
 
+  /**
+   * Create the end day screen
+   */
   private void createEndDayScreen() {
     Entity endDayScreen = new Entity();
     endDayScreen

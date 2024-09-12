@@ -8,18 +8,9 @@ import com.csse3200.game.components.ordersystem.TicketDetails;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.components.player.InventoryDisplay;
 import com.csse3200.game.rendering.AnimationRenderComponent;
-import com.csse3200.game.physics.components.InteractionComponent;
 import com.csse3200.game.services.ServiceLocator;
-import com.badlogic.gdx.scenes.scene2d.ui.List;
-import com.csse3200.game.components.items.IngredientComponent;
-import com.csse3200.game.components.items.MealComponent;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.Arrays;
-import java.util.stream.Collectors;
-import java.security.Provider;
 
 /**
  * StationServingComponent.java
@@ -33,11 +24,11 @@ import java.security.Provider;
  *
  * This component is currently incomplete and will need to be finished.
  */
-public class StationServingComponent extends Component {
+public class StationBinComponent extends Component {
 
     // itemHandler allows acess for serving component to see the inventory of
     // the station.
-    private static final Logger logger = LoggerFactory.getLogger(StationServingComponent.class);
+    private static final Logger logger = LoggerFactory.getLogger(StationBinComponent.class);
 
     private OrderActions orderActions;
     AnimationRenderComponent animator;
@@ -77,28 +68,28 @@ public class StationServingComponent extends Component {
      */
     public void submitMeal(ItemComponent item) {
 
-        //ServiceLocator.getLevelService.getCurrGold() + 2;
-        ServiceLocator.getLevelService().setCurrGold(ServiceLocator.getLevelService().getCurrGold() + 2);
-
-        String[] bigTicketInfo = bigTicket.getCurrentBigTicketInfo();
-
-        if (bigTicketInfo[0] != null) {
-            logger.info(bigTicketInfo[0]); // order number ("5")
-            logger.info(bigTicketInfo[1]); // meal ("tomato soup")
-            logger.info(bigTicketInfo[2]); // time left ("32")
-
-            // Call to team 1's function with the big ticket info
-            //TBD(item, bigTicketInfo[0], bigTicketInfo[1], bigTicketInfo[2]);
-            // remove ticket
-            ServiceLocator.getDocketService().getEvents().trigger("removeOrder", -1); // removes the order from the orderaction list
-            ServiceLocator.getDocketService().getEvents().trigger("removeBigTicket"); // removes the order from the display list
-
-        } else {
-            logger.info("no ticket when submitting"); // team 1 can decide if they want to handle this edge case
-            return;
-
-
-        }
+//        //ServiceLocator.getLevelService.getCurrGold() + 2;
+//        ServiceLocator.getLevelService().setCurrGold(ServiceLocator.getLevelService().getCurrGold() + 2);
+//
+//        String[] bigTicketInfo = bigTicket.getCurrentBigTicketInfo();
+//
+//        if (bigTicketInfo[0] != null) {
+//            logger.info(bigTicketInfo[0]); // order number ("5")
+//            logger.info(bigTicketInfo[1]); // meal ("tomato soup")
+//            logger.info(bigTicketInfo[2]); // time left ("32")
+//
+//            // Call to team 1's function with the big ticket info
+//            //TBD(item, bigTicketInfo[0], bigTicketInfo[1], bigTicketInfo[2]);
+//            // remove ticket
+//            ServiceLocator.getDocketService().getEvents().trigger("removeOrder", -1); // removes the order from the orderaction list
+//            ServiceLocator.getDocketService().getEvents().trigger("removeBigTicket"); // removes the order from the display list
+//
+//        } else {
+//            logger.info("no ticket when submitting"); // team 1 can decide if they want to handle this edge case
+//            return;
+//
+//
+//        }
 
 
     }
