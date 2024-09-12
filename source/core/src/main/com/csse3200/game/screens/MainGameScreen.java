@@ -207,8 +207,7 @@ public class MainGameScreen extends ScreenAdapter {
 			.addComponent(new MainGameOrderBtnDisplay())
 				.addComponent(new PauseMenuActions(this.game))
 				.addComponent(new PauseMenuDisplay(this))
-		        .addComponent(new EndDayDisplay())
-				.addComponent(new MoralDisplayTemp(this));
+		        .addComponent(new EndDayDisplay());
 
 		//temporary moral display
 //			.addComponent(new MoralDisplayTemp(this));
