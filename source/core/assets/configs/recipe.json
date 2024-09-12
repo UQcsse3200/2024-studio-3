@@ -2,47 +2,29 @@
   "acaiBowl":{
     "ingredient":["acai","banana"],
     "cuttingBoard":["acai","banana"],
-    "produceBasket": ["acai", "banana"],
-    "blender": ["acai", "banana"],
-    "fryingPan":[],
-    "oven":[],
-    "fridge": [],
-    "makingTime":3,
-    "price": 20
+    "makingTime":3
   },
   "salad":{
     "ingredient":["tomato","cucumber","lettuce"],
-    "cuttingBoard":["tomato","cucumber", "lettuce"],
-    "produceBasket": ["tomato", "cucumber", "lettuce"],
-    "fridge": [],
-    "makingTime":2,
-    "price": 25
+    "cuttingBoard":["tomato","cucumber"],
+    "makingTime":2
   },
   "fruitSalad":{
     "ingredient":["banana","strawberry"],
     "cuttingBoard":["banana","strawberry"],
-    "produceBasket": ["banana", "strawberry"],
-    "fridge": [],
-    "makingTime":2,
-    "price": 20
+    "makingTime":2
   },
   "steakMeal":{
     "ingredient":["beef","tomato","cucumber"],
     "cuttingBoard":["tomato","cucumber"],
     "fryingPan":["beef"],
     "oven":["tomato","cucumber"],
-    "produceBasket": ["tomato", "cucumber"],
-    "fridge": ["beef"],
     "makingTime":5,
-    "burnedTime": 8,
-    "price": 40
+    "burnedTime": 8
   },
   "bananaSplit":{
     "ingredient":["banana","strawberry","chocolate"],
     "cuttingBoard":["banana","strawberry","chocolate"],
-    "produceBasket": ["banana", "strawberry"],
-    "fridge": ["chocolate"],
-    "makingTime":2,
-    "price": 25
+    "makingTime":2
   }
 }

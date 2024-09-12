@@ -3,7 +3,6 @@ package com.csse3200.game.components.settingsmenu;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Graphics.DisplayMode;
 import com.badlogic.gdx.Graphics.Monitor;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Event;
@@ -15,7 +14,6 @@ import com.csse3200.game.GdxGame;
 import com.csse3200.game.GdxGame.ScreenType;
 import com.csse3200.game.files.UserSettings;
 import com.csse3200.game.files.UserSettings.DisplaySettings;
-import com.csse3200.game.screens.MainGameScreen;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
 import com.csse3200.game.utils.StringDecorator;
@@ -246,17 +244,8 @@ public class SettingsMenuDisplay extends UIComponent {
   }
 
   private void exitMenu() {
-    Screen previousScreen = game.getPreviousScreen();
-
-    if (previousScreen instanceof MainGameScreen) {
-      game.setScreen(ScreenType.MAIN_GAME);
-    }
-    else {
-      game.setScreen(ScreenType.MAIN_MENU);
-    }
+    game.setScreen(ScreenType.MAIN_MENU);
   }
-
-
   private Integer parseOrNull(String num) {
     try {
       return Integer.parseInt(num, 10);

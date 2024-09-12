@@ -46,11 +46,14 @@ public class MainMenuScreen extends ScreenAdapter {
   public MainMenuScreen(GdxGame game) {
     this.game = game;
 
-    logger.debug("Initialising main menu screen services");
+    logger.debug("Initialising main menu screen services.");
     ServiceLocator.registerInputService(new InputService());
     ServiceLocator.registerResourceService(new ResourceService());
     ServiceLocator.registerEntityService(new EntityService());
     ServiceLocator.registerRenderService(new RenderService());
+
+    MainMenuDisplay mainMenuDisplay = new MainMenuDisplay();
+    ServiceLocator.registerMainMenuDisplay(mainMenuDisplay);
 
     renderer = RenderFactory.createRenderer();
     loadAssets();
@@ -98,6 +101,8 @@ public class MainMenuScreen extends ScreenAdapter {
     ServiceLocator.getResourceService().loadAll();
   }
 
+
+
   private void unloadAssets() {
     logger.debug("Unloading assets");
     ResourceService resourceService = ServiceLocator.getResourceService();
@@ -120,4 +125,5 @@ public class MainMenuScreen extends ScreenAdapter {
         .addComponent(new MainMenuActions(game));
     ServiceLocator.getEntityService().register(ui);
   }
+
 }

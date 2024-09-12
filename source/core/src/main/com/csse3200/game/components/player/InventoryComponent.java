@@ -6,9 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.csse3200.game.components.items.ItemComponent;
 import java.util.ArrayList;
-import java.util.List;
 import java.lang.IllegalArgumentException;
-
 
 /**
  * A generic inventory component that is used to keep track of stored items
@@ -285,8 +283,8 @@ public class InventoryComponent extends Component {
    *
    * @return - the list of names of items in the inventory, null if empty.
    */
-  public List<String> getItemNames() {
-    List<String> itemNames = new ArrayList();
+  public ArrayList<String> getItemNames() {
+    ArrayList<String> itemNames = new ArrayList();
 
     if (!this.isEmpty()) {
       for (ItemComponent item : items) {

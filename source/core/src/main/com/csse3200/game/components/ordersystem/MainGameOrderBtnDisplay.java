@@ -20,6 +20,8 @@ public class MainGameOrderBtnDisplay extends UIComponent{
 	public Table table;
 	public boolean pressed = false;
 
+
+
 	/**
 	 * Initialises the button display and sets up the actors in the UI.
 	 */
@@ -99,7 +101,10 @@ public class MainGameOrderBtnDisplay extends UIComponent{
 	 */
 	@Override
 	public void dispose() {
-		table.clear();
+
+		if (table != null) {
+			table.clear();
+		}
 		super.dispose();
 	}
 }

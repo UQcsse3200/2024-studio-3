@@ -7,6 +7,7 @@ import com.csse3200.game.files.UserSettings;
 import com.csse3200.game.screens.MainGameScreen;
 import com.csse3200.game.screens.MainMenuScreen;
 import com.csse3200.game.screens.SettingsScreen;
+import com.csse3200.game.screens.TutorialScreen;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,7 +21,6 @@ import static com.badlogic.gdx.Gdx.app;
  */
 public class GdxGame extends Game {
   private static final Logger logger = LoggerFactory.getLogger(GdxGame.class);
-  private Screen previousScreen;
 
   @Override
   public void create() {
@@ -48,22 +48,10 @@ public class GdxGame extends Game {
   public void setScreen(ScreenType screenType) {
     logger.info("Setting game screen to {}", screenType);
     Screen currentScreen = getScreen();
-
-    previousScreen = currentScreen;  // Save the current screen before changing
-
     if (currentScreen != null) {
       currentScreen.dispose();
     }
-
     setScreen(newScreen(screenType));
-  }
-
-  /**
-   * Get the previous game's screen
-   * @return previous screen
-   */
-  public Screen getPreviousScreen() {
-    return previousScreen;
   }
 
   @Override
@@ -85,13 +73,15 @@ public class GdxGame extends Game {
         return new MainGameScreen(this);
       case SETTINGS:
         return new SettingsScreen(this);
+      case TUTORIAL:
+        return new TutorialScreen(this);
       default:
         return null;
     }
   }
 
   public enum ScreenType {
-    MAIN_MENU, MAIN_GAME, SETTINGS
+    MAIN_MENU, MAIN_GAME, SETTINGS, TUTORIAL
   }
 
   /**
