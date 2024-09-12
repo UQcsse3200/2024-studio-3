@@ -93,9 +93,9 @@ public class TutorialScreen extends ScreenAdapter {
         createUI();  // Create the UI after loading the assets
 
         logger.debug("Initialising tutorial screen entities");
-        TerrainFactory terrainFactory = new TerrainFactory(renderer.getCamera());
-        ForestGameArea forestGameArea = new ForestGameArea(terrainFactory);
-        forestGameArea.create();
+//        TerrainFactory terrainFactory = new TerrainFactory(renderer.getCamera());
+//        ForestGameArea forestGameArea = new ForestGameArea(terrainFactory);
+//        forestGameArea.create();
     }
 
     @Override
