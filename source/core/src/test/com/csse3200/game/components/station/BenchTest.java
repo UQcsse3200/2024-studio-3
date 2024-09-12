@@ -32,7 +32,9 @@ public class BenchTest {
         ServiceLocator.registerResourceService(mockResourceService);
 
     }
-
+    /**
+     * Test the creation of a bench with the type "left_border".
+     */
     @Test
     public void testCreateBench() {
         Entity bench = Bench.createBench("left_border");
@@ -44,6 +46,9 @@ public class BenchTest {
 
         assertEquals(BodyDef.BodyType.StaticBody, bench.getComponent(PhysicsComponent.class).getBody().getType());
     }
+    /**
+     * Test the creation of a bench with the type "middle".
+     */
     @Test
     public void testCreateBench2() {
         Entity bench = Bench.createBench("middle");
@@ -55,6 +60,9 @@ public class BenchTest {
 
         assertEquals(BodyDef.BodyType.StaticBody, bench.getComponent(PhysicsComponent.class).getBody().getType());
     }
+    /**
+     * Test the creation of a bench with the type "single".
+     */
     @Test
     public void testCreateBench3() {
         Entity bench = Bench.createBench("single");
