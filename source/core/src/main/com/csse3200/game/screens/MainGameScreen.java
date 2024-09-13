@@ -110,13 +110,24 @@ public class MainGameScreen extends ScreenAdapter {
 
 	@Override
 	public void render(float delta) {
-		if (!isPaused) {
+		if(isPaused){
+			renderPauseMenu();
+			return;
+		}
 			physicsEngine.update();
 			ServiceLocator.getDayNightService().update();
 			ServiceLocator.getEntityService().update();
-		}
+
+
+		//renderPauseMenu();
 		renderer.render();
 
+	}
+
+	private void renderPauseMenu(){
+		Stage stage = ServiceLocator.getRenderService().getStage();
+		stage.act();
+		stage.draw();
 	}
 
 	@Override
@@ -205,8 +216,10 @@ public class MainGameScreen extends ScreenAdapter {
 			.addComponent(new TerminalDisplay())
 			.addComponent(new OrderActions(this.game))
 			.addComponent(new MainGameOrderBtnDisplay())
-				.addComponent(new PauseMenuActions(this.game))
-				.addComponent(new PauseMenuDisplay(this));
+		        .addComponent(new EndDayDisplay())
+						.addComponent(new PauseMenuDisplay(this))
+								.addComponent(new PauseMenuActions(this.game));
+
 
 		//temporary moral display
 //			.addComponent(new MoralDisplayTemp(this));
