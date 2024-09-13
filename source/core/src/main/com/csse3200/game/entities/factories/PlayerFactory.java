@@ -7,6 +7,7 @@ import com.csse3200.game.components.maingame.CheckWinLoseComponent;
 import com.csse3200.game.components.ordersystem.MainGameOrderTicketDisplay;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.components.player.InventoryDisplay;
+import com.csse3200.game.components.player.PlayerItemSpriteManager;
 import com.csse3200.game.components.player.PlayerActions;
 import com.csse3200.game.components.player.PlayerStatsDisplay;
 import com.csse3200.game.components.player.*;
@@ -73,6 +74,7 @@ public class PlayerFactory {
             .addComponent(new CombatStatsComponent(config.health, config.baseAttack, ServiceLocator.getLevelService().getCurrGold()))
             .addComponent(new InventoryComponent(config.inventorySize))
             .addComponent(new InventoryDisplay())
+                .addComponent(new PlayerItemSpriteManager())
             .addComponent(inputComponent)
             .addComponent(animator)
             .addComponent(new PlayerAnimationController())
