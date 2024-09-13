@@ -32,6 +32,10 @@ public class PlayerItemSpriteManager extends Component {
         }
     }
 
+    /**
+     * Updates the player sprite to show it holding the item provided.
+     * @param item The item to show the player sprite holding.
+     */
     private void updatePlayerSprite(ItemComponent item) {
         if (item != null) {
             if (item instanceof IngredientComponent) {
@@ -151,6 +155,10 @@ public class PlayerItemSpriteManager extends Component {
         }
     }
 
+    /**
+     * Updates the player sprite to match what is currently being held in
+     * the player's InventoryComponent
+     */
     public void update() {
         if (entity != null) {
             updatePlayerSprite(entity.getComponent(InventoryComponent.class).getItemFirst());
