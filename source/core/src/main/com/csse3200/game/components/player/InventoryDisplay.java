@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Stack;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.csse3200.game.components.items.IngredientComponent;
 import com.csse3200.game.components.items.ItemType;
+import com.csse3200.game.components.items.PlateComponent;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
 import org.slf4j.Logger;
@@ -42,6 +43,10 @@ public class InventoryDisplay extends UIComponent {
         addActors();
     }
 
+    /**
+     * Creates the required actors to display each inventory slot, and adds them
+     * to the UI table.
+     */
     private void addActors() {
         // Create table
         table = new Table();
@@ -68,14 +73,19 @@ public class InventoryDisplay extends UIComponent {
                 // are several classes that extend the ItemComponent, and thus store different variables. Most variables
                 // we would require (i.e. chopped, burnt, etc) are not included in the base ItemComponent class.
 
-                //String itemTexturePath = item.entity.getComponent(TextureRenderComponent.class).getTexturePath();
-                //Image itemImage = new Image(ServiceLocator.getResourceService().getAsset(itemTexturePath, Texture.class));
+                String itemTexturePath = item.getTexturePath();
+                Image itemImage;
 
-                // placeholder lettuce image for now
-                Image itemImage = new Image(ServiceLocator.getResourceService().getAsset("images/ingredients/raw_lettuce.png", Texture.class));
+
+                if (itemTexturePath != null) {
+                    itemImage = new Image(ServiceLocator.getResourceService().getAsset(itemTexturePath, Texture.class));
+                } else {
+                    // placeholder lettuce image if no texture found for item
+                    itemImage = new Image(ServiceLocator.getResourceService().getAsset("images/ingredients/raw_lettuce.png", Texture.class));
+                }
+
                 itemPadding.add(itemImage).pad(20);
                 currentStack.add(itemPadding);
-
             }
             table.add(currentStack).size(200).padLeft(20);
 
@@ -83,6 +93,10 @@ public class InventoryDisplay extends UIComponent {
 
         stage.addActor(table);
     }
+    /**
+     * Updates the label to reflect the current item in the first slot of the inventory.
+     * @param item the item in the first slot of the inventory
+     */
 
     private void updateLabel(ItemComponent item) {
         // Update the label with the item information
@@ -196,6 +210,16 @@ public class InventoryDisplay extends UIComponent {
                         entity.getEvents().trigger("updateAnimationEmptyInventory");
                         break;
                 }
+            } else {
+                switch(item.getItemType()) {
+                    case PLATE:
+                        entity.getEvents().trigger("updateAnimationPlate");
+                        break;
+                    case FIREEXTINGUISHER:
+                        entity.getEvents().trigger(
+                            "updateAnimationFireExtinguisher");
+                        break;
+                }
             }
         } else {
             //Updates player sprite back to default
@@ -204,6 +228,10 @@ public class InventoryDisplay extends UIComponent {
     }
 
 
+    /**
+     * Updates the UI display to reflect the current state of the InventoryComponent
+     * of this component's parent entity.
+     */
     private void updateDisplay() {
 
         for (int i = 0; i < slots.size(); i++) {
@@ -215,20 +243,27 @@ public class InventoryDisplay extends UIComponent {
             ItemComponent item = entity.getComponent(InventoryComponent.class).getItemAt(i);
             if (item != null) {
                 Table itemPadding = new Table();
-                //N! See addActors
 
-                //String itemTexturePath = item.entity.getComponent(TextureRenderComponent.class).getTexturePath();
-                //Image itemImage = new Image(ServiceLocator.getResourceService().getAsset(itemTexturePath, Texture.class));
+                String itemTexturePath = item.getTexturePath();
+                Image itemImage;
+                if (itemTexturePath != null) {
+                    itemImage = new Image(ServiceLocator.getResourceService().getAsset(itemTexturePath, Texture.class));
+                } else {
+                    // placeholder lettuce image if no texture found for item
+                    itemImage = new Image(ServiceLocator.getResourceService().getAsset("images/ingredients/raw_lettuce.png", Texture.class));
+                }
 
-                // placeholder beef image for now
-                Image itemImage = new Image(ServiceLocator.getResourceService().getAsset("images/ingredients/cooked_beef.png", Texture.class));
                 itemPadding.add(itemImage).pad(20);
                 currentStack.add(itemPadding);
             }
         }
 
         }
-    // Method to update the UI with a new item
+
+    /**
+     * Updates this InventoryDisplay to reflect the current state of the InventoryComponent
+     * of this component's parent entity.
+     */
     public void update() {
         // updateLabel(entity.getComponent(InventoryComponent.class).getItemFirst());
         updateDisplay();
@@ -251,6 +286,6 @@ public class InventoryDisplay extends UIComponent {
 
     @Override
     public void setStage(Stage mock) {
-        
+        this.stage = mock;
     }
 }
