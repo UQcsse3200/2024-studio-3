@@ -15,6 +15,7 @@ import com.csse3200.game.components.station.StationCollectionComponent;
 import com.csse3200.game.components.station.StationCookingComponent;
 import com.csse3200.game.components.station.StationItemHandlerComponent;
 import com.csse3200.game.components.station.StationServingComponent;
+import com.csse3200.game.components.station.StationMealComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.PhysicsUtils;
@@ -89,6 +90,31 @@ public class StationFactory {
     body.setUserData(stove);
     return stove;
   }
+
+  public static Entity createBin() {
+    Entity bin = new Entity()
+        .addComponent(new TextureRenderComponent("images/stations/refrigerator.png"))
+        .addComponent(new PhysicsComponent())
+        .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
+        .addComponent(new InteractionComponent(PhysicsLayer.INTERACTABLE))
+        .addComponent(new TooltipsDisplay())
+        .addComponent(new InventoryComponent(1))
+        .addComponent(new StationCookingComponent())
+        .addComponent(new StationItemHandlerComponent("stove", new ArrayList<>()));
+
+    bin.getComponent(InteractionComponent.class).setAsBox(bin.getScale());
+    bin.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
+    bin.getComponent(TextureRenderComponent.class).scaleEntity();
+    bin.scaleHeight(1.5f);
+
+    PhysicsUtils.setScaledCollider(bin, 0.3f, 0.2f);
+    // Add station reference
+    PhysicsComponent physicsComponent = bin.getComponent(PhysicsComponent.class);
+    Body body = physicsComponent.getBody();
+    body.setUserData(bin);
+    return bin;
+  }
+
   public static Entity createFireExtinguisher() {
     Entity fireExtinguisher = new Entity()
             .addComponent(new TextureRenderComponent("images/fireExtinguisher/Fire_Extinguisher.png"))
@@ -197,7 +223,8 @@ public class StationFactory {
             .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
             .addComponent(new InteractionComponent(PhysicsLayer.INTERACTABLE))
             .addComponent(new TooltipsDisplay())
-            .addComponent(new InventoryComponent(1));
+            .addComponent(new InventoryComponent(1))
+            .addComponent(new StationMealComponent("combining", new ArrayList<>()));
             // Change this handler to the combining one
             //.addComponent(new StationItemHandlerComponent("benchMiddle", new ArrayList<>()));
 
@@ -222,7 +249,6 @@ public class StationFactory {
 
 
     Entity submission = new Entity()
-            .addComponent(new TextureRenderComponent("images/stations/servery.png"))
             .addComponent(new PhysicsComponent())
             .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
             .addComponent(new InteractionComponent(PhysicsLayer.INTERACTABLE))
@@ -233,9 +259,14 @@ public class StationFactory {
 
     submission.getComponent(InteractionComponent.class).setAsBox(submission.getScale());
     submission.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
-    submission.getComponent(TextureRenderComponent.class).scaleEntity();
-    submission.scaleHeight(2f);
-    PhysicsUtils.setScaledCollider(submission, 0.3f, 0.2f);
+    PhysicsUtils.setScaledCollider(submission, 1f, 1f);
+
+    AnimationRenderComponent animator =
+            new AnimationRenderComponent(
+                    ServiceLocator.getResourceService().getAsset("images/stations/Servery_Animation/servery.atlas", TextureAtlas.class));
+    animator.addAnimation("servery_idle", 0.1f, Animation.PlayMode.LOOP);
+
+    submission.addComponent(animator);
 
     // Add station reference
     PhysicsComponent physicsComponent = submission.getComponent(PhysicsComponent.class);

@@ -1,77 +1,54 @@
 package com.csse3200.game.components.maingame;
 
+import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.Component;
+import com.csse3200.game.entities.Entity;
+import com.csse3200.game.services.ServiceLocator;
 
 public class CheckWinLoseComponent extends Component {
 
-    private float totalMoneyMade;
-    private float winAmount;
-    private float loseThreshold;
-    private float mealQuality;
-    private int storeRating;
+    private CombatStatsComponent combatStatsComponent;
+    private int winAmount;
+    private int loseThreshold;
 
-    public CheckWinLoseComponent(float totalMoneyMade, float winAmount, float loseThreshold, float mealQuality) {
-        this.totalMoneyMade = totalMoneyMade;
+    public CheckWinLoseComponent(int winAmount, int loseThreshold) {
         this.winAmount = winAmount;
         this.loseThreshold = loseThreshold;
-        this.mealQuality = mealQuality;
-        this.storeRating = calculateStoreRating(); // can have this displayed on the screen 'at all times'?
+
+        // Listen for player creation and retrieve the CombatStatsComponent
+        ServiceLocator.getPlayerService().getEvents().addListener("playerCreated", (Entity player) -> {
+            this.combatStatsComponent = player.getComponent(CombatStatsComponent.class);
+        });
     }
 
-    public void updateGameState(float totalMoneyMade, float mealQuality) {
-        this.totalMoneyMade = totalMoneyMade;
-        this.mealQuality = mealQuality;
-        this.storeRating = calculateStoreRating();
-    }
-
-    public int calculateStoreRating() {
-        if (mealQuality >= 0 && mealQuality < 20) {
-            return 1;
-        } else if (mealQuality >= 20 && mealQuality < 40) {
-            return 2;
-        } else if (mealQuality >= 40 && mealQuality < 60) {
-            return 3;
-        } else if (mealQuality >= 60 && mealQuality < 80) {
-            return 4;
-        } else {
-            return 5;
-        }
-    }
-
+    /**
+     * Public method to check the game state and return "WIN", "LOSE", or "GAME_IN_PROGRESS".
+     */
     public String checkGameState() {
-        if (checkLose()) {
-            triggerLoseState();
+        if (combatStatsComponent == null) {
+            return "GAME_IN_PROGRESS";  // Ensuring combatStatsComponent is initialised
+        }
+
+        if (hasLost()) {
             return "LOSE";
-        } else if (checkWin()) {
-            triggerWinState();
+        } else if (hasWon()) {
             return "WIN";
         } else {
             return "GAME_IN_PROGRESS";
         }
     }
 
-    private boolean checkLose() {
-        if (storeRating <= 2) {
-            return true;
-        }
-        if (totalMoneyMade < loseThreshold) {
-            return true;
-        }
-        return false;
+    /**
+     * Returns true if the player has lost (gold less than loseThreshold).
+     */
+    public boolean hasLost() {
+        return combatStatsComponent != null && combatStatsComponent.getGold() < loseThreshold;
     }
 
-    private boolean checkWin() {
-        if (totalMoneyMade >= winAmount) {
-            return true;
-        }
-        return false;
-    }
-
-    private void triggerLoseState() {
-        // Need to add logic for losing (trigger cutscenes, end game)
-    }
-
-    private void triggerWinState() {
-        // Need to add logic for winning (trigger cutscenes, end game)
+    /**
+     * Returns true if the player has won (gold >= winAmount).
+     */
+    public boolean hasWon() {
+        return combatStatsComponent != null && combatStatsComponent.getGold() >= winAmount;
     }
 }

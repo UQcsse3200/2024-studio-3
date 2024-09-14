@@ -1,12 +1,14 @@
 package com.csse3200.game.areas;
 
-
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-
+import com.csse3200.game.components.maingame.CheckWinLoseComponent;
+import com.csse3200.game.components.npc.PersonalCustomerEnums;
+import com.badlogic.gdx.utils.Null;
+import com.csse3200.game.GdxGame;
+import com.csse3200.game.components.maingame.TextDisplay;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
@@ -29,6 +31,18 @@ import com.csse3200.game.screens.MoralDecisionDisplay;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.utils.math.GridPoint2Utils;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import com.csse3200.game.components.maingame.EndDayDisplay;
+import com.csse3200.game.components.moral.MoralDecision;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import static com.badlogic.gdx.Gdx.app;
+
+
+
+
 
 /** Forest area for the demo game with trees, a player, and some enemies. */
 public class ForestGameArea extends GameArea {
@@ -69,12 +83,14 @@ public class ForestGameArea extends GameArea {
     "images/tiles/blue_tile.png",
     "images/stations/oven.png",
     "images/stations/stove.png",
+    "images/stations/bin.png",
     "images/stations/apple_tree.png",
     "images/stations/bench_middle.png",
     "images/stations/bench_legs.png",
     "images/stations/bench_top.png",
     "images/stations/bench.png",
     "images/stations/servery.png",
+    "images/stations/refrigerator.png",
     "images/chef_player.png",
     "images/frame/top_border.png",
     "images/frame/left_border.png",
@@ -118,67 +134,85 @@ public class ForestGameArea extends GameArea {
           "images/platecomponent/stackedplates/2plates.png",
           "images/platecomponent/stackedplates/3plates.png",
           "images/platecomponent/stackedplates/4plates.png",
-          "images/platecomponent/stackedplates/5plates.png"
+          "images/platecomponent/stackedplates/5plates.png",
+          "images/inventory_ui/slot.png"
   };
   private static final String[] forestTextureAtlases = {
-    "images/terrain_iso_grass.atlas", 
-    "images/ghost.atlas", 
-    "images/ghostKing.atlas", 
+    "images/terrain_iso_grass.atlas",
+    "images/ghost.atlas",
+    "images/ghostKing.atlas",
     "images/animal_images/gorilla.atlas",
-    "images/animal_images/goose.atlas", 
-    "images/animal_images/goat.atlas", 
+    "images/animal_images/goose.atlas",
+    "images/animal_images/goat.atlas",
     "images/animal_images/monkey.atlas",
     "images/animal_images/snow_wolf.atlas",
-    "images/player.atlas", 
-    "images/fireExtinguisher/atlas/flame.atlas", 
+    "images/player.atlas",
+    "images/fireExtinguisher/atlas/flame.atlas",
     "images/stations/oven/oven.atlas",
-    "images/terrain_iso_grass.atlas", 
-    "images/ghost.atlas", 
-    "images/ghostKing.atlas", 
+    "images/terrain_iso_grass.atlas",
+    "images/ghost.atlas",
+    "images/ghostKing.atlas",
     "images/animal_images/gorilla.atlas",
-    "images/animal_images/goose.atlas", 
-    "images/animal_images/goat.atlas", 
+    "images/animal_images/goose.atlas",
+    "images/animal_images/goat.atlas",
     "images/animal_images/monkey.atlas",
-    "images/animal_images/snow_wolf.atlas", 
-    "images/fireExtinguisher/atlas/flame.atlas", 
+    "images/animal_images/snow_wolf.atlas",
+    "images/fireExtinguisher/atlas/flame.atlas",
     "images/player/player.atlas",
-    "images/player/acaiBowl.atlas", 
+    "images/player/acaiBowl.atlas",
     "images/player/bananaSplit.atlas",
-    "images/player/burntBeef.atlas", 
-    "images/player/choppedAcai.atlas", 
-    "images/player/choppedBanana.atlas", 
-    "images/player/choppedChocolate.atlas", 
-    "images/player/choppedCucumber.atlas", 
-    "images/player/choppedLettuce.atlas", 
-    "images/player/choppedStrawberry.atlas", 
-    "images/player/choppedTomato.atlas", 
-    "images/player/cookedBeef.atlas", 
-    "images/player/cookedFish.atlas", 
-    "images/player/fruitSalad.atlas", 
-    "images/player/rawAcai.atlas", 
-    "images/player/rawBanana.atlas", 
-    "images/player/rawBeef.atlas", 
-    "images/player/rawChocolate.atlas", 
-    "images/player/rawCucumber.atlas", 
-    "images/player/rawFish.atlas", 
-    "images/player/rawLettuce.atlas", 
-    "images/player/rawStrawberry.atlas", 
-    "images/player/rawTomato.atlas", 
+    "images/player/burntBeef.atlas",
+    "images/player/choppedAcai.atlas",
+    "images/player/choppedBanana.atlas",
+    "images/player/choppedChocolate.atlas",
+    "images/player/choppedCucumber.atlas",
+    "images/player/choppedLettuce.atlas",
+    "images/player/choppedStrawberry.atlas",
+    "images/player/choppedTomato.atlas",
+    "images/player/cookedBeef.atlas",
+    "images/player/cookedFish.atlas",
+    "images/player/fruitSalad.atlas",
+    "images/player/rawAcai.atlas",
+    "images/player/rawBanana.atlas",
+    "images/player/rawBeef.atlas",
+    "images/player/rawChocolate.atlas",
+    "images/player/rawCucumber.atlas",
+    "images/player/rawFish.atlas",
+    "images/player/rawLettuce.atlas",
+    "images/player/rawStrawberry.atlas",
+    "images/player/rawTomato.atlas",
     "images/player/salad.atlas",
-    "images/player/steak.atlas", 
-    "images/player/playerPlate.atlas", 
-    "images/player/playerDirtyPlate.atlas", 
-    "images/player/playerFireExtinguisher.atlas"
+    "images/player/steak.atlas",
+    "images/player/playerPlate.atlas",
+    "images/player/playerDirtyPlate.atlas",
+          "images/player/playerFireExtinguisher.atlas",
+          "images/special_NPCs/boss.atlas", "images/stations/Servery_Animation/servery.atlas"
 
   };
   private static final String[] forestSounds = {"sounds/Impact4.ogg"};
-  private static final String backgroundMusic = "sounds/BGM_03_mp3.mp3";
+  private static final String backgroundMusic = "sounds/BB_BGM.mp3";
   private static final String[] forestMusic = {backgroundMusic};
   private static Entity customerSpawnController;
 
   private final TerrainFactory terrainFactory;
 
   private Entity player;
+  private CheckWinLoseComponent winLoseComponent;  // Reference to CheckWinLoseComponent
+
+
+  // Define the win/lose conditions
+  private int winAmount = 60;      // Example value for winning gold amount
+  private int loseThreshold = 50;   // Example value for losing threshold
+
+  public enum personalCustomerEnums{
+    HANK,
+    LEWIS,
+    SILVER,
+    JOHN,
+    MOONKI,
+    BASIC_CHICKEN,
+    BASIC_SHEEP
+  }
 
   /**
    * Initialise this ForestGameArea to use the provided TerrainFactory.
@@ -204,6 +238,7 @@ public class ForestGameArea extends GameArea {
     // Spawn the restaurant
     spawnDoor();
     spawnWall();
+    spawnBenches();
     make_border();
 
 
@@ -223,20 +258,36 @@ public class ForestGameArea extends GameArea {
       spawnStackPlate(5); //testplate spawn
       //spawnPlatewithMeal();
 
+
     // Spawn the player
     player = spawnPlayer();
-    //ServiceLocator.getEntityService().getEvents().trigger("SetText", "Boss: Rent is due");
-    //triggerFiredEnd();    // Trigger the fired (bad) ending
+
+    // Check and trigger win/lose state
+    ServiceLocator.getDayNightService().getEvents().addListener("endGame", this::checkEndOfDayGameState);
+
     createMoralScreen();
     createEndDayScreen();
     playMusic();
   }
 
-  /**
-   * Get the Entity containing the customer spawn events
-   *
-   * @return the Entity handling all customer spawn events
+  /***
+   * Checks using the checkWinLoseComponent if to call a cutscene and which one to call
    */
+  private void checkEndOfDayGameState() {
+    String gameState = player.getComponent(CheckWinLoseComponent.class).checkGameState();
+
+    if ("LOSE".equals(gameState)) {
+      createTextBox("You *oink* two-legged moron! You're ruining my " +
+              "business' *oink* reputation! Get out!");
+      triggerFiredEnd();  // Trigger the fired (bad) ending
+    } else if ("WIN".equals(gameState)) {
+      createTextBox("You *oink* amazing critter! You're a master! " +
+              "Enjoy a 40c raise for your efforts!");
+      triggerRaiseEnd();  // Trigger the raise (good) ending
+    }
+  }
+
+
   public Entity getCustomerSpawnController() {
     return customerSpawnController;
   }
@@ -401,15 +452,23 @@ public class ForestGameArea extends GameArea {
     spawnEntityAt(stove, stovePos, false, false);
     stove.setPosition(stove.getPosition().x + 2.7f , stove.getPosition().y + 1.3f);
 
+    GridPoint2 binPos = new GridPoint2(5,4);
+    Entity bin = StationFactory.createBin();
+    spawnEntityAt(bin, binPos, false, false);
+    bin.setPosition(bin.getPosition().x + 1.7f , bin.getPosition().y - 2f);
+
     GridPoint2 appleTreePos = new GridPoint2( 5, 4);
     Entity appleTree = StationFactory.createAppleTree();
     spawnEntityAt(appleTree, appleTreePos, false, false);
-    appleTree.setPosition(appleTree.getPosition().x + 4.2f , appleTree.getPosition().y - 1.3f);
+    appleTree.setPosition(appleTree.getPosition().x + 4.2f , appleTree.getPosition().y - 3f);
 
-    GridPoint2 serveryPos = new GridPoint2(3,0);
+    GridPoint2 serveryPos = new GridPoint2(1,1);
     Entity servery = StationFactory.createSubmissionWindow();
     spawnEntityAt(servery, serveryPos, false, false);
-    servery.setPosition(servery.getPosition().x, servery.getPosition().y + 1.3f);
+    servery.setPosition(servery.getPosition().x + 2, servery.getPosition().y + 0.5f);
+    servery = StationFactory.createSubmissionWindow();
+    spawnEntityAt(servery, serveryPos, false, false);
+    servery.setPosition(servery.getPosition().x + 2, servery.getPosition().y);
 
     // Bench
     GridPoint2 middlePos = new GridPoint2(5,4);
@@ -428,13 +487,10 @@ public class ForestGameArea extends GameArea {
     bottom.setPosition(bottom.getPosition().x - 2.6f, bottom.getPosition().y - 2.6f);
   }
 
-    /**
-     * spawn a bench
-     * @param type: bench filename
-     * @param x: x coordinate
-     * @param y: y coordinate
-     *         note: coordinates begin at bottom left of screen
-     */
+  /**
+   * spawn a bench
+   *         note: coordinates begin at bottom left of screen
+   */
   private void spawnBench() {
     //Spawn a flame, this is temporary and for testing purposes
     GridPoint2 flamePos = new GridPoint2(1,1);
@@ -822,11 +878,13 @@ public class ForestGameArea extends GameArea {
     return newPlate;
   }
 
-
+  /**
+   * Plays the background music
+   */
   private void playMusic() {
     Music music = ServiceLocator.getResourceService().getAsset(backgroundMusic, Music.class);
     music.setLooping(true);
-    music.setVolume(0.008f);
+    music.setVolume(0.02f);
     music.play();
   }
 
@@ -860,37 +918,72 @@ public class ForestGameArea extends GameArea {
     this.unloadAssets();
   }
 
+  /**
+   * Spawns a boss entity
+   */
   private void spawnBoss() {
     GridPoint2 position = new GridPoint2(1, 5);
-    Vector2 targetPos = new Vector2(2, 6); // Target position for ghost king
+    Vector2 targetPos = new Vector2(2, 6);
     Entity boss = NPCFactory.createBoss(targetPos);
     spawnEntityAt(boss, position, false, false);
   }
 
+  /**
+   * Triggers the Fired cutscene
+   */
   private void triggerFiredEnd() {
     ExecutorService executor = Executors.newSingleThreadExecutor();
     executor.submit(() -> {
       try {
-        Thread.sleep(10000);
         spawnBoss();
-        createTextBox("You *oink* two-legged moron! You're ruining my business' *oink* reputation!. Get out!");
-
+        Thread.sleep(10000);
+        createTextBox("You *oink* two-legged moron! You're ruining my " +
+                "business' *oink* reputation! Get out!");
+        Thread.sleep(10000);
+        app.exit();
       } catch (InterruptedException e) {
         Thread.currentThread().interrupt();
         System.out.println("Thread was interrupted");
       }
     });
-
-    // Shutdown the executor to prevent zombie threads
     executor.shutdown();
   }
 
+  /**
+   * Triggers the Raise cutscene
+   */
+  private void triggerRaiseEnd() {
+    ExecutorService executor = Executors.newSingleThreadExecutor();
+    executor.submit(() -> {
+      try {
+        spawnBoss();
+        Thread.sleep(10000);
+        createTextBox("You *oink* amazing critter! You're a master! " +
+                "Enjoy a 40c raise for your efforts!");
+        Thread.sleep(10000);
+        app.exit();
+      } catch (InterruptedException e) {
+        Thread.currentThread().interrupt();
+        System.out.println("Thread was interrupted");
+      }
+    });
+    executor.shutdown();
+  }
+
+  /**
+   * Creates a text box on the screen
+   * @param text A string with desired text to appear
+   */
   private void createTextBox(String text) {
     for (Entity entity: ServiceLocator.getEntityService().getEntities()) {
       entity.getEvents().trigger("SetText", text);
     }
   }
 
+
+  /**
+   * Create the moral decision screen
+   */
   private void createMoralScreen() {
     Entity moralScreen = new Entity();
     moralScreen
@@ -899,14 +992,14 @@ public class ForestGameArea extends GameArea {
     ServiceLocator.getEntityService().registerMoral(moralScreen);
   }
 
+  /**
+   * Create the end day screen
+   */
   private void createEndDayScreen() {
     Entity endDayScreen = new Entity();
     endDayScreen
             .addComponent(new EndDayDisplay());
     ServiceLocator.getEntityService().registerEndDay(endDayScreen);
   }
-
-  private void triggerGoodEnd() {
-    // pain
-  }
 }
+

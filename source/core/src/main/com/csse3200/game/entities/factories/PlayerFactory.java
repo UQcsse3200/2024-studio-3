@@ -3,9 +3,11 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.TooltipsDisplay;
+import com.csse3200.game.components.maingame.CheckWinLoseComponent;
 import com.csse3200.game.components.ordersystem.MainGameOrderTicketDisplay;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.components.player.InventoryDisplay;
+import com.csse3200.game.components.player.PlayerItemSpriteManager;
 import com.csse3200.game.components.player.PlayerActions;
 import com.csse3200.game.components.player.PlayerStatsDisplay;
 import com.csse3200.game.components.player.*;
@@ -72,12 +74,14 @@ public class PlayerFactory {
             .addComponent(new CombatStatsComponent(config.health, config.baseAttack, ServiceLocator.getLevelService().getCurrGold()))
             .addComponent(new InventoryComponent(config.inventorySize))
             .addComponent(new InventoryDisplay())
+                .addComponent(new PlayerItemSpriteManager())
             .addComponent(inputComponent)
             .addComponent(animator)
             .addComponent(new PlayerAnimationController())
             .addComponent(new TooltipsDisplay())
             .addComponent(new PlayerStatsDisplay())
             .addComponent(new InteractionComponent(PhysicsLayer.INTERACTABLE))
+            .addComponent(new CheckWinLoseComponent(55, 55))
             .addComponent(new SensorComponent(PhysicsLayer.INTERACTABLE, 10f));
 
     player.scaleHeight(1.5f);
