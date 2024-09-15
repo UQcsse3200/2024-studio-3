@@ -57,6 +57,9 @@ public class EndDayDisplay extends UIComponent {
     private static final NPCConfigs configs =
             FileLoader.readClass(NPCConfigs.class, "configs/NPCs.json");
 
+    /**
+     * Constructor for the EndDayDisplay class.
+     */
     public EndDayDisplay() {
         super();
         this.gameScreen = ServiceLocator.getGameScreen();
@@ -66,6 +69,9 @@ public class EndDayDisplay extends UIComponent {
         this.customerNameArray = new ArrayList<>();
     }
 
+    /**
+     * Creates the end of day display.
+     */
     public void create() {
         super.create();
         layout = new Table();
@@ -88,6 +94,9 @@ public class EndDayDisplay extends UIComponent {
             show();});
     }
 
+    /**
+     * Creates a white background for the display.
+     */
     private void createBackground() {
         // Create a background
         Pixmap pixmap = new Pixmap(1, 1, Pixmap.Format.RGBA8888);
@@ -98,6 +107,9 @@ public class EndDayDisplay extends UIComponent {
         pixmap.dispose();
     }
 
+    /**
+     * Sets up the images for the display.
+     */
     private void setupImages() {
         birdImage = createImage("images/bird.png");
         pointImage1 = createImage("images/point.png");
@@ -105,6 +117,11 @@ public class EndDayDisplay extends UIComponent {
         pointImage3 = createImage("images/point.png");
     }
 
+    /**
+     * Creates an image with the given texture path.
+     * @param texturePath the path to the texture
+     * @return the created image
+     */
     private Image createImage(String texturePath) {
         Texture texture = ServiceLocator.getResourceService().getAsset(texturePath, Texture.class);
         Image image = new Image(new TextureRegionDrawable(new TextureRegion(texture)));
@@ -114,6 +131,9 @@ public class EndDayDisplay extends UIComponent {
         return image;
     }
 
+    /**
+     * Sets up the UI for the display.
+     */
     private void setupUI() {
         addSpacer();
         setupGoldDisplay();
@@ -121,12 +141,18 @@ public class EndDayDisplay extends UIComponent {
         addCloseButton();
     }
 
+    /**
+     * Adds a spacer to the layout.
+     */
     private void addSpacer() {
         Table spacer = new Table();
         spacer.add().height(3 * birdImage.getHeight() / 5);
         layout.add(spacer).row();
     }
 
+    /**
+     * Sets up the gold display for the display.
+     */
     private void setupGoldDisplay() {
         Texture coinTexture = ServiceLocator.getResourceService()
                 .getAsset("images/coin.png", Texture.class);
@@ -151,6 +177,9 @@ public class EndDayDisplay extends UIComponent {
         layout.add(coinAndGoldLayout).expandX().fillX().center().row();
     }
 
+    /**
+     * Sets up the customer lists for the display.
+     */
     private void setupCustomerLists() {
         // Customer lists
         List<String> passedCustomers = new List<>(skin);
@@ -178,6 +207,9 @@ public class EndDayDisplay extends UIComponent {
         layout.add(listTable).expand().fill().row();
     }
 
+    /**
+     * Adds a close button to the display.
+     */
     private void addCloseButton() {
         TextButton closeBtn = new TextButton("Close", skin);
         closeBtn.addListener(new ClickListener() {
@@ -189,17 +221,28 @@ public class EndDayDisplay extends UIComponent {
         layout.add(closeBtn).padTop(20).row();
     }
 
+    /**
+     * Handles the update of the gold display.
+     * @param gold the new gold amount
+     */
     private void handleGoldUpdate(int gold) {
         currentGold = gold;
         goldLabel.setText(currentGold);
     }
 
+    /**
+     * Updates the customer list with the given customer name.
+     * @param customerName the name of the customer
+     */
     private void updateCustomerList(String customerName) {
         customerNameArray.add(customerName);
         customerList.setItems(customerNameArray.toArray(new String[0]));
     }
 
-    public void show() {
+    /**
+     * Shows the display.
+     */
+    private void show() {
         isVisible = true;
         layout.setVisible(true);
         birdImage.setVisible(true);
@@ -219,6 +262,10 @@ public class EndDayDisplay extends UIComponent {
         this.animateGoldChange();
     }
 
+    /**
+     * Updates the position of the bird image.
+     * @param delta update distance for the bird
+     */
     private void updateBirdPosition(float delta) {
         imageX -= 200 * delta;
         if (imageX + birdImage.getWidth() < 0) {
@@ -231,6 +278,9 @@ public class EndDayDisplay extends UIComponent {
         pointImage3.setPosition(imageX + birdImage.getWidth() + 2 * pointImage1.getWidth(), pointImage3.getY());
     }
 
+    /**
+     * Animates the gold change.
+     */
     private void animateGoldChange() {
         float duration = 1.0f;
         goldLabel.addAction(Actions.sequence(
@@ -248,13 +298,19 @@ public class EndDayDisplay extends UIComponent {
         ));
     }
 
-    public void hide() {
+    /**
+     * Hides the display and opens moral screen.
+     */
+    private void hide() {
         ServiceLocator.getLevelService().togglePlayerFinishedLevel();
         game.setScreen(GdxGame.ScreenType.MAIN_GAME);
         ServiceLocator.getDayNightService().getEvents().trigger("TOMORAL");
     }
 
-    public void toggleVisibility() {
+    /**
+     * Toggle the visibility of the display
+     */
+    private void toggleVisibility() {
         if (isVisible) {
             hide();
         } else {

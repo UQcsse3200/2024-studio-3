@@ -22,6 +22,8 @@ public class CustomerComponent extends Component {
         this.type = config.type;
         this.patience = config.patience;
         this.countDown = config.countDown;
+        this.preference = config.preference;
+        this.Customer_id = config.Customer_id;
     }
 
     public CustomerComponent(CustomerPersonalityConfig config) {
@@ -90,5 +92,8 @@ public class CustomerComponent extends Component {
 
     public int getCustomer_id() {
         return this.Customer_id;
+    }
+    public String getType() {
+        return this.type;
     }
 }
