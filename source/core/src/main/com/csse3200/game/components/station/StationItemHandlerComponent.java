@@ -7,6 +7,7 @@ import com.csse3200.game.components.items.IngredientComponent;
 import com.csse3200.game.components.items.ItemComponent;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.components.player.InventoryDisplay;
+import com.csse3200.game.components.station.loader.StationAcceptableItemsGetter;
 
 public class StationItemHandlerComponent extends Component {
     /**
@@ -16,7 +17,7 @@ public class StationItemHandlerComponent extends Component {
      */
     protected final String type;
     protected InventoryComponent inventoryComponent;
-    protected final ArrayList<String> acceptableItems;
+    protected ArrayList<String> acceptableItems;
 
     // General TODO:
     // Add trigger calls to external for failed interactions
@@ -34,6 +35,8 @@ public class StationItemHandlerComponent extends Component {
         this.type = type;
         this.acceptableItems = acceptableItems;
 
+
+        this.acceptableItems = StationAcceptableItemsGetter.getAcceptableItems(type);
     }
 
     /**
@@ -62,15 +65,14 @@ public class StationItemHandlerComponent extends Component {
     public boolean isItemAccepted(ItemComponent item) {
         // TODO: Change this back after doing proper item acceptance
 
-        /*String itemName = item.getItemName();
+        String itemName = item.getItemName();
 
         for (String acceptableItem : this.acceptableItems) {
             if (acceptableItem.equals(itemName)) {
                 return true;
             }
         }
-        return false;*/
-        return true;
+        return false;
     }
 
     /**
