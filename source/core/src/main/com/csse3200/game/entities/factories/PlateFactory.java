@@ -38,6 +38,7 @@ public class PlateFactory {
      * @return The spawned plate entity
      */
     public static Entity spawnPlate(int id) {
+        System.out.println("Spawning plate id:" + id);
         String texturePath = "images/platecomponent/stackedplates/1plates.png";
 
         Entity plate = createTemplatePlate()

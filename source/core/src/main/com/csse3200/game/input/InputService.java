@@ -1,7 +1,6 @@
 package com.csse3200.game.input;
 
 import com.badlogic.gdx.Gdx;
-import com.csse3200.game.events.EventHandler;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.Vector2;
@@ -23,7 +22,6 @@ public class InputService implements InputProcessor, GestureDetector.GestureList
   private static final Logger logger = LoggerFactory.getLogger(InputService.class);
   private static final InputFactory.InputType inputType = InputFactory.InputType.KEYBOARD;
 
-  private final EventHandler inputEventHandler = new EventHandler();
   private static final Comparator<InputComponent> comparator =
       Collections.reverseOrder(Comparator.comparingInt(InputComponent::getPriority));
 
@@ -389,9 +387,5 @@ public class InputService implements InputProcessor, GestureDetector.GestureList
     }
     logger.debug("zoom input was not handled");
     return false;
-  }
-
-  public EventHandler getEvents() {
-    return inputEventHandler;
   }
 }

@@ -247,8 +247,7 @@ public class Entity {
       return;
     }
     getEvents().update();
-    Array<Component> componentsCopy = new Array<>(createdComponents);
-    for (Component component : componentsCopy) {
+    for (Component component : createdComponents) {
       component.triggerUpdate();
     }
   }

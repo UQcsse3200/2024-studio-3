@@ -14,7 +14,7 @@ import java.util.Arrays;
  * servable status of plate, stacked status of plate, stackPlateArray to store id of plates in a stacked plates
  * plate id (for single plates) and quantity of plates in a stack
  */
-public class PlateComponent extends Component {
+public class PlateComponent extends ItemComponent {
     private PlateState state;
     private String itemOnPlate;
     private boolean isAvailable;
@@ -39,6 +39,7 @@ public class PlateComponent extends Component {
      * @param quantity the initial number of plates in the stack
      */
     public PlateComponent(int quantity) {
+        super("Plate", ItemType.PLATE, 1);
         this.state = PlateState.CLEAN;
         this.itemOnPlate = null;
         this.isAvailable = true;
