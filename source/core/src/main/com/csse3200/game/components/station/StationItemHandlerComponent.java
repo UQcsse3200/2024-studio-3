@@ -64,7 +64,7 @@ public class StationItemHandlerComponent extends Component {
             return true;
         }
 
-        String itemName = item.getItemName();
+        String itemName = item.getItemName().toLowerCase();
 
         for (String acceptableItem : this.acceptableItems) {
             if (acceptableItem.equals(itemName)) {
