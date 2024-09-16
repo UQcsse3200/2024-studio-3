@@ -1,6 +1,6 @@
 {
     "oven":["tomato", "cucumber"],
-    "stove":["beef"],
+    "stove":["beef", "fish"],
     "cuttingBoard":["acai", "banana", "tomato", "cucumber", "lettuce", "strawberry", "chocolate"],
     "blender":["acai", "banana"],
     "produceBasket":["acai", "banana", "tomato", "cucumber", "lettuce", "strawberry"],
