@@ -46,7 +46,7 @@ public class StationFactory {
         .addComponent(new InteractionComponent(PhysicsLayer.INTERACTABLE))
         .addComponent(new TooltipsDisplay())
         .addComponent(new StationCookingComponent())
-        .addComponent(new StationItemHandlerComponent("oven", new ArrayList<>()))
+        .addComponent(new StationItemHandlerComponent("oven"))
         .addComponent(new InventoryComponent(1));
 
     
@@ -76,7 +76,7 @@ public class StationFactory {
         .addComponent(new TooltipsDisplay())
         .addComponent(new InventoryComponent(1))
         .addComponent(new StationCookingComponent())  
-        .addComponent(new StationItemHandlerComponent("stove", new ArrayList<>()));
+        .addComponent(new StationItemHandlerComponent("stove"));
 
     stove.getComponent(InteractionComponent.class).setAsBox(stove.getScale());
     stove.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
@@ -100,7 +100,7 @@ public class StationFactory {
         .addComponent(new TooltipsDisplay())
         .addComponent(new InventoryComponent(1))
         .addComponent(new StationCookingComponent())
-        .addComponent(new StationItemHandlerComponent("stove", new ArrayList<>()));
+        .addComponent(new StationItemHandlerComponent("stove"));
 
     bin.getComponent(InteractionComponent.class).setAsBox(bin.getScale());
     bin.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
@@ -286,7 +286,7 @@ public class StationFactory {
         .addComponent(new TextureRenderComponent("images/stations/benches/"+ type + ".png"))
         .addComponent(new PhysicsComponent())
         .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
-        .addComponent(new StationItemHandlerComponent(type, new ArrayList<>()))
+        .addComponent(new StationItemHandlerComponent(type))
         .addComponent(new InventoryComponent(1));
 
     station.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);

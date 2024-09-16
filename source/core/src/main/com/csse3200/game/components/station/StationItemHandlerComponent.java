@@ -13,7 +13,7 @@ public class StationItemHandlerComponent extends Component {
     /**
      * String type - storing type of station
      * StationInventoryComponent inventorycomponent - instance of inventory for this station
-     * TBD acceptableItems - HashMap, HashSet etc of mappings for acceptable items based on station
+     * acceptableItems - ArrayList which contains all accepted items or it null
      */
     protected final String type;
     protected InventoryComponent inventoryComponent;
@@ -21,21 +21,16 @@ public class StationItemHandlerComponent extends Component {
 
     // General TODO:
     // Add trigger calls to external for failed interactions
-    // Introduce an actual structure for acceptable items, json parsing etc
     // Processing in Inventory component, animation, timing and mapping
     // Create subclass for each station where needed, eg classic bench will need
-    //      to call add second component method that we dont want all stations to be able to access
+    // to call add second component method that we dont want all stations to be able to access
 
     /**
      * General constructor
      * @param type - storing type of station
-     * @param acceptableItems - HashMap, HashSet etc of mappings for acceptable items based on station
      */
-    public StationItemHandlerComponent(String type, ArrayList<String> acceptableItems) {
+    public StationItemHandlerComponent(String type) {
         this.type = type;
-        this.acceptableItems = acceptableItems;
-
-
         this.acceptableItems = StationAcceptableItemsGetter.getAcceptableItems(type);
     }
 
@@ -63,7 +58,11 @@ public class StationItemHandlerComponent extends Component {
      * @return true if it can be acceptedd, false otherwise.
      */
     public boolean isItemAccepted(ItemComponent item) {
-        // TODO: Change this back after doing proper item acceptance
+        // If the acceptable items is null the station is assumed to be able
+        // to carray any item
+        if (this.acceptableItems == null) {
+            return true;
+        }
 
         String itemName = item.getItemName();
 
@@ -72,6 +71,7 @@ public class StationItemHandlerComponent extends Component {
                 return true;
             }
         }
+
         return false;
     }
 
@@ -237,15 +237,6 @@ public class StationItemHandlerComponent extends Component {
         @param inventoryDisplay reference to UI for inventory display
      */
     public void stationGiveItem(InventoryComponent playerInventoryComponent, InventoryDisplay inventoryDisplay) {
-        // These are placeholders and don't currently go anywhere
-        //if (type.equals("COOK_TOP") || type.equals("OVEN")) {
-        //    entity.getEvents().trigger("stopCookingIngredient");
-        //} else {
-        //    entity.getEvents().trigger("stopChoppingIngredient");
-        //}
-//        entity.getEvents().trigger("showTooltip", "You took something from the station!");
-
-        // Stop the cooking process on the item
         onGiveItem();
 
         ItemComponent item = inventoryComponent.getItemFirst();

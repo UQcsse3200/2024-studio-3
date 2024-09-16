@@ -38,10 +38,7 @@ public class StationItemHandlerComponentTest {
 
         // Create handler with the actual class
         ArrayList<String> items = new ArrayList<>();
-        items.add("fish");
-        items.add("banana");
-        items.add("beef");
-        handler = new StationItemHandlerComponent("oven", items);
+        handler = new StationItemHandlerComponent("oven");
         handler.setEntity(mockEntity);
 
         // Stub methods

@@ -1,9 +1,5 @@
 package com.csse3200.game.entities.benches;
 
-import java.util.ArrayList;
-
-import com.badlogic.gdx.math.GridPoint2;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.csse3200.game.components.station.StationItemHandlerComponent;
 import com.csse3200.game.entities.Entity;
@@ -38,7 +34,7 @@ public class Bench extends Entity{
                 .addComponent(new TextureRenderComponent("images/stations/benches/" + type + ".png"))
                 .addComponent(new PhysicsComponent())
                 .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
-                .addComponent(new StationItemHandlerComponent(type, new ArrayList<>()));
+                .addComponent(new StationItemHandlerComponent(type));
         float width  = 1f;
         float height = 1f;
         bench.setScale(width, height);
