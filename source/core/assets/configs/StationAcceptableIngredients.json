@@ -8,7 +8,7 @@
     [
         "beef"
     ],
-    "cutting board":
+    "cuttingBoard":
     [
         "acai",
         "banana", 
@@ -23,11 +23,11 @@
         "acai", 
         "banana"
     ],
-    "produce basket":
+    "produceBasket":
     [
         "acai", 
         "banana", 
-        "tomato", 
+        "tomato",
         "cucumber", 
         "lettuce", 
         "strawberry"
