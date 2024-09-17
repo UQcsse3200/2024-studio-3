@@ -108,12 +108,15 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color"><code>protected <a href="StationCollectionComponent.html" title="class in com.csse3200.game.components.station">StationCollectionComponent</a></code></div>
 <div class="col-second even-row-color"><code><a href="#collectionComponent" class="member-name-link">collectionComponent</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>protected <a href="../player/InventoryComponent.html" title="class in com.csse3200.game.components.player">InventoryComponent</a></code></div>
-<div class="col-second odd-row-color"><code><a href="#inventoryComponent" class="member-name-link">inventoryComponent</a></code></div>
+<div class="col-first odd-row-color"><code>protected final <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#ingredient" class="member-name-link">ingredient</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code>protected final <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color"><code><a href="#type" class="member-name-link">type</a></code></div>
-<div class="col-last even-row-color">
+<div class="col-first even-row-color"><code>protected <a href="../player/InventoryComponent.html" title="class in com.csse3200.game.components.player">InventoryComponent</a></code></div>
+<div class="col-second even-row-color"><code><a href="#inventoryComponent" class="member-name-link">inventoryComponent</a></code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>protected final <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#type" class="member-name-link">type</a></code></div>
+<div class="col-last odd-row-color">
 <div class="block">String type - storing type of station
  StationInventoryComponent inventorycomponent - instance of inventory for this station
  TBD acceptableItems - HashMap, HashSet etc of mappings for acceptable items based on station</div>
@@ -132,7 +135,8 @@ loadScripts(document, 'script');</script>
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Constructor</div>
 <div class="table-header col-last">Description</div>
-<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(java.lang.String)" class="member-name-link">IngredientStationHandlerComponent</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;type)</code></div>
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(java.lang.String,java.lang.String)" class="member-name-link">IngredientStationHandlerComponent</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;type,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;ingredient)</code></div>
 <div class="col-last even-row-color">
 <div class="block">General constructor</div>
 </div>
@@ -214,6 +218,12 @@ loadScripts(document, 'script');</script>
 <div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type"><a href="StationCollectionComponent.html" title="class in com.csse3200.game.components.station">StationCollectionComponent</a></span>&nbsp;<span class="element-name">collectionComponent</span></div>
 </section>
 </li>
+<li>
+<section class="detail" id="ingredient">
+<h3>ingredient</h3>
+<div class="member-signature"><span class="modifiers">protected final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">ingredient</span></div>
+</section>
+</li>
 </ul>
 </section>
 </li>
@@ -223,9 +233,10 @@ loadScripts(document, 'script');</script>
 <h2>Constructor Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="&lt;init&gt;(java.lang.String)">
+<section class="detail" id="&lt;init&gt;(java.lang.String,java.lang.String)">
 <h3>IngredientStationHandlerComponent</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">IngredientStationHandlerComponent</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;type)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">IngredientStationHandlerComponent</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;type,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;ingredient)</span></div>
 <div class="block">General constructor</div>
 <dl class="notes">
 <dt>Parameters:</dt>

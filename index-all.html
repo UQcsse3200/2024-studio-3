@@ -266,6 +266,8 @@ loadScripts(document, 'script');</script>
 </dd>
 <dt><a href="com/csse3200/game/entities/benches/Bench.html#%3Cinit%3E(java.lang.String,int,int)" class="member-name-link">Bench(String, int, int)</a> - Constructor for class com.csse3200.game.entities.benches.<a href="com/csse3200/game/entities/benches/Bench.html" title="class in com.csse3200.game.entities.benches">Bench</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/components/station/loader/StationAcceptableItemsConfig.html#blender" class="member-name-link">blender</a> - Variable in class com.csse3200.game.components.station.loader.<a href="com/csse3200/game/components/station/loader/StationAcceptableItemsConfig.html" title="class in com.csse3200.game.components.station.loader">StationAcceptableItemsConfig</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/entities/configs/MultiStationRecipeConfig.html#blender" class="member-name-link">blender</a> - Variable in class com.csse3200.game.entities.configs.<a href="com/csse3200/game/entities/configs/MultiStationRecipeConfig.html" title="class in com.csse3200.game.entities.configs">MultiStationRecipeConfig</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/physics/BodyUserData.html" class="type-name-link" title="class in com.csse3200.game.physics">BodyUserData</a> - Class in <a href="com/csse3200/game/physics/package-summary.html">com.csse3200.game.physics</a></dt>
@@ -408,6 +410,8 @@ loadScripts(document, 'script');</script>
 <dt><a href="com/csse3200/game/components/settingsmenu/package-summary.html">com.csse3200.game.components.settingsmenu</a> - package com.csse3200.game.components.settingsmenu</dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/station/package-summary.html">com.csse3200.game.components.station</a> - package com.csse3200.game.components.station</dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/components/station/loader/package-summary.html">com.csse3200.game.components.station.loader</a> - package com.csse3200.game.components.station.loader</dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/tasks/package-summary.html">com.csse3200.game.components.tasks</a> - package com.csse3200.game.components.tasks</dt>
 <dd>&nbsp;</dd>
@@ -733,10 +737,6 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Create an Açaí bowl meal item.</div>
 </dd>
-<dt><a href="com/csse3200/game/entities/factories/StationFactory.html#createAppleTree()" class="member-name-link">createAppleTree()</a> - Static method in class com.csse3200.game.entities.factories.<a href="com/csse3200/game/entities/factories/StationFactory.html" title="class in com.csse3200.game.entities.factories">StationFactory</a></dt>
-<dd>
-<div class="block">Creates an apple tree, a type of ingredient station</div>
-</dd>
 <dt><a href="com/csse3200/game/entities/factories/ItemFactory.html#createBanana(java.lang.String)" class="member-name-link">createBanana(String)</a> - Static method in class com.csse3200.game.entities.factories.<a href="com/csse3200/game/entities/factories/ItemFactory.html" title="class in com.csse3200.game.entities.factories">ItemFactory</a></dt>
 <dd>
 <div class="block">Create a banana item.</div>
@@ -744,6 +744,10 @@ loadScripts(document, 'script');</script>
 <dt><a href="com/csse3200/game/entities/factories/ItemFactory.html#createBananaSplit()" class="member-name-link">createBananaSplit()</a> - Static method in class com.csse3200.game.entities.factories.<a href="com/csse3200/game/entities/factories/ItemFactory.html" title="class in com.csse3200.game.entities.factories">ItemFactory</a></dt>
 <dd>
 <div class="block">Create a banana split meal item.</div>
+</dd>
+<dt><a href="com/csse3200/game/entities/factories/StationFactory.html#createBananaTree()" class="member-name-link">createBananaTree()</a> - Static method in class com.csse3200.game.entities.factories.<a href="com/csse3200/game/entities/factories/StationFactory.html" title="class in com.csse3200.game.entities.factories">StationFactory</a></dt>
+<dd>
+<div class="block">Creates an apple tree, a type of ingredient station</div>
 </dd>
 <dt><a href="com/csse3200/game/entities/factories/NPCFactory.html#createBaseCharacter(com.badlogic.gdx.math.Vector2)" class="member-name-link">createBaseCharacter(Vector2)</a> - Static method in class com.csse3200.game.entities.factories.<a href="com/csse3200/game/entities/factories/NPCFactory.html" title="class in com.csse3200.game.entities.factories">NPCFactory</a></dt>
 <dd>&nbsp;</dd>
@@ -881,6 +885,10 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Creates visible stove.</div>
 </dd>
+<dt><a href="com/csse3200/game/entities/factories/StationFactory.html#createStrawberries()" class="member-name-link">createStrawberries()</a> - Static method in class com.csse3200.game.entities.factories.<a href="com/csse3200/game/entities/factories/StationFactory.html" title="class in com.csse3200.game.entities.factories">StationFactory</a></dt>
+<dd>
+<div class="block">Creates an apple tree, a type of ingredient station</div>
+</dd>
 <dt><a href="com/csse3200/game/entities/factories/ItemFactory.html#createStrawberry(java.lang.String)" class="member-name-link">createStrawberry(String)</a> - Static method in class com.csse3200.game.entities.factories.<a href="com/csse3200/game/entities/factories/ItemFactory.html" title="class in com.csse3200.game.entities.factories">ItemFactory</a></dt>
 <dd>
 <div class="block">Create a strawberry item.</div>
@@ -959,6 +967,8 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Add one to the total number of customers spawned</div>
 </dd>
+<dt><a href="com/csse3200/game/components/station/loader/StationAcceptableItemsConfig.html#cuttingBoard" class="member-name-link">cuttingBoard</a> - Variable in class com.csse3200.game.components.station.loader.<a href="com/csse3200/game/components/station/loader/StationAcceptableItemsConfig.html" title="class in com.csse3200.game.components.station.loader">StationAcceptableItemsConfig</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/entities/configs/MultiStationRecipeConfig.html#cuttingBoard" class="member-name-link">cuttingBoard</a> - Variable in class com.csse3200.game.entities.configs.<a href="com/csse3200/game/entities/configs/MultiStationRecipeConfig.html" title="class in com.csse3200.game.entities.configs">MultiStationRecipeConfig</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/entities/configs/SingleStationRecipeConfig.html#cuttingBoard" class="member-name-link">cuttingBoard</a> - Variable in class com.csse3200.game.entities.configs.<a href="com/csse3200/game/entities/configs/SingleStationRecipeConfig.html" title="class in com.csse3200.game.entities.configs">SingleStationRecipeConfig</a></dt>
@@ -1397,6 +1407,8 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">FPS cap of the game.</div>
 </dd>
+<dt><a href="com/csse3200/game/components/station/loader/StationAcceptableItemsConfig.html#fridge" class="member-name-link">fridge</a> - Variable in class com.csse3200.game.components.station.loader.<a href="com/csse3200/game/components/station/loader/StationAcceptableItemsConfig.html" title="class in com.csse3200.game.components.station.loader">StationAcceptableItemsConfig</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/entities/configs/SingleStationRecipeConfig.html#fridge" class="member-name-link">fridge</a> - Variable in class com.csse3200.game.entities.configs.<a href="com/csse3200/game/entities/configs/SingleStationRecipeConfig.html" title="class in com.csse3200.game.entities.configs">SingleStationRecipeConfig</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/entities/configs/CookingConfig.html#fruitSalad" class="member-name-link">fruitSalad</a> - Variable in class com.csse3200.game.entities.configs.<a href="com/csse3200/game/entities/configs/CookingConfig.html" title="class in com.csse3200.game.entities.configs">CookingConfig</a></dt>
@@ -1444,6 +1456,11 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Get value from map</div>
 </dd>
+<dt><a href="com/csse3200/game/components/station/loader/StationAcceptableItemsGetter.html#getAcceptableItems(java.lang.String)" class="member-name-link">getAcceptableItems(String)</a> - Static method in class com.csse3200.game.components.station.loader.<a href="com/csse3200/game/components/station/loader/StationAcceptableItemsGetter.html" title="class in com.csse3200.game.components.station.loader">StationAcceptableItemsGetter</a></dt>
+<dd>
+<div class="block">Function to read the acceptable items file and calculate acceptable items
+ using that</div>
+</dd>
 <dt><a href="com/csse3200/game/rendering/DebugRenderer.html#getActive()" class="member-name-link">getActive()</a> - Method in class com.csse3200.game.rendering.<a href="com/csse3200/game/rendering/DebugRenderer.html" title="class in com.csse3200.game.rendering">DebugRenderer</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/ordersystem/ActiveAnimalsManager.html#getActiveAnimals()" class="member-name-link">getActiveAnimals()</a> - Method in class com.csse3200.game.components.ordersystem.<a href="com/csse3200/game/components/ordersystem/ActiveAnimalsManager.html" title="class in com.csse3200.game.components.ordersystem">ActiveAnimalsManager</a></dt>
@@ -1464,6 +1481,8 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Returns the entity's base attack damage.</div>
 </dd>
+<dt><a href="com/csse3200/game/components/station/loader/StationAcceptableItemsConfig.html#getBlenderConfig()" class="member-name-link">getBlenderConfig()</a> - Method in class com.csse3200.game.components.station.loader.<a href="com/csse3200/game/components/station/loader/StationAcceptableItemsConfig.html" title="class in com.csse3200.game.components.station.loader">StationAcceptableItemsConfig</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/areas/terrain/TerrainTile.html#getBlendMode()" class="member-name-link">getBlendMode()</a> - Method in class com.csse3200.game.areas.terrain.<a href="com/csse3200/game/areas/terrain/TerrainTile.html" title="class in com.csse3200.game.areas.terrain">TerrainTile</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/physics/components/PhysicsComponent.html#getBody()" class="member-name-link">getBody()</a> - Method in class com.csse3200.game.physics.components.<a href="com/csse3200/game/physics/components/PhysicsComponent.html" title="class in com.csse3200.game.physics.components">PhysicsComponent</a></dt>
@@ -1562,6 +1581,8 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/entities/configs/SingleStationRecipeConfig.html#getCuttingBoard()" class="member-name-link">getCuttingBoard()</a> - Method in class com.csse3200.game.entities.configs.<a href="com/csse3200/game/entities/configs/SingleStationRecipeConfig.html" title="class in com.csse3200.game.entities.configs">SingleStationRecipeConfig</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/components/station/loader/StationAcceptableItemsConfig.html#getCuttingBoardConfig()" class="member-name-link">getCuttingBoardConfig()</a> - Method in class com.csse3200.game.components.station.loader.<a href="com/csse3200/game/components/station/loader/StationAcceptableItemsConfig.html" title="class in com.csse3200.game.components.station.loader">StationAcceptableItemsConfig</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/services/ServiceLocator.html#getDayNightService()" class="member-name-link">getDayNightService()</a> - Static method in class com.csse3200.game.services.<a href="com/csse3200/game/services/ServiceLocator.html" title="class in com.csse3200.game.services">ServiceLocator</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/rendering/Renderer.html#getDebug()" class="member-name-link">getDebug()</a> - Method in class com.csse3200.game.rendering.<a href="com/csse3200/game/rendering/Renderer.html" title="class in com.csse3200.game.rendering">Renderer</a></dt>
@@ -1645,6 +1666,8 @@ loadScripts(document, 'script');</script>
 <div class="block">Gets the PlayerService EventHandler</div>
 </dd>
 <dt><a href="com/csse3200/game/physics/components/ColliderComponent.html#getFixture()" class="member-name-link">getFixture()</a> - Method in class com.csse3200.game.physics.components.<a href="com/csse3200/game/physics/components/ColliderComponent.html" title="class in com.csse3200.game.physics.components">ColliderComponent</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/components/station/loader/StationAcceptableItemsConfig.html#getFridgeConfig()" class="member-name-link">getFridgeConfig()</a> - Method in class com.csse3200.game.components.station.loader.<a href="com/csse3200/game/components/station/loader/StationAcceptableItemsConfig.html" title="class in com.csse3200.game.components.station.loader">StationAcceptableItemsConfig</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/ComponentType.html#getFrom(java.lang.Class)" class="member-name-link">getFrom(Class&lt;? extends Component&gt;)</a> - Static method in class com.csse3200.game.components.<a href="com/csse3200/game/components/ComponentType.html" title="class in com.csse3200.game.components">ComponentType</a></dt>
 <dd>&nbsp;</dd>
@@ -1845,6 +1868,8 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/entities/configs/MultiStationRecipeConfig.html#getOven()" class="member-name-link">getOven()</a> - Method in class com.csse3200.game.entities.configs.<a href="com/csse3200/game/entities/configs/MultiStationRecipeConfig.html" title="class in com.csse3200.game.entities.configs">MultiStationRecipeConfig</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/components/station/loader/StationAcceptableItemsConfig.html#getOvenConfig()" class="member-name-link">getOvenConfig()</a> - Method in class com.csse3200.game.components.station.loader.<a href="com/csse3200/game/components/station/loader/StationAcceptableItemsConfig.html" title="class in com.csse3200.game.components.station.loader">StationAcceptableItemsConfig</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/npc/CustomerComponent.html#getPatience()" class="member-name-link">getPatience()</a> - Method in class com.csse3200.game.components.npc.<a href="com/csse3200/game/components/npc/CustomerComponent.html" title="class in com.csse3200.game.components.npc">CustomerComponent</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/physics/PhysicsService.html#getPhysics()" class="member-name-link">getPhysics()</a> - Method in class com.csse3200.game.physics.<a href="com/csse3200/game/physics/PhysicsService.html" title="class in com.csse3200.game.physics">PhysicsService</a></dt>
@@ -1884,6 +1909,8 @@ loadScripts(document, 'script');</script>
 <dt><a href="com/csse3200/game/components/tasks/WanderTask.html#getPriority()" class="member-name-link">getPriority()</a> - Method in class com.csse3200.game.components.tasks.<a href="com/csse3200/game/components/tasks/WanderTask.html" title="class in com.csse3200.game.components.tasks">WanderTask</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/input/InputComponent.html#getPriority()" class="member-name-link">getPriority()</a> - Method in class com.csse3200.game.input.<a href="com/csse3200/game/input/InputComponent.html" title="class in com.csse3200.game.input">InputComponent</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/components/station/loader/StationAcceptableItemsConfig.html#getProduceBasketConfig()" class="member-name-link">getProduceBasketConfig()</a> - Method in class com.csse3200.game.components.station.loader.<a href="com/csse3200/game/components/station/loader/StationAcceptableItemsConfig.html" title="class in com.csse3200.game.components.station.loader">StationAcceptableItemsConfig</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/services/ResourceService.html#getProgress()" class="member-name-link">getProgress()</a> - Method in class com.csse3200.game.services.<a href="com/csse3200/game/services/ResourceService.html" title="class in com.csse3200.game.services">ResourceService</a></dt>
 <dd>
@@ -1993,6 +2020,8 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Get the current status of the task.</div>
 </dd>
+<dt><a href="com/csse3200/game/components/station/loader/StationAcceptableItemsConfig.html#getStoveConfig()" class="member-name-link">getStoveConfig()</a> - Method in class com.csse3200.game.components.station.loader.<a href="com/csse3200/game/components/station/loader/StationAcceptableItemsConfig.html" title="class in com.csse3200.game.components.station.loader">StationAcceptableItemsConfig</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/tutorial/TutorialTextDisplay.html#getTable()" class="member-name-link">getTable()</a> - Method in class com.csse3200.game.components.tutorial.<a href="com/csse3200/game/components/tutorial/TutorialTextDisplay.html" title="class in com.csse3200.game.components.tutorial">TutorialTextDisplay</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/ordersystem/MainGameOrderTicketDisplay.html#getTableArrayList()" class="member-name-link">getTableArrayList()</a> - Static method in class com.csse3200.game.components.ordersystem.<a href="com/csse3200/game/components/ordersystem/MainGameOrderTicketDisplay.html" title="class in com.csse3200.game.components.ordersystem">MainGameOrderTicketDisplay</a></dt>
@@ -2252,6 +2281,8 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Increases the integer representing the current level by one</div>
 </dd>
+<dt><a href="com/csse3200/game/components/station/IngredientStationHandlerComponent.html#ingredient" class="member-name-link">ingredient</a> - Variable in class com.csse3200.game.components.station.<a href="com/csse3200/game/components/station/IngredientStationHandlerComponent.html" title="class in com.csse3200.game.components.station">IngredientStationHandlerComponent</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/entities/configs/MultiStationRecipeConfig.html#ingredient" class="member-name-link">ingredient</a> - Variable in class com.csse3200.game.entities.configs.<a href="com/csse3200/game/entities/configs/MultiStationRecipeConfig.html" title="class in com.csse3200.game.entities.configs">MultiStationRecipeConfig</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/entities/configs/SingleStationRecipeConfig.html#ingredient" class="member-name-link">ingredient</a> - Variable in class com.csse3200.game.entities.configs.<a href="com/csse3200/game/entities/configs/SingleStationRecipeConfig.html" title="class in com.csse3200.game.entities.configs">SingleStationRecipeConfig</a></dt>
@@ -2268,7 +2299,7 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/station/IngredientStationHandlerComponent.html" class="type-name-link" title="class in com.csse3200.game.components.station">IngredientStationHandlerComponent</a> - Class in <a href="com/csse3200/game/components/station/package-summary.html">com.csse3200.game.components.station</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="com/csse3200/game/components/station/IngredientStationHandlerComponent.html#%3Cinit%3E(java.lang.String)" class="member-name-link">IngredientStationHandlerComponent(String)</a> - Constructor for class com.csse3200.game.components.station.<a href="com/csse3200/game/components/station/IngredientStationHandlerComponent.html" title="class in com.csse3200.game.components.station">IngredientStationHandlerComponent</a></dt>
+<dt><a href="com/csse3200/game/components/station/IngredientStationHandlerComponent.html#%3Cinit%3E(java.lang.String,java.lang.String)" class="member-name-link">IngredientStationHandlerComponent(String, String)</a> - Constructor for class com.csse3200.game.components.station.<a href="com/csse3200/game/components/station/IngredientStationHandlerComponent.html" title="class in com.csse3200.game.components.station">IngredientStationHandlerComponent</a></dt>
 <dd>
 <div class="block">General constructor</div>
 </dd>
@@ -2846,6 +2877,8 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/areas/terrain/TerrainComponent.TerrainOrientation.html#ORTHOGONAL" class="member-name-link">ORTHOGONAL</a> - Enum constant in enum class com.csse3200.game.areas.terrain.<a href="com/csse3200/game/areas/terrain/TerrainComponent.TerrainOrientation.html" title="enum class in com.csse3200.game.areas.terrain">TerrainComponent.TerrainOrientation</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/components/station/loader/StationAcceptableItemsConfig.html#oven" class="member-name-link">oven</a> - Variable in class com.csse3200.game.components.station.loader.<a href="com/csse3200/game/components/station/loader/StationAcceptableItemsConfig.html" title="class in com.csse3200.game.components.station.loader">StationAcceptableItemsConfig</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/entities/configs/MultiStationRecipeConfig.html#oven" class="member-name-link">oven</a> - Variable in class com.csse3200.game.entities.configs.<a href="com/csse3200/game/entities/configs/MultiStationRecipeConfig.html" title="class in com.csse3200.game.entities.configs">MultiStationRecipeConfig</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/ai/tasks/DefaultTask.html#owner" class="member-name-link">owner</a> - Variable in class com.csse3200.game.ai.tasks.<a href="com/csse3200/game/ai/tasks/DefaultTask.html" title="class in com.csse3200.game.ai.tasks">DefaultTask</a></dt>
@@ -3075,6 +3108,8 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Processes the completed message entered by the user.</div>
 </dd>
+<dt><a href="com/csse3200/game/components/station/loader/StationAcceptableItemsConfig.html#produceBasket" class="member-name-link">produceBasket</a> - Variable in class com.csse3200.game.components.station.loader.<a href="com/csse3200/game/components/station/loader/StationAcceptableItemsConfig.html" title="class in com.csse3200.game.components.station.loader">StationAcceptableItemsConfig</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/entities/configs/SingleStationRecipeConfig.html#produceBasket" class="member-name-link">produceBasket</a> - Variable in class com.csse3200.game.entities.configs.<a href="com/csse3200/game/entities/configs/SingleStationRecipeConfig.html" title="class in com.csse3200.game.entities.configs">SingleStationRecipeConfig</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/utils/SortedIntMap.html#put(int,V)" class="member-name-link">put(int, V)</a> - Method in class com.csse3200.game.utils.<a href="com/csse3200/game/utils/SortedIntMap.html" title="class in com.csse3200.game.utils">SortedIntMap</a></dt>
@@ -3883,16 +3918,33 @@ loadScripts(document, 'script');</script>
 </dd>
 <dt><a href="com/csse3200/game/events/CookingAndServingHandler.html#startCooking()" class="member-name-link">startCooking()</a> - Method in class com.csse3200.game.events.<a href="com/csse3200/game/events/CookingAndServingHandler.html" title="class in com.csse3200.game.events">CookingAndServingHandler</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/components/station/loader/StationAcceptableItemsConfig.html" class="type-name-link" title="class in com.csse3200.game.components.station.loader">StationAcceptableItemsConfig</a> - Class in <a href="com/csse3200/game/components/station/loader/package-summary.html">com.csse3200.game.components.station.loader</a></dt>
+<dd>
+<div class="block">StatonAcceptableItemsConfig
+ 
+ Config class to read the station item json file from.</div>
+</dd>
+<dt><a href="com/csse3200/game/components/station/loader/StationAcceptableItemsConfig.html#%3Cinit%3E()" class="member-name-link">StationAcceptableItemsConfig()</a> - Constructor for class com.csse3200.game.components.station.loader.<a href="com/csse3200/game/components/station/loader/StationAcceptableItemsConfig.html" title="class in com.csse3200.game.components.station.loader">StationAcceptableItemsConfig</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/components/station/loader/StationAcceptableItemsGetter.html" class="type-name-link" title="class in com.csse3200.game.components.station.loader">StationAcceptableItemsGetter</a> - Class in <a href="com/csse3200/game/components/station/loader/package-summary.html">com.csse3200.game.components.station.loader</a></dt>
+<dd>
+<div class="block">StationAcceptableItems is a class used to both load and retrieve items from
+ recipie.json to determine if an item is allowed within a station or not.</div>
+</dd>
+<dt><a href="com/csse3200/game/components/station/loader/StationAcceptableItemsGetter.html#%3Cinit%3E()" class="member-name-link">StationAcceptableItemsGetter()</a> - Constructor for class com.csse3200.game.components.station.loader.<a href="com/csse3200/game/components/station/loader/StationAcceptableItemsGetter.html" title="class in com.csse3200.game.components.station.loader">StationAcceptableItemsGetter</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/station/StationAnimationController.html" class="type-name-link" title="class in com.csse3200.game.components.station">StationAnimationController</a> - Class in <a href="com/csse3200/game/components/station/package-summary.html">com.csse3200.game.components.station</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/station/StationAnimationController.html#%3Cinit%3E()" class="member-name-link">StationAnimationController()</a> - Constructor for class com.csse3200.game.components.station.<a href="com/csse3200/game/components/station/StationAnimationController.html" title="class in com.csse3200.game.components.station">StationAnimationController</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/station/StationBinComponent.html" class="type-name-link" title="class in com.csse3200.game.components.station">StationBinComponent</a> - Class in <a href="com/csse3200/game/components/station/package-summary.html">com.csse3200.game.components.station</a></dt>
 <dd>
-<div class="block">StationServingComponent.java
+<div class="block">StationBinComponent.java
 
- StationServingComponent gives the station the ability to submit a meal to be 
- able to be served to a customer.</div>
+ StationBinComponent throughs away an item
+
+ <a href="com/csse3200/game/components/station/StationBinComponent.html#submitMeal(com.csse3200.game.components.items.ItemComponent)"><code>StationBinComponent.submitMeal(ItemComponent)</code></a>: Function which controls the submission of a meal by the
+ class.</div>
 </dd>
 <dt><a href="com/csse3200/game/components/station/StationBinComponent.html#%3Cinit%3E()" class="member-name-link">StationBinComponent()</a> - Constructor for class com.csse3200.game.components.station.<a href="com/csse3200/game/components/station/StationBinComponent.html" title="class in com.csse3200.game.components.station">StationBinComponent</a></dt>
 <dd>&nbsp;</dd>
@@ -3938,7 +3990,7 @@ loadScripts(document, 'script');</script>
 </dd>
 <dt><a href="com/csse3200/game/components/station/StationItemHandlerComponent.html" class="type-name-link" title="class in com.csse3200.game.components.station">StationItemHandlerComponent</a> - Class in <a href="com/csse3200/game/components/station/package-summary.html">com.csse3200.game.components.station</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="com/csse3200/game/components/station/StationItemHandlerComponent.html#%3Cinit%3E(java.lang.String,java.util.ArrayList)" class="member-name-link">StationItemHandlerComponent(String, ArrayList&lt;String&gt;)</a> - Constructor for class com.csse3200.game.components.station.<a href="com/csse3200/game/components/station/StationItemHandlerComponent.html" title="class in com.csse3200.game.components.station">StationItemHandlerComponent</a></dt>
+<dt><a href="com/csse3200/game/components/station/StationItemHandlerComponent.html#%3Cinit%3E(java.lang.String)" class="member-name-link">StationItemHandlerComponent(String)</a> - Constructor for class com.csse3200.game.components.station.<a href="com/csse3200/game/components/station/StationItemHandlerComponent.html" title="class in com.csse3200.game.components.station">StationItemHandlerComponent</a></dt>
 <dd>
 <div class="block">General constructor</div>
 </dd>
@@ -4003,6 +4055,8 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Stops the player from walking.</div>
 </dd>
+<dt><a href="com/csse3200/game/components/station/loader/StationAcceptableItemsConfig.html#stove" class="member-name-link">stove</a> - Variable in class com.csse3200.game.components.station.loader.<a href="com/csse3200/game/components/station/loader/StationAcceptableItemsConfig.html" title="class in com.csse3200.game.components.station.loader">StationAcceptableItemsConfig</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/items/ItemType.html#STRAWBERRY" class="member-name-link">STRAWBERRY</a> - Enum constant in enum class com.csse3200.game.components.items.<a href="com/csse3200/game/components/items/ItemType.html" title="enum class in com.csse3200.game.components.items">ItemType</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/utils/StringDecorator.html" class="type-name-link" title="class in com.csse3200.game.utils">StringDecorator&lt;T&gt;</a> - Class in <a href="com/csse3200/game/utils/package-summary.html">com.csse3200.game.utils</a></dt>
@@ -4291,7 +4345,7 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">String type - storing type of station
  StationInventoryComponent inventorycomponent - instance of inventory for this station
- TBD acceptableItems - HashMap, HashSet etc of mappings for acceptable items based on station</div>
+ acceptableItems - ArrayList which contains all accepted items or it null</div>
 </dd>
 <dt><a href="com/csse3200/game/components/station/StationMealComponent.html#type" class="member-name-link">type</a> - Variable in class com.csse3200.game.components.station.<a href="com/csse3200/game/components/station/StationMealComponent.html" title="class in com.csse3200.game.components.station">StationMealComponent</a></dt>
 <dd>
