@@ -29,238 +29,241 @@ import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
 /**
- * Factory to create non-playable character (NPC) entities with predefined components.
+ * Factory to create non-playable character (NPC) entities with predefined
+ * components.
  */
 public class NPCFactory {
 
-    private static final NPCConfigs configs =
-            FileLoader.readClass(NPCConfigs.class, "configs/NPCs.json");
+        private static final NPCConfigs configs = FileLoader.readClass(NPCConfigs.class, "configs/NPCs.json");
 
-    private static final Logger logger = LoggerFactory.getLogger(NPCFactory.class);
-    /**
-     * Creates a ghost entity.
-     *
-     * @param target entity to chase
-     * @return entity
-     */
+        private static final Logger logger = LoggerFactory.getLogger(NPCFactory.class);
 
-    /**
-     * Creates a boss entity.
-     *
-     * @param targetPosition Place to roam to
-     * @return entity
-     */
-    public static Entity createBoss(Vector2 targetPosition) {
-        Entity boss = createBaseCharacter(targetPosition);
+        /**
+         * Creates a ghost entity.
+         *
+         * @param target entity to chase
+         * @return entity
+         */
 
-        AnimationRenderComponent animator =
-                new AnimationRenderComponent(
-                        ServiceLocator.getResourceService()
-                                .getAsset("images/special_NPCs/boss.atlas", TextureAtlas.class));
-        animator.addAnimation("walk", 0.3f, Animation.PlayMode.LOOP);
-        animator.addAnimation("turn", 0.3f, Animation.PlayMode.LOOP);
+        /**
+         * Creates a boss entity.
+         *
+         * @param targetPosition Place to roam to
+         * @return entity
+         */
+        public static Entity createBoss(Vector2 targetPosition) {
+                Entity boss = createBaseCharacter(targetPosition);
 
-        boss
-                .addComponent(animator)
-                .addComponent(new SpecialNPCAnimationController());
+                AnimationRenderComponent animator = new AnimationRenderComponent(
+                                ServiceLocator.getResourceService()
+                                                .getAsset("images/special_NPCs/boss.atlas", TextureAtlas.class));
+                animator.addAnimation("walk", 0.3f, Animation.PlayMode.LOOP);
+                animator.addAnimation("turn", 0.3f, Animation.PlayMode.LOOP);
 
-        return boss;
-    }
+                boss
+                                .addComponent(animator)
+                                .addComponent(new SpecialNPCAnimationController());
 
-    /**
-     * Creates a ghost king entity at a specific target position.
-     *
-     * @param target entity to chase
-     * @param targetPosition the target position on the screen where the ghost king should move
-     * @return entity
-     */
-    public static Entity createGhostKing(Entity target, Vector2 targetPosition) {
-        Entity ghostKing = createBaseNPC(target, targetPosition);
-        GhostKingConfig config = configs.ghostKing;
-
-        AnimationRenderComponent animator =
-                new AnimationRenderComponent(
-                        ServiceLocator.getResourceService()
-                                .getAsset("images/ghostKing.atlas", TextureAtlas.class));
-        animator.addAnimation("float", 0.1f, Animation.PlayMode.LOOP);
-        animator.addAnimation("angry_float", 0.1f, Animation.PlayMode.LOOP);
-
-        ghostKing
-                .addComponent(new CombatStatsComponent(config.health, config.baseAttack))
-                .addComponent(animator)
-                .addComponent(new GhostAnimationController());
-
-        ghostKing.getComponent(AnimationRenderComponent.class).scaleEntity();
-        return ghostKing;
-    }
-
-    public static Entity createCustomerPersonal(String name, Vector2 targetPosition) {
-        Entity customer = createBaseCustomer(targetPosition);
-
-        CustomerPersonalityConfig config = switch (name) {
-            case "Hank" -> configs.Hank;
-            case "Lewis" -> configs.Lewis;
-            case "Silver" -> configs.Silver;
-            case "John" -> configs.John;
-            case "Moonki" -> configs.Moonki;
-            default -> configs.Default;
-        };
-
-        // Ensure CustomerComponent is added
-        customer.addComponent(new CustomerComponent(config));
-
-        AnimationRenderComponent animator =
-                new AnimationRenderComponent(
-                        ServiceLocator.getResourceService()
-                                .getAsset(config.texture, TextureAtlas.class));
-        animator.addAnimation("walk", 0.3f, Animation.PlayMode.LOOP);
-
-        customer
-                .addComponent(animator)
-                .addComponent(new GhostAnimationController());
-
-        customer.getComponent(AnimationRenderComponent.class).scaleEntity();
-
-        // Set the recipe preference in CustomerComponent
-        CustomerComponent customerComponent = customer.getComponent(CustomerComponent.class);
-        if (customerComponent != null) {
-            customerComponent.setPreference(config.preference); // Assuming this sets the preference
-        } else {
-            logger.error("CustomerComponent is not added to the customer entity.");
+                return boss;
         }
 
-        // Set the countdown in the PathFollowTask
-        AITaskComponent aiComponent = customer.getComponent(AITaskComponent.class);
-        aiComponent.addTask(new PathFollowTask(targetPosition, config.countDown));
+        /**
+         * Creates a ghost king entity at a specific target position.
+         *
+         * @param target         entity to chase
+         * @param targetPosition the target position on the screen where the ghost king
+         *                       should move
+         * @return entity
+         */
+        public static Entity createGhostKing(Entity target, Vector2 targetPosition) {
+                Entity ghostKing = createBaseNPC(target, targetPosition);
+                GhostKingConfig config = configs.ghostKing;
 
-        // Display the order for the customer
-        OrderManager.displayOrder(customer);
+                AnimationRenderComponent animator = new AnimationRenderComponent(
+                                ServiceLocator.getResourceService()
+                                                .getAsset("images/ghostKing.atlas", TextureAtlas.class));
+                animator.addAnimation("float", 0.1f, Animation.PlayMode.LOOP);
+                animator.addAnimation("angry_float", 0.1f, Animation.PlayMode.LOOP);
 
-        return customer;
-    }
+                ghostKing
+                                .addComponent(new CombatStatsComponent(config.health, config.baseAttack))
+                                .addComponent(animator)
+                                .addComponent(new GhostAnimationController());
 
-    public static Entity createBasicCustomer(String name, Vector2 targetPosition) {
-        Entity customer = createBaseCustomer(targetPosition);
-
-        BaseCustomerConfig config = switch (name) {
-            case "Basic Chicken" -> configs.Basic_Chicken;
-            case "Basic Sheep" -> configs.Basic_Sheep;
-            default -> configs.Default;
-        };
-
-        // Ensure CustomerComponent is added
-        customer.addComponent(new CustomerComponent(config));
-
-        AnimationRenderComponent animator =
-                new AnimationRenderComponent(
-                        ServiceLocator.getResourceService()
-                                .getAsset("images/ghostKing.atlas", TextureAtlas.class));
-        animator.addAnimation("float", 0.3f, Animation.PlayMode.LOOP);
-        animator.addAnimation("angry_float", 0.3f, Animation.PlayMode.LOOP);
-
-        customer
-                .addComponent(animator)
-                .addComponent(new GhostAnimationController());
-
-        customer.getComponent(AnimationRenderComponent.class).scaleEntity();
-
-        // Set the recipe preference in CustomerComponent
-        CustomerComponent customerComponent = customer.getComponent(CustomerComponent.class);
-        if (customerComponent != null) {
-            customerComponent.setPreference(config.preference); // Assuming this sets the preference
-        } else {
-            logger.error("CustomerComponent is not added to the customer entity.");
+                ghostKing.getComponent(AnimationRenderComponent.class).scaleEntity();
+                return ghostKing;
         }
 
-        // Set the countdown in the PathFollowTask
-        AITaskComponent aiComponent = customer.getComponent(AITaskComponent.class);
-        aiComponent.addTask(new PathFollowTask(targetPosition, config.countDown));
+        public static Entity createCustomerPersonal(String name, Vector2 targetPosition) {
+                Entity customer = createBaseCustomer(targetPosition);
 
-        // Display the order for the customer
-        OrderManager.displayOrder(customer);
+                CustomerPersonalityConfig config = switch (name) {
+                        case "Hank" -> configs.Hank;
+                        case "Lewis" -> configs.Lewis;
+                        case "Silver" -> configs.Silver;
+                        case "John" -> configs.John;
+                        case "Moonki" -> configs.Moonki;
+                        default -> configs.Default;
+                };
 
-        return customer;
-    }
+                // Ensure CustomerComponent is added
+                customer.addComponent(new CustomerComponent(config));
 
+                AnimationRenderComponent animator = new AnimationRenderComponent(
+                                ServiceLocator.getResourceService()
+                                                .getAsset(config.texture, TextureAtlas.class));
+                animator.addAnimation("walk", 0.3f, Animation.PlayMode.LOOP);
 
-    public static Entity createBaseCustomer(Vector2 targetPosition) {
-        AITaskComponent aiComponent =
-                new AITaskComponent();
-        Entity npc =
-                new Entity()
-                        .addComponent(new PhysicsComponent())
-                        .addComponent(new PhysicsMovementComponent())
-                        .addComponent(new ColliderComponent())
-                        .addComponent(new HitboxComponent().setLayer(PhysicsLayer.NPC))
-                        .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 1.5f))
-                        .addComponent(new CustomerBehaviorComponent())
-                        .addComponent(aiComponent);
-        PhysicsUtils.setScaledCollider(npc, 0.9f, 0.4f);
-        return npc;
-    }
+                customer
+                                .addComponent(animator)
+                                .addComponent(new GhostAnimationController());
 
-    public static Entity createBaseCharacter(Vector2 targetPosition) {
-        AITaskComponent aiComponent = new AITaskComponent();
-        aiComponent
-                .addTask(new PathFollowTask(targetPosition, 30)) // Default countdown
-                .addTask(new TurnTask(10, 0.01f,10f));
-        Entity npc =
-                new Entity()
-                        .addComponent(new PhysicsComponent())
-                        .addComponent(new PhysicsMovementComponent())
-                        .addComponent(new ColliderComponent())
-                        .addComponent(new HitboxComponent().setLayer(PhysicsLayer.NPC))
-                        .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 1.5f))
-                        .addComponent(aiComponent);
-        PhysicsUtils.setScaledCollider(npc, 0.9f, 0.4f);
-        npc.getComponent(PhysicsComponent.class).getBody().setUserData("Customer");
-        return npc;
-    }
+                customer.getComponent(AnimationRenderComponent.class).scaleEntity();
 
-    /**
-     * Creates a generic NPC to be used as a base entity by more specific NPC creation methods.
-     *
-     * @return entity
-     */
-    private static Entity createBaseNPC(Entity target, Vector2 targetPosition) {
-        AITaskComponent aiComponent = new AITaskComponent();
-        aiComponent
-                .addTask(new PathFollowTask(targetPosition, 30)); // Default countdown
+                // Set the recipe preference in CustomerComponent
+                CustomerComponent customerComponent = customer.getComponent(CustomerComponent.class);
+                if (customerComponent != null) {
+                        customerComponent.setPreference(config.preference); // Assuming this sets the preference
+                } else {
+                        logger.error("CustomerComponent is not added to the customer entity.");
+                }
 
-        Entity npc =
-                new Entity()
-                        .addComponent(new PhysicsComponent())
-                        .addComponent(new PhysicsMovementComponent())
-                        .addComponent(new ColliderComponent())
-                        .addComponent(new HitboxComponent().setLayer(PhysicsLayer.NPC))
-                        .addComponent(aiComponent);
+                // Set the countdown in the PathFollowTask
+                AITaskComponent aiComponent = customer.getComponent(AITaskComponent.class);
+                aiComponent.addTask(new PathFollowTask(targetPosition, config.countDown));
 
-        PhysicsUtils.setScaledCollider(npc, 0.9f, 0.4f);
-        return npc;
-    }
+                // Display the order for the customer
+                OrderManager.displayOrder(customer);
 
-    private NPCFactory() {
-        throw new IllegalStateException("Instantiating static util class");
-    }
+                System.out.println("Created customer " + name + " with initial position: " + customer.getPosition());
 
-   /* public static void createMultipleNPCs(Entity target) {
-        // Different target positions for each NPC
-        Vector2 targetPosition1 = new Vector2(5, 5);
-        Vector2 targetPosition2 = new Vector2(10, 8);
-        Vector2 targetPosition3 = new Vector2(3, 2);
+                if (customer.getComponent(HoverBoxComponent.class) == null) {
+                        customer.addComponent(new HoverBoxComponent());
+                        System.out.println("Added HoverBoxComponent to customer: " + name);
+                } else {
+                        System.out.println("HoverBoxComponent already exists for customer: " + name);
+                }
 
-        // Create different NPCs
-        Entity ghost1 = createGhost(target, targetPosition1);
-        Entity ghost2 = createGhost(target, targetPosition2);
-        Entity ghostKing = createGhostKing(target, targetPosition3);
+                return customer;
+        }
 
-        // Assuming some method to add NPCs to the game
-        ForestGameArea.getInstance().addEntity(ghost1);
-        ForestGameArea.getInstance().addEntity(ghost2);
-        ForestGameArea.getInstance().addEntity(ghostKing);
-    }
+        public static Entity createBasicCustomer(String name, Vector2 targetPosition) {
+                Entity customer = createBaseCustomer(targetPosition);
 
-    */
+                BaseCustomerConfig config = switch (name) {
+                        case "Basic Chicken" -> configs.Basic_Chicken;
+                        case "Basic Sheep" -> configs.Basic_Sheep;
+                        default -> configs.Default;
+                };
+
+                // Ensure CustomerComponent is added
+                customer.addComponent(new CustomerComponent(config));
+
+                AnimationRenderComponent animator = new AnimationRenderComponent(
+                                ServiceLocator.getResourceService()
+                                                .getAsset("images/ghostKing.atlas", TextureAtlas.class));
+                animator.addAnimation("float", 0.3f, Animation.PlayMode.LOOP);
+                animator.addAnimation("angry_float", 0.3f, Animation.PlayMode.LOOP);
+
+                customer
+                                .addComponent(animator)
+                                .addComponent(new GhostAnimationController());
+
+                customer.getComponent(AnimationRenderComponent.class).scaleEntity();
+
+                // Set the recipe preference in CustomerComponent
+                CustomerComponent customerComponent = customer.getComponent(CustomerComponent.class);
+                if (customerComponent != null) {
+                        customerComponent.setPreference(config.preference); // Assuming this sets the preference
+                } else {
+                        logger.error("CustomerComponent is not added to the customer entity.");
+                }
+
+                // Set the countdown in the PathFollowTask
+                AITaskComponent aiComponent = customer.getComponent(AITaskComponent.class);
+                aiComponent.addTask(new PathFollowTask(targetPosition, config.countDown));
+
+                // Display the order for the customer
+                OrderManager.displayOrder(customer);
+
+                return customer;
+        }
+
+        public static Entity createBaseCustomer(Vector2 targetPosition) {
+                AITaskComponent aiComponent = new AITaskComponent();
+                Entity npc = new Entity()
+                                .addComponent(new PhysicsComponent())
+                                .addComponent(new PhysicsMovementComponent())
+                                .addComponent(new ColliderComponent())
+                                .addComponent(new HitboxComponent().setLayer(PhysicsLayer.NPC))
+                                .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 1.5f))
+                                .addComponent(new CustomerBehaviorComponent())
+                                .addComponent(aiComponent);
+                PhysicsUtils.setScaledCollider(npc, 0.9f, 0.4f);
+                return npc;
+        }
+
+        public static Entity createBaseCharacter(Vector2 targetPosition) {
+                AITaskComponent aiComponent = new AITaskComponent();
+                aiComponent
+                                .addTask(new PathFollowTask(targetPosition, 30)) // Default countdown
+                                .addTask(new TurnTask(10, 0.01f, 10f));
+                Entity npc = new Entity()
+                                .addComponent(new PhysicsComponent())
+                                .addComponent(new PhysicsMovementComponent())
+                                .addComponent(new ColliderComponent())
+                                .addComponent(new HitboxComponent().setLayer(PhysicsLayer.NPC))
+                                .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 1.5f))
+                                .addComponent(aiComponent);
+                PhysicsUtils.setScaledCollider(npc, 0.9f, 0.4f);
+                npc.getComponent(PhysicsComponent.class).getBody().setUserData("Customer");
+                return npc;
+        }
+
+        /**
+         * Creates a generic NPC to be used as a base entity by more specific NPC
+         * creation methods.
+         *
+         * @return entity
+         */
+        private static Entity createBaseNPC(Entity target, Vector2 targetPosition) {
+                AITaskComponent aiComponent = new AITaskComponent();
+                aiComponent
+                                .addTask(new PathFollowTask(targetPosition, 30)); // Default countdown
+
+                Entity npc = new Entity()
+                                .addComponent(new PhysicsComponent())
+                                .addComponent(new PhysicsMovementComponent())
+                                .addComponent(new ColliderComponent())
+                                .addComponent(new HitboxComponent().setLayer(PhysicsLayer.NPC))
+                                .addComponent(aiComponent);
+
+                PhysicsUtils.setScaledCollider(npc, 0.9f, 0.4f);
+                return npc;
+        }
+
+        private NPCFactory() {
+                throw new IllegalStateException("Instantiating static util class");
+        }
+
+        /*
+         * public static void createMultipleNPCs(Entity target) {
+         * // Different target positions for each NPC
+         * Vector2 targetPosition1 = new Vector2(5, 5);
+         * Vector2 targetPosition2 = new Vector2(10, 8);
+         * Vector2 targetPosition3 = new Vector2(3, 2);
+         * 
+         * // Create different NPCs
+         * Entity ghost1 = createGhost(target, targetPosition1);
+         * Entity ghost2 = createGhost(target, targetPosition2);
+         * Entity ghostKing = createGhostKing(target, targetPosition3);
+         * 
+         * // Assuming some method to add NPCs to the game
+         * ForestGameArea.getInstance().addEntity(ghost1);
+         * ForestGameArea.getInstance().addEntity(ghost2);
+         * ForestGameArea.getInstance().addEntity(ghostKing);
+         * }
+         * 
+         */
 }
