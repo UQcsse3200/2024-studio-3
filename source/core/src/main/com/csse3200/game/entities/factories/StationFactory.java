@@ -9,13 +9,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.csse3200.game.components.FlameComponent;
 import com.csse3200.game.components.TooltipsDisplay;
 import com.csse3200.game.components.player.InventoryComponent;
-import com.csse3200.game.components.station.FireExtinguisherHandlerComponent;
-import com.csse3200.game.components.station.IngredientStationHandlerComponent;
-import com.csse3200.game.components.station.StationCollectionComponent;
-import com.csse3200.game.components.station.StationCookingComponent;
-import com.csse3200.game.components.station.StationItemHandlerComponent;
-import com.csse3200.game.components.station.StationServingComponent;
-import com.csse3200.game.components.station.StationMealComponent;
+import com.csse3200.game.components.station.*;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.PhysicsUtils;
@@ -97,10 +91,7 @@ public class StationFactory {
         .addComponent(new PhysicsComponent())
         .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
         .addComponent(new InteractionComponent(PhysicsLayer.INTERACTABLE))
-        .addComponent(new TooltipsDisplay())
-        .addComponent(new InventoryComponent(1))
-        .addComponent(new StationCookingComponent())
-        .addComponent(new StationItemHandlerComponent("stove"));
+        .addComponent(new StationBinComponent());
 
     bin.getComponent(InteractionComponent.class).setAsBox(bin.getScale());
     bin.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
@@ -146,9 +137,7 @@ public class StationFactory {
             .addComponent(new TooltipsDisplay())
             .addComponent(new StationCollectionComponent())
             .addComponent(new InventoryComponent(1))
-            .addComponent(new IngredientStationHandlerComponent("apples"));
-
-    //apple.getComponent(InventoryComponent.class).addItem(new ItemComponent("Apples", ItemType.APPLE, 1));
+            .addComponent(new IngredientStationHandlerComponent("bananaTree", "banana"));
 
     // Physics components
     apple.getComponent(InteractionComponent.class).setAsBox(apple.getScale());
@@ -218,7 +207,7 @@ public class StationFactory {
    */
   public static Entity createMainBenchTable() {
     Entity benchTable = new Entity()
-            .addComponent(new TextureRenderComponent("images/stations/bench_middle.png"))
+            .addComponent(new TextureRenderComponent("images/stations/benches/right_border.png"))
             .addComponent(new PhysicsComponent())
             .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
             .addComponent(new InteractionComponent(PhysicsLayer.INTERACTABLE))
@@ -228,12 +217,12 @@ public class StationFactory {
             // Change this handler to the combining one
             //.addComponent(new StationItemHandlerComponent("benchMiddle", new ArrayList<>()));
 
-    //benchTable.getComponent(InteractionComponent.class).setAsBox(benchTable.getScale());
+    benchTable.getComponent(InteractionComponent.class).setAsBox(benchTable.getScale());
     benchTable.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
     benchTable.getComponent(TextureRenderComponent.class).scaleEntity();
-    benchTable.scaleHeight(1.5f);
-
-    PhysicsUtils.setScaledCollider(benchTable, 0.6f, 0.4f);
+    benchTable.scaleHeight(1f);
+    benchTable.scaleWidth(1f);
+    PhysicsUtils.setScaledCollider(benchTable, 1.05f, 0.75f);
     // Add station reference
     PhysicsComponent physicsComponent = benchTable.getComponent(PhysicsComponent.class);
     Body body = physicsComponent.getBody();

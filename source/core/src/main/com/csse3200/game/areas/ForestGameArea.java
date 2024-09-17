@@ -245,13 +245,13 @@ public class ForestGameArea extends GameArea {
     //ticketDetails();
 
 
-    spawnBenches();
+    //spawnBenches();
 
     spawnStations();
     // Spawn beef
-    spawnBeef("cooked");
-    spawnStrawberry("chopped");
-    spawnLettuce("chopped");
+//    spawnBeef("cooked");
+//    spawnStrawberry("chopped");
+//    spawnLettuce("chopped");
     customerSpawnController = spawnCustomerController();
 
     //spawnplates
@@ -455,7 +455,7 @@ public class ForestGameArea extends GameArea {
     GridPoint2 binPos = new GridPoint2(5,4);
     Entity bin = StationFactory.createBin();
     spawnEntityAt(bin, binPos, false, false);
-    bin.setPosition(bin.getPosition().x + 1.7f , bin.getPosition().y - 2f);
+    bin.setPosition(bin.getPosition().x + 3.4f , bin.getPosition().y - 5.2f);
 
     GridPoint2 appleTreePos = new GridPoint2( 5, 4);
     Entity appleTree = StationFactory.createAppleTree();
@@ -474,17 +474,17 @@ public class ForestGameArea extends GameArea {
     GridPoint2 middlePos = new GridPoint2(5,4);
     Entity middle = StationFactory.createMainBenchTable();
     spawnEntityAt(middle, middlePos, false, false);
-    middle.setPosition(middle.getPosition().x - 2.6f, middle.getPosition().y - 1.3f);
-
-    GridPoint2 topPos = new GridPoint2(5,4);
-    Entity top = StationFactory.createTopBenchTable();
-    spawnEntityAt(top, topPos, false, false);
-    top.setPosition(top.getPosition().x - 2.6f, top.getPosition().y);
-
-    GridPoint2 bottomPos = new GridPoint2(5,4);
-    Entity bottom = StationFactory.createFeetBenchTable();
-    spawnEntityAt(bottom, bottomPos, false, false);
-    bottom.setPosition(bottom.getPosition().x - 2.6f, bottom.getPosition().y - 2.6f);
+    middle.setPosition(middle.getPosition().x - 2.6f, middle.getPosition().y - 3.9f);
+//
+//    GridPoint2 topPos = new GridPoint2(5,4);
+//    Entity top = StationFactory.createTopBenchTable();
+//    spawnEntityAt(top, topPos, false, false);
+//    top.setPosition(top.getPosition().x - 2.6f, top.getPosition().y - 2.6f);
+//
+//    GridPoint2 bottomPos = new GridPoint2(5,4);
+//    Entity bottom = StationFactory.createFeetBenchTable();
+//    spawnEntityAt(bottom, bottomPos, false, false);
+//    bottom.setPosition(bottom.getPosition().x - 2.6f, bottom.getPosition().y - 5.2f);
   }
 
   /**
@@ -566,37 +566,37 @@ public class ForestGameArea extends GameArea {
     // Top horizontal shadows near middle
     spawnBenchRow("top_shadows", 10, 12, 7f);
 
-    // Long bench bottom part (left shadow + right shadow)
-    spawnSingleBench("left_corner_shadow", 11, 3f);
-    spawnSingleBench("top_shadows", 12, 3f);
-    spawnSingleBench("right_corner_shadow", 13, 3f);
+//    // Long bench bottom part (left shadow + right shadow)
+//    spawnSingleBench("left_corner_shadow", 11, 3f);
+//    spawnSingleBench("top_shadows", 12, 3f);
+//    spawnSingleBench("right_corner_shadow", 13, 3f);
+//
+//    // Right side of long bench (vertical and top fin)
+//    spawnSingleBench("top", 13f, 7f);
+//    spawnBenchColumn("vertical", 13f, 4, 6);
+//
+//    // Left side of long bench (final vertical + top fin)
+//    spawnSingleBench("vertical", 11f, 4f); // Left vertical part of the long bench
+//    spawnSingleBench("top", 11f, 5f); // Top left fin for long bench
 
-    // Right side of long bench (vertical and top fin)
-    spawnSingleBench("top", 13f, 7f);
-    spawnBenchColumn("vertical", 13f, 4, 6);
-
-    // Left side of long bench (final vertical + top fin)
-    spawnSingleBench("vertical", 11f, 4f); // Left vertical part of the long bench
-    spawnSingleBench("top", 11f, 5f); // Top left fin for long bench
-
-    // Right vertical bench column
-    spawnBenchColumn("vertical", 15f, 2, 9);
-    spawnSingleBench("top", 15f, 10f);
+//    // Right vertical bench column
+//    spawnBenchColumn("vertical", 15f, 2, 9);
+//    spawnSingleBench("top", 15f, 10f);
 
     // Left vertical bench column
     spawnBenchColumn("vertical", 4f, 4, 6);
     spawnSingleBench("bottom_shadow", 4f, 3f);
     spawnSingleBench("top", 4f, 7f);
 
-    // Middle long bench (vertical section)
-    spawnBenchColumn("vertical", 9f, 2, 4);
-    spawnSingleBench("final", 7f, 3f);
-    spawnSingleBench("top", 9f, 5f);
+//    // Middle long bench (vertical section)
+//    spawnBenchColumn("vertical", 9f, 2, 4);
+//    spawnSingleBench("final", 7f, 3f);
+//    spawnSingleBench("top", 9f, 5f);
 
     // Additional benches near middle area
-    spawnSingleBench("middle", 7f, 5f);
-    spawnSingleBench("middle", 8f, 5f);
-    spawnSingleBench("left_border", 6f, 5f);
+//    spawnSingleBench("middle", 7f, 5f);
+//    spawnSingleBench("middle", 8f, 5f);
+//    spawnSingleBench("left_border", 6f, 5f);
 
     // Top left section
     spawnSingleBench("bottom_shadow", 6f, 7f);
