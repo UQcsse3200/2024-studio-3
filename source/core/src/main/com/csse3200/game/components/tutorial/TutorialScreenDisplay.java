@@ -1,11 +1,13 @@
 package com.csse3200.game.components.tutorial;
 
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.components.ordersystem.MainGameOrderBtnDisplay;
+import com.csse3200.game.components.player.PlayerActions;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
@@ -23,6 +25,7 @@ public class TutorialScreenDisplay extends UIComponent {
     private static final Logger logger = LoggerFactory.getLogger(TutorialScreenDisplay.class);
     private final GdxGame game;
     private Skin skin;
+    private PlayerActions playerActions;
     private int tutorialStep = 0;
     private MainGameOrderTicketDisplay orderTicketDisplay;
     private MainGameOrderBtnDisplay orderBtnDisplay;
@@ -30,6 +33,10 @@ public class TutorialScreenDisplay extends UIComponent {
     private boolean docketsShifted = false;
     private Table table;
     private TutorialTextDisplay textDisplay;
+    private boolean wPressedLastFrame = false;
+    private boolean aPressedLastFrame = false;
+    private boolean sPressedLastFrame = false;
+    private boolean dPressedLastFrame = false;
 
     public TutorialScreenDisplay(GdxGame game) {
         this.game = game;
@@ -41,8 +48,10 @@ public class TutorialScreenDisplay extends UIComponent {
     public void create() {
         super.create();
 
+        playerActions = entity.getComponent(PlayerActions.class);
+
         if (table == null) {
-            table = new Table();  // Ensure table is initialized
+            table = new Table();  // Ensure table is initialised
         }
 
         setupUI();
@@ -110,26 +119,6 @@ public class TutorialScreenDisplay extends UIComponent {
     /**
      * Displays the ordering tutorial. The player needs to use [ and ] to switch dockets.
      */
-//    public void showOrderingTutorial() {
-//        textDisplay.setVisible(true);
-//        createTextBox("To begin, press the 'Create Order' button.");
-//
-//        // Wait for the createOrderPressed to be true, which is triggered when the button is pressed
-//        if (createOrderPressed) {
-//            createTextBox("Now use [ and ] keys to switch dockets.");
-//
-//            // Check if the user presses [ or ] keys to shift dockets
-//            if (Gdx.input.isKeyJustPressed(Input.Keys.LEFT_BRACKET) || Gdx.input.isKeyJustPressed(Input.Keys.RIGHT_BRACKET)) {
-//                docketsShifted = true;
-//                logger.debug("Dockets shifted");
-//            }
-//
-//            if (docketsShifted) {
-//                logger.debug("Advancing tutorial after dockets shifted");
-//                advanceTutorialStep();  // Advance tutorial when both conditions are met
-//            }
-//        }
-//    }
 
     public void showOrderingTutorial() {
         textDisplay.setVisible(true);
@@ -245,7 +234,6 @@ public class TutorialScreenDisplay extends UIComponent {
     public void draw(SpriteBatch batch) {
         // handled by stage
     }
-
     @Override
     public void setStage(Stage stage) {
         if (stage == null) {

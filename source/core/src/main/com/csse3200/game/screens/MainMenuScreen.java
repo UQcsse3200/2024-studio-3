@@ -52,6 +52,9 @@ public class MainMenuScreen extends ScreenAdapter {
     ServiceLocator.registerEntityService(new EntityService());
     ServiceLocator.registerRenderService(new RenderService());
 
+    MainMenuDisplay mainMenuDisplay = new MainMenuDisplay();
+    ServiceLocator.registerMainMenuDisplay(mainMenuDisplay);
+
     renderer = RenderFactory.createRenderer();
     loadAssets();
     createUI();

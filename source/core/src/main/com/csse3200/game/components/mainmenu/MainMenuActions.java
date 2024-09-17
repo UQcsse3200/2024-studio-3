@@ -2,9 +2,9 @@ package com.csse3200.game.components.mainmenu;
 
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.components.Component;
+import com.csse3200.game.screens.TutorialScreen;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import com.csse3200.game.screens.TutorialScreen;
 import com.csse3200.game.services.ServiceLocator;
 
 /**
