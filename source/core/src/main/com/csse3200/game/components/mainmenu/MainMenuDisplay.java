@@ -46,6 +46,7 @@ public class MainMenuDisplay extends UIComponent {
 
   @Override
   public void create() {
+      ServiceLocator.registerMainMenuDisplay(this);
     super.create();
     animalMoveTask = new Timer.Task() {
       public void run() {
@@ -144,6 +145,8 @@ public class MainMenuDisplay extends UIComponent {
     ImageTextButton loadBtn = new ImageTextButton("Load", skin);
     ImageTextButton settingsBtn = new ImageTextButton("Settings", skin);
     ImageTextButton exitBtn = new ImageTextButton("Exit", skin);
+    ImageTextButton tutBtn = new ImageTextButton("Tutorial", skin);
+
     startBtn.setTransform(true);
     startBtn.setScale(scale_of_button);
     loadBtn.setTransform(true);
@@ -152,7 +155,8 @@ public class MainMenuDisplay extends UIComponent {
     settingsBtn.setScale(scale_of_button);
     exitBtn.setTransform(true);
     exitBtn.setScale(scale_of_button);
-
+      tutBtn.setTransform(true);
+      tutBtn.setScale(scale_of_button);
       // Triggers an event when the button is pressed
     startBtn.addListener(
         new ChangeListener() {
@@ -193,6 +197,14 @@ public class MainMenuDisplay extends UIComponent {
             entity.getEvents().trigger("exit");
           }
         });
+      tutBtn.addListener(
+              new ChangeListener() {
+                  @Override
+                  public void changed(ChangeEvent changeEvent, Actor actor) {
+                      logger.debug("tutorial button clicked");
+                      entity.getEvents().trigger("tutorial");
+                  }
+              });
 
     // Add logo and buttons
     logo.add(title).pad(0,0,250,0);
@@ -200,6 +212,7 @@ public class MainMenuDisplay extends UIComponent {
     table.add(loadBtn).pad(600, 95, 0, 0).height(60);
     table.add(settingsBtn).pad(600, 90, 0, 0).height(60);
     table.add(exitBtn).pad(600, 120, 0, 0).height(60);
+    table.add(tutBtn).pad(600, 80, 0, 0).height(60);
     table.center();
 
     // Render logo and buttons
@@ -220,6 +233,14 @@ public class MainMenuDisplay extends UIComponent {
     @Override
     public void setStage(Stage mock) {
 
+    }
+    public void stopBackgroundTasks() {
+        if (animalMoveTask != null) {
+            animalMoveTask.cancel();
+        }
+        if (clearstage != null) {
+            clearstage.cancel();
+        }
     }
 
     @Override

@@ -119,7 +119,7 @@ public class PlayerActions extends Component {
    *
    * @param direction direction to move in
    */
-  void walk(Vector2 direction) {
+  public void walk(Vector2 direction) {
     this.walkDirection = direction;
     moving = true;
   }
@@ -127,7 +127,7 @@ public class PlayerActions extends Component {
   /**
    * Stops the player from walking.
    */
-  void stopWalking() {
+  public void stopWalking() {
     this.walkDirection = Vector2.Zero.cpy();
     updateSpeed();
     moving = false;
