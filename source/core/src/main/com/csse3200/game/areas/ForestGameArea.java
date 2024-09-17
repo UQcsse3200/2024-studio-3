@@ -455,12 +455,17 @@ public class ForestGameArea extends GameArea {
     GridPoint2 binPos = new GridPoint2(5,4);
     Entity bin = StationFactory.createBin();
     spawnEntityAt(bin, binPos, false, false);
-    bin.setPosition(bin.getPosition().x + 3.4f , bin.getPosition().y - 5.2f);
+    bin.setPosition(bin.getPosition().x + 6f , bin.getPosition().y - 6f);
 
-    GridPoint2 appleTreePos = new GridPoint2( 5, 4);
-    Entity appleTree = StationFactory.createAppleTree();
-    spawnEntityAt(appleTree, appleTreePos, false, false);
-    appleTree.setPosition(appleTree.getPosition().x + 4.2f , appleTree.getPosition().y - 3f);
+    GridPoint2 bananaTreePos = new GridPoint2( 5, 4);
+    Entity bananaTree = StationFactory.createBananaTree();
+    spawnEntityAt(bananaTree, bananaTreePos, false, false);
+    bananaTree.setPosition(bananaTree.getPosition().x + 4.2f , bananaTree.getPosition().y - 4f);
+
+    GridPoint2 strawberryPos = new GridPoint2( 5, 4);
+    Entity strawberryStation = StationFactory.createStrawberries();
+    spawnEntityAt(strawberryStation, strawberryPos, false, false);
+    strawberryStation.setPosition(strawberryStation.getPosition().x + 4.2f , strawberryStation.getPosition().y - 5f);
 
     GridPoint2 serveryPos = new GridPoint2(1,1);
     Entity servery = StationFactory.createSubmissionWindow();
@@ -497,7 +502,7 @@ public class ForestGameArea extends GameArea {
     Entity flame = StationFactory.createFlame();
     spawnEntityAt(flame, flamePos, false, false);
 
-    GridPoint2 fireExtinguisherPos = new GridPoint2(3, 4);
+    GridPoint2 fireExtinguisherPos = new GridPoint2(4, 4);
     Entity fireExtinguisher = StationFactory.createFireExtinguisher();
     spawnEntityAt(fireExtinguisher, fireExtinguisherPos, false, false);
   }

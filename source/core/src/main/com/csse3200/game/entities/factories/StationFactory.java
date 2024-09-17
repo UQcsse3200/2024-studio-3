@@ -128,7 +128,7 @@ public class StationFactory {
    * Creates an apple tree, a type of ingredient station
    * @return Entity of type station with added components and references
    */
-  public static Entity createAppleTree() {
+  public static Entity createBananaTree() {
     Entity apple = new Entity()
             .addComponent(new TextureRenderComponent("images/stations/apple_tree.png"))
             .addComponent(new PhysicsComponent())
@@ -143,7 +143,7 @@ public class StationFactory {
     apple.getComponent(InteractionComponent.class).setAsBox(apple.getScale());
     apple.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
     apple.getComponent(TextureRenderComponent.class).scaleEntity();
-    apple.scaleHeight(2f);
+    apple.scaleHeight(1.5f);
     PhysicsUtils.setScaledCollider(apple, 0.3f, 0.2f);
 
     // Add station reference
@@ -151,6 +151,35 @@ public class StationFactory {
     Body body = physicsComponent.getBody();
     body.setUserData(apple);
     return apple;
+  }
+
+  /**
+   * Creates an apple tree, a type of ingredient station
+   * @return Entity of type station with added components and references
+   */
+  public static Entity createStrawberries() {
+    Entity strawberry = new Entity()
+            .addComponent(new TextureRenderComponent("images/ingredients/raw_strawberry.png"))
+            .addComponent(new PhysicsComponent())
+            .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
+            .addComponent(new InteractionComponent(PhysicsLayer.INTERACTABLE))
+            .addComponent(new TooltipsDisplay())
+            .addComponent(new StationCollectionComponent())
+            .addComponent(new InventoryComponent(1))
+            .addComponent(new IngredientStationHandlerComponent("strawberriesStation", "strawberry"));
+
+    // Physics components
+    strawberry.getComponent(InteractionComponent.class).setAsBox(strawberry.getScale());
+    strawberry.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
+    strawberry.getComponent(TextureRenderComponent.class).scaleEntity();
+    strawberry.scaleHeight(0.5f);
+    PhysicsUtils.setScaledCollider(strawberry, 0.3f, 0.2f);
+
+    // Add station reference
+    PhysicsComponent physicsComponent = strawberry.getComponent(PhysicsComponent.class);
+    Body body = physicsComponent.getBody();
+    body.setUserData(strawberry);
+    return strawberry;
   }
 
   /**

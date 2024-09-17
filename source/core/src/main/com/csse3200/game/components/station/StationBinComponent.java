@@ -54,6 +54,6 @@ public class StationBinComponent extends Component {
      */
     public void submitMeal(ItemComponent item) {
         // Remove item
-        item.dispose();
+        //item.dispose();
     }
 }
