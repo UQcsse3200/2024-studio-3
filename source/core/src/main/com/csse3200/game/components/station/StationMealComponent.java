@@ -21,8 +21,8 @@ public class StationMealComponent extends Component {
      * StationInventoryComponent inventorycomponent - instance of inventory for this station
      * TBD acceptableItems - HashMap, HashSet etc of mappings for acceptable items based on station
      */
-    protected final String type;
-    protected InventoryComponent inventoryComponent;
+    protected final String type;    
+    protected InventoryComponent inventoryComponent;        // initialised with capacity = 4
     protected final ArrayList<String> acceptableItems;
     private final DishFactory mealFactory;
 
@@ -116,19 +116,16 @@ public class StationMealComponent extends Component {
      * @param inventoryDisplay - reference to UI for inventory display
      */
     public void stationReceiveItem(ItemComponent item, InventoryComponent playerInventoryComponent, InventoryDisplay inventoryDisplay) {
-        // increase the capacity of the inventory if needed
-        if (this.inventoryComponent.isFull()) {
-            this.inventoryComponent.increaseCapacity(this.inventoryComponent.getCapacity() + 1);
+        // add an item to the station inventory if there is room
+        if (!this.inventoryComponent.isFull()) {
+            this.inventoryComponent.addItemAt(item, this.inventoryComponent.getSize());
+            playerInventoryComponent.removeAt(0);
+            
+            // process a meal from the station inventory if possible
+            if (this.inventoryComponent.getSize() > 1) {
+                this.processMeal();
+            }
         }
-        this.inventoryComponent.addItemAt(item, this.inventoryComponent.getSize());
-        playerInventoryComponent.removeAt(0);
-        
-        // processes a meal from the station inventory if possible
-        if (this.inventoryComponent.getSize() > 1) {
-            this.processMeal();
-        }
-
-        // do i need to end the interaction here? --> nope
     }
 
     /**
@@ -162,6 +159,7 @@ public class StationMealComponent extends Component {
      */
     private int mealExists() {
         for (int index = 0; index < this.inventoryComponent.getCapacity(); index++) {
+            // check if any item in the station inventory is a meal type
             ItemComponent item = this.inventoryComponent.getItemAt(index);
             if (item.getItemType() == ItemType.MEAL) {
                 return index;
