@@ -18,6 +18,7 @@ com.csse3200.game.components.ScoreSystem
 com.csse3200.game.components.settingsmenu
 com.csse3200.game.components.station
 com.csse3200.game.components.tasks
+com.csse3200.game.components.tutorial
 com.csse3200.game.concurrency
 com.csse3200.game.entities
 com.csse3200.game.entities.benches
