@@ -31,7 +31,7 @@ public class Bench extends Entity{
         addComponent(new TextureRenderComponent("images/stations/benches/" + type + ".png"));
         addComponent(new PhysicsComponent());
         addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
-        addComponent(new StationItemHandlerComponent(type, new ArrayList<>()));
+        addComponent(new StationItemHandlerComponent(type));
         setScale(1f, 1f);
         getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
         PhysicsUtils.setScaledCollider(this, 1.05f, 0.75f);
@@ -48,7 +48,7 @@ public class Bench extends Entity{
                 .addComponent(new TextureRenderComponent("images/stations/benches/" + type + ".png"))
                 .addComponent(new PhysicsComponent())
                 .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
-                .addComponent(new StationItemHandlerComponent(type, new ArrayList<>()));
+                .addComponent(new StationItemHandlerComponent(type));
         float width  = 1f;
         float height = 1f;
         bench.setScale(width, height);
