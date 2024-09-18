@@ -16,7 +16,7 @@ import java.util.*;
 /**
  * Factory to create a cooking entity with predefined components.
  *
- * <p>Predefined recipe properties are loaded from a config stored as a json file and should have
+ * Predefined recipe properties are loaded from a config stored as a json file and should have
  * the properties stores in 'CookingConfig'.
  */
 public class DishFactory {
@@ -25,7 +25,8 @@ public class DishFactory {
 
     /**
      * Store the recipe and associated ingredients to the dictionary
-     * @return dictionary that only need one station when making the meal
+     * 
+     * @return - dictionary that only need one station when making the meal
      */
     private static Map<String, SingleStationRecipeConfig> getSingleStationRecipes() {
         Map<String, SingleStationRecipeConfig> singleStationRecipes = new HashMap<>();
@@ -37,7 +38,8 @@ public class DishFactory {
 
     /**
      * Store the recipe and associated ingredients to the dictionary
-     * @return dictionary of recipes that need more than one station when making the meal
+     * 
+     * @return - dictionary of recipes that need more than one station when making the meal
      */
     private static Map<String, MultiStationRecipeConfig> getMultiStationRecipes() {
         Map<String, MultiStationRecipeConfig> multiStationRecipes = new HashMap<>();
@@ -50,8 +52,8 @@ public class DishFactory {
     /**
      Get the recipe for associated ingredients
 
-     @param ingredient needed to make the dish (specify in the recipe.json)
-     @return list of recipes that contain associated ingredients
+     @param ingredient - needed to make the dish (specify in the recipe.json)
+     @return - list of recipes that contain associated ingredients
      */
     public static List<String> getRecipe (List<String> ingredient) {
         List<String> recipes = new ArrayList<>();
@@ -84,8 +86,8 @@ public class DishFactory {
     /**
     Get the list of possible recipes for associated ingredients
 
-     @param ingredients needed to make the dish (specify in the recipe.json)
-     @return list of recipes that contain associated ingredients
+     @param ingredients - needed to make the dish (specify in the recipe.json)
+     @return - list of recipes that contain associated ingredients
      */
     public static List<String> getPossibleRecipes (List<String> ingredients) {
         List<String> recipes = new ArrayList<>();
@@ -119,8 +121,8 @@ public class DishFactory {
     /**
      Gets a recipe if and only if it matches exactly the list of ingredients
 
-     @param ingredients needed to make the dish (specify in the recipe.json)
-     @return name of recipe that contain associated ingredients
+     @param ingredients - needed to make the dish (specify in the recipe.json)
+     @return - name of recipe that contain associated ingredients
      */
     public static Optional<String> getDefinitiveRecipe (List<String> ingredients) {
         if (ingredients.size() >= 1) {
@@ -147,14 +149,32 @@ public class DishFactory {
         return Optional.empty();
     }
 
+    /**
+     * Returns the single station recipe config for the given recipe name.
+     * 
+     * @param recipeName - the recipe config searched for. 
+     * @return - the SingleStationRecipeConfig for the given recipe name.
+     */
     public static SingleStationRecipeConfig getSingleStationRecipe(String recipeName) {
         return getSingleStationRecipes().get(recipeName);
     }
 
+    /**
+     * Returns the multi station recipe config for the given recipe name.
+     * 
+     * @param recipeName - the recipe config searched for.
+     * @return - the MultiStationRecipeConfig for the given recipe name.
+     */
     public static MultiStationRecipeConfig getMultiStationRecipe(String recipeName) {
         return getMultiStationRecipes().get(recipeName);
     }
 
+    /**
+     * Checks if the provided recipe name is a valid recipe as defined in the recipe.json.
+     * 
+     * @param recipeName - the recipe searched for.
+     * @return - true if the recipe is valid, false otherwise.
+     */
     public static boolean recipeExists(String recipeName) {
         return getSingleStationRecipes().containsKey(recipeName) ||
           getMultiStationRecipes().containsKey(recipeName);
