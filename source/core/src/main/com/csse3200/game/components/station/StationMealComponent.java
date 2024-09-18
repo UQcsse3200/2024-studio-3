@@ -78,7 +78,6 @@ public class StationMealComponent extends Component {
         // Pre calcs
         boolean empty = playerInventoryComponent.isEmpty() & this.inventoryComponent.isEmpty();
         boolean full = playerInventoryComponent.isFull() & this.inventoryComponent.isFull();
-        System.out.printf("STATION INVENTORY: %s\n", this.inventoryComponent.getItemNames());
 
         if (empty | full) {
             // nothing should happen, neither can do anything
@@ -96,11 +95,8 @@ public class StationMealComponent extends Component {
         
         } else if (!inventoryComponent.isEmpty()) {
             // Player wants meal from station, if possible results in meal in player inventory
-            System.out.printf("GIVE ME SOMETHING\n");
             this.stationGiveItem(playerInventoryComponent, inventoryDisplay);
         }
-
-        System.out.printf("PLAYER INVENTORY: %s\n", playerInventoryComponent.getItemNames());
     }
 
     /**
@@ -139,7 +135,6 @@ public class StationMealComponent extends Component {
     public void stationGiveItem(InventoryComponent playerInventoryComponent, InventoryDisplay inventoryDisplay) {
         // check if there is a meal in the inventory
         int mealIndex = this.mealExists();
-        System.out.printf("MEAL INDEX: %d\n", mealIndex);
         
         if (mealIndex > -1) {
             // item swapping
