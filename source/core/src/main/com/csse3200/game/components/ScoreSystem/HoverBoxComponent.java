@@ -15,7 +15,7 @@ public class HoverBoxComponent extends RenderComponent {
     private ShapeRenderer shapeRenderer;
     private Vector2 position;
     private Vector2 scale;
-    private static final float X_OFFSET = 0.35f;
+    private static final float X_OFFSET = 0.45f;
     private static final float Y_OFFSET = 1.0F;
 
     @Override
@@ -48,7 +48,7 @@ public class HoverBoxComponent extends RenderComponent {
             return; // Skip drawing if the entity is at (0,0)
         }
 
-        final float boxWidth = 0.8f;
+        final float boxWidth = 0.5f;
         final float boxHeight = 0.5f;
 
         String entityInfo = getEntityInfo();
