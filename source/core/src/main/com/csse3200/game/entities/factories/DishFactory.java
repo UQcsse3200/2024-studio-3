@@ -1,15 +1,9 @@
-
 package com.csse3200.game.entities.factories;
-
 
 import com.csse3200.game.entities.configs.CookingConfig;
 import com.csse3200.game.entities.configs.SingleStationRecipeConfig;
 import com.csse3200.game.entities.configs.MultiStationRecipeConfig;
-
-
 import com.csse3200.game.files.FileLoader;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.*;
 
@@ -20,8 +14,24 @@ import java.util.*;
  * the properties stores in 'CookingConfig'.
  */
 public class DishFactory {
-    private static final CookingConfig configs =
-            FileLoader.readClass(CookingConfig.class, "configs/recipe.json");
+    // read in recipe configs
+    private static final CookingConfig configs = FileLoader.readClass(CookingConfig.class, "configs/recipe.json");
+    public static Map<String, SingleStationRecipeConfig> singleStationRecipes = new HashMap<>();    // all single-station recipes
+    public static Map<String, MultiStationRecipeConfig> multiStationRecipes = new HashMap<>();      // all multi-station recipes
+
+    /**
+     * Constructor for the DishFactory class, no parameters required.
+     */
+    public DishFactory() {
+        // populate single-station recipes
+        DishFactory.singleStationRecipes.put("salad", configs.salad);
+        DishFactory.singleStationRecipes.put("fruitSalad", configs.fruitSalad);
+        DishFactory.singleStationRecipes.put("bananaSplit", configs.bananaSplit);
+
+        // populate multi-station recipes
+        DishFactory.multiStationRecipes.put("steakMeal", configs.steakMeal);
+        DishFactory.multiStationRecipes.put("acaiBowl", configs.acaiBowl);
+    }
 
     /**
      * Store the recipe and associated ingredients to the dictionary
@@ -29,10 +39,6 @@ public class DishFactory {
      * @return - dictionary that only need one station when making the meal
      */
     private static Map<String, SingleStationRecipeConfig> getSingleStationRecipes() {
-        Map<String, SingleStationRecipeConfig> singleStationRecipes = new HashMap<>();
-        singleStationRecipes.put("salad", configs.salad);
-        singleStationRecipes.put("fruitSalad", configs.fruitSalad);
-        singleStationRecipes.put("bananaSplit", configs.bananaSplit);
         return singleStationRecipes;
     }
 
@@ -42,54 +48,16 @@ public class DishFactory {
      * @return - dictionary of recipes that need more than one station when making the meal
      */
     private static Map<String, MultiStationRecipeConfig> getMultiStationRecipes() {
-        Map<String, MultiStationRecipeConfig> multiStationRecipes = new HashMap<>();
-        multiStationRecipes.put("steakMeal", configs.steakMeal);
-        multiStationRecipes.put("acaiBowl", configs.acaiBowl);
-
         return multiStationRecipes;
     }
 
     /**
-     Get the recipe for associated ingredients
-
-     @param ingredient - needed to make the dish (specify in the recipe.json)
-     @return - list of recipes that contain associated ingredients
+     * Get the list of possible recipes for associated ingredients
+     * 
+     * @param ingredients - needed to make the dish (specify in the recipe.json)
+     * @return - list of recipes that contain associated ingredients
      */
-    public static List<String> getRecipe (List<String> ingredient) {
-        List<String> recipes = new ArrayList<>();
-
-        if (configs == null) {
-            return recipes;
-        }
-
-        for (Map.Entry<String, SingleStationRecipeConfig> entry : getSingleStationRecipes().entrySet()) {
-            String recipe = entry.getKey();
-            SingleStationRecipeConfig recipeConfig = entry.getValue();
-
-            if (new HashSet<>(recipeConfig.ingredient).containsAll(ingredient)) {
-                recipes.add(recipe);
-            }
-        }
-
-        for (Map.Entry<String, MultiStationRecipeConfig> entry : getMultiStationRecipes().entrySet()) {
-            String recipe = entry.getKey();
-            MultiStationRecipeConfig recipeConfig = entry.getValue();
-
-            if (new HashSet<>(recipeConfig.ingredient).containsAll(ingredient)) {
-                recipes.add(recipe);
-            }
-        }
-        return recipes;
-    }
-
-
-    /**
-    Get the list of possible recipes for associated ingredients
-
-     @param ingredients - needed to make the dish (specify in the recipe.json)
-     @return - list of recipes that contain associated ingredients
-     */
-    public static List<String> getPossibleRecipes (List<String> ingredients) {
+    public static List<String> getPossibleRecipes(List<String> ingredients) {
         List<String> recipes = new ArrayList<>();
 
         if (configs == null) {
@@ -119,12 +87,12 @@ public class DishFactory {
     }
 
     /**
-     Gets a recipe if and only if it matches exactly the list of ingredients
-
-     @param ingredients - needed to make the dish (specify in the recipe.json)
-     @return - name of recipe that contain associated ingredients
+     * Gets a recipe if and only if it matches exactly the list of ingredients
+     * 
+     * @param ingredients - needed to make the dish (specify in the recipe.json
+     * @return - name of recipe that contain associated ingredients
      */
-    public static Optional<String> getDefinitiveRecipe (List<String> ingredients) {
+    public static Optional<String> getDefinitiveRecipe(List<String> ingredients) {
         if (ingredients.size() >= 1) {
             for (Map.Entry<String, SingleStationRecipeConfig> entry : getSingleStationRecipes().entrySet()) {
                 String recipe = entry.getKey();
@@ -179,6 +147,7 @@ public class DishFactory {
         return getSingleStationRecipes().containsKey(recipeName) ||
           getMultiStationRecipes().containsKey(recipeName);
     }
+}
 
 //    /**
 //     * Get the station type for a given recipe
@@ -197,7 +166,6 @@ public class DishFactory {
 //        }
 //        return stationTypes;
 //    }
-//
 //    /**
 //     * Get the making time for a given recipe
 //     * @param recipeName the name of the recipe
@@ -229,4 +197,37 @@ public class DishFactory {
 //        return -1; // Return -1 if there's no burned time
 //    }
 //
-}
+
+    /**
+     * Get the recipe for associated ingredients
+     * 
+     * @param ingredient - needed to make the dish (specify in the recipe.json)
+     * @return - list of recipes that contain associated ingredients
+     
+    public static List<String> getRecipe(List<String> ingredient) {
+        List<String> recipes = new ArrayList<>();
+
+        if (this.configs == null) {
+            return recipes;
+        }
+
+        for (Map.Entry<String, SingleStationRecipeConfig> entry : getSingleStationRecipes().entrySet()) {
+            String recipe = entry.getKey();
+            SingleStationRecipeConfig recipeConfig = entry.getValue();
+
+            if (new HashSet<>(recipeConfig.ingredient).containsAll(ingredient)) {
+                recipes.add(recipe);
+            }
+        }
+
+        for (Map.Entry<String, MultiStationRecipeConfig> entry : getMultiStationRecipes().entrySet()) {
+            String recipe = entry.getKey();
+            MultiStationRecipeConfig recipeConfig = entry.getValue();
+
+            if (new HashSet<>(recipeConfig.ingredient).containsAll(ingredient)) {
+                recipes.add(recipe);
+            }
+        }
+        return recipes;
+    }
+        */
