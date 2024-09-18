@@ -1,5 +1,6 @@
 package com.csse3200.game.components.ScoreSystem;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -10,19 +11,22 @@ import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.components.npc.CustomerComponent;
 
 public class HoverBoxComponent extends RenderComponent {
+    private Texture hoverImage;
     private ShapeRenderer shapeRenderer;
-    private final float width = 50f;
-    private final float height = 30f;
-    private final float yOffset = 40f;
     private Vector2 position;
     private Vector2 scale;
-    private static final float X_OFFSET = 0.45f;
+    private static final float X_OFFSET = 0.35f;
     private static final float Y_OFFSET = 1.0F;
 
     @Override
     public void create() {
         super.create();
         shapeRenderer = new ShapeRenderer();
+        try {
+            hoverImage = new Texture("images/customer_faces/angry_face.png");
+        } catch (Exception e) {
+            System.err.println("Failed to load hover box image: " + e.getMessage());
+        }
         ServiceLocator.getRenderService().register(this);
     }
 
@@ -44,28 +48,19 @@ public class HoverBoxComponent extends RenderComponent {
             return; // Skip drawing if the entity is at (0,0)
         }
 
-        final float boxWidth = 0.5f;
-        final float boxHeight = 0.1f;
+        final float boxWidth = 0.8f;
+        final float boxHeight = 0.5f;
 
         String entityInfo = getEntityInfo();
         System.out.println("Drawing HoverBox for " + entityInfo
                 + " at (" + position.x + "," + position.y + ")"
                 + " with scale (" + scale.x + "," + scale.y + ")");
 
-        // We need to end the SpriteBatch to use ShapeRenderer
-        batch.end();
-
-        shapeRenderer.setProjectionMatrix(batch.getProjectionMatrix());
-        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-
-        // Draw red outline for visibility
-        shapeRenderer.setColor(Color.RED);
-        shapeRenderer.rect(position.x + X_OFFSET, position.y + Y_OFFSET, boxWidth, boxHeight);
-
-        shapeRenderer.end();
-
-        // Resume the SpriteBatch
-        batch.begin();
+        batch.draw(hoverImage,
+                position.x + X_OFFSET,
+                position.y + Y_OFFSET,
+                boxWidth,
+                boxHeight);
 
     }
 
