@@ -2,15 +2,13 @@ package com.csse3200.game.components.station;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
+import java.util.Optional;
 
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.items.IngredientComponent;
-import com.csse3200.game.components.items.CookIngredientComponent;
 import com.csse3200.game.components.items.ItemComponent;
 import com.csse3200.game.components.items.ItemType;
 import com.csse3200.game.components.player.InventoryComponent;
-import com.csse3200.game.entities.Entity;
 import com.csse3200.game.components.player.InventoryDisplay;
 import com.csse3200.game.components.items.MealComponent;
 import com.csse3200.game.entities.factories.DishFactory;;
@@ -174,11 +172,10 @@ public class StationMealComponent extends Component {
      * and return it to the station inventory.
      */
     private void processMeal() {
-        List<String> possibleRecipes = mealFactory.getRecipe(this.inventoryComponent.getItemNames());
+        Optional<String> possibleRecipe = mealFactory.getDefinitiveRecipe(this.inventoryComponent.getItemNames());
         
-        if (!possibleRecipes.isEmpty()) {
+        if (!possibleRecipe.isEmpty()) {
             // get first valid recipe
-            // String currentRecipe = possibleRecipes.getFirst();
             List<IngredientComponent> ingredients = new ArrayList<>();
 
             // process items to be IngredientComponents
