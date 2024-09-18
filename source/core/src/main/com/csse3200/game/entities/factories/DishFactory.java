@@ -18,6 +18,7 @@ public class DishFactory {
     private static final CookingConfig configs = FileLoader.readClass(CookingConfig.class, "configs/recipe.json");
     public static Map<String, SingleStationRecipeConfig> singleStationRecipes = new HashMap<>();    // all single-station recipes
     public static Map<String, MultiStationRecipeConfig> multiStationRecipes = new HashMap<>();      // all multi-station recipes
+    public static Map<String, SingleStationRecipeConfig> recipes = new HashMap<>();                                   // all recipes
 
     /**
      * Constructor for the DishFactory class, no parameters required.
@@ -31,6 +32,9 @@ public class DishFactory {
         // populate multi-station recipes
         DishFactory.multiStationRecipes.put("steakMeal", configs.steakMeal);
         DishFactory.multiStationRecipes.put("acaiBowl", configs.acaiBowl);
+
+        // generate all recipes
+        this.generateAllRecipes();
     }
 
     /**
@@ -147,6 +151,46 @@ public class DishFactory {
         return getSingleStationRecipes().containsKey(recipeName) ||
           getMultiStationRecipes().containsKey(recipeName);
     }
+
+    /**
+     * Populates all possible recipes from the dish factory configs.
+     */
+    private void generateAllRecipes() {
+        for (Map.Entry<String, SingleStationRecipeConfig> entry : getSingleStationRecipes().entrySet()) {
+            this.recipes.put(entry.getKey(), entry.getValue());
+        }
+
+        for (Map.Entry<String, MultiStationRecipeConfig> entry : getMultiStationRecipes().entrySet()) {
+            this.recipes.put(entry.getKey(), (SingleStationRecipeConfig) entry.getValue());
+        }
+    }
+
+    /**
+     * 
+     * 
+     * @return
+     */
+    public Map<String, SingleStationRecipeConfig> getAllRecipes() {
+        return this.recipes;
+    }
+
+    /**
+     * 
+     * 
+     * @param ingredients
+     * @return
+     */
+    public Optional<String> getRealRecipe(List<String> ingredients) {
+        for (Map.Entry<String, SingleStationRecipeConfig> entry : getAllRecipes().entrySet()) {
+            List<String> recipeIngredients = entry.getValue().getIngredient();
+            if (new HashSet<>(recipeIngredients).equals(new HashSet<>(ingredients))) {
+                return Optional.of(entry.getKey());
+            }
+        }
+
+        return Optional.empty();
+    }
+
 }
 
 //    /**

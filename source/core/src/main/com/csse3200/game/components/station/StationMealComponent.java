@@ -76,6 +76,9 @@ public class StationMealComponent extends Component {
      */
     public void handleInteraction(InventoryComponent playerInventoryComponent, InventoryDisplay inventoryDisplay) {
         // Pre calcs
+        System.out.printf("BEFORE STATION ITEMS: %s\n", this.inventoryComponent.getItemNames());
+        System.out.printf("BEFORE PLAYER ITEMS: %s\n", playerInventoryComponent.getItemNames());
+        
         boolean empty = playerInventoryComponent.isEmpty() & this.inventoryComponent.isEmpty();
         boolean full = playerInventoryComponent.isFull() & this.inventoryComponent.isFull();
 
@@ -97,6 +100,8 @@ public class StationMealComponent extends Component {
             // Player wants meal from station, if possible results in meal in player inventory
             this.stationGiveItem(playerInventoryComponent, inventoryDisplay);
         }
+        System.out.printf("AFTER STATION ITEMS: %s\n", this.inventoryComponent.getItemNames());
+        System.out.printf("AFTER PLAYER ITEMS: %s\n", playerInventoryComponent.getItemNames());
     }
 
     /**
@@ -118,7 +123,7 @@ public class StationMealComponent extends Component {
     public void stationReceiveItem(ItemComponent item, InventoryComponent playerInventoryComponent, InventoryDisplay inventoryDisplay) {
         // add an item to the station inventory if there is room
         if (!this.inventoryComponent.isFull()) {
-            this.inventoryComponent.addItemAt(item, this.inventoryComponent.getSize());
+            this.inventoryComponent.addItem(item);
             playerInventoryComponent.removeAt(0);
             
             // process a meal from the station inventory if possible
@@ -133,22 +138,16 @@ public class StationMealComponent extends Component {
      * @param inventoryDisplay - reference to UI for inventory display
      */
     public void stationGiveItem(InventoryComponent playerInventoryComponent, InventoryDisplay inventoryDisplay) {
-        // check if there is a meal in the inventory
-        int mealIndex = this.mealExists();
-        
-        if (mealIndex > -1) {
-            // item swapping
-            ItemComponent item = inventoryComponent.getItemAt(mealIndex);
-            playerInventoryComponent.addItemAt(item,0);
-            
-            // Remove single item in station
-            this.inventoryComponent.removeAt(mealIndex);
-
-            // do i need this here?
-            entity.getEvents().trigger("interactionEnd");
-        } else {
-
+        for (int index = 0; index < this.inventoryComponent.getCapacity(); index++) {
+            if (this.inventoryComponent.getItemAt(index) != null) {
+                // item swapping
+                ItemComponent item = this.inventoryComponent.removeAt(index);
+                playerInventoryComponent.addItemAt(item,0);
+            }
         }
+        
+        // do i need this here? --> yes
+        entity.getEvents().trigger("interactionEnd");
     }
 
     /**
@@ -174,7 +173,7 @@ public class StationMealComponent extends Component {
      * and return it to the station inventory.
      */
     private void processMeal() {
-        Optional<String> possibleRecipe = mealFactory.getDefinitiveRecipe(this.inventoryComponent.getItemNames()); 
+        Optional<String> possibleRecipe = mealFactory.getRealRecipe(this.inventoryComponent.getItemNames()); 
         
         if (!possibleRecipe.isEmpty()) {
             // get first valid recipe
