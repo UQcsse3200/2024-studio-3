@@ -76,8 +76,9 @@ public class StationMealComponent extends Component {
         // Pre calcs
         // boolean full = playerInventoryComponent.isFull() & this.inventoryComponent.isFull();
         boolean empty = playerInventoryComponent.isEmpty() & this.inventoryComponent.isEmpty();
+        boolean full = playerInventoryComponent.isFull() & this.inventoryComponent.isFull();
 
-        if (empty) {
+        if (empty | full) {
             // nothing should happen, neither can do anything
         } else if (playerInventoryComponent.isFull()) {
             // Input to station
@@ -118,6 +119,10 @@ public class StationMealComponent extends Component {
         if (!this.inventoryComponent.isFull()) {
             this.inventoryComponent.addItemAt(item, this.inventoryComponent.getSize());
             playerInventoryComponent.removeAt(0);
+
+            // debug print
+            System.out.printf("STATION INVENTORY: %s", this.inventoryComponent.getItemNames());
+            System.out.printf("PLAYER INVENTORY: %s", playerInventoryComponent.getItemNames());
             
             // process a meal from the station inventory if possible
             if (this.inventoryComponent.getSize() > 1) {
@@ -172,10 +177,11 @@ public class StationMealComponent extends Component {
      * and return it to the station inventory.
      */
     private void processMeal() {
-        Optional<String> possibleRecipe = mealFactory.getDefinitiveRecipe(this.inventoryComponent.getItemNames());
+        Optional<String> possibleRecipe = mealFactory.getDefinitiveRecipe(this.inventoryComponent.getItemNames()); 
         
         if (!possibleRecipe.isEmpty()) {
             // get first valid recipe
+            String recipe = possibleRecipe.get();
             List<IngredientComponent> ingredients = new ArrayList<>();
 
             // process items to be IngredientComponents
@@ -188,7 +194,7 @@ public class StationMealComponent extends Component {
             }
             
             // create and return the first possible meal
-            MealComponent meal = new MealComponent(possibleRecipes.getFirst(), ItemType.MEAL, 0, ingredients, 0);
+            MealComponent meal = new MealComponent(recipe, ItemType.MEAL, 0, ingredients, 0);
             this.inventoryComponent.addItem(meal);
         }
     }
