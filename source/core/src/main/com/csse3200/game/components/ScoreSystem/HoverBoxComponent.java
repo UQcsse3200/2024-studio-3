@@ -9,12 +9,8 @@ import com.csse3200.game.rendering.RenderComponent;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.components.npc.CustomerComponent;
 
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.GlyphLayout;
-
 public class HoverBoxComponent extends RenderComponent {
     private ShapeRenderer shapeRenderer;
-    private BitmapFont font;
     private final float width = 50f;
     private final float height = 30f;
     private final float yOffset = 40f;
@@ -22,14 +18,11 @@ public class HoverBoxComponent extends RenderComponent {
     private Vector2 scale;
     private static final float X_OFFSET = 0.45f;
     private static final float Y_OFFSET = 1.0F;
-    // private static final float FONT_SCALE = 0.05f;
 
     @Override
     public void create() {
         super.create();
         shapeRenderer = new ShapeRenderer();
-        // font = new BitmapFont(); // Initialize the font
-        // font.getData().setScale(FONT_SCALE); // Set the scale of the font
         ServiceLocator.getRenderService().register(this);
     }
 
@@ -59,10 +52,6 @@ public class HoverBoxComponent extends RenderComponent {
                 + " at (" + position.x + "," + position.y + ")"
                 + " with scale (" + scale.x + "," + scale.y + ")");
 
-        // float boxWidth = width * scale.x;
-        // float boxHeight = height * scale.y;
-        // float actualYOffset = yOffset * scale.y;
-
         // We need to end the SpriteBatch to use ShapeRenderer
         batch.end();
 
@@ -77,15 +66,6 @@ public class HoverBoxComponent extends RenderComponent {
 
         // Resume the SpriteBatch
         batch.begin();
-
-        // Draw the text above the NPC
-        // String text = "42"; // Example number to display
-        // GlyphLayout layout = new GlyphLayout(font, text); // Measure the dimensions
-        // of the text
-        // float textX = position.x + X_OFFSET;
-        // float textY = position.y + Y_OFFSET;
-
-        // font.draw(batch, layout, textX, textY);
 
     }
 
@@ -106,9 +86,6 @@ public class HoverBoxComponent extends RenderComponent {
         ServiceLocator.getRenderService().unregister(this);
         if (shapeRenderer != null) {
             shapeRenderer.dispose();
-        }
-        if (font != null) {
-            font.dispose();
         }
     }
 
