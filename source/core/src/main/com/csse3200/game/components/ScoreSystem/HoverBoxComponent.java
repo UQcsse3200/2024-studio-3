@@ -1,6 +1,8 @@
 package com.csse3200.game.components.ScoreSystem;
 
 import com.badlogic.gdx.graphics.Texture;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -11,6 +13,7 @@ import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.components.npc.CustomerComponent;
 
 public class HoverBoxComponent extends RenderComponent {
+    private static final Logger logger = LoggerFactory.getLogger(HoverBoxComponent.class);
     private Texture hoverImage;
     private ShapeRenderer shapeRenderer;
     private Vector2 position;
@@ -18,15 +21,22 @@ public class HoverBoxComponent extends RenderComponent {
     private static final float X_OFFSET = 0.45f;
     private static final float Y_OFFSET = 1.0F;
 
+    public HoverBoxComponent(Texture contentImage) {
+        hoverImage = contentImage;
+    }
+
     @Override
     public void create() {
         super.create();
         shapeRenderer = new ShapeRenderer();
+        /*
         try {
             hoverImage = new Texture("images/customer_faces/angry_face.png");
         } catch (Exception e) {
             System.err.println("Failed to load hover box image: " + e.getMessage());
         }
+        */
+
         ServiceLocator.getRenderService().register(this);
     }
 
@@ -48,10 +58,12 @@ public class HoverBoxComponent extends RenderComponent {
             return; // Skip drawing if the entity is at (0,0)
         }
 
+
         final float boxWidth = 0.5f;
         final float boxHeight = 0.5f;
 
         String entityInfo = getEntityInfo();
+
         System.out.println("Drawing HoverBox for " + entityInfo
                 + " at (" + position.x + "," + position.y + ")"
                 + " with scale (" + scale.x + "," + scale.y + ")");

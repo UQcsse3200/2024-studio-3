@@ -19,6 +19,7 @@ import org.slf4j.LoggerFactory;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.components.items.ItemComponent;
 import com.csse3200.game.rendering.TextureRenderComponent;
+import java.lang.IllegalArgumentException;
 
 /**
  * A UI component used to display slots of an InventoryComponent and the
@@ -28,9 +29,38 @@ import com.csse3200.game.rendering.TextureRenderComponent;
  */
 public class InventoryDisplay extends UIComponent {
     private Table table;
-
+    private String slotImagePath;
+    private int slotSize;
     private ArrayList<Stack> slots;
 
+    /**
+     * Creates an InventoryDisplay with a default background slot image and slot
+     * size.
+     * Requires that the entity this component is being added to also have
+     * an InventoryComponent.
+     */
+    public InventoryDisplay() {
+        this.slotImagePath = "images/inventory_ui/slot.png";
+        this.slotSize = 200;
+    }
+
+    /**
+     * Creates an InventoryDisplay that displays slots with the slot image path
+     * provided, with the size provided.
+     * @param slotImagePath the path to the image to use as the background image
+     * of a displayed inventory item.
+     * @param slotSize how large the slots will be displayed.
+     * @throws java.lang.IllegalArgumentException if slotSize is less than 1
+     * Requires that the entity this component is being added to also have
+     * an InventoryComponent.
+    */
+    public InventoryDisplay(String slotImagePath, int slotSize) {
+        this.slotImagePath = slotImagePath;
+        if (slotSize < 1) {
+            throw new IllegalArgumentException("slotSize must be a positive non-zero integer");
+        }
+        this.slotSize = slotSize;
+    }
 
     @Override
     public void create() {
@@ -79,7 +109,7 @@ public class InventoryDisplay extends UIComponent {
                 itemPadding.add(itemImage).pad(20);
                 currentStack.add(itemPadding);
             }
-            table.add(currentStack).size(200).padLeft(20);
+            table.add(currentStack).size(slotSize).padLeft(20);
 
         }
 
@@ -123,9 +153,7 @@ public class InventoryDisplay extends UIComponent {
      * of this component's parent entity.
      */
     public void update() {
-        // updateLabel(entity.getComponent(InventoryComponent.class).getItemFirst());
         updateDisplay();
-        //updateLabel(entity.getComponent(InventoryComponent.class).getItemFirst());
     }
 
     @Override

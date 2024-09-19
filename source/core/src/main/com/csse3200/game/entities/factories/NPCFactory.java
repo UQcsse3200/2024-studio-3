@@ -1,6 +1,7 @@
 package com.csse3200.game.entities.factories;
 
 import com.csse3200.game.components.ScoreSystem.HoverBoxComponent;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
@@ -140,7 +141,7 @@ public class NPCFactory {
                 System.out.println("Created customer " + name + " with initial position: " + customer.getPosition());
 
                 if (customer.getComponent(HoverBoxComponent.class) == null) {
-                        customer.addComponent(new HoverBoxComponent());
+                        customer.addComponent(new HoverBoxComponent(new Texture("images/customer_faces/angry_face.png")));
                         System.out.println("Added HoverBoxComponent to customer: " + name);
                 } else {
                         System.out.println("HoverBoxComponent already exists for customer: " + name);
