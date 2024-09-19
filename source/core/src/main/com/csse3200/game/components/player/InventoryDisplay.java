@@ -64,14 +64,6 @@ public class InventoryDisplay extends UIComponent {
             ItemComponent item = entity.getComponent(InventoryComponent.class).getItemAt(i);
             if (item != null) {
                 Table itemPadding = new Table();
-                //N! cannot access item's parent entity from within another component
-                // 3 options:
-                // 1. change InventoryComponent to hold Entity types (that we assume have an ItemComponent or derivative)
-                // 2. make a get texture method in ItemComponent that returns the texture component's path (this makes ItemComponent
-                // now reliant on the entity also having a TextureRenderComponent
-                // 3. construct the path to the image using the Item's state variables. This is difficult as there
-                // are several classes that extend the ItemComponent, and thus store different variables. Most variables
-                // we would require (i.e. chopped, burnt, etc) are not included in the base ItemComponent class.
 
                 String itemTexturePath = item.getTexturePath();
                 Image itemImage;
@@ -80,8 +72,8 @@ public class InventoryDisplay extends UIComponent {
                 if (itemTexturePath != null) {
                     itemImage = new Image(ServiceLocator.getResourceService().getAsset(itemTexturePath, Texture.class));
                 } else {
-                    // placeholder lettuce image if no texture found for item
-                    itemImage = new Image(ServiceLocator.getResourceService().getAsset("images/ingredients/raw_lettuce.png", Texture.class));
+                    // null image if no texture found for item
+                    itemImage = new Image(ServiceLocator.getResourceService().getAsset("images/inventory_ui/null_image.png", Texture.class));
                 }
 
                 itemPadding.add(itemImage).pad(20);
@@ -115,8 +107,8 @@ public class InventoryDisplay extends UIComponent {
                 if (itemTexturePath != null) {
                     itemImage = new Image(ServiceLocator.getResourceService().getAsset(itemTexturePath, Texture.class));
                 } else {
-                    // placeholder lettuce image if no texture found for item
-                    itemImage = new Image(ServiceLocator.getResourceService().getAsset("images/ingredients/raw_lettuce.png", Texture.class));
+                    // null image if no texture found for item
+                    itemImage = new Image(ServiceLocator.getResourceService().getAsset("images/inventory_ui/null_image.png", Texture.class));
                 }
 
                 itemPadding.add(itemImage).pad(20);
