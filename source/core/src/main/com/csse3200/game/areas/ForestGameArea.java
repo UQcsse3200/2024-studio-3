@@ -13,6 +13,8 @@ import com.csse3200.game.entities.configs.PlayerConfig;
 import com.csse3200.game.screens.MoralDecisionDisplay;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
@@ -43,8 +45,6 @@ import java.util.List;
 //import java.util.concurrent.TimeUnit;
 
 import static com.badlogic.gdx.Gdx.app;
-
-
 
 
 /** Forest area for the demo game with trees, a player, and some enemies. */
@@ -138,21 +138,55 @@ public class ForestGameArea extends GameArea {
           "images/platecomponent/stackedplates/5plates.png"
   };
   private static final String[] forestTextureAtlases = {
-    "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/ghostKing.atlas", "images/animal_images/gorilla.atlas",
-          "images/animal_images/goose.atlas", "images/animal_images/goat.atlas", "images/animal_images/monkey.atlas",
-          "images/animal_images/snow_wolf.atlas", "images" +
-          "/fireExtinguisher/atlas/flame.atlas", "images/player/player.atlas",
-          "images/player/acaiBowl.atlas", "images/player/bananaSplit.atlas",
-          "images/player/burntBeef.atlas", "images/player/choppedAcai.atlas", "images/player" +
-          "/choppedBanana.atlas", "images/player/choppedChocolate.atlas", "images/player" +
-          "/choppedCucumber.atlas", "images/player/choppedLettuce.atlas", "images/player" +
-          "/choppedStrawberry.atlas", "images/player/choppedTomato.atlas", "images/player" +
-          "/cookedBeef.atlas", "images/player/cookedFish.atlas", "images/player/fruitSalad.atlas"
-          , "images/player/rawAcai.atlas", "images/player/rawBanana.atlas", "images/player" +
-          "/rawBeef.atlas", "images/player/rawChocolate.atlas", "images/player/rawCucumber.atlas"
-          , "images/player/rawFish.atlas", "images/player/rawLettuce.atlas", "images/player" +
-          "/rawStrawberry.atlas", "images/player/rawTomato.atlas", "images/player/salad.atlas",
-          "images/player/steak.atlas", "images/special_NPCs/boss.atlas"
+    "images/terrain_iso_grass.atlas", 
+    "images/ghost.atlas", 
+    "images/ghostKing.atlas", 
+    "images/animal_images/gorilla.atlas",
+    "images/animal_images/goose.atlas", 
+    "images/animal_images/goat.atlas", 
+    "images/animal_images/monkey.atlas",
+    "images/animal_images/snow_wolf.atlas",
+    "images/player.atlas", 
+    "images/fireExtinguisher/atlas/flame.atlas", 
+    "images/stations/oven/oven.atlas",
+    "images/terrain_iso_grass.atlas", 
+    "images/ghost.atlas", 
+    "images/ghostKing.atlas", 
+    "images/animal_images/gorilla.atlas",
+    "images/animal_images/goose.atlas", 
+    "images/animal_images/goat.atlas", 
+    "images/animal_images/monkey.atlas",
+    "images/animal_images/snow_wolf.atlas", 
+    "images/fireExtinguisher/atlas/flame.atlas", 
+    "images/player/player.atlas",
+    "images/player/acaiBowl.atlas", 
+    "images/player/bananaSplit.atlas",
+    "images/player/burntBeef.atlas", 
+    "images/player/choppedAcai.atlas", 
+    "images/player/choppedBanana.atlas", 
+    "images/player/choppedChocolate.atlas", 
+    "images/player/choppedCucumber.atlas", 
+    "images/player/choppedLettuce.atlas", 
+    "images/player/choppedStrawberry.atlas", 
+    "images/player/choppedTomato.atlas", 
+    "images/player/cookedBeef.atlas", 
+    "images/player/cookedFish.atlas", 
+    "images/player/fruitSalad.atlas", 
+    "images/player/rawAcai.atlas", 
+    "images/player/rawBanana.atlas", 
+    "images/player/rawBeef.atlas", 
+    "images/player/rawChocolate.atlas", 
+    "images/player/rawCucumber.atlas", 
+    "images/player/rawFish.atlas", 
+    "images/player/rawLettuce.atlas", 
+    "images/player/rawStrawberry.atlas", 
+    "images/player/rawTomato.atlas", 
+    "images/player/salad.atlas",
+    "images/player/steak.atlas", 
+    "images/player/playerPlate.atlas", 
+    "images/player/playerDirtyPlate.atlas",
+          "images/player/playerFireExtinguisher.atlas",
+          "images/special_NPCs/boss.atlas"
   };
   private static final String[] forestSounds = {"sounds/Impact4.ogg"};
   private static final String backgroundMusic = "sounds/BB_BGM.mp3";
@@ -229,9 +263,12 @@ public class ForestGameArea extends GameArea {
     playMusic();
   }
 
-
+  /***
+   * Checks using the checkWinLoseComponent if to call a cutscene and which one to call
+   */
   private void checkEndOfDayGameState() {
     String gameState = player.getComponent(CheckWinLoseComponent.class).checkGameState();
+
     if ("LOSE".equals(gameState)) {
       createTextBox("You *oink* two-legged moron! You're ruining my " +
               "business' *oink* reputation! Get out!");

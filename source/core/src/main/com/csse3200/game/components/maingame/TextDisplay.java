@@ -140,6 +140,7 @@ public class TextDisplay extends UIComponent {
         String temp = "";
         String current = "";
         for (int i = 0; i < text_length; i++) {
+            // if word formed in temp
             if (text.charAt(i) == ' ') {
                 temp += current;
                 current = "";
@@ -190,6 +191,7 @@ public class TextDisplay extends UIComponent {
         if (this.text != null && current_part < TextDisplay.this.text.size() && charIndex < this.text.get(current_part).length()) {
             if (time - lastUpdate >= delay) {
                 lastUpdate = time;
+                // Add a character and set the label to new text
                 this.currentText.append(text.get(current_part).charAt(charIndex));
                 label.setText(currentText.toString());
                 charIndex++;
@@ -210,6 +212,7 @@ public class TextDisplay extends UIComponent {
                     charIndex = 0;
                     lastUpdate = 0;
                     TextDisplay.this.currentText = new StringBuilder();
+                    // if no more text remaining
                     if (current_part == TextDisplay.this.text.size()) {
                         setVisible(false);
                     }
