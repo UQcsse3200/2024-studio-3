@@ -38,7 +38,7 @@ public class PlayerItemSpriteManager extends Component {
      */
     private void updatePlayerSprite(ItemComponent item) {
         if (item != null) {
-            if (item instanceof IngredientComponent) {
+            if (item instanceof ItemComponent) {
                 switch (item.getItemType()) {
                     case ItemType.ACAI:
                         //Updates player sprite back to hold fish (raw or chopped)
