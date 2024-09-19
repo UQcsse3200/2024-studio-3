@@ -14,6 +14,8 @@ import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.areas.terrain.TerrainFactory.TerrainType;
+import com.csse3200.game.areas.map.BenchGenerator;
+import com.csse3200.game.areas.map.BenchLayout;
 import com.csse3200.game.components.gamearea.GameAreaDisplay;
 import com.csse3200.game.components.maingame.EndDayDisplay;
 import com.csse3200.game.components.moral.MoralDecision;
@@ -506,70 +508,26 @@ public class ForestGameArea extends GameArea {
     Entity fireExtinguisher = StationFactory.createFireExtinguisher();
     spawnEntityAt(fireExtinguisher, fireExtinguisherPos, false, false);
   }
-
-
-  /**
-   * @param type - The type of bench to spawn.
-   * @param startX - The x-coordinate to start spawning the bench.
-   * @param endX - The x-coordinate to end spawning the bench.
-   * @param y - The y-coordinate to spawn the bench.
-   * Spawns a row of benches of the specified type.
-   */
-  private void spawnBenchRow(String type, int startX, int endX, float y) {
-    for (int i = startX; i <= endX; i++) {
-      Entity bench = Bench.createBench(type);
-      spawnEntityAt(bench, new GridPoint2(i, (int) y), false, false);
-      bench.setPosition(i, y);
-    }
-  }
-
-  /**
-   * @param type - The type of bench to spawn.
-   * @param x - The x-coordinate to spawn the bench.
-   * @param startY - The y-coordinate to start spawning the bench.
-   * @param endY - The y-coordinate to end spawning the bench.
-   * Spawns a column of benches of the specified type.
-   */
-  private void spawnBenchColumn(String type, float x, int startY, int endY) {
-    for (int i = startY; i <= endY; i++) {
-      Entity bench = Bench.createBench(type);
-      spawnEntityAt(bench, new GridPoint2((int) x, i), false, false);
-      bench.setPosition(x, i);
-    }
-  }
-  /**
-   * @param type - The type of bench to spawn.
-   * @param x - The x-coordinate to spawn the bench.
-   * @param y - The y-coordinate to spawn the bench.
-   * Spawns a single bench tile of the specified type.
-   */
-  private void spawnSingleBench(String type, float x, float y) {
-    Entity bench = Bench.createBench(type);
-    spawnEntityAt(bench, new GridPoint2((int) x, (int) y), false, false);
-    bench.setPosition(x, y);
-  }
   /**
    * Spawns benches around the restaurant
    */
   private void spawnBenches() {
-     spawnBench(); // temporary, spawns a fire extinguisher and a fire (?)
+    for (Bench bench : BenchLayout.levelOne()) {
+      spawnEntity(bench);
+      bench.setPosition(bench.x, bench.y);
+    }
+    // stuff above should be all that is left here.
+    // the rest below just needs to get copied over into BenchLayout using new tech
 
-    // Bottom bench row
-    spawnSingleBench("left_border", 4, 1f);
-    spawnBenchRow("middle", 5, 14, 1f);
-    spawnSingleBench("right_border", 15, 1f);
 
-    // Top shadow bench row
-    spawnBenchRow("shadow_bottom_top", 5, 14, 10f);
-    spawnSingleBench("left_shadow", 4, 10f);
 
     // Middle vertical benches (long bench setup)
-    spawnSingleBench("single", 9f, 10f); // Middle part of long bench
-    spawnBenchColumn("vertical", 9f, 7, 9);  // Middle vertical section
-    spawnSingleBench("left_corner_shadow", 9f, 7f); // Bottom-left corner shadow
-
-    // Top horizontal shadows near middle
-    spawnBenchRow("top_shadows", 10, 12, 7f);
+    //spawnSingleBench("single", 9f, 10f); // Middle part of long bench
+    //spawnBenchColumn("vertical", 9f, 7, 9);  // Middle vertical section
+    //spawnSingleBench("left_corner_shadow", 9f, 7f); // Bottom-left corner shadow
+//
+    //// Top horizontal shadows near middle
+    //spawnBenchRow("top_shadows", 10, 12, 7f);
 
 //    // Long bench bottom part (left shadow + right shadow)
 //    spawnSingleBench("left_corner_shadow", 11, 3f);
@@ -589,9 +547,12 @@ public class ForestGameArea extends GameArea {
 //    spawnSingleBench("top", 15f, 10f);
 
     // Left vertical bench column
-    spawnBenchColumn("vertical", 4f, 4, 6);
-    spawnSingleBench("bottom_shadow", 4f, 3f);
-    spawnSingleBench("top", 4f, 7f);
+    //spawnBenchColumn("vertical", 4f, 4, 6);
+    //spawnSingleBench("bottom_shadow", 4f, 3f);
+    //spawnSingleBench("top", 4f, 7f);
+
+
+
 
 //    // Middle long bench (vertical section)
 //    spawnBenchColumn("vertical", 9f, 2, 4);
@@ -604,9 +565,9 @@ public class ForestGameArea extends GameArea {
 //    spawnSingleBench("left_border", 6f, 5f);
 
     // Top left section
-    spawnSingleBench("bottom_shadow", 6f, 7f);
-    spawnBenchColumn("vertical", 6f, 8, 9);
-    spawnSingleBench("single", 6f, 10f);
+    //spawnSingleBench("bottom_shadow", 6f, 7f);
+    //spawnBenchColumn("vertical", 6f, 8, 9);
+    //spawnSingleBench("single", 6f, 10f);
   }
 
   private Entity spawnPlayer() {
