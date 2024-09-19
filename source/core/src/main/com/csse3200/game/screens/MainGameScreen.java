@@ -9,6 +9,7 @@ import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.components.maingame.*;
 import com.csse3200.game.components.levels.LevelComponent;
 import com.csse3200.game.components.maingame.MainGameActions;
+import com.csse3200.game.components.upgrades.RageUpgrade;
 import com.csse3200.game.components.ordersystem.*;
 import com.csse3200.game.components.moral.MoralDecision;
 import com.csse3200.game.components.ordersystem.MainGameOrderBtnDisplay;
@@ -55,7 +56,8 @@ public class MainGameScreen extends ScreenAdapter {
 			"images/bird.png",
 			"images/point.png",
 			"images/coin.png",
-			"images/textbox.png"
+			"images/textbox.png",
+			"images/red_overlay.jpg"
 	};
 	// Modified the camera position to fix layout
 	private static final Vector2 CAMERA_POSITION = new Vector2(7.5f, 6.0f);
@@ -205,8 +207,10 @@ public class MainGameScreen extends ScreenAdapter {
 			.addComponent(new TerminalDisplay())
 			.addComponent(new OrderActions(this.game))
 			.addComponent(new MainGameOrderBtnDisplay())
-				.addComponent(new PauseMenuActions(this.game))
-				.addComponent(new PauseMenuDisplay(this));
+			.addComponent(new PauseMenuActions(this.game))
+			.addComponent(new PauseMenuDisplay(this))
+			.addComponent(new RageUpgrade());
+
 
 		//temporary moral display
 //			.addComponent(new MoralDisplayTemp(this));
