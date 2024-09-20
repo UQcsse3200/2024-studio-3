@@ -10,6 +10,8 @@ import org.slf4j.LoggerFactory;
  */
 public class CookIngredientComponent extends ItemTimerComponent {
     
+    private final float ITEMBURNINGTIME = 15f;
+
     // The ingredient componetn of the item being used
     private IngredientComponent item;
     private static final Logger logger = LoggerFactory.getLogger(ChopIngredientComponent.class);
@@ -67,7 +69,7 @@ public class CookIngredientComponent extends ItemTimerComponent {
         item.cookItem();
 
         // Check if the item should be burned
-        if (elapsed >= length + 15) {
+        if (elapsed >= length + ITEMBURNINGTIME) {
             item.burnItem();
             stopTimer(); // Only stop the timer if the item has been burned
         }
