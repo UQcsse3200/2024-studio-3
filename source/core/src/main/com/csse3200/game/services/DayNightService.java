@@ -13,7 +13,7 @@ import com.csse3200.game.events.EventHandler;
  */
 public class DayNightService {
     private static final Logger logger = LoggerFactory.getLogger(DayNightService.class);
-    public  long FIVE_MINUTES = 5 * 60 * 1000; // 5 minutes in milliseconds
+    public  long FIVE_MINUTES = 5000;//5 * 60 * 1000; // 5 minutes in milliseconds
     public long lastCheckTime;
     public long lastCheckTime2;
     private final GameTime gameTime;
@@ -98,6 +98,7 @@ public class DayNightService {
         ServiceLocator.getDayNightService().getEvents().trigger("endGame");
         logger.info("It's a new Day!");
         enddayEventHandler.trigger("newday");
+        enddayEventHandler.trigger("upgrade");
         // // Resume the game time and reset the last check time
         lastCheckTime = gameTime.getTime(); // Reset lastCheckTime to the current time
         endOfDayTriggered = false;
