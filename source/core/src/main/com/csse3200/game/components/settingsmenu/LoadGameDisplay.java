@@ -24,14 +24,9 @@ import java.util.Set;
 
 public class LoadGameDisplay extends UIComponent {
     private static final Logger logger = LoggerFactory.getLogger(LoadGameDisplay.class);
-    private final GdxGame game;
+    //private final GdxGame game;
     private Table rootTable;
     private Table savesTable;
-
-    public LoadGameDisplay(game) {
-        super();
-        this.game = game;
-    }
     @Override
     public void create() {
         super.create();
@@ -39,22 +34,22 @@ public class LoadGameDisplay extends UIComponent {
     }
     private void addActors() {
         rootTable = new Table();
-        table.setFillParent(true);
+        rootTable.setFillParent(true);
 
-        Label title = new Label("Load Game");
+        Label title = new Label("Load Game", skin);
         rootTable.add(title).row();
 
         savesTable = new Table();
         for (int i = 1; i < 7; i++) {
-            Load load = new Table();
-            load.add(new Label("Save " + i));
-            savesTable.add(load);
+            Table load = new Table();
+            load.add(new Label("Save " + i, skin));
+            savesTable.add(load).pad(100,100,100,100);
             if (i % 2 == 0) {
                 savesTable.row();
             }
         }
         rootTable.add(savesTable).row();
-        ImageTextButton backBtn = new ImageTextButton("Start", skin);
+        ImageTextButton backBtn = new ImageTextButton("Back", skin);
         backBtn.addListener(
             new ChangeListener() {
                 @Override
@@ -63,7 +58,12 @@ public class LoadGameDisplay extends UIComponent {
                     entity.getEvents().trigger("exit");
                 }
             });
-        )
         rootTable.add(backBtn).row();
+        stage.addActor(rootTable);
     }
+
+    @Override
+    public void draw(SpriteBatch batch) {}
+    @Override
+    public void setStage(Stage mock) {}
 }
