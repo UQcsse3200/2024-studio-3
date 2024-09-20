@@ -30,10 +30,6 @@ public class ChopIngredientComponent extends ItemTimerComponent {
         // Run the previous creation
         super.create();
 
-        // Add appriopriate event listeners
-        entity.getEvents().addListener("chopIngredient", this::startTimer);
-        entity.getEvents().addListener("stopChoppingIngredient", this::stopTimer);
-
         // Get the item so that it can be updated correctly and the length can be correct
         item = entity.getComponent(IngredientComponent.class);
         setLength(item.getChopTime()); // More logic can be added here when required
