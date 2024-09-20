@@ -75,13 +75,16 @@ public class ObstacleFactory {
             .addComponent(new PhysicsComponent())
             .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
 
-    float width=-1f,height=131.9f,scalefactor=11f;
+    float width=-0.15f,height=131.9f,scalefactor=9f;
+    border.setScale(width, height/scalefactor);
     border.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
-    PhysicsUtils.setScaledCollider(border, 1.0F, 0.0F);
-    border.setScale(width/scalefactor, height/scalefactor);
-    PhysicsUtils.setScaledCollider(border, 1, (height - 5) / height);
+    PhysicsUtils.setScaledCollider(border, -2.0f, (height - 5) / height);
     return border;
   }
+
+//  bench.setScale(width, height);
+//  bench.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
+//  PhysicsUtils.setScaledCollider(bench, 1.5f, 0.75f);
 
   public static Entity horizontalSeparation(){
     Entity border = new Entity()
@@ -91,7 +94,6 @@ public class ObstacleFactory {
 
     float width = 177.4f, height = 1f, scalefactor = 11f;
     border.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
-    PhysicsUtils.setScaledCollider(border, 1.0F, 0.8F);
     border.setScale(width/scalefactor, height/scalefactor);
     PhysicsUtils.setScaledCollider(border, 1, (height - 5) / height);
     return border;

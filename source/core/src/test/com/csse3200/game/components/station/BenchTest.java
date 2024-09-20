@@ -34,7 +34,7 @@ public class BenchTest {
     }
     /**
      * Test the creation of a bench with the type "left_border".
-     */
+        */
     @Test
     public void testCreateBench() {
         Entity bench = Bench.createBench("left_border");
