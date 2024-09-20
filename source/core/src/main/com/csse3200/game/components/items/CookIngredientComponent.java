@@ -27,10 +27,6 @@ public class CookIngredientComponent extends ItemTimerComponent {
         // Run the previous creation
         super.create();
 
-        // Add appriopriate event listeners
-        entity.getEvents().addListener("cookIngredient", this::startTimer);
-        entity.getEvents().addListener("stopCookingIngredient", this::stopTimer);
-
         // Get the item so that it can be updated correctly and correct time gotten
         item = entity.getComponent(IngredientComponent.class);
         setLength(item.getCookTime()); // More logic can be added here when required
@@ -63,16 +59,21 @@ public class CookIngredientComponent extends ItemTimerComponent {
      * Update the item component to reflect its new state.
      */
     protected void updateItem() {
-        // TODO: implement item burning and not just cooking
+        // TODO: implement item burning and not just cooking 
+        // Using the previous logic of 15s buffer but should / could this be
+        // changed?
 
         // Update item state
         item.cookItem();
 
-        // stop the timer from running to prevent any errors
-        stopTimer();
+        // Check if the item should be burned
+        if (elapsed >= length + 15) {
+            item.burnItem();
+            stopTimer(); // Only stop the timer if the item has been burned
+        }
 
         // Put the info to the console
-        String s = String.format("The state of item: %s, has been update to cooked", item.getItemName());
+        String s = String.format("The state of item: %s, has been update to %s", item.getItemName(), item.getItemState());
         logger.info(s);
     }
 

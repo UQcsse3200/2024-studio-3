@@ -41,8 +41,9 @@ public abstract class ItemTimerComponent extends Component {
      */
     @Override
     public void create() {
-        entity.getEvents().addListener("Start Timer", this::startTimer);
-        entity.getEvents().addListener("Stop Timer", this::stopTimer);
+        // Add appriopriate event listeners
+        entity.getEvents().addListener("cookIngredient", this::startTimer);
+        entity.getEvents().addListener("stopCookingIngredient", this::stopTimer);
     }
 
     /**
