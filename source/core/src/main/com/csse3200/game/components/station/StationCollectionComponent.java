@@ -3,7 +3,6 @@ package com.csse3200.game.components.station;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.factories.ItemFactory;
-import com.csse3200.game.services.ServiceLocator;
 
 /**
  * StationCollectionComponent.java
