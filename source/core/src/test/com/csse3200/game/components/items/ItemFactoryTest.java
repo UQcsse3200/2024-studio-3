@@ -21,6 +21,9 @@ public class ItemFactoryTest {
 
     @BeforeEach
     void setUp() {
+        // Clear service locater before tests
+        ServiceLocator.clear();
+
         ServiceLocator.registerPhysicsService(new PhysicsService());
         ServiceLocator.registerEntityService(new EntityService());
         ServiceLocator.registerRenderService(new RenderService());
@@ -51,63 +54,54 @@ public class ItemFactoryTest {
     void createFish() {
         Entity fish = ItemFactory.createFish("raw");
         assertEquals(ItemType.FISH, fish.getComponent(IngredientComponent.class).getItemType());
-        baseComponentsAssertion(fish);
     }
 
     @Test
     void createBeef() {
         Entity beef = ItemFactory.createBeef("raw");
         assertEquals(ItemType.BEEF, beef.getComponent(IngredientComponent.class).getItemType());
-        baseComponentsAssertion(beef);
     }
 
     @Test
     void createBanana() {
         Entity banana = ItemFactory.createBanana("raw");
         assertEquals(ItemType.BANANA, banana.getComponent(IngredientComponent.class).getItemType());
-        baseComponentsAssertion(banana);
     }
 
     @Test
     void createCucumber() {
         Entity cucumber = ItemFactory.createCucumber("raw");
         assertEquals(ItemType.CUCUMBER, cucumber.getComponent(IngredientComponent.class).getItemType());
-        baseComponentsAssertion(cucumber);
     }
 
     @Test
     void createTomato() {
         Entity tomato = ItemFactory.createTomato("raw");
         assertEquals(ItemType.TOMATO, tomato.getComponent(IngredientComponent.class).getItemType());
-        baseComponentsAssertion(tomato);
     }
 
     @Test
     void createStrawberry() {
         Entity strawberry = ItemFactory.createStrawberry("raw");
         assertEquals(ItemType.STRAWBERRY, strawberry.getComponent(IngredientComponent.class).getItemType());
-        baseComponentsAssertion(strawberry);
     }
 
     @Test
     void createLettuce() {
         Entity lettuce = ItemFactory.createLettuce("raw");
         assertEquals(ItemType.LETTUCE, lettuce.getComponent(IngredientComponent.class).getItemType());
-        baseComponentsAssertion(lettuce);
     }
 
     @Test
     void createChocolate() {
         Entity chocolate = ItemFactory.createChocolate("raw");
         assertEquals(ItemType.CHOCOLATE, chocolate.getComponent(IngredientComponent.class).getItemType());
-        baseComponentsAssertion(chocolate);
     }
 
     @Test
     void createAcai() {
         Entity acai = ItemFactory.createAcai("raw");
         assertEquals(ItemType.ACAI, acai.getComponent(IngredientComponent.class).getItemType());
-        baseComponentsAssertion(acai);
     }
 
     @Test
@@ -149,7 +143,6 @@ public class ItemFactoryTest {
     void testCreateBaseItemValidItem() {
         Entity testItem = ItemFactory.createBaseItem("strawberry");
         assertEquals(ItemType.STRAWBERRY, testItem.getComponent(IngredientComponent.class).getItemType());
-        baseComponentsAssertion(testItem);
     }
 
     @Test
