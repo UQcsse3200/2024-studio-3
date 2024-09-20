@@ -16,6 +16,7 @@ import com.csse3200.game.components.moral.MoralDecision;
 import com.csse3200.game.components.ordersystem.MainGameOrderBtnDisplay;
 import com.csse3200.game.components.ordersystem.OrderActions;
 import com.csse3200.game.components.ordersystem.TicketDetails;
+import com.csse3200.game.components.upgrades.SpeedBootsUpgrade;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.entities.factories.LevelFactory;
@@ -211,7 +212,9 @@ public class MainGameScreen extends ScreenAdapter {
 			.addComponent(new PauseMenuActions(this.game))
 			.addComponent(new PauseMenuDisplay(this))
 			.addComponent(new RageUpgrade())
-			.addComponent(new LoanUpgrade());
+			.addComponent(new LoanUpgrade())
+				.addComponent(new SpeedBootsUpgrade());
+
 
 
 		//temporary moral display
