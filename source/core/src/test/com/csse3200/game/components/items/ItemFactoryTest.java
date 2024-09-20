@@ -142,6 +142,9 @@ public class ItemFactoryTest {
     @Test
     void testCreateBaseItemValidItem() {
         Entity testItem = ItemFactory.createBaseItem("strawberry");
+        assertNotNull(testItem);
+        assertNotNull(testItem.getComponent(IngredientComponent.class));
+        assertTrue(testItem.getComponent(IngredientComponent.class).getItemName().toLowerCase().equals("strawberry"));
         assertEquals(ItemType.STRAWBERRY, testItem.getComponent(IngredientComponent.class).getItemType());
     }
 

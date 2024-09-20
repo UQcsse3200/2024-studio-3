@@ -10,6 +10,8 @@ import com.csse3200.game.physics.components.ColliderComponent;
 import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.rendering.TextureRenderComponent;
+import com.csse3200.game.services.ServiceLocator;
+
 import java.util.List;
 
 public class ItemFactory {
@@ -222,28 +224,42 @@ public class ItemFactory {
 
     public static Entity createBaseItem(String itemName) {
 
+        Entity entity = null;
+
         switch (itemName) {
                 case "fish":
-                        return ItemFactory.createFish("raw");
+                        entity = ItemFactory.createFish("raw");
+                        break;
                 case "beef":
-                        return ItemFactory.createBeef("raw");
+                        entity = ItemFactory.createBeef("raw");
+                        break;
                 case "banana":
-                        return ItemFactory.createBanana("raw");
+                        entity = ItemFactory.createBanana("raw");
+                        break;
                 case "cucumber":
-                        return ItemFactory.createCucumber("raw");
+                        entity = ItemFactory.createCucumber("raw");
+                        break;
                 case "tomato":
-                        return ItemFactory.createTomato("raw");
+                        entity = ItemFactory.createTomato("raw");
+                        break;
                 case "strawberry":
-                        return ItemFactory.createStrawberry("raw");
+                        entity = ItemFactory.createStrawberry("raw");
+                        break;
                 case "lettuce":
-                        return ItemFactory.createLettuce("raw");
+                        entity = ItemFactory.createLettuce("raw");
+                        break;
                 case "chocolate":
-                        return ItemFactory.createChocolate("raw");
+                        entity = ItemFactory.createChocolate("raw");
+                        break;
                 case "acai":
-                        return ItemFactory.createAcai("raw");
+                        entity = ItemFactory.createAcai("raw");
+                        break;
+                default:
+                        return null;
         }
 
-        // Here to supress warnings about return values
-        return null;
+        // Register the entity
+        ServiceLocator.getEntityService().register(entity);
+        return entity;
     }
 }

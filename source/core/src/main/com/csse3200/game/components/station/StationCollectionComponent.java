@@ -27,7 +27,6 @@ public class StationCollectionComponent extends Component {
             return null;
         }
         
-        ServiceLocator.getEntityService().register(newItem); // Register so it can update !IMPORTANT!
         return newItem;
     }
     
