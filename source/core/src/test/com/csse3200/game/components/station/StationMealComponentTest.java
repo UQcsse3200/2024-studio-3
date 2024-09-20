@@ -2,6 +2,8 @@ package com.csse3200.game.components.station;
 
 import com.csse3200.game.components.items.CookIngredientComponent;
 import com.csse3200.game.components.items.IngredientComponent;
+import com.csse3200.game.components.items.ItemComponent;
+import com.csse3200.game.components.items.ItemType;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.components.player.InventoryDisplay;
 import com.csse3200.game.entities.Entity;
@@ -18,6 +20,8 @@ import com.csse3200.game.services.ServiceLocator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+
+import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -58,10 +62,80 @@ public class StationMealComponentTest {
     }
 
     @Test
-    void shouldGetAcceptableItems() {
+    void shouldSetAcceptableItems() {
+        ArrayList<String> acceptableItems = new ArrayList<>();
+        acceptableItems.add("banana");
+        acceptableItems.add("strawberry");
+        mealHandler = new StationMealComponent("combining", acceptableItems);
+        ArrayList<String> actualItems = mealHandler.acceptableItems;
+        assertEquals(acceptableItems, actualItems);
+    }
+
+    @Test
+    void shouldSetStationType() {
+        ArrayList<String> acceptableItems = new ArrayList<>();
+        mealHandler = new StationMealComponent("combining", acceptableItems);
+        assertEquals("combining", mealHandler.getType());
+    }
+
+    // TODO: this test has problems since it always returns true!! Will need to be modified once this method is fixed
+    @Test
+    void shouldAcceptItem() {
+        ArrayList<String> acceptableItems = new ArrayList<>();
+        acceptableItems.add("banana");
+        acceptableItems.add("strawberry");
+        mealHandler = new StationMealComponent("combining", acceptableItems);
+        ItemComponent item = new ItemComponent("banana", ItemType.BANANA, 1);
+        assertTrue(mealHandler.isItemAccepted(item));
+    }
+
+    // might need to include a shouldntAcceptItem() test once this has been implemented
+
+
+    @Test
+    void tooLittleShouldntMakeMeal() {
+        ArrayList<String> acceptableItems = new ArrayList<>();
+        acceptableItems.add("banana");
+        acceptableItems.add("strawberry");
+        mealHandler = new StationMealComponent("combining", acceptableItems);
 
     }
 
+    @Test
+    void incorrectIngrsShouldntMakeMeal() {
+
+    }
+
+    @Test
+    void shouldMakeAcaiBowl() {
+
+    }
+
+    @Test
+    void shouldMakeBananaSplit() {
+
+    }
+
+    @Test
+    void shouldMakeFruitSalad() {
+
+    }
+
+    @Test
+    void shouldMakeSalad() {
+        ArrayList<String> acceptableItems = new ArrayList<>();
+        acceptableItems.add("tomato");
+        acceptableItems.add("cucumber");
+        acceptableItems.add("lettuce");
+        mealHandler = new StationMealComponent("combining", acceptableItems);
+
+
+    }
+
+    @Test
+    void shouldMakeSteakMeal() {
+
+    }
 
 
 }
