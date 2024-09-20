@@ -1,5 +1,6 @@
 package com.csse3200.game.services;
 
+import com.csse3200.game.components.mainmenu.MainMenuDisplay;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,7 +32,7 @@ public class ServiceLocator {
   private static PlayerService playerService;
   private static GameArea gameArea;
   private static MainGameScreen gameScreen;
-
+  private static MainMenuDisplay mainMenuDisplay;
 
   private static ResourceService resourceService;
 
@@ -90,13 +91,12 @@ public class ServiceLocator {
   }
 
 
-
   public static OrderActions getOrderActions() {
     return orderActions;
 
   }
 
-  public static LevelService getLevelService(){
+  public static LevelService getLevelService() {
     return levelService;
   }
 
@@ -108,16 +108,16 @@ public class ServiceLocator {
     return gameScreen;
   }
 
-    // New getters for additional services
-    public static CustomerMovementService getCustomerMovementService() {
-        return customerMovementService;
-    }
+  // New getters for additional services
+  public static CustomerMovementService getCustomerMovementService() {
+    return customerMovementService;
+  }
 
 
-    // Register methods for services
-    public static void registerEntityService(EntityService service) {
-        entityService = service;
-    }
+  // Register methods for services
+  public static void registerEntityService(EntityService service) {
+    entityService = service;
+  }
 
   public static void registerDocketService(DocketService service) {
     if (docketService != null) {
@@ -152,6 +152,7 @@ public class ServiceLocator {
 
   /**
    * Register player service
+   *
    * @param service PlayerService
    */
   public static void registerPlayerService(PlayerService service) {
@@ -174,8 +175,6 @@ public class ServiceLocator {
   }
 
 
-
-
   public static void registerOrderActions(OrderActions source) {
     logger.debug("Registering order action {}", source);
     orderActions = source;
@@ -189,7 +188,8 @@ public class ServiceLocator {
       logger.warn("Level service is already assigned, ignoring register");
     }
   }
-  public static void registerTicketDetails(TicketDetails source){
+
+  public static void registerTicketDetails(TicketDetails source) {
     logger.debug("Registering resource service {}", source);
     ticketDetails = source;
   }
@@ -205,6 +205,11 @@ public class ServiceLocator {
 
   }
 
+
+  public static void registerMainMenuDisplay(MainMenuDisplay display) {
+    mainMenuDisplay = display;
+  }
+
   public static void registerGameScreen(MainGameScreen game) {
     if (gameScreen != null) {
       logger.warn("Game Screen is already registered!");
@@ -214,34 +219,42 @@ public class ServiceLocator {
     }
   }
 
-    // New register methods for additional services
-    public static void registerCustomerMovementService(CustomerMovementService service) {
-        if (customerMovementService != null) {
-            logger.warn("CustomerMovementService is being overwritten!");
-        }
-        logger.debug("Registering customer movement service {}", service);
-        customerMovementService = service;
+  // New register methods for additional services
+  public static void registerCustomerMovementService(CustomerMovementService service) {
+    if (customerMovementService != null) {
+      logger.warn("CustomerMovementService is being overwritten!");
     }
+    logger.debug("Registering customer movement service {}", service);
+    customerMovementService = service;
+  }
 
 
-    // Clear all services
-    public static void clear() {
-        entityService = null;
-        renderService = null;
-        physicsService = null;
-        timeSource = null;
-        inputService = null;
-        resourceService = null;
-        docketService = null;
-        orderActions = null;
-        playerService = null;
-        gameArea = null;
-        gameScreen = null;
-        customerMovementService = null;
-        dayNightService = null;
-    }
+  // Clear all services
+  public static void clear() {
+    entityService = null;
+    renderService = null;
+    physicsService = null;
+    timeSource = null;
+    inputService = null;
+    resourceService = null;
+    docketService = null;
+    orderActions = null;
+    playerService = null;
+    gameArea = null;
+    gameScreen = null;
+    customerMovementService = null;
+    dayNightService = null;
+  }
 
   private ServiceLocator() {
     throw new IllegalStateException("Instantiating static util class");
   }
+
+
+  public static MainMenuDisplay getMainMenuDisplay() {
+    return ServiceLocator.mainMenuDisplay;
+  }
 }
+
+
+

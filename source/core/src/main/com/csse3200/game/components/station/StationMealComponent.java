@@ -2,18 +2,18 @@ package com.csse3200.game.components.station;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
+import java.util.Optional;
 
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.items.IngredientComponent;
-import com.csse3200.game.components.items.CookIngredientComponent;
 import com.csse3200.game.components.items.ItemComponent;
 import com.csse3200.game.components.items.ItemType;
 import com.csse3200.game.components.player.InventoryComponent;
-import com.csse3200.game.entities.Entity;
 import com.csse3200.game.components.player.InventoryDisplay;
 import com.csse3200.game.components.items.MealComponent;
-import com.csse3200.game.entities.factories.DishFactory;;
+import com.csse3200.game.entities.Entity;
+import com.csse3200.game.entities.factories.DishFactory;
+import com.csse3200.game.entities.factories.ItemFactory;;
 
 public class StationMealComponent extends Component {
     /**
@@ -21,8 +21,8 @@ public class StationMealComponent extends Component {
      * StationInventoryComponent inventorycomponent - instance of inventory for this station
      * TBD acceptableItems - HashMap, HashSet etc of mappings for acceptable items based on station
      */
-    protected final String type;
-    protected InventoryComponent inventoryComponent;
+    protected final String type;    
+    protected InventoryComponent inventoryComponent;        // initialised with capacity = 4
     protected final ArrayList<String> acceptableItems;
     private final DishFactory mealFactory;
 
@@ -76,10 +76,13 @@ public class StationMealComponent extends Component {
      */
     public void handleInteraction(InventoryComponent playerInventoryComponent, InventoryDisplay inventoryDisplay) {
         // Pre calcs
-        // boolean full = playerInventoryComponent.isFull() & this.inventoryComponent.isFull();
+        System.out.printf("BEFORE STATION ITEMS: %s\n", this.inventoryComponent.getItemNames());
+        System.out.printf("BEFORE PLAYER ITEMS: %s\n", playerInventoryComponent.getItemNames());
+        
         boolean empty = playerInventoryComponent.isEmpty() & this.inventoryComponent.isEmpty();
+        boolean full = playerInventoryComponent.isFull() & this.inventoryComponent.isFull();
 
-        if (empty) {
+        if (empty | full) {
             // nothing should happen, neither can do anything
         } else if (playerInventoryComponent.isFull()) {
             // Input to station
@@ -93,10 +96,12 @@ public class StationMealComponent extends Component {
                 this.stationReceiveItem(item, playerInventoryComponent, inventoryDisplay);
             }
         
-        } else if (inventoryComponent.isFull()) {
+        } else if (!inventoryComponent.isEmpty()) {
             // Player wants meal from station, if possible results in meal in player inventory
             this.stationGiveItem(playerInventoryComponent, inventoryDisplay);
         }
+        System.out.printf("AFTER STATION ITEMS: %s\n", this.inventoryComponent.getItemNames());
+        System.out.printf("AFTER PLAYER ITEMS: %s\n", playerInventoryComponent.getItemNames());
     }
 
     /**
@@ -116,19 +121,14 @@ public class StationMealComponent extends Component {
      * @param inventoryDisplay - reference to UI for inventory display
      */
     public void stationReceiveItem(ItemComponent item, InventoryComponent playerInventoryComponent, InventoryDisplay inventoryDisplay) {
-        // increase the capacity of the inventory if needed
-        if (this.inventoryComponent.isFull()) {
-            this.inventoryComponent.increaseCapacity(this.inventoryComponent.getCapacity() + 1);
-        }
-        this.inventoryComponent.addItemAt(item, this.inventoryComponent.getSize());
-        playerInventoryComponent.removeAt(0);
-        
-        // processes a meal from the station inventory if possible
-        if (this.inventoryComponent.getSize() > 1) {
+        // add an item to the station inventory if there is room
+        if (!this.inventoryComponent.isFull()) {
+            this.inventoryComponent.addItem(item);
+            playerInventoryComponent.removeAt(0);
+            
+            // process a meal from the station inventory if possible
             this.processMeal();
         }
-
-        // do i need to end the interaction here? --> nope
     }
 
     /**
@@ -138,20 +138,16 @@ public class StationMealComponent extends Component {
      * @param inventoryDisplay - reference to UI for inventory display
      */
     public void stationGiveItem(InventoryComponent playerInventoryComponent, InventoryDisplay inventoryDisplay) {
-        // check if there is a meal in the inventory
-        int mealIndex = this.mealExists();
-        
-        if (mealIndex > 0) {
-            // item swapping
-            ItemComponent item = inventoryComponent.getItemAt(mealIndex);
-            playerInventoryComponent.addItemAt(item,0);
-            
-            // Remove single item in station
-            this.inventoryComponent.removeAt(mealIndex);
-
-            // do i need this here?
-            entity.getEvents().trigger("interactionEnd");
+        for (int index = 0; index < this.inventoryComponent.getCapacity(); index++) {
+            if (this.inventoryComponent.getItemAt(index) != null) {
+                // item swapping
+                ItemComponent item = this.inventoryComponent.removeAt(index);
+                playerInventoryComponent.addItemAt(item,0);
+            }
         }
+        
+        // do i need this here? --> yes
+        entity.getEvents().trigger("interactionEnd");
     }
 
     /**
@@ -162,8 +158,9 @@ public class StationMealComponent extends Component {
      */
     private int mealExists() {
         for (int index = 0; index < this.inventoryComponent.getCapacity(); index++) {
+            // check if any item in the station inventory is a meal type
             ItemComponent item = this.inventoryComponent.getItemAt(index);
-            if (item.getItemType() == ItemType.MEAL) {
+            if (item != null && item instanceof MealComponent) {
                 return index;
             }
         }
@@ -176,11 +173,11 @@ public class StationMealComponent extends Component {
      * and return it to the station inventory.
      */
     private void processMeal() {
-        List<String> possibleRecipes = mealFactory.getRecipe(this.inventoryComponent.getItemNames());
+        Optional<String> possibleRecipe = mealFactory.getRealRecipe(this.inventoryComponent.getItemNames()); 
         
-        if (!possibleRecipes.isEmpty()) {
+        if (!possibleRecipe.isEmpty()) {
             // get first valid recipe
-            // String currentRecipe = possibleRecipes.getFirst();
+            String recipe = possibleRecipe.get();
             List<IngredientComponent> ingredients = new ArrayList<>();
 
             // process items to be IngredientComponents
@@ -193,8 +190,10 @@ public class StationMealComponent extends Component {
             }
             
             // create and return the first possible meal
-            MealComponent meal = new MealComponent(possibleRecipes.getFirst(), ItemType.MEAL, 0, ingredients, 0);
-            this.inventoryComponent.addItem(meal);
-        }
+            Entity mealEntity = ItemFactory.createMeal(recipe, ingredients);
+            MealComponent meal = mealEntity.getComponent(MealComponent.class);
+            // MealComponent meal = new MealComponent(recipe, ItemType.MEAL, 0, ingredients, 0);
+            this.inventoryComponent.addItemAt(meal, 0);
+        } 
     }
 }

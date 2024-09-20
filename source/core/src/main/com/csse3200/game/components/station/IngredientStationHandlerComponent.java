@@ -8,6 +8,8 @@ import com.csse3200.game.components.items.ItemComponent;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.components.player.InventoryDisplay;
 import com.csse3200.game.entities.Entity;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class IngredientStationHandlerComponent extends Component {
     /**
@@ -19,6 +21,8 @@ public class IngredientStationHandlerComponent extends Component {
     protected InventoryComponent inventoryComponent;
     protected StationCollectionComponent collectionComponent;
     private final String[] ingredientList = {"acai", "beef", "banana", "lettuce", "cucumber", "tomato", "strawberry", "chocolate", "fish"};
+    protected final String ingredient;
+    private static final Logger logger = LoggerFactory.getLogger(StationBinComponent.class);
 
     // General TODO:
     // Add trigger calls to external for failed interactions
@@ -31,9 +35,9 @@ public class IngredientStationHandlerComponent extends Component {
      * General constructor
      * @param type - storing type of station
      */
-    public IngredientStationHandlerComponent(String type) {
+    public IngredientStationHandlerComponent(String type, String ingredient) {
         this.type = type;
-
+        this.ingredient = ingredient;
     }
 
     /**
@@ -47,7 +51,7 @@ public class IngredientStationHandlerComponent extends Component {
         this.collectionComponent = entity.getComponent(StationCollectionComponent.class);
 
         // Get a random ingredient for now
-        IngredientComponent itemComponent = getRandomIngredient();
+        IngredientComponent itemComponent = getIngredient(this.ingredient);
 
         ///this.inventoryComponent.addItemAt(new ItemComponent("Apples", ItemType.APPLE, 1), 0);
         this.inventoryComponent.addItemAt(itemComponent, 0);
@@ -71,6 +75,7 @@ public class IngredientStationHandlerComponent extends Component {
             // do nothing
         } else {
             stationGiveItem(playerInventoryComponent, inventoryDisplay);
+            logger.debug("INTERACTED WITH TREE");
         }
     }
 
@@ -82,17 +87,23 @@ public class IngredientStationHandlerComponent extends Component {
         // entity.getEvents().trigger("showTooltip", "You took something from the station!");
         ItemComponent item = this.inventoryComponent.getItemFirst();
         playerInventoryComponent.addItemAt(item,0);
+        inventoryDisplay.update();
         this.inventoryComponent.removeAt(0);
 
-        // TODO: create a new entity instead of the item component and then get the item
-        // component from the entity and then put that in the inventory
-        // For now just get a random ingredient WILL CHANGE LATER
-        IngredientComponent itemComponent = getRandomIngredient();
+        // Create Entity and give an Item Component
+        IngredientComponent itemComponent = getIngredient(this.ingredient);
 
         ///this.inventoryComponent.addItemAt(new ItemComponent("Apples", ItemType.APPLE, 1), 0);
         this.inventoryComponent.addItemAt(itemComponent, 0);
-        inventoryDisplay.update();
-        entity.getEvents().trigger("interactionEnd");
+
+        //entity.getEvents().trigger("interactionEnd");
+    }
+
+    private IngredientComponent getIngredient(String ingredientType) {
+        Entity newItem = collectionComponent.collectItem(ingredientType);
+        IngredientComponent itemComponent = newItem.getComponent(IngredientComponent.class);
+
+        return itemComponent;
     }
 
     private IngredientComponent getRandomIngredient() {
