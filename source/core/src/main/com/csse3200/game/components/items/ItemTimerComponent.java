@@ -98,14 +98,6 @@ public abstract class ItemTimerComponent extends Component {
     }
 
     /**
-     * Get the time elapsed since the timer has been started
-     * @return the ammount of time in seconds since the timer started
-    */
-    public float getElapsedTime() {
-        return elapsed;
-    }
-
-    /**
      * Gets the percentage completion of the timer. e.g. if the length is 10s
      * and 3s has passed 30 will be returned.
      * @return The percentage completion of the timer.
