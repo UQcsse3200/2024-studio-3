@@ -2,7 +2,6 @@ package com.csse3200.game.entities.factories;
 
 import java.util.Arrays;
 
-import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.components.items.*;
 import com.csse3200.game.physics.PhysicsLayer;
@@ -27,16 +26,10 @@ public class ItemFactory {
      * @return A fish entity.
      */
     public static Entity createFish(String cookedLevel) {
-        Entity fish = createTemplateItem()
+        Entity fish = new Entity()
                 .addComponent(new IngredientComponent("Fish", ItemType.FISH, 2, 10,
                         0, cookedLevel))
-                .addComponent(new TextureRenderComponent(String.format("images/ingredients/%s_fish.png", cookedLevel)));
-        /**
-         * Added this to allow the fish to change texture while cooking.
-         */
-        fish.addComponent(new CookIngredientComponent());
-        PhysicsUtils.setScaledCollider(fish, 0.6f, 0.3f);
-        fish.getComponent(ColliderComponent.class).setDensity(1.5f);
+                .addComponent(new CookIngredientComponent());
         return fish;
     }
 
@@ -46,14 +39,10 @@ public class ItemFactory {
      * @return A beef entity.
      */
     public static Entity createBeef(String cookedLevel) {
-        Entity beef = createTemplateItem()
+        Entity beef = new Entity()
                 .addComponent(new IngredientComponent("Beef", ItemType.BEEF, 2, 10,
                         0, cookedLevel))
-                .addComponent(new TextureRenderComponent(String.format("images/ingredients/%s_beef.png", cookedLevel)));
-        beef.getComponent(PhysicsComponent.class).setBodyType(BodyDef.BodyType.StaticBody);
-        beef.addComponent(new CookIngredientComponent());
-        PhysicsUtils.setScaledCollider(beef, 0.6f, 0.3f);
-        beef.getComponent(ColliderComponent.class).setDensity(1.5f);
+                .addComponent(new CookIngredientComponent());
         return beef;
     }
 
@@ -77,12 +66,10 @@ public class ItemFactory {
      * @return A cucumber entity.
      */
     public static Entity createCucumber(String chopLevel) {
-        Entity cucumber = createTemplateItem()
+        Entity cucumber = new Entity()
                 .addComponent(new IngredientComponent("Cucumber", ItemType.CUCUMBER, 1, 5,
                         10, chopLevel))
-                .addComponent(new TextureRenderComponent(String.format("images/ingredients/%s_cucumber.png", chopLevel)));
-        PhysicsUtils.setScaledCollider(cucumber, 0.6f, 0.3f);
-        cucumber.getComponent(ColliderComponent.class).setDensity(1.5f);
+                .addComponent(new ChopIngredientComponent());
         return cucumber;
     }
 
@@ -92,12 +79,10 @@ public class ItemFactory {
      * @return A tomato entity.
      */
     public static Entity createTomato(String chopLevel) {
-        Entity tomato = createTemplateItem()
+        Entity tomato = new Entity()
                 .addComponent(new IngredientComponent("Tomato", ItemType.TOMATO, 1, 6,
                         10, chopLevel))
-                .addComponent(new TextureRenderComponent(String.format("images/ingredients/%s_tomato.png", chopLevel)));
-        PhysicsUtils.setScaledCollider(tomato, 0.6f, 0.3f);
-        tomato.getComponent(ColliderComponent.class).setDensity(1.5f);
+                .addComponent(new ChopIngredientComponent());
         return tomato;
     }
 
@@ -109,7 +94,8 @@ public class ItemFactory {
     public static Entity createStrawberry(String chopLevel) {
         Entity strawberry = new Entity()//createTemplateItem()
                 .addComponent(new IngredientComponent("Strawberry", ItemType.STRAWBERRY, 1, 3,
-                        10, chopLevel));
+                        10, chopLevel))
+                .addComponent(new ChopIngredientComponent());
         return strawberry;
     }
 
@@ -119,12 +105,9 @@ public class ItemFactory {
      * @return A lettuce entity.
      */
     public static Entity createLettuce(String chopLevel) {
-        Entity lettuce = createTemplateItem()
+        Entity lettuce = new Entity()
                 .addComponent(new IngredientComponent("Lettuce", ItemType.LETTUCE, 1, 10, 10, chopLevel))
-                .addComponent(new TextureRenderComponent(String.format("images/ingredients/%s_lettuce.png", chopLevel)));
-        lettuce.getComponent(PhysicsComponent.class).setBodyType(BodyDef.BodyType.StaticBody);
-        PhysicsUtils.setScaledCollider(lettuce, 0.6f, 0.3f);
-        lettuce.getComponent(ColliderComponent.class).setDensity(1.5f);
+                .addComponent(new ChopIngredientComponent());
         return lettuce;
     }
 
@@ -134,11 +117,9 @@ public class ItemFactory {
      * @return A chocolate entity.
      */
     public static Entity createChocolate(String chopLevel) {
-        Entity chocolate = createTemplateItem()
+        Entity chocolate = new Entity()
                 .addComponent(new IngredientComponent("Chocolate", ItemType.CHOCOLATE, 1, 10, 10, chopLevel))
-                .addComponent(new TextureRenderComponent(String.format("images/ingredients/%s_chocolate.png", chopLevel)));
-        PhysicsUtils.setScaledCollider(chocolate, 0.6f, 0.3f);
-        chocolate.getComponent(ColliderComponent.class).setDensity(1.5f);
+                .addComponent(new ChopIngredientComponent());
         return chocolate;
     }
 
@@ -148,11 +129,9 @@ public class ItemFactory {
      * @return An Açaí entity.
      */
     public static Entity createAcai(String chopLevel) {
-        Entity acai = createTemplateItem()
+        Entity acai = new Entity()
                 .addComponent(new IngredientComponent("Acai", ItemType.ACAI, 1, 10, 10, chopLevel))
-                .addComponent(new TextureRenderComponent(String.format("images/ingredients/%s_acai.png", chopLevel)));
-        PhysicsUtils.setScaledCollider(acai, 0.6f, 0.3f);
-        acai.getComponent(ColliderComponent.class).setDensity(1.5f);
+                .addComponent(new ChopIngredientComponent());
         return acai;
     }
 
