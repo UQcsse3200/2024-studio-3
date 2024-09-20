@@ -63,14 +63,11 @@ public class ItemFactory {
      * @return A banana entity.
      */
     public static Entity createBanana(String chopLevel) {
-        Entity banana = new Entity()//= createTemplateItem()
+        Entity banana = new Entity()
                 .addComponent(new IngredientComponent("Banana", ItemType.BANANA, 1, 3,
                         10, chopLevel))
                 .addComponent(new CookIngredientComponent());
-                        //.addComponent(new TextureRenderComponent(String.format("images/ingredients/%s_banana.png", chopLevel)));
 
-        //PhysicsUtils.setScaledCollider(banana, 0.6f, 0.3f);
-        //banana.getComponent(ColliderComponent.class).setDensity(1.5f);
         return banana;
     }
 
@@ -113,11 +110,6 @@ public class ItemFactory {
         Entity strawberry = new Entity()//createTemplateItem()
                 .addComponent(new IngredientComponent("Strawberry", ItemType.STRAWBERRY, 1, 3,
                         10, chopLevel));
-                //.addComponent(new TextureRenderComponent(String.format("images/ingredients/%s_strawberry.png", chopLevel)));
-
-        //strawberry.getComponent(PhysicsComponent.class).setBodyType(BodyDef.BodyType.StaticBody);
-        //PhysicsUtils.setScaledCollider(strawberry, 0.6f, 0.3f);
-        //strawberry.getComponent(ColliderComponent.class).setDensity(1.5f);
         return strawberry;
     }
 
