@@ -1,117 +1,302 @@
 package com.csse3200.game.components.station;
 
-import com.csse3200.game.events.EventHandler;
+import com.csse3200.game.components.items.CookIngredientComponent;
+import com.csse3200.game.components.items.IngredientComponent;
+import com.csse3200.game.components.player.InventoryComponent;
+import com.csse3200.game.components.player.InventoryDisplay;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.entities.EntityService;
+import com.csse3200.game.entities.factories.ItemFactory;
 import com.csse3200.game.extensions.GameExtension;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.jupiter.api.Test;
+import com.csse3200.game.physics.PhysicsService;
+import com.csse3200.game.rendering.RenderService;
+import com.csse3200.game.services.GameTime;
+import com.csse3200.game.services.ResourceService;
+import com.csse3200.game.services.ServiceLocator;
+
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
-import java.util.ArrayList;
-import java.util.Optional;
-
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(GameExtension.class)
 public class StationItemHandlerComponentTest {
 
-    private StationItemHandlerComponent handler;
-    private StationInventoryComponent mockInventory;
-    private Entity mockEntity;
-    private EventHandler mockEvents;
+    public Entity station;
+    public StationItemHandlerComponent handler;
+    public InventoryComponent stationInventory;
+    public StationCookingComponent cookingComponent;
 
+    public InventoryComponent playerInventory;
+    public InventoryDisplay playerInventoryDisplay;
+
+    public Entity testEntity1;
+    public Entity testEntity2;
+
+    // Before each to reset all out values and all created in the pre station
+    // task
     @BeforeEach
-    public void setUp() {
-        ArrayList<String> acceptableItems = new ArrayList<>();
-        acceptableItems.add("meat");
-        acceptableItems.add("vegetable");
-        acceptableItems.add("cheese");
-        // Create handler to test
-        handler = new StationItemHandlerComponent("oven", acceptableItems);
-        // Create a mock inventory to test handler agaisnt
-        mockInventory = mock(StationInventoryComponent.class);
-        // Mock Entity and EventHandler so stuff actually runs
-        mockEntity = mock(Entity.class);
-        mockEvents = mock(EventHandler.class);
-        // Map any InventoryComponent calls to actually return mock inventory
-        when(mockEntity.getComponent(StationInventoryComponent.class)).thenReturn(mockInventory);
-        when(mockEntity.getEvents()).thenReturn(mockEvents);
+    public void BeforeEach() {
+        // Set up stuff so item creation can function
+        ServiceLocator.registerPhysicsService(new PhysicsService());
+        ServiceLocator.registerEntityService(new EntityService());
+        ServiceLocator.registerRenderService(new RenderService());
 
-        handler.setEntity(mockEntity);
-        handler.create();
+        ResourceService mockResourceService = mock(ResourceService.class);
+        when(mockResourceService.getAsset(anyString(), any())).thenReturn(null);
+        ServiceLocator.registerResourceService(mockResourceService);
+
+        GameTime mockTime = mock(GameTime.class);
+        when(mockTime.getTime()).thenReturn(1000L, 10000L);
+        ServiceLocator.registerTimeSource(mockTime);
+
+        // Reset all class variables to null
+        station = null;
+        handler = null;
+        stationInventory = null;
+
+        playerInventory = null;
+        playerInventoryDisplay = null;
+
+        testEntity1 = null;
+        testEntity2 = null;
+    }
+
+    public void preItemHandlingTests() {
+        playerInventory = new InventoryComponent(1);
+        playerInventoryDisplay = new InventoryDisplay();
+    }
+
+    // Pre oven test tasks
+    public void preOvenTests() {
+        // Create a station stationInventory and handler and add it to station entity
+        stationInventory = new InventoryComponent(1);
+        handler  = new StationItemHandlerComponent("oven");
+        cookingComponent = new StationCookingComponent();
+
+        // Create a station with these components
+        station = new Entity();
+        station.addComponent(handler);
+        station.addComponent(stationInventory);
+        station.addComponent(cookingComponent);
+        //when(station.getComponent(StationItemHandlerComponent.class)).thenReturn(handler);
+        //when(station.getComponent(InventoryComponent.class)).thenReturn(stationInventory);
+        handler.setEntity(station);
+        stationInventory.setEntity(station);
+        cookingComponent.setEntity(station);
+        station.create();
+    }
+
+    // pre stove making tasks
+    public void preStoveTests() {
+        // Create a station stationInventory and handler and add it to station entity
+        stationInventory = new InventoryComponent(1);
+        handler  = new StationItemHandlerComponent("stove");
+        cookingComponent = new StationCookingComponent();
+
+        station = new Entity();
+        station.addComponent(handler);
+        station.addComponent(stationInventory);
+        station.addComponent(cookingComponent);
+        handler.setEntity(station);
+        stationInventory.setEntity(station);
+        cookingComponent.setEntity(station);
+        station.create();
+    }
+
+    // Test that the component is properly aware of its own type
+    @Test
+    public void TestOvenGetType() {
+        preOvenTests();
+
+        assertNotNull(handler);
+        assertTrue(handler.getType().equals("oven"));
+    }
+
+    // Test that the oven can correctly accept / deny items
+    @Test
+    public void TestOvenAcceptedItems() {
+        IngredientComponent mockIngredientComponent = mock(IngredientComponent.class);
+        when(mockIngredientComponent.getItemName()).thenReturn("fake item");
+
+        preOvenTests();
+
+        String[] oven = {"tomato", "cucumber"};
+        Entity[] ovenItem = {ItemFactory.createBaseItem(oven[0]), ItemFactory.createBaseItem(oven[1])};
+
+        assertNotNull(ovenItem[0]);
+        assertNotNull(ovenItem[1]);
+
+        for (Entity item : ovenItem) {
+            assertTrue(handler.isItemAccepted(item.getComponent(IngredientComponent.class)));
+        }
+        
+        assertFalse(handler.isItemAccepted(mockIngredientComponent));
     }
 
     @Test
-    public void testGetType() {
-        assertEquals("oven", handler.getType());
+    public void TestOvenHandlesInteractionStationBothEmpty() {
+        preOvenTests();
+        preItemHandlingTests();
+
+        // Assert both have nothing in them to start
+        assertTrue(station.getComponent(InventoryComponent.class).getSize() == 0);
+        assertTrue(playerInventory.getSize() == 0);
+
+        station
+            .getComponent(StationItemHandlerComponent.class)
+            .handleInteraction(playerInventory, playerInventoryDisplay);
+
+        // Assert both have nothing in them after the interaction
+        assertTrue(station.getComponent(InventoryComponent.class).getSize() == 0);
+        assertTrue(playerInventory.getSize() == 0);
     }
 
+    // Test when station empty but player inventory full
     @Test
-    public void testIsItemAccepted() {
-        assertTrue(handler.isItemAccepted("meat"));
-        assertFalse(handler.isItemAccepted("stone"));
+    public void TestOvenHandlesInteractionStationOvenEmptyItemAllowed() {
+        preOvenTests();
+        preItemHandlingTests();
+
+        // Create an item to put into the players inventory that is allowed for oven
+        testEntity1 = ItemFactory.createBaseItem("tomato");
+        playerInventory
+            .addItem(testEntity1.getComponent(IngredientComponent.class));
+
+        // Assert they have correct ammount of items and confirm item
+        assertTrue(station.getComponent(InventoryComponent.class).getSize() == 0);
+        assertTrue(playerInventory.getSize() == 1);
+        assertTrue(playerInventory.getItemAt(0).getItemName().toLowerCase().equals("tomato"));
+
+        station
+            .getComponent(StationItemHandlerComponent.class)
+            .handleInteraction(playerInventory, playerInventoryDisplay);
+
+        // Assert they have correct ammount of items and confirm item
+        assertTrue(station.getComponent(InventoryComponent.class).getSize() == 1);
+        assertTrue(stationInventory.getItemAt(0).getItemName().toLowerCase().equals("tomato"));
+        assertTrue(playerInventory.getSize() == 0);
     }
 
+    // Test oven correctly handles the item not being allowed
     @Test
-    public void testHasItem_whenItemIsPresent() {
-        // Assumes inventory works, sets an expected value true
-        // and checks handler returns same value
-        when(mockInventory.isItemPresent()).thenReturn(true);
-        assertTrue(handler.hasItem());
+    public void TestOvenHandlesInteractionStationEmptyItemNotAllowed() {
+        preOvenTests();
+        preItemHandlingTests();
+
+        testEntity1 = ItemFactory.createBaseItem("beef");
+
+        playerInventory.addItem(testEntity1.getComponent(IngredientComponent.class));
+
+
+        // Assert they have correct ammount of items and confirm item
+        assertTrue(station.getComponent(InventoryComponent.class).getSize() == 0);
+        assertTrue(playerInventory.getSize() == 1);
+        assertTrue(playerInventory.getItemAt(0).getItemName().toLowerCase().equals("beef"));
+
+        // Simulate the interaction
+        station
+            .getComponent(StationItemHandlerComponent.class)
+            .handleInteraction(playerInventory, playerInventoryDisplay);
+
+        // Assert that nothing has changed
+        assertTrue(station.getComponent(InventoryComponent.class).getSize() == 0);
+        assertTrue(playerInventory.getSize() == 1);
+        assertTrue(playerInventory.getItemAt(0).getItemName().toLowerCase().equals("beef"));
     }
 
+    // Test when station full but player empty
     @Test
-    public void testHasItem_whenItemIsNotPresent() {
-        // Assumes inventory works, sets an expected value false
-        // and checks handler returns same value
-        when(mockInventory.isItemPresent()).thenReturn(false);
-        assertFalse(handler.hasItem());
+    public void TestOvenHandlesInteractionOvenFullPlayerEmpty() {
+        preOvenTests();
+        preItemHandlingTests();
+
+        testEntity1 = ItemFactory.createBaseItem("tomato");
+
+        // Add entity to station inventory
+        stationInventory.addItem(testEntity1.getComponent(IngredientComponent.class));
+
+        // Assert they have correct ammount of items and confirm item
+        assertTrue(station.getComponent(InventoryComponent.class).getSize() == 1);
+        assertTrue(stationInventory.getItemAt(0).getItemName().toLowerCase().equals("tomato"));
+        assertTrue(playerInventory.getSize() == 0);
+
+        // Simulate the interaction
+        station
+            .getComponent(StationItemHandlerComponent.class)
+            .handleInteraction(playerInventory, playerInventoryDisplay);
+
+        // Assert they have correct ammount of items and confirm item
+        assertTrue(station.getComponent(InventoryComponent.class).getSize() == 0);
+        assertTrue(playerInventory.getSize() == 1);
+        assertTrue(playerInventory.getItemAt(0).getItemName().toLowerCase().equals("tomato"));
     }
 
+    // Test when both are full i.e. nothing should happen on interaction
     @Test
-    public void testGiveItem_whenStationIsEmptyAndItemAccepted() {
-        // Assumes inventory works, sets an expected value true
-        // and checks handler returns same value after method run
-        when(mockInventory.isItemPresent()).thenReturn(false);
-        handler.giveItem("meat");
-        // verify mocks up a scenario, in this case that
-        // setting Inventory happens once, cant actually check handler
-        // as takeItem is void, include check later
-        verify(mockInventory).setCurrentItem("meat");
+    public void TestOvenHandlesInteractionBothInventoryFull() {
+        preOvenTests();
+        preItemHandlingTests();
+
+        // entity 1 for the station
+        testEntity1 = ItemFactory.createBaseItem("tomato");
+        stationInventory.addItem(testEntity1.getComponent(IngredientComponent.class));
+
+        // entity 2 for the player
+        testEntity2 = ItemFactory.createBaseItem("cucumber");
+        playerInventory.addItem(testEntity2.getComponent(IngredientComponent.class));
+
+        // Assert they have correct ammount of items and confirm item
+        assertTrue(station.getComponent(InventoryComponent.class).getSize() == 1);
+        assertTrue(stationInventory.getItemAt(0).getItemName().toLowerCase().equals("tomato"));
+        assertTrue(playerInventory.getSize() == 1);
+        assertTrue(playerInventory.getItemAt(0).getItemName().toLowerCase().equals("cucumber"));
+
+        // Simulate the interaction
+        station
+            .getComponent(StationItemHandlerComponent.class)
+            .handleInteraction(playerInventory, playerInventoryDisplay);
+
+        // Assert that nothing should have changed i.e. no swap occured
+        assertTrue(station.getComponent(InventoryComponent.class).getSize() == 1);
+        assertTrue(stationInventory.getItemAt(0).getItemName().toLowerCase().equals("tomato"));
+        assertTrue(playerInventory.getSize() == 1);
+        assertTrue(playerInventory.getItemAt(0).getItemName().toLowerCase().equals("cucumber"));
     }
 
+    // Test that the oven starts cooking ingredient when placed in it
     @Test
-    public void testGiveItem_whenStationIsNotEmpty() {
-        when(mockInventory.isItemPresent()).thenReturn(true);
-        handler.giveItem("meat");
-        // cant actually check handler
-        // as takeItem is void, include check later
-        // never() checks that no interaction actually occured, in this case
-        // we expect nothing to happen as station is full with one item
-        verify(mockInventory, never()).setCurrentItem(anyString());
+    public void TestOvenHandlesInteractionItemStartsCooking() {
+        preStoveTests();
+        preItemHandlingTests();
+
+        // Create an item to put into the players inventory that is allowed for oven
+        testEntity1 = ItemFactory.createBaseItem("beef");
+        testEntity1.create();
+        playerInventory
+            .addItem(testEntity1.getComponent(IngredientComponent.class));
+
+        // Assert they have correct ammount of items and confirm item
+        assertTrue(station.getComponent(InventoryComponent.class).getSize() == 0);
+        assertTrue(playerInventory.getSize() == 1);
+        assertTrue(playerInventory.getItemAt(0).getItemName().toLowerCase().equals("beef"));
+
+        station
+            .getComponent(StationItemHandlerComponent.class)
+            .handleInteraction(playerInventory, playerInventoryDisplay);
+
+        // Assert they have correct ammount of items and confirm item
+        assertTrue(station.getComponent(InventoryComponent.class).getSize() == 1);
+        assertTrue(stationInventory.getItemAt(0).getItemName().toLowerCase().equals("beef"));
+        assertTrue(playerInventory.getSize() == 0);
+
+        // Now interaction is confirmed check that the item starts cooking
+        boolean isCooking = stationInventory.getItemAt(0).getEntity().getComponent(CookIngredientComponent.class).getIsCooking();
+        assertTrue(isCooking);
     }
 
-    @Test
-    public void testGiveItem_whenItemNotAccepted() {
-        when(mockInventory.isItemPresent()).thenReturn(false);
-        handler.giveItem("stone");
-        verify(mockInventory, never()).setCurrentItem(anyString());
-    }
-
-    @Test
-    public void testTakeItem_whenItemIsPresent() {
-        Optional<String> item = Optional.of("meat");
-        when(mockInventory.removeCurrentItem()).thenReturn(item);
-        handler.takeItem();
-        verify(mockInventory).removeCurrentItem();
-    }
-
-    @Test
-    public void testTakeItem_whenItemIsNotPresent() {
-        when(mockInventory.removeCurrentItem()).thenReturn(Optional.empty());
-        handler.takeItem();
-        verify(mockInventory).removeCurrentItem();
-    }
 }
-

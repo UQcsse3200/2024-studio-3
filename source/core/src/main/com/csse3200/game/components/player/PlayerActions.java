@@ -5,6 +5,11 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.csse3200.game.components.Component;
+import com.csse3200.game.entities.Entity;
+import com.csse3200.game.physics.BodyUserData;
+import com.csse3200.game.components.items.PlateComponent;
+import com.csse3200.game.components.station.FireExtinguisherHandlerComponent;
+import com.csse3200.game.entities.Entity;
 import com.csse3200.game.components.TooltipsDisplay;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.services.ServiceLocator;
@@ -21,11 +26,15 @@ public class PlayerActions extends Component {
   private Vector2 walkDirection = Vector2.Zero.cpy();
   private boolean moving = false;
   private SensorComponent interactionSensor;
+  private InventoryComponent playerInventory;
+  private InventoryDisplay displayInventory;
 
   @Override
   public void create() {
     physicsComponent = entity.getComponent(PhysicsComponent.class);
     interactionSensor = entity.getComponent(SensorComponent.class);
+    playerInventory = entity.getComponent(InventoryComponent.class);
+    displayInventory = entity.getComponent(InventoryDisplay.class);
     entity.getEvents().addListener("walk", this::walk);
     entity.getEvents().addListener("walkStop", this::stopWalking);
     entity.getEvents().addListener("attack", this::attack);
@@ -81,8 +90,29 @@ public class PlayerActions extends Component {
     // Get the closest fixture all call an interact method on it
     Fixture interactable = interactionSensor.getClosestFixture();
     if (interactable != null) {
+      // We need to notify the input that we are inside an interaction
+      //entity.getEvents().trigger("startInteraction");
+
+      // Uses attached information to Fixture on station creation to identify entity belonging
+      // too
+      Entity station = ((BodyUserData) interactable.getBody().getUserData()).entity;
+
+      // Handle if it was a fire extinguisher
+      boolean interactingWithFireExtinguisher = FireExtinguisherHandlerComponent.handleFireExtinguisher(interactable, entity);
+      if (interactingWithFireExtinguisher) {
+        // No more interacting after this
+        return;
+      }
+
+      boolean interactingWithPlate = PlateComponent.handlePlateInteraction(interactable, entity);
+      if (interactingWithPlate) {
+        // Interaction handled by PlateComponent for plates
+        return;
+      }
+      // Code to freeze player, not a current feature
+      entity.getEvents().trigger("startInteraction");
       // Logic for what interaction even to call on the station
-      entity.getEvents().trigger("Add Station Item");
+      station.getEvents().trigger("Station Interaction", playerInventory, displayInventory);
     }
   }
 
@@ -91,7 +121,7 @@ public class PlayerActions extends Component {
    *
    * @param direction direction to move in
    */
-  void walk(Vector2 direction) {
+  public void walk(Vector2 direction) {
     this.walkDirection = direction;
     moving = true;
   }
@@ -99,7 +129,7 @@ public class PlayerActions extends Component {
   /**
    * Stops the player from walking.
    */
-  void stopWalking() {
+  public void stopWalking() {
     this.walkDirection = Vector2.Zero.cpy();
     updateSpeed();
     moving = false;

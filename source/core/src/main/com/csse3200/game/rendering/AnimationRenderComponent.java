@@ -7,11 +7,13 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 import com.csse3200.game.services.GameTime;
 import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.w3c.dom.Text;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -36,7 +38,7 @@ import java.util.Map;
 public class AnimationRenderComponent extends RenderComponent {
   private static final Logger logger = LoggerFactory.getLogger(AnimationRenderComponent.class);
   private final GameTime timeSource;
-  private final TextureAtlas atlas;
+  private TextureAtlas atlas;
   private final Map<String, Animation<TextureRegion>> animations;
   private Animation<TextureRegion> currentAnimation;
   private String currentAnimationName;
@@ -182,4 +184,27 @@ public class AnimationRenderComponent extends RenderComponent {
     atlas.dispose();
     super.dispose();
   }
+
+  @Override
+  public void setStage(Stage mock) {
+
+  }
+
+  /**
+   * Update the atlas being used by the animation component
+   * @param atlasName Atlas to update the component
+   */
+  public void updateAtlas(TextureAtlas atlasName) {
+    this.atlas = atlasName;
+  }
+
+  public String getAtlasString() {
+    if (this.atlas.equals(ServiceLocator.getResourceService().getAsset(
+            "images/player/" + "rawTomato.atlas", TextureAtlas.class))) {
+      return "rawTomato";
+    }
+    return "player";
+  }
+
+  public TextureAtlas getAtlas() {return this.atlas;}
 }

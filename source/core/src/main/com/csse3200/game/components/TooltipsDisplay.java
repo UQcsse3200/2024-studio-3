@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -97,5 +98,10 @@ public class TooltipsDisplay extends UIComponent {
         super.dispose();
         tooltipLabel.remove();
         tooltipBackground.remove();
+    }
+
+    @Override
+    public void setStage(Stage mock) {
+
     }
 }

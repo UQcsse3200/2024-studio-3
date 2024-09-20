@@ -3,6 +3,7 @@ package com.csse3200.game.rendering;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.csse3200.game.services.ServiceLocator;
 
 /** Render a static texture. */
@@ -63,5 +64,10 @@ public class TextureRenderComponent extends RenderComponent {
     Vector2 position = entity.getPosition();
     Vector2 scale = entity.getScale();
     batch.draw(texture, position.x, position.y, scale.x, scale.y);
+  }
+
+  @Override
+  public void setStage(Stage mock) {
+
   }
 }
