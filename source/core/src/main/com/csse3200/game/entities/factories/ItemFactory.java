@@ -1,18 +1,14 @@
 package com.csse3200.game.entities.factories;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 
 import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.csse3200.game.components.TooltipsDisplay;
-import com.csse3200.game.components.station.StationItemHandlerComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.components.items.*;
 import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.PhysicsUtils;
 import com.csse3200.game.physics.components.ColliderComponent;
 import com.csse3200.game.physics.components.HitboxComponent;
-import com.csse3200.game.physics.components.InteractionComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.rendering.TextureRenderComponent;
 import java.util.List;
@@ -69,10 +65,9 @@ public class ItemFactory {
     public static Entity createBanana(String chopLevel) {
         Entity banana = new Entity()//= createTemplateItem()
                 .addComponent(new IngredientComponent("Banana", ItemType.BANANA, 1, 3,
-                        10, chopLevel));
+                        10, chopLevel))
+                .addComponent(new CookIngredientComponent());
                         //.addComponent(new TextureRenderComponent(String.format("images/ingredients/%s_banana.png", chopLevel)));
-
-        banana.addComponent(new CookIngredientComponent());
 
         //PhysicsUtils.setScaledCollider(banana, 0.6f, 0.3f);
         //banana.getComponent(ColliderComponent.class).setDensity(1.5f);
