@@ -20,10 +20,10 @@ public abstract class ItemTimerComponent extends Component {
      * @param elapsed the current ammount of time elapsed
      * @param isRunning if the timer is running starts as false when item created
      */
-    private final GameTime gameTime = ServiceLocator.getTimeSource();
-    private float length;
-    private float elapsed;
-    private boolean isRunning;
+    protected final GameTime gameTime = ServiceLocator.getTimeSource();
+    protected float length;
+    protected float elapsed;
+    protected boolean isRunning;
 
     /**
      * TimerComponent initialiser creates a timer which has the legnth set to
@@ -50,8 +50,8 @@ public abstract class ItemTimerComponent extends Component {
      */
     @Override
     public void update() {
-        // Check if the timer is running
-        if (!isRunning) {
+        // Update the timing within the timer if running
+        if (!this.isRunning) {
             return;
         }
 
@@ -65,7 +65,7 @@ public abstract class ItemTimerComponent extends Component {
      * however, if used the completion status of the timer could change.
      * @param length of time the timer should run for requires length > 0
      */
-    public void setLength(float length) {
+    protected void setLength(float length) {
         if (length <= 0) { // Invalid length 0 not allow to prevent div 0 errors
             return;
         }
@@ -97,6 +97,14 @@ public abstract class ItemTimerComponent extends Component {
     }
 
     /**
+     * Get the time elapsed since the timer has been started
+     * @return the ammount of time in seconds since the timer started
+    */
+    public float getElapsedTime() {
+        return elapsed;
+    }
+
+    /**
      * Gets the percentage completion of the timer. e.g. if the length is 10s
      * and 3s has passed 30 will be returned.
      * @return The percentage completion of the timer.
@@ -110,4 +118,5 @@ public abstract class ItemTimerComponent extends Component {
      * Abtract since cooking and chopping will have different implementations.
      */
     protected abstract void updateItem();
+
 }
