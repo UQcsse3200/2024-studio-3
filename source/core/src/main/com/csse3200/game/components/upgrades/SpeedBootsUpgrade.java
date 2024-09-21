@@ -41,13 +41,13 @@ public class SpeedBootsUpgrade extends Component {
         }
     }
 
-    private void activate() {
+    public void activate() {
         keyboardPlayerInputComponent.setWalkSpeed(BOOSTED_SPEED);
         boostStartTime = gameTime.getTime();
         speedCost();
     }
 
-    private void deactivate() {
+    public void deactivate() {
         keyboardPlayerInputComponent.setWalkSpeed(NORMAL_SPEED);
         boostStartTime = -1;
     }

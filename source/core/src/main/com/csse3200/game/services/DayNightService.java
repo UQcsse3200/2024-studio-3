@@ -2,6 +2,7 @@ package com.csse3200.game.services;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.csse3200.game.events.EventHandler; 
+import java.util.Random;
 
 
 
@@ -13,14 +14,19 @@ import com.csse3200.game.events.EventHandler;
  */
 public class DayNightService {
     private static final Logger logger = LoggerFactory.getLogger(DayNightService.class);
-    public  long FIVE_MINUTES = 5000;//5 * 60 * 1000; // 5 minutes in milliseconds
+    public  long FIVE_MINUTES = 15000; //5 * 60 * 1000; // 5 minutes in milliseconds
     public long lastCheckTime;
     public long lastCheckTime2;
+    public long lastCheckTime3;
     private final GameTime gameTime;
     private boolean endOfDayTriggered = false;
     private boolean pastSecond = false;
+    private boolean pastUpgrade = false; 
     private final EventHandler enddayEventHandler;
     private final EventHandler docketServiceEventHandler;
+    private Random random;
+    private int randomChoice; 
+    
 
     /**
      * Constructs a new DayNightService. Initializes the game time and event handler,
@@ -40,7 +46,14 @@ public class DayNightService {
         this.docketServiceEventHandler = docketServiceEventHandler;
 
         this.lastCheckTime = gameTime.getTime();
+        System.out.println(lastCheckTime+"asdfghjkjhgfdsasdfghjhgfdsasdfghjhgfdsdfghjhgfs");
         this.lastCheckTime2 = gameTime.getTime();
+        this.lastCheckTime3 = gameTime.getTime();
+        this.random = new Random();
+        randomChoice = random.nextInt(10) * 1000;
+        System.out.println(randomChoice + "/////////////////////////////////////////////////");
+        
+
         create();
     }
 
@@ -78,6 +91,13 @@ public class DayNightService {
             lastCheckTime2 = currentTime;
         }
 
+        if (currentTime - lastCheckTime3 >= randomChoice && !pastUpgrade) {
+            pastUpgrade = true;
+            enddayEventHandler.trigger("upgrade");
+            randomChoice = random.nextInt(10) * 1000;
+            // lastCheckTime3 = currentTime;
+        }
+
         if (currentTime - lastCheckTime >= FIVE_MINUTES && !endOfDayTriggered) {
             endOfDayTriggered = true; 
             gameTime.setTimeScale(0);
@@ -98,10 +118,15 @@ public class DayNightService {
         ServiceLocator.getDayNightService().getEvents().trigger("endGame");
         logger.info("It's a new Day!");
         enddayEventHandler.trigger("newday");
-        enddayEventHandler.trigger("upgrade");
+        // randomChoice = random.nextInt(10) * 1000;
+        // System.out.println(randomChoice + "lllllllllllllllllllllllllllllllllllllll");
+
+        // enddayEventHandler.trigger("upgrade");
         // // Resume the game time and reset the last check time
         lastCheckTime = gameTime.getTime(); // Reset lastCheckTime to the current time
+        lastCheckTime3 = gameTime.getTime();
         endOfDayTriggered = false;
+        pastUpgrade = false; 
         gameTime.setTimeScale(1); // Resume game time
     }
 
