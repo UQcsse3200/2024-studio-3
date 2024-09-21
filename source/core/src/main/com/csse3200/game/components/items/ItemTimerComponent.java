@@ -69,7 +69,7 @@ public abstract class ItemTimerComponent extends Component {
     /**
      * Sets the timer to start running.
      */
-    public void startTimer() {
+    protected void startTimer() {
         isRunning = true;
         prevTime = gameTime.getTime();
     }
@@ -77,7 +77,7 @@ public abstract class ItemTimerComponent extends Component {
     /**
      * Set the timer to stop running.
      */
-    public void stopTimer() {
+    protected void stopTimer() {
         isRunning = false;
     }
 
@@ -86,7 +86,7 @@ public abstract class ItemTimerComponent extends Component {
      * @return true if the time elapsed is greater than the length, false
      * otherwise
      */
-    public boolean isFinished() {
+    protected boolean isFinished() {
         return (elapsed >= length);
     }
 
