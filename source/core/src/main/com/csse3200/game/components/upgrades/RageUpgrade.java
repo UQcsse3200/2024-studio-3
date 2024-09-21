@@ -95,7 +95,7 @@ public class RageUpgrade extends UIComponent {
     }
 
     public void activateRageMode() {
-//        entity.getEvents().trigger("rageModeOn");
+        entity.getEvents().trigger("rageModeOn");
         isRageActive = true;
         isOverlayVisible = true;
         layout.setVisible(true);
@@ -103,7 +103,7 @@ public class RageUpgrade extends UIComponent {
     }
 
     public void deactivateRageMode() {
-//        entity.getEvents().trigger("rageModeOff");
+        entity.getEvents().trigger("rageModeOff");
         isRageActive = false;
         isOverlayVisible = false;
         layout.setVisible(false);
