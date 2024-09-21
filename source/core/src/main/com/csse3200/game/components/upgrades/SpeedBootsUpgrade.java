@@ -32,7 +32,7 @@ public class SpeedBootsUpgrade extends Component {
     public void update() {
         if (keyboardPlayerInputComponent != null) {
             long current = gameTime.getTime();
-            if (Gdx.input.isKeyJustPressed(Input.Keys.B) && boostStartTime == -1) {
+            if (Gdx.input.isKeyJustPressed(Input.Keys.B) && boostStartTime == -1 && combatStatsComponent.getGold() >= 20) {
                 activate();
             }
             if (boostStartTime != -1 && current - boostStartTime > BOOST_DURATION) {
