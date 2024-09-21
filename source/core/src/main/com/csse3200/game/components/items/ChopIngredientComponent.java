@@ -83,7 +83,7 @@ public class ChopIngredientComponent extends ItemTimerComponent {
      * Get if the item is currently cooking
      * @return true if the item is cooking, false otherwise.
      */
-    public boolean getIsCooking() {
+    public boolean getIsChopping() {
         return isRunning;
     }
     
