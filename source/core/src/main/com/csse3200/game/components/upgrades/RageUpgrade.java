@@ -1,6 +1,7 @@
 package com.csse3200.game.components.upgrades;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -25,10 +26,20 @@ public class RageUpgrade extends UIComponent {
 
     private boolean isOverlayVisible;
     private Table layout;
+
     private ProgressBar rageMeter;
     private float rageTimeRemaining; // Track remaining time for rage mode
-    private final float maxRageTime = 30f; // 1 minute duration
+    private final float rageTime = 30f; // 1 minute duration
     private boolean isRageActive = false;
+
+    private float rageFillTimeRemaining;
+    private final float rageFillTime = 90f;
+    private boolean isRageFilling = false;
+
+    private Sound rageSound;
+    private Long rageSoundId;
+    private Sound powerDownSound;
+    private Long powerDownId;
 
     public RageUpgrade() {
         super();
@@ -47,6 +58,9 @@ public class RageUpgrade extends UIComponent {
         setupRedOverlay();
         setupRageMeter();
         setupInputListener();
+
+        rageSound = Gdx.audio.newSound(Gdx.files.internal("sounds/rage_sound.wav"));
+        powerDownSound = Gdx.audio.newSound(Gdx.files.internal("sounds/power_down.wav"));
     }
 
     private void setupRedOverlay() {
@@ -84,7 +98,7 @@ public class RageUpgrade extends UIComponent {
                 if (keycode == com.badlogic.gdx.Input.Keys.R) {
                     if (isRageActive) {
                         deactivateRageMode();
-                    } else {
+                    } else if (rageMeter.getValue() == 1f){
                         activateRageMode();
                     }
                     return true;
@@ -95,29 +109,46 @@ public class RageUpgrade extends UIComponent {
     }
 
     public void activateRageMode() {
-//        entity.getEvents().trigger("rageModeOn");
+        entity.getEvents().trigger("rageModeOn");
+        rageSoundId = rageSound.play();
+        rageSound.setVolume(rageSoundId, 0.25f);
+
         isRageActive = true;
         isOverlayVisible = true;
         layout.setVisible(true);
-        rageTimeRemaining = maxRageTime;
+        rageTimeRemaining = rageTime;
     }
 
     public void deactivateRageMode() {
-//        entity.getEvents().trigger("rageModeOff");
+        entity.getEvents().trigger("rageModeOff");
+        powerDownId = powerDownSound.play();
+        powerDownSound.setVolume(powerDownId, 0.25f);
+
         isRageActive = false;
         isOverlayVisible = false;
         layout.setVisible(false);
-        rageMeter.setValue(1f);
+//        rageMeter.setValue(1f);
+
+        isRageFilling = true;
+        logger.info("rage meter value: " + rageMeter.getValue());
+        rageFillTimeRemaining = (1 - rageMeter.getValue()) * rageFillTime;
+        logger.info("rage fill time remaining : " + rageFillTimeRemaining);
     }
 
     @Override
     public void update() {
         if (isRageActive) {
             rageTimeRemaining -= timesource.getDeltaTime();
-            rageMeter.setValue(rageTimeRemaining / maxRageTime);
-
+            rageMeter.setValue(rageTimeRemaining / rageTime);
             if (rageTimeRemaining <= 0) {
                 deactivateRageMode();
+            }
+
+        } else if (isRageFilling) {
+            rageFillTimeRemaining -= timesource.getDeltaTime();
+            rageMeter.setValue((rageFillTime - rageFillTimeRemaining) / rageFillTime);
+            if (rageFillTimeRemaining <= 0) {
+                isRageFilling = false;
             }
         }
     }
@@ -129,5 +160,4 @@ public class RageUpgrade extends UIComponent {
     @Override
     public void setStage(Stage mock) {
     }
-
 }
