@@ -38,6 +38,8 @@ public class RageUpgrade extends UIComponent {
 
     private Sound rageSound;
     private Long rageSoundId;
+    private Sound powerDownSound;
+    private Long powerDownId;
 
     public RageUpgrade() {
         super();
@@ -58,6 +60,7 @@ public class RageUpgrade extends UIComponent {
         setupInputListener();
 
         rageSound = Gdx.audio.newSound(Gdx.files.internal("sounds/rage_sound.wav"));
+        powerDownSound = Gdx.audio.newSound(Gdx.files.internal("sounds/power_down.wav"));
     }
 
     private void setupRedOverlay() {
@@ -108,7 +111,6 @@ public class RageUpgrade extends UIComponent {
     public void activateRageMode() {
         entity.getEvents().trigger("rageModeOn");
         rageSoundId = rageSound.play();
-
         rageSound.setVolume(rageSoundId, 0.25f);
 
         isRageActive = true;
@@ -119,6 +121,9 @@ public class RageUpgrade extends UIComponent {
 
     public void deactivateRageMode() {
         entity.getEvents().trigger("rageModeOff");
+        powerDownId = powerDownSound.play();
+        powerDownSound.setVolume(powerDownId, 0.25f);
+
         isRageActive = false;
         isOverlayVisible = false;
         layout.setVisible(false);
@@ -135,9 +140,6 @@ public class RageUpgrade extends UIComponent {
         if (isRageActive) {
             rageTimeRemaining -= timesource.getDeltaTime();
             rageMeter.setValue(rageTimeRemaining / rageTime);
-            if (rageTimeRemaining <= 1) {
-
-            }
             if (rageTimeRemaining <= 0) {
                 deactivateRageMode();
             }
