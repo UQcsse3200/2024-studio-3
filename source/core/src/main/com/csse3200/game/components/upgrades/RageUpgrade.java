@@ -25,10 +25,16 @@ public class RageUpgrade extends UIComponent {
 
     private boolean isOverlayVisible;
     private Table layout;
+
     private ProgressBar rageMeter;
     private float rageTimeRemaining; // Track remaining time for rage mode
-    private final float maxRageTime = 30f; // 1 minute duration
+    private final float rageTime = 30f; // 1 minute duration
     private boolean isRageActive = false;
+
+    private float rageFillTimeRemaining;
+    private final float rageFillTime = 90f;
+    private boolean isRageFilling = false;
+
 
     public RageUpgrade() {
         super();
@@ -84,7 +90,7 @@ public class RageUpgrade extends UIComponent {
                 if (keycode == com.badlogic.gdx.Input.Keys.R) {
                     if (isRageActive) {
                         deactivateRageMode();
-                    } else {
+                    } else if (rageMeter.getValue() == 1f){
                         activateRageMode();
                     }
                     return true;
@@ -99,7 +105,7 @@ public class RageUpgrade extends UIComponent {
         isRageActive = true;
         isOverlayVisible = true;
         layout.setVisible(true);
-        rageTimeRemaining = maxRageTime;
+        rageTimeRemaining = rageTime;
     }
 
     public void deactivateRageMode() {
@@ -107,17 +113,28 @@ public class RageUpgrade extends UIComponent {
         isRageActive = false;
         isOverlayVisible = false;
         layout.setVisible(false);
-        rageMeter.setValue(1f);
+//        rageMeter.setValue(1f);
+
+        isRageFilling = true;
+        logger.info("rage meter value: " + rageMeter.getValue());
+        rageFillTimeRemaining = (1 - rageMeter.getValue()) * rageFillTime;
+        logger.info("rage fill time remaining : " + rageFillTimeRemaining);
     }
 
     @Override
     public void update() {
         if (isRageActive) {
             rageTimeRemaining -= timesource.getDeltaTime();
-            rageMeter.setValue(rageTimeRemaining / maxRageTime);
-
+            rageMeter.setValue(rageTimeRemaining / rageTime);
             if (rageTimeRemaining <= 0) {
                 deactivateRageMode();
+            }
+
+        } else if (isRageFilling) {
+            rageFillTimeRemaining -= timesource.getDeltaTime();
+            rageMeter.setValue((rageFillTime - rageFillTimeRemaining) / rageFillTime);
+            if (rageFillTimeRemaining <= 0) {
+                isRageFilling = false;
             }
         }
     }
@@ -129,5 +146,4 @@ public class RageUpgrade extends UIComponent {
     @Override
     public void setStage(Stage mock) {
     }
-
 }
