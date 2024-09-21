@@ -6,7 +6,7 @@ import java.util.Random;
 
 public class RandomCombination extends Component {
     private LoanUpgrade loanUpgrade; 
-    private RageUpgrade rageUpgrade; 
+//    private RageUpgrade rageUpgrade;
     private Random random;
     private SpeedBootsUpgrade speedBootsUpgrade;
 
@@ -14,10 +14,10 @@ public class RandomCombination extends Component {
     public RandomCombination() {
         super(); 
         this.loanUpgrade = new LoanUpgrade();
-        this.rageUpgrade = new RageUpgrade(); 
+//        this.rageUpgrade = new RageUpgrade();
         this.speedBootsUpgrade = new SpeedBootsUpgrade(); 
         this.loanUpgrade.create();
-        this.rageUpgrade.create();
+//        this.rageUpgrade.create();
         this.speedBootsUpgrade.create();
         this.random = new Random();
         ServiceLocator.getDayNightService().getEvents().addListener("upgrade", () -> {
@@ -33,7 +33,7 @@ public class RandomCombination extends Component {
                 loanUpgrade.Loaner();  // Call Loaner() if randomChoice is 0
                 break;
             case 1:
-                rageUpgrade.toggleRageModeOverlay();  // Call toggleRageModeOverlay() if randomChoice is 1
+//                rageUpgrade.activateRageMode();  // Call toggleRageModeOverlay() if randomChoice is 1
                 break;
             default:
                 speedBootsUpgrade.activate();  // Call activate() if randomChoice is any other value
