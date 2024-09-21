@@ -1,6 +1,7 @@
 package com.csse3200.game.components.upgrades;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -35,6 +36,8 @@ public class RageUpgrade extends UIComponent {
     private final float rageFillTime = 90f;
     private boolean isRageFilling = false;
 
+    private Sound rageSound;
+    private Long rageSoundId;
 
     public RageUpgrade() {
         super();
@@ -53,6 +56,8 @@ public class RageUpgrade extends UIComponent {
         setupRedOverlay();
         setupRageMeter();
         setupInputListener();
+
+        rageSound = Gdx.audio.newSound(Gdx.files.internal("sounds/rage_sound.wav"));
     }
 
     private void setupRedOverlay() {
@@ -102,6 +107,10 @@ public class RageUpgrade extends UIComponent {
 
     public void activateRageMode() {
         entity.getEvents().trigger("rageModeOn");
+        rageSoundId = rageSound.play();
+
+        rageSound.setVolume(rageSoundId, 0.25f);
+
         isRageActive = true;
         isOverlayVisible = true;
         layout.setVisible(true);
@@ -126,6 +135,9 @@ public class RageUpgrade extends UIComponent {
         if (isRageActive) {
             rageTimeRemaining -= timesource.getDeltaTime();
             rageMeter.setValue(rageTimeRemaining / rageTime);
+            if (rageTimeRemaining <= 1) {
+
+            }
             if (rageTimeRemaining <= 0) {
                 deactivateRageMode();
             }
