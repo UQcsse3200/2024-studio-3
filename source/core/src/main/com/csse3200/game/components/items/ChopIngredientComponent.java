@@ -27,12 +27,13 @@ public class ChopIngredientComponent extends ItemTimerComponent {
      */
     @Override
     public void create() {
-        // Run the previous creation
-        super.create();
+        // Add appriopriate event listeners
+        entity.getEvents().addListener("chopIngredient", this::startTimer);
+        entity.getEvents().addListener("stopChoppingIngredient", this::stopTimer);
 
         // Get the item so that it can be updated correctly and the length can be correct
         item = entity.getComponent(IngredientComponent.class);
-        setLength(item.getChopTime()); // More logic can be added here when required
+        setLength(item.getChopTime() * 1000); // More logic can be added here when required
 
         // Log the info
         String s = String.format("The timer for item: %s, has been created", item.getItemName());
@@ -52,7 +53,7 @@ public class ChopIngredientComponent extends ItemTimerComponent {
         // update the elapsed time
         super.update();
 
-        String s = String.format("The elapsed time of item: %s, has been updated to %.4f", item.getItemName(), this.elapsed);
+        String s = String.format("The elapsed time of item: %s, has been updated to %d ms, completion is at %.2f percent", item.getItemName(), this.elapsed, getCompletionPercent());
         logger.info(s);
 
         // Check if the timer is finished
@@ -62,13 +63,15 @@ public class ChopIngredientComponent extends ItemTimerComponent {
     }
 
     /**
-     * Update the item component to reflect its new state.
+     * Update the item component to reflect its new state. Should not be 
+     * manually calleds
      */
     protected void updateItem() {
         // Update item state
         item.chopItem();
 
-        // stop the timer from running to prevent any errors
+        // stop the timer from running to prevent any errors and to help 
+        // test for proper player pausing
         stopTimer();
 
         // Put the info to the console

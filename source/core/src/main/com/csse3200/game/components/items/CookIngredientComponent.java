@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
  */
 public class CookIngredientComponent extends ItemTimerComponent {
     
-    private final float ITEMBURNINGTIME = 15f;
+    private static final float ITEM_BURNING_TIME = 15;
 
     // The ingredient componetn of the item being used
     private IngredientComponent item;
@@ -26,12 +26,13 @@ public class CookIngredientComponent extends ItemTimerComponent {
 
     @Override
     public void create() {
-        // Run the previous creation
-        super.create();
+        // Add appriopriate event listeners
+        entity.getEvents().addListener("cookIngredient", this::startTimer);
+        entity.getEvents().addListener("stopCookingIngredient", this::stopTimer);
 
         // Get the item so that it can be updated correctly and correct time gotten
         item = entity.getComponent(IngredientComponent.class);
-        setLength(item.getCookTime()); // More logic can be added here when required
+        setLength(item.getCookTime() * 1000); // More logic can be added here when required
 
         // Log the info
         String s = String.format("The timer for item: %s, has been created", item.getItemName());
@@ -48,7 +49,7 @@ public class CookIngredientComponent extends ItemTimerComponent {
         // Update the elapsed time
         super.update();
 
-        String s = String.format("The elapsed time of item: %s, has been updated to %.4f, completion is at %.2f percent", item.getItemName(), this.elapsed, getCompletionPercent());
+        String s = String.format("The elapsed time of item: %s, has been updated to %d ms, completion is at %.2f percent", item.getItemName(), this.elapsed, getCompletionPercent());
         logger.info(s);
 
         // Check if the timer is finished
@@ -61,15 +62,11 @@ public class CookIngredientComponent extends ItemTimerComponent {
      * Update the item component to reflect its new state.
      */
     protected void updateItem() {
-        // TODO: implement item burning and not just cooking 
-        // Using the previous logic of 15s buffer but should / could this be
-        // changed?
-
         // Update item state
         item.cookItem();
 
         // Check if the item should be burned
-        if (elapsed >= length + ITEMBURNINGTIME) {
+        if (elapsed >= length + ITEM_BURNING_TIME * 1000) {
             item.burnItem();
             stopTimer(); // Only stop the timer if the item has been burned
         }

@@ -21,8 +21,9 @@ public abstract class ItemTimerComponent extends Component {
      * @param isRunning if the timer is running starts as false when item created
      */
     protected final GameTime gameTime = ServiceLocator.getTimeSource();
-    protected float length;
-    protected float elapsed;
+    private long prevTime;
+    protected long length;
+    protected long elapsed;
     protected boolean isRunning;
 
     /**
@@ -31,19 +32,9 @@ public abstract class ItemTimerComponent extends Component {
      * timings depending on upgrades and such are not prevented in the future.
      */
     public ItemTimerComponent() {
-        this.length = Float.MAX_VALUE;
+        this.length = Long.MAX_VALUE;
         this.isRunning = false;
         this.elapsed = 0;
-    }
-
-    /**
-     * Function to run on the creation of the component and it's registration
-     */
-    @Override
-    public void create() {
-        // Add appriopriate event listeners
-        entity.getEvents().addListener("cookIngredient", this::startTimer);
-        entity.getEvents().addListener("stopCookingIngredient", this::stopTimer);
     }
 
     /**
@@ -57,7 +48,8 @@ public abstract class ItemTimerComponent extends Component {
         }
 
         // Update the elapsed time
-        this.elapsed += gameTime.getDeltaTime();
+        this.elapsed += (gameTime.getTime() - prevTime);
+        prevTime = gameTime.getTime();
     }
 
     /**
@@ -66,7 +58,7 @@ public abstract class ItemTimerComponent extends Component {
      * however, if used the completion status of the timer could change.
      * @param length of time the timer should run for requires length > 0
      */
-    protected void setLength(float length) {
+    protected void setLength(long length) {
         if (length <= 0) { // Invalid length 0 not allow to prevent div 0 errors
             return;
         }
@@ -79,6 +71,7 @@ public abstract class ItemTimerComponent extends Component {
      */
     public void startTimer() {
         isRunning = true;
+        prevTime = gameTime.getTime();
     }
 
     /**
@@ -99,11 +92,11 @@ public abstract class ItemTimerComponent extends Component {
 
     /**
      * Gets the percentage completion of the timer. e.g. if the length is 10s
-     * and 3s has passed 30 will be returned.
+     * and 3s has passed 30f will be returned.
      * @return The percentage completion of the timer.
      */
     public float getCompletionPercent() {
-        return (elapsed / length) * 100;
+        return ((float) elapsed / (float) length) * 100;
     }
 
     /**
