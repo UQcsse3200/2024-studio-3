@@ -78,5 +78,13 @@ public class ChopIngredientComponent extends ItemTimerComponent {
         String s = String.format("The state of item: %s, has been update to chopped", item.getItemName());
         logger.info(s);
     }
+
+    /**
+     * Get if the item is currently cooking
+     * @return true if the item is cooking, false otherwise.
+     */
+    public boolean getIsCooking() {
+        return isRunning;
+    }
     
 }

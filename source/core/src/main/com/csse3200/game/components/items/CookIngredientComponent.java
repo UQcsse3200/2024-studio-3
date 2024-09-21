@@ -76,4 +76,11 @@ public class CookIngredientComponent extends ItemTimerComponent {
         logger.info(s);
     }
 
+    /**
+     * Get if the item is currently cooking
+     * @return true if the item is cooking, false otherwise.
+     */
+    public boolean getIsCooking() {
+        return isRunning;
+    }
 }
