@@ -1,5 +1,6 @@
 package com.csse3200.game.services;
 
+import com.csse3200.game.components.cutscenes.CutsceneScreen;
 import com.csse3200.game.components.mainmenu.MainMenuDisplay;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,6 +33,7 @@ public class ServiceLocator {
   private static PlayerService playerService;
   private static GameArea gameArea;
   private static MainGameScreen gameScreen;
+  private static CutsceneScreen cutsceneScreen;
   private static MainMenuDisplay mainMenuDisplay;
 
   private static ResourceService resourceService;
@@ -106,6 +108,10 @@ public class ServiceLocator {
 
   public static MainGameScreen getGameScreen() {
     return gameScreen;
+  }
+
+  public static CutsceneScreen getCutsceneScreen() {
+    return cutsceneScreen;
   }
 
   // New getters for additional services
@@ -216,6 +222,15 @@ public class ServiceLocator {
     } else {
       logger.debug("Registering game screen");
       gameScreen = game;
+    }
+  }
+
+  public static void registerCutsceneScreen(CutsceneScreen scene) {
+    if (cutsceneScreen != null) {
+      logger.warn("Game Screen is already registered!");
+    } else {
+      logger.debug("Registering cutscene screen");
+      cutsceneScreen = scene;
     }
   }
 
