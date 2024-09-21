@@ -11,9 +11,9 @@ import com.csse3200.game.services.ServiceLocator;
 
 public class SpeedBootsUpgrade extends Component {
 
-    private static final long BOOST_DURATION = 60000;
+    private static final long BOOST_DURATION = 60000; // 1 minute
     private static final float NORMAL_SPEED = 1f;
-    private static final float BOOSTED_SPEED = 2f;
+    private static final float BOOSTED_SPEED = 2f; // 2x speed
     private CombatStatsComponent combatStatsComponent;
     private KeyboardPlayerInputComponent keyboardPlayerInputComponent;
     private final GameTime gameTime;
