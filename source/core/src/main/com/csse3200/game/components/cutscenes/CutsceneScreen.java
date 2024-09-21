@@ -29,11 +29,10 @@ public class CutsceneScreen extends ScreenAdapter {
 
     private final GdxGame game;
     private final Renderer renderer;
-    private boolean isPaused = false;
 
-    private static final String[] introScreenTextures = {};
+    private static final String[] cutsceneScreenTextures = {};
 
-    public CutsceneScreen(GdxGame game) {
+    public CutsceneScreen(GdxGame game, int cutsceneVal) {
         this.game = game;
 
         logger.debug("Initialising main game screen services");
@@ -53,19 +52,47 @@ public class CutsceneScreen extends ScreenAdapter {
 
         logger.debug("Initialising Cutscene game screen entities");
         TerrainFactory terrainFactory = new TerrainFactory(renderer.getCamera());
-        CutsceneArea cutsceneArea = new CutsceneArea();
+        CutsceneArea cutsceneArea = new CutsceneArea(cutsceneVal);
         cutsceneArea.create();
-        Entity spawnControllerEntity = LevelFactory.createSpawnControllerEntity();
-        ServiceLocator.getEntityService().register(spawnControllerEntity);
-        int currLevel = ServiceLocator.getLevelService().getCurrLevel();
-        ServiceLocator.getLevelService().getEvents().trigger("setGameArea", cutsceneArea);
+    }
+
+    @Override
+    public void render(float delta) {
+        renderer.render();
+    }
+
+    @Override
+    public void resize(int width, int height) {
+        renderer.resize(width, height);
+        logger.trace("Resized renderer: ({} x {})", width, height);
+    }
+
+    @Override
+    public void dispose() {
+        logger.debug("Disposing cutscene screen");
+
+        renderer.dispose();
+        unloadAssets();
+
+        ServiceLocator.getEntityService().dispose();
+        ServiceLocator.getRenderService().dispose();
+        ServiceLocator.getResourceService().dispose();
+
+        ServiceLocator.clear();
     }
 
     private void loadAssets() {
         logger.debug("Loading assets");
         ResourceService resourceService = ServiceLocator.getResourceService();
-        resourceService.loadTextures(introScreenTextures);
+        resourceService.loadTextures(cutsceneScreenTextures);
         ServiceLocator.getResourceService().loadAll();
+    }
+
+    private void unloadAssets() {
+        logger.debug("Unloading assets");
+        ResourceService resourceService = ServiceLocator.getResourceService();
+        resourceService.unloadAssets(cutsceneScreenTextures);
+        resourceService.unloadAssets(DocketMealDisplay.getMealDocketTextures());
     }
 
     public GdxGame getGame() {
