@@ -1,6 +1,6 @@
 package com.csse3200.game.services;
 
-import com.csse3200.game.components.cutscenes.CutsceneScreen;
+import com.csse3200.game.screens.CutsceneScreen;
 import com.csse3200.game.components.mainmenu.MainMenuDisplay;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

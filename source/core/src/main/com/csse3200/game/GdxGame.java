@@ -3,12 +3,11 @@ package com.csse3200.game;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.csse3200.game.components.cutscenes.CutsceneScreen;
+import com.csse3200.game.screens.CutsceneScreen;
 import com.csse3200.game.files.UserSettings;
 import com.csse3200.game.screens.MainGameScreen;
 import com.csse3200.game.screens.MainMenuScreen;
 import com.csse3200.game.screens.SettingsScreen;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
