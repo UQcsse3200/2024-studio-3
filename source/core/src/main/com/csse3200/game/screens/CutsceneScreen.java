@@ -34,7 +34,7 @@ public class CutsceneScreen extends ScreenAdapter {
     private final GdxGame game;
     private final Renderer renderer;
 
-    private static final String[] cutsceneScreenTextures = {};
+    private static final String[] cutsceneScreenTextures = {"images/textbox.png",};
 
     private CutsceneScreenDisplay cutsceneScreenDisplay;
 
@@ -53,8 +53,8 @@ public class CutsceneScreen extends ScreenAdapter {
 
         renderer = RenderFactory.createRenderer();
         renderer.getCamera().getEntity().setPosition(CAMERA_POSITION);
-
         loadAssets();
+        createUI();
 
         logger.debug("Initialising Cutscene game screen entities");
         TerrainFactory terrainFactory = new TerrainFactory(renderer.getCamera());
@@ -89,6 +89,7 @@ public class CutsceneScreen extends ScreenAdapter {
 
     private void loadAssets() {
         logger.debug("Loading assets");
+        System.out.println("Loading assets");
         ResourceService resourceService = ServiceLocator.getResourceService();
         resourceService.loadTextures(cutsceneScreenTextures);
         ServiceLocator.getResourceService().loadAll();
@@ -105,6 +106,7 @@ public class CutsceneScreen extends ScreenAdapter {
         logger.debug("Creating UI");
         Stage stage = ServiceLocator.getRenderService().getStage();
         InputComponent inputComponent = ServiceLocator.getInputService().getInputFactory().createForTerminal();
+        System.out.println("Creating cutscene display");
         cutsceneScreenDisplay = new CutsceneScreenDisplay(this.game);
 
         Entity ui = new Entity();

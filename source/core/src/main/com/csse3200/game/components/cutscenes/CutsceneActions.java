@@ -19,6 +19,7 @@ public class CutsceneActions extends Component {
     public void create() {
         entity.getEvents().addListener("nextCutscene", this::nextCutscene);
         entity.getEvents().addListener("cutsceneEnded", this::nextCutscene);
+        entity.getEvents().addListener("exitCutscene", this::exitCutscene);
         inputService = ServiceLocator.getInputService();
     }
 
@@ -29,6 +30,10 @@ public class CutsceneActions extends Component {
             logger.debug("Space bar pressed. Moving to next cutscene or level.");
             nextCutscene();
         }
+        if (inputService.keyDown(Input.Keys.BACKSPACE)){
+            logger.debug("Backspace bar pressed. Moving to the main menu");
+            exitCutscene();
+        }
     }
 
     private void nextCutscene() {
@@ -36,6 +41,11 @@ public class CutsceneActions extends Component {
         // Need better logic to determine which level of the game it should be on.
         // Could also end up transitioning to the next cutscene maybe
         game.setScreen(GdxGame.ScreenType.MAIN_GAME);
+    }
+
+    private void exitCutscene() {
+        logger.debug("Transitioning to main menu");
+        game.setScreen(GdxGame.ScreenType.MAIN_MENU);
     }
 
 }

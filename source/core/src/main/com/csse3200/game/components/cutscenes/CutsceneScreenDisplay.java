@@ -3,8 +3,11 @@ package com.csse3200.game.components.cutscenes;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Array;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.entities.Entity;
@@ -44,9 +47,46 @@ public class CutsceneScreenDisplay extends UIComponent {
         textDisplay.setVisible(false);  // Initially hidden
         stage.addActor(textDisplay.getTable());  // Add it to the stage
 
-        advanceCutsceneStep();  // Ensure textDisplay is initialized before calling this method
+        table.setFillParent(true);
+
+        TextButton mainMenuBtn = new TextButton("Next Scene", skin);
+
+        // Triggers an event when the button is pressed.
+        mainMenuBtn.addListener(
+                new ChangeListener() {
+                    @Override
+                    public void changed(ChangeEvent changeEvent, Actor actor) {
+                        logger.debug("Next Scene button clicked");
+                        entity.getEvents().trigger("nextCutscene");
+                    }
+                });
+
+        TextButton ExituButton = new TextButton("Exit", skin);
+        ExituButton.addListener(
+                new ChangeListener() {
+                    @Override
+                    public void changed(ChangeEvent changeEvent, Actor actor) {
+                        logger.debug("Main Menu button clicked");
+                        entity.getEvents().trigger("exitCutscene");  // Transition to the main menu
+                    }
+                });
+
+        table.bottom().right();
+        table.add(mainMenuBtn).padTop(10f).padRight(10f);
 
         stage.addActor(table);
+
+        Table topRightTable = new Table();
+        topRightTable.setFillParent(true);
+        topRightTable.top().right();
+
+        topRightTable.add(ExituButton).padTop(20f).padRight(20f);
+
+        stage.addActor(topRightTable);
+
+        cutsceneText.add("Hello guys");
+
+        advanceCutsceneStep();  // Ensure textDisplay is initialized before calling this method
     }
 
     private void setupUI() {
@@ -86,6 +126,7 @@ public class CutsceneScreenDisplay extends UIComponent {
      * Automatically ends the cutscene when all steps are complete.
      */
     public void advanceCutsceneStep() {
+        logger.info("Cutscene Step: {}, cutsceneText.size {}", cutsceneStep, cutsceneText.size);
         if (cutsceneStep < cutsceneText.size) {
             String text = cutsceneText.get(cutsceneStep);
             textDisplay.setText(text);  // Display the current step text
@@ -116,6 +157,8 @@ public class CutsceneScreenDisplay extends UIComponent {
         if (table != null) {
             table.clear();  // Safely clear the table
         }
+
+        System.out.println("We are starting the main game");
         game.setScreen(GdxGame.ScreenType.MAIN_GAME);  // Transition to the main game
     }
 
