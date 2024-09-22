@@ -26,16 +26,20 @@ public class CutsceneArea extends GameArea {
 
     @Override
     public void create() {
-        if (cutsceneValue == 0) {
-            logger.debug("Loading in intro cutscene");
-            System.out.println("Loading in intro cutscene");
-            currentCutscene = new IntroCutscene();
-            Entity cutsceneEntity = new Entity();
-            cutsceneEntity.addComponent(currentCutscene);
-
-            ServiceLocator.getEntityService().register(cutsceneEntity);
+        switch (cutsceneValue) {
+            case 0:
+                logger.debug("Loading intro cutscene");
+                System.out.println("Loading in intro cutscene");
+                currentCutscene = new IntroCutscene();
+                break;
+            default:
+                logger.error("Invalid cutscene value: {}", cutsceneValue);
+                return;
         }
 
+        Entity cutsceneEntity = new Entity();
+        cutsceneEntity.addComponent(currentCutscene);
+        ServiceLocator.getEntityService().register(cutsceneEntity);
         currentCutscene.start();
     }
 
@@ -43,12 +47,13 @@ public class CutsceneArea extends GameArea {
         if (cutsceneCompleted()) {
             // Trigger transition to next gameplay area
             logger.debug("Cutscene is done");
+
         }
     }
 
     private boolean cutsceneCompleted() {
         // Use a listener to update this value
-        return true;
+        return currentCutscene != null && currentCutscene.isCompleted();
     }
 
     public void dispose() {

@@ -66,6 +66,22 @@ public class CutsceneScreenDisplay extends UIComponent {
     }
 
     /**
+     * Get the text for the current cutscene
+     * @return An array of strings wehre each string represents a step in the cutscene
+     */
+    public Array<String> getCutsceneText() {
+        return cutsceneText;
+    }
+
+    /**
+     * Get the current step in the cutscene
+     * @return An integer representation of the current step in the cutscene
+     */
+    public int getCutsceneStep() {
+        return cutsceneStep;
+    }
+
+    /**
      * Proceeds to the next step in the cutscene, displaying the next piece of text.
      * Automatically ends the cutscene when all steps are complete.
      */
@@ -126,5 +142,13 @@ public class CutsceneScreenDisplay extends UIComponent {
             return;
         }
         this.stage = stage;
+    }
+
+    public void setTextDisplay(CutsceneTextDisplay textDisplay) {
+        this.textDisplay = textDisplay;
+    }
+
+    public void setTable(Table table) {
+        this.table = table;
     }
 }

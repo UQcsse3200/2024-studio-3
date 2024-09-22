@@ -1,11 +1,6 @@
 package com.csse3200.game.components.cutscenes;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.math.Vector2;
-import com.csse3200.game.components.Component;
-import com.csse3200.game.components.mainmenu.MainMenuActions;
 import com.csse3200.game.entities.Entity;
-import com.csse3200.game.rendering.TextureRenderComponent;
 import com.csse3200.game.services.GameTime;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
@@ -13,16 +8,22 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class IntroCutscene extends Cutscene {
-    private static final Logger logger = LoggerFactory.getLogger(MainMenuActions.class);
+    private static final Logger logger = LoggerFactory.getLogger(IntroCutscene.class);
     float timeStart = 0;
     float duration = 2.0f;
     private GameTime gameTime;
 
     public IntroCutscene() {
-
         System.out.println("Created intro cutscene");
         gameTime = ServiceLocator.getTimeSource();
         timeStart = gameTime.getTime();
+
+        // Create the script
+        this.cutsceneText.add("First bit of text");
+        this.cutsceneText.add("Second bit of text");
+        this.cutsceneText.add("Third bit of text");
+
+        this.setScript();
     }
 
     @Override
