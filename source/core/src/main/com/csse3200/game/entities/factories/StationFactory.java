@@ -139,7 +139,7 @@ public class StationFactory {
    * @return Entity of type station with added components and references
    */
   public static Entity createBananaTree() {
-    Entity apple = new Entity()
+    Entity banana = new Entity()
             .addComponent(new TextureRenderComponent("images/stations/apple_tree.png"))
             .addComponent(new PhysicsComponent())
             .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
@@ -148,19 +148,18 @@ public class StationFactory {
             .addComponent(new StationCollectionComponent())
             .addComponent(new InventoryComponent(1))
             .addComponent(new IngredientStationHandlerComponent("bananaTree", "banana"));
-
     // Physics components
-    apple.getComponent(InteractionComponent.class).setAsBox(apple.getScale());
-    apple.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
-    apple.getComponent(TextureRenderComponent.class).scaleEntity();
-    apple.scaleHeight(1.5f);
-    PhysicsUtils.setScaledCollider(apple, 0.3f, 0.2f);
 
+    banana.getComponent(InteractionComponent.class).setAsBox(banana.getScale());
+    banana.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
+    banana.getComponent(TextureRenderComponent.class).scaleEntity();
+    banana.scaleHeight(1.5f);
+    PhysicsUtils.setScaledCollider(banana, 0.3f, 0.2f);
     // Add station reference
-    PhysicsComponent physicsComponent = apple.getComponent(PhysicsComponent.class);
+    PhysicsComponent physicsComponent = banana.getComponent(PhysicsComponent.class);
     Body body = physicsComponent.getBody();
-    body.setUserData(apple);
-    return apple;
+    body.setUserData(banana);
+    return banana;
   }
 
   /**
@@ -169,7 +168,7 @@ public class StationFactory {
    */
   public static Entity createStrawberries() {
     Entity strawberry = new Entity()
-            .addComponent(new TextureRenderComponent("images/ingredients/raw_strawberry.png"))
+            .addComponent(new TextureRenderComponent("images/stations/apple_tree.png"))
             .addComponent(new PhysicsComponent())
             .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
             .addComponent(new InteractionComponent(PhysicsLayer.INTERACTABLE))
@@ -177,14 +176,12 @@ public class StationFactory {
             .addComponent(new StationCollectionComponent())
             .addComponent(new InventoryComponent(1))
             .addComponent(new IngredientStationHandlerComponent("strawberriesStation", "strawberry"));
-
     // Physics components
     strawberry.getComponent(InteractionComponent.class).setAsBox(strawberry.getScale());
     strawberry.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
     strawberry.getComponent(TextureRenderComponent.class).scaleEntity();
-    strawberry.scaleHeight(0.5f);
+    strawberry.scaleHeight(1.5f);
     PhysicsUtils.setScaledCollider(strawberry, 0.3f, 0.2f);
-
     // Add station reference
     PhysicsComponent physicsComponent = strawberry.getComponent(PhysicsComponent.class);
     Body body = physicsComponent.getBody();
