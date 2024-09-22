@@ -2,15 +2,23 @@ package com.csse3200.game.components.cutscenes;
 
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.areas.ForestGameArea;
 import com.csse3200.game.areas.terrain.TerrainFactory;
-import com.csse3200.game.components.ordersystem.DocketMealDisplay;
-import com.csse3200.game.components.ordersystem.TicketDetails;
+import com.csse3200.game.components.gamearea.PerformanceDisplay;
+import com.csse3200.game.components.maingame.MainGameActions;
+import com.csse3200.game.components.maingame.MainGameExitDisplay;
+import com.csse3200.game.components.ordersystem.*;
+import com.csse3200.game.components.tutorial.TutorialScreenDisplay;
+import com.csse3200.game.components.tutorial.TutorialTextDisplay;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.entities.factories.LevelFactory;
 import com.csse3200.game.entities.factories.RenderFactory;
+import com.csse3200.game.input.InputComponent;
+import com.csse3200.game.input.InputDecorator;
 import com.csse3200.game.input.InputService;
 import com.csse3200.game.physics.PhysicsEngine;
 import com.csse3200.game.physics.PhysicsService;
@@ -18,6 +26,8 @@ import com.csse3200.game.rendering.RenderService;
 import com.csse3200.game.rendering.Renderer;
 import com.csse3200.game.screens.MainGameScreen;
 import com.csse3200.game.services.*;
+import com.csse3200.game.ui.terminal.Terminal;
+import com.csse3200.game.ui.terminal.TerminalDisplay;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,6 +41,8 @@ public class CutsceneScreen extends ScreenAdapter {
     private final Renderer renderer;
 
     private static final String[] cutsceneScreenTextures = {};
+
+    private CutsceneScreenDisplay cutsceneScreenDisplay;
 
     public CutsceneScreen(GdxGame game, int cutsceneVal) {
         this.game = game;
@@ -93,6 +105,29 @@ public class CutsceneScreen extends ScreenAdapter {
         ResourceService resourceService = ServiceLocator.getResourceService();
         resourceService.unloadAssets(cutsceneScreenTextures);
         resourceService.unloadAssets(DocketMealDisplay.getMealDocketTextures());
+    }
+
+    private void createUI() {
+        logger.debug("Creating UI");
+        Stage stage = ServiceLocator.getRenderService().getStage();
+        InputComponent inputComponent = ServiceLocator.getInputService().getInputFactory().createForTerminal();
+        cutsceneScreenDisplay = new CutsceneScreenDisplay(this.game);
+
+        Entity ui = new Entity();
+        ui.addComponent(new InputDecorator(stage, 10))
+                .addComponent(new PerformanceDisplay())
+                .addComponent(new Terminal())
+                .addComponent(inputComponent)
+                .addComponent(new TerminalDisplay())
+                .addComponent(new CutsceneActions(this.game))
+                .addComponent(cutsceneScreenDisplay)
+                .addComponent(new CutsceneTextDisplay(this));
+
+        ServiceLocator.getEntityService().register(ui);
+    }
+
+    public CutsceneScreenDisplay getCutsceneScreenDisplay() {
+        return cutsceneScreenDisplay;
     }
 
     public GdxGame getGame() {
