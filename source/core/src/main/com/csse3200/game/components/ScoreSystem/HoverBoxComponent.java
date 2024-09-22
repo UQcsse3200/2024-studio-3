@@ -64,9 +64,9 @@ public class HoverBoxComponent extends RenderComponent {
 
         String entityInfo = getEntityInfo();
 
-        System.out.println("Drawing HoverBox for " + entityInfo
-                + " at (" + position.x + "," + position.y + ")"
-                + " with scale (" + scale.x + "," + scale.y + ")");
+        // System.out.println("Drawing HoverBox for " + entityInfo
+        //         + " at (" + position.x + "," + position.y + ")"
+        //         + " with scale (" + scale.x + "," + scale.y + ")");
 
         batch.draw(hoverImage,
                 position.x + X_OFFSET,
