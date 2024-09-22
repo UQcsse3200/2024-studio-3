@@ -61,7 +61,15 @@ public class TerrainFactory {
             new TextureRegion(resourceService.getAsset("images/tiles/blue_tile.png", Texture.class));
         return createKitchenDemoTerrain(2f, orthoFloor, custTile);
         // leaving this code incase we decide to implement isometric instead
-
+      // Testing with another level
+      case Level2:
+        new TextureRegion(resourceService.getAsset("images/tiles/orange_tile.png", Texture.class));
+        TextureRegion custom =
+                new TextureRegion(resourceService.getAsset("images/tiles/blue_tile.png", Texture.class));
+        // add bench tiles:
+        TextureRegion benchTile =
+                new TextureRegion(resourceService.getAsset("images/tiles/bench_tile.png", Texture.class));
+        return createBenchDemoTerrain(2f,benchTile, custom);
       default:
         return null;
     }
@@ -76,17 +84,44 @@ public class TerrainFactory {
     return new TerrainComponent(camera, tiledMap, renderer, orientation, tileWorldSize);
   }
 
+  private TerrainComponent createBenchDemoTerrain(
+          float tileWorldSize, TextureRegion floor, TextureRegion customer_tiles) {
+    // Customer_tiles are the blue tiles where the customers/animals are going to be
+    GridPoint2 tilePixelSize = new GridPoint2(floor.getRegionWidth(), floor.getRegionHeight());
+    TiledMap tiledMap = createBenchTileLevels(tilePixelSize, floor, customer_tiles);
+    TiledMapRenderer renderer = createRenderer(tiledMap, tileWorldSize / tilePixelSize.x);
+    return new TerrainComponent(camera, tiledMap, renderer, orientation, tileWorldSize);
+  }
+
   private TiledMapRenderer createRenderer(TiledMap tiledMap, float tileScale) {
     switch (orientation) {
       case ORTHOGONAL:
         return new OrthogonalTiledMapRenderer(tiledMap, tileScale);
-      case ISOMETRIC:
-        return new IsometricTiledMapRenderer(tiledMap, tileScale);
-      case HEXAGONAL:
-        return new HexagonalTiledMapRenderer(tiledMap, tileScale);
       default:
         return null;
     }
+  }
+
+  private TiledMap createBenchTileLevels(
+          GridPoint2 tileSize,  TextureRegion bench, TextureRegion customer_tiles) {
+    TiledMap tiledMap = new TiledMap();
+    TerrainTile benchTile= new TerrainTile(bench);
+    TerrainTile customerTile = new TerrainTile(customer_tiles);
+    // Bench tile
+    TiledMapTileLayer layer = new TiledMapTileLayer(MAP_SIZE.x, MAP_SIZE.y, tileSize.x , tileSize.y);
+
+    // Size for blue tiles
+    GridPoint2 modified_size = new GridPoint2(MAP_SIZE.x/4 , MAP_SIZE.y);
+
+    // Create base orange tiles
+    fillTiles(layer, MAP_SIZE, benchTile);
+    // Create blue tiles with modified map size
+
+    fillBlueTiles(layer, modified_size, customerTile, CUST_TILE_COUNT);
+
+    tiledMap.getLayers().add(layer);
+    tiledMap.getLayers().add(layer);
+    return tiledMap;
   }
 
   private TiledMap createKitchenDemoTiles(
@@ -94,6 +129,8 @@ public class TerrainFactory {
     TiledMap tiledMap = new TiledMap();
     TerrainTile floorTile= new TerrainTile(floor);
     TerrainTile customerTile = new TerrainTile(customer_tiles);
+    // Bench tile
+
     TiledMapTileLayer layer = new TiledMapTileLayer(MAP_SIZE.x, MAP_SIZE.y, tileSize.x , tileSize.y);
 
     // Size for blue tiles
@@ -161,6 +198,6 @@ public class TerrainFactory {
    */
   public enum TerrainType {
     KITCHEN_DEMO,
-    KITCHEN_DEMO_ISO,
+    Level2
   }
 }
