@@ -212,13 +212,12 @@ public class MainGameScreen extends ScreenAdapter {
 			.addComponent(new TerminalDisplay())
 			.addComponent(new OrderActions(this.game))
 			.addComponent(new MainGameOrderBtnDisplay())
-			.addComponent(new PauseMenuActions(this.game))
-			.addComponent(new PauseMenuDisplay(this))
 			.addComponent(new RageUpgrade())
 			.addComponent(new LoanUpgrade())
 			.addComponent(new RandomCombination())
-				.addComponent(new SpeedBootsUpgrade());
-
+				.addComponent(new SpeedBootsUpgrade())
+				.addComponent(new PauseMenuActions(this.game))
+				.addComponent(new PauseMenuDisplay(this));
 
 
 		//temporary moral display
