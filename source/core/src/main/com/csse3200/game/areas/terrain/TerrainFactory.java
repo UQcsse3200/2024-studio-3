@@ -60,7 +60,7 @@ public class TerrainFactory {
         TextureRegion custTile =
             new TextureRegion(resourceService.getAsset("images/tiles/blue_tile.png", Texture.class));
         return createKitchenDemoTerrain(2f, orthoFloor, custTile);
-        // leaving this code incase we decide to implement isometric instead
+
       // Testing with another level
       case Level2:
         new TextureRegion(resourceService.getAsset("images/tiles/orange_tile.png", Texture.class));
