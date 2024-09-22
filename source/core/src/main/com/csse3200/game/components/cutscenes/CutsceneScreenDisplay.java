@@ -3,8 +3,11 @@ package com.csse3200.game.components.cutscenes;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Array;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.entities.Entity;
@@ -43,6 +46,25 @@ public class CutsceneScreenDisplay extends UIComponent {
         textDisplay = new CutsceneTextDisplay();
         textDisplay.setVisible(false);  // Initially hidden
         stage.addActor(textDisplay.getTable());  // Add it to the stage
+
+        table.bottom().right();
+        table.setFillParent(true);
+
+        TextButton mainMenuBtn = new TextButton("Next Scene", skin);
+
+        // Triggers an event when the button is pressed.
+        mainMenuBtn.addListener(
+                new ChangeListener() {
+                    @Override
+                    public void changed(ChangeEvent changeEvent, Actor actor) {
+                        logger.debug("Next Scene button clicked");
+                        entity.getEvents().trigger("nextCutscene");
+                    }
+                });
+
+        table.add(mainMenuBtn).padTop(10f).padRight(10f);
+
+        cutsceneText.add("Hello guys");
 
         advanceCutsceneStep();  // Ensure textDisplay is initialized before calling this method
 
@@ -86,6 +108,7 @@ public class CutsceneScreenDisplay extends UIComponent {
      * Automatically ends the cutscene when all steps are complete.
      */
     public void advanceCutsceneStep() {
+        logger.info("Cutscene Step: {}, cutsceneText.size {}", cutsceneStep, cutsceneText.size);
         if (cutsceneStep < cutsceneText.size) {
             String text = cutsceneText.get(cutsceneStep);
             textDisplay.setText(text);  // Display the current step text
@@ -116,6 +139,8 @@ public class CutsceneScreenDisplay extends UIComponent {
         if (table != null) {
             table.clear();  // Safely clear the table
         }
+
+        System.out.println("We are starting the main game");
         game.setScreen(GdxGame.ScreenType.MAIN_GAME);  // Transition to the main game
     }
 
