@@ -28,8 +28,8 @@ public class RageUpgrade extends UIComponent {
     private Table layout;
 
     private ProgressBar rageMeter;
-    private float rageTimeRemaining; // Track remaining time for rage mode
-    private final float rageTime = 30f; // 1 minute duration
+    private float rageTimeRemaining;
+    private final float rageTime = 30f;
     private boolean isRageActive = false;
 
     private float rageFillTimeRemaining;
@@ -59,12 +59,18 @@ public class RageUpgrade extends UIComponent {
         setupRageMeter();
         setupInputListener();
 
+        // https://freesound.org/people/Timbre/sounds/86241/
         rageSound = Gdx.audio.newSound(Gdx.files.internal("sounds/rage_sound.wav"));
+
+        // https://freesound.org/people/noirenex/sounds/159399/
         powerDownSound = Gdx.audio.newSound(Gdx.files.internal("sounds/power_down.wav"));
     }
 
     private void setupRedOverlay() {
+        // https://www.freepik.com/free-vector/grunge-red-distressed-textured-background_4043545.htm#query=
+        // red%20overlay&position=32&from_view=keyword&track=ais_hybrid&uuid=5e1656db-c1a1-483b-b846-d3d666207271
         Texture texture = ServiceLocator.getResourceService().getAsset("images/red_overlay.jpg", Texture.class);
+
         Image image = new Image(texture);
         image.setFillParent(true);
         image.setColor(new Color(1, 0, 0, 0.3f));
@@ -72,6 +78,7 @@ public class RageUpgrade extends UIComponent {
     }
 
     private void setupRageMeter() {
+        // Made textures in Paint
         Texture whiteTexture = ServiceLocator.getResourceService().getAsset("images/white_background.png", Texture.class);
         Texture fillTexture = ServiceLocator.getResourceService().getAsset("images/red_fill.png", Texture.class);
 
