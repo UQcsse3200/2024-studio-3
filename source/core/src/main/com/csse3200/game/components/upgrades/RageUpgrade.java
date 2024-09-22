@@ -54,6 +54,7 @@ public class RageUpgrade extends UIComponent {
         layout.setFillParent(true);
         layout.setVisible(isOverlayVisible);
         stage.addActor(layout);
+        layout.setZIndex(0);
 
         setupRedOverlay();
         setupRageMeter();
