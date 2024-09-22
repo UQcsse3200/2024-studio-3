@@ -47,7 +47,6 @@ public class CutsceneScreenDisplay extends UIComponent {
         textDisplay.setVisible(false);  // Initially hidden
         stage.addActor(textDisplay.getTable());  // Add it to the stage
 
-        table.bottom().right();
         table.setFillParent(true);
 
         TextButton mainMenuBtn = new TextButton("Next Scene", skin);
@@ -62,13 +61,32 @@ public class CutsceneScreenDisplay extends UIComponent {
                     }
                 });
 
+        TextButton ExituButton = new TextButton("Exit", skin);
+        ExituButton.addListener(
+                new ChangeListener() {
+                    @Override
+                    public void changed(ChangeEvent changeEvent, Actor actor) {
+                        logger.debug("Main Menu button clicked");
+                        entity.getEvents().trigger("exitCutscene");  // Transition to the main menu
+                    }
+                });
+
+        table.bottom().right();
         table.add(mainMenuBtn).padTop(10f).padRight(10f);
+
+        stage.addActor(table);
+
+        Table topRightTable = new Table();
+        topRightTable.setFillParent(true);
+        topRightTable.top().right();
+
+        topRightTable.add(ExituButton).padTop(20f).padRight(20f);
+
+        stage.addActor(topRightTable);
 
         cutsceneText.add("Hello guys");
 
         advanceCutsceneStep();  // Ensure textDisplay is initialized before calling this method
-
-        stage.addActor(table);
     }
 
     private void setupUI() {
