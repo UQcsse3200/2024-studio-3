@@ -226,9 +226,9 @@ public class MoralDecisionDisplay extends UIComponent {
      */
     @Override
     public void update() {
-        super.update();
-        layout.clear();
-        this.create();
+//        super.update();
+//        layout.clear();
+//        this.create();
 
 
         // time stuff
