@@ -50,21 +50,23 @@ public class CutsceneScreenDisplay extends UIComponent {
         table.bottom().right();
         table.setFillParent(true);
 
-        TextButton mainMenuBtn = new TextButton("Next Scene", skin);
+        TextButton nextSceneBtn = new TextButton("Next Scene", skin);
 
         // Triggers an event when the button is pressed.
-        mainMenuBtn.addListener(
+        nextSceneBtn.addListener(
                 new ChangeListener() {
                     @Override
                     public void changed(ChangeEvent changeEvent, Actor actor) {
                         logger.debug("Next Scene button clicked");
-                        entity.getEvents().trigger("nextCutscene");
+                        entity.getEvents().trigger("cutsceneEnded");
                     }
                 });
 
-        table.add(mainMenuBtn).padTop(10f).padRight(10f);
+        table.add(nextSceneBtn).padTop(10f).padRight(10f);
 
         cutsceneText.add("Hello guys");
+
+        createTextBox("Start text");
 
         advanceCutsceneStep();  // Ensure textDisplay is initialized before calling this method
 
@@ -131,6 +133,7 @@ public class CutsceneScreenDisplay extends UIComponent {
 
         for (int i = 0; i < entities.size; i++) {
             Entity entity = entities.get(i);
+            System.out.println("Triggering an event");
             entity.getEvents().trigger("SetText", text);
         }
     }

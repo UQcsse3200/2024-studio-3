@@ -15,9 +15,13 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
+import com.csse3200.game.components.maingame.TextDisplay;
 import com.csse3200.game.screens.CutsceneScreen;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * CutsceneTextDisplay displays scrolling text during a cutscene.
@@ -26,16 +30,18 @@ import com.csse3200.game.ui.UIComponent;
 public class CutsceneTextDisplay extends UIComponent {
     private String text;
     private StringBuilder currentText;
-    private int curCharIndex = 0;
+    private int charIndex = 0;
     private long lastUpdate = 0L;
+    private long delay = 100L;
 
+    // Displaying variables
     private boolean visible;
     private Stack layout;
     private Label label;
-    private final Table table;
+    private Table table;
     private Image displayBox;
+
     private final CutsceneScreen cutscene;
-    private final long delay = 50L;
 
     /**
      * Default constructor initializes without a specific cutscene.
@@ -112,56 +118,40 @@ public class CutsceneTextDisplay extends UIComponent {
     public void setText(String text) {
         setVisible(true);
         this.text = text;
-        this.currentText.setLength(0);
-        this.curCharIndex = 0;
+        this.currentText.setLength(0);  // Reset current text
+        this.charIndex = 0;  // Start typing from the beginning
     }
 
-    /**
-     * Sets the visibility of the text display.
-     *
-     * @param value true to show the display, false to hide
-     */
     public void setVisible(boolean value) {
         this.visible = value;
         table.setVisible(value);
     }
 
-    /**
-     * Returns the current visibility of the text display.
-     *
-     * @return true if visible, false otherwise
-     */
     public boolean getVisible() {
         return this.visible;
     }
 
-    /**
-     * Updates the text display, adding one character at a time.
-     */
     @Override
     public void update() {
         long time = ServiceLocator.getTimeSource().getTime();
-        if (this.text != null && curCharIndex < this.text.length()) {
-            if (time - lastUpdate >= this.delay) {
+        if (this.text != null && charIndex < this.text.length()) {
+            if (time - lastUpdate >= delay) {
                 lastUpdate = time;
-                this.currentText.append(text.charAt(curCharIndex));
+                this.currentText.append(text.charAt(charIndex));
                 label.setText(currentText.toString());
-                curCharIndex++;
+                charIndex++;
             }
         }
     }
 
-    /**
-     * Sets up the input listener to skip the text display when ENTER is pressed.
-     */
     private void setupInputListener() {
         stage.addListener(new InputListener() {
             @Override
             public boolean keyDown(InputEvent event, int keycode) {
                 if (keycode == com.badlogic.gdx.Input.Keys.ENTER) {
-                    // Skip to the full text when ENTER is pressed
+                    // If ENTER is pressed, skip to the full text
                     label.setText(text);
-                    curCharIndex = text.length();  // Skip to the end of the text
+                    charIndex = text.length();  // Set charIndex to the end
                     return true;
                 }
                 return false;

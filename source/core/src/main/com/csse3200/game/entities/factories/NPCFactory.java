@@ -138,7 +138,7 @@ public class NPCFactory {
                 // Display the order for the customer
                 OrderManager.displayOrder(customer);
 
-                System.out.println("Created customer " + name + " with initial position: " + customer.getPosition());
+                logger.debug("Created customer " + name + " with initial position: " + customer.getPosition());
 
                 if (customer.getComponent(HoverBoxComponent.class) == null) {
                         customer.addComponent(new HoverBoxComponent(new Texture("images/customer_faces/angry_face.png")));

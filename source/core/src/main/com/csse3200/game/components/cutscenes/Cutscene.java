@@ -28,10 +28,19 @@ public abstract class Cutscene extends Component {
     }
 
     @Override
+    public void create() {
+        entity.getEvents().addListener("nextCutscene", this::nextCutscene);
+    }
+
+    @Override
     public abstract void update();
 
     protected abstract void loadAssets();
     protected abstract void createEntities();
+
+    protected void nextCutscene(){
+        logger.error("Not implemented, should be overridden by child cutscene");
+    }
 
     public void start() {
         createEntities();

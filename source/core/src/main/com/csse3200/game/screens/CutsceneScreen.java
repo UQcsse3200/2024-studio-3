@@ -89,7 +89,6 @@ public class CutsceneScreen extends ScreenAdapter {
 
     private void loadAssets() {
         logger.debug("Loading assets");
-        System.out.println("Loading assets");
         ResourceService resourceService = ServiceLocator.getResourceService();
         resourceService.loadTextures(cutsceneScreenTextures);
         ServiceLocator.getResourceService().loadAll();
@@ -106,7 +105,6 @@ public class CutsceneScreen extends ScreenAdapter {
         logger.debug("Creating UI");
         Stage stage = ServiceLocator.getRenderService().getStage();
         InputComponent inputComponent = ServiceLocator.getInputService().getInputFactory().createForTerminal();
-        System.out.println("Creating cutscene display");
         cutsceneScreenDisplay = new CutsceneScreenDisplay(this.game);
 
         Entity ui = new Entity();

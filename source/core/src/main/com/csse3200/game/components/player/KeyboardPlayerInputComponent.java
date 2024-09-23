@@ -39,8 +39,6 @@ public class KeyboardPlayerInputComponent extends InputComponent {
     keyFlags.put(keycode, 1);
 
     if (keycode == Keys.O) {
-      System.out.println("O clicked");
-
       entity.getEvents().trigger("createOrder");
       return true;
     }

@@ -29,7 +29,6 @@ public class CutsceneArea extends GameArea {
         switch (cutsceneValue) {
             case 0:
                 logger.debug("Loading intro cutscene");
-                System.out.println("Loading in intro cutscene");
                 currentCutscene = new IntroCutscene();
                 break;
             default:

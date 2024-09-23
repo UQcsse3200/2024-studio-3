@@ -14,7 +14,6 @@ public class IntroCutscene extends Cutscene {
     private GameTime gameTime;
 
     public IntroCutscene() {
-        System.out.println("Created intro cutscene");
         gameTime = ServiceLocator.getTimeSource();
         timeStart = gameTime.getTime();
 
@@ -27,14 +26,24 @@ public class IntroCutscene extends Cutscene {
     }
 
     @Override
+    public void create() {
+        super.create();
+    }
+
+    @Override
     public void update() {
-        System.out.println("Updating");
         // Check if the cutscene has finished based on time
         float currentTime = gameTime.getTime();
         if ((currentTime - timeStart) > duration) {
             logger.debug("Cutscene finished. Triggering next level/cutscene.");
             entity.getEvents().trigger("cutsceneEnded");
         }
+    }
+
+    @Override
+    protected void nextCutscene() {
+        // Should move to the next cutscene, but since it is not available
+        entity.getEvents().trigger("cutsceneEnded");
     }
 
     @Override

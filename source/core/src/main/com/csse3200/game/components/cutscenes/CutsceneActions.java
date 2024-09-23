@@ -17,22 +17,12 @@ public class CutsceneActions extends Component {
 
     @Override
     public void create() {
-        entity.getEvents().addListener("nextCutscene", this::nextCutscene);
-        entity.getEvents().addListener("cutsceneEnded", this::nextCutscene);
+        entity.getEvents().addListener("cutsceneEnded", this::cutsceneEnded);
         inputService = ServiceLocator.getInputService();
     }
 
-    @Override
-    public void update() {
-        // Check for space bar press
-        if (inputService.keyDown(Input.Keys.SPACE)) {
-            logger.debug("Space bar pressed. Moving to next cutscene or level.");
-            nextCutscene();
-        }
-    }
-
-    private void nextCutscene() {
-        logger.debug("Transitioning to next cutscene or game level.");
+    private void cutsceneEnded() {
+        logger.debug("Transitioning to the game level.");
         // Need better logic to determine which level of the game it should be on.
         // Could also end up transitioning to the next cutscene maybe
         game.setScreen(GdxGame.ScreenType.MAIN_GAME);
