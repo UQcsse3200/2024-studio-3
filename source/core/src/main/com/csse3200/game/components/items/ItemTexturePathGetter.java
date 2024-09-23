@@ -71,11 +71,11 @@ public class ItemTexturePathGetter {
 
         // string for the meal name image
         String imageName = switch(item) {
-            case "Fruit Salad" -> "fruit_salad";
-            case "Acai bowl" -> "acai_bowl";
-            case "Salad" -> "salad";
-            case "Steak Meal" -> "steak_meal";
-            case "Banana Split" -> "banana_split";
+            case "fruit salad" -> "fruit_salad";
+            case "acai bowl" -> "acai_bowl";
+            case "salad" -> "salad";
+            case "steak meal" -> "steak_meal";
+            case "banana split" -> "banana_split";
             default -> null;
         };
 
