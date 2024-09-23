@@ -1,20 +1,19 @@
 package com.csse3200.game.areas;
 
-import com.csse3200.game.components.maingame.CheckWinLoseComponent;
-import com.csse3200.game.components.npc.PersonalCustomerEnums;
-import com.badlogic.gdx.utils.Null;
-import com.csse3200.game.GdxGame;
-import com.csse3200.game.components.maingame.TextDisplay;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import static com.badlogic.gdx.Gdx.app;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.areas.terrain.TerrainFactory.TerrainType;
 import com.csse3200.game.components.gamearea.GameAreaDisplay;
+import com.csse3200.game.components.maingame.CheckWinLoseComponent;
 import com.csse3200.game.components.maingame.EndDayDisplay;
 import com.csse3200.game.components.moral.MoralDecision;
 import com.csse3200.game.components.npc.PersonalCustomerEnums;
@@ -31,14 +30,6 @@ import com.csse3200.game.screens.MoralDecisionDisplay;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.utils.math.GridPoint2Utils;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import com.csse3200.game.components.maingame.EndDayDisplay;
-import com.csse3200.game.components.moral.MoralDecision;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import static com.badlogic.gdx.Gdx.app;
 
 
 
@@ -446,7 +437,7 @@ public class ForestGameArea extends GameArea {
     GridPoint2 ovenPos = new GridPoint2(5,4);
     Entity oven = StationFactory.createOven();
     spawnEntityAt(oven, ovenPos, true, false);
-    oven.setPosition(oven.getPosition().x , oven.getPosition().y + 0.9f);
+    oven.setPosition(oven.getPosition().x + 0.5f, oven.getPosition().y + 2f);
 
     GridPoint2 stovePos = new GridPoint2(5,4);
     Entity stove = StationFactory.createStove();
