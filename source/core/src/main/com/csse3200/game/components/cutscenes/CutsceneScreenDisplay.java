@@ -61,16 +61,35 @@ public class CutsceneScreenDisplay extends UIComponent {
                         entity.getEvents().trigger("cutsceneEnded");
                     }
                 });
-
         table.add(nextSceneBtn).padTop(10f).padRight(10f);
+
+        TextButton ExituButton = new TextButton("Exit", skin);
+        ExituButton.addListener(
+                new ChangeListener() {
+                    @Override
+                    public void changed(ChangeEvent changeEvent, Actor actor) {
+                        logger.debug("Main Menu button clicked");
+                        entity.getEvents().trigger("exitCutscene");  // Transition to the main menu
+                    }
+                });
+
+        table.bottom().left();
+
+        stage.addActor(table);
+
+        Table topRightTable = new Table();
+        topRightTable.setFillParent(true);
+        topRightTable.top().right();
+
+        topRightTable.add(ExituButton).padTop(20f).padRight(20f);
+
+        stage.addActor(topRightTable);
 
         cutsceneText.add("Hello guys");
 
         createTextBox("Start text");
 
         advanceCutsceneStep();  // Ensure textDisplay is initialized before calling this method
-
-        stage.addActor(table);
     }
 
     private void setupUI() {
@@ -133,7 +152,6 @@ public class CutsceneScreenDisplay extends UIComponent {
 
         for (int i = 0; i < entities.size; i++) {
             Entity entity = entities.get(i);
-            System.out.println("Triggering an event");
             entity.getEvents().trigger("SetText", text);
         }
     }
