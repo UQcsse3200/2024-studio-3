@@ -205,39 +205,21 @@ public class ItemFactory {
      * @return - the specified item entity, null if invalid.
      */
     public static Entity createBaseItem(String itemName) {
+        Entity entity = switch (itemName) {
+                case "fish" -> ItemFactory.createFish("raw");
+                case "beef" -> ItemFactory.createBeef("raw");
+                case "banana" -> ItemFactory.createBanana("raw");
+                case "cucumber" -> ItemFactory.createCucumber("raw");
+                case "tomato" -> ItemFactory.createTomato("raw");
+                case "strawberry" -> ItemFactory.createStrawberry("raw");
+                case "lettuce" -> ItemFactory.createLettuce("raw");
+                case "chocolate" -> ItemFactory.createChocolate("raw");
+                case "acai" -> ItemFactory.createAcai("raw");
+                default -> null;
+        };
 
-        Entity entity = null;
-
-        switch (itemName) {
-                case "fish":
-                        entity = ItemFactory.createFish("raw");
-                        break;
-                case "beef":
-                        entity = ItemFactory.createBeef("raw");
-                        break;
-                case "banana":
-                        entity = ItemFactory.createBanana("raw");
-                        break;
-                case "cucumber":
-                        entity = ItemFactory.createCucumber("raw");
-                        break;
-                case "tomato":
-                        entity = ItemFactory.createTomato("raw");
-                        break;
-                case "strawberry":
-                        entity = ItemFactory.createStrawberry("raw");
-                        break;
-                case "lettuce":
-                        entity = ItemFactory.createLettuce("raw");
-                        break;
-                case "chocolate":
-                        entity = ItemFactory.createChocolate("raw");
-                        break;
-                case "acai":
-                        entity = ItemFactory.createAcai("raw");
-                        break;
-                default:
-                        return null;
+        if (entity == null) {
+                return null;
         }
 
         // Register the entity
