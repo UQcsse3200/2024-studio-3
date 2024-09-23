@@ -27,6 +27,7 @@ public class MainGameActions extends Component {
 
     public MainGameActions(GdxGame game) {
         this.game = game;
+        ServiceLocator.getEntityService().register(ui);
     }
 
     @Override
@@ -53,7 +54,6 @@ public class MainGameActions extends Component {
             docketDisplayer.setRecipe(preferredRecipe);
             docketDisplayer.setStage(ServiceLocator.getRenderService().getStage());
             docketDisplayer.addActors();
-            ServiceLocator.getEntityService().register(ui);
         } else {
             logger.info("Order limit of {} reached", ORDER_LIMIT);
         }
