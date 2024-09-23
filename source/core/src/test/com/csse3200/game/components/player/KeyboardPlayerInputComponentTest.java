@@ -56,7 +56,7 @@ class KeyboardPlayerInputComponentTest {
   @Test
   void shouldTriggerInteract() {
     inputComponent.keyDown(Keys.E);
-    verify(eventHandlerMock, times(1)).trigger("interact");
+    verify(eventHandlerMock, times(1)).trigger("interact", "default");
   }
 
   @Test
