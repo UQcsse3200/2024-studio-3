@@ -255,30 +255,25 @@ public class ItemFactory {
     public static Entity createMeal(String recipeName, List<IngredientComponent> ingredients) {
         Entity entity = switch(recipeName) {
                 case "fruitSalad" -> ItemFactory.createFruitSalad(ingredients);
+                case "acaiBowl" -> ItemFactory.createAcaiBowl(ingredients);
+                case "salad" ->  ItemFactory.createSalad(ingredients);
+                case "steakMeal" -> ItemFactory.createSteakMeal(ingredients);
+                case "bananaSplit" ->ItemFactory.createBananaSplit(ingredients);
                 default -> null;
         };
 
         if (entity == null) {
                 return null;
         }
-        
+
+        // Unregister the ingredients as they have no need to be entities and
+        // recieve updates anymore
+        for (IngredientComponent ingredient : ingredients) {
+                ServiceLocator.getEntityService().unregister(ingredient.getEntity());
+        }
+
         // Register the entity
         ServiceLocator.getEntityService().register(entity);
         return entity;
-
-        /*switch (recipeName) {
-                case "fruitSalad":
-                        return ItemFactory.createFruitSalad(ingredients);
-                case "acaiBowl":
-                        return ItemFactory.createAcaiBowl(ingredients);
-                case "salad":
-                        return ItemFactory.createSalad(ingredients);
-                case "steakMeal":
-                        return ItemFactory.createSteakMeal(ingredients);
-                case "bananaSplit":
-                        return ItemFactory.createBananaSplit(ingredients);
-        }*/
-
-        //return null;
     }
 }
