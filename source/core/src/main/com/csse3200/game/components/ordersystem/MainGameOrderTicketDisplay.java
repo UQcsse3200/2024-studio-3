@@ -53,6 +53,7 @@ public class MainGameOrderTicketDisplay extends UIComponent {
     private DocketMealDisplay mealDisplay;
     private static final float DISTANCE_MULTIPLIER = 0.015f;
     public CombatStatsComponent combatStatsComponent;
+    public int goldMultiplier = 1;
 
     /**
      * Constructs an MainGameOrderTicketDisplay instance
@@ -223,7 +224,7 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         startTimeArrayList.remove(i);
         countdownLabelArrayList.remove(i);
         recipeTimeArrayList.remove(i);
-        combatStatsComponent.addGold(getRecipeValue());
+        combatStatsComponent.addGold(getRecipeValue() * goldMultiplier);
     }
 
     /**
