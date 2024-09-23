@@ -19,7 +19,7 @@ import com.csse3200.game.services.ServiceLocator;
 
 /** Factory for creating game terrains. */
 public class TerrainFactory {
-  private static final GridPoint2 MAP_SIZE = new GridPoint2(8, 6);
+  private static final GridPoint2 MAP_SIZE = new GridPoint2(8, 5);
   private static final int CUST_TILE_COUNT = 13;
   private final OrthographicCamera camera;
   private final TerrainOrientation orientation;

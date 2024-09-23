@@ -75,7 +75,7 @@ public class ObstacleFactory {
             .addComponent(new PhysicsComponent())
             .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
 
-    float width=-1f,height=131.9f,scalefactor=11f;
+    float width=-1f,height=131,scalefactor=11f;
     border.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
     PhysicsUtils.setScaledCollider(border, 1.0F, 0.0F);
     border.setScale(width/scalefactor, height/scalefactor);
@@ -89,7 +89,7 @@ public class ObstacleFactory {
             .addComponent(new PhysicsComponent())
             .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
 
-    float width = 177.4f, height = 1f, scalefactor = 11f;
+    float width = 176.4f, height = 1f, scalefactor = 11f;
     border.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
     PhysicsUtils.setScaledCollider(border, 1.0F, 0.8F);
     border.setScale(width/scalefactor, height/scalefactor);

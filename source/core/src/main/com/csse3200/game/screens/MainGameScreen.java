@@ -65,7 +65,7 @@ public class MainGameScreen extends ScreenAdapter {
 			"images/white_background.png"
 	};
 	// Modified the camera position to fix layout
-	private static final Vector2 CAMERA_POSITION = new Vector2(7.5f, 6.0f);
+	private static final Vector2 CAMERA_POSITION = new Vector2(8f, 5.3f);
 
   private final GdxGame game;
   private final Renderer renderer;

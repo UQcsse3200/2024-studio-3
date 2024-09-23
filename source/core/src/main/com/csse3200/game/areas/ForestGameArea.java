@@ -344,25 +344,25 @@ public class ForestGameArea extends GameArea {
     GridPoint2 coords;
     Vector2 pos;
     Entity top_left_door = ObstacleFactory.Door("topleft_door");
-    coords = new GridPoint2(0,264);
+    coords = new GridPoint2(0,241);
     spawnEntityAt(top_left_door, coords, true, true);
     pos = top_left_door.getPosition();
     top_left_door.setPosition((pos.x / (24 * (terrain.getTileSize()))) + 0.02f, pos.y / (24 * (terrain.getTileSize())));
 
     Entity top_right_door = ObstacleFactory.Door("topright_door");
-    coords = new GridPoint2(48,264);
+    coords = new GridPoint2(48,241);
     spawnEntityAt(top_right_door, coords, true, true);
     pos = top_right_door.getPosition();
     top_right_door.setPosition((pos.x / (24 * (terrain.getTileSize()))) + 0.02f, pos.y / (24 * (terrain.getTileSize())));
 
     Entity bottom_left_door = ObstacleFactory.Door("bottomleft_door");
-    coords = new GridPoint2(0,1);
+    coords = new GridPoint2(0,-20);
     spawnEntityAt(bottom_left_door, coords, true, true);
     pos = bottom_left_door.getPosition();
     bottom_left_door.setPosition((pos.x / (24 * (terrain.getTileSize()))) + 0.02f, pos.y / (24 * (terrain.getTileSize())));
 
     Entity bottom_right_door = ObstacleFactory.Door("bottomright_door");
-    coords = new GridPoint2(48,1);
+    coords = new GridPoint2(48,-20);
     spawnEntityAt(bottom_right_door, coords, true, true);
     pos = bottom_right_door.getPosition();
     bottom_right_door.setPosition((pos.x / (24 * (terrain.getTileSize()))) + 0.02f, pos.y / (24 * (terrain.getTileSize())));
@@ -375,13 +375,14 @@ public class ForestGameArea extends GameArea {
     GridPoint2 coords;
     Vector2 pos;
     Entity top_wall = ObstacleFactory.wall();
-    coords = new GridPoint2(99,264);
+    coords = new GridPoint2(99,241);
     spawnEntityAt(top_wall, coords, true, true);
     pos = top_wall.getPosition();
     top_wall.setPosition((pos.x / (24 * (terrain.getTileSize()))) + 0.02f, pos.y / (24 * (terrain.getTileSize())));
 
     Entity bottom_wall = ObstacleFactory.wall();
-    coords = new GridPoint2(99,1);
+    coords = new GridPoint2(99,-20
+    );
     spawnEntityAt(bottom_wall, coords, true, true);
     pos = bottom_wall.getPosition();
     bottom_wall.setPosition((pos.x / (24 * (terrain.getTileSize()))) + 0.02f, pos.y / (24 * (terrain.getTileSize())));
@@ -394,49 +395,51 @@ public class ForestGameArea extends GameArea {
     GridPoint2 coords = new GridPoint2(0,0);
     Vector2 pos;
 
-    //top border
     Entity top_border = ObstacleFactory.horizontalSeparation();
-    coords = new GridPoint2(2,286);
+    coords = new GridPoint2(3,263);
     spawnEntityAt(top_border, coords, true, true);
     pos = top_border.getPosition();
     top_border.setPosition((pos.x / (24 * (terrain.getTileSize()))) + 0.02f, pos.y / (24 * (terrain.getTileSize())));
 
-    Entity top_down_border = ObstacleFactory.horizontalSeparation();
-    coords = new GridPoint2(2,263);
-    spawnEntityAt(top_down_border, coords, true, true);
-    pos = top_down_border.getPosition();
-    top_down_border.setPosition((pos.x / (24 * (terrain.getTileSize()))) + 0.02f, pos.y / (24 * (terrain.getTileSize())));
+    Entity top_up_border = ObstacleFactory.horizontalSeparation();
+    coords = new GridPoint2(3,239);
+    spawnEntityAt(top_up_border, coords, true, true);
+    pos = top_up_border.getPosition();
+    top_up_border.setPosition((pos.x / (24 * (terrain.getTileSize()))) + 0.02f, pos.y / (24 * (terrain.getTileSize())));
 
     //bottom border
     Entity bottom_border = ObstacleFactory.horizontalSeparation();
-    coords = new GridPoint2(2,-1);
+    coords = new GridPoint2(2,-21);
     spawnEntityAt(bottom_border, coords, true, true);
     pos = bottom_border.getPosition();
     bottom_border.setPosition((pos.x / (24 * (terrain.getTileSize()))) + 0.02f, pos.y / (24 * (terrain.getTileSize())));
 
     Entity bottom_up_border = ObstacleFactory.horizontalSeparation();
-    coords = new GridPoint2(2,23);
+    coords = new GridPoint2(2,2);
     spawnEntityAt(bottom_up_border, coords, true, true);
     pos = bottom_up_border.getPosition();
     bottom_up_border.setPosition((pos.x / (24 * (terrain.getTileSize()))) + 0.02f, pos.y / (24 * (terrain.getTileSize())));
 
+
     //left border
     Entity left_border = ObstacleFactory.verticalSeparation();
-    coords = new GridPoint2(0,3);
+    coords = new GridPoint2(0,-18);
     spawnEntityAt(left_border, coords, true, true);
     pos = left_border.getPosition();
-    left_border.setPosition((pos.x / (24 * (terrain.getTileSize()))) + 0.02f, pos.y / (24 * (terrain.getTileSize())));
+
+
+    left_border.setPosition((pos.x / (15 * (terrain.getTileSize()))) + 0.02f, pos.y / (24 * (terrain.getTileSize())));
 
     //right border
     Entity right_border = ObstacleFactory.verticalSeparation();
-    coords = new GridPoint2(385,3);
+    coords = new GridPoint2(385,-18);
     spawnEntityAt(right_border, coords, true, true);
     pos = right_border.getPosition();
     right_border.setPosition((pos.x / (24 * (terrain.getTileSize()))) + 0.02f, pos.y / (24 * (terrain.getTileSize())));
 
     //separation border
     Entity sep_border = ObstacleFactory.verticalSeparation();
-    coords = new GridPoint2(96,3);
+    coords = new GridPoint2(96,-18);
     spawnEntityAt(sep_border, coords, true, true);
     pos = sep_border.getPosition();
     sep_border.setPosition((pos.x / (24 * (terrain.getTileSize()))) + 0.02f, pos.y / (24 * (terrain.getTileSize())));
