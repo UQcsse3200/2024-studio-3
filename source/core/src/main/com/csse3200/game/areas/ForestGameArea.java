@@ -126,7 +126,8 @@ public class ForestGameArea extends GameArea {
           "images/platecomponent/stackedplates/3plates.png",
           "images/platecomponent/stackedplates/4plates.png",
           "images/platecomponent/stackedplates/5plates.png",
-          "images/inventory_ui/slot.png"
+          "images/inventory_ui/slot.png",
+          "images/inventory_ui/null_image.png"
   };
   private static final String[] forestTextureAtlases = {
     "images/terrain_iso_grass.atlas",
@@ -720,17 +721,6 @@ public class ForestGameArea extends GameArea {
     return newAcai;
   }
 
-  /**
-   * Spawn a FruitSalad item.
-   * @return A FruitSalad entity.
-   */
-  private Entity spawnFruitSalad() {
-    Entity newFruitSalad = ItemFactory.createFruitSalad();
-    spawnEntityAt(newFruitSalad, new GridPoint2(3, 3), true, true);
-    newFruitSalad.setScale(0.5f,0.5f);
-    return newFruitSalad;
-  }
-
   private Entity spawnCustomerController() {
     Entity spawnController = new Entity();
     spawnController.getEvents().addListener(PersonalCustomerEnums.HANK.name(), this::spawnHank);
@@ -781,50 +771,6 @@ public class ForestGameArea extends GameArea {
   }
   private void spawnBasicSheep() {
     spawnBasicCustomer("Basic Sheep");
-  }
-
-  /**
-   * Spawn an AcaiBowl item.
-   * @return An AcaiBowl entity.
-   */
-  private Entity spawnAcaiBowl() {
-    Entity newAcaiBowl = ItemFactory.createAcaiBowl();
-    spawnEntityAt(newAcaiBowl, new GridPoint2(16, 10), true, true);
-    newAcaiBowl.setScale(0.65f,0.65f);
-    return newAcaiBowl;
-  }
-
-  /**
-   * Spawn a Salad item.
-   * @return A Salad entity.
-   */
-  private Entity spawnSalad() {
-    Entity newSalad = ItemFactory.createSalad();
-    spawnEntityAt(newSalad, new GridPoint2(13, 10), true, true);
-    newSalad.setScale(0.5f,0.5f);
-    return newSalad;
-  }
-
-  /**
-   * Spawn a SteakMeal item.
-   * @return A SteakMeal entity.
-   */
-  private Entity spawnSteakMeal() {
-    Entity newSteakMeal = ItemFactory.createSteakMeal();
-    spawnEntityAt(newSteakMeal, new GridPoint2(10, 9), true, true);
-    newSteakMeal.setScale(0.5f,0.5f);
-    return newSteakMeal;
-  }
-
-  /**
-   * Spawn a BananaSplit item.
-   * @return A BananaSplit entity.
-   */
-  private Entity spawnBananaSplit() {
-    Entity newBananaSplit = ItemFactory.createBananaSplit();
-    spawnEntityAt(newBananaSplit, new GridPoint2(14, 12), true, true);
-    newBananaSplit.setScale(0.5f,0.5f);
-    return newBananaSplit;
   }
 
 //  private void spawnGhosts() {
