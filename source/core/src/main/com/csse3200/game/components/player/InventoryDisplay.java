@@ -8,17 +8,9 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.Stack;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.csse3200.game.components.items.IngredientComponent;
-import com.csse3200.game.components.items.ItemType;
-import com.csse3200.game.components.items.PlateComponent;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.components.items.ItemComponent;
-import com.csse3200.game.rendering.TextureRenderComponent;
 
 /**
  * A UI component used to display slots of an InventoryComponent and the
@@ -110,8 +102,7 @@ public class InventoryDisplay extends UIComponent {
             if (item != null) {
                 Table itemPadding = new Table();
 
-                //String itemTexturePath = item.getTexturePath();
-                String itemTexturePath = String.format("images/ingredients/raw_%s.png", item.getItemName().toLowerCase());
+                String itemTexturePath = item.getTexturePath();
                 Image itemImage;
                 if (itemTexturePath != null) {
                     itemImage = new Image(ServiceLocator.getResourceService().getAsset(itemTexturePath, Texture.class));

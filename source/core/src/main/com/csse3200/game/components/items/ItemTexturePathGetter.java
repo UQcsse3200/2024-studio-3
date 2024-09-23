@@ -1,5 +1,8 @@
 package com.csse3200.game.components.items;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.csse3200.game.entities.Entity;
 
 /**
@@ -13,6 +16,9 @@ import com.csse3200.game.entities.Entity;
  * resulting in a game crash. So please keep this in mind
  */
 public class ItemTexturePathGetter {
+
+    // A logger for the class
+    private static final Logger logger = LoggerFactory.getLogger(ItemTexturePathGetter.class);
 
     // The formate strings used to get the full image name
     private static final String ingredientFormat = "images/ingredients/%s_%s.png";
@@ -45,6 +51,9 @@ public class ItemTexturePathGetter {
         // Get the item and it's state
         String item = ingredient.getItemName().toLowerCase();
         String state = ingredient.getItemState().toLowerCase();
+        
+        logger.info("The texture of the item is:");
+        logger.info(String.format(ingredientFormat, state, item));
 
         // Return a format string
         return String.format(ingredientFormat, state, item);
@@ -72,8 +81,12 @@ public class ItemTexturePathGetter {
 
         // if name is null return null
         if (imageName == null) {
+            logger.info("Meal texture not found");
             return null;
         }
+
+        logger.info("The texture of the item is:");
+        logger.info(String.format(mealFormat, imageName));
 
         return String.format(mealFormat, imageName);
     }
