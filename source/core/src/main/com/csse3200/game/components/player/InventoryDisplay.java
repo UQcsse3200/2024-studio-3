@@ -110,7 +110,8 @@ public class InventoryDisplay extends UIComponent {
             if (item != null) {
                 Table itemPadding = new Table();
 
-                String itemTexturePath = item.getTexturePath();
+                //String itemTexturePath = item.getTexturePath();
+                String itemTexturePath = String.format("images/ingredients/raw_%s.png", item.getItemName().toLowerCase());
                 Image itemImage;
                 if (itemTexturePath != null) {
                     itemImage = new Image(ServiceLocator.getResourceService().getAsset(itemTexturePath, Texture.class));
