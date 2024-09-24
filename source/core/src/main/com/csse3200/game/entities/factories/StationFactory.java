@@ -65,7 +65,7 @@ public class StationFactory {
     
     body.setUserData(oven);
     oven.addComponent(animator);
-    animator.startAnimation("Oven");
+    animator.startAnimation("OvenDefault");
     return oven;
   }
 
@@ -89,9 +89,9 @@ public class StationFactory {
     stove.getComponent(InteractionComponent.class).setAsBox(stove.getScale());
     stove.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
     stove.getComponent(TextureRenderComponent.class).scaleEntity();
-    stove.scaleHeight(1.5f);
+    stove.scaleHeight(1f);
 
-    PhysicsUtils.setScaledCollider(stove, 0.3f, 0.2f);
+    PhysicsUtils.setScaledCollider(stove, 1f, 1f);
     // Add station reference
     PhysicsComponent physicsComponent = stove.getComponent(PhysicsComponent.class);
     Body body = physicsComponent.getBody();

@@ -442,7 +442,7 @@ public class ForestGameArea extends GameArea {
     GridPoint2 stovePos = new GridPoint2(5,4);
     Entity stove = StationFactory.createStove();
     spawnEntityAt(stove, stovePos, false, false);
-    stove.setPosition(stove.getPosition().x + 2.7f , stove.getPosition().y + 1.3f);
+    stove.setPosition(stove.getPosition().x + 2.5f , stove.getPosition().y + 2f);
 
     GridPoint2 binPos = new GridPoint2(5,4);
     Entity bin = StationFactory.createBin();
