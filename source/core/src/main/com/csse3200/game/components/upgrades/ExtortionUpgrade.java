@@ -25,7 +25,8 @@ public class ExtortionUpgrade {
         this.upgradeDuration = upgradeDuration;
         this.isActive = false;
         this.gameTime = gameTime;
-        ServiceLocator.getPlayerService().getEvents().addListener("playerCreated", (Entity player) -> {
+        ServiceLocator.getPlayerService().getEvents().addListener("playerCreated", (Entity player) ->
+        {
             this.combatStatsComponent = player.getComponent(CombatStatsComponent.class);
         });
     }
@@ -55,8 +56,7 @@ public class ExtortionUpgrade {
         for (Entity entity : ServiceLocator.getEntityService().getEntities()) {
             MainGameOrderTicketDisplay component = entity.getComponent(MainGameOrderTicketDisplay.class);
 
-            if (component != null)
-            {
+            if (component != null) {
                 return component;
             }
         }
