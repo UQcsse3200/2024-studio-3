@@ -27,9 +27,7 @@ public class UpgradesDisplay extends UIComponent {
         this.game = game;
     }
 
-    /**
-     * Loads the upgrades menu texture and creates an Image to be displayed
-     */
+
     private Image createUpgradesMenuDisplay() {
         Texture pauseMenuTexture = ServiceLocator
                 .getResourceService().getAsset("images/UpgradesDisplay.png", Texture.class);
@@ -52,9 +50,7 @@ public class UpgradesDisplay extends UIComponent {
         return backgroundImage;
     }
 
-    /**
-     * Create the component and set up input listeners for toggling visibility
-     */
+
     @Override
     public void create() {
         super.create();
