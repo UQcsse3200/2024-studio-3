@@ -53,11 +53,11 @@ public class RecipeCardDisplay extends UIComponent {
         stage.addListener(new InputListener() {
             @Override
             public boolean keyDown(InputEvent event, int keycode) {
-            if (keycode == com.badlogic.gdx.Input.Keys.ENTER) {
-                toggleVisibility();
-                return true;
-            }
-            return false;
+                if (keycode == com.badlogic.gdx.Input.Keys.M) {
+                    toggleVisibility();
+                    return true;
+                }
+                return false;
             }
         });
         if (isVisible) {
