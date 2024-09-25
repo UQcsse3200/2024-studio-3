@@ -17,7 +17,7 @@ public class RecipeCardDisplay extends UIComponent {
     private boolean isVisible;
     private final MainGameScreen game;
     private static final Logger logger = LoggerFactory.getLogger(PauseMenuDisplay.class);
-    private static final String[] recipeCardTexture = {"images/pause_menu2.png"};
+    private static final String[] recipeCardTexture = {"images/recipe_card_placeholder.png"};
 
     //TODO add esc key exit
 
@@ -32,9 +32,9 @@ public class RecipeCardDisplay extends UIComponent {
      * @return backgroundImage
      */
     private Image createRecipeCardBackground() {
-        Texture pauseMenuTexture = ServiceLocator
-                .getResourceService().getAsset("images/pause_menu2.png", Texture.class);
-        Image backgroundImage = new Image(pauseMenuTexture);
+        Texture recipeCardTexture = ServiceLocator
+                .getResourceService().getAsset("images/recipe_card_placeholder.png", Texture.class);
+        Image backgroundImage = new Image(recipeCardTexture);
         backgroundImage.setSize(800, 800);
 
         return backgroundImage;
@@ -44,16 +44,17 @@ public class RecipeCardDisplay extends UIComponent {
         super.create();
         ServiceLocator.getResourceService().loadTextures(recipeCardTexture);
         ServiceLocator.getResourceService().loadAll(); // Ensures the texture is loaded
+        displayScreen();
     }
 
     /**
-     * Pressing enter will stop the game and display the recipe card
+     * Pressing F will stop the game and display the recipe card
      */
     public void displayScreen() {
         stage.addListener(new InputListener() {
             @Override
             public boolean keyDown(InputEvent event, int keycode) {
-                if (keycode == com.badlogic.gdx.Input.Keys.M) {
+                if (keycode == com.badlogic.gdx.Input.Keys.F) {
                     toggleVisibility();
                     return true;
                 }
