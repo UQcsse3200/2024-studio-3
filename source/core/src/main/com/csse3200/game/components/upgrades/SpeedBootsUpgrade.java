@@ -23,7 +23,7 @@ import org.slf4j.LoggerFactory;
 
 public class SpeedBootsUpgrade extends UIComponent implements Upgrade {
     private static final Logger logger = LoggerFactory.getLogger(RageUpgrade.class);
-    private static final long BOOST_DURATION = 10000; // 30 sec
+    private static final long BOOST_DURATION = 30000; // 30 sec
     private static final float NORMAL_SPEED = 1f;
     private static final float BOOSTED_SPEED = 2f; // 2x speed
     private CombatStatsComponent combatStatsComponent;
