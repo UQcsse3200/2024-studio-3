@@ -17,6 +17,7 @@ import com.csse3200.game.components.items.MealComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 import java.security.Provider;
@@ -24,11 +25,12 @@ import java.security.Provider;
 /**
  * StationServingComponent.java
  *
- * StationServingComponent gives the station the ability to submit a meal to be 
- * able to be served to a customer. This will specifically be used by the 
+ * StationServingComponent gives the station the ability to submit a meal to be
+ * able to be served to a customer. This will specifically be used by the
  * serving bench 'station'.
  *
- * {@link #submitMeal(ItemComponent)}: Function which controls the submission of a meal by the
+ * {@link #submitMeal(ItemComponent)}: Function which controls the submission of
+ * a meal by the
  * class.
  *
  * This component is currently incomplete and will need to be finished.
@@ -50,7 +52,7 @@ public class StationServingComponent extends Component {
     @Override
     public void create() {
         entity.getEvents().addListener("Station Interaction", this::handleInteraction);
-        //orderActions = entity.getComponent(OrderActions.class);
+        // orderActions = entity.getComponent(OrderActions.class);
         orderActions = ServiceLocator.getOrderActions(); // ? doesn't seem to work...
         animator = this.entity.getComponent(AnimationRenderComponent.class);
         animator.startAnimation("servery_idle");
@@ -58,13 +60,16 @@ public class StationServingComponent extends Component {
     }
 
     /**
-     * Handles any interaction with station, using current state of player and station
+     * Handles any interaction with station, using current state of player and
+     * station
      * inventory to determine intended interaction
+     * 
      * @param playerInventoryComponent reference to player inventory component
-     * @param inventoryDisplay reference to individual inventory display
-     * @param type the type of interaction attempt
+     * @param inventoryDisplay         reference to individual inventory display
+     * @param type                     the type of interaction attempt
      */
-    public void handleInteraction(InventoryComponent playerInventoryComponent, InventoryDisplay inventoryDisplay, String type) {
+    public void handleInteraction(InventoryComponent playerInventoryComponent, InventoryDisplay inventoryDisplay,
+            String type) {
         if (playerInventoryComponent.isFull()) {
             ItemComponent item = playerInventoryComponent.getItemFirst();
             playerInventoryComponent.removeAt(0);
@@ -72,14 +77,17 @@ public class StationServingComponent extends Component {
             submitMeal(item);
         }
     }
+
     /**
-     * Function which calls to identify the current ticket info, as well as the item in the inventory
+     * Function which calls to identify the current ticket info, as well as the item
+     * in the inventory
      * Calls another function which grades the submission
+     * 
      * @param item reference to the item being submitted by the user
      */
     public void submitMeal(ItemComponent item) {
 
-        //ServiceLocator.getLevelService.getCurrGold() + 2;
+        // ServiceLocator.getLevelService.getCurrGold() + 2;
         ServiceLocator.getLevelService().setCurrGold(ServiceLocator.getLevelService().getCurrGold() + 2);
 
         String[] bigTicketInfo = bigTicket.getCurrentBigTicketInfo();
@@ -90,49 +98,55 @@ public class StationServingComponent extends Component {
             logger.info(bigTicketInfo[2]); // time left ("32")
 
             // Call to team 1's function with the big ticket info
-            //TBD(item, bigTicketInfo[0], bigTicketInfo[1], bigTicketInfo[2]);
+            // TBD(item, bigTicketInfo[0], bigTicketInfo[1], bigTicketInfo[2]);
             // remove ticket
-            ServiceLocator.getDocketService().getEvents().trigger("removeOrder", -1); // removes the order from the orderaction list
-            ServiceLocator.getDocketService().getEvents().trigger("removeBigTicket"); // removes the order from the display list
+            ServiceLocator.getDocketService().getEvents().trigger("removeOrder", -1); // removes the order from the
+                                                                                      // orderaction list
+            ServiceLocator.getDocketService().getEvents().trigger("removeBigTicket"); // removes the order from the
+                                                                                      // display list
 
         } else {
             logger.info("no ticket when submitting"); // team 1 can decide if they want to handle this edge case
             return;
 
-
         }
-
 
     }
 
-    /*
-    * private void scoreMeal(ItemComponent item) {
-    * String[] bigTicketInfo = orderActions.getCurrentBigTicketInfo();
-    * if (bigTicketInfo != null && bigTicketInfo.length >= 2) {
-    * String orderNumber = bigTicketInfo[0];
-    * String orderedMeal = bigTicketInfo[1];
-    *
-    * // Get the list of ingredient names from the MealComponent
-    * List<String> playerIngredients = item.getIngredients() // convert to
-    * List<String>
-    *
-    * List<String> orderIngredients = orderedMeal.getIngredients() // replace with
-    * actual code
-    *
-    * int score = ScoreSystem.compareLists(playerIngredients, orderIngredients);
-    * String scoreDescription = ScoreSystem.getScoreDescription(score);
-    *
-    * logger.info("Order number: " + orderNumber);
-    * logger.info("Score: " + score + "%");
-    * logger.info("Description: " + scoreDescription);
-    *
-    * } else {
-    * logger.warn("No current order to score the meal for.");
-    * }
-    *
-    * return score;
-    * }
-    * }
-    */
+    private int scoreMeal() {
+        String[] bigTicketInfo = bigTicket.getCurrentBigTicketInfo();
+        if (bigTicketInfo != null && bigTicketInfo.length >= 2) {
+            String orderNumber = bigTicketInfo[0];
+            String orderedMeal = bigTicketInfo[1];
 
+            ArrayList<String> playerIngredients = new ArrayList<>(Arrays.asList("potato", "mango"));
+            ArrayList<String> orderIngredients = new ArrayList<>(Arrays.asList("potato", "mango", "cheese", "lettuce"));
+
+            int score = ScoreSystem.compareLists(playerIngredients, orderIngredients);
+            String scoreDescription = ScoreSystem.getScoreDescription(score);
+            logger.info("Order number: " + orderNumber);
+            logger.info("Score: " + score + "%");
+            logger.info("Description: " + scoreDescription);
+            return score;
+        } else {
+            logger.warn("No current order to score the meal for.");
+            return -1;
+        }
+    }
+
+    public StationServingComponent() {
+        // Manually initialize bigTicket
+        this.bigTicket = new TicketDetails() {
+            @Override
+            public String[] getCurrentBigTicketInfo() {
+                return new String[] { "123", "Meal1" };
+            }
+        };
+    }
+
+    public static void main(String[] args) {
+        StationServingComponent mealScorer = new StationServingComponent();
+        int finalScore = mealScorer.scoreMeal();
+        System.out.println("Final Score: " + finalScore);
+    }
 }
