@@ -33,12 +33,29 @@ public class MainGameActions extends Component {
     public void create() {
         entity.getEvents().addListener("exit", this::onExit);
         ServiceLocator.getEntityService().getEvents().addListener("createOrder", this::onCreateOrder);
+        ServiceLocator.getEntityService().getEvents().addListener("createAcaiDocket", this::onCreateAcai);
+        ServiceLocator.getEntityService().getEvents().addListener("createBananaDocket", this::onCreateBanana);
+        ServiceLocator.getEntityService().getEvents().addListener("createSaladDocket", this::onCreateSalad);
+        ServiceLocator.getEntityService().getEvents().addListener("createSteakDocket", this::onCreateSteak);
+        ServiceLocator.getEntityService().getEvents().addListener("createFruitSaladDocket", this::onCreateFruitSalad);
         entity.getEvents().addListener("orderDone", this::onOrderDone);
     }
 
     private void onExit() {
         logger.info("Exiting main game screen");
         game.setScreen(GdxGame.ScreenType.MAIN_MENU);
+    }
+
+    private void onCreateAcai() {
+        onCreateOrder("acaiBowl");
+    }private void onCreateBanana() {
+        onCreateOrder("bananaSplit");
+    }private void onCreateSalad() {
+        onCreateOrder("salad");
+    }private void onCreateSteak() {
+        onCreateOrder("steakMeal");
+    }private void onCreateFruitSalad() {
+        onCreateOrder("fruitSalad");
     }
 
     private void onCreateOrder(String preferredRecipe) {
