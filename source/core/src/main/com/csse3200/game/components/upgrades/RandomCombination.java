@@ -16,8 +16,12 @@ public class RandomCombination extends Component {
         this.upgrades = new ArrayList<>();
         this.upgrades.add(new ExtortionUpgrade(10L));
         this.upgrades.add(new LoanUpgrade());
-        this.upgrades.add(new RageUpgrade());
-        this.upgrades.add(new SpeedBootsUpgrade());
+        RageUpgrade rageUpgrade = new RageUpgrade();
+        rageUpgrade.create();
+        this.upgrades.add(rageUpgrade);
+        SpeedBootsUpgrade speedBootsUpgrade = new SpeedBootsUpgrade();
+        speedBootsUpgrade.create();
+        this.upgrades.add(speedBootsUpgrade);
 
         this.random = new Random();
         ServiceLocator.getDayNightService().getEvents().addListener("upgrade", () -> {
