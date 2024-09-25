@@ -21,18 +21,14 @@ public class ExtortionUpgrade implements Upgrade {
     private CombatStatsComponent combatStatsComponent;
     //TODO will need to add whatever currency dependencies as well as morality and order stuff
 
-    public ExtortionUpgrade(long upgradeDuration, GameTime gameTime) {
+    public ExtortionUpgrade(long upgradeDuration) {
         this.upgradeDuration = upgradeDuration;
         this.isActive = false;
-        this.gameTime = gameTime;
+        this.gameTime = ServiceLocator.getTimeSource();
         ServiceLocator.getPlayerService().getEvents().addListener("playerCreated", (Entity player) ->
         {
             this.combatStatsComponent = player.getComponent(CombatStatsComponent.class);
         });
-    }
-
-    public boolean isActive() {
-        return isActive;
     }
 
     /**
@@ -49,6 +45,18 @@ public class ExtortionUpgrade implements Upgrade {
     }
 
     /**
+     * Deactivates the extortion upgrade
+     */
+    public void deactivate() {
+        this.isActive = false;
+        getTickets().goldMultiplier = 1;
+    }
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+    /**
      * @return instance of MainGameorderTicketDisplay if it exists
      */
     public MainGameOrderTicketDisplay getTickets() {
@@ -61,14 +69,6 @@ public class ExtortionUpgrade implements Upgrade {
             }
         }
         return null;
-    }
-
-    /**
-     * Deactivates the extortion upgrade
-     */
-    public void deactivate() {
-        this.isActive = false;
-        getTickets().goldMultiplier = 1;
     }
 
     /**

@@ -58,6 +58,31 @@ public class SpeedBootsUpgrade extends UIComponent implements Upgrade {
         setupInputListner();
     }
 
+    public void activate() {
+        keyboardPlayerInputComponent.setWalkSpeed(BOOSTED_SPEED);
+        activeTimeRemaining = BOOST_DURATION;
+        speedCost();
+        isActivate = true;
+        isVisible = true;
+        layout.setVisible(true);
+        setupSpeedMeter();
+    }
+
+    public void deactivate() {
+        keyboardPlayerInputComponent.setWalkSpeed(NORMAL_SPEED);
+        boostStartTime = -1;
+        isActivate = false;
+        isVisible = false;
+        layout.setVisible(false);
+
+        if (speedMeter != null && speedMeter.hasParent()) {
+            speedMeter.remove(); // Ensure it's removed from the stage after time finish
+        }
+
+        // Set it to null to avoid speedMeter.remove not working
+        speedMeter = null;
+    }
+
     @Override
     public void update() {
         if (isActivate) {
@@ -114,31 +139,6 @@ public class SpeedBootsUpgrade extends UIComponent implements Upgrade {
                 return false;
             }
         });
-    }
-
-    public void activate() {
-        keyboardPlayerInputComponent.setWalkSpeed(BOOSTED_SPEED);
-        activeTimeRemaining = BOOST_DURATION;
-        speedCost();
-        isActivate = true;
-        isVisible = true;
-        layout.setVisible(true);
-        setupSpeedMeter();
-    }
-
-    public void deactivate() {
-        keyboardPlayerInputComponent.setWalkSpeed(NORMAL_SPEED);
-        boostStartTime = -1;
-        isActivate = false;
-        isVisible = false;
-        layout.setVisible(false);
-
-        if (speedMeter != null && speedMeter.hasParent()) {
-            speedMeter.remove();  // Ensure it's removed from the stage after time finish
-        }
-
-        // Set it to null to avoid speedMeter.remove not working
-        speedMeter = null;
     }
 
     public void speedCost() {

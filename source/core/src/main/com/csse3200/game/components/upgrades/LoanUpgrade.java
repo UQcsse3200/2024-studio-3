@@ -18,6 +18,10 @@ public class LoanUpgrade extends Component implements Upgrade {
         });
     }
 
+    public void activate() { combatStatsComponent.addGold(100); }
+
+    public void deactivate() {}
+
     @Override
     public void update() {
         // Check if the 'L' key is pressed in each frame
@@ -25,8 +29,4 @@ public class LoanUpgrade extends Component implements Upgrade {
             activate();  // Add 100 gold when 'L' is pressed
         }
     }
-
-    public void activate() { combatStatsComponent.addGold(100); }
-
-    public void deactivate() {}
 }

@@ -17,6 +17,7 @@ import org.slf4j.LoggerFactory;
 public class UpgradesDisplay extends UIComponent {
     private final MainGameScreen game;
     private static final String[] upgradesMenuTexture = {"images/UpgradesDisplay.png"};
+    //TODO why is this pauseMenuDisplay??
     private static final Logger logger = LoggerFactory.getLogger(PauseMenuDisplay.class);
 
     private Image upgradesMenuImage;
