@@ -30,6 +30,7 @@ public class TutorialScreenDisplay extends UIComponent {
     private boolean docketsShifted = false;
     private Table table;
     private TutorialTextDisplay textDisplay;
+    private  int  i = 0;
 
     public TutorialScreenDisplay(GdxGame game) {
         this.game = game;
@@ -57,6 +58,8 @@ public class TutorialScreenDisplay extends UIComponent {
         // Add event listeners for create order
         entity.getEvents().addListener("createOrder", this::onCreateOrderPressed);
         ServiceLocator.getInputService().getEvents().addListener("createOrder", this::onCreateOrderPressed);
+        ServiceLocator.getInputService().getEvents().addListener("walked", this::onPlayerMoved);
+        ServiceLocator.getInputService().getEvents().addListener("interact", this::onInteraction);// start the tutorial from the first step
 
         stage.addActor(table);
     }
@@ -97,7 +100,26 @@ public class TutorialScreenDisplay extends UIComponent {
     private void showMovementTutorial() {
         textDisplay.setVisible(true);
         createTextBox("Use W/A/S/D to move around.");
+        ServiceLocator.getInputService().getEvents().addListener("playerMoved", this::onPlayerMoved);
     }
+
+    /**
+     * Called when the player moves. Proceeds to the next tutorial step.
+     */
+    private void onPlayerMoved() {
+
+        if(i == 0)
+        {advanceTutorialStep();
+        i++;}
+    }
+    private void onInteraction() {
+
+        if(i == 1)
+        {advanceTutorialStep();//hacky way to implement tutorial
+        i++;}
+
+    }
+
 
     /**
      * Displays the item pickup tutorial. The player needs to press E to pick up an item.
@@ -160,17 +182,17 @@ public class TutorialScreenDisplay extends UIComponent {
     @Override
     public void update() {
         switch (tutorialStep) {
-            case 1:
-                if (Gdx.input.isKeyJustPressed(Input.Keys.W) || Gdx.input.isKeyJustPressed(Input.Keys.A) ||
-                        Gdx.input.isKeyJustPressed(Input.Keys.S) || Gdx.input.isKeyJustPressed(Input.Keys.D)) {
-                    advanceTutorialStep();
-                }
-                break;
-            case 2:
-                if (Gdx.input.isKeyJustPressed(Input.Keys.E)) {
-                    advanceTutorialStep();
-                }
-                break;
+//            case 1:
+//                if (Gdx.input.isKeyJustPressed(Input.Keys.W) || Gdx.input.isKeyJustPressed(Input.Keys.A) ||
+//                        Gdx.input.isKeyJustPressed(Input.Keys.S) || Gdx.input.isKeyJustPressed(Input.Keys.D)) {
+//                    advanceTutorialStep();
+//                }
+//                break;
+//            case 2:
+//                if (Gdx.input.isKeyJustPressed(Input.Keys.E)) {
+//                    advanceTutorialStep();
+//                }
+//                break;
             case 3:
                 if (createOrderPressed) {
                     textDisplay.setText("Now use [ and ] keys to switch dockets.");
