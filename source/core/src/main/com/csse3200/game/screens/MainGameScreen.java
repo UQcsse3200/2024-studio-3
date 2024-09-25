@@ -60,7 +60,8 @@ public class MainGameScreen extends ScreenAdapter {
 			"images/red_overlay.jpg",
 			"images/red_fill.png",
 			"images/white_background.png",
-			"images/UpgradesDisplay.png"
+			"images/UpgradesDisplay.png",
+			"images/pause_menu2.png"
 	};
 	// Modified the camera position to fix layout
 	private static final Vector2 CAMERA_POSITION = new Vector2(7.5f, 6.0f);
@@ -216,7 +217,8 @@ public class MainGameScreen extends ScreenAdapter {
 				.addComponent(new SpeedBootsUpgrade())
 				.addComponent(new PauseMenuActions(this.game))
 				.addComponent(new PauseMenuDisplay(this))
-						.addComponent(new UpgradesDisplay(this));
+						.addComponent(new UpgradesDisplay(this))
+								.addComponent(new RecipeCardDisplay(this));
 
 
 
