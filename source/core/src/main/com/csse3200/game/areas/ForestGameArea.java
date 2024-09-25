@@ -82,6 +82,11 @@ public class ForestGameArea extends GameArea {
     "images/stations/bench.png",
     "images/stations/servery.png",
     "images/stations/refrigerator.png",
+    "images/stations/baskets/basket_banana.png",
+    "images/stations/baskets/basket_cucumber.png",
+    "images/stations/baskets/basket_lettuce.png",
+    "images/stations/baskets/basket_strawberry.png",
+    "images/stations/baskets/basket_tomato.png",
     "images/chef_player.png",
     "images/frame/top_border.png",
     "images/frame/left_border.png",
@@ -442,7 +447,7 @@ public class ForestGameArea extends GameArea {
     GridPoint2 stovePos = new GridPoint2(5,4);
     Entity stove = StationFactory.createStove();
     spawnEntityAt(stove, stovePos, false, false);
-    stove.setPosition(stove.getPosition().x + 2.7f , stove.getPosition().y + 1.3f);
+    stove.setPosition(stove.getPosition().x + 2.5f , stove.getPosition().y + 2f);
 
     GridPoint2 binPos = new GridPoint2(5,4);
     Entity bin = StationFactory.createBin();
@@ -450,14 +455,29 @@ public class ForestGameArea extends GameArea {
     bin.setPosition(bin.getPosition().x + 6f , bin.getPosition().y - 6f);
 
     GridPoint2 bananaTreePos = new GridPoint2( 5, 4);
-    Entity bananaTree = StationFactory.createBananaTree();
+    Entity bananaTree = StationFactory.createBananaBasket();
     spawnEntityAt(bananaTree, bananaTreePos, false, false);
-    bananaTree.setPosition(bananaTree.getPosition().x + 4.2f , bananaTree.getPosition().y - 4f);
+    bananaTree.setPosition(bananaTree.getPosition().x - 4f , bananaTree.getPosition().y - 2f);
 
     GridPoint2 strawberryPos = new GridPoint2( 5, 4);
-    Entity strawberryStation = StationFactory.createStrawberries();
+    Entity strawberryStation = StationFactory.createStrawberryBasket();
     spawnEntityAt(strawberryStation, strawberryPos, false, false);
-    strawberryStation.setPosition(strawberryStation.getPosition().x + 4.2f , strawberryStation.getPosition().y - 5f);
+    strawberryStation.setPosition(strawberryStation.getPosition().x - 2f , strawberryStation.getPosition().y - 2f);
+
+    GridPoint2 lettucePos = new GridPoint2( 5, 4);
+    Entity lettuceStation = StationFactory.createLettuceBasket();
+    spawnEntityAt(lettuceStation, lettucePos, false, false);
+    lettuceStation.setPosition(lettuceStation.getPosition().x + 0f , lettuceStation.getPosition().y - 2f);
+
+    GridPoint2 tomatoPos = new GridPoint2( 5, 4);
+    Entity tomatoStation = StationFactory.createTomatoBasket();
+    spawnEntityAt(tomatoStation, tomatoPos, false, false);
+    tomatoStation.setPosition(tomatoStation.getPosition().x + 2f , tomatoStation.getPosition().y - 2f);
+
+    GridPoint2 cucumberPos = new GridPoint2( 5, 4);
+    Entity cucumberStation = StationFactory.createCucumberBasket();
+    spawnEntityAt(cucumberStation, cucumberPos, false, false);
+    cucumberStation.setPosition(cucumberStation.getPosition().x + 4f , cucumberStation.getPosition().y - 2f);
 
     GridPoint2 serveryPos = new GridPoint2(1,1);
     Entity servery = StationFactory.createSubmissionWindow();
@@ -471,7 +491,7 @@ public class ForestGameArea extends GameArea {
     GridPoint2 middlePos = new GridPoint2(5,4);
     Entity middle = StationFactory.createMainBenchTable();
     spawnEntityAt(middle, middlePos, false, false);
-    middle.setPosition(middle.getPosition().x - 2.6f, middle.getPosition().y - 3.9f);
+    middle.setPosition(middle.getPosition().x - 2f, middle.getPosition().y - 5f);
 //
 //    GridPoint2 topPos = new GridPoint2(5,4);
 //    Entity top = StationFactory.createTopBenchTable();
@@ -800,10 +820,10 @@ public class ForestGameArea extends GameArea {
    */
   private Entity spawnStackPlate(int quantity) {
     Entity newPlate = PlateFactory.spawnPlateStack(quantity);
-    GridPoint2 platePosition = new GridPoint2(3, 2);
+    GridPoint2 platePosition = new GridPoint2(5, 4);
     spawnEntityAt(newPlate, platePosition, true, false);
     newPlate.setScale(1.0f, 1.0f);
-
+    newPlate.setPosition(newPlate.getPosition().x + 1f , newPlate.getPosition().y - 6f);
     return newPlate;
   }
 
