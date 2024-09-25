@@ -1,6 +1,8 @@
 package com.csse3200.game.components.upgrades;
 
+import com.badlogic.gdx.utils.Array;
 import com.csse3200.game.components.CombatStatsComponent;
+import com.csse3200.game.components.npc.CustomerComponent;
 import com.csse3200.game.components.ordersystem.MainGameOrderTicketDisplay;
 import com.csse3200.game.components.ordersystem.OrderManager;
 import com.csse3200.game.components.ordersystem.OrderActions;
@@ -23,7 +25,8 @@ public class ExtortionUpgrade {
         this.upgradeDuration = upgradeDuration;
         this.isActive = false;
         this.gameTime = gameTime;
-        ServiceLocator.getPlayerService().getEvents().addListener("playerCreated", (Entity player) -> {
+        ServiceLocator.getPlayerService().getEvents().addListener("playerCreated", (Entity player) ->
+        {
             this.combatStatsComponent = player.getComponent(CombatStatsComponent.class);
         });
     }
@@ -41,8 +44,23 @@ public class ExtortionUpgrade {
 
         //Placeholder for halving reputation; subtract gold instead
         if (combatStatsComponent.getGold() >= 40) combatStatsComponent.addGold(-40);
-        //Upon activation: double gold from orders
-        //TODO how to access MainGameOrderTicketDisplay?
+        //Upon activation, double gold from orders
+        getTickets().goldMultiplier = 2;
+    }
+
+    /**
+     * @return instance of MainGameorderTicketDisplay if it exists
+     */
+    public MainGameOrderTicketDisplay getTickets() {
+        //TODO it would be nice to move this to the constructor, however there is no event triggered
+        for (Entity entity : ServiceLocator.getEntityService().getEntities()) {
+            MainGameOrderTicketDisplay component = entity.getComponent(MainGameOrderTicketDisplay.class);
+
+            if (component != null) {
+                return component;
+            }
+        }
+        return null;
     }
 
     /**
@@ -50,6 +68,7 @@ public class ExtortionUpgrade {
      */
     public void deactivate() {
         this.isActive = false;
+        getTickets().goldMultiplier = 1;
     }
 
     /**
