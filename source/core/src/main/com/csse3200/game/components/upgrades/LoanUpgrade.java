@@ -8,7 +8,7 @@ import com.csse3200.game.components.Component;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.services.ServiceLocator;
 
-public class LoanUpgrade extends Component {
+public class LoanUpgrade extends Component implements Upgrade {
     private CombatStatsComponent combatStatsComponent;
 
     public LoanUpgrade(){
@@ -18,16 +18,15 @@ public class LoanUpgrade extends Component {
         });
     }
 
+    public void activate() { combatStatsComponent.addGold(100); }
+
+    public void deactivate() {}
+
     @Override
     public void update() {
         // Check if the 'L' key is pressed in each frame
         if (Gdx.input.isKeyJustPressed(Input.Keys.L)) {
-            Loaner();  // Add 100 gold when 'L' is pressed
+            activate();  // Add 100 gold when 'L' is pressed
         }
     }
-
-    public void Loaner(){
-        combatStatsComponent.addGold(100);
-    }
-
 }

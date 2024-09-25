@@ -2,46 +2,33 @@ package com.csse3200.game.components.upgrades;
 
 import com.csse3200.game.components.Component;
 import com.csse3200.game.services.ServiceLocator;
+
+import java.util.ArrayList;
 import java.util.Random;
+import java.util.List;
 
 public class RandomCombination extends Component {
-    private LoanUpgrade loanUpgrade; 
-//    private RageUpgrade rageUpgrade;
+    private List<Upgrade> upgrades;
     private Random random;
-    private SpeedBootsUpgrade speedBootsUpgrade;
-
 
     public RandomCombination() {
-        super(); 
-        this.loanUpgrade = new LoanUpgrade();
-//        this.rageUpgrade = new RageUpgrade();
-        this.speedBootsUpgrade = new SpeedBootsUpgrade(); 
-        this.loanUpgrade.create();
-//        this.rageUpgrade.create();
-        this.speedBootsUpgrade.create();
+        super();
+        this.upgrades = new ArrayList<>();
+        this.upgrades.add(new ExtortionUpgrade(10L));
+        this.upgrades.add(new LoanUpgrade());
+        this.upgrades.add(new RageUpgrade());
+        this.upgrades.add(new SpeedBootsUpgrade());
+
         this.random = new Random();
         ServiceLocator.getDayNightService().getEvents().addListener("upgrade", () -> {
-            RandomUpgrade();});
-    }
-    public void RandomUpgrade(){
-        // loanUpgrade.Loaner();
-        // rageUpgrade.toggleRageModeOverlay();
-        int randomChoice = random.nextInt(3);  // Randomly generate either 0 or 1
-        
-        switch (randomChoice) {
-            case 0:
-                loanUpgrade.Loaner();  // Call Loaner() if randomChoice is 0
-                break;
-            case 1:
-//                rageUpgrade.activateRageMode();  // Call toggleRageModeOverlay() if randomChoice is 1
-                break;
-            default:
-                speedBootsUpgrade.activate();  // Call activate() if randomChoice is any other value
-                break;
-        }
+            RandomUpgrade();
+        });
     }
 
-
+    public void RandomUpgrade() {
+        int randomChoice = random.nextInt(upgrades.size());  // Randomly generate index
+        upgrades.get(randomChoice).activate();
+    }
 }
     
     

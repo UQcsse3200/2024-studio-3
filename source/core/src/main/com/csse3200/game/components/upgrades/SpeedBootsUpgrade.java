@@ -19,7 +19,7 @@ import com.csse3200.game.ui.UIComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class SpeedBootsUpgrade extends UIComponent {
+public class SpeedBootsUpgrade extends UIComponent implements Upgrade {
     private static final Logger logger = LoggerFactory.getLogger(RageUpgrade.class);
     private static final long BOOST_DURATION = 30000; // 30 sec
     private static final float NORMAL_SPEED = 1f;
@@ -58,6 +58,36 @@ public class SpeedBootsUpgrade extends UIComponent {
         layout.setFillParent(true);
         layout.setVisible(isVisible);
         setupInputListner();
+    }
+
+    /**
+     * Activate the speed boot and decrement the cost.
+     */
+    public void activate() {
+        keyboardPlayerInputComponent.setWalkSpeed(BOOSTED_SPEED);
+        activeTimeRemaining = BOOST_DURATION;
+        speedCost();
+        isActivate = true;
+        isVisible = true;
+        layout.setVisible(true);
+        setupSpeedMeter();
+    }
+
+    /**
+     * Deactivate the speed boot once it reaches the time limit.
+     */
+    public void deactivate() {
+        keyboardPlayerInputComponent.setWalkSpeed(NORMAL_SPEED);
+        boostStartTime = -1;
+        isActivate = false;
+        isVisible = false;
+        layout.setVisible(false);
+
+        // Ensure the text and meter are removed from the stage after time finish
+        if (speedMeter != null && speedMeter.hasParent()) {
+            speedMeter.remove();
+            text.remove();
+        }
     }
 
     @Override
@@ -130,36 +160,6 @@ public class SpeedBootsUpgrade extends UIComponent {
                 return false;
             }
         });
-    }
-
-    /**
-     * Activate the speed boot and decrement the cost.
-     */
-    public void activate() {
-        keyboardPlayerInputComponent.setWalkSpeed(BOOSTED_SPEED);
-        activeTimeRemaining = BOOST_DURATION;
-        speedCost();
-        isActivate = true;
-        isVisible = true;
-        layout.setVisible(true);
-        setupSpeedMeter();
-    }
-
-    /**
-     * Deactivate the speed boot once it reaches the time limit.
-     */
-    public void deactivate() {
-        keyboardPlayerInputComponent.setWalkSpeed(NORMAL_SPEED);
-        boostStartTime = -1;
-        isActivate = false;
-        isVisible = false;
-        layout.setVisible(false);
-
-        // Ensure the text and meter are removed from the stage after time finish
-        if (speedMeter != null && speedMeter.hasParent()) {
-            speedMeter.remove();
-            text.remove();
-        }
     }
 
     /**
