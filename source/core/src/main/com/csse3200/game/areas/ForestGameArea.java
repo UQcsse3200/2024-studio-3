@@ -1,25 +1,19 @@
 package com.csse3200.game.areas;
 
-
-
-
-import com.csse3200.game.components.maingame.CheckWinLoseComponent;
-import com.csse3200.game.components.npc.PersonalCustomerEnums;
-import com.badlogic.gdx.utils.Null;
-import com.csse3200.game.GdxGame;
-import com.csse3200.game.components.maingame.TextDisplay;
-
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+
+import static com.badlogic.gdx.Gdx.app;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.areas.terrain.TerrainFactory.TerrainType;
 import com.csse3200.game.components.gamearea.GameAreaDisplay;
+import com.csse3200.game.components.maingame.CheckWinLoseComponent;
 import com.csse3200.game.components.maingame.EndDayDisplay;
 import com.csse3200.game.components.moral.MoralDecision;
 import com.csse3200.game.components.npc.PersonalCustomerEnums;
@@ -36,18 +30,6 @@ import com.csse3200.game.screens.MoralDecisionDisplay;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.utils.math.GridPoint2Utils;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import com.csse3200.game.components.maingame.EndDayDisplay;
-import com.csse3200.game.components.moral.MoralDecision;
-
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-//import java.util.concurrent.TimeUnit;
-
-import static com.badlogic.gdx.Gdx.app;
 
 
 
@@ -92,12 +74,14 @@ public class ForestGameArea extends GameArea {
     "images/tiles/blue_tile.png",
     "images/stations/oven.png",
     "images/stations/stove.png",
+    "images/stations/bin.png",
     "images/stations/apple_tree.png",
     "images/stations/bench_middle.png",
     "images/stations/bench_legs.png",
     "images/stations/bench_top.png",
     "images/stations/bench.png",
     "images/stations/servery.png",
+    "images/stations/refrigerator.png",
     "images/chef_player.png",
     "images/frame/top_border.png",
     "images/frame/left_border.png",
@@ -141,58 +125,60 @@ public class ForestGameArea extends GameArea {
           "images/platecomponent/stackedplates/2plates.png",
           "images/platecomponent/stackedplates/3plates.png",
           "images/platecomponent/stackedplates/4plates.png",
-          "images/platecomponent/stackedplates/5plates.png"
+          "images/platecomponent/stackedplates/5plates.png",
+          "images/inventory_ui/slot.png",
+          "images/inventory_ui/null_image.png"
   };
   private static final String[] forestTextureAtlases = {
-    "images/terrain_iso_grass.atlas", 
-    "images/ghost.atlas", 
-    "images/ghostKing.atlas", 
+    "images/terrain_iso_grass.atlas",
+    "images/ghost.atlas",
+    "images/ghostKing.atlas",
     "images/animal_images/gorilla.atlas",
-    "images/animal_images/goose.atlas", 
-    "images/animal_images/goat.atlas", 
+    "images/animal_images/goose.atlas",
+    "images/animal_images/goat.atlas",
     "images/animal_images/monkey.atlas",
     "images/animal_images/snow_wolf.atlas",
-    "images/player.atlas", 
-    "images/fireExtinguisher/atlas/flame.atlas", 
+    "images/player.atlas",
+    "images/fireExtinguisher/atlas/flame.atlas",
     "images/stations/oven/oven.atlas",
-    "images/terrain_iso_grass.atlas", 
-    "images/ghost.atlas", 
-    "images/ghostKing.atlas", 
+    "images/terrain_iso_grass.atlas",
+    "images/ghost.atlas",
+    "images/ghostKing.atlas",
     "images/animal_images/gorilla.atlas",
-    "images/animal_images/goose.atlas", 
-    "images/animal_images/goat.atlas", 
+    "images/animal_images/goose.atlas",
+    "images/animal_images/goat.atlas",
     "images/animal_images/monkey.atlas",
-    "images/animal_images/snow_wolf.atlas", 
-    "images/fireExtinguisher/atlas/flame.atlas", 
+    "images/animal_images/snow_wolf.atlas",
+    "images/fireExtinguisher/atlas/flame.atlas",
     "images/player/player.atlas",
-    "images/player/acaiBowl.atlas", 
+    "images/player/acaiBowl.atlas",
     "images/player/bananaSplit.atlas",
-    "images/player/burntBeef.atlas", 
-    "images/player/choppedAcai.atlas", 
-    "images/player/choppedBanana.atlas", 
-    "images/player/choppedChocolate.atlas", 
-    "images/player/choppedCucumber.atlas", 
-    "images/player/choppedLettuce.atlas", 
-    "images/player/choppedStrawberry.atlas", 
-    "images/player/choppedTomato.atlas", 
-    "images/player/cookedBeef.atlas", 
-    "images/player/cookedFish.atlas", 
-    "images/player/fruitSalad.atlas", 
-    "images/player/rawAcai.atlas", 
-    "images/player/rawBanana.atlas", 
-    "images/player/rawBeef.atlas", 
-    "images/player/rawChocolate.atlas", 
-    "images/player/rawCucumber.atlas", 
-    "images/player/rawFish.atlas", 
-    "images/player/rawLettuce.atlas", 
-    "images/player/rawStrawberry.atlas", 
-    "images/player/rawTomato.atlas", 
+    "images/player/burntBeef.atlas",
+    "images/player/choppedAcai.atlas",
+    "images/player/choppedBanana.atlas",
+    "images/player/choppedChocolate.atlas",
+    "images/player/choppedCucumber.atlas",
+    "images/player/choppedLettuce.atlas",
+    "images/player/choppedStrawberry.atlas",
+    "images/player/choppedTomato.atlas",
+    "images/player/cookedBeef.atlas",
+    "images/player/cookedFish.atlas",
+    "images/player/fruitSalad.atlas",
+    "images/player/rawAcai.atlas",
+    "images/player/rawBanana.atlas",
+    "images/player/rawBeef.atlas",
+    "images/player/rawChocolate.atlas",
+    "images/player/rawCucumber.atlas",
+    "images/player/rawFish.atlas",
+    "images/player/rawLettuce.atlas",
+    "images/player/rawStrawberry.atlas",
+    "images/player/rawTomato.atlas",
     "images/player/salad.atlas",
-    "images/player/steak.atlas", 
-    "images/player/playerPlate.atlas", 
+    "images/player/steak.atlas",
+    "images/player/playerPlate.atlas",
     "images/player/playerDirtyPlate.atlas",
           "images/player/playerFireExtinguisher.atlas",
-          "images/special_NPCs/boss.atlas"
+          "images/special_NPCs/boss.atlas", "images/stations/Servery_Animation/servery.atlas"
 
   };
   private static final String[] forestSounds = {"sounds/Impact4.ogg"};
@@ -251,13 +237,13 @@ public class ForestGameArea extends GameArea {
     //ticketDetails();
 
 
-    spawnBenches();
+    //spawnBenches();
 
     spawnStations();
     // Spawn beef
-    spawnBeef("cooked");
-    spawnStrawberry("chopped");
-    spawnLettuce("chopped");
+//    spawnBeef("cooked");
+//    spawnStrawberry("chopped");
+//    spawnLettuce("chopped");
     customerSpawnController = spawnCustomerController();
 
     //spawnplates
@@ -451,38 +437,51 @@ public class ForestGameArea extends GameArea {
     GridPoint2 ovenPos = new GridPoint2(5,4);
     Entity oven = StationFactory.createOven();
     spawnEntityAt(oven, ovenPos, true, false);
-    oven.setPosition(oven.getPosition().x , oven.getPosition().y + 0.9f);
+    oven.setPosition(oven.getPosition().x + 0.5f, oven.getPosition().y + 2f);
 
     GridPoint2 stovePos = new GridPoint2(5,4);
     Entity stove = StationFactory.createStove();
     spawnEntityAt(stove, stovePos, false, false);
     stove.setPosition(stove.getPosition().x + 2.7f , stove.getPosition().y + 1.3f);
 
-    GridPoint2 appleTreePos = new GridPoint2( 5, 4);
-    Entity appleTree = StationFactory.createAppleTree();
-    spawnEntityAt(appleTree, appleTreePos, false, false);
-    appleTree.setPosition(appleTree.getPosition().x + 4.2f , appleTree.getPosition().y - 1.3f);
+    GridPoint2 binPos = new GridPoint2(5,4);
+    Entity bin = StationFactory.createBin();
+    spawnEntityAt(bin, binPos, false, false);
+    bin.setPosition(bin.getPosition().x + 6f , bin.getPosition().y - 6f);
 
-    GridPoint2 serveryPos = new GridPoint2(3,0);
+    GridPoint2 bananaTreePos = new GridPoint2( 5, 4);
+    Entity bananaTree = StationFactory.createBananaTree();
+    spawnEntityAt(bananaTree, bananaTreePos, false, false);
+    bananaTree.setPosition(bananaTree.getPosition().x + 4.2f , bananaTree.getPosition().y - 4f);
+
+    GridPoint2 strawberryPos = new GridPoint2( 5, 4);
+    Entity strawberryStation = StationFactory.createStrawberries();
+    spawnEntityAt(strawberryStation, strawberryPos, false, false);
+    strawberryStation.setPosition(strawberryStation.getPosition().x + 4.2f , strawberryStation.getPosition().y - 5f);
+
+    GridPoint2 serveryPos = new GridPoint2(1,1);
     Entity servery = StationFactory.createSubmissionWindow();
     spawnEntityAt(servery, serveryPos, false, false);
-    servery.setPosition(servery.getPosition().x, servery.getPosition().y + 1.3f);
+    servery.setPosition(servery.getPosition().x + 2, servery.getPosition().y + 0.5f);
+    servery = StationFactory.createSubmissionWindow();
+    spawnEntityAt(servery, serveryPos, false, false);
+    servery.setPosition(servery.getPosition().x + 2, servery.getPosition().y);
 
     // Bench
     GridPoint2 middlePos = new GridPoint2(5,4);
     Entity middle = StationFactory.createMainBenchTable();
     spawnEntityAt(middle, middlePos, false, false);
-    middle.setPosition(middle.getPosition().x - 2.6f, middle.getPosition().y - 1.3f);
-
-    GridPoint2 topPos = new GridPoint2(5,4);
-    Entity top = StationFactory.createTopBenchTable();
-    spawnEntityAt(top, topPos, false, false);
-    top.setPosition(top.getPosition().x - 2.6f, top.getPosition().y);
-
-    GridPoint2 bottomPos = new GridPoint2(5,4);
-    Entity bottom = StationFactory.createFeetBenchTable();
-    spawnEntityAt(bottom, bottomPos, false, false);
-    bottom.setPosition(bottom.getPosition().x - 2.6f, bottom.getPosition().y - 2.6f);
+    middle.setPosition(middle.getPosition().x - 2.6f, middle.getPosition().y - 3.9f);
+//
+//    GridPoint2 topPos = new GridPoint2(5,4);
+//    Entity top = StationFactory.createTopBenchTable();
+//    spawnEntityAt(top, topPos, false, false);
+//    top.setPosition(top.getPosition().x - 2.6f, top.getPosition().y - 2.6f);
+//
+//    GridPoint2 bottomPos = new GridPoint2(5,4);
+//    Entity bottom = StationFactory.createFeetBenchTable();
+//    spawnEntityAt(bottom, bottomPos, false, false);
+//    bottom.setPosition(bottom.getPosition().x - 2.6f, bottom.getPosition().y - 5.2f);
   }
 
   /**
@@ -495,7 +494,7 @@ public class ForestGameArea extends GameArea {
     Entity flame = StationFactory.createFlame();
     spawnEntityAt(flame, flamePos, false, false);
 
-    GridPoint2 fireExtinguisherPos = new GridPoint2(3, 4);
+    GridPoint2 fireExtinguisherPos = new GridPoint2(4, 4);
     Entity fireExtinguisher = StationFactory.createFireExtinguisher();
     spawnEntityAt(fireExtinguisher, fireExtinguisherPos, false, false);
   }
@@ -564,37 +563,37 @@ public class ForestGameArea extends GameArea {
     // Top horizontal shadows near middle
     spawnBenchRow("top_shadows", 10, 12, 7f);
 
-    // Long bench bottom part (left shadow + right shadow)
-    spawnSingleBench("left_corner_shadow", 11, 3f);
-    spawnSingleBench("top_shadows", 12, 3f);
-    spawnSingleBench("right_corner_shadow", 13, 3f);
+//    // Long bench bottom part (left shadow + right shadow)
+//    spawnSingleBench("left_corner_shadow", 11, 3f);
+//    spawnSingleBench("top_shadows", 12, 3f);
+//    spawnSingleBench("right_corner_shadow", 13, 3f);
+//
+//    // Right side of long bench (vertical and top fin)
+//    spawnSingleBench("top", 13f, 7f);
+//    spawnBenchColumn("vertical", 13f, 4, 6);
+//
+//    // Left side of long bench (final vertical + top fin)
+//    spawnSingleBench("vertical", 11f, 4f); // Left vertical part of the long bench
+//    spawnSingleBench("top", 11f, 5f); // Top left fin for long bench
 
-    // Right side of long bench (vertical and top fin)
-    spawnSingleBench("top", 13f, 7f);
-    spawnBenchColumn("vertical", 13f, 4, 6);
-
-    // Left side of long bench (final vertical + top fin)
-    spawnSingleBench("vertical", 11f, 4f); // Left vertical part of the long bench
-    spawnSingleBench("top", 11f, 5f); // Top left fin for long bench
-
-    // Right vertical bench column
-    spawnBenchColumn("vertical", 15f, 2, 9);
-    spawnSingleBench("top", 15f, 10f);
+//    // Right vertical bench column
+//    spawnBenchColumn("vertical", 15f, 2, 9);
+//    spawnSingleBench("top", 15f, 10f);
 
     // Left vertical bench column
     spawnBenchColumn("vertical", 4f, 4, 6);
     spawnSingleBench("bottom_shadow", 4f, 3f);
     spawnSingleBench("top", 4f, 7f);
 
-    // Middle long bench (vertical section)
-    spawnBenchColumn("vertical", 9f, 2, 4);
-    spawnSingleBench("final", 7f, 3f);
-    spawnSingleBench("top", 9f, 5f);
+//    // Middle long bench (vertical section)
+//    spawnBenchColumn("vertical", 9f, 2, 4);
+//    spawnSingleBench("final", 7f, 3f);
+//    spawnSingleBench("top", 9f, 5f);
 
     // Additional benches near middle area
-    spawnSingleBench("middle", 7f, 5f);
-    spawnSingleBench("middle", 8f, 5f);
-    spawnSingleBench("left_border", 6f, 5f);
+//    spawnSingleBench("middle", 7f, 5f);
+//    spawnSingleBench("middle", 8f, 5f);
+//    spawnSingleBench("left_border", 6f, 5f);
 
     // Top left section
     spawnSingleBench("bottom_shadow", 6f, 7f);
@@ -722,17 +721,6 @@ public class ForestGameArea extends GameArea {
     return newAcai;
   }
 
-  /**
-   * Spawn a FruitSalad item.
-   * @return A FruitSalad entity.
-   */
-  private Entity spawnFruitSalad() {
-    Entity newFruitSalad = ItemFactory.createFruitSalad();
-    spawnEntityAt(newFruitSalad, new GridPoint2(3, 3), true, true);
-    newFruitSalad.setScale(0.5f,0.5f);
-    return newFruitSalad;
-  }
-
   private Entity spawnCustomerController() {
     Entity spawnController = new Entity();
     spawnController.getEvents().addListener(PersonalCustomerEnums.HANK.name(), this::spawnHank);
@@ -783,50 +771,6 @@ public class ForestGameArea extends GameArea {
   }
   private void spawnBasicSheep() {
     spawnBasicCustomer("Basic Sheep");
-  }
-
-  /**
-   * Spawn an AcaiBowl item.
-   * @return An AcaiBowl entity.
-   */
-  private Entity spawnAcaiBowl() {
-    Entity newAcaiBowl = ItemFactory.createAcaiBowl();
-    spawnEntityAt(newAcaiBowl, new GridPoint2(16, 10), true, true);
-    newAcaiBowl.setScale(0.65f,0.65f);
-    return newAcaiBowl;
-  }
-
-  /**
-   * Spawn a Salad item.
-   * @return A Salad entity.
-   */
-  private Entity spawnSalad() {
-    Entity newSalad = ItemFactory.createSalad();
-    spawnEntityAt(newSalad, new GridPoint2(13, 10), true, true);
-    newSalad.setScale(0.5f,0.5f);
-    return newSalad;
-  }
-
-  /**
-   * Spawn a SteakMeal item.
-   * @return A SteakMeal entity.
-   */
-  private Entity spawnSteakMeal() {
-    Entity newSteakMeal = ItemFactory.createSteakMeal();
-    spawnEntityAt(newSteakMeal, new GridPoint2(10, 9), true, true);
-    newSteakMeal.setScale(0.5f,0.5f);
-    return newSteakMeal;
-  }
-
-  /**
-   * Spawn a BananaSplit item.
-   * @return A BananaSplit entity.
-   */
-  private Entity spawnBananaSplit() {
-    Entity newBananaSplit = ItemFactory.createBananaSplit();
-    spawnEntityAt(newBananaSplit, new GridPoint2(14, 12), true, true);
-    newBananaSplit.setScale(0.5f,0.5f);
-    return newBananaSplit;
   }
 
 //  private void spawnGhosts() {
@@ -979,6 +923,9 @@ public class ForestGameArea extends GameArea {
   }
 
 
+  /**
+   * Create the moral decision screen
+   */
   private void createMoralScreen() {
     Entity moralScreen = new Entity();
     moralScreen
@@ -987,6 +934,9 @@ public class ForestGameArea extends GameArea {
     ServiceLocator.getEntityService().registerMoral(moralScreen);
   }
 
+  /**
+   * Create the end day screen
+   */
   private void createEndDayScreen() {
     Entity endDayScreen = new Entity();
     endDayScreen

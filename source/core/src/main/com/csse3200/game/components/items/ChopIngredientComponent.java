@@ -1,77 +1,90 @@
 package com.csse3200.game.components.items;
 
-import com.csse3200.game.components.Component;
-import com.csse3200.game.services.GameTime;
-import com.csse3200.game.services.ServiceLocator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * The ChopIngredientComponent handles the chopping process for an ingredient in the game.
  * It manages the state of chopped, determines when the chopping is complete, and triggers
  * the appropriate actions based on the chopping status.
  */
-public class ChopIngredientComponent extends Component {
-    private IngredientComponent ingredient;
-    private final GameTime timesource;
-    private boolean isChopping;
-    private long chopEndTime;
+public class ChopIngredientComponent extends ItemTimerComponent {
+
+    // The ingredient componetn of the item being used
+    private IngredientComponent item;
+    private static final Logger logger = LoggerFactory.getLogger(ChopIngredientComponent.class);
 
     /**
-     * Constructor for ChopIngredientComponent. Initializes the time source used for tracking
-     * the chopping duration.
+     * ChopIngredientComponent constructor, takes no parameters as the length of
+     * time that the timer goes for must be set manually.
      */
     public ChopIngredientComponent() {
-        timesource = ServiceLocator.getTimeSource();
+        super();
     }
+
     /**
-     * Called when the component is created. This method retrieves the IngredientComponent
-     * and sets up listeners for starting and stopping the chopping process.
+     * create is called when the entity is registered
      */
     @Override
     public void create() {
-        ingredient = entity.getComponent(IngredientComponent.class);
-        entity.getEvents().addListener("chopIngredient", this::chopIngredient);
-        entity.getEvents().addListener("stopChoppingIngredient", this::stopChoppingIngredient);
+        // Add appriopriate event listeners
+        entity.getEvents().addListener("chopIngredient", this::startTimer);
+        entity.getEvents().addListener("stopChoppingIngredient", this::stopTimer);
+
+        // Get the item so that it can be updated correctly and the length can be correct
+        item = entity.getComponent(IngredientComponent.class);
+        setLength(item.getChopTime() * 1000); // More logic can be added here when required
+
+        // Log the info
+        String s = String.format("The timer for item: %s, has been created", item.getItemName());
+        logger.info(s);
     }
 
     /**
-     * This method is called every frame to update the ingredient state. It checks if the
-     * chopping process is active, then checks if the end duration has been reached to trigger
-     * the action of changing the chopped state of the item
+     * update is called on each frame
      */
     @Override
     public void update() {
-        if (isChopping) {
-            long current_time = timesource.getTime();
-            if (current_time >= chopEndTime) {
-                ingredient.chopItem();
-                stopChoppingIngredient();
-            }
+        // Update the timing within the timer if running
+        if (!this.isRunning) {
+            return; // super.update() does same check but this needed for early return 
+        }
+
+        // update the elapsed time
+        super.update();
+
+        String s = String.format("The elapsed time of item: %s, has been updated to %d ms, completion is at %.2f percent", item.getItemName(), this.elapsed, getCompletionPercent());
+        logger.info(s);
+
+        // Check if the timer is finished
+        if (isFinished()) {
+            updateItem();
         }
     }
 
     /**
-     * Starts the chopping process for the ingredient and calculates the time at which the
-     * ingredient will finish chopping. The chopping time is determined by the ingredient's
-     * chop time
+     * Update the item component to reflect its new state. Should not be 
+     * manually calleds
      */
-    void chopIngredient() {
-        isChopping = true;
-        // The following needs to be updated with ingredient.getChopTime()
-        // We're waiting for Items team to add it in
-        chopEndTime = timesource.getTime() + ingredient.getCookTime() * 1000L;
+    protected void updateItem() {
+        // Update item state
+        item.chopItem();
+
+        // stop the timer from running to prevent any errors and to help 
+        // test for proper player pausing
+        stopTimer();
+
+        // Put the info to the console
+        String s = String.format("The state of item: %s, has been update to chopped", item.getItemName());
+        logger.info(s);
     }
 
     /**
-     * Stops the chopping process. This method is called when chopping is complete
+     * Get if the item is currently cooking
+     * @return true if the item is cooking, false otherwise.
      */
-    void stopChoppingIngredient() {
-        isChopping = false;
-    }
-
     public boolean getIsChopping() {
-        return isChopping;
+        return isRunning;
     }
-
+    
 }
-
-

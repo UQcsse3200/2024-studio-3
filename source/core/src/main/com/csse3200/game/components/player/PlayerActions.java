@@ -108,7 +108,7 @@ public class PlayerActions extends Component {
         return;
       }
       // Code to freeze player, not a current feature
-      // entity.getEvents().trigger("startInteraction");
+      entity.getEvents().trigger("startInteraction");
       // Logic for what interaction even to call on the station
       station.getEvents().trigger("Station Interaction", playerInventory, displayInventory);
     }
@@ -119,7 +119,7 @@ public class PlayerActions extends Component {
    *
    * @param direction direction to move in
    */
-  void walk(Vector2 direction) {
+  public void walk(Vector2 direction) {
     this.walkDirection = direction;
     moving = true;
   }
@@ -127,7 +127,7 @@ public class PlayerActions extends Component {
   /**
    * Stops the player from walking.
    */
-  void stopWalking() {
+  public void stopWalking() {
     this.walkDirection = Vector2.Zero.cpy();
     updateSpeed();
     moving = false;

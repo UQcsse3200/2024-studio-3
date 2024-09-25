@@ -3,6 +3,15 @@ package com.csse3200.game.entities.factories;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.csse3200.game.extensions.GameExtension;
+import com.csse3200.game.physics.PhysicsService;
+import com.csse3200.game.rendering.AnimationRenderComponent;
+import com.csse3200.game.rendering.RenderService;
+import com.csse3200.game.services.ResourceService;
+import com.csse3200.game.services.ServiceLocator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -36,24 +45,29 @@ public class StationFactoryTest {
 
     @BeforeEach
     public void setUp() {
+        ServiceLocator.registerPhysicsService(new PhysicsService());
+        ServiceLocator.registerRenderService(new RenderService());
 
-            ServiceLocator.registerPhysicsService(new PhysicsService());
-            ServiceLocator.registerRenderService(new RenderService());
+        // Mock ResourceService
+        ResourceService mockResourceService = mock(ResourceService.class);
 
-            // Mock ResourceService
-            ResourceService mockResourceService = mock(ResourceService.class);
+        // Create a mock Texture with dimensions
+        Texture mockTexture = mock(Texture.class);
+        when(mockTexture.getHeight()).thenReturn(100); // Set a sample height
+        when(mockTexture.getWidth()).thenReturn(100);  // Set a sample width
 
-            // Create a mock Texture with dimensions
-            Texture mockTexture = mock(Texture.class);
-            when(mockTexture.getHeight()).thenReturn(100); // Set a sample height
-            when(mockTexture.getWidth()).thenReturn(100);  // Set a sample width
+        // Create a mock TextureAtlas
+        TextureAtlas mockAtlas = mock(TextureAtlas.class);
 
-            // Configure ResourceService to return the mock Texture
-            when(mockResourceService.getAsset(anyString(), any())).thenReturn(mockTexture);
-            ServiceLocator.registerResourceService(mockResourceService);
+        // Configure ResourceService to return the mock Texture or the mock Texture atlas for servery as it is animated
+        when(mockResourceService.getAsset(anyString(), any())).thenAnswer(invocation ->
+                "images/stations/Servery_Animation/servery.atlas".equals(invocation.getArgument(0)) &&
+                        invocation.getArgument(1) == TextureAtlas.class ? mockAtlas : mockTexture
+        );
+        ServiceLocator.registerResourceService(mockResourceService);
 
     }
-    /*/
+    /*
     @Test
     public void testCreateOven() {
         Entity oven = StationFactory.createOven();
@@ -70,7 +84,8 @@ public class StationFactoryTest {
 
         assertEquals(BodyDef.BodyType.StaticBody, oven.getComponent(PhysicsComponent.class).getBody().getType());
     }
-*/
+    */
+
     @Test
     public void testCreateStove() {
         Entity stove = StationFactory.createStove();
@@ -90,7 +105,7 @@ public class StationFactoryTest {
 
     @Test
     public void testCreateAppleTree() {
-        Entity appleTree = StationFactory.createAppleTree();
+        Entity appleTree = StationFactory.createBananaTree();
 
         assertNotNull(appleTree);
         assertNotNull(appleTree.getComponent(TextureRenderComponent.class));
@@ -160,7 +175,7 @@ public class StationFactoryTest {
         Entity submissionWindow = StationFactory.createSubmissionWindow();
 
         assertNotNull(submissionWindow);
-        assertNotNull(submissionWindow.getComponent(TextureRenderComponent.class));
+        assertNotNull(submissionWindow.getComponent(AnimationRenderComponent.class));
         assertNotNull(submissionWindow.getComponent(PhysicsComponent.class));
         assertNotNull(submissionWindow.getComponent(ColliderComponent.class));
         assertNotNull(submissionWindow.getComponent(InteractionComponent.class));

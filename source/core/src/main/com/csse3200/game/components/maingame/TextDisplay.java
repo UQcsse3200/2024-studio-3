@@ -76,7 +76,7 @@ public class TextDisplay extends UIComponent {
 
     /***
      * Sets the delay of each character printing on the screen
-     * @param A long which is the time it takes
+     * @param delay - A long which is the time it takes
      */
     public void setDelay(long delay) {
         this.delay = delay;
@@ -169,7 +169,7 @@ public class TextDisplay extends UIComponent {
 
     /***
      * Set visiblility of the textbox
-     * @param True or False if the textbox is visible
+     * @param value - True or False if the textbox is visible
      */
     public void setVisible(boolean value) {
         this.visible = value;
