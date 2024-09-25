@@ -32,7 +32,7 @@ public class MainGameActions extends Component {
     @Override
     public void create() {
         entity.getEvents().addListener("exit", this::onExit);
-        entity.getEvents().addListener("createOrder", this::onCreateOrder);
+        ServiceLocator.getEntityService().getEvents().addListener("createOrder", this::onCreateOrder);
         entity.getEvents().addListener("orderDone", this::onOrderDone);
     }
 
@@ -41,11 +41,10 @@ public class MainGameActions extends Component {
         game.setScreen(GdxGame.ScreenType.MAIN_MENU);
     }
 
-    private void onCreateOrder() {
+    private void onCreateOrder(String preferredRecipe) {
         int orderCount = MainGameOrderTicketDisplay.getTableArrayList().size();
-
         if (orderCount < ORDER_LIMIT) {
-            String preferredRecipe = getPreferredRecipeFromSpawningAnimals();
+//            String preferredRecipe = getPreferredRecipeFromSpawningAnimals();
             if (preferredRecipe == null || preferredRecipe.isEmpty()) {
                 logger.warn("No recipe preference set. Falling back to random recipe.");
                 preferredRecipe = RECIPE_NAMES[new Random().nextInt(RECIPE_NAMES.length)];

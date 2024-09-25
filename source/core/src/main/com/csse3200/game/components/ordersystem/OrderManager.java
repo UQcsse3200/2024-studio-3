@@ -3,6 +3,7 @@ package com.csse3200.game.components.ordersystem;
 import com.csse3200.game.files.FileLoader;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.components.npc.CustomerComponent;
+import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -51,6 +52,8 @@ public class OrderManager {
             logger.error("Customer preference is null or empty. Cannot display order.");
             return;
         }
+
+        ServiceLocator.getEntityService().getEvents().trigger("createOrder",preference);
 
         Recipe recipe = getRecipe(preference);
         if (recipe != null) {
