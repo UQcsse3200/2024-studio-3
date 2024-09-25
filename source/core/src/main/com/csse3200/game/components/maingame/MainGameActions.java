@@ -4,6 +4,7 @@ import com.csse3200.game.GdxGame;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.npc.CustomerComponent;
 import com.csse3200.game.components.ordersystem.MainGameOrderTicketDisplay;
+import com.csse3200.game.components.ordersystem.RecipeNameEnums;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.factories.UIFactory;
 import com.csse3200.game.services.ServiceLocator;
@@ -47,15 +48,15 @@ public class MainGameActions extends Component {
     }
 
     private void onCreateAcai() {
-        onCreateOrder("acaiBowl");
+        onCreateOrder(RecipeNameEnums.ACAI_BOWL.getRecipeName());
     }private void onCreateBanana() {
-        onCreateOrder("bananaSplit");
+        onCreateOrder(RecipeNameEnums.BANANA_SPLIT.getRecipeName());
     }private void onCreateSalad() {
-        onCreateOrder("salad");
+        onCreateOrder(RecipeNameEnums.SALAD.getRecipeName());
     }private void onCreateSteak() {
-        onCreateOrder("steakMeal");
+        onCreateOrder(RecipeNameEnums.STEAK_MEAL.getRecipeName());
     }private void onCreateFruitSalad() {
-        onCreateOrder("fruitSalad");
+        onCreateOrder(RecipeNameEnums.FRUIT_SALAD.getRecipeName());
     }
 
     private void onCreateOrder(String preferredRecipe) {

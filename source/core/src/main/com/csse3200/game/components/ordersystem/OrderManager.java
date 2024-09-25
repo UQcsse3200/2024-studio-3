@@ -53,12 +53,9 @@ public class OrderManager {
             return;
         }
 
-        ServiceLocator.getEntityService().getEvents().trigger("createOrder",preference);
-        ServiceLocator.getEntityService().getEvents().trigger("createAcaiDocket");
-        ServiceLocator.getEntityService().getEvents().trigger("createBananaDocket");
-        ServiceLocator.getEntityService().getEvents().trigger("createSaladDocket");
-        ServiceLocator.getEntityService().getEvents().trigger("createSteakDocket");
-        ServiceLocator.getEntityService().getEvents().trigger("createFruitSaladDocket");
+        // Temporarily create docket when customer spawns
+        // TODO: create docket when player takes order from customer
+        ServiceLocator.getEntityService().getEvents().trigger("createOrder", preference);
 
         Recipe recipe = getRecipe(preference);
         if (recipe != null) {
