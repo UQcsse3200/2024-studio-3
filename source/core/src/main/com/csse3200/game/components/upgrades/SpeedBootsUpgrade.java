@@ -46,7 +46,6 @@ public class SpeedBootsUpgrade extends UIComponent implements Upgrade {
         });
         gameTime = ServiceLocator.getTimeSource();
         isActivate = false;
-        isVisible = false;
     }
 
     @Override
@@ -70,7 +69,7 @@ public class SpeedBootsUpgrade extends UIComponent implements Upgrade {
         speedCost();
         isActivate = true;
         isVisible = true;
-//        layout.setVisible(true);
+        layout.setVisible(true);
         setupSpeedMeter();
     }
 
