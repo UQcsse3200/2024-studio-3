@@ -1,7 +1,6 @@
 package com.csse3200.game.components.upgrades;
 
 import com.csse3200.game.components.Component;
-import com.csse3200.game.entities.Entity;
 import com.csse3200.game.services.ServiceLocator;
 
 import java.util.ArrayList;
@@ -19,7 +18,7 @@ public class RandomCombination extends Component {
         this.upgrades.add(new ExtortionUpgrade(10L));
         this.upgrades.add(new LoanUpgrade());
         RageUpgrade rageUpgrade = new RageUpgrade();
-        rageUpgrade.setEntity(new Entity());
+        rageUpgrade.create();
         this.upgrades.add(rageUpgrade);
         SpeedBootsUpgrade speedBootsUpgrade = new SpeedBootsUpgrade();
         speedBootsUpgrade.create();
