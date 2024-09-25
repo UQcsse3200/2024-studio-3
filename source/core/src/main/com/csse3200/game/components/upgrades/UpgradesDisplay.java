@@ -22,6 +22,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Stack;
 
 public class UpgradesDisplay extends UIComponent {
     private final MainGameScreen game;
@@ -34,7 +35,9 @@ public class UpgradesDisplay extends UIComponent {
     private List<Image> upgradeImages; // this is to store all the upgrades images
     private Table upgradesTable;
 
-    private Skin skin;
+    private RandomCombination randomCombination;
+
+//    private Skin skin;
     private static final String[] upgradeTexturePaths = {
             "images/Speed_boot.png",
             "images/Rage.png",
@@ -90,9 +93,11 @@ public class UpgradesDisplay extends UIComponent {
                 upgradesMenuImage.getY() + 30
         );
 
+        Table button = createButtonsTable();
+        upgradesTable.addActor(button);
+
         upgradesTable.top().left();
         stage.addActor(upgradesTable);
-
 
 
         stage.addListener(new InputListener() {
@@ -140,6 +145,7 @@ public class UpgradesDisplay extends UIComponent {
         yesButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                randomCombination = new RandomCombination();
                 logger.info("YES button clicked");
                 // Handle YES button click
             }
@@ -148,6 +154,7 @@ public class UpgradesDisplay extends UIComponent {
         noButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                game.resume();
                 logger.info("NO button clicked");
                 // Handle NO button click
             }
