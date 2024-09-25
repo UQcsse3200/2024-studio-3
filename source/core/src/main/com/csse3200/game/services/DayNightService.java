@@ -25,7 +25,8 @@ public class DayNightService {
     private final EventHandler enddayEventHandler;
     private final EventHandler docketServiceEventHandler;
     private Random random;
-    private int randomChoice; 
+    private int randomChoice;
+    private int day;
     
 
     /**
@@ -34,10 +35,12 @@ public class DayNightService {
      */
     public DayNightService() {
         this(new EventHandler());
+        day = 0;
     }
 
     public DayNightService(EventHandler enddayEventHandler) {
         this(enddayEventHandler, ServiceLocator.getDocketService().getEvents());
+        day = 0;
     }
 
     public DayNightService(EventHandler enddayEventHandler, EventHandler docketServiceEventHandler) {
@@ -50,6 +53,7 @@ public class DayNightService {
         this.lastCheckTime2 = gameTime.getTime();
         this.lastCheckTime3 = gameTime.getTime();
         this.random = new Random();
+        day = 0;
         randomChoice = random.nextInt(10) * 1000;
         System.out.println(randomChoice + "/////////////////////////////////////////////////");
         
@@ -73,7 +77,6 @@ public class DayNightService {
         // ***Working version of Day cycle used "decisionDone"***
         enddayEventHandler.addListener("decisionDone", this::startNewDay);
         // enddayEventHandler.addListener("animationDone", this::startNewDay);
-
         enddayEventHandler.addListener("callpastsecond", this::updatepastSecond);
     }
 
@@ -126,9 +129,12 @@ public class DayNightService {
         lastCheckTime = gameTime.getTime(); // Reset lastCheckTime to the current time
         lastCheckTime3 = gameTime.getTime();
         endOfDayTriggered = false;
-        pastUpgrade = false; 
+        pastUpgrade = false;
+        day += 1;
         gameTime.setTimeScale(1); // Resume game time
     }
+
+    public int getDay() { return day;}
 
     public EventHandler getEvents() {
         return enddayEventHandler;
