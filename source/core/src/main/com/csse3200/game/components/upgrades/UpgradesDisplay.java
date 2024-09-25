@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.csse3200.game.components.maingame.PauseMenuDisplay;
 import com.csse3200.game.screens.MainGameScreen;
 import com.csse3200.game.services.ServiceLocator;
@@ -26,6 +27,7 @@ public class UpgradesDisplay extends UIComponent {
     private Image upgradesMenuImage;
     private boolean isVisible = false;
     private List<Image> upgradeImages; // this is to store all the upgrades images
+    private Table upgradesTable;
     private static final String[] upgradeTexturePaths = {
             "images/Speed_boot.png",
             "images/Rage.png",
@@ -45,7 +47,7 @@ public class UpgradesDisplay extends UIComponent {
                 .getResourceService().getAsset("images/Upgrade_display.png", Texture.class);
 
         Image backgroundImage = new Image(pauseMenuTexture);
-        backgroundImage.setSize(500, 500);
+        backgroundImage.setSize(600, 600);
 
 
         float stageWidth = stage.getWidth();
@@ -69,8 +71,21 @@ public class UpgradesDisplay extends UIComponent {
         ServiceLocator.getResourceService().loadTextures(upgradesMenuTexture);
         ServiceLocator.getResourceService().loadTextures(upgradeTexturePaths);
 
+        // Create and add the upgrades menu image first (background image)
         upgradesMenuImage = createUpgradesMenuDisplay();
         stage.addActor(upgradesMenuImage);
+
+        // Create a table for the upgrade images and position it on top of the upgradesMenuImage
+        upgradesTable = new Table();
+        upgradesTable.setFillParent(false);  // Don't let it take the whole screen
+        upgradesTable.setSize(400, 300);  // Set table size to match background size
+        upgradesTable.setPosition(
+                upgradesMenuImage.getX() + 100,  // Adjust for a good fit
+                upgradesMenuImage.getY() + 50  // Stack above the background image
+        );
+
+        upgradesTable.top().left();  // Align images to top-left inside the table
+        stage.addActor(upgradesTable);  // Add the table on top of the upgrades display background
 
         stage.addListener(new InputListener() {
             @Override
@@ -85,6 +100,9 @@ public class UpgradesDisplay extends UIComponent {
     }
 
     public void addRandomUpgradeImage() {
+        // Remove previous images to show only one per upgrade
+        upgradesTable.clearChildren();
+
         // Randomly select a texture from the upgrade textures
         int randomIndex = (int) (Math.random() * upgradeTexturePaths.length);
         String randomTexturePath = upgradeTexturePaths[randomIndex];
@@ -92,21 +110,16 @@ public class UpgradesDisplay extends UIComponent {
         // Create the upgrade image
         Image upgradeImage = createUpgradeImage(randomTexturePath);
 
-        // Randomize the position on the display
-        float randomX = (float) (Math.random() * (stage.getWidth() - upgradeImage.getWidth()));
-        float randomY = (float) (Math.random() * (stage.getHeight() - upgradeImage.getHeight()));
-
-        upgradeImage.setPosition(randomX, randomY);
-        upgradeImage.setVisible(true);  // Set it to visible
-
-        stage.addActor(upgradeImage);  // Add the image on the stage
-        upgradeImages.add(upgradeImage);  // Keep track of the image
+        // Add the upgrade image to the table
+        upgradesTable.add(upgradeImage).pad(10);  // Add padding between images
+        upgradeImages.add(upgradeImage);
     }
 
+    // Helper method to create an upgrade image
     private Image createUpgradeImage(String texturePath) {
         Texture upgradeTexture = ServiceLocator.getResourceService().getAsset(texturePath, Texture.class);
         Image upgradeImage = new Image(upgradeTexture);
-        upgradeImage.setSize(100, 100);  // Set the desired size of the upgrade image
+        upgradeImage.setSize(150, 150);  // Set the desired size of the upgrade image
         return upgradeImage;
     }
 
@@ -124,6 +137,7 @@ public class UpgradesDisplay extends UIComponent {
 
             // Add a random upgrade image each time the menu is shown
             addRandomUpgradeImage();
+            upgradesTable.setVisible(true);
         } else {
             logger.info("Upgrades menu is now hidden.");
             game.resume();
@@ -137,6 +151,6 @@ public class UpgradesDisplay extends UIComponent {
 
     @Override
     public void setStage(Stage stage) {
-       // super.setStage(stage);
+       this.stage = stage;
     }
 }
