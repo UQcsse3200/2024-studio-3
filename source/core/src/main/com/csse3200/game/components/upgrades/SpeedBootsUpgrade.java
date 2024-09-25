@@ -46,6 +46,7 @@ public class SpeedBootsUpgrade extends UIComponent implements Upgrade {
         });
         gameTime = ServiceLocator.getTimeSource();
         isActivate = false;
+        isVisible = false;
     }
 
     @Override
@@ -57,7 +58,7 @@ public class SpeedBootsUpgrade extends UIComponent implements Upgrade {
         layout = new Table();
         layout.setFillParent(true);
         layout.setVisible(isVisible);
-        setupInputListner();
+        setupInputListener();
     }
 
     /**
@@ -69,7 +70,7 @@ public class SpeedBootsUpgrade extends UIComponent implements Upgrade {
         speedCost();
         isActivate = true;
         isVisible = true;
-        layout.setVisible(true);
+//        layout.setVisible(true);
         setupSpeedMeter();
     }
 
@@ -145,9 +146,9 @@ public class SpeedBootsUpgrade extends UIComponent implements Upgrade {
     }
 
     /**
-     * Actiavte the speed boot if B is pressed
+     * Activate the speed boot if B is pressed
      */
-    private void setupInputListner() {
+    private void setupInputListener() {
         stage.addListener(new InputListener() {
             @Override
             public boolean keyDown(InputEvent event, int keycode) {
