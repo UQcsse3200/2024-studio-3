@@ -20,7 +20,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 
-public class RageUpgrade extends UIComponent {
+public class RageUpgrade extends UIComponent implements Upgrade {
     private static final Logger logger = LoggerFactory.getLogger(RageUpgrade.class);
     private final GameTime timesource;
 
@@ -105,9 +105,9 @@ public class RageUpgrade extends UIComponent {
             public boolean keyDown(InputEvent event, int keycode) {
                 if (keycode == com.badlogic.gdx.Input.Keys.R) {
                     if (isRageActive) {
-                        deactivateRageMode();
+                        deactivate();
                     } else if (rageMeter.getValue() == 1f){
-                        activateRageMode();
+                        activate();
                     }
                     return true;
                 }
@@ -116,7 +116,7 @@ public class RageUpgrade extends UIComponent {
         });
     }
 
-    public void activateRageMode() {
+    public void activate() {
         entity.getEvents().trigger("rageModeOn");
         rageSoundId = rageSound.play();
         rageSound.setVolume(rageSoundId, 0.25f);
@@ -127,7 +127,7 @@ public class RageUpgrade extends UIComponent {
         rageTimeRemaining = rageTime;
     }
 
-    public void deactivateRageMode() {
+    public void deactivate() {
         entity.getEvents().trigger("rageModeOff");
         powerDownId = powerDownSound.play();
         powerDownSound.setVolume(powerDownId, 0.25f);
@@ -149,7 +149,7 @@ public class RageUpgrade extends UIComponent {
             rageTimeRemaining -= timesource.getDeltaTime();
             rageMeter.setValue(rageTimeRemaining / rageTime);
             if (rageTimeRemaining <= 0) {
-                deactivateRageMode();
+                deactivate();
             }
 
         } else if (isRageFilling) {

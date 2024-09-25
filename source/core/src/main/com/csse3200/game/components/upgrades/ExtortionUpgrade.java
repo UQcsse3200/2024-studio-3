@@ -12,7 +12,7 @@ import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class ExtortionUpgrade {
+public class ExtortionUpgrade implements Upgrade {
     private static final Logger logger = LoggerFactory.getLogger(ExtortionUpgrade.class);
     private boolean isActive;
     private long upgradeDuration;
