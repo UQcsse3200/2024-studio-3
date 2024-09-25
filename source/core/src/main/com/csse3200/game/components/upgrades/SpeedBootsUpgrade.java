@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
@@ -31,7 +32,8 @@ public class SpeedBootsUpgrade extends UIComponent {
     private static final String[] whiteBgTexture = {"images/white_background.png"};
     private boolean isActivate;
     private Table layout;
-    private ProgressBar speedMeter;
+    private Label text; // the "Upgrade" text above the speedMeter
+    private ProgressBar speedMeter; // the meter that show the remaining time
     private boolean isVisible;
     private float activeTimeRemaining;
 
@@ -63,6 +65,7 @@ public class SpeedBootsUpgrade extends UIComponent {
         if (isActivate) {
             stage.addActor(layout);
             stage.addActor(speedMeter);
+            stage.addActor(text);
             activeTimeRemaining -= gameTime.getDeltaTime() * 1000; // Calculate speed boot duration
             speedMeter.setValue((activeTimeRemaining / (float) BOOST_DURATION)); // Update progress bar
 
@@ -73,6 +76,9 @@ public class SpeedBootsUpgrade extends UIComponent {
         }
     }
 
+    /**
+     * Set up the meter and the text to display the time when speed boot is activate
+     */
     private void setupSpeedMeter() {
         Texture whiteBgTexture = ServiceLocator
                 .getResourceService().getAsset("images/white_background.png", Texture.class);
@@ -84,23 +90,33 @@ public class SpeedBootsUpgrade extends UIComponent {
         // Setting white background
         style.background = new TextureRegionDrawable(new TextureRegion(whiteBgTexture));
         style.background.setMinHeight(15);
+        style.background.setMinWidth(10);
 
         // Setting green fill color
         style.knobBefore = new TextureRegionDrawable(new TextureRegion(fillTexture));
         style.knobBefore.setMinHeight(15);
+        style.background.setMinWidth(10);
 
-        // Only show the speed meter if it is activate
+
+        // Only show the speed meter if it is activated
         if (isActivate) {
             speedMeter = new ProgressBar(0f, 1f, 0.01f, false, style);
             speedMeter.setValue(1f); // Initially, the meter is full
-            speedMeter.setPosition(500, 80);
+            speedMeter.setPosition(8, 500);
+
+            // Set up text
+            text =  new Label("Upgrade", skin);
+            text.setPosition(speedMeter.getX(), speedMeter.getY() + speedMeter.getHeight() + 8); // Placed above meter
         }
         else {
             speedMeter = null;
+            text = null;
         }
     }
 
-    // Activate when B is pressed
+    /**
+     * Actiavte the speed boot if B is pressed
+     */
     private void setupInputListner() {
         stage.addListener(new InputListener() {
             @Override
@@ -116,6 +132,9 @@ public class SpeedBootsUpgrade extends UIComponent {
         });
     }
 
+    /**
+     * Activate the speed boot and decrement the cost.
+     */
     public void activate() {
         keyboardPlayerInputComponent.setWalkSpeed(BOOSTED_SPEED);
         activeTimeRemaining = BOOST_DURATION;
@@ -126,6 +145,9 @@ public class SpeedBootsUpgrade extends UIComponent {
         setupSpeedMeter();
     }
 
+    /**
+     * Deactivate the speed boot once it reaches the time limit.
+     */
     public void deactivate() {
         keyboardPlayerInputComponent.setWalkSpeed(NORMAL_SPEED);
         boostStartTime = -1;
@@ -133,14 +155,16 @@ public class SpeedBootsUpgrade extends UIComponent {
         isVisible = false;
         layout.setVisible(false);
 
+        // Ensure the text and meter are removed from the stage after time finish
         if (speedMeter != null && speedMeter.hasParent()) {
-            speedMeter.remove();  // Ensure it's removed from the stage after time finish
+            speedMeter.remove();
+            text.remove();
         }
-
-        // Set it to null to avoid speedMeter.remove not working
-        speedMeter = null;
     }
 
+    /**
+     * Decrement cost when speed boot is activate.
+     */
     public void speedCost() {
         combatStatsComponent.addGold(-20);
     }
