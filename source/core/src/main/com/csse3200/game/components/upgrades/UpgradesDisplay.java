@@ -75,17 +75,17 @@ public class UpgradesDisplay extends UIComponent {
         upgradesMenuImage = createUpgradesMenuDisplay();
         stage.addActor(upgradesMenuImage);
 
-        // Create a table for the upgrade images and position it on top of the upgradesMenuImage
+        // Create a table for the upgrade images
         upgradesTable = new Table();
-        upgradesTable.setFillParent(false);  // Don't let it take the whole screen
-        upgradesTable.setSize(400, 300);  // Set table size to match background size
+        upgradesTable.setFillParent(false);  // if set to true it will take the whole screem
+        upgradesTable.setSize(400, 300);
         upgradesTable.setPosition(
-                upgradesMenuImage.getX() + 100,  // Adjust for a good fit
-                upgradesMenuImage.getY() + 50  // Stack above the background image
+                upgradesMenuImage.getX() + 100,
+                upgradesMenuImage.getY() + 40
         );
 
-        upgradesTable.top().left();  // Align images to top-left inside the table
-        stage.addActor(upgradesTable);  // Add the table on top of the upgrades display background
+        upgradesTable.top().left();
+        stage.addActor(upgradesTable);
 
         stage.addListener(new InputListener() {
             @Override
@@ -100,26 +100,24 @@ public class UpgradesDisplay extends UIComponent {
     }
 
     public void addRandomUpgradeImage() {
-        // Remove previous images to show only one per upgrade
         upgradesTable.clearChildren();
 
-        // Randomly select a texture from the upgrade textures
+        // make it random
         int randomIndex = (int) (Math.random() * upgradeTexturePaths.length);
         String randomTexturePath = upgradeTexturePaths[randomIndex];
 
-        // Create the upgrade image
         Image upgradeImage = createUpgradeImage(randomTexturePath);
 
         // Add the upgrade image to the table
-        upgradesTable.add(upgradeImage).pad(10);  // Add padding between images
+        upgradesTable.add(upgradeImage).pad(10);
         upgradeImages.add(upgradeImage);
     }
 
-    // Helper method to create an upgrade image
+
     private Image createUpgradeImage(String texturePath) {
         Texture upgradeTexture = ServiceLocator.getResourceService().getAsset(texturePath, Texture.class);
         Image upgradeImage = new Image(upgradeTexture);
-        upgradeImage.setSize(150, 150);  // Set the desired size of the upgrade image
+        upgradeImage.setSize(150, 150);
         return upgradeImage;
     }
 
@@ -135,7 +133,7 @@ public class UpgradesDisplay extends UIComponent {
             logger.info("Upgrades menu is now visible.");
             game.pause();
 
-            // Add a random upgrade image each time the menu is shown
+            // Add a random upgrade image each time if th emenu is shown
             addRandomUpgradeImage();
             upgradesTable.setVisible(true);
         } else {
