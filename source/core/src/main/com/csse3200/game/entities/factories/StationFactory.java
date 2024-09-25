@@ -39,8 +39,7 @@ public class StationFactory {
     System.out.println("Adding Oven animation");
     animator.addAnimation("Oven", 0.2f, Animation.PlayMode.LOOP);
     animator.addAnimation("OvenDefault", 0.2f, Animation.PlayMode.LOOP);
-    
-    
+
     Entity oven = new Entity()
        
         .addComponent(new PhysicsComponent())

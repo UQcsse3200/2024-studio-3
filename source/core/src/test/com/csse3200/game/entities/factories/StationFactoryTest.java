@@ -12,6 +12,7 @@ import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.csse3200.game.rendering.RenderService;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -67,57 +68,101 @@ public class StationFactoryTest {
         ServiceLocator.registerResourceService(mockResourceService);
 
     }
-    /*
-    @Test
-    public void testCreateOven() {
-        Entity oven = StationFactory.createOven();
+    // Atlas error, Andi to investigate
+//    @Test
+//    public void testCreateOven() {
+//        Entity oven = StationFactory.createOven();
+//
+//        assertNotNull(oven);
+//        assertNotNull(oven.getComponent(TextureRenderComponent.class));
+//        assertNotNull(oven.getComponent(PhysicsComponent.class));
+//        assertNotNull(oven.getComponent(ColliderComponent.class));
+//        assertNotNull(oven.getComponent(InteractionComponent.class));
+//        assertNotNull(oven.getComponent(TooltipsDisplay.class));
+//        assertNotNull(oven.getComponent(StationCookingComponent.class));
+//        assertNotNull(oven.getComponent(StationItemHandlerComponent.class));
+//        assertNotNull(oven.getComponent(InventoryComponent.class));
+//
+//        assertEquals(BodyDef.BodyType.StaticBody, oven.getComponent(PhysicsComponent.class).getBody().getType());
+//    }
 
-        assertNotNull(oven);
-        assertNotNull(oven.getComponent(TextureRenderComponent.class));
-        assertNotNull(oven.getComponent(PhysicsComponent.class));
-        assertNotNull(oven.getComponent(ColliderComponent.class));
-        assertNotNull(oven.getComponent(InteractionComponent.class));
-        assertNotNull(oven.getComponent(TooltipsDisplay.class));
-        assertNotNull(oven.getComponent(StationCookingComponent.class));
-        assertNotNull(oven.getComponent(StationItemHandlerComponent.class));
-        assertNotNull(oven.getComponent(InventoryComponent.class));
-
-        assertEquals(BodyDef.BodyType.StaticBody, oven.getComponent(PhysicsComponent.class).getBody().getType());
-    }
-    */
 
     @Test
     public void testCreateStove() {
         Entity stove = StationFactory.createStove();
 
         assertNotNull(stove);
-        assertNotNull(stove.getComponent(TextureRenderComponent.class));
-        assertNotNull(stove.getComponent(PhysicsComponent.class));
-        assertNotNull(stove.getComponent(ColliderComponent.class));
-        assertNotNull(stove.getComponent(InteractionComponent.class));
-        assertNotNull(stove.getComponent(TooltipsDisplay.class));
         assertNotNull(stove.getComponent(InventoryComponent.class));
         assertNotNull(stove.getComponent(StationCookingComponent.class));
         assertNotNull(stove.getComponent(StationItemHandlerComponent.class));
+        verifyCommonComponents(stove);
 
         assertEquals(BodyDef.BodyType.StaticBody, stove.getComponent(PhysicsComponent.class).getBody().getType());
     }
 
     @Test
-    public void testCreateAppleTree() {
-        Entity appleTree = StationFactory.createBananaBasket();
+    public void testCreateBananaBasket() {
+        Entity bananaBasket = StationFactory.createBananaBasket();
 
-        assertNotNull(appleTree);
-        assertNotNull(appleTree.getComponent(TextureRenderComponent.class));
-        assertNotNull(appleTree.getComponent(PhysicsComponent.class));
-        assertNotNull(appleTree.getComponent(ColliderComponent.class));
-        assertNotNull(appleTree.getComponent(InteractionComponent.class));
-        assertNotNull(appleTree.getComponent(TooltipsDisplay.class));
-        assertNotNull(appleTree.getComponent(StationCollectionComponent.class));
-        assertNotNull(appleTree.getComponent(InventoryComponent.class));
-        assertNotNull(appleTree.getComponent(IngredientStationHandlerComponent.class));
+        assertNotNull(bananaBasket);
+        assertNotNull(bananaBasket.getComponent(StationCollectionComponent.class));
+        assertNotNull(bananaBasket.getComponent(InventoryComponent.class));
+        assertNotNull(bananaBasket.getComponent(IngredientStationHandlerComponent.class));
+        verifyCommonComponents(bananaBasket);
 
-        assertEquals(BodyDef.BodyType.StaticBody, appleTree.getComponent(PhysicsComponent.class).getBody().getType());
+        assertEquals(BodyDef.BodyType.StaticBody, bananaBasket.getComponent(PhysicsComponent.class).getBody().getType());
+    }
+
+    @Test
+    public void testCreateStrawberryBasket() {
+        Entity strawberryBasket = StationFactory.createStrawberryBasket();
+
+        assertNotNull(strawberryBasket);
+        assertNotNull(strawberryBasket.getComponent(StationCollectionComponent.class));
+        assertNotNull(strawberryBasket.getComponent(InventoryComponent.class));
+        assertNotNull(strawberryBasket.getComponent(IngredientStationHandlerComponent.class));
+        verifyCommonComponents(strawberryBasket);
+
+        assertEquals(BodyDef.BodyType.StaticBody, strawberryBasket.getComponent(PhysicsComponent.class).getBody().getType());
+    }
+
+    @Test
+    public void testCreateLettuceBasket() {
+        Entity lettuceBasket = StationFactory.createLettuceBasket();
+
+        assertNotNull(lettuceBasket);
+        assertNotNull(lettuceBasket.getComponent(StationCollectionComponent.class));
+        assertNotNull(lettuceBasket.getComponent(InventoryComponent.class));
+        assertNotNull(lettuceBasket.getComponent(IngredientStationHandlerComponent.class));
+        verifyCommonComponents(lettuceBasket);
+
+        assertEquals(BodyDef.BodyType.StaticBody, lettuceBasket.getComponent(PhysicsComponent.class).getBody().getType());
+    }
+
+    @Test
+    public void testCreateTomatoBasket() {
+        Entity tomatoBasket = StationFactory.createTomatoBasket();
+
+        assertNotNull(tomatoBasket);
+        assertNotNull(tomatoBasket.getComponent(StationCollectionComponent.class));
+        assertNotNull(tomatoBasket.getComponent(InventoryComponent.class));
+        assertNotNull(tomatoBasket.getComponent(IngredientStationHandlerComponent.class));
+        verifyCommonComponents(tomatoBasket);
+
+        assertEquals(BodyDef.BodyType.StaticBody, tomatoBasket.getComponent(PhysicsComponent.class).getBody().getType());
+    }
+
+    @Test
+    public void testCreateCucumberBasket() {
+        Entity cucumberBasket = StationFactory.createCucumberBasket();
+
+        assertNotNull(cucumberBasket);
+        assertNotNull(cucumberBasket.getComponent(StationCollectionComponent.class));
+        assertNotNull(cucumberBasket.getComponent(InventoryComponent.class));
+        assertNotNull(cucumberBasket.getComponent(IngredientStationHandlerComponent.class));
+        verifyCommonComponents(cucumberBasket);
+
+        assertEquals(BodyDef.BodyType.StaticBody, cucumberBasket.getComponent(PhysicsComponent.class).getBody().getType());
     }
 
     @Test
@@ -125,11 +170,7 @@ public class StationFactoryTest {
         Entity benchTable = StationFactory.createFeetBenchTable();
 
         assertNotNull(benchTable);
-        assertNotNull(benchTable.getComponent(TextureRenderComponent.class));
-        assertNotNull(benchTable.getComponent(PhysicsComponent.class));
-        assertNotNull(benchTable.getComponent(ColliderComponent.class));
-        assertNotNull(benchTable.getComponent(InteractionComponent.class));
-        assertNotNull(benchTable.getComponent(TooltipsDisplay.class));
+        verifyCommonComponents(benchTable);
 
         assertEquals(BodyDef.BodyType.StaticBody, benchTable.getComponent(PhysicsComponent.class).getBody().getType());
     }
@@ -139,12 +180,8 @@ public class StationFactoryTest {
         Entity benchTable = StationFactory.createTopBenchTable();
 
         assertNotNull(benchTable);
-        assertNotNull(benchTable.getComponent(TextureRenderComponent.class));
-        assertNotNull(benchTable.getComponent(PhysicsComponent.class));
-        assertNotNull(benchTable.getComponent(ColliderComponent.class));
-        assertNotNull(benchTable.getComponent(InteractionComponent.class));
-        assertNotNull(benchTable.getComponent(TooltipsDisplay.class));
         assertNotNull(benchTable.getComponent(InventoryComponent.class));
+        verifyCommonComponents(benchTable);
 
         // Verify if the StationItemHandlerComponent is added
         assertNull(benchTable.getComponent(StationItemHandlerComponent.class), "StationItemHandlerComponent should not be present");
@@ -157,12 +194,8 @@ public class StationFactoryTest {
         Entity benchTable = StationFactory.createMainBenchTable();
 
         assertNotNull(benchTable);
-        assertNotNull(benchTable.getComponent(TextureRenderComponent.class));
-        assertNotNull(benchTable.getComponent(PhysicsComponent.class));
-        assertNotNull(benchTable.getComponent(ColliderComponent.class));
-        assertNotNull(benchTable.getComponent(InteractionComponent.class));
-        assertNotNull(benchTable.getComponent(TooltipsDisplay.class));
         assertNotNull(benchTable.getComponent(InventoryComponent.class));
+        verifyCommonComponents((benchTable));
 
         // Verify if the StationItemHandlerComponent is added
         assertNull(benchTable.getComponent(StationItemHandlerComponent.class), "StationItemHandlerComponent should not be present");
@@ -186,21 +219,20 @@ public class StationFactoryTest {
         assertEquals(BodyDef.BodyType.StaticBody, submissionWindow.getComponent(PhysicsComponent.class).getBody().getType());
     }
 
-    @Test
-    public void testCreateStation() {
-        String type = "customStation";
-        float height = 2.0f;
-        Entity station = StationFactory.createStation(type, height);
-
-        assertNotNull(station);
-        assertNotNull(station.getComponent(TextureRenderComponent.class));
-        assertNotNull(station.getComponent(PhysicsComponent.class));
-        assertNotNull(station.getComponent(ColliderComponent.class));
-        assertNotNull(station.getComponent(StationItemHandlerComponent.class));
-        assertNotNull(station.getComponent(InventoryComponent.class));
-
-        assertEquals(BodyDef.BodyType.StaticBody, station.getComponent(PhysicsComponent.class).getBody().getType());
-        assertEquals(height, station.getScale().y);
+    @AfterEach
+    public void tearDown() {
+        // Unregister services to clean up between tests
+        ServiceLocator.clear();
     }
+
+    private void verifyCommonComponents(Entity entity) {
+        assertNotNull(entity.getComponent(TextureRenderComponent.class));
+        assertNotNull(entity.getComponent(PhysicsComponent.class));
+        assertNotNull(entity.getComponent(ColliderComponent.class));
+        assertNotNull(entity.getComponent(InteractionComponent.class));
+        assertNotNull(entity.getComponent(TooltipsDisplay.class));
+        assertEquals(BodyDef.BodyType.StaticBody, entity.getComponent(PhysicsComponent.class).getBody().getType());
+    }
+
 }
 

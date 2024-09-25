@@ -60,6 +60,18 @@ class KeyboardPlayerInputComponentTest {
   }
 
   @Test
+  void shouldTriggerCombine() {
+    inputComponent.keyDown(Keys.J);
+    verify(eventHandlerMock, times(1)).trigger("interact", "combine");
+  }
+
+  @Test
+  void shouldTriggerRotate() {
+    inputComponent.keyDown(Keys.K);
+    verify(eventHandlerMock, times(1)).trigger("interact", "rotate");
+  }
+
+  @Test
   void shouldStopOnButtonRelease() {
     inputComponent.keyDown(Keys.W);
     inputComponent.keyUp(Keys.W);
