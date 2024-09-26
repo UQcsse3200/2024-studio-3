@@ -67,7 +67,7 @@ public class StationFactory {
    */
   public static Entity createCuttingBoard() {
     Entity cutting_board = new Entity()
-            .addComponent(new TextureRenderComponent("images/stations/cuttingboard.png"))
+            .addComponent(new TextureRenderComponent("images/stations/chopping_board/choppingboardbench.png"))
             .addComponent(new PhysicsComponent())
             .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
             .addComponent(new InteractionComponent(PhysicsLayer.INTERACTABLE))
@@ -219,7 +219,7 @@ public class StationFactory {
    */
   public static Entity createAcaiBasket() {
     Entity acai = new Entity()
-            .addComponent(new TextureRenderComponent("images/stations/producebasketalt.png"))
+            .addComponent(new TextureRenderComponent("images/stations/baskets/basket_acai.png"))
             .addComponent(new PhysicsComponent())
             .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
             .addComponent(new InteractionComponent(PhysicsLayer.INTERACTABLE))
@@ -328,7 +328,7 @@ public class StationFactory {
    */
   public static Entity createBeefFridge() {
     Entity beef = new Entity()
-            .addComponent(new TextureRenderComponent("images/ingredients/raw_beef.png"))
+            .addComponent(new TextureRenderComponent("images/stations/fridge/fridge_meat.png"))
             .addComponent(new PhysicsComponent())
             .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
             .addComponent(new InteractionComponent(PhysicsLayer.INTERACTABLE))
@@ -341,7 +341,7 @@ public class StationFactory {
     beef.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
     beef.getComponent(TextureRenderComponent.class).scaleEntity();
     beef.scaleHeight(1f);
-    PhysicsUtils.setScaledCollider(beef, 1f, 1f);
+    PhysicsUtils.setScaledCollider(beef, 0.8f, 0.8f);
     // Add station reference
     PhysicsComponent physicsComponent = beef.getComponent(PhysicsComponent.class);
     Body body = physicsComponent.getBody();
@@ -355,7 +355,7 @@ public class StationFactory {
    */
   public static Entity createChocolateFridge() {
     Entity chocolate = new Entity()
-            .addComponent(new TextureRenderComponent("images/ingredients/chopped_chocolate.png"))
+            .addComponent(new TextureRenderComponent("images/stations/fridge/fridge_choc.png"))
             .addComponent(new PhysicsComponent())
             .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
             .addComponent(new InteractionComponent(PhysicsLayer.INTERACTABLE))
@@ -368,7 +368,7 @@ public class StationFactory {
     chocolate.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
     chocolate.getComponent(TextureRenderComponent.class).scaleEntity();
     chocolate.scaleHeight(1f);
-    PhysicsUtils.setScaledCollider(chocolate, 1f, 1f);
+    PhysicsUtils.setScaledCollider(chocolate, 0.8f, 0.8f);
     // Add station reference
     PhysicsComponent physicsComponent = chocolate.getComponent(PhysicsComponent.class);
     Body body = physicsComponent.getBody();
