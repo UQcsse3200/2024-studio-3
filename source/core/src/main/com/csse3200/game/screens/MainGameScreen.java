@@ -1,5 +1,6 @@
 package com.csse3200.game.screens;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -62,7 +63,8 @@ public class MainGameScreen extends ScreenAdapter {
 			"images/textbox.png",
 			"images/red_overlay.jpg",
 			"images/red_fill.png",
-			"images/white_background.png"
+			"images/white_background.png",
+			"images/b1.png" //Background overlay - TESTING
 	};
 	// Modified the camera position to fix layout
 	private static final Vector2 CAMERA_POSITION = new Vector2(7.5f, 6.0f);
@@ -217,7 +219,8 @@ public class MainGameScreen extends ScreenAdapter {
 			.addComponent(new RageUpgrade())
 			.addComponent(new LoanUpgrade())
 			.addComponent(new RandomCombination())
-				.addComponent(new SpeedBootsUpgrade());
+				.addComponent(new SpeedBootsUpgrade())
+				.addComponent(new GameBackgroundDisplay());
 
 
 
