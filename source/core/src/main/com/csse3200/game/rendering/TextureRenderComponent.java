@@ -59,6 +59,22 @@ public class TextureRenderComponent extends RenderComponent {
     entity.setScale(1f, (float) texture.getHeight() / texture.getWidth());
   }
 
+  /**
+   * Gets the width of the texture
+   * @return the width of the texture
+   */
+  public float getWidth() {
+    return texture.getWidth();
+  }
+
+  /**
+   * Gets the height of the texture
+   * @return the height of the texture
+   */
+  public float getHeight() {
+    return texture.getHeight();
+  }
+
   @Override
   protected void draw(SpriteBatch batch) {
     Vector2 position = entity.getPosition();

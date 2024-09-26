@@ -25,10 +25,12 @@ public class ScoreSystem extends Component {
     }
 
     public static String getScoreDescription(int score) {
-        
+
         if (score > 100 || score < 0) {
-            throw new IllegalArgumentException("Invalid score parameter. Must be an integer between 0 and 100 (inclusive).");
-        };
+            throw new IllegalArgumentException(
+                    "Invalid score parameter. Must be an integer between 0 and 100 (inclusive).");
+        }
+        ;
 
         return switch (score / 20) {
             case 5, 4 -> "Grin Face"; // 80-100

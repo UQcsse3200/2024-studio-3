@@ -40,6 +40,9 @@ public class StationCookingComponentTest {
     
     @BeforeEach
     public void BeforeEach() {
+        // Clear service locator before each
+        ServiceLocator.clear();
+
         // Set-up services for Item entity creation
         ServiceLocator.registerPhysicsService(new PhysicsService());
         ServiceLocator.registerEntityService(new EntityService());
@@ -78,7 +81,6 @@ public class StationCookingComponentTest {
         mockStation = new Entity()
             .addComponent(mockCookingComponent)
             .addComponent(mockItemHandler);
-        mockStation.create();
 
         // Set up the fish entity for cooking and fake it being inside the itemHandler
         when(mockItemHandler.peek()).thenReturn(fishEntity.getComponent(IngredientComponent.class));
@@ -88,6 +90,8 @@ public class StationCookingComponentTest {
 
     @Test
     public void IngredientStartsCooking() {
+        // Need to call create on station here
+        mockStation.create();
 
         // Test the ingredient starts cooking
         mockStation.getEvents().trigger("Cook Ingredient");
@@ -101,6 +105,8 @@ public class StationCookingComponentTest {
 
     @Test
     public void IngredientStartsCookingThenStops() {
+        // Need to call create on station here
+        mockStation.create();
 
         // Test the ingredient starts cooking
         mockStation.getEvents().trigger("Cook Ingredient");
@@ -121,6 +127,9 @@ public class StationCookingComponentTest {
 
     @Test
     public void TestIngredientCooks() {
+        // Need to call create on station here
+        mockStation.create();
+
         // Set up time
         when(mockTime.getTime()).thenReturn(1000L, 10000L);
 
@@ -142,6 +151,9 @@ public class StationCookingComponentTest {
 
     @Test
     public void TestIngredientBurns() {
+        // Need to call create on station here
+        mockStation.create();
+
         // Set up time
         when(mockTime.getTime()).thenReturn(1000L, 20000L);
 
@@ -163,8 +175,11 @@ public class StationCookingComponentTest {
 
     @Test
     public void TestIngredientCooksThenBurns() {
+        // Need to call create on station here
+        mockStation.create();
+
         // Set up time
-        when(mockTime.getTime()).thenReturn(1000L, 10000L, 20000L);
+        when(mockTime.getTime()).thenReturn(1000L, 10000L, 10000L, 20000L);
 
         // Test the ingredient starts cooking
         mockStation.getEvents().trigger("Cook Ingredient");
@@ -191,6 +206,9 @@ public class StationCookingComponentTest {
 
     @Test
     public void TestIngredientDoesntBurn() {
+        // Need to call create on station here
+        mockStation.create();
+        
         // Set up time
         when(mockTime.getTime()).thenReturn(1000L, 10000L, 20000L);
 
