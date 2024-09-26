@@ -41,7 +41,7 @@ public class ForestGameArea extends GameArea {
   private static final int NUM_TREES = 7;
   private static final int NUM_GHOSTS = 2;
   private static final int NUM_CUSTOMERS_BASE = 1;
-  private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(5, 3);
+  private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(5, 2);
   private static final float WALL_WIDTH = 0.1f;
   private static final String[] forestTextures = {
     "images/special_NPCs/boss.png",
@@ -480,20 +480,20 @@ public class ForestGameArea extends GameArea {
   }
 
   private void spawnStations() {
-    GridPoint2 ovenPos = new GridPoint2(5,4);
+    GridPoint2 ovenPos = new GridPoint2(5,3);
     Entity oven = StationFactory.createOven();
     spawnEntityAt(oven, ovenPos, true, false);
-    oven.setPosition(oven.getPosition().x + 0.5f, oven.getPosition().y + 2f);
+    oven.setPosition(oven.getPosition().x + 0.5f, oven.getPosition().y );
 
-    GridPoint2 stovePos = new GridPoint2(5,4);
+    GridPoint2 stovePos = new GridPoint2(5,1);
     Entity stove = StationFactory.createStove();
     spawnEntityAt(stove, stovePos, false, false);
-    stove.setPosition(stove.getPosition().x + 2.5f , stove.getPosition().y + 2f);
+    stove.setPosition(stove.getPosition().x + 2.5f , stove.getPosition().y );
 
     GridPoint2 binPos = new GridPoint2(5,4);
     Entity bin = StationFactory.createBin();
     spawnEntityAt(bin, binPos, false, false);
-    bin.setPosition(bin.getPosition().x + 6f , bin.getPosition().y - 6f);
+    bin.setPosition(bin.getPosition().x +1f , bin.getPosition().y - 6f);
 
     GridPoint2 bananaTreePos = new GridPoint2( 5, 4);
     Entity bananaTree = StationFactory.createBananaBasket();
@@ -515,10 +515,10 @@ public class ForestGameArea extends GameArea {
     spawnEntityAt(tomatoStation, tomatoPos, false, false);
     tomatoStation.setPosition(tomatoStation.getPosition().x + 2f , tomatoStation.getPosition().y - 2f);
 
-    GridPoint2 cucumberPos = new GridPoint2( 5, 4);
+    GridPoint2 cucumberPos = new GridPoint2( 5, 3);
     Entity cucumberStation = StationFactory.createCucumberBasket();
     spawnEntityAt(cucumberStation, cucumberPos, false, false);
-    cucumberStation.setPosition(cucumberStation.getPosition().x + 4f , cucumberStation.getPosition().y - 2f);
+    cucumberStation.setPosition(cucumberStation.getPosition().x + 2f , cucumberStation.getPosition().y - 2f);
 
     GridPoint2 serveryPos = new GridPoint2(1,1);
     Entity servery = StationFactory.createSubmissionWindow();
@@ -555,7 +555,7 @@ public class ForestGameArea extends GameArea {
     Entity flame = StationFactory.createFlame();
     spawnEntityAt(flame, flamePos, false, false);
 
-    GridPoint2 fireExtinguisherPos = new GridPoint2(4, 4);
+    GridPoint2 fireExtinguisherPos = new GridPoint2(3, 1);
     Entity fireExtinguisher = StationFactory.createFireExtinguisher();
     spawnEntityAt(fireExtinguisher, fireExtinguisherPos, false, false);
   }
@@ -667,6 +667,7 @@ public class ForestGameArea extends GameArea {
     PlayerConfig playerConfig = new PlayerConfig();
     newPlayer = PlayerFactory.createPlayer();
     spawnEntityAt(newPlayer, PLAYER_SPAWN, true, true);
+    newPlayer.setPosition(PLAYER_SPAWN.x, 2.5f);
     return newPlayer;
   }
 
@@ -799,15 +800,15 @@ public class ForestGameArea extends GameArea {
   }
 
   private void spawnCustomer(String name) {
-        GridPoint2 position = new GridPoint2(1, 5);
-        Vector2 targetPos = new Vector2(3, 5);
+        GridPoint2 position = new GridPoint2(1, 3);
+        Vector2 targetPos = new Vector2(3, 3);
         Entity customer = NPCFactory.createCustomerPersonal(name, targetPos);
         spawnEntityAt(customer, position, true, true);
   }
 
   private void spawnBasicCustomer(String name) {
-    GridPoint2 position = new GridPoint2(1, 5);
-    Vector2 targetPos = new Vector2(3, 5);
+    GridPoint2 position = new GridPoint2(1, 3);
+    Vector2 targetPos = new Vector2(3, 3);
     Entity customer = NPCFactory.createBasicCustomer(name, targetPos);
     spawnEntityAt(customer, position, true, true);
   }
