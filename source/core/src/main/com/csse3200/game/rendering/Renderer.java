@@ -2,6 +2,7 @@ package com.csse3200.game.rendering;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -23,9 +24,12 @@ public class Renderer implements Disposable {
   private CameraComponent camera;
   private float gameWidth;
   private SpriteBatch batch;
+  private SpriteBatch batch3 = new SpriteBatch();
   private Stage stage;
   private RenderService renderService;
   private DebugRenderer debugRenderer;
+
+
 
   /**
    * Create a new renderer with default settings
@@ -92,13 +96,15 @@ public class Renderer implements Disposable {
 
   /** Render everything to the render service. */
   public void render() {
+    Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
     Matrix4 projMatrix = camera.getProjectionMatrix();
     batch.setProjectionMatrix(projMatrix);
-    Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
     batch.begin();
+
     renderService.render(batch);
     batch.end();
+
     debugRenderer.render(projMatrix);
 
     stage.act();
@@ -134,6 +140,8 @@ public class Renderer implements Disposable {
   public void dispose() {
     stage.dispose();
     batch.dispose();
+
+
   }
 
   public Stage getStage() {

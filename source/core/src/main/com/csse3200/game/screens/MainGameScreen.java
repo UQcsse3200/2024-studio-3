@@ -1,5 +1,6 @@
 package com.csse3200.game.screens;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -123,6 +124,7 @@ public class MainGameScreen extends ScreenAdapter {
 			ServiceLocator.getEntityService().update();
 		}
 		renderer.render();
+		Gdx.gl.glClearColor(234f/255f, 221/255f, 202/255f, 1);
 
 	}
 
