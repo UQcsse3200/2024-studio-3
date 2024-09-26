@@ -126,6 +126,8 @@ public class ForestGameArea extends GameArea {
     "images/frame/topright_door.png",
     "images/frame/bottomleft_door.png",
     "images/frame/bottomright_door.png",
+          "images/frame/border_test.png",
+          "images/frame/side_border.png",
     "images/frame/wall.png",
           "images/platecomponent/cleanplate.png",
           "images/platecomponent/dirtyplate.png",
@@ -237,17 +239,13 @@ public class ForestGameArea extends GameArea {
 
     spawnTerrain();
     // Spawn the restaurant
-    spawnDoor();
-    spawnWall();
+   // spawnDoor();
+    //spawnWall();
     spawnBenches();
-    make_border();
-
-
+    //make_border();
+    new_border();
     //ticketDetails();
-
-
     //spawnBenches();
-
     spawnStations();
     // Spawn beef
 //    spawnBeef("cooked");
@@ -388,12 +386,52 @@ public class ForestGameArea extends GameArea {
     bottom_wall.setPosition((pos.x / (24 * (terrain.getTileSize()))) + 0.02f, pos.y / (24 * (terrain.getTileSize())));
   }
 
+  private void new_border(){
+    GridPoint2 coords = new GridPoint2(0,0);
+    Vector2 pos;
+
+    for (int i=0;i<14;i++) {
+        Entity top_border = ObstacleFactory.spawnBorderTile();
+        spawnEntityAt(top_border, coords, true, true);
+        top_border.setPosition(i, -0.08f);
+    }
+
+    for (int i=0;i<14;i++) {
+      Entity top_border = ObstacleFactory.spawnBorderTile();
+      spawnEntityAt(top_border, coords, true, true);
+      top_border.setPosition(i, 8f);
+    }
+
+    for (int y=0;y<8;y++) {
+      Entity left_border = ObstacleFactory.spawnBorderTileVertical();
+      spawnEntityAt(left_border, coords, true, true);
+       left_border.setPosition(0, y);
+    }
+
+    for (int y=0;y<8;y++) {
+      Entity left_border = ObstacleFactory.spawnBorderTileVertical();
+      spawnEntityAt(left_border, coords, true, true);
+      left_border.setPosition(13.87f, y);
+    }
+
+    for (int y=0;y<8;y++) {
+      Entity left_border = ObstacleFactory.spawnBorderTileVertical();
+      spawnEntityAt(left_border, coords, true, true);
+      left_border.setPosition(4, y);
+    }
+
+
+
+  }
+
   /**
    * Renders a black border around the restaurant
    */
   private void make_border(){
     GridPoint2 coords = new GridPoint2(0,0);
     Vector2 pos;
+
+
 
     Entity top_border = ObstacleFactory.horizontalSeparation();
     coords = new GridPoint2(3,263);

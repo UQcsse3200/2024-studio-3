@@ -19,7 +19,7 @@ import com.csse3200.game.services.ServiceLocator;
 
 /** Factory for creating game terrains. */
 public class TerrainFactory {
-  private static final GridPoint2 MAP_SIZE = new GridPoint2(8, 5);
+  private static final GridPoint2 MAP_SIZE = new GridPoint2(7, 4);
   private static final int CUST_TILE_COUNT = 13;
   private final OrthographicCamera camera;
   private final TerrainOrientation orientation;
@@ -111,7 +111,7 @@ public class TerrainFactory {
     TiledMapTileLayer layer = new TiledMapTileLayer(MAP_SIZE.x, MAP_SIZE.y, tileSize.x , tileSize.y);
 
     // Size for blue tiles
-    GridPoint2 modified_size = new GridPoint2(MAP_SIZE.x/4 , MAP_SIZE.y);
+    GridPoint2 modified_size = new GridPoint2(MAP_SIZE.x , MAP_SIZE.y);
 
     // Create base orange tiles
     fillTiles(layer, MAP_SIZE, benchTile);
@@ -134,7 +134,7 @@ public class TerrainFactory {
     TiledMapTileLayer layer = new TiledMapTileLayer(MAP_SIZE.x, MAP_SIZE.y, tileSize.x , tileSize.y);
 
     // Size for blue tiles
-    GridPoint2 modified_size = new GridPoint2(MAP_SIZE.x/4 , MAP_SIZE.y);
+    GridPoint2 modified_size = new GridPoint2(MAP_SIZE.x/2 , MAP_SIZE.y);
 
     // Create base orange tiles
     fillTiles(layer, MAP_SIZE, floorTile);
@@ -149,7 +149,7 @@ public class TerrainFactory {
 
   private static void fillBlueTiles(
       TiledMapTileLayer layer, GridPoint2 map, TerrainTile tile, int amount) {
-    for (int x = 0; x < map.x; x++) {
+    for (int x = 0; x < map.x-1 ; x++) {
       for (int y = 0; y < map.y; y++) {
         Cell cell = new Cell();
         cell.setTile(tile);
@@ -158,9 +158,9 @@ public class TerrainFactory {
     }
   }
 
-  private static void fillTiles(TiledMapTileLayer layer, GridPoint2 mapSize, TerrainTile tile) {
-    for (int x = 0; x < mapSize.x; x++) {
-      for (int y = 0; y < mapSize.y; y++) {
+  private static void fillTiles(TiledMapTileLayer layer, GridPoint2 map, TerrainTile tile) {
+    for (int x = 0; x < map.x; x++) {
+      for (int y = 0; y < map.y; y++) {
         Cell cell = new Cell();
         cell.setTile(tile);
         layer.setCell(x, y, cell);

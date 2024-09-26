@@ -83,6 +83,32 @@ public class ObstacleFactory {
     return border;
   }
 
+  public static Entity spawnBorderTile(){
+    Entity border = new Entity()
+            .addComponent(new TextureRenderComponent("images/frame/border_test.png"))
+            .addComponent(new PhysicsComponent())
+            .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
+
+   // float width=-1f,height=131,scalefactor=11f;
+    border.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
+
+    PhysicsUtils.setScaledCollider(border, 1, 1);
+    return border;
+  }
+
+  public static Entity spawnBorderTileVertical(){
+    Entity border = new Entity()
+            .addComponent(new TextureRenderComponent("images/frame/side_border.png"))
+            .addComponent(new PhysicsComponent())
+            .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
+
+    // float width=-1f,height=131,scalefactor=11f;
+    border.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
+
+    PhysicsUtils.setScaledCollider(border, 1, 1);
+    return border;
+  }
+
   public static Entity horizontalSeparation(){
     Entity border = new Entity()
             .addComponent(new TextureRenderComponent("images/frame/horizontal_border.png"))
