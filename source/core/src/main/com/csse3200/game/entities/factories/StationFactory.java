@@ -75,7 +75,7 @@ public class StationFactory {
             .addComponent(new InventoryComponent(1))
             .addComponent(new InventoryDisplayHoverComponent())
             .addComponent(new StationChoppingComponent())
-            .addComponent(new StationItemHandlerComponent("cuttingboard"));
+            .addComponent(new StationItemHandlerComponent("cutting board"));
 
     cutting_board.getComponent(InteractionComponent.class).setAsBox(cutting_board.getScale());
     cutting_board.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
