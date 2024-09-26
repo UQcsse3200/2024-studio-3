@@ -26,7 +26,7 @@ public abstract class ItemTimerComponent extends Component {
     protected long length;
     protected long elapsed;
     protected boolean isRunning;
-    private long multiplier = 2;
+    private long multiplier = 1;
 
     /**
      * TimerComponent initialiser creates a timer which has the legnth set to
@@ -41,9 +41,9 @@ public abstract class ItemTimerComponent extends Component {
 
     @Override
     public void create() {
-        // On creation add triggers for rage mode to the timer
-        entity.getEvents().addListener("rageModeOn", this::rageModeOn);
-        entity.getEvents().addListener("rageModeOff", this::rageModeOff);
+        // Add event listeners for the rage mode
+        ServiceLocator.getEntityService().getEvents().addListener("rageModeOn", this::rageModeOn);
+        ServiceLocator.getEntityService().getEvents().addListener("rageModeOff", this::rageModeOff);
     }
 
     /**
@@ -118,16 +118,16 @@ public abstract class ItemTimerComponent extends Component {
      * Method to call when rage mode is activated by the user. Reduces the time
      * that the item will take to cook
      */
-    private void rageModeOn() {
-        // No funtionality yet
+    protected void rageModeOn() {
+        multiplier = 2;
     }
 
     /**
      * Method to call when rage mode is deactivated by the user. Changes back
      * the time that the item takes to cook back to normal.
      */
-    private void rageModeOff() {
-        // No functionality yet
+    protected void rageModeOff() {
+        multiplier = 1;
     }
 
 }
