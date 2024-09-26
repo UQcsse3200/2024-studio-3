@@ -121,7 +121,7 @@ public class StationFactory {
 
   public static Entity createBin() {
     Entity bin = new Entity()
-        .addComponent(new TextureRenderComponent("images/stations/refrigerator.png"))
+        .addComponent(new TextureRenderComponent("images/stations/benches/garbage_bin.png"))
         .addComponent(new PhysicsComponent())
         .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
         .addComponent(new InteractionComponent(PhysicsLayer.INTERACTABLE))
@@ -130,7 +130,7 @@ public class StationFactory {
     bin.getComponent(InteractionComponent.class).setAsBox(bin.getScale());
     bin.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
     bin.getComponent(TextureRenderComponent.class).scaleEntity();
-    bin.scaleHeight(1.5f);
+    bin.scaleHeight(1f);
 
     PhysicsUtils.setScaledCollider(bin, 1f, 1f);
     // Add station reference

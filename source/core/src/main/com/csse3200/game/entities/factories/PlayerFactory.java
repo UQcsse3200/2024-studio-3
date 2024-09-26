@@ -84,7 +84,7 @@ public class PlayerFactory {
             .addComponent(new CheckWinLoseComponent(55, 55))
             .addComponent(new SensorComponent(PhysicsLayer.INTERACTABLE, 3f));
 
-    player.scaleHeight(1f);
+    player.scaleHeight(1.25f);
     PhysicsUtils.setScaledCollider(player, 0.1f, 0.3f);
     player.getComponent(ColliderComponent.class).setDensity(1.5f);
 

@@ -82,6 +82,7 @@ public class ForestGameArea extends GameArea {
     "images/stations/bench.png",
     "images/stations/servery.png",
     "images/stations/refrigerator.png",
+    "images/stations/benches/garbage_bin.png",
     "images/stations/baskets/basket_banana.png",
     "images/stations/baskets/basket_cucumber.png",
     "images/stations/baskets/basket_lettuce.png",
