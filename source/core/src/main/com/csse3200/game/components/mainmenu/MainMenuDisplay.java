@@ -28,7 +28,7 @@ public class MainMenuDisplay extends UIComponent {
   private static final float Z_INDEX = 2f;
   private Table table;
   private Table logo;
-    private Table backg;
+
   private float scale_of_button = 1.5f;
 
   // Animation variables
@@ -134,13 +134,13 @@ public class MainMenuDisplay extends UIComponent {
    * */
   private void addActors() {
     logo = new Table();
-    backg = new Table();
+
 
     logo.setFillParent(true);
-    backg.setFillParent(true);
+
     table = new Table();
     table.setFillParent(true);
-    Image bg = new Image(ServiceLocator.getResourceService().getAsset("images/Cutscenes/Beastly_Bistro_Background.png", Texture.class));
+
     Image title =
         new Image(
             ServiceLocator.getResourceService()
@@ -225,7 +225,7 @@ public class MainMenuDisplay extends UIComponent {
 
     // Add logo and buttons
     logo.add(title).pad(0,0,250,0);
-    backg.add(bg).pad(0,0,250,0);
+
     table.add(startBtn).pad(600, 0, 0, 0).height(60);
     table.add(loadBtn).pad(600, 95, 0, 0).height(60);
     table.add(settingsBtn).pad(600, 90, 0, 0).height(60);

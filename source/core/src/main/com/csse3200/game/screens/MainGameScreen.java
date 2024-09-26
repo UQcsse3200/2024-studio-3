@@ -10,6 +10,7 @@ import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.components.maingame.*;
 import com.csse3200.game.components.levels.LevelComponent;
 import com.csse3200.game.components.maingame.MainGameActions;
+import com.csse3200.game.components.mainmenu.MainMenuBackground;
 import com.csse3200.game.components.upgrades.LoanUpgrade;
 import com.csse3200.game.components.upgrades.RageUpgrade;
 import com.csse3200.game.components.upgrades.RandomCombination;
@@ -220,6 +221,7 @@ public class MainGameScreen extends ScreenAdapter {
 			.addComponent(new LoanUpgrade())
 			.addComponent(new RandomCombination())
 				.addComponent(new SpeedBootsUpgrade());
+
 
 
 
