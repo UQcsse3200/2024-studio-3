@@ -19,12 +19,14 @@ public abstract class ItemTimerComponent extends Component {
      * @param length finishing time of the timer
      * @param elapsed the current ammount of time elapsed
      * @param isRunning if the timer is running starts as false when item created
+     * @param multiplier the current multiplier of the station if cooking
      */
     protected final GameTime gameTime = ServiceLocator.getTimeSource();
     private long prevTime;
     protected long length;
     protected long elapsed;
     protected boolean isRunning;
+    private long multiplier = 2;
 
     /**
      * TimerComponent initialiser creates a timer which has the legnth set to
@@ -35,6 +37,13 @@ public abstract class ItemTimerComponent extends Component {
         this.length = Long.MAX_VALUE;
         this.isRunning = false;
         this.elapsed = 0;
+    }
+
+    @Override
+    public void create() {
+        // On creation add triggers for rage mode to the timer
+        entity.getEvents().addListener("rageModeOn", this::rageModeOn);
+        entity.getEvents().addListener("rageModeOff", this::rageModeOff);
     }
 
     /**
@@ -48,7 +57,7 @@ public abstract class ItemTimerComponent extends Component {
         }
 
         // Update the elapsed time
-        this.elapsed += (gameTime.getTime() - prevTime);
+        this.elapsed += (gameTime.getTime() - prevTime) * multiplier;
         prevTime = gameTime.getTime();
     }
 
@@ -104,5 +113,21 @@ public abstract class ItemTimerComponent extends Component {
      * Abtract since cooking and chopping will have different implementations.
      */
     protected abstract void updateItem();
+
+    /**
+     * Method to call when rage mode is activated by the user. Reduces the time
+     * that the item will take to cook
+     */
+    private void rageModeOn() {
+        // No funtionality yet
+    }
+
+    /**
+     * Method to call when rage mode is deactivated by the user. Changes back
+     * the time that the item takes to cook back to normal.
+     */
+    private void rageModeOff() {
+        // No functionality yet
+    }
 
 }

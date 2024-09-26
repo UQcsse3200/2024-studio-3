@@ -26,6 +26,9 @@ public class CookIngredientComponent extends ItemTimerComponent {
 
     @Override
     public void create() {
+        // Call the super to get the rage mode listeners
+        super.create();
+
         // Add appriopriate event listeners
         entity.getEvents().addListener("cookIngredient", this::startTimer);
         entity.getEvents().addListener("stopCookingIngredient", this::stopTimer);
@@ -49,7 +52,7 @@ public class CookIngredientComponent extends ItemTimerComponent {
         // Update the elapsed time
         super.update();
 
-        String s = String.format("The elapsed time of item: %s, has been updated to %d ms, completion is at %.2f percent", item.getItemName(), this.elapsed, getCompletionPercent());
+        String s = String.format("The completion of %s is at %.2f percent", item.getItemName(), getCompletionPercent());
         logger.info(s);
 
         // Check if the timer is finished
