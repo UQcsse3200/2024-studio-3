@@ -50,10 +50,8 @@ public class IngredientStationHandlerComponent extends Component {
         this.inventoryComponent = entity.getComponent(InventoryComponent.class);
         this.collectionComponent = entity.getComponent(StationCollectionComponent.class);
 
-        // Get a random ingredient for now
         IngredientComponent itemComponent = getIngredient(this.ingredient);
 
-        ///this.inventoryComponent.addItemAt(new ItemComponent("Apples", ItemType.APPLE, 1), 0);
         this.inventoryComponent.addItemAt(itemComponent, 0);
     }
 
@@ -77,7 +75,7 @@ public class IngredientStationHandlerComponent extends Component {
             // do nothing
         } else {
             stationGiveItem(playerInventoryComponent, inventoryDisplay);
-            logger.debug("INTERACTED WITH TREE");
+            logger.debug("INTERACTED WITH BASKET");
         }
     }
 

@@ -82,6 +82,13 @@ public class ForestGameArea extends GameArea {
     "images/stations/bench.png",
     "images/stations/servery.png",
     "images/stations/refrigerator.png",
+    "images/stations/baskets/basket_banana.png",
+    "images/stations/baskets/basket_cucumber.png",
+    "images/stations/baskets/basket_lettuce.png",
+    "images/stations/baskets/basket_strawberry.png",
+    "images/stations/baskets/basket_tomato.png",
+    "images/stations/cuttingboard.png",
+    "images/stations/producebasketalt.png",
     "images/chef_player.png",
     "images/frame/top_border.png",
     "images/frame/left_border.png",
@@ -447,18 +454,48 @@ public class ForestGameArea extends GameArea {
     GridPoint2 binPos = new GridPoint2(5,4);
     Entity bin = StationFactory.createBin();
     spawnEntityAt(bin, binPos, false, false);
-    bin.setPosition(bin.getPosition().x + 6f , bin.getPosition().y - 6f);
+    bin.setPosition(bin.getPosition().x + 3f , bin.getPosition().y - 6f);
 
     GridPoint2 bananaTreePos = new GridPoint2( 5, 4);
-    Entity bananaTree = StationFactory.createBananaTree();
+    Entity bananaTree = StationFactory.createBananaBasket();
     spawnEntityAt(bananaTree, bananaTreePos, false, false);
-    bananaTree.setPosition(bananaTree.getPosition().x + 4.2f , bananaTree.getPosition().y - 4f);
+    bananaTree.setPosition(bananaTree.getPosition().x - 4f , bananaTree.getPosition().y - 2f);
 
     GridPoint2 strawberryPos = new GridPoint2( 5, 4);
-    Entity strawberryStation = StationFactory.createStrawberries();
+    Entity strawberryStation = StationFactory.createStrawberryBasket();
     spawnEntityAt(strawberryStation, strawberryPos, false, false);
-    strawberryStation.setPosition(strawberryStation.getPosition().x + 4.2f , strawberryStation.getPosition().y - 5f);
+    strawberryStation.setPosition(strawberryStation.getPosition().x - 2f , strawberryStation.getPosition().y - 2f);
 
+    GridPoint2 lettucePos = new GridPoint2( 5, 4);
+    Entity lettuceStation = StationFactory.createLettuceBasket();
+    spawnEntityAt(lettuceStation, lettucePos, false, false);
+    lettuceStation.setPosition(lettuceStation.getPosition().x + 0f , lettuceStation.getPosition().y - 2f);
+
+    GridPoint2 tomatoPos = new GridPoint2( 5, 4);
+    Entity tomatoStation = StationFactory.createTomatoBasket();
+    spawnEntityAt(tomatoStation, tomatoPos, false, false);
+    tomatoStation.setPosition(tomatoStation.getPosition().x + 2f , tomatoStation.getPosition().y - 2f);
+
+    GridPoint2 cucumberPos = new GridPoint2( 5, 4);
+    Entity cucumberStation = StationFactory.createCucumberBasket();
+    spawnEntityAt(cucumberStation, cucumberPos, false, false);
+    cucumberStation.setPosition(cucumberStation.getPosition().x + 4f , cucumberStation.getPosition().y - 2f);
+
+    GridPoint2 acaiPos = new GridPoint2( 5, 4);
+    Entity acaiStation = StationFactory.createAcaiBasket();
+    spawnEntityAt(acaiStation, acaiPos, false, false);
+    acaiStation.setPosition(acaiStation.getPosition().x + 5f , acaiStation.getPosition().y + 0f);
+
+    GridPoint2 beefPos = new GridPoint2( 5, 4);
+    Entity beefStation = StationFactory.createBeefFridge();
+    spawnEntityAt(beefStation, beefPos, false, false);
+    beefStation.setPosition(beefStation.getPosition().x + 5f , beefStation.getPosition().y - 4f);
+
+    GridPoint2 chocolatePos = new GridPoint2( 5, 4);
+    Entity chocolateStation = StationFactory.createChocolateFridge();
+    spawnEntityAt(chocolateStation, chocolatePos, false, false);
+    chocolateStation.setPosition(chocolateStation.getPosition().x + 5f , chocolateStation.getPosition().y - 6f);
+    
     GridPoint2 serveryPos = new GridPoint2(1,1);
     Entity servery = StationFactory.createSubmissionWindow();
     spawnEntityAt(servery, serveryPos, false, false);
@@ -471,17 +508,13 @@ public class ForestGameArea extends GameArea {
     GridPoint2 middlePos = new GridPoint2(5,4);
     Entity middle = StationFactory.createMainBenchTable();
     spawnEntityAt(middle, middlePos, false, false);
-    middle.setPosition(middle.getPosition().x - 2.6f, middle.getPosition().y - 3.9f);
-//
-//    GridPoint2 topPos = new GridPoint2(5,4);
-//    Entity top = StationFactory.createTopBenchTable();
-//    spawnEntityAt(top, topPos, false, false);
-//    top.setPosition(top.getPosition().x - 2.6f, top.getPosition().y - 2.6f);
-//
-//    GridPoint2 bottomPos = new GridPoint2(5,4);
-//    Entity bottom = StationFactory.createFeetBenchTable();
-//    spawnEntityAt(bottom, bottomPos, false, false);
-//    bottom.setPosition(bottom.getPosition().x - 2.6f, bottom.getPosition().y - 5.2f);
+    middle.setPosition(middle.getPosition().x - 2f, middle.getPosition().y - 5f);
+
+    // Cutting Board
+    GridPoint2 cuttingPos = new GridPoint2(5,4);
+    Entity board = StationFactory.createCuttingBoard();
+    spawnEntityAt(board, cuttingPos, false, false);
+    board.setPosition(board.getPosition().x + 1f, board.getPosition().y - 5f);
   }
 
   /**
@@ -800,10 +833,10 @@ public class ForestGameArea extends GameArea {
    */
   private Entity spawnStackPlate(int quantity) {
     Entity newPlate = PlateFactory.spawnPlateStack(quantity);
-    GridPoint2 platePosition = new GridPoint2(3, 2);
+    GridPoint2 platePosition = new GridPoint2(5, 4);
     spawnEntityAt(newPlate, platePosition, true, false);
     newPlate.setScale(1.0f, 1.0f);
-
+    newPlate.setPosition(newPlate.getPosition().x - 6f , newPlate.getPosition().y + 0f);
     return newPlate;
   }
 
