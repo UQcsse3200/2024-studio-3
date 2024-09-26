@@ -37,10 +37,14 @@ public class StationItemHandlerComponentTest {
     public Entity testEntity1;
     public Entity testEntity2;
 
+    public String type;
+
     // Before each to reset all out values and all created in the pre station
     // task
     @BeforeEach
     public void BeforeEach() {
+        ServiceLocator.clear();
+
         // Set up stuff so item creation can function
         ServiceLocator.registerPhysicsService(new PhysicsService());
         ServiceLocator.registerEntityService(new EntityService());
@@ -64,6 +68,8 @@ public class StationItemHandlerComponentTest {
 
         testEntity1 = null;
         testEntity2 = null;
+
+        type = "default";
     }
 
     public void preItemHandlingTests() {
@@ -149,7 +155,7 @@ public class StationItemHandlerComponentTest {
 
         station
             .getComponent(StationItemHandlerComponent.class)
-            .handleInteraction(playerInventory, playerInventoryDisplay);
+            .handleInteraction(playerInventory, playerInventoryDisplay, type);
 
         // Assert both have nothing in them after the interaction
         assertTrue(station.getComponent(InventoryComponent.class).getSize() == 0);
@@ -174,7 +180,7 @@ public class StationItemHandlerComponentTest {
 
         station
             .getComponent(StationItemHandlerComponent.class)
-            .handleInteraction(playerInventory, playerInventoryDisplay);
+            .handleInteraction(playerInventory, playerInventoryDisplay, type);
 
         // Assert they have correct ammount of items and confirm item
         assertTrue(station.getComponent(InventoryComponent.class).getSize() == 1);
@@ -201,7 +207,7 @@ public class StationItemHandlerComponentTest {
         // Simulate the interaction
         station
             .getComponent(StationItemHandlerComponent.class)
-            .handleInteraction(playerInventory, playerInventoryDisplay);
+            .handleInteraction(playerInventory, playerInventoryDisplay, type);
 
         // Assert that nothing has changed
         assertTrue(station.getComponent(InventoryComponent.class).getSize() == 0);
@@ -228,7 +234,7 @@ public class StationItemHandlerComponentTest {
         // Simulate the interaction
         station
             .getComponent(StationItemHandlerComponent.class)
-            .handleInteraction(playerInventory, playerInventoryDisplay);
+            .handleInteraction(playerInventory, playerInventoryDisplay, type);
 
         // Assert they have correct ammount of items and confirm item
         assertTrue(station.getComponent(InventoryComponent.class).getSize() == 0);
@@ -259,7 +265,7 @@ public class StationItemHandlerComponentTest {
         // Simulate the interaction
         station
             .getComponent(StationItemHandlerComponent.class)
-            .handleInteraction(playerInventory, playerInventoryDisplay);
+            .handleInteraction(playerInventory, playerInventoryDisplay, type);
 
         // Assert that nothing should have changed i.e. no swap occured
         assertTrue(station.getComponent(InventoryComponent.class).getSize() == 1);
@@ -287,7 +293,7 @@ public class StationItemHandlerComponentTest {
 
         station
             .getComponent(StationItemHandlerComponent.class)
-            .handleInteraction(playerInventory, playerInventoryDisplay);
+            .handleInteraction(playerInventory, playerInventoryDisplay, type);
 
         // Assert they have correct ammount of items and confirm item
         assertTrue(station.getComponent(InventoryComponent.class).getSize() == 1);

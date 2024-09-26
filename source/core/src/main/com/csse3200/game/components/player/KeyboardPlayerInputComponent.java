@@ -17,7 +17,7 @@ import java.util.HashMap;
 public class KeyboardPlayerInputComponent extends InputComponent {
   private static final float ROOT2INV = 1f / (float) Math.sqrt(2f);
   private Vector2 walkDirection = Vector2.Zero.cpy();
-  private static final float WALK_SPEED = 1f;
+  public float walkSpeed = 1f;
   private static HashMap<Integer, Integer> keyFlags = new HashMap<>();
   private static final String WALKSTOP = "walkStop";
   private Entity player;
@@ -46,7 +46,15 @@ public class KeyboardPlayerInputComponent extends InputComponent {
     
     if (keycode == Keys.E) {
       // Trigger an interaction attempt
-      entity.getEvents().trigger("interact");
+      entity.getEvents().trigger("interact", "default");
+      return true;
+    } else if (keycode == Keys.J) {
+      // Trigger an attempt to combine existing items in a mixing station
+      entity.getEvents().trigger("interact", "combine");
+      return true;
+    } else if (keycode == Keys.K) {
+      // Trigger an attempt to rotate inventory of a station to update item display
+      entity.getEvents().trigger("interact", "rotate");
       return true;
     }
 
@@ -106,10 +114,14 @@ public class KeyboardPlayerInputComponent extends InputComponent {
     };
   }
 
+  public void setWalkSpeed(float speed) {
+    walkSpeed = speed;
+  }
+
   private void triggerWalkEvent() {
 
     Vector2 lastDir = this.walkDirection.cpy();
-    this.walkDirection = keysToVector().scl(WALK_SPEED);
+    this.walkDirection = keysToVector().scl(walkSpeed);
     Directions dir = keysToDirection();
     if(dir == Directions.NONE)
     {
@@ -173,7 +185,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
       yCom /= length;
     }
 
-    return new Vector2(xCom, yCom).scl(WALK_SPEED);
+    return new Vector2(xCom, yCom).scl(walkSpeed);
   }
 
   private boolean isPressed(int keycode) {

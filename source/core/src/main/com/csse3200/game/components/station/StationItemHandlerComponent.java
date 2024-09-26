@@ -79,8 +79,10 @@ public class StationItemHandlerComponent extends Component {
      * Handles any interaction with station, using current state of player and station
      * inventory to determine intended interaction
      * @param playerInventoryComponent reference to player inventory component
+     * @param inventoryDisplay reference to individual inventory display
+     * @param type the type of interaction attempt
      */
-    public void handleInteraction(InventoryComponent playerInventoryComponent, InventoryDisplay inventoryDisplay) {
+    public void handleInteraction(InventoryComponent playerInventoryComponent, InventoryDisplay inventoryDisplay, String type) {
         // Pre calcs
         boolean full = playerInventoryComponent.isFull() & this.inventoryComponent.isFull();
         boolean empty = playerInventoryComponent.isEmpty() & this.inventoryComponent.isEmpty();
