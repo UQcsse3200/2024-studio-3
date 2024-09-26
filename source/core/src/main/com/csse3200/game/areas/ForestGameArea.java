@@ -597,21 +597,21 @@ public class ForestGameArea extends GameArea {
      spawnBench(); // temporary, spawns a fire extinguisher and a fire (?)
 
     // Bottom bench row
-    spawnSingleBench("left_border", 4, 1f);
-    spawnBenchRow("middle", 5, 14, 1f);
-    spawnSingleBench("right_border", 15, 1f);
+    spawnSingleBench("left_border", 4, 0f);
+    spawnBenchRow("middle", 5, 13, 0f);
+    spawnSingleBench("right_border", 13, 0f);
 
     // Top shadow bench row
-    spawnBenchRow("shadow_bottom_top", 5, 14, 10f);
-    spawnSingleBench("left_shadow", 4, 10f);
+    spawnBenchRow("shadow_bottom_top", 5, 13, 7f);
+    spawnSingleBench("left_shadow", 4, 7f);
 
     // Middle vertical benches (long bench setup)
-    spawnSingleBench("single", 9f, 10f); // Middle part of long bench
-    spawnBenchColumn("vertical", 9f, 7, 9);  // Middle vertical section
-    spawnSingleBench("left_corner_shadow", 9f, 7f); // Bottom-left corner shadow
+    spawnSingleBench("single", 9f, 7f); // Middle part of long bench
+    spawnBenchColumn("vertical", 9f, 5, 7);  // Middle vertical section
+    spawnSingleBench("left_corner_shadow", 9f, 4f); // Bottom-left corner shadow
 
     // Top horizontal shadows near middle
-    spawnBenchRow("top_shadows", 10, 12, 7f);
+    spawnBenchRow("top_shadows", 10, 12, 4f);
 
 //    // Long bench bottom part (left shadow + right shadow)
 //    spawnSingleBench("left_corner_shadow", 11, 3f);
@@ -631,9 +631,9 @@ public class ForestGameArea extends GameArea {
 //    spawnSingleBench("top", 15f, 10f);
 
     // Left vertical bench column
-    spawnBenchColumn("vertical", 4f, 4, 6);
-    spawnSingleBench("bottom_shadow", 4f, 3f);
-    spawnSingleBench("top", 4f, 7f);
+    spawnBenchColumn("vertical", 4f, 2, 5);
+    spawnSingleBench("bottom_shadow", 4f, 2f);
+    spawnSingleBench("top", 4f, 6f);
 
 //    // Middle long bench (vertical section)
 //    spawnBenchColumn("vertical", 9f, 2, 4);
@@ -646,9 +646,9 @@ public class ForestGameArea extends GameArea {
 //    spawnSingleBench("left_border", 6f, 5f);
 
     // Top left section
-    spawnSingleBench("bottom_shadow", 6f, 7f);
-    spawnBenchColumn("vertical", 6f, 8, 9);
-    spawnSingleBench("single", 6f, 10f);
+    spawnSingleBench("bottom_shadow", 6f, 5f);
+    spawnBenchColumn("vertical", 6f, 6, 7);
+    spawnSingleBench("single", 6f, 7f);
   }
 
   private Entity spawnPlayer() {
