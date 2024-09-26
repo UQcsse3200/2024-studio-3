@@ -2,7 +2,6 @@ package com.csse3200.game.components.items;
 import com.csse3200.game.components.Component;
 
 import java.util.UUID;
-import com.csse3200.game.rendering.TextureRenderComponent;
 
 public class ItemComponent extends Component {
     private final String itemId;
@@ -60,13 +59,6 @@ public class ItemComponent extends Component {
      * returns null
      */
     public String getTexturePath() {
-        if (entity == null) {
-            return null;
-        }
-        TextureRenderComponent itemImage = entity.getComponent(TextureRenderComponent.class);
-        if (itemImage != null) {
-            return itemImage.getTexturePath();
-        }
-        return null;
+        return ItemTexturePathGetter.getTexturePath(entity);
     }
 }

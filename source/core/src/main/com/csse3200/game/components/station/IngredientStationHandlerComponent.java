@@ -50,10 +50,8 @@ public class IngredientStationHandlerComponent extends Component {
         this.inventoryComponent = entity.getComponent(InventoryComponent.class);
         this.collectionComponent = entity.getComponent(StationCollectionComponent.class);
 
-        // Get a random ingredient for now
         IngredientComponent itemComponent = getIngredient(this.ingredient);
 
-        ///this.inventoryComponent.addItemAt(new ItemComponent("Apples", ItemType.APPLE, 1), 0);
         this.inventoryComponent.addItemAt(itemComponent, 0);
     }
 
@@ -69,13 +67,15 @@ public class IngredientStationHandlerComponent extends Component {
      * Handles any interaction with station, using current state of player and station
      * inventory to determine intended interaction
      * @param playerInventoryComponent reference to player inventory component
+     * @param inventoryDisplay reference to individual inventory display
+     * @param type the type of interaction attempt
      */
-    public void handleInteraction(InventoryComponent playerInventoryComponent, InventoryDisplay inventoryDisplay) {
+    public void handleInteraction(InventoryComponent playerInventoryComponent, InventoryDisplay inventoryDisplay, String type) {
         if (playerInventoryComponent.isFull()) {
             // do nothing
         } else {
             stationGiveItem(playerInventoryComponent, inventoryDisplay);
-            logger.debug("INTERACTED WITH TREE");
+            logger.debug("INTERACTED WITH BASKET");
         }
     }
 

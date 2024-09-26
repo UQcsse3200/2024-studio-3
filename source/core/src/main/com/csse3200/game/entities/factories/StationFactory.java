@@ -9,8 +9,15 @@ import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.csse3200.game.components.FlameComponent;
 import com.csse3200.game.components.TooltipsDisplay;
 import com.csse3200.game.components.player.InventoryComponent;
+import com.csse3200.game.components.station.FireExtinguisherHandlerComponent;
+import com.csse3200.game.components.station.IngredientStationHandlerComponent;
+import com.csse3200.game.components.station.StationBinComponent;
+import com.csse3200.game.components.station.StationCollectionComponent;
+import com.csse3200.game.components.station.StationCookingComponent;
+import com.csse3200.game.components.station.StationItemHandlerComponent;
+import com.csse3200.game.components.station.StationMealComponent;
+import com.csse3200.game.components.station.StationServingComponent;
 import com.csse3200.game.components.player.InventoryDisplayHoverComponent;
-import com.csse3200.game.components.station.*;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.PhysicsUtils;
@@ -32,8 +39,7 @@ public class StationFactory {
     System.out.println("Adding Oven animation");
     animator.addAnimation("Oven", 0.2f, Animation.PlayMode.LOOP);
     animator.addAnimation("OvenDefault", 0.2f, Animation.PlayMode.LOOP);
-    
-    
+
     Entity oven = new Entity()
        
         .addComponent(new PhysicsComponent())
@@ -46,16 +52,19 @@ public class StationFactory {
         .addComponent(new InventoryDisplayHoverComponent());
 
 
-    
-    oven.scaleHeight(0.64f);
+    //set scale
+    oven.scaleHeight(1f);
+    //ensure cant be pushed
+    oven.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
     PhysicsUtils.setScaledCollider(oven, 1f, 1f);
 
     // Add station reference
     PhysicsComponent physicsComponent = oven.getComponent(PhysicsComponent.class);
     Body body = physicsComponent.getBody();
+    
     body.setUserData(oven);
     oven.addComponent(animator);
-    animator.startAnimation("Oven");
+    animator.startAnimation("OvenDefault");
     return oven;
   }
 
@@ -79,9 +88,9 @@ public class StationFactory {
     stove.getComponent(InteractionComponent.class).setAsBox(stove.getScale());
     stove.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
     stove.getComponent(TextureRenderComponent.class).scaleEntity();
-    stove.scaleHeight(1.5f);
+    stove.scaleHeight(1f);
 
-    PhysicsUtils.setScaledCollider(stove, 0.3f, 0.2f);
+    PhysicsUtils.setScaledCollider(stove, 1f, 1f);
     // Add station reference
     PhysicsComponent physicsComponent = stove.getComponent(PhysicsComponent.class);
     Body body = physicsComponent.getBody();
@@ -129,12 +138,12 @@ public class StationFactory {
   }
 
   /**
-   * Creates an apple tree, a type of ingredient station
+   * Creates an banana basket, a type of ingredient station
    * @return Entity of type station with added components and references
    */
-  public static Entity createBananaTree() {
-    Entity apple = new Entity()
-            .addComponent(new TextureRenderComponent("images/stations/apple_tree.png"))
+  public static Entity createBananaBasket() {
+    Entity banana = new Entity()
+            .addComponent(new TextureRenderComponent("images/stations/baskets/basket_banana.png"))
             .addComponent(new PhysicsComponent())
             .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
             .addComponent(new InteractionComponent(PhysicsLayer.INTERACTABLE))
@@ -142,28 +151,27 @@ public class StationFactory {
             .addComponent(new StationCollectionComponent())
             .addComponent(new InventoryComponent(1))
             .addComponent(new IngredientStationHandlerComponent("bananaTree", "banana"));
-
     // Physics components
-    apple.getComponent(InteractionComponent.class).setAsBox(apple.getScale());
-    apple.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
-    apple.getComponent(TextureRenderComponent.class).scaleEntity();
-    apple.scaleHeight(1.5f);
-    PhysicsUtils.setScaledCollider(apple, 0.3f, 0.2f);
 
+    banana.getComponent(InteractionComponent.class).setAsBox(banana.getScale());
+    banana.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
+    banana.getComponent(TextureRenderComponent.class).scaleEntity();
+    banana.scaleHeight(1f);
+    PhysicsUtils.setScaledCollider(banana, 1f, 1f);
     // Add station reference
-    PhysicsComponent physicsComponent = apple.getComponent(PhysicsComponent.class);
+    PhysicsComponent physicsComponent = banana.getComponent(PhysicsComponent.class);
     Body body = physicsComponent.getBody();
-    body.setUserData(apple);
-    return apple;
+    body.setUserData(banana);
+    return banana;
   }
 
   /**
-   * Creates an apple tree, a type of ingredient station
+   * Creates an strawberry basket, a type of ingredient station
    * @return Entity of type station with added components and references
    */
-  public static Entity createStrawberries() {
+  public static Entity createStrawberryBasket() {
     Entity strawberry = new Entity()
-            .addComponent(new TextureRenderComponent("images/ingredients/raw_strawberry.png"))
+            .addComponent(new TextureRenderComponent("images/stations/baskets/basket_strawberry.png"))
             .addComponent(new PhysicsComponent())
             .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
             .addComponent(new InteractionComponent(PhysicsLayer.INTERACTABLE))
@@ -171,19 +179,99 @@ public class StationFactory {
             .addComponent(new StationCollectionComponent())
             .addComponent(new InventoryComponent(1))
             .addComponent(new IngredientStationHandlerComponent("strawberriesStation", "strawberry"));
-
     // Physics components
     strawberry.getComponent(InteractionComponent.class).setAsBox(strawberry.getScale());
     strawberry.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
     strawberry.getComponent(TextureRenderComponent.class).scaleEntity();
-    strawberry.scaleHeight(0.5f);
-    PhysicsUtils.setScaledCollider(strawberry, 0.3f, 0.2f);
-
+    strawberry.scaleHeight(1f);
+    PhysicsUtils.setScaledCollider(strawberry, 1f, 1f);
     // Add station reference
     PhysicsComponent physicsComponent = strawberry.getComponent(PhysicsComponent.class);
     Body body = physicsComponent.getBody();
     body.setUserData(strawberry);
     return strawberry;
+  }
+
+  /**
+   * Creates an strawberry basket, a type of ingredient station
+   * @return Entity of type station with added components and references
+   */
+  public static Entity createLettuceBasket() {
+    Entity lettuce = new Entity()
+            .addComponent(new TextureRenderComponent("images/stations/baskets/basket_lettuce.png"))
+            .addComponent(new PhysicsComponent())
+            .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
+            .addComponent(new InteractionComponent(PhysicsLayer.INTERACTABLE))
+            .addComponent(new TooltipsDisplay())
+            .addComponent(new StationCollectionComponent())
+            .addComponent(new InventoryComponent(1))
+            .addComponent(new IngredientStationHandlerComponent("lettuceStation", "lettuce"));
+    // Physics components
+    lettuce.getComponent(InteractionComponent.class).setAsBox(lettuce.getScale());
+    lettuce.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
+    lettuce.getComponent(TextureRenderComponent.class).scaleEntity();
+    lettuce.scaleHeight(1f);
+    PhysicsUtils.setScaledCollider(lettuce, 1f, 1f);
+    // Add station reference
+    PhysicsComponent physicsComponent = lettuce.getComponent(PhysicsComponent.class);
+    Body body = physicsComponent.getBody();
+    body.setUserData(lettuce);
+    return lettuce;
+  }
+
+  /**
+   * Creates an strawberry basket, a type of ingredient station
+   * @return Entity of type station with added components and references
+   */
+  public static Entity createTomatoBasket() {
+    Entity tomato = new Entity()
+            .addComponent(new TextureRenderComponent("images/stations/baskets/basket_tomato.png"))
+            .addComponent(new PhysicsComponent())
+            .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
+            .addComponent(new InteractionComponent(PhysicsLayer.INTERACTABLE))
+            .addComponent(new TooltipsDisplay())
+            .addComponent(new StationCollectionComponent())
+            .addComponent(new InventoryComponent(1))
+            .addComponent(new IngredientStationHandlerComponent("tomatoStation", "tomato"));
+    // Physics components
+    tomato.getComponent(InteractionComponent.class).setAsBox(tomato.getScale());
+    tomato.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
+    tomato.getComponent(TextureRenderComponent.class).scaleEntity();
+    tomato.scaleHeight(1f);
+    PhysicsUtils.setScaledCollider(tomato, 1f, 1f);
+    // Add station reference
+    PhysicsComponent physicsComponent = tomato.getComponent(PhysicsComponent.class);
+    Body body = physicsComponent.getBody();
+    body.setUserData(tomato);
+    return tomato;
+  }
+
+
+  /**
+   * Creates an cucumber basket, a type of ingredient station
+   * @return Entity of type station with added components and references
+   */
+  public static Entity createCucumberBasket() {
+    Entity cucumber = new Entity()
+            .addComponent(new TextureRenderComponent("images/stations/baskets/basket_cucumber.png"))
+            .addComponent(new PhysicsComponent())
+            .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
+            .addComponent(new InteractionComponent(PhysicsLayer.INTERACTABLE))
+            .addComponent(new TooltipsDisplay())
+            .addComponent(new StationCollectionComponent())
+            .addComponent(new InventoryComponent(1))
+            .addComponent(new IngredientStationHandlerComponent("cucumberStation", "cucumber"));
+    // Physics components
+    cucumber.getComponent(InteractionComponent.class).setAsBox(cucumber.getScale());
+    cucumber.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
+    cucumber.getComponent(TextureRenderComponent.class).scaleEntity();
+    cucumber.scaleHeight(1f);
+    PhysicsUtils.setScaledCollider(cucumber, 1f, 1f);
+    // Add station reference
+    PhysicsComponent physicsComponent = cucumber.getComponent(PhysicsComponent.class);
+    Body body = physicsComponent.getBody();
+    body.setUserData(cucumber);
+    return cucumber;
   }
 
   /**
