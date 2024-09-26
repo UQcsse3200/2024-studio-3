@@ -86,9 +86,6 @@ public class LevelService {
     public void levelControl(int level) {
         int spawnCap = 0;
         switch (level) {
-            case 0:
-                spawnCap = 1;
-                break;
             case 1:
                 spawnCap = 3;
                 break;
@@ -103,21 +100,6 @@ public class LevelService {
                 break;
             case 5:
                 spawnCap = 9;
-                break;
-            case 6:
-                spawnCap = 11;
-                break;
-            case 7:
-                spawnCap = 8;
-                break;
-            case 8:
-                spawnCap = 12;
-                break;
-            case 9:
-                spawnCap = 15;
-                break;
-            case 10:
-                spawnCap = 17;
                 break;
         }
         levelEventHandler.trigger("startSpawning", spawnCap);
