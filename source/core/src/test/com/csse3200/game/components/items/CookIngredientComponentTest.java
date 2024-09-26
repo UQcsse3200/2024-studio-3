@@ -1,6 +1,7 @@
 package com.csse3200.game.components.items;
 
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.services.GameTime;
 import com.csse3200.game.extensions.GameExtension;
 import com.csse3200.game.services.ServiceLocator;
@@ -27,6 +28,8 @@ public class CookIngredientComponentTest {
     public void setUp() {
         // Clear service locator
         ServiceLocator.clear();
+
+        ServiceLocator.registerEntityService(new EntityService());
 
         mockEntity = new Entity();
         // creating mockEntity via
