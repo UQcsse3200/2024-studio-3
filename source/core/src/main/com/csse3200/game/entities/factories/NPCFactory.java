@@ -70,6 +70,22 @@ public class NPCFactory {
                 return boss;
         }
 
+        // CREATE UPGRADE NPC - PENGUIN
+        public static Entity createUpgradeNPC(Entity target, Vector2 targetPosition) {
+                Entity penguin = createBaseNPC(target, targetPosition);
+
+                AnimationRenderComponent animator = new AnimationRenderComponent(
+                        ServiceLocator.getResourceService()
+                                .getAsset("images/special_NPCs/penguin.atlas", TextureAtlas.class));
+                animator.addAnimation("walk", 0.3f, Animation.PlayMode.LOOP);
+                animator.addAnimation("turn", 0.3f, Animation.PlayMode.LOOP);
+
+                penguin.addComponent(animator)
+                        .addComponent(new SpecialNPCAnimationController());
+
+                return penguin;
+        }
+
         /**
          * Creates a ghost king entity at a specific target position.
          *

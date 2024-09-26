@@ -45,6 +45,7 @@ public class ForestGameArea extends GameArea {
   private static final float WALL_WIDTH = 0.1f;
   private static final String[] forestTextures = {
     "images/special_NPCs/boss.png",
+    "images/special_NPCs/penguin.png",
     "images/meals/acai_bowl.png",
     "images/meals/banana_split.png",
     "images/meals/salad.png",
@@ -127,7 +128,7 @@ public class ForestGameArea extends GameArea {
           "images/platecomponent/stackedplates/4plates.png",
           "images/platecomponent/stackedplates/5plates.png",
           "images/inventory_ui/slot.png",
-          "images/inventory_ui/null_image.png"
+          "images/inventory_ui/null_image.png",
   };
   private static final String[] forestTextureAtlases = {
     "images/terrain_iso_grass.atlas",
@@ -178,8 +179,8 @@ public class ForestGameArea extends GameArea {
     "images/player/playerPlate.atlas",
     "images/player/playerDirtyPlate.atlas",
           "images/player/playerFireExtinguisher.atlas",
-          "images/special_NPCs/boss.atlas", "images/stations/Servery_Animation/servery.atlas"
-
+          "images/special_NPCs/boss.atlas", "images/stations/Servery_Animation/servery.atlas",
+          "images/special_NPCs/penguin.atlas",
   };
   private static final String[] forestSounds = {"sounds/Impact4.ogg"};
   private static final String backgroundMusic = "sounds/BB_BGM.mp3";
@@ -253,6 +254,8 @@ public class ForestGameArea extends GameArea {
 
     // Spawn the player
     player = spawnPlayer();
+
+    spawnPenguin();
 
     // Check and trigger win/lose state
     ServiceLocator.getDayNightService().getEvents().addListener("endGame", this::checkEndOfDayGameState);
@@ -868,6 +871,15 @@ public class ForestGameArea extends GameArea {
     Vector2 targetPos = new Vector2(2, 6);
     Entity boss = NPCFactory.createBoss(targetPos);
     spawnEntityAt(boss, position, false, false);
+  }
+
+  // Spawn Upgrade NPC
+  private void spawnPenguin() {
+    GridPoint2 position = new GridPoint2(1, 5);
+    Vector2 targetPos = new Vector2(2, 6);
+    Entity penguin = NPCFactory.createUpgradeNPC(player, targetPos);
+//    spawnEntityAt(penguin, new GridPoint2(6, 5), false, true);
+    spawnEntityAt(penguin, position, true, true);
   }
 
   /**
