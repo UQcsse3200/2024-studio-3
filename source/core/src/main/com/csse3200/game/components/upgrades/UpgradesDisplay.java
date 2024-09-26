@@ -34,8 +34,8 @@ public class UpgradesDisplay extends UIComponent {
     private boolean isVisible = false;
     private List<Image> upgradeImages; // this is to store all the upgrades images
     private Table upgradesTable;
-
-    private RandomCombination randomCombination;
+    private Image upgradeImage;
+    private RandomCombination randomCombination = new RandomCombination();
 
 //    private Skin skin;
     private static final String[] upgradeTexturePaths = {
@@ -80,6 +80,7 @@ public class UpgradesDisplay extends UIComponent {
         super.create();
         ServiceLocator.getResourceService().loadTextures(upgradesMenuTexture);
         ServiceLocator.getResourceService().loadTextures(upgradeTexturePaths);
+        ServiceLocator.getResourceService().loadAll(); // Ensures the texture is loaded
 
         // Create and add the upgrades menu image first (background image)
         upgradesMenuImage = createUpgradesMenuDisplay();
@@ -95,6 +96,10 @@ public class UpgradesDisplay extends UIComponent {
 
         Table button = createButtonsTable();
         upgradesTable.addActor(button);
+
+        // Uncomment this sometimes will throw an error
+//        addUpgradeImage();
+
 
         upgradesTable.top().left();
         stage.addActor(upgradesTable);
@@ -112,27 +117,53 @@ public class UpgradesDisplay extends UIComponent {
         });
     }
 
-    public void addRandomUpgradeImage() {
-        upgradesTable.clearChildren();
+    public void addUpgradeImage() {
+//        upgradesTable.clearChildren();
+        String upgrade = randomCombination.getSelectedUpgrade();
+        logger.info(upgrade);
+        String texturePath = "";
 
-        // make it random
-        int randomIndex = (int) (Math.random() * upgradeTexturePaths.length);
-        String randomTexturePath = upgradeTexturePaths[randomIndex];
+        switch (upgrade) {
+            case "Extortion":
+                texturePath = "images/Extortion.png";
+                break;
+            case "Speed boot":
+                texturePath = "images/Speed_boot.png";
+                break;
+            case "Rage":
+                texturePath = "images/Rage.png";
+                break;
+        }
 
-        Image upgradeImage = createUpgradeImage(randomTexturePath);
-
-        // Add the upgrade image to the table
-        upgradesTable.add(upgradeImage).pad(10);
-        upgradeImages.add(upgradeImage);
-    }
-
-
-    private Image createUpgradeImage(String texturePath) {
         Texture upgradeTexture = ServiceLocator.getResourceService().getAsset(texturePath, Texture.class);
         Image upgradeImage = new Image(upgradeTexture);
-        upgradeImage.setSize(150, 150);
-        return upgradeImage;
+        upgradeImages.clear();
+        upgradeImages.add(upgradeImage);
+        upgradesTable.add(upgradeImage).pad(10);
+
     }
+
+//    public void addRandomUpgradeImage() {
+//        upgradesTable.clearChildren();
+//
+//        // make it random
+//        int randomIndex = (int) (Math.random() * upgradeTexturePaths.length);
+//        String randomTexturePath = upgradeTexturePaths[randomIndex];
+//
+//        Image upgradeImage = createUpgradeImage(randomTexturePath);
+//
+//        // Add the upgrade image to the table
+//        upgradesTable.add(upgradeImage).pad(10);
+//        upgradeImages.add(upgradeImage);
+//    }
+//
+//
+//    private Image createUpgradeImage(String texturePath) {
+//        Texture upgradeTexture = ServiceLocator.getResourceService().getAsset(texturePath, Texture.class);
+//        Image upgradeImage = new Image(upgradeTexture);
+//        upgradeImage.setSize(150, 150);
+//        return upgradeImage;
+//    }
 
     private Table createButtonsTable() {
         Table buttonTable = new Table();
@@ -145,7 +176,7 @@ public class UpgradesDisplay extends UIComponent {
         yesButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                randomCombination = new RandomCombination();
+                randomCombination.activateUpgrade();
                 logger.info("YES button clicked");
                 // Handle YES button click
             }
@@ -179,7 +210,7 @@ public class UpgradesDisplay extends UIComponent {
             game.pause();
 
             // Add a random upgrade image each time if th emenu is shown
-            addRandomUpgradeImage();
+//            addRandomUpgradeImage();
             upgradesTable.setVisible(true);
         } else {
             logger.info("Upgrades menu is now hidden.");
