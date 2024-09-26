@@ -39,6 +39,8 @@ public class StationChoppingComponentTest {
 
     @BeforeEach
     public void BeforeEach() {
+        ServiceLocator.clear();
+
         // Set-up services for Item entity creation
         ServiceLocator.registerPhysicsService(new PhysicsService());
         ServiceLocator.registerEntityService(new EntityService());
@@ -60,11 +62,15 @@ public class StationChoppingComponentTest {
 
         // Create a fish entity
         mockIngredientComponent = mock(IngredientComponent.class);
-        when(mockIngredientComponent.getCookTime()).thenReturn(1);
+        when(mockIngredientComponent.getChopTime()).thenReturn(1);
         mockChopIngredientComponent = new ChopIngredientComponent();//mock(CookIngredientComponent.class);
         chopEntity = new Entity()
             .addComponent(mockIngredientComponent)
             .addComponent(mockChopIngredientComponent);
+
+        // Set up time
+        when(mockTime.getTime()).thenReturn(1000L, 10000L);
+
         chopEntity.create();
 
         mockChopIngredientComponent.setEntity(chopEntity);
@@ -119,9 +125,6 @@ public class StationChoppingComponentTest {
 
     @Test
     public void TestIngredientChops() {
-        // Set up time
-        when(mockTime.getTime()).thenReturn(1000L, 10000L);
-
         // Test the ingredient starts cooking
         mockStation.getEvents().trigger("Chop Ingredient");
         
