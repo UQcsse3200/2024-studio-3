@@ -11,6 +11,7 @@ public class LevelService {
     private int currLevel;
     private int currGold;
     private boolean playerFinishedLevel;
+    private int[] madeGoodDecision = {0,0,0,0};
 
     /**
      * Constructor method, initialises both private variables
@@ -23,6 +24,15 @@ public class LevelService {
         levelEventHandler.addListener("startLevel", this::levelControl);
         //levelEventHandler.addListener("createCustomer", ForestGameArea::spawnCustomer);
         //ServiceLocator.getLevelService().getEvents().addListener("spawnCustomer", this::spawnCustomer);
+    }
+
+    public boolean checkIfPlayerMadeAllGoodDecisions() {
+        for (int i : madeGoodDecision) {
+            if (i == 0) {
+                return false;
+            }
+        }
+        return true;
     }
 
     public void togglePlayerFinishedLevel() {
