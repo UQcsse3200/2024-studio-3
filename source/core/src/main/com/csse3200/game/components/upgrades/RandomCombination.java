@@ -52,7 +52,7 @@ public class RandomCombination extends Component {
                 upgrade = "Rage";
                 break;
             case 3:
-                upgrade = "Speed Boot";
+                upgrade = "Speed";
                 break;
             default:
                 upgrade = "";

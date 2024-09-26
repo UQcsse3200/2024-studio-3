@@ -41,7 +41,8 @@ public class UpgradesDisplay extends UIComponent {
     private static final String[] upgradeTexturePaths = {
             "images/Speed_boot.png",
             "images/Rage.png",
-            "images/Extortion.png"
+            "images/Extortion.png",
+            "images/Loan.png",
     };
 
 
@@ -98,7 +99,7 @@ public class UpgradesDisplay extends UIComponent {
         upgradesTable.addActor(button);
 
         // Uncomment this sometimes will throw an error
-//        addUpgradeImage();
+        addUpgradeImage();
 
 
         upgradesTable.top().left();
@@ -127,11 +128,14 @@ public class UpgradesDisplay extends UIComponent {
             case "Extortion":
                 texturePath = "images/Extortion.png";
                 break;
-            case "Speed boot":
+            case "Speed":
                 texturePath = "images/Speed_boot.png";
                 break;
             case "Rage":
                 texturePath = "images/Rage.png";
+                break;
+            case "Loan":
+                texturePath = "images/Loan.png";
                 break;
         }
 
@@ -216,6 +220,13 @@ public class UpgradesDisplay extends UIComponent {
             logger.info("Upgrades menu is now hidden.");
             game.resume();
         }
+    }
+
+    @Override
+    public void dispose() {
+        super.dispose();
+        ServiceLocator.getResourceService().unloadAssets(upgradesMenuTexture);
+        ServiceLocator.getResourceService().unloadAssets(upgradeTexturePaths);
     }
 
     @Override
