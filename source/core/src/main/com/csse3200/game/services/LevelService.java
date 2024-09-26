@@ -35,6 +35,11 @@ public class LevelService {
         return true;
     }
 
+    public void playerMadeGoodMoralDecision(int day) {
+        int levelNo = day - 1;
+        madeGoodDecision[levelNo] = 1;
+    }
+
     public void togglePlayerFinishedLevel() {
         playerFinishedLevel = !playerFinishedLevel;
     }
