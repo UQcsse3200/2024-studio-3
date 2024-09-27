@@ -880,6 +880,7 @@ public class ForestGameArea extends GameArea {
     Entity penguin = NPCFactory.createUpgradeNPC(player, targetPos);
 //    spawnEntityAt(penguin, new GridPoint2(6, 5), false, true);
     spawnEntityAt(penguin, position, true, true);
+    logger.info("Penguin");
   }
 
   /**

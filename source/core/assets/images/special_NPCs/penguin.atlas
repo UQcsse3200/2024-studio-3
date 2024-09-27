@@ -1,34 +1,34 @@
 penguin.png
-size: 64, 16
+size: 260, 65
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
-default
+walk
   rotate: false
   xy: 0, 0
-  size: 16, 16
-  orig: 16, 16
+  size: 65, 65
+  orig: 65, 65
   offset: 0, 0
   index: 0
 walk
   rotate: false
-  xy: 16, 0
-  size: 16, 16
-  orig: 16, 16
+  xy: 65, 0
+  size: 65, 65
+  orig: 65, 65
   offset: 0, 0
   index: 1
 walk
   rotate: false
-  xy: 32, 0
-  size: 16, 16
-  orig: 16, 16
+  xy: 130, 0
+  size: 65, 65
+  orig: 65, 65
   offset: 0, 0
   index: 2
 walk
-rotate: false
-  xy: 48, 0
-  size: 16, 16
-  orig: 16, 16
+  rotate: false
+  xy: 195, 0
+  size: 65, 65
+  orig: 65, 65
   offset: 0, 0
   index: 3
 turn
