@@ -15,10 +15,10 @@ public abstract class ItemTimerComponent extends Component {
 
     /**
      * Class member variables.
-     * @param gameTime the global gametime service
-     * @param length finishing time of the timer
-     * @param elapsed the current ammount of time elapsed
-     * @param isRunning if the timer is running starts as false when item created
+     * gameTime the global gametime service
+     * length finishing time of the timer
+     * elapsed the current ammount of time elapsed
+     * isRunning if the timer is running starts as false when item created
      */
     protected final GameTime gameTime = ServiceLocator.getTimeSource();
     private long prevTime;

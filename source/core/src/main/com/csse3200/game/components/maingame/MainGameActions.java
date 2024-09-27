@@ -4,6 +4,7 @@ import com.csse3200.game.GdxGame;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.npc.CustomerComponent;
 import com.csse3200.game.components.ordersystem.MainGameOrderTicketDisplay;
+import com.csse3200.game.components.ordersystem.RecipeNameEnums;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.factories.UIFactory;
 import com.csse3200.game.services.ServiceLocator;
@@ -32,7 +33,12 @@ public class MainGameActions extends Component {
     @Override
     public void create() {
         entity.getEvents().addListener("exit", this::onExit);
-        entity.getEvents().addListener("createOrder", this::onCreateOrder);
+        ServiceLocator.getEntityService().getEvents().addListener("createOrder", this::onCreateOrder);
+        ServiceLocator.getEntityService().getEvents().addListener("createAcaiDocket", this::onCreateAcai);
+        ServiceLocator.getEntityService().getEvents().addListener("createBananaDocket", this::onCreateBanana);
+        ServiceLocator.getEntityService().getEvents().addListener("createSaladDocket", this::onCreateSalad);
+        ServiceLocator.getEntityService().getEvents().addListener("createSteakDocket", this::onCreateSteak);
+        ServiceLocator.getEntityService().getEvents().addListener("createFruitSaladDocket", this::onCreateFruitSalad);
         entity.getEvents().addListener("orderDone", this::onOrderDone);
     }
 
@@ -41,11 +47,22 @@ public class MainGameActions extends Component {
         game.setScreen(GdxGame.ScreenType.MAIN_MENU);
     }
 
-    private void onCreateOrder() {
-        int orderCount = MainGameOrderTicketDisplay.getTableArrayList().size();
+    private void onCreateAcai() {
+        onCreateOrder(RecipeNameEnums.ACAI_BOWL.getRecipeName());
+    }private void onCreateBanana() {
+        onCreateOrder(RecipeNameEnums.BANANA_SPLIT.getRecipeName());
+    }private void onCreateSalad() {
+        onCreateOrder(RecipeNameEnums.SALAD.getRecipeName());
+    }private void onCreateSteak() {
+        onCreateOrder(RecipeNameEnums.STEAK_MEAL.getRecipeName());
+    }private void onCreateFruitSalad() {
+        onCreateOrder(RecipeNameEnums.FRUIT_SALAD.getRecipeName());
+    }
 
+    private void onCreateOrder(String preferredRecipe) {
+        int orderCount = MainGameOrderTicketDisplay.getTableArrayList().size();
         if (orderCount < ORDER_LIMIT) {
-            String preferredRecipe = getPreferredRecipeFromSpawningAnimals();
+//            String preferredRecipe = getPreferredRecipeFromSpawningAnimals();
             if (preferredRecipe == null || preferredRecipe.isEmpty()) {
                 logger.warn("No recipe preference set. Falling back to random recipe.");
                 preferredRecipe = RECIPE_NAMES[new Random().nextInt(RECIPE_NAMES.length)];

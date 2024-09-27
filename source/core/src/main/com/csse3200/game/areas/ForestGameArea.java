@@ -3,6 +3,7 @@ package com.csse3200.game.areas;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import com.csse3200.game.entities.factories.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,12 +21,6 @@ import com.csse3200.game.components.npc.PersonalCustomerEnums;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.benches.Bench;
 import com.csse3200.game.entities.configs.PlayerConfig;
-import com.csse3200.game.entities.factories.ItemFactory;
-import com.csse3200.game.entities.factories.NPCFactory;
-import com.csse3200.game.entities.factories.ObstacleFactory;
-import com.csse3200.game.entities.factories.PlateFactory;
-import com.csse3200.game.entities.factories.PlayerFactory;
-import com.csse3200.game.entities.factories.StationFactory;
 import com.csse3200.game.screens.MoralDecisionDisplay;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
