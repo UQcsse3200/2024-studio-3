@@ -26,6 +26,12 @@ public class LevelService {
         //ServiceLocator.getLevelService().getEvents().addListener("spawnCustomer", this::spawnCustomer);
     }
 
+    /**
+     * Checks if a player has only made "good" moral decisions, by iterating
+     * through the array tracking the flags for if the player made a good decision or not
+     *
+     * @return Whether the player only made "good" choices or not
+     */
     public boolean checkIfPlayerMadeAllGoodDecisions() {
         for (int i : madeGoodDecision) {
             if (i == 0) {
@@ -35,11 +41,21 @@ public class LevelService {
         return true;
     }
 
+    /**
+     * Updates the value at the given index to 1, symbolising that a player
+     * made a "good" moral choice
+     *
+     * @param day the day/level a choice was made on converted to an array index
+     */
     public void playerMadeGoodMoralDecision(int day) {
         int levelNo = day - 1;
         madeGoodDecision[levelNo] = 1;
     }
 
+    /**
+     * Changes a boolean value to symbolise whether the player actually finished a level
+     * or not and therefore if they can progress to the next level
+     */
     public void togglePlayerFinishedLevel() {
         playerFinishedLevel = !playerFinishedLevel;
     }
@@ -66,10 +82,20 @@ public class LevelService {
         return currLevel;
     }
 
+    /**
+     * Return the current amount of gold the player has
+     *
+     * @return how much gold the player has
+     */
     public int getCurrGold() {
         return currGold;
     }
 
+    /**
+     * Set the gold tracking variable to the given value
+     *
+     * @param gold the value to be set
+     */
     public void setCurrGold(int gold) {
         currGold = gold;
         logger.info("Gold is {}", getCurrGold());
