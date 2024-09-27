@@ -206,7 +206,8 @@ public class MainGameScreen extends ScreenAdapter {
 		docketLineDisplay = new DocketLineDisplay();
 
 		Entity ui = new Entity();
-		ui.addComponent(new InputDecorator(stage, 10))
+		ui.addComponent(new GameBackgroundDisplay())
+		.addComponent(new InputDecorator(stage, 10))
 		  	.addComponent(docketLineDisplay)
 			.addComponent(new PerformanceDisplay())
 			.addComponent(new MainGameActions(this.game))
@@ -221,8 +222,8 @@ public class MainGameScreen extends ScreenAdapter {
 			.addComponent(new RageUpgrade())
 			.addComponent(new LoanUpgrade())
 			.addComponent(new RandomCombination())
-				.addComponent(new SpeedBootsUpgrade())
-				.addComponent(new GameBackgroundDisplay());
+				.addComponent(new SpeedBootsUpgrade());
+
 
 
 
