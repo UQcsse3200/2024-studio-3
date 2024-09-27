@@ -92,14 +92,13 @@ public class StationMealComponent extends Component {
 
         // Check if player is trying to rotate position of items for selection
         if (Objects.equals(type, "rotate")) {
-//            // Call rotate somehow
-//            if (this.inventoryComponent.isEmpty() || this.inventoryComponent.getSize() == 1) {
-//                // Don't allow rotate
-//                logger.info("Rotate attempt made, nothing to rotate");
-//
-//            } else {
-//                this.rotateInventory();
-//            }
+            if (this.inventoryComponent.isEmpty() || this.inventoryComponent.getSize() == 1) {
+                // Don't allow rotate
+                logger.info("Rotate attempt made, nothing to rotate");
+
+            } else {
+                this.rotateInventory();
+            }
             return;
         }
 
@@ -162,16 +161,8 @@ public class StationMealComponent extends Component {
      * @param inventoryDisplay - reference to UI for inventory display
      */
     public void stationGiveItem(InventoryComponent playerInventoryComponent, InventoryDisplay inventoryDisplay) {
-        for (int index = 0; index < this.inventoryComponent.getCapacity(); index++) {
-            if (this.inventoryComponent.getItemAt(index) != null) {
-                // item swapping
-                ItemComponent item = this.inventoryComponent.removeAt(index);
-                playerInventoryComponent.addItemAt(item,0);
-            }
-        }
-        
-        // do i need this here? --> yes
-        entity.getEvents().trigger("interactionEnd");
+        ItemComponent item = this.inventoryComponent.removeItem();
+        playerInventoryComponent.addItemAt(item,0);
     }
 
     /**
@@ -225,12 +216,14 @@ public class StationMealComponent extends Component {
      * Rotate the items in station inventory when input received from user
      */
     private void rotateInventory() {
-        ItemComponent first = this.inventoryComponent.removeAt(0);
-        int size = this.inventoryComponent.getSize();
-        for (int index = 1; index < this.inventoryComponent.getSize(); index++) {
-            ItemComponent item = this.inventoryComponent.removeAt(index);
-            this.inventoryComponent.addItemAt(item, index - 1);
+        ItemComponent last = this.inventoryComponent.removeItem();
+        for (int index = this.inventoryComponent.getCapacity() - 1; index >= 0; index--) {
+            if (this.inventoryComponent.getItemAt(index) != null) {
+                ItemComponent holder = this.inventoryComponent.removeAt(index);
+                this.inventoryComponent.addItemAt(last, index);
+                last = holder;
+            }
         }
-        this.inventoryComponent.addItemAt(first, size - 1);
+        this.inventoryComponent.addItem(last);
     }
 }

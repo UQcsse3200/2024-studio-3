@@ -1,6 +1,6 @@
 package com.csse3200.game.screens;
 
-import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -10,6 +10,7 @@ import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.components.maingame.*;
 import com.csse3200.game.components.levels.LevelComponent;
 import com.csse3200.game.components.maingame.MainGameActions;
+import com.csse3200.game.components.mainmenu.MainMenuBackground;
 import com.csse3200.game.components.upgrades.LoanUpgrade;
 import com.csse3200.game.components.upgrades.RageUpgrade;
 import com.csse3200.game.components.upgrades.RandomCombination;
@@ -67,7 +68,7 @@ public class MainGameScreen extends ScreenAdapter {
 			"images/b1.png" //Background overlay - TESTING
 	};
 	// Modified the camera position to fix layout
-	private static final Vector2 CAMERA_POSITION = new Vector2(7.5f, 6.0f);
+	private static final Vector2 CAMERA_POSITION = new Vector2(7f, 4.5f);
 
   private final GdxGame game;
   private final Renderer renderer;
@@ -125,6 +126,7 @@ public class MainGameScreen extends ScreenAdapter {
 			ServiceLocator.getEntityService().update();
 		}
 		renderer.render();
+		Gdx.gl.glClearColor(234f/255f, 221/255f, 202/255f, 1);
 
 	}
 
@@ -221,6 +223,7 @@ public class MainGameScreen extends ScreenAdapter {
 			.addComponent(new RandomCombination())
 				.addComponent(new SpeedBootsUpgrade())
 				.addComponent(new GameBackgroundDisplay());
+
 
 
 

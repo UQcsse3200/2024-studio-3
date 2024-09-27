@@ -123,7 +123,7 @@ public class MainGameOrderTicketDisplay extends UIComponent {
 
         table.setFillParent(false);
         table.setSize(viewportWidth * 3f / 32f, 5f / 27f * viewportHeight); // DEFAULT_HEIGHT
-        float xVal = cntXval(225f, tableArrayList.size());
+        float xVal = cntXval(250f, tableArrayList.size());
         float yVal = viewportHeight * viewPortHeightMultiplier;
         table.setPosition(xVal, yVal);
         Docket background = new Docket(getTimer());
@@ -278,7 +278,7 @@ public class MainGameOrderTicketDisplay extends UIComponent {
     private void updateDocketPositions() {
         for (int i = 0; i < tableArrayList.size(); i++) {
             Table table = tableArrayList.get(i);
-            float xVal = cntXval(225f, i + 1);
+            float xVal = cntXval(250f, i + 1);
 
             table.setPosition(xVal, table.getY());
         }
@@ -301,9 +301,9 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         float enlargedDocketWidth = normalDocketWidth * 1.7f;
         float enlargedDocketHeight = normalDocketHeight * 1.7f;
 
-        float dynamicDistanceLeft = 0.175f; // 225f Percentage of the width to place first docket
+        float dynamicDistanceLeft = 0.105f; // 225f Percentage of the width to place first docket
         float leftHandSideDistance = viewportWidth * dynamicDistanceLeft;
-        float dynamicDistanceRight = 0.09f; //115f Percentage of the width to place the enlarged/tail docket
+        float dynamicDistanceRight = 0.045f; //115f Percentage of the width to place the enlarged/tail docket
         float rightHandSideDistance = viewportWidth * dynamicDistanceRight;
 
 
