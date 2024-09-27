@@ -91,8 +91,8 @@ public class ForestGameArea extends GameArea {
     "images/frame/top_border.png",
     "images/frame/left_border.png",
     "images/frame/bottom_border.png",
-    "images/frame/right_border.png",
-    "images/frame/vert_border.png",
+    "images/frame/right_door.png",
+    "images/frame/left_door.png",
     "images/frame/door.png",
     "images/frame/top_door_left_part.png",
     "images/frame/top_door_right_part.png",
@@ -337,12 +337,21 @@ public class ForestGameArea extends GameArea {
     GridPoint2 coords;
     Vector2 pos;
 
-    for (int i=0;i<12;i++) {
+    for (int i=4;i<12;i++) {
       coords = new GridPoint2(i,7);
       Entity top_wall = ObstacleFactory.wall();
       spawnEntityAt(top_wall, coords, true, true);
       top_wall.setPosition(i, 8f);
     }
+    coords = new GridPoint2(3,7);
+    Entity left_door = ObstacleFactory.door("left_door");
+    spawnEntityAt(left_door, coords, true, true);
+    left_door.setPosition(0, 8f);
+
+    coords = new GridPoint2(3,7);
+    Entity right_door = ObstacleFactory.door("right_door");
+    spawnEntityAt(right_door, coords, true, true);
+    right_door.setPosition(1.95f, 8f);
 
   }
 
@@ -379,7 +388,7 @@ public class ForestGameArea extends GameArea {
       left_border.setPosition(13.87f, y);
     }
 
-    for (int y=0;y<8;y++) {
+    for (int y=0;y<9;y++) {
       Entity left_border = ObstacleFactory.spawnBorderTileVertical();
       spawnEntityAt(left_border, coords, true, true);
       left_border.setPosition(4, y);

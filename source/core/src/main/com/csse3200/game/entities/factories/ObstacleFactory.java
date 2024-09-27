@@ -92,6 +92,18 @@ public class ObstacleFactory {
     return border;
   }
 
+  public static Entity door(String s){
+    Entity door = new Entity()
+            .addComponent(new TextureRenderComponent("images/frame/"+s+".png"))
+            .addComponent(new PhysicsComponent())
+            .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
+
+    door.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
+    door.setScale(3,2);
+    PhysicsUtils.setScaledCollider(door, 1, 1);
+    return door;
+  }
+
 
   private ObstacleFactory() {
     throw new IllegalStateException("Instantiating static util class");
