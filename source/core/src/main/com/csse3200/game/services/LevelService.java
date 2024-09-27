@@ -22,8 +22,6 @@ public class LevelService {
         currGold = 50;
         playerFinishedLevel = false;
         levelEventHandler.addListener("startLevel", this::levelControl);
-        //levelEventHandler.addListener("createCustomer", ForestGameArea::spawnCustomer);
-        //ServiceLocator.getLevelService().getEvents().addListener("spawnCustomer", this::spawnCustomer);
     }
 
     /**
