@@ -98,7 +98,7 @@ public class ForestGameArea extends GameArea {
     "images/frame/top_door_right_part.png",
     "images/frame/bottom_left_inv.png",
     "images/frame/bottom_right_inv.png",
-    "images/frame/top_border_wall.png",
+    "images/frame/full_door.png",
     "images/frame/bottom_border_wall.png",
     "images/frame/border.png",
     "images/tooltip_bg.png",
@@ -337,21 +337,17 @@ public class ForestGameArea extends GameArea {
     GridPoint2 coords;
     Vector2 pos;
 
-    for (int i=4;i<12;i++) {
+    for (int i=0;i<12;i++) {
       coords = new GridPoint2(i,7);
       Entity top_wall = ObstacleFactory.wall();
       spawnEntityAt(top_wall, coords, true, true);
       top_wall.setPosition(i, 8f);
     }
     coords = new GridPoint2(3,7);
-    Entity left_door = ObstacleFactory.door("left_door");
+    Entity left_door = ObstacleFactory.door("full_door");
     spawnEntityAt(left_door, coords, true, true);
-    left_door.setPosition(0, 8f);
+    left_door.setPosition(1f, 8f);
 
-    coords = new GridPoint2(3,7);
-    Entity right_door = ObstacleFactory.door("right_door");
-    spawnEntityAt(right_door, coords, true, true);
-    right_door.setPosition(1.95f, 8f);
 
   }
 
