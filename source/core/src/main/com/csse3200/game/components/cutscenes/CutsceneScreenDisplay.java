@@ -57,8 +57,8 @@ public class CutsceneScreenDisplay extends UIComponent {
                 new ChangeListener() {
                     @Override
                     public void changed(ChangeEvent changeEvent, Actor actor) {
-                        logger.debug("Next Scene button clicked");
-                        entity.getEvents().trigger("cutsceneEnded");
+                        logger.info("Next Scene button clicked");
+                        entity.getEvents().trigger("nextCutscene");
                     }
                 });
         table.add(nextSceneBtn).padTop(10f).padRight(10f);
@@ -136,7 +136,7 @@ public class CutsceneScreenDisplay extends UIComponent {
             cutsceneStep++;  // Move to the next step
         } else {
             textDisplay.setText("The cutscene ends.");
-            startGame();  // End the cutscene and start the game
+//            startGame();  // End the cutscene and start the game
         }
     }
 

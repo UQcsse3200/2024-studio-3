@@ -26,4 +26,13 @@ public class CutsceneFactory {
 
         return background;
     }
+
+    public static Entity createAnimation(String animationImgPath) {
+        Entity animation = new Entity();
+        TextureRenderComponent textureComponent = new TextureRenderComponent(animationImgPath);
+        animation.addComponent(textureComponent);
+        textureComponent.scaleEntity();
+
+        return animation;
+    }
 }

@@ -30,6 +30,7 @@ public class CutsceneArea extends GameArea {
             case 0:
                 logger.debug("Loading intro cutscene");
                 currentCutscene = new IntroCutscene();
+                ServiceLocator.setCurrentCutscene(currentCutscene);
                 break;
             default:
                 logger.error("Invalid cutscene value: {}", cutsceneValue);
