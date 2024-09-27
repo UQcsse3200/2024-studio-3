@@ -11,6 +11,7 @@ public class LevelService {
     private int currLevel;
     private int currGold;
     private boolean playerFinishedLevel;
+    @Deprecated
     private final int[] madeGoodDecision = {0,0,0,0};
 
     /**
@@ -30,6 +31,7 @@ public class LevelService {
      *
      * @return Whether the player only made "good" choices or not
      */
+    @Deprecated
     public boolean checkIfPlayerMadeAllGoodDecisions() {
         for (int i : madeGoodDecision) {
             if (i == 0) {
@@ -45,6 +47,7 @@ public class LevelService {
      *
      * @param day the day/level a choice was made on converted to an array index
      */
+    @Deprecated
     public void playerMadeGoodMoralDecision(int day) {
         int levelNo = day - 1;
         madeGoodDecision[levelNo] = 1;
