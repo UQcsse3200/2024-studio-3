@@ -62,6 +62,7 @@ public class PathFollowTask extends DefaultTask implements PriorityTask {
     public void update() {
         elapsedTime += getDeltaTime();
 
+        // Check if it's time to move to the predefined position
         if (!hasMovedToPredefined && elapsedTime >= WAIT_TIME) {
             triggerMoveToPredefinedPosition();
             hasMovedToPredefined = true;
@@ -71,6 +72,11 @@ public class PathFollowTask extends DefaultTask implements PriorityTask {
             if (currentTask.getStatus() != Status.ACTIVE) {
                 if (currentTarget.epsilonEquals(targetPos)) {
                     currentTask.stop();
+                    // Check if the entity reached the predefined position
+                    if (targetPos.epsilonEquals(predefinedTargetPos, 0.1f)) {
+                        // Remove the customer from the game
+                        removeCustomerEntity();
+                    }
                 } else if (currentTarget.epsilonEquals(targetPos.x, owner.getEntity().getPosition().y, 0.1f)) {
                     currentTarget.set(targetPos);
                     startMoving();
@@ -79,7 +85,6 @@ public class PathFollowTask extends DefaultTask implements PriorityTask {
             currentTask.update();
         }
     }
-
     private void startMoving() {
         if (movementTask == null) {
             return;
@@ -106,6 +111,11 @@ public class PathFollowTask extends DefaultTask implements PriorityTask {
         startMoving();
     }
 
+    private void removeCustomerEntity() {
+        logger.info("Customer reached predefined position and will be removed.");
+        ServiceLocator.getEntityService().unregister(owner.getEntity());
+        owner.getEntity().dispose(); // Dispose of the entity
+    }
     private float getDeltaTime() {
         return 1 / 60f;
     }
