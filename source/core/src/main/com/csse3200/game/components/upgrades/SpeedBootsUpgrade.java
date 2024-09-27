@@ -32,7 +32,7 @@ public class SpeedBootsUpgrade extends UIComponent implements Upgrade {
     private long boostStartTime = -1;
     private static final String[] greenTexture = {"images/green_fill.png"};
     private static final String[] whiteBgTexture = {"images/white_background.png"};
-    private boolean isActivate;
+    private boolean isActivate = false;
     private Table layout;
     private Label text; // the "Upgrade" text above the speedMeter
     private ProgressBar speedMeter; // the meter that show the remaining time
@@ -49,7 +49,7 @@ public class SpeedBootsUpgrade extends UIComponent implements Upgrade {
             this.keyboardPlayerInputComponent = player.getComponent(KeyboardPlayerInputComponent.class);
         });
         gameTime = ServiceLocator.getTimeSource();
-        isActivate = false;
+//        isActivate = false;
     }
 
     @Override
@@ -63,7 +63,8 @@ public class SpeedBootsUpgrade extends UIComponent implements Upgrade {
         layout = new Table();
         layout.setFillParent(true);
         layout.setVisible(isVisible);
-        setupInputListener();
+//        setupSpeedMeter();
+//        setupInputListener();
     }
 
     /**
@@ -78,6 +79,9 @@ public class SpeedBootsUpgrade extends UIComponent implements Upgrade {
             isVisible = true;
             layout.setVisible(true);
             setupSpeedMeter();
+            stage.addActor(layout);
+            stage.addActor(speedMeter);
+            stage.addActor(text);
         }
     }
 
@@ -101,9 +105,9 @@ public class SpeedBootsUpgrade extends UIComponent implements Upgrade {
     @Override
     public void update() {
         if (isActivate) {
-            stage.addActor(layout);
-            stage.addActor(speedMeter);
-            stage.addActor(text);
+//            stage.addActor(layout);
+//            stage.addActor(speedMeter);
+//            stage.addActor(text);
             activeTimeRemaining -= gameTime.getDeltaTime() * 1000; // Calculate speed boot duration
             speedMeter.setValue((activeTimeRemaining / (float) BOOST_DURATION)); // Update progress bar
 
@@ -197,6 +201,5 @@ public class SpeedBootsUpgrade extends UIComponent implements Upgrade {
 
     @Override
     public void setStage(Stage mock) {
-
     }
 }
