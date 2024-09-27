@@ -83,6 +83,10 @@ public class NPCFactory {
                 penguin.addComponent(animator)
                         .addComponent(new SpecialNPCAnimationController());
 
+                if (penguin.getComponent(HoverBoxComponent.class) == null) {
+                        penguin.addComponent(new HoverBoxComponent(new Texture("images/special_NPCs/upgrade_sign.png")));
+                }
+
                 return penguin;
         }
 
