@@ -3,6 +3,7 @@ package com.csse3200.game.areas;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import com.csse3200.game.components.upgrades.UpgradesMenuDisplay;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,8 +18,7 @@ import com.csse3200.game.components.maingame.CheckWinLoseComponent;
 import com.csse3200.game.components.maingame.EndDayDisplay;
 import com.csse3200.game.components.moral.MoralDecision;
 import com.csse3200.game.components.npc.PersonalCustomerEnums;
-import com.csse3200.game.components.player.TouchPlayerInputComponent;
-import com.csse3200.game.components.upgrades.UpgradesDisplay;
+import com.csse3200.game.components.upgrades.UpgradesMenuDisplay;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.benches.Bench;
 import com.csse3200.game.entities.configs.PlayerConfig;
@@ -190,7 +190,7 @@ public class ForestGameArea extends GameArea {
   private static Entity customerSpawnController;
 
   private final TerrainFactory terrainFactory;
-  private final UpgradesDisplay upgradesDisplay; 
+  private final UpgradesMenuDisplay upgradesDisplay; 
 
   private Entity player;
   private CheckWinLoseComponent winLoseComponent;  // Reference to CheckWinLoseComponent
@@ -215,7 +215,7 @@ public class ForestGameArea extends GameArea {
    * @param terrainFactory TerrainFactory used to create the terrain for the GameArea.
    * @requires terrainFactory != null
    */
-  public ForestGameArea(TerrainFactory terrainFactory, UpgradesDisplay upgradesDisplay) {
+  public ForestGameArea(TerrainFactory terrainFactory, UpgradesMenuDisplay upgradesDisplay) {
     super();
     this.terrainFactory = terrainFactory;
     this.upgradesDisplay = upgradesDisplay; 
@@ -879,13 +879,14 @@ public class ForestGameArea extends GameArea {
   }
 
   // Spawn Upgrade NPC
-  private void spawnPenguin(UpgradesDisplay upgradesDisplay) {
+  private void spawnPenguin(UpgradesMenuDisplay upgradesDisplay) {
     GridPoint2 position = new GridPoint2(1, 5);
     Vector2 targetPos = new Vector2(1, 4);
     Vector2 targetPos2 = new Vector2(2, 0);
 
     // Create the penguin entity
-    Entity penguin = NPCFactory.createUpgradeNPC(player, targetPos, targetPos2, upgradesDisplay);
+    UpgradesMenuDisplay upgradesMenuDisplay = null;
+    Entity penguin = NPCFactory.createUpgradeNPC(player, targetPos, targetPos2, upgradesMenuDisplay);
 
 
     // Spawn the penguin at the desired position

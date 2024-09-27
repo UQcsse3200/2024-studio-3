@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.ai.tasks.AITaskComponent;
-import com.csse3200.game.areas.ForestGameArea;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.CustomerBehaviorComponent;
 import com.csse3200.game.components.npc.CustomerComponent;
@@ -17,8 +16,8 @@ import com.csse3200.game.components.npc.SpecialNPCAnimationController;
 import com.csse3200.game.components.TouchAttackComponent;
 import com.csse3200.game.components.tasks.PathFollowTask;
 import com.csse3200.game.components.tasks.TurnTask;
-import com.csse3200.game.components.tasks.WaitTask;
-import com.csse3200.game.components.upgrades.UpgradesDisplay;
+import com.csse3200.game.components.upgrades.UpgradesMenuDisplay;
+import com.csse3200.game.components.upgrades.UpgradesMenuDisplay;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.configs.*;
 import com.csse3200.game.files.FileLoader;
@@ -74,7 +73,7 @@ public class NPCFactory {
 
 
 
-       public static Entity createUpgradeNPC(Entity target, Vector2 firstPosition, Vector2 secondPosition, UpgradesDisplay upgradesDisplay) {
+       public static Entity createUpgradeNPC(Entity target, Vector2 firstPosition, Vector2 secondPosition, UpgradesMenuDisplay upgradesDisplay) {
 
                 Entity penguin = createBaseNPC(target, firstPosition);
                 AITaskComponent aiComponent = new AITaskComponent();
