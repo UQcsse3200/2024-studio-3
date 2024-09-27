@@ -1,5 +1,6 @@
 package com.csse3200.game.components.cutscenes;
 
+import com.csse3200.game.components.cutscenes.scenes.Scene;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.services.GameTime;
 import com.csse3200.game.services.ResourceService;
@@ -7,63 +8,54 @@ import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class IntroCutscene extends Cutscene {
-    private static final Logger logger = LoggerFactory.getLogger(IntroCutscene.class);
-    float timeStart = 0;
-    float duration = 2.0f;
-    private GameTime gameTime;
 
     public IntroCutscene() {
-        gameTime = ServiceLocator.getTimeSource();
-        timeStart = gameTime.getTime();
-
-        // Create the script
-        this.cutsceneText.add("First bit of text");
-        this.cutsceneText.add("Second bit of text");
-        this.cutsceneText.add("Third bit of text");
-
-        this.setScript();
+        super();
     }
 
     @Override
-    public void create() {
-        super.create();
-    }
+    protected void setupScenes() {
+        cutsceneText.add("First bit of text");
+        cutsceneText.add("Second bit of text");
+        cutsceneText.add("Third bit of text");
 
-    @Override
-    public void update() {
-        // Check if the cutscene has finished based on time
-        float currentTime = gameTime.getTime();
-        if ((currentTime - timeStart) > duration) {
-            logger.debug("Cutscene finished. Triggering next level/cutscene.");
-            entity.getEvents().trigger("cutsceneEnded");
-        }
-    }
+        scenes.add(new Scene(
+                "images/Cutscenes/Beastly_Bistro_Background.png",
+                new String[]{"images/player/Cook_Model32.png"},
+                cutsceneText, 3.0f));
 
-    @Override
-    protected void nextCutscene() {
-        // Should move to the next cutscene, but since it is not available
-        entity.getEvents().trigger("cutsceneEnded");
+        scenes.add(new Scene(
+                "images/Cutscenes/Graveyard_Scene.png",
+                new String[]{"images/player/Cook_Model32.png"},
+                cutsceneText, 4.0f));
+
+        scenes.add(new Scene(
+                "images/Cutscenes/Beastly_Bistro_Background.png",
+                new String[]{"images/player/Cook_Model32.png"},
+                cutsceneText, 2.0f));
     }
 
     @Override
     protected void loadAssets() {
-        textures = new String[] {"images/Cutscenes/Beastly_Bistro_Background.png"};
-//        sounds = new String[] {"sounds/intro_music.mp3"};
+        textures = new String[] {
+                "images/Cutscenes/Beastly_Bistro_Background.png",
+                "images/Cutscenes/Graveyard_Scene.png"
+        };
+        animations = new String[] {"images/player/Cook_Model32.png"};
         ResourceService resourceService = ServiceLocator.getResourceService();
         resourceService.loadTextures(textures);
-//        resourceService.loadSounds(sounds);
-//        resourceService.loadMusic(music);
+        resourceService.loadTextureAtlases(animations);
         resourceService.loadAll();
     }
 
     @Override
-    protected void createEntities() {
-        // Create the background entity
-        Entity background = CutsceneFactory.createBackground("images/Cutscenes/Beastly_Bistro_Background.png");
-
-        entities.add(background);
-        ServiceLocator.getEntityService().register(background);
+    public void createEntities() {
+        // Any specific entity creation logic for the cutscene
     }
 }
+
 

@@ -19,6 +19,7 @@ public class CutsceneActions extends Component {
     public void create() {
         entity.getEvents().addListener("cutsceneEnded", this::cutsceneEnded);
         entity.getEvents().addListener("exitCutscene", this::exitCutscene);
+        entity.getEvents().addListener("nextCutscene", this::nextCutscene);
         inputService = ServiceLocator.getInputService();
     }
 
@@ -33,6 +34,10 @@ public class CutsceneActions extends Component {
             logger.debug("Backspace bar pressed. Moving to the main menu");
             exitCutscene();
         }
+    }
+
+    private void nextCutscene() {
+        ServiceLocator.getCurrentCutscene().nextCutscene();
     }
 
     private void cutsceneEnded() {
