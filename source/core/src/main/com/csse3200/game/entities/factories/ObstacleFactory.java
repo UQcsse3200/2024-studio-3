@@ -85,11 +85,10 @@ public class ObstacleFactory {
             .addComponent(new TextureRenderComponent("images/frame/wall.png"))
             .addComponent(new PhysicsComponent())
             .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
-    float width = 132f, height = 10.2f, scalefactor = 11f;
+
     border.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
-    PhysicsUtils.setScaledCollider(border, 1.0F, 0.8F);
-    border.setScale(width/scalefactor, height/scalefactor);
-    PhysicsUtils.setScaledCollider(border, 1, (height - 5) / height);
+    border.setScale(3,2);
+    PhysicsUtils.setScaledCollider(border, 1, 1);
     return border;
   }
 
