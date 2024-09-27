@@ -237,6 +237,7 @@ public class ForestGameArea extends GameArea {
     loadAssets();
     displayUI();
     spawnTerrain();
+    spawnWall();
     spawnBenches();
     new_border();
     //ticketDetails();
@@ -335,17 +336,14 @@ public class ForestGameArea extends GameArea {
   private void spawnWall() {
     GridPoint2 coords;
     Vector2 pos;
-    Entity top_wall = ObstacleFactory.wall();
-    coords = new GridPoint2(99,264);
-    spawnEntityAt(top_wall, coords, true, true);
-    pos = top_wall.getPosition();
-    top_wall.setPosition((pos.x / (24 * (terrain.getTileSize()))) + 0.02f, pos.y / (24 * (terrain.getTileSize())));
 
-    Entity bottom_wall = ObstacleFactory.wall();
-    coords = new GridPoint2(99,1);
-    spawnEntityAt(bottom_wall, coords, true, true);
-    pos = bottom_wall.getPosition();
-    bottom_wall.setPosition((pos.x / (24 * (terrain.getTileSize()))) + 0.02f, pos.y / (24 * (terrain.getTileSize())));
+    for (int i=0;i<12;i++) {
+      coords = new GridPoint2(i,7);
+      Entity top_wall = ObstacleFactory.wall();
+      spawnEntityAt(top_wall, coords, true, true);
+      top_wall.setPosition(i, 8f);
+    }
+
   }
 
   private void new_border(){
@@ -363,14 +361,19 @@ public class ForestGameArea extends GameArea {
       spawnEntityAt(top_border, coords, true, true);
       top_border.setPosition(i, 8f);
     }
+    for (int i=0;i<14;i++) {
+      Entity top_border = ObstacleFactory.spawnBorderTile();
+      spawnEntityAt(top_border, coords, true, true);
+      top_border.setPosition(i, 9f);
+    }
 
-    for (int y=0;y<8;y++) {
+    for (int y=0;y<9;y++) {
       Entity left_border = ObstacleFactory.spawnBorderTileVertical();
       spawnEntityAt(left_border, coords, true, true);
        left_border.setPosition(0, y);
     }
 
-    for (int y=0;y<8;y++) {
+    for (int y=0;y<9;y++) {
       Entity left_border = ObstacleFactory.spawnBorderTileVertical();
       spawnEntityAt(left_border, coords, true, true);
       left_border.setPosition(13.87f, y);
