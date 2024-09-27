@@ -89,6 +89,7 @@ public class CutsceneScreenDisplay extends UIComponent {
         topRightTable.top().right();
         topRightTable.add(ExituButton).padTop(20f).padRight(20f);
         stage.addActor(topRightTable);
+        stage.addActor(table);
 
         // Adding sample text for the cutscene
         cutsceneText.add("Hello guys");

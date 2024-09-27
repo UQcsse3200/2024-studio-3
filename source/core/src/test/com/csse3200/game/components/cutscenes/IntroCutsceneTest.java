@@ -12,6 +12,7 @@ import com.csse3200.game.events.EventHandler;
 import com.csse3200.game.services.GameTime;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -60,11 +61,27 @@ public class IntroCutsceneTest {
         ServiceLocator.registerTimeSource(gameTime);
         ServiceLocator.registerEntityService(mock(EntityService.class));
 
-        // Initialize the cutscene
-        introCutscene = new IntroCutscene();
+        // Initialize the cutscene with it not calling the service locator and instead just triggering own event
+        introCutscene = new IntroCutscene() {
+            protected void nextCutscene() {
+                disposeEntities();
+
+                currentSceneIndex++;
+                if (currentSceneIndex < scenes.size()) {
+                    loadScene(currentSceneIndex);
+                } else {
+                    entity.getEvents().trigger("cutsceneEnded");
+                }
+            }
+        };
 
         // Mock the entity for event triggering
         introCutscene.setEntity(entity);
+    }
+
+    @After
+    public void tearDown() {
+        ServiceLocator.clear();
     }
 
     /**

@@ -90,7 +90,7 @@ public abstract class Cutscene extends Component {
             loadScene(currentSceneIndex);
         } else {
             logger.info("Cutscene finished. Triggering next event.");
-            entity.getEvents().trigger("cutsceneEnded");
+            ServiceLocator.getCutsceneScreen().getCutsceneScreenDisplay().getEntity().getEvents().trigger("cutsceneEnded");
         }
     }
 
