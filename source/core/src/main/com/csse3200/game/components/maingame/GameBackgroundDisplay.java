@@ -158,7 +158,7 @@ public class GameBackgroundDisplay extends UIComponent {
             "images/background_images/17.5.png",
             "images/background_images/18.0.png",
             "images/background_images/18.5.png",
-            "images/b1.png"};
+            "images/b2.png"};
 
     private float screenWidth = Gdx.graphics.getWidth();
     private float screenHeight = Gdx.graphics.getHeight();
@@ -179,7 +179,7 @@ public class GameBackgroundDisplay extends UIComponent {
     }
 
     private void setupBackground() {
-        Texture texture = ServiceLocator.getResourceService().getAsset("images/b1.png",
+        Texture texture = ServiceLocator.getResourceService().getAsset("images/b2.png",
                 Texture.class);
         Image image = new Image(texture);
         image.setFillParent(true);

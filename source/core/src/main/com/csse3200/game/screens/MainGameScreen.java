@@ -65,7 +65,7 @@ public class MainGameScreen extends ScreenAdapter {
 			"images/red_overlay.jpg",
 			"images/red_fill.png",
 			"images/white_background.png",
-			"images/b1.png" //Background overlay - TESTING
+			"images/b2.png" //Background overlay - TESTING
 	};
 	// Modified the camera position to fix layout
 	private static final Vector2 CAMERA_POSITION = new Vector2(7f, 4.5f);
