@@ -35,7 +35,7 @@ public class LevelComponent extends Component {
         customerNameArray = new ArrayList<>();
         for (PersonalCustomerEnums customer: PersonalCustomerEnums.values()) {
             String name = customer.name();
-            if (name != "BASIC_SHEEP" && name != "BASIC_CHICKEN") {
+            if (!name.equals("BASIC_SHEEP") && !name.equals("BASIC_CHICKEN")) {
                 customerNameArray.add(customer.name());
             }
         }
@@ -57,7 +57,6 @@ public class LevelComponent extends Component {
                 setSpawnStartTime();
                 customerSpawned();
                 spawnCustomer();
-                //ServiceLocator.getLevelService().getEvents().trigger("createCustomer", gameArea);
                 logger.info("Spawned {} customer(s) so far", numbCustomersSpawned);
                 if (numbCustomersSpawned == levelSpawnCap) {
                     logger.info("Hit the spawn limit of {} with {}", getLevelSpawnCap(), getNumbCustomersSpawned());
@@ -153,7 +152,7 @@ public class LevelComponent extends Component {
     /**
      * Is the game spawning customers?
      *
-     * @return whether or not the game is spawning customers
+     * @return whether the game is spawning customers
      */
     public boolean getNowSpawning() {
         return nowSpawning;
@@ -178,7 +177,7 @@ public class LevelComponent extends Component {
     }
 
     /**
-     * Get the Entity that handles all of the customer spawning events
+     * Get the Entity that handles all customer spawning events
      *
      * @return the Entity with all customer spawning events
      */
