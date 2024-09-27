@@ -203,7 +203,4 @@ public class UpgradesMenuDisplay extends UIComponent {
     @Override
     public void setStage(Stage stage) {
     }
-
-    public void toggleVisibility() {
-    }
 }

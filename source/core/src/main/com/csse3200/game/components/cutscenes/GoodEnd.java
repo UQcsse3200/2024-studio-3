@@ -1,17 +1,16 @@
 package com.csse3200.game.components.cutscenes;
 
 import com.badlogic.gdx.math.GridPoint2;
-import com.csse3200.game.components.upgrades.UpgradesMenuDisplay;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.factories.ItemFactory;
 import com.csse3200.game.areas.ForestGameArea;
 
 import com.csse3200.game.areas.terrain.TerrainFactory;
-import com.csse3200.game.components.upgrades.UpgradesMenuDisplay;
+import com.csse3200.game.components.upgrades.UpgradesDisplay;
 
 public class GoodEnd extends ForestGameArea {
     private TerrainFactory terrainFactory;
-    private UpgradesMenuDisplay upgradesDisplay;
+    private UpgradesDisplay upgradesDisplay; 
 
     /**
      * Initialise this ForestGameArea to use the provided TerrainFactory.
@@ -19,10 +18,10 @@ public class GoodEnd extends ForestGameArea {
      * @param terrainFactory TerrainFactory used to create the terrain for the GameArea.
      * @requires terrainFactory != null
      */
-    public GoodEnd(TerrainFactory terrainFactory, UpgradesMenuDisplay upgradesDisplay) {
+    public GoodEnd(TerrainFactory terrainFactory, UpgradesDisplay upgradesDisplay) {
         super(terrainFactory, upgradesDisplay);
         this.terrainFactory = terrainFactory;
-        this.upgradesDisplay = upgradesDisplay;
+        this.upgradesDisplay = upgradesDisplay; 
 
     }
 
