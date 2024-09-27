@@ -9,12 +9,12 @@ import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.security.SecureRandom;
 import java.util.ArrayList;
-import java.util.Random;
 
 public class LevelComponent extends Component {
     private static final Logger logger = LoggerFactory.getLogger(LevelComponent.class);
-    private static final Random rand = new Random();
+    private static final SecureRandom rand = new SecureRandom();
     private long spawnStartTime = 0;
     private boolean nowSpawning = false;
     private int levelSpawnCap = 0;
