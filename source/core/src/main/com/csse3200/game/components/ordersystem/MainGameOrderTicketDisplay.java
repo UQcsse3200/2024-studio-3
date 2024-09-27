@@ -303,7 +303,7 @@ public class MainGameOrderTicketDisplay extends UIComponent {
 
         float dynamicDistanceLeft = 0.175f; // 225f Percentage of the width to place first docket
         float leftHandSideDistance = viewportWidth * dynamicDistanceLeft;
-        float dynamicDistanceRight = 0.09f; //115f Percentage of the width to place the enlarged/tail docket
+        float dynamicDistanceRight = 0.045f; //115f Percentage of the width to place the enlarged/tail docket
         float rightHandSideDistance = viewportWidth * dynamicDistanceRight;
 
 
