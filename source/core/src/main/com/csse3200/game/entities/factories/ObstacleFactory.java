@@ -99,7 +99,7 @@ public class ObstacleFactory {
             .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
 
     door.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
-    door.setScale(3,2);
+    door.setScale(2f,2f);
     PhysicsUtils.setScaledCollider(door, 1, 1);
     return door;
   }
