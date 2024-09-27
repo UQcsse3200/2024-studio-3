@@ -7,11 +7,11 @@ import org.slf4j.LoggerFactory;
 /**Allows for global access and control of the game levels*/
 public class LevelService {
     private static final Logger logger = LoggerFactory.getLogger(LevelService.class);
-    private EventHandler levelEventHandler;
+    private final EventHandler levelEventHandler;
     private int currLevel;
     private int currGold;
     private boolean playerFinishedLevel;
-    private int[] madeGoodDecision = {0,0,0,0};
+    private final int[] madeGoodDecision = {0,0,0,0};
 
     /**
      * Constructor method, initialises both private variables
