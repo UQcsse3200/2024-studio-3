@@ -5,6 +5,7 @@ import com.csse3200.game.ai.tasks.DefaultTask;
 import com.csse3200.game.ai.tasks.PriorityTask;
 import com.csse3200.game.ai.tasks.Task;
 import com.csse3200.game.ai.tasks.TaskRunner;
+import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -48,14 +49,7 @@ public class PathFollowTask extends DefaultTask implements PriorityTask {
 
         this.owner.getEntity().getEvents().trigger("wanderStart");
 
-        this.owner.getEntity().getEvents().addListener("leaveEarly", (Object idObj) -> {
-            if (idObj instanceof Integer) {
-                int id = (Integer) idObj;
-                if (this.Customer_id == id) {
-                    triggerMoveToPredefinedPosition();
-                }
-            }
-        });
+        ServiceLocator.getEntityService().getEvents().addListener("leaveEarly", this::triggerMoveToPredefinedPosition);
     }
 
     @Override
