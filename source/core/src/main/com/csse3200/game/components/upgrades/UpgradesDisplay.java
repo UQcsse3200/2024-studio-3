@@ -104,6 +104,7 @@ public class UpgradesDisplay extends UIComponent {
 
         upgradesTable.top().left();
         stage.addActor(upgradesTable);
+        upgradesTable.setVisible(false);
 
 
         stage.addListener(new InputListener() {
@@ -183,6 +184,7 @@ public class UpgradesDisplay extends UIComponent {
                 randomCombination.activateUpgrade();
                 logger.info("YES button clicked");
                 // Handle YES button click
+                toggleVisibility();
             }
         });
 
@@ -192,6 +194,7 @@ public class UpgradesDisplay extends UIComponent {
                 game.resume();
                 logger.info("NO button clicked");
                 // Handle NO button click
+                toggleVisibility();
             }
         });
 
@@ -205,7 +208,7 @@ public class UpgradesDisplay extends UIComponent {
     /**
      * Toggles the visibility of the upgrades menu
      */
-    private void toggleVisibility() {
+    public void toggleVisibility() {
         isVisible = !isVisible;
         upgradesMenuImage.setVisible(isVisible);
 
@@ -219,6 +222,7 @@ public class UpgradesDisplay extends UIComponent {
         } else {
             logger.info("Upgrades menu is now hidden.");
             game.resume();
+            upgradesTable.setVisible(false);
         }
     }
 
