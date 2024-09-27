@@ -113,6 +113,11 @@ public class ForestGameArea extends GameArea {
     "images/stations/benches/bottom_shadow.png",
     "images/stations/benches/shadow_bottom_top.png",
     "images/stations/benches/left_shadow.png",
+          "images/stations/benches/garbage_bin.png",
+          "images/stations/baskets/basket_acai.png",
+          "images/stations/fridge/fridge_meat.png",
+          "images/stations/fridge/fridge_choc.png",
+          "images/stations/chopping_board/choppingboardbench.png",
     "images/stations/benches/left_corner_shadow.png",
     "images/stations/benches/right_corner_shadow.png",
     "images/stations/benches/top_shadows.png",
@@ -811,10 +816,11 @@ public class ForestGameArea extends GameArea {
         Vector2 targetPos = new Vector2(3, 3);
         Entity customer = NPCFactory.createCustomerPersonal(name, targetPos);
         spawnEntityAt(customer, position, true, true);
+
   }
 
   private void spawnBasicCustomer(String name) {
-    GridPoint2 position = new GridPoint2(1, 3);
+    GridPoint2 position = new GridPoint2(0, 3);
     Vector2 targetPos = new Vector2(3, 3);
     Entity customer = NPCFactory.createBasicCustomer(name, targetPos);
     spawnEntityAt(customer, position, true, true);
@@ -869,7 +875,7 @@ public class ForestGameArea extends GameArea {
    */
   private Entity spawnStackPlate(int quantity) {
     Entity newPlate = PlateFactory.spawnPlateStack(quantity);
-    GridPoint2 platePosition = new GridPoint2(5, 4);
+    GridPoint2 platePosition = new GridPoint2(5, 3);
     spawnEntityAt(newPlate, platePosition, true, false);
     newPlate.setScale(1.0f, 1.0f);
     newPlate.setPosition(newPlate.getPosition().x - 6f , newPlate.getPosition().y + 0f);
