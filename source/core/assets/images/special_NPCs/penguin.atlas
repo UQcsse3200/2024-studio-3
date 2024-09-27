@@ -31,3 +31,10 @@ rotate: false
   orig: 16, 16
   offset: 0, 0
   index: 3
+turn
+  rotate: false
+  xy: 130, 65
+  size: 65, 65
+  orig: 65, 65
+  offset: 0, 0
+  index: 0
