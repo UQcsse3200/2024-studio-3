@@ -11,14 +11,12 @@ import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.CustomerBehaviorComponent;
 import com.csse3200.game.components.npc.CustomerComponent;
 import com.csse3200.game.components.ordersystem.OrderManager;
-import com.csse3200.game.components.player.TouchPlayerInputComponent;
 import com.csse3200.game.components.npc.GhostAnimationController;
 import com.csse3200.game.components.npc.SpecialNPCAnimationController;
 import com.csse3200.game.components.TouchAttackComponent;
 import com.csse3200.game.components.tasks.PathFollowTask;
 import com.csse3200.game.components.tasks.TurnTask;
 import com.csse3200.game.components.tasks.WaitTask;
-import com.csse3200.game.components.upgrades.UpgradesDisplay;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.configs.*;
 import com.csse3200.game.files.FileLoader;
@@ -72,52 +70,25 @@ public class NPCFactory {
                 return boss;
         }
 
+        // CREATE UPGRADE NPC - PENGUIN
+        public static Entity createUpgradeNPC(Entity target, Vector2 targetPosition) {
+                Entity penguin = createBaseNPC(target, targetPosition);
 
-
-       public static Entity createUpgradeNPC(Entity target, Vector2 firstPosition, Vector2 secondPosition, UpgradesDisplay upgradesDisplay) {
-
-                Entity penguin = createBaseNPC(target, firstPosition);
-                AITaskComponent aiComponent = new AITaskComponent();
-                aiComponent
-                                .addTask(new PathFollowTask(firstPosition, 30))
-                                .addTask(new PathFollowTask(secondPosition, 30));
-                
-                // Animation setup
                 AnimationRenderComponent animator = new AnimationRenderComponent(
                         ServiceLocator.getResourceService()
                                 .getAsset("images/special_NPCs/penguin.atlas", TextureAtlas.class));
                 animator.addAnimation("walk", 0.3f, Animation.PlayMode.LOOP);
                 animator.addAnimation("turn", 0.3f, Animation.PlayMode.LOOP);
+
                 penguin.addComponent(animator)
-                        .addComponent(new SpecialNPCAnimationController())
-                        .addComponent(aiComponent);
-                
-                // Make sure HoverBox is added
+                        .addComponent(new SpecialNPCAnimationController());
+
                 if (penguin.getComponent(HoverBoxComponent.class) == null) {
                         penguin.addComponent(new HoverBoxComponent(new Texture("images/special_NPCs/upgrade_sign.png")));
                 }
-                
-                // Add TouchPlayerInputComponent for click detection
-                penguin.addComponent(new TouchPlayerInputComponent());
-                final boolean[] isClicked = {false};
-                
-                // Add a click event listener for the penguin
-                penguin.getEvents().addListener("clicked", () -> {
-                        if (!isClicked[0]) {
-                                logger.info("Penguin clicked!");
-                                upgradesDisplay.create();
-                                upgradesDisplay.toggleVisibility();
-                                isClicked[0] = true;  
-                            } else {
-                                logger.info("Penguin has already been clicked, ignoring.");
-                            }     
-                });
 
                 return penguin;
         }
-
-            
-            
 
         /**
          * Creates a ghost king entity at a specific target position.

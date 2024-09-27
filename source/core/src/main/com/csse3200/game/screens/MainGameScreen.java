@@ -105,8 +105,7 @@ public class MainGameScreen extends ScreenAdapter {
 
 		logger.debug("Initialising main game screen entities");
 		TerrainFactory terrainFactory = new TerrainFactory(renderer.getCamera());
-		UpgradesDisplay upgradesDisplay = new UpgradesDisplay(this); 
-		ForestGameArea forestGameArea = new ForestGameArea(terrainFactory, upgradesDisplay);
+		ForestGameArea forestGameArea = new ForestGameArea(terrainFactory);
 		forestGameArea.create();
 		Entity spawnControllerEntity = LevelFactory.createSpawnControllerEntity();
 		ServiceLocator.getEntityService().register(spawnControllerEntity);
