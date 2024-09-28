@@ -70,22 +70,9 @@ public class RecipeCardDisplay extends UIComponent {
      * Pressing F will stop the game and display the recipe card
      */
     public void displayScreen() {
-<<<<<<< HEAD
-        stage.addListener(new InputListener() {
-            @Override
-            public boolean keyDown(InputEvent event, int keycode) {
-                if (keycode == com.badlogic.gdx.Input.Keys.F) {
-                    toggleVisibility();
-                    return true;
-                }
-                return false;
-            }
-        });
-=======
         isVisible = !isVisible;
         backgroundImage.setVisible(isVisible);
 
->>>>>>> dd4c462120192644c4264b4aad7c2fdf6525faee
         if (isVisible) {
             logger.info("Upgrades menu is now visible.");
             game.pause();
