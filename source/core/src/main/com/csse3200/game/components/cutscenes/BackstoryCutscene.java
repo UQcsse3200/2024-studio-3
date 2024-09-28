@@ -30,18 +30,18 @@ public class BackstoryCutscene extends Cutscene {
 
         // Add scenes with background images, animations, text, and duration
         scenes.add(new Scene(
-                "images/cutscenes/backstory_scene1.png",
-                new String[]{"images/cutscenes/hero_intro.png"},
+                "images/Cutscenes/Brooklyn_Bistro_Background.png",
+                new String[]{"images/player/Cook_Model32.png"},
                 cutsceneText, 4.0f));
 
         scenes.add(new Scene(
-                "images/cutscenes/backstory_scene2.png",
-                new String[]{"images/cutscenes/hero_intro.png"},
+                "images/Cutscenes/Kitchen_Background.png",
+                new String[]{"images/player/Cook_Model32.png"},
                 cutsceneText, 5.0f));
 
         scenes.add(new Scene(
-                "images/cutscenes/backstory_scene3.png",
-                new String[]{"images/cutscenes/hero_intro.png"},
+                "images/Cutscenes/Farm_Background.png",
+                new String[]{"images/player/Cook_Model32.png"},
                 cutsceneText, 3.0f));
     }
 
@@ -53,13 +53,13 @@ public class BackstoryCutscene extends Cutscene {
     protected void loadAssets() {
         // Load the background images for the cutscene
         textures = new String[] {
-                "images/cutscenes/backstory_scene1.png",
-                "images/cutscenes/backstory_scene2.png",
-                "images/cutscenes/backstory_scene3.png"
+                "images/Cutscenes/Brooklyn_Bistro_Background.png",
+                "images/Cutscenes/Kitchen_Background.png",
+                "images/Cutscenes/Farm_Background.png"
         };
 
         // Load the animation images for the cutscene (e.g., the hero character)
-        animations = new String[] {"images/cutscenes/hero_intro.png"};
+        animations = new String[] {"images/player/Cook_Model32.png"};
 
         // Get the resource service to load assets
         ResourceService resourceService = ServiceLocator.getResourceService();
