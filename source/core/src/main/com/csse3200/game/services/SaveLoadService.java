@@ -2,8 +2,9 @@ package com.csse3200.game.services;
 
 import com.badlogic.gdx.utils.Array;
 import com.csse3200.game.entities.Entity;
-//import com.csse3200.game.files.SaveGame;
 import com.csse3200.game.files.GameState;
+import com.csse3200.game.files.FileLoader.Location;
+import com.csse3200.game.files.FileLoader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,8 +26,7 @@ public class SaveLoadService {
         state.setMoney(100);
         state.setDay(2);
 
-        // Write the state to a file
-        //SaveGame.set(state, path);
+        FileLoader.writeClass(state, path, Location.LOCAL);
 
         logger.debug("The current game state has been saved to the file assets/saves/saveFile.json");
     }
