@@ -53,6 +53,7 @@ public class MainGameOrderTicketDisplay extends UIComponent {
     private DocketMealDisplay mealDisplay;
     private static final float DISTANCE_MULTIPLIER = 0.015f;
     public CombatStatsComponent combatStatsComponent;
+    private boolean isPaused = false;
 
     /**
      * Constructs an MainGameOrderTicketDisplay instance
@@ -92,6 +93,17 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         return recipe != null ? recipe.getName() : null;
     }
 
+    public void setPaused(boolean paused) {
+        this.isPaused = paused;
+
+        for (Docket docket : backgroundArrayList) {
+            docket.setPaused(paused);
+        }
+    }
+
+    public boolean getPaused() {
+        return isPaused;
+    }
 
     /**
      * Initialises the display and sets up event listeners for creating and shifting orders.
@@ -377,6 +389,10 @@ public class MainGameOrderTicketDisplay extends UIComponent {
      */
     @Override
     public void update() {
+        if (isPaused) {
+            return;
+        }
+
         // No additional update logic needed here, shifting is handled by the OrderActions class
         for (int i = 0; i < tableArrayList.size(); i++) {
             Docket currBackground = backgroundArrayList.get(i);
