@@ -1,9 +1,6 @@
 package com.csse3200.game.components.station;
 
-import com.csse3200.game.components.items.CookIngredientComponent;
-import com.csse3200.game.components.items.IngredientComponent;
-import com.csse3200.game.components.items.ItemComponent;
-import com.csse3200.game.components.items.ItemType;
+import com.csse3200.game.components.items.*;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.components.player.InventoryDisplay;
 import com.csse3200.game.entities.Entity;
@@ -23,6 +20,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 
 import java.util.ArrayList;
 
+import static org.junit.Assert.assertNotNull;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -35,105 +33,204 @@ public class StationMealComponentTest {
     protected InventoryComponent playerInventory;
     protected Entity mockEntity;
     protected Entity mockStation;
+    protected Entity mockMealEntity;
     protected EventHandler mockStationEvents;
     protected EventHandler mockPlayerEvents;
+    protected EventHandler mockMealEventHandler;
+    protected GameTime mockTime;
+    protected InventoryDisplay inventoryDisplay;
+    protected ArrayList<String> acceptableItems;
+
 
     @BeforeEach
     void setUp() {
+        // Clear service locator before each
+        ServiceLocator.clear();
+
+        // Set-up services for Item entity creation
+        ServiceLocator.registerPhysicsService(new PhysicsService());
+        ServiceLocator.registerEntityService(new EntityService());
+        ServiceLocator.registerRenderService(new RenderService());
+
+        // Set up mock time source
+        mockTime = mock(GameTime.class);
+        ServiceLocator.registerTimeSource(mockTime);
+
         // mock the entities and events
         mockEntity = mock(Entity.class);
         mockStation = mock(Entity.class);
+        mockMealEntity = mock(Entity.class);
         mockStationEvents = mock(EventHandler.class);
+        mockMealEventHandler = mock(EventHandler.class);
 
         // and the inventories
         playerInventory = new InventoryComponent(1);
-        stationInventory = new InventoryComponent(2); // double check, might be initialised to 1
+        stationInventory = new InventoryComponent(4); // initialised to 4 atm
+
+        // and inventoryDisplay (not actually used in code so is just here as a placeholder I guess)
+        inventoryDisplay = new InventoryDisplay();
 
         // map calls to entities to return correct things
         when(mockEntity.getEvents()).thenReturn(mockPlayerEvents);
         when(mockStation.getEvents()).thenReturn(mockStationEvents);
+        when(mockMealEntity.getEvents()).thenReturn(mockMealEventHandler);
         when(mockEntity.getComponent(InventoryComponent.class)).thenReturn(playerInventory);
         when(mockStation.getComponent(InventoryComponent.class)).thenReturn(stationInventory);
-
-        // check this is the right thing
+        when(mockMealEntity.getComponent(InventoryComponent.class)).thenReturn(stationInventory);
         when(mockStation.getComponent(StationMealComponent.class)).thenReturn(mealHandler);
 
-        // I dont know if more needs to go in here?
+        // Fake a useless recourse service
+        ResourceService mockResourceService = mock(ResourceService.class);
+        when(mockResourceService.getAsset(anyString(), any())).thenReturn(null);
+        ServiceLocator.registerResourceService(mockResourceService);
+
+        // Set up time
+        when(mockTime.getTime()).thenReturn(1000L, 10000L);
+
+        // all acceptable items in the game (only ingredients and meals)
+        acceptableItems = new ArrayList<>();
+        acceptableItems.add("fish");
+        acceptableItems.add("banana");
+        acceptableItems.add("beef");
+        acceptableItems.add("acai");
+        acceptableItems.add("lettuce");
+        acceptableItems.add("cucumber");
+        acceptableItems.add("tomato");
+        acceptableItems.add("strawberry");
+        acceptableItems.add("chocolate");
+        acceptableItems.add("fruitsalad");
+        acceptableItems.add("acaibowl");
+        acceptableItems.add("salad");
+        acceptableItems.add("steakmeal");
+        acceptableItems.add("bananasplit");
+
+        // initialise the station meal component
+        mealHandler = new StationMealComponent("combining", acceptableItems);
+
+        // assign mock meal entity to mealHandler
+        mealHandler.setEntity(mockMealEntity);
+
+        mealHandler.create();
     }
 
     @Test
     void shouldSetAcceptableItems() {
-        ArrayList<String> acceptableItems = new ArrayList<>();
-        acceptableItems.add("banana");
-        acceptableItems.add("strawberry");
-        mealHandler = new StationMealComponent("combining", acceptableItems);
         ArrayList<String> actualItems = mealHandler.acceptableItems;
         assertEquals(acceptableItems, actualItems);
     }
 
     @Test
     void shouldSetStationType() {
-        ArrayList<String> acceptableItems = new ArrayList<>();
-        mealHandler = new StationMealComponent("combining", acceptableItems);
         assertEquals("combining", mealHandler.getType());
     }
 
-    // TODO: this test has problems since it always returns true!! Will need to be modified once this method is fixed
     @Test
     void shouldAcceptItem() {
-        ArrayList<String> acceptableItems = new ArrayList<>();
-        acceptableItems.add("banana");
-        acceptableItems.add("strawberry");
-        mealHandler = new StationMealComponent("combining", acceptableItems);
         ItemComponent item = new ItemComponent("banana", ItemType.BANANA, 1);
         assertTrue(mealHandler.isItemAccepted(item));
     }
 
-    // might need to include a shouldntAcceptItem() test once this has been implemented
-
+    // note there is no shouldntAcceptItem() since isItemAccepted() always returns true
 
     @Test
     void tooLittleShouldntMakeMeal() {
-        ArrayList<String> acceptableItems = new ArrayList<>();
-        acceptableItems.add("banana");
-        acceptableItems.add("strawberry");
-        mealHandler = new StationMealComponent("combining", acceptableItems);
+        // call the combine function to "attempt" to combine
+        mealHandler.handleInteraction(playerInventory, inventoryDisplay, "combine");
+        // check if any component in inventory is of a meal type
+        for (int index = 0; index < stationInventory.getCapacity(); index++) {
+            ItemComponent item = stationInventory.getItemAt(index);
+            if (item instanceof MealComponent) {
+                // if it exists, fail
+                fail();
+            }
+        }
+        // otherwise all good
+        assertTrue(true);
+    }
 
+    @Test
+    void shouldntMakeMealWhenJustAdding() {
+        // mock items to be added (that make a valid meal)
+        ItemComponent item1 = new ItemComponent("banana", ItemType.BANANA, 1);
+        ItemComponent item2 = new ItemComponent("strawberry", ItemType.STRAWBERRY, 1);
+        // pretend ingredients were added to station through interaction
+        stationInventory.addItem(item1);
+        stationInventory.addItem(item2);
+        // check if any component in inventory is of a meal type
+        for (int index = 0; index < stationInventory.getCapacity(); index++) {
+            ItemComponent item = stationInventory.getItemAt(index);
+            if (item instanceof MealComponent) {
+                // if it exists, fail
+                fail();
+            }
+        }
+        // otherwise all good
+        assertTrue(true);
     }
 
     @Test
     void incorrectIngrsShouldntMakeMeal() {
-
+        // mock items to be added
+        ItemComponent item1 = new ItemComponent("banana", ItemType.BANANA, 1);
+        ItemComponent item2 = new ItemComponent("lettuce", ItemType.LETTUCE, 1);
+        // picked up and added both items
+        playerInventory.addItem(item1);
+        mealHandler.handleInteraction(playerInventory, inventoryDisplay, "combine");
+        playerInventory.addItem(item2);
+        mealHandler.handleInteraction(playerInventory, inventoryDisplay, "combine");
+        // check if any component in inventory is of a meal type
+        for (int index = 0; index < stationInventory.getCapacity(); index++) {
+            ItemComponent item = stationInventory.getItemAt(index);
+            if (item instanceof MealComponent) {
+                // if it exists, fail
+                fail();
+            }
+        }
+        // otherwise all good
+        assertTrue(true);
     }
 
     @Test
     void shouldMakeAcaiBowl() {
-
+//        ItemComponent acai = new ItemComponent("banana", ItemType.BANANA, 1);
+//        ItemComponent banana = new ItemComponent("lettuce", ItemType.LETTUCE, 1);
+//        playerInventory.addItem(acai);
+//        mealHandler.handleInteraction(playerInventory, inventoryDisplay, "combine");
+//        playerInventory.addItem(banana);
+//        mealHandler.handleInteraction(playerInventory, inventoryDisplay, "combine");
+//        // check if any component in inventory is of a meal type
+//        for (int index = 0; index < stationInventory.getCapacity(); index++) {
+//            ItemComponent item = stationInventory.getItemAt(index);
+//            if (item.getItemName().equals("acaibowl")) {
+//                assertTrue(true);
+//            }
+//        }
+//        // else didnt make, so fail
+//        fail();
     }
 
     @Test
     void shouldMakeBananaSplit() {
-
+        // banana strawberry chocolate
     }
 
     @Test
     void shouldMakeFruitSalad() {
+        // banana strawberry
 
     }
 
     @Test
     void shouldMakeSalad() {
-        ArrayList<String> acceptableItems = new ArrayList<>();
-        acceptableItems.add("tomato");
-        acceptableItems.add("cucumber");
-        acceptableItems.add("lettuce");
-        mealHandler = new StationMealComponent("combining", acceptableItems);
+        // tomato cucumber lettuce
+
 
 
     }
 
     @Test
     void shouldMakeSteakMeal() {
+        // beef tomato cucumber
 
     }
 
