@@ -47,18 +47,41 @@ public class MainGameActions extends Component {
         game.setScreen(GdxGame.ScreenType.MAIN_MENU);
     }
 
+    /**
+     * Creates Acai Bowl Docket
+     */
     private void onCreateAcai() {
         onCreateOrder(RecipeNameEnums.ACAI_BOWL.getRecipeName());
-    }private void onCreateBanana() {
+    }
+    /**
+     * Creates Banana Split Docket
+     */
+    private void onCreateBanana() {
         onCreateOrder(RecipeNameEnums.BANANA_SPLIT.getRecipeName());
-    }private void onCreateSalad() {
+    }
+    /**
+     * Creates Salad Docket
+     */
+    private void onCreateSalad() {
         onCreateOrder(RecipeNameEnums.SALAD.getRecipeName());
-    }private void onCreateSteak() {
+    }
+    /**
+     * Creates Steak Docket
+     */
+    private void onCreateSteak() {
         onCreateOrder(RecipeNameEnums.STEAK_MEAL.getRecipeName());
-    }private void onCreateFruitSalad() {
+    }
+    /**
+     * Creates Fruit Salad Docket
+     */
+    private void onCreateFruitSalad() {
         onCreateOrder(RecipeNameEnums.FRUIT_SALAD.getRecipeName());
     }
 
+    /**
+     * Create a docket for a recipe
+     * @param preferredRecipe the name of the recipe to create a docket for
+     */
     private void onCreateOrder(String preferredRecipe) {
         int orderCount = MainGameOrderTicketDisplay.getTableArrayList().size();
         if (orderCount < ORDER_LIMIT) {
@@ -100,6 +123,9 @@ public class MainGameActions extends Component {
         return null;
     }
 
+    /**
+     * Remove all dockets
+     */
     private void onOrderDone() {
         if (ui != null) {
             ServiceLocator.getEntityService().unregister(ui);
