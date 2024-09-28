@@ -1,5 +1,7 @@
 package com.csse3200.game.components.upgrades;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -36,6 +38,8 @@ public class SpeedBootsUpgrade extends UIComponent implements Upgrade {
     private ProgressBar speedMeter; // the meter that show the remaining time
     private boolean isVisible;
     private float activeTimeRemaining;
+    private Sound countDown;
+    private boolean playSound = false;
 
 
     public SpeedBootsUpgrade() {
@@ -54,6 +58,8 @@ public class SpeedBootsUpgrade extends UIComponent implements Upgrade {
         ServiceLocator.getResourceService().loadTextures(whiteBgTexture);
         ServiceLocator.getResourceService().loadTextures(greenTexture);
         ServiceLocator.getResourceService().loadAll(); // Ensures the texture is loaded
+        // https://mixkit.co/free-sound-effects/countdown/
+        countDown = Gdx.audio.newSound(Gdx.files.internal("sounds/upgrade_count_down.wav"));
         layout = new Table();
         layout.setFillParent(true);
         layout.setVisible(isVisible);
@@ -64,13 +70,15 @@ public class SpeedBootsUpgrade extends UIComponent implements Upgrade {
      * Activate the speed boot and decrement the cost.
      */
     public void activate() {
-        keyboardPlayerInputComponent.setWalkSpeed(BOOSTED_SPEED);
-        activeTimeRemaining = BOOST_DURATION;
-        speedCost();
-        isActivate = true;
-        isVisible = true;
-        layout.setVisible(true);
-        setupSpeedMeter();
+        if (!isActivate && boostStartTime == -1 && combatStatsComponent.getGold() >= 20) {
+            keyboardPlayerInputComponent.setWalkSpeed(BOOSTED_SPEED);
+            activeTimeRemaining = BOOST_DURATION;
+            speedCost();
+            isActivate = true;
+            isVisible = true;
+            layout.setVisible(true);
+            setupSpeedMeter();
+        }
     }
 
     /**
@@ -99,9 +107,16 @@ public class SpeedBootsUpgrade extends UIComponent implements Upgrade {
             activeTimeRemaining -= gameTime.getDeltaTime() * 1000; // Calculate speed boot duration
             speedMeter.setValue((activeTimeRemaining / (float) BOOST_DURATION)); // Update progress bar
 
+            if (activeTimeRemaining <= 4000 && !playSound) {
+                long countDownId = countDown.play();
+                countDown.setVolume(countDownId, 0.05f);
+                playSound = true;
+            }
+
             // Check if boost has expired
             if (activeTimeRemaining <= 0) {
                 deactivate();
+                playSound = false;
             }
         }
     }

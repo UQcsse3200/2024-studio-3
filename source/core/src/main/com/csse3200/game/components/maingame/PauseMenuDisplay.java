@@ -99,7 +99,7 @@ public class PauseMenuDisplay extends UIComponent {
      */
     private Image createPauseMenuBackground() {
         Texture pauseMenuTexture = ServiceLocator
-                .getResourceService().getAsset("images/pause_menu.png", Texture.class);
+                .getResourceService().getAsset("images/pause_menu2.png", Texture.class);
         Image backgroundImage = new Image(pauseMenuTexture);
         backgroundImage.setSize(800, 800);
 

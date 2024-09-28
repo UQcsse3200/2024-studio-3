@@ -14,17 +14,21 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class RecipeCardDisplay extends UIComponent {
+
     private boolean isVisible;
     private final MainGameScreen game;
-    private static final Logger logger = LoggerFactory.getLogger(PauseMenuDisplay.class);
-    private static final String[] recipeCardTexture = {"images/recipe_card_placeholder.png"};
+    //private static final Logger logger = LoggerFactory.getLogger(PauseMenuDisplay.class);
+    private static final Logger logger = LoggerFactory.getLogger(RecipeCardDisplay.class);
+
+    private static final String[] recipeCardTexture = {"images/pause_menu2.png"};
+    private Image backgroundImage;
 
     //TODO add esc key exit
 
     public RecipeCardDisplay(MainGameScreen game) {
         super();
         this.game = game;
-        isVisible = false;
+       // isVisible = false;
     }
 
     /**
@@ -37,12 +41,27 @@ public class RecipeCardDisplay extends UIComponent {
         Image backgroundImage = new Image(recipeCardTexture);
         backgroundImage.setSize(800, 800);
 
+        backgroundImage.setVisible(false);
         return backgroundImage;
     }
 
     public void create() {
         super.create();
         ServiceLocator.getResourceService().loadTextures(recipeCardTexture);
+
+        backgroundImage = createRecipeCardBackground();
+        stage.addActor(backgroundImage);
+
+        stage.addListener(new InputListener() {
+            @Override
+            public boolean keyDown(InputEvent event, int keycode) {
+                if (keycode == com.badlogic.gdx.Input.Keys.ENTER) {
+                    toggleVisibility();
+                    return true;
+                }
+                return false;
+            }
+        });
         ServiceLocator.getResourceService().loadAll(); // Ensures the texture is loaded
         displayScreen();
     }
@@ -51,6 +70,7 @@ public class RecipeCardDisplay extends UIComponent {
      * Pressing F will stop the game and display the recipe card
      */
     public void displayScreen() {
+<<<<<<< HEAD
         stage.addListener(new InputListener() {
             @Override
             public boolean keyDown(InputEvent event, int keycode) {
@@ -61,9 +81,19 @@ public class RecipeCardDisplay extends UIComponent {
                 return false;
             }
         });
+=======
+        isVisible = !isVisible;
+        backgroundImage.setVisible(isVisible);
+
+>>>>>>> dd4c462120192644c4264b4aad7c2fdf6525faee
         if (isVisible) {
-            toggleVisibility();
+            logger.info("Upgrades menu is now visible.");
+            game.pause();
+        } else {
+            logger.info("Upgrades menu is now hidden.");
+            game.resume();
         }
+
     }
 
     /**
@@ -73,6 +103,8 @@ public class RecipeCardDisplay extends UIComponent {
         isVisible = true;
         logger.info("PAUSE GAME");
         game.pause();
+
+        backgroundImage.setVisible(true);
     }
 
     /**
@@ -82,6 +114,9 @@ public class RecipeCardDisplay extends UIComponent {
         isVisible = false;
         logger.info("RESUME GAME");
         game.resume();
+        if (backgroundImage != null) {
+            backgroundImage.remove();
+        }
     }
 
 
@@ -99,14 +134,17 @@ public class RecipeCardDisplay extends UIComponent {
     @Override
     public void dispose() {
         super.dispose();
-        ServiceLocator.getResourceService().unloadAssets(recipeCardTexture);
+        ServiceLocator.getResourceService().unloadAssets(new String[]{"images/pause_menu2.png"});
+
     }
 
     @Override
     protected void draw(SpriteBatch batch) {
+
     }
 
     @Override
     public void setStage(Stage mock) {
+        this.stage = mock;
     }
 }

@@ -41,6 +41,8 @@ public class StationItemHandlerComponentTest {
     // task
     @BeforeEach
     public void BeforeEach() {
+        ServiceLocator.clear();
+
         // Set up stuff so item creation can function
         ServiceLocator.registerPhysicsService(new PhysicsService());
         ServiceLocator.registerEntityService(new EntityService());
