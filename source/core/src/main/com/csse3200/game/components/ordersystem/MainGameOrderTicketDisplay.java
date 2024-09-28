@@ -110,10 +110,6 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         }
     }
 
-    public boolean getPaused() {
-        return isPaused;
-    }
-
     /**
      * Initialises the display and sets up event listeners for creating and shifting orders.
      */
