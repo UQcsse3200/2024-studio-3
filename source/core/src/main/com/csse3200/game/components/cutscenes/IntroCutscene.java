@@ -29,6 +29,7 @@ public class IntroCutscene extends Cutscene {
         cutsceneText.add("Third bit of text");
 
         // Add scenes with background images, animations, text, and duration
+
         scenes.add(new Scene(
                 "images/Cutscenes/Beastly_Bistro_Background.png",
                 new String[]{"images/player/Cook_Model32.png"},
