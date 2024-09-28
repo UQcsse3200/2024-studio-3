@@ -50,6 +50,7 @@ public class SpeedBootsUpgrade extends UIComponent implements Upgrade {
         });
         gameTime = ServiceLocator.getTimeSource();
         isActivate = false;
+        
     }
 
     @Override
@@ -64,6 +65,8 @@ public class SpeedBootsUpgrade extends UIComponent implements Upgrade {
         layout.setFillParent(true);
         layout.setVisible(isVisible);
         setupInputListener();
+        ServiceLocator.getRandomComboService().getEvents().addListener("Speed", this::activate); 
+ 
     }
 
     /**

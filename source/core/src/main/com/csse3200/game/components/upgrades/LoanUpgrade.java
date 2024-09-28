@@ -16,6 +16,7 @@ public class LoanUpgrade extends Component implements Upgrade {
         ServiceLocator.getPlayerService().getEvents().addListener("playerCreated", (Entity player) -> {
             this.combatStatsComponent = player.getComponent(CombatStatsComponent.class);
         });
+        ServiceLocator.getRandomComboService().getEvents().addListener("Loan", this::activate); 
     }
 
     public void activate() { combatStatsComponent.addGold(100); }

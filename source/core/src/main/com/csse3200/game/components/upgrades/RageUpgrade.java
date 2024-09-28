@@ -65,6 +65,7 @@ public class RageUpgrade extends UIComponent implements Upgrade {
 
         // https://freesound.org/people/noirenex/sounds/159399/
         powerDownSound = Gdx.audio.newSound(Gdx.files.internal("sounds/power_down.wav"));
+        ServiceLocator.getRandomComboService().getEvents().addListener("Rage", this::activate); 
     }
 
     private void setupRedOverlay() {

@@ -91,6 +91,7 @@ public class MainGameScreen extends ScreenAdapter {
 		ServiceLocator.registerRenderService(new RenderService());
 		ServiceLocator.registerDocketService(new DocketService());
         ServiceLocator.registerDayNightService(new DayNightService());
+		ServiceLocator.registerRandomComboService(new RandomComboService());
 		ServiceLocator.registerLevelService(new LevelService());
 		ServiceLocator.registerGameScreen(this);
 
@@ -214,7 +215,7 @@ public class MainGameScreen extends ScreenAdapter {
 			.addComponent(new MainGameOrderBtnDisplay())
 			.addComponent(new RageUpgrade())
 			.addComponent(new LoanUpgrade())
-			.addComponent(new RandomCombination())
+			// .addComponent(new RandomCombination())
 				.addComponent(new SpeedBootsUpgrade())
 				.addComponent(new PauseMenuActions(this.game))
 				.addComponent(new PauseMenuDisplay(this))

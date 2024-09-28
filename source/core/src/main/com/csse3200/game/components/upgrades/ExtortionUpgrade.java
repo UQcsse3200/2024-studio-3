@@ -29,6 +29,7 @@ public class ExtortionUpgrade implements Upgrade {
         {
             this.combatStatsComponent = player.getComponent(CombatStatsComponent.class);
         });
+        ServiceLocator.getRandomComboService().getEvents().addListener("Extortion", this::activate); 
     }
 
     /**

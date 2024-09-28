@@ -35,7 +35,7 @@ public class UpgradesDisplay extends UIComponent {
     private List<Image> upgradeImages; // this is to store all the upgrades images
     private Table upgradesTable;
     private Image upgradeImage;
-    private RandomCombination randomCombination = new RandomCombination();
+    // private RandomCombination randomCombination= new RandomCombination();
 
 //    private Skin skin;
     private static final String[] upgradeTexturePaths = {
@@ -82,6 +82,7 @@ public class UpgradesDisplay extends UIComponent {
         ServiceLocator.getResourceService().loadTextures(upgradesMenuTexture);
         ServiceLocator.getResourceService().loadTextures(upgradeTexturePaths);
         ServiceLocator.getResourceService().loadAll(); // Ensures the texture is loaded
+        
 
         // Create and add the upgrades menu image first (background image)
         upgradesMenuImage = createUpgradesMenuDisplay();
@@ -121,7 +122,7 @@ public class UpgradesDisplay extends UIComponent {
 
     public void addUpgradeImage() {
 //        upgradesTable.clearChildren();
-        String upgrade = randomCombination.getSelectedUpgrade();
+        String upgrade = ServiceLocator.getRandomComboService().getSelectedUpgrade();
         logger.info(upgrade);
         String texturePath = "";
 
@@ -181,7 +182,7 @@ public class UpgradesDisplay extends UIComponent {
         yesButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                randomCombination.activateUpgrade();
+                ServiceLocator.getRandomComboService().activateUpgrade();
                 logger.info("YES button clicked");
                 // Handle YES button click
                 toggleVisibility();

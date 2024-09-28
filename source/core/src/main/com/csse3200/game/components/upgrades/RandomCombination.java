@@ -2,6 +2,7 @@ package com.csse3200.game.components.upgrades;
 
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.maingame.PauseMenuDisplay;
+import com.csse3200.game.events.EventHandler;
 import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,33 +16,43 @@ public class RandomCombination extends Component {
     private List<Upgrade> upgrades;
     private Random random;
     private int randomChoice;
+    private EventHandler eventHandler;
 
     public RandomCombination() {
+        this(new EventHandler());
+    }
+    public RandomCombination(EventHandler eventHandler) {
         super();
-        this.upgrades = new ArrayList<>();
-        this.upgrades.add(new ExtortionUpgrade(10L));
-        this.upgrades.add(new LoanUpgrade());
-        RageUpgrade rageUpgrade = new RageUpgrade();
-        rageUpgrade.create();
-        this.upgrades.add(rageUpgrade);
-        SpeedBootsUpgrade speedBootsUpgrade = new SpeedBootsUpgrade();
-        speedBootsUpgrade.create();
-        this.upgrades.add(speedBootsUpgrade);
+        // this.upgrades = new ArrayList<>();
+        // this.upgrades.add(new ExtortionUpgrade(10L));
+        // this.upgrades.add(new LoanUpgrade());
+        // RageUpgrade rageUpgrade = new RageUpgrade();
+        // rageUpgrade.create();
+        // this.upgrades.add(rageUpgrade);
+        // SpeedBootsUpgrade speedBootsUpgrade = new SpeedBootsUpgrade();
+        // speedBootsUpgrade.create();
+        // this.upgrades.add(speedBootsUpgrade);
 
+        this.eventHandler = eventHandler;
         this.random = new Random();
+        
 
-        randomChoice = random.nextInt(upgrades.size()); // Randomly generate index
-        logger.info(String.valueOf(randomChoice));
+        // randomChoice = random.nextInt(upgrades.size()); // Randomly generate index
+        randomChoice = random.nextInt(4); // Randomly generate index
+        System.out.println("TTTTTTTTTTTTTTTTTTTTTT" + randomChoice);
 
 //        ServiceLocator.getDayNightService().getEvents().addListener("upgrade", () -> {
 //            RandomUpgrade();
 //        });
+
+
     }
 
     // Use to get associate image in UpgradesDisplay UI
     public String getSelectedUpgrade() {
         String upgrade;
         switch (randomChoice) {
+
             case 0:
                 upgrade = "Extortion";
                 break;
@@ -57,19 +68,25 @@ public class RandomCombination extends Component {
             default:
                 upgrade = "";
         }
+        System.out.println("NNNNNNNNNNNNNNNNNNN" + randomChoice);
         return upgrade;
     }
 
     // Function call when YES button is pressed
     public void activateUpgrade() {
-        upgrades.get(randomChoice).activate();
-        logger.info("Activate");
+        // upgrades.get(randomChoice).activate();
+        // System.out.println("OOOOOOOOOOO" + randomChoice);
+        // logger.info("Activate");
+        // entity.getEvents().trigger("speed");
+        eventHandler.trigger("speed"); 
     }
 
     public void RandomUpgrade() {
         int randomChoice = random.nextInt(upgrades.size());  // Randomly generate index
         upgrades.get(randomChoice).activate();
     }
+
+    
 }
     
     
