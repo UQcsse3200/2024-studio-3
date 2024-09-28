@@ -83,6 +83,9 @@ public class KeyboardPlayerInputComponent extends InputComponent {
         case Keys.P:
           ServiceLocator.getEntityService().getEvents().trigger("toggleEndDayScreen");
           return true;
+          case Keys.L:
+              ServiceLocator.getEntityService().getEvents().trigger("leaveEarly");
+              return true;
       }
     }
 
