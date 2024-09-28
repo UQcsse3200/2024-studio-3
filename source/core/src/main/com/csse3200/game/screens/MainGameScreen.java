@@ -4,11 +4,14 @@ import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.csse3200.game.GdxGame;
+import com.csse3200.game.ai.tasks.AITaskComponent;
+import com.csse3200.game.ai.tasks.Task;
 import com.csse3200.game.areas.ForestGameArea;
 import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.components.maingame.*;
 import com.csse3200.game.components.levels.LevelComponent;
 import com.csse3200.game.components.maingame.MainGameActions;
+import com.csse3200.game.components.tasks.PathFollowTask;
 import com.csse3200.game.components.upgrades.LoanUpgrade;
 import com.csse3200.game.components.upgrades.RageUpgrade;
 import com.csse3200.game.components.upgrades.RandomCombination;
@@ -140,12 +143,24 @@ public class MainGameScreen extends ScreenAdapter {
 	public void pause() {
 		logger.info("Game paused");
 		isPaused = true;
+		for (Entity entity : ServiceLocator.getEntityService().getEntities()) {
+			AITaskComponent aiComponent = entity.getComponent(AITaskComponent.class);
+			if (aiComponent != null) {
+				aiComponent.pause();
+			}
+		}
 	}
 
 	@Override
 	public void resume() {
 		logger.info("Game resumed");
 		isPaused = false;
+		for (Entity entity : ServiceLocator.getEntityService().getEntities()) {
+			AITaskComponent aiComponent = entity.getComponent(AITaskComponent.class);
+			if (aiComponent != null) {
+				aiComponent.resume();
+			}
+		}
 	}
 
 	@Override
