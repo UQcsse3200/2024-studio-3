@@ -124,6 +124,7 @@ public class UpgradesDisplay extends UIComponent {
         });
         // change to this::<function name>
         //displayNotEnoughGoldUI();
+        ServiceLocator.getRandomComboService().getEvents().addListener("notenoughmoney", this::displayNotEnoughGoldUI);
     }
 
     public void addUpgradeImage() {
@@ -188,7 +189,7 @@ public class UpgradesDisplay extends UIComponent {
             public void clicked(InputEvent event, float x, float y) {
                 ServiceLocator.getRandomComboService().activateUpgrade();
                 logger.info("YES button clicked");
-                displayNotEnoughGoldUI();
+                // displayNotEnoughGoldUI();
                 toggleVisibility();
             }
         });
