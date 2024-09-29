@@ -61,8 +61,7 @@ public class GameBackgroundDisplay extends UIComponent {
             "images/background_images/17.0.png",
             "images/background_images/17.5.png",
             "images/background_images/18.0.png",
-            "images/background_images/18.5.png",
-            "images/b2.png"};
+            "images/background_images/18.5.png"};
 
 
 
@@ -70,7 +69,7 @@ public class GameBackgroundDisplay extends UIComponent {
     public GameBackgroundDisplay() {
         super();
         this.lastFrame = false;
-        this.currentImage = "images/b2.png";
+        this.currentImage = "images/background_images/1.0.png";
         this.currentImageIndex = 0;
         this.timeSinceLastUpdate = TimeUtils.millis();
     }
@@ -102,23 +101,23 @@ public class GameBackgroundDisplay extends UIComponent {
     public void setStage(Stage mock) {
     }
 
-//    @Override
-//    public void update() {
-//        if (!lastFrame) {
-//            long elapsedTime = TimeUtils.timeSinceMillis(timeSinceLastUpdate);
-//            long elapsedTimeSecs = elapsedTime/1000;
-//            if (elapsedTimeSecs >= this.timePerFrame) {
-//                this.currentImageIndex++;
-//                this.currentImage = BACKGROUNDTEXTURES[currentImageIndex];
-//                this.timeSinceLastUpdate = TimeUtils.millis();
-//                table.clear();
-//                setBackground();
-//                System.out.println("Updated background to " + this.currentImage);
-//                if (currentImageIndex >= 35) {
-//                    this.lastFrame = true; //stops updating when hits last frame of cycle
-//                }
-//            }
-//        }
-//    }
+    @Override
+    public void update() {
+        if (!lastFrame) {
+            long elapsedTime = TimeUtils.timeSinceMillis(timeSinceLastUpdate);
+            long elapsedTimeSecs = elapsedTime/1000;
+            if (elapsedTimeSecs >= this.timePerFrame) {
+                this.currentImageIndex++;
+                this.currentImage = BACKGROUNDTEXTURES[currentImageIndex];
+                this.timeSinceLastUpdate = TimeUtils.millis();
+                table.clear();
+                setBackground();
+                System.out.println("Updated background to " + this.currentImage);
+                if (currentImageIndex >= 35) {
+                    this.lastFrame = true; //stops updating when hits last frame of cycle
+                }
+            }
+        }
+    }
 
 }
