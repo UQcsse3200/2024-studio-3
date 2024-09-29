@@ -38,9 +38,7 @@ public class MainMenuActions extends Component {
    */
   private void onStart() {
     logger.info("Start game");
-//    game.setScreen(GdxGame.ScreenType.MAIN_GAME);
     Stage stage = ServiceLocator.getRenderService().getStage();
-//    Skin skin = ServiceLocator.getResourceService().getAsset("flat-earth/skin/flat-earth-ui.json", Skin.class);
     Skin skin = new Skin(Gdx.files.internal("flat-earth/skin/flat-earth-ui.json"));
     new Confirmationpopup("Game start tuto conf", skin, stage, game);
 

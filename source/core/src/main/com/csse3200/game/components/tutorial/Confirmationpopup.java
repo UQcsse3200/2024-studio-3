@@ -24,8 +24,6 @@ public class Confirmationpopup extends Dialog {
         super(title, skin);
         this.game = game;
 
-//        ResourceService resourceService = ServiceLocator.getResourceService();
-//        resourceService.load(flat-earth/skin/flat-earth-ui.json);
         text("Start tuto?");
         button("Yes", true);
         button("No", false);
@@ -38,10 +36,10 @@ public class Confirmationpopup extends Dialog {
     protected void result(Object object) {
         boolean isTrue = (boolean) object;
         if (isTrue) {
-            logger.info("Yes clicked");
+//            logger.info("Yes clicked");
             game.setScreen(new TutorialScreen(game));
         }else{
-            logger.info("No clicked");
+//            logger.info("No clicked");
             game.setScreen(GdxGame.ScreenType.MAIN_GAME);
         }
     }
