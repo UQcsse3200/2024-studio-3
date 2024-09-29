@@ -40,7 +40,7 @@ public class MainMenuActions extends Component {
     logger.info("Start game");
     Stage stage = ServiceLocator.getRenderService().getStage();
     Skin skin = new Skin(Gdx.files.internal("flat-earth/skin/flat-earth-ui.json"));
-    new Confirmationpopup("Game start tuto conf", skin, stage, game);
+    new Confirmationpopup("Game Tuto Confirm", skin, stage, game);
 
   }
 
