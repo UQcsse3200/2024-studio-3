@@ -1,7 +1,9 @@
 package com.csse3200.game.components.ordersystem;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -9,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Cell;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.SnapshotArray;
@@ -21,6 +24,8 @@ import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 
 /**
@@ -49,11 +54,12 @@ public class MainGameOrderTicketDisplay extends UIComponent {
     private static int recipeValue;
     private Recipe recipe;
     public InventoryComponent inventoryComponent;
-    private Image mealImage;
     private DocketMealDisplay mealDisplay;
     private static final float DISTANCE_MULTIPLIER = 0.015f;
     public CombatStatsComponent combatStatsComponent;
 
+    private static ArrayList<Image> imageArrayList;
+    private static ArrayList<String> stringArrayList;
     /**
      * Constructs an MainGameOrderTicketDisplay instance
      */
@@ -68,6 +74,9 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         ServiceLocator.getPlayerService().getEvents().addListener("playerCreated", (Entity player) -> {
             combatStatsComponent = player.getComponent(CombatStatsComponent.class);
         });
+
+        imageArrayList=new ArrayList<>();
+        stringArrayList=new ArrayList<>();
     }
 
     /**
@@ -137,8 +146,9 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         Label recipeNameLabel = new Label(getRecipe().getName(), skin);
         table.add(recipeNameLabel).padLeft(10f).row();
 
-        mealImage = mealDisplay.getMealImage(getRecipe().getName());
-        table.add(mealImage).row();
+        stringArrayList.add(getRecipe().getName());
+        imageArrayList.addLast(new Image(new TextureRegionDrawable(new TextureRegion(mealDisplay.getMealImage(stringArrayList.getLast(),"vertical")))));
+        table.add(imageArrayList.getLast()).row();
 
         recipeTimeArrayList.add(getTimer());
         Label countdownLabel = new Label("Timer: " + getTimer(), skin);
@@ -198,6 +208,12 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         long firstRecipeTime = recipeTimeArrayList.remove(0);
         recipeTimeArrayList.add(firstRecipeTime);
 
+        Image firstImage = imageArrayList.removeFirst();
+        imageArrayList.add(firstImage);
+
+        String firstString = stringArrayList.removeFirst();
+        stringArrayList.add(firstString);
+
         updateDocketPositions();
         updateDocketSizes();
 
@@ -223,7 +239,10 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         startTimeArrayList.remove(i);
         countdownLabelArrayList.remove(i);
         recipeTimeArrayList.remove(i);
+        stringArrayList.remove(i);
+        imageArrayList.remove(i);
         combatStatsComponent.addGold(getRecipeValue());
+
     }
 
     /**
@@ -265,6 +284,12 @@ public class MainGameOrderTicketDisplay extends UIComponent {
 
         long recipeTime = recipeTimeArrayList.remove(recipeTimeArrayList.size() - 1);
         recipeTimeArrayList.add(0, recipeTime);
+
+        Image lastImage = imageArrayList.removeLast();
+        imageArrayList.addFirst(lastImage);
+
+        String lastString = stringArrayList.removeLast();
+        stringArrayList.addFirst(lastString);
 
         updateDocketPositions();
         updateDocketSizes();
@@ -320,7 +345,7 @@ public class MainGameOrderTicketDisplay extends UIComponent {
                 table.setSize(enlargedDocketWidth, enlargedDocketHeight);
                 // Fixed position for enlarged docket
                 table.setPosition(xPosEnlarged, yPosEnlarged);
-
+                imageArrayList.get(i).setDrawable(new TextureRegionDrawable(new TextureRegion(mealDisplay.getMealImage(stringArrayList.get(i),"vertical"))));
                 table.setZIndex(10);
                 // Apply enlarged font size
                 for (int j = 0; j < cells.size; j++) {
@@ -341,6 +366,7 @@ public class MainGameOrderTicketDisplay extends UIComponent {
                 float xVal = cntXval(leftHandSideDistance,i + 1);
                 table.setPosition(xVal, yPosNormal);
                 table.setZIndex(5);
+                imageArrayList.get(i).setDrawable(new TextureRegionDrawable(new TextureRegion(mealDisplay.getMealImage(stringArrayList.get(i),"horizontal"))));
                 for (int j = 0; j < cells.size; j++) {
                     if (cells.get(j).getActor() instanceof Label) {
                         Label label = (Label) cells.get(j).getActor();
@@ -508,6 +534,8 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         startTimeArrayList.clear();
         backgroundArrayList.clear();
         countdownLabelArrayList.clear();
+        stringArrayList.clear();
+        imageArrayList.clear();
         super.dispose();
     }
 
