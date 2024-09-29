@@ -1,11 +1,13 @@
 package com.csse3200.game.components.upgrades;
 
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -42,7 +44,8 @@ public class UpgradesDisplay extends UIComponent {
             "images/Speed_boot.png",
             "images/Rage.png",
             "images/Extortion.png",
-            "images/Loan.png",
+            "images/loan2.png",
+        "images/notEnoughGold.png",
     };
 
 
@@ -112,7 +115,7 @@ public class UpgradesDisplay extends UIComponent {
         stage.addListener(new InputListener() {
             @Override
             public boolean keyDown(InputEvent event, int keycode) {
-                if (keycode == com.badlogic.gdx.Input.Keys.U) {
+                if (keycode == Input.Keys.U) {
                     toggleVisibility();
                     return true;
                 }
@@ -120,7 +123,7 @@ public class UpgradesDisplay extends UIComponent {
             }
         });
         // change to this::<function name>
-        ServiceLocator.getRandomComboService().getEvents().addListener("notenoughmoney", ()->{System.out.println("YOU DO NOT HAVE ENOUGH MONEY");});
+        //displayNotEnoughGoldUI();
     }
 
     public void addUpgradeImage() {
@@ -140,7 +143,7 @@ public class UpgradesDisplay extends UIComponent {
                 texturePath = "images/Rage.png";
                 break;
             case "Loan":
-                texturePath = "images/Loan.png";
+                texturePath = "images/loan2.png";
                 break;
         }
 
@@ -177,17 +180,15 @@ public class UpgradesDisplay extends UIComponent {
     private Table createButtonsTable() {
         Table buttonTable = new Table();
 
-        // Create YES and NO buttons
         TextButton yesButton = new TextButton("YES", skin);
         TextButton noButton = new TextButton("NO", skin);
 
-        // Add click listeners for the buttons
         yesButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 ServiceLocator.getRandomComboService().activateUpgrade();
                 logger.info("YES button clicked");
-                // Handle YES button click
+                displayNotEnoughGoldUI();
                 toggleVisibility();
             }
         });
@@ -202,13 +203,39 @@ public class UpgradesDisplay extends UIComponent {
             }
         });
 
-        // Add buttons to the table with padding
+
         buttonTable.add(yesButton).minWidth(200).minHeight(50).padTop(-100).padLeft(-40);
         //buttonTable.row();  // Move to the next row
         buttonTable.add(noButton).minWidth(200).minHeight(50).padTop(-100).padRight(-700);
 
         return buttonTable;
     }
+
+    public void displayNotEnoughGoldUI() {
+
+        Texture notEnoughGoldTexture = ServiceLocator.getResourceService()
+                .getAsset("images/notEnoughGold.png", Texture.class);
+
+        Image notEnoughGoldImage = new Image(notEnoughGoldTexture);
+        notEnoughGoldImage.setSize(400, 400);
+
+        float xPosition = (stage.getWidth() - notEnoughGoldImage.getWidth()) / 2;
+        float yPosition = (stage.getHeight() - notEnoughGoldImage.getHeight()) / 2;
+        notEnoughGoldImage.setPosition(xPosition, yPosition);
+
+        stage.addActor(notEnoughGoldImage);
+
+        // Optionally, remove the image after some time or when clicked
+        // Remove the image after 2 seconds
+        Actions Actions = new Actions();
+        notEnoughGoldImage.addAction(Actions.sequence(
+                Actions.delay(2f),
+                Actions.run(() -> {
+                    notEnoughGoldImage.remove();
+                })
+        ));
+    }
+
     /**
      * Toggles the visibility of the upgrades menu
      */
