@@ -242,6 +242,8 @@ public class PauseMenuDisplay extends UIComponent {
         table.setVisible(true);
         logger.info("PAUSE GAME");
         game.pause();
+
+        table.toFront();
     }
 
     /**
