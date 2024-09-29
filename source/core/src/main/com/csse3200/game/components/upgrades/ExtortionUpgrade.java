@@ -2,6 +2,7 @@ package com.csse3200.game.components.upgrades;
 
 import com.badlogic.gdx.utils.Array;
 import com.csse3200.game.components.CombatStatsComponent;
+import com.csse3200.game.components.Component;
 import com.csse3200.game.components.npc.CustomerComponent;
 import com.csse3200.game.components.ordersystem.MainGameOrderTicketDisplay;
 import com.csse3200.game.components.ordersystem.OrderManager;
@@ -12,7 +13,7 @@ import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class ExtortionUpgrade implements Upgrade {
+public class ExtortionUpgrade extends Component implements Upgrade {
     private static final Logger logger = LoggerFactory.getLogger(ExtortionUpgrade.class);
     private boolean isActive;
     private long upgradeDuration;

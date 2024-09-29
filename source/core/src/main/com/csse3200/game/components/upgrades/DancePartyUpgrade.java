@@ -1,5 +1,6 @@
 package com.csse3200.game.components.upgrades;
 
+import com.csse3200.game.components.Component;
 import com.csse3200.game.components.ordersystem.OrderActions;
 import com.csse3200.game.components.ordersystem.OrderManager;
 import com.csse3200.game.entities.Entity;
@@ -10,7 +11,7 @@ import org.slf4j.LoggerFactory;
 import com.csse3200.game.services.GameTime;
 import com.csse3200.game.components.CombatStatsComponent;
 
-public class DancePartyUpgrade implements Upgrade {
+public class DancePartyUpgrade extends Component implements Upgrade {
     private static final long UPGRADE_DURATION = 60000;
     private OrderManager orderManager;
     private final GameTime gameTime;
