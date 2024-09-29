@@ -101,8 +101,8 @@ loadScripts(document, 'script');</script>
 <hr>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">CutsceneTextDisplay</span>
 <span class="extends-implements">extends <a href="../../ui/UIComponent.html" title="class in com.csse3200.game.ui">UIComponent</a></span></div>
-<div class="block">CutsceneTextDisplay displays scrolling text during a cutscene.
- It shows text one character at a time and allows skipping to the full text by pressing ENTER.</div>
+<div class="block">CutsceneTextDisplay handles displaying scrolling text during a cutscene. The text is displayed
+ one character at a time, and pressing ENTER will skip the scrolling and display the full text immediately.</div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -128,11 +128,11 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Description</div>
 <div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E()" class="member-name-link">CutsceneTextDisplay</a>()</code></div>
 <div class="col-last even-row-color">
-<div class="block">Default constructor initializes without a specific cutscene.</div>
+<div class="block">Default constructor that initializes without a specific cutscene.</div>
 </div>
 <div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(com.csse3200.game.screens.CutsceneScreen)" class="member-name-link">CutsceneTextDisplay</a><wbr>(<a href="../../screens/CutsceneScreen.html" title="class in com.csse3200.game.screens">CutsceneScreen</a>&nbsp;cutscene)</code></div>
 <div class="col-last odd-row-color">
-<div class="block">Constructor that links this text display to a cutscene.</div>
+<div class="block">Constructor that links the text display to a specific cutscene.</div>
 </div>
 </div>
 </section>
@@ -151,42 +151,42 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#create()" class="member-name-link">create</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Sets up the text display with a background and label, and adds it to the stage.</div>
+<div class="block">Sets up the text display UI, including the background image and text label, and adds it to the stage.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#draw(com.badlogic.gdx.graphics.g2d.SpriteBatch)" class="member-name-link">draw</a><wbr>(com.badlogic.gdx.graphics.g2d.SpriteBatch&nbsp;batch)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Overridden to handle custom drawing logic.</div>
+<div class="block">Custom draw method to handle additional rendering.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>com.badlogic.gdx.scenes.scene2d.ui.Table</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getTable()" class="member-name-link">getTable</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Provides access to the main table containing the text display.</div>
+<div class="block">Returns the main table containing the text display UI components.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getVisible()" class="member-name-link">getVisible</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Returns the current visibility of the text display.</div>
+<div class="block">Returns whether the text display is currently visible.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setStage(com.badlogic.gdx.scenes.scene2d.Stage)" class="member-name-link">setStage</a><wbr>(com.badlogic.gdx.scenes.scene2d.Stage&nbsp;stage)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Assigns a stage to this UI component.</div>
+<div class="block">Sets the stage for this UI component.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setText(java.lang.String)" class="member-name-link">setText</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;text)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Sets the text to be displayed.</div>
+<div class="block">Sets the text to be displayed during the cutscene.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setVisible(boolean)" class="member-name-link">setVisible</a><wbr>(boolean&nbsp;value)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Sets the visibility of the text display.</div>
+<div class="block">Controls the visibility of the text display.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#update()" class="member-name-link">update</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Updates the text display, adding one character at a time.</div>
+<div class="block">Updates the text display, adding characters one at a time based on the specified delay.</div>
 </div>
 </div>
 </div>
@@ -224,14 +224,14 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="&lt;init&gt;()">
 <h3>CutsceneTextDisplay</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">CutsceneTextDisplay</span>()</div>
-<div class="block">Default constructor initializes without a specific cutscene.</div>
+<div class="block">Default constructor that initializes without a specific cutscene.</div>
 </section>
 </li>
 <li>
 <section class="detail" id="&lt;init&gt;(com.csse3200.game.screens.CutsceneScreen)">
 <h3>CutsceneTextDisplay</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">CutsceneTextDisplay</span><wbr><span class="parameters">(<a href="../../screens/CutsceneScreen.html" title="class in com.csse3200.game.screens">CutsceneScreen</a>&nbsp;cutscene)</span></div>
-<div class="block">Constructor that links this text display to a cutscene.</div>
+<div class="block">Constructor that links the text display to a specific cutscene.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>cutscene</code> - the associated CutsceneScreen</dd>
@@ -250,7 +250,7 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="create()">
 <h3>create</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">create</span>()</div>
-<div class="block">Sets up the text display with a background and label, and adds it to the stage.</div>
+<div class="block">Sets up the text display UI, including the background image and text label, and adds it to the stage.</div>
 <dl class="notes">
 <dt>Overrides:</dt>
 <dd><code><a href="../../ui/UIComponent.html#create()">create</a></code>&nbsp;in class&nbsp;<code><a href="../../ui/UIComponent.html" title="class in com.csse3200.game.ui">UIComponent</a></code></dd>
@@ -261,10 +261,10 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="setText(java.lang.String)">
 <h3>setText</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setText</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;text)</span></div>
-<div class="block">Sets the text to be displayed.</div>
+<div class="block">Sets the text to be displayed during the cutscene.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
-<dd><code>text</code> - the new text to display</dd>
+<dd><code>text</code> - The text to display.</dd>
 </dl>
 </section>
 </li>
@@ -272,10 +272,10 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="setVisible(boolean)">
 <h3>setVisible</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setVisible</span><wbr><span class="parameters">(boolean&nbsp;value)</span></div>
-<div class="block">Sets the visibility of the text display.</div>
+<div class="block">Controls the visibility of the text display.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
-<dd><code>value</code> - true to show the display, false to hide</dd>
+<dd><code>value</code> - Whether the text display should be visible.</dd>
 </dl>
 </section>
 </li>
@@ -283,10 +283,10 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="getVisible()">
 <h3>getVisible</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">getVisible</span>()</div>
-<div class="block">Returns the current visibility of the text display.</div>
+<div class="block">Returns whether the text display is currently visible.</div>
 <dl class="notes">
 <dt>Returns:</dt>
-<dd>true if visible, false otherwise</dd>
+<dd>True if visible, false otherwise.</dd>
 </dl>
 </section>
 </li>
@@ -294,7 +294,7 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="update()">
 <h3>update</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">update</span>()</div>
-<div class="block">Updates the text display, adding one character at a time.</div>
+<div class="block">Updates the text display, adding characters one at a time based on the specified delay.</div>
 <dl class="notes">
 <dt>Overrides:</dt>
 <dd><code><a href="../Component.html#update()">update</a></code>&nbsp;in class&nbsp;<code><a href="../Component.html" title="class in com.csse3200.game.components">Component</a></code></dd>
@@ -305,8 +305,8 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="draw(com.badlogic.gdx.graphics.g2d.SpriteBatch)">
 <h3>draw</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">draw</span><wbr><span class="parameters">(com.badlogic.gdx.graphics.g2d.SpriteBatch&nbsp;batch)</span></div>
-<div class="block">Overridden to handle custom drawing logic.
- In this case, drawing is handled by the stage, so nothing is needed here.</div>
+<div class="block">Custom draw method to handle additional rendering.
+ Drawing is handled by the stage, so no custom drawing is needed here.</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="../../rendering/RenderComponent.html#draw(com.badlogic.gdx.graphics.g2d.SpriteBatch)">draw</a></code>&nbsp;in class&nbsp;<code><a href="../../rendering/RenderComponent.html" title="class in com.csse3200.game.rendering">RenderComponent</a></code></dd>
@@ -319,10 +319,10 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="setStage(com.badlogic.gdx.scenes.scene2d.Stage)">
 <h3>setStage</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setStage</span><wbr><span class="parameters">(com.badlogic.gdx.scenes.scene2d.Stage&nbsp;stage)</span></div>
-<div class="block">Assigns a stage to this UI component.</div>
+<div class="block">Sets the stage for this UI component.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
-<dd><code>stage</code> - the stage to be used</dd>
+<dd><code>stage</code> - The stage to assign.</dd>
 </dl>
 </section>
 </li>
@@ -330,10 +330,10 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="getTable()">
 <h3>getTable</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">com.badlogic.gdx.scenes.scene2d.ui.Table</span>&nbsp;<span class="element-name">getTable</span>()</div>
-<div class="block">Provides access to the main table containing the text display.</div>
+<div class="block">Returns the main table containing the text display UI components.</div>
 <dl class="notes">
 <dt>Returns:</dt>
-<dd>the table containing the display components</dd>
+<dd>The table containing the display components.</dd>
 </dl>
 </section>
 </li>

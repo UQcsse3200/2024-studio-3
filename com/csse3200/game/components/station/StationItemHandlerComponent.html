@@ -161,8 +161,9 @@ loadScripts(document, 'script');</script>
 <div class="block">Gets the type of station</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#handleInteraction(com.csse3200.game.components.player.InventoryComponent,com.csse3200.game.components.player.InventoryDisplay)" class="member-name-link">handleInteraction</a><wbr>(<a href="../player/InventoryComponent.html" title="class in com.csse3200.game.components.player">InventoryComponent</a>&nbsp;playerInventoryComponent,
- <a href="../player/InventoryDisplay.html" title="class in com.csse3200.game.components.player">InventoryDisplay</a>&nbsp;inventoryDisplay)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#handleInteraction(com.csse3200.game.components.player.InventoryComponent,com.csse3200.game.components.player.InventoryDisplay,java.lang.String)" class="member-name-link">handleInteraction</a><wbr>(<a href="../player/InventoryComponent.html" title="class in com.csse3200.game.components.player">InventoryComponent</a>&nbsp;playerInventoryComponent,
+ <a href="../player/InventoryDisplay.html" title="class in com.csse3200.game.components.player">InventoryDisplay</a>&nbsp;inventoryDisplay,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;type)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Handles any interaction with station, using current state of player and station
  inventory to determine intended interaction</div>
@@ -293,15 +294,18 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="handleInteraction(com.csse3200.game.components.player.InventoryComponent,com.csse3200.game.components.player.InventoryDisplay)">
+<section class="detail" id="handleInteraction(com.csse3200.game.components.player.InventoryComponent,com.csse3200.game.components.player.InventoryDisplay,java.lang.String)">
 <h3>handleInteraction</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">handleInteraction</span><wbr><span class="parameters">(<a href="../player/InventoryComponent.html" title="class in com.csse3200.game.components.player">InventoryComponent</a>&nbsp;playerInventoryComponent,
- <a href="../player/InventoryDisplay.html" title="class in com.csse3200.game.components.player">InventoryDisplay</a>&nbsp;inventoryDisplay)</span></div>
+ <a href="../player/InventoryDisplay.html" title="class in com.csse3200.game.components.player">InventoryDisplay</a>&nbsp;inventoryDisplay,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;type)</span></div>
 <div class="block">Handles any interaction with station, using current state of player and station
  inventory to determine intended interaction</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>playerInventoryComponent</code> - reference to player inventory component</dd>
+<dd><code>inventoryDisplay</code> - reference to individual inventory display</dd>
+<dd><code>type</code> - the type of interaction attempt</dd>
 </dl>
 </section>
 </li>

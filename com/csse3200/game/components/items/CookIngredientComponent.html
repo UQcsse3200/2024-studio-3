@@ -86,13 +86,15 @@ loadScripts(document, 'script');</script>
 </div>
 <div class="inheritance" title="Inheritance Tree"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">java.lang.Object</a>
 <div class="inheritance"><a href="../Component.html" title="class in com.csse3200.game.components">com.csse3200.game.components.Component</a>
+<div class="inheritance"><a href="ItemTimerComponent.html" title="class in com.csse3200.game.components.items">com.csse3200.game.components.items.ItemTimerComponent</a>
 <div class="inheritance">com.csse3200.game.components.items.CookIngredientComponent</div>
+</div>
 </div>
 </div>
 <section class="class-description" id="class-description">
 <hr>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">CookIngredientComponent</span>
-<span class="extends-implements">extends <a href="../Component.html" title="class in com.csse3200.game.components">Component</a></span></div>
+<span class="extends-implements">extends <a href="ItemTimerComponent.html" title="class in com.csse3200.game.components.items">ItemTimerComponent</a></span></div>
 <div class="block">The CookIngredientComponent handles the cooking process for an ingredient in the game.
  It manages the state of cooking, determines when the cooking is complete, and triggers
  the appropriate actions based on the cooking status and the station's state.</div>
@@ -103,6 +105,9 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="field-summary" id="field-summary">
 <h2>Field Summary</h2>
+<div class="inherited-list">
+<h3 id="fields-inherited-from-class-com.csse3200.game.components.items.ItemTimerComponent">Fields inherited from class&nbsp;com.csse3200.game.components.items.<a href="ItemTimerComponent.html" title="class in com.csse3200.game.components.items">ItemTimerComponent</a></h3>
+<code><a href="ItemTimerComponent.html#elapsed">elapsed</a>, <a href="ItemTimerComponent.html#gameTime">gameTime</a>, <a href="ItemTimerComponent.html#isRunning">isRunning</a>, <a href="ItemTimerComponent.html#length">length</a></code></div>
 <div class="inherited-list">
 <h3 id="fields-inherited-from-class-com.csse3200.game.components.Component">Fields inherited from class&nbsp;com.csse3200.game.components.<a href="../Component.html" title="class in com.csse3200.game.components">Component</a></h3>
 <code><a href="../Component.html#enabled">enabled</a>, <a href="../Component.html#entity">entity</a></code></div>
@@ -118,7 +123,8 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Description</div>
 <div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E()" class="member-name-link">CookIngredientComponent</a>()</code></div>
 <div class="col-last even-row-color">
-<div class="block">Constructor for CookIngredientComponent.</div>
+<div class="block">CookIngredientComponent constructor, takes no parameters as the length of
+ time that the timer goes for must be set manually.</div>
 </div>
 </div>
 </section>
@@ -137,21 +143,29 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#create()" class="member-name-link">create</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Called when the component is created.</div>
+<div class="block">Called when the entity is created and registered.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getIsCooking()" class="member-name-link">getIsCooking</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Returns whether the ingredient is currently being cooked.</div>
+<div class="block">Get if the item is currently cooking</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#update()" class="member-name-link">update</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">This method is called every frame to update the ingredient state.</div>
+<div class="block">Function to run each frame</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#updateItem()" class="member-name-link">updateItem</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Update the item component to reflect its new state.</div>
 </div>
 </div>
 </div>
 </div>
+<div class="inherited-list">
+<h3 id="methods-inherited-from-class-com.csse3200.game.components.items.ItemTimerComponent">Methods inherited from class&nbsp;com.csse3200.game.components.items.<a href="ItemTimerComponent.html" title="class in com.csse3200.game.components.items">ItemTimerComponent</a></h3>
+<code><a href="ItemTimerComponent.html#getCompletionPercent()">getCompletionPercent</a>, <a href="ItemTimerComponent.html#isFinished()">isFinished</a>, <a href="ItemTimerComponent.html#setLength(long)">setLength</a>, <a href="ItemTimerComponent.html#startTimer()">startTimer</a>, <a href="ItemTimerComponent.html#stopTimer()">stopTimer</a></code></div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-com.csse3200.game.components.Component">Methods inherited from class&nbsp;com.csse3200.game.components.<a href="../Component.html" title="class in com.csse3200.game.components">Component</a></h3>
 <code><a href="../Component.html#dispose()">dispose</a>, <a href="../Component.html#earlyUpdate()">earlyUpdate</a>, <a href="../Component.html#getEntity()">getEntity</a>, <a href="../Component.html#setEnabled(boolean)">setEnabled</a>, <a href="../Component.html#setEntity(com.csse3200.game.entities.Entity)">setEntity</a>, <a href="../Component.html#toString()">toString</a>, <a href="../Component.html#triggerEarlyUpdate()">triggerEarlyUpdate</a>, <a href="../Component.html#triggerUpdate()">triggerUpdate</a></code></div>
@@ -173,8 +187,8 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="&lt;init&gt;()">
 <h3>CookIngredientComponent</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">CookIngredientComponent</span>()</div>
-<div class="block">Constructor for CookIngredientComponent. Initializes the time source used for tracking
- the cooking duration.</div>
+<div class="block">CookIngredientComponent constructor, takes no parameters as the length of
+ time that the timer goes for must be set manually.</div>
 </section>
 </li>
 </ul>
@@ -189,8 +203,9 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="create()">
 <h3>create</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">create</span>()</div>
-<div class="block">Called when the component is created. This method retrieves the IngredientComponent
- and sets up listeners for starting and stopping the cooking process.</div>
+<div class="block"><span class="description-from-type-label">Description copied from class:&nbsp;<code><a href="../Component.html#create()">Component</a></code></span></div>
+<div class="block">Called when the entity is created and registered. Initial logic such as calls to GetComponent
+ should be made here, not in the constructor which is called before an entity is finished.</div>
 <dl class="notes">
 <dt>Overrides:</dt>
 <dd><code><a href="../Component.html#create()">create</a></code>&nbsp;in class&nbsp;<code><a href="../Component.html" title="class in com.csse3200.game.components">Component</a></code></dd>
@@ -201,12 +216,22 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="update()">
 <h3>update</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">update</span>()</div>
-<div class="block">This method is called every frame to update the ingredient state. It checks if the
- cooking process is complete or if the ingredient has been overcooked (burnt) based
- on the time elapsed since the cooking started.</div>
+<div class="block"><span class="description-from-type-label">Description copied from class:&nbsp;<code><a href="ItemTimerComponent.html#update()">ItemTimerComponent</a></code></span></div>
+<div class="block">Function to run each frame</div>
 <dl class="notes">
 <dt>Overrides:</dt>
-<dd><code><a href="../Component.html#update()">update</a></code>&nbsp;in class&nbsp;<code><a href="../Component.html" title="class in com.csse3200.game.components">Component</a></code></dd>
+<dd><code><a href="ItemTimerComponent.html#update()">update</a></code>&nbsp;in class&nbsp;<code><a href="ItemTimerComponent.html" title="class in com.csse3200.game.components.items">ItemTimerComponent</a></code></dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="updateItem()">
+<h3>updateItem</h3>
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">updateItem</span>()</div>
+<div class="block">Update the item component to reflect its new state.</div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="ItemTimerComponent.html#updateItem()">updateItem</a></code>&nbsp;in class&nbsp;<code><a href="ItemTimerComponent.html" title="class in com.csse3200.game.components.items">ItemTimerComponent</a></code></dd>
 </dl>
 </section>
 </li>
@@ -214,10 +239,10 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="getIsCooking()">
 <h3>getIsCooking</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">getIsCooking</span>()</div>
-<div class="block">Returns whether the ingredient is currently being cooked.</div>
+<div class="block">Get if the item is currently cooking</div>
 <dl class="notes">
 <dt>Returns:</dt>
-<dd>true if the ingredient is cooking, false otherwise.</dd>
+<dd>true if the item is cooking, false otherwise.</dd>
 </dl>
 </section>
 </li>

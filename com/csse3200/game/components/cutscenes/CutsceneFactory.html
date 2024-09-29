@@ -91,6 +91,7 @@ loadScripts(document, 'script');</script>
 <hr>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">CutsceneFactory</span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span></div>
+<div class="block">A factory class for creating entities used in cutscenes, such as backgrounds and animations.</div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -119,8 +120,15 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="../../entities/Entity.html" title="class in com.csse3200.game.entities">Entity</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#createBackground(java.lang.String)" class="member-name-link">createBackground</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;bgImgPath)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#createAnimation(java.lang.String)" class="member-name-link">createAnimation</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;animationImgPath)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Creates an animation entity with the specified image path.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="../../entities/Entity.html" title="class in com.csse3200.game.entities">Entity</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#createBackground(java.lang.String)" class="member-name-link">createBackground</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;bgImgPath)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Creates a background entity with the specified image path.</div>
+</div>
 </div>
 </div>
 </div>
@@ -156,6 +164,28 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="createBackground(java.lang.String)">
 <h3>createBackground</h3>
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="../../entities/Entity.html" title="class in com.csse3200.game.entities">Entity</a></span>&nbsp;<span class="element-name">createBackground</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;bgImgPath)</span></div>
+<div class="block">Creates a background entity with the specified image path. The background
+ will be scaled to fit the screen and centered on the screen.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>bgImgPath</code> - The file path of the background image to use.</dd>
+<dt>Returns:</dt>
+<dd>A new background entity.</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="createAnimation(java.lang.String)">
+<h3>createAnimation</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="../../entities/Entity.html" title="class in com.csse3200.game.entities">Entity</a></span>&nbsp;<span class="element-name">createAnimation</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;animationImgPath)</span></div>
+<div class="block">Creates an animation entity with the specified image path. The entity
+ will have a texture component for rendering the animation.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>animationImgPath</code> - The file path of the animation image to use.</dd>
+<dt>Returns:</dt>
+<dd>A new animation entity.</dd>
+</dl>
 </section>
 </li>
 </ul>
