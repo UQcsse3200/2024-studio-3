@@ -2,12 +2,11 @@ package com.csse3200.game.components.player;
 
 import java.util.concurrent.TimeUnit;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
@@ -17,6 +16,11 @@ import com.csse3200.game.ui.UIComponent;
  */
 public class PlayerStatsDisplay extends UIComponent {
   Table table;
+  Table goldTable;
+  Table timerTable;
+  Skin newFont;
+  //private ImageTextButton goldText;
+  private Image timerImage;
   private Image heartImage;
   private Image goldImage;
   private Label healthLabel;
@@ -58,6 +62,19 @@ public class PlayerStatsDisplay extends UIComponent {
     table.setFillParent(true);
     table.padTop(45f).padLeft(5f);
 
+    goldTable = new Table();
+    goldTable.bottom().left();
+    goldTable.setFillParent(true);
+    goldTable.padBottom(45f).padLeft(100f);
+
+    timerTable = new Table();
+    timerTable.bottom().right();
+    timerTable.setFillParent(true);
+    timerTable.padBottom(45f).padRight(55f);
+
+    // timer and gold font
+    //newFont = new Skin(Gdx.files.internal("flat-earth/skin/flat-earth-ui.png"));
+
     // Heart image
     float heartSideLength = 30f;
     heartImage = new Image(ServiceLocator.getResourceService().getAsset("images/heart.png", Texture.class));
@@ -73,12 +90,13 @@ public class PlayerStatsDisplay extends UIComponent {
 
      goldImage = new Image(ServiceLocator.getResourceService().getAsset("images/money.png", Texture.class));
      int gold = entity.getComponent(CombatStatsComponent.class).getGold();
-     CharSequence goldText = String.format("Cash: %d", gold);
-     goldLabel = new Label(goldText, skin, "large");
+     CharSequence goldText = String.format("%d", gold);
+     goldLabel = new Label(goldText, skin);
 
-     table.add(goldImage).size(heartSideLength).pad(5);
-     table.add(goldLabel);
-     table.row();
+     goldTable.add(goldImage).size(heartSideLength).pad(5);
+     goldTable.add(goldLabel);
+     stage.addActor(goldTable);
+     goldTable.row();
 
     //Label for the Current Day
     CharSequence dayText = String.format("Day: %d", currentday); // Start with Day 1
@@ -87,11 +105,15 @@ public class PlayerStatsDisplay extends UIComponent {
     stage.addActor(table);
     table.row();
 
+    //Timer image
+    timerImage = new Image(ServiceLocator.getResourceService().getAsset("images/hourglass.png", Texture.class));
+
     // Timer label for the remaining time in the day
-    CharSequence TimerText = String.format("Time Left: \n    %s", convertDigital(timer)); 
+    CharSequence TimerText = String.format("\n   %s", convertDigital(timer));
     timerLabel = new Label(TimerText, skin, "large");
-    table.add(timerLabel);
-    stage.addActor(table);
+    timerTable.add(timerImage).size(heartSideLength).pad(5);
+    timerTable.add(timerLabel);
+    stage.addActor(timerTable);
   }
 
   @Override
@@ -113,7 +135,7 @@ public class PlayerStatsDisplay extends UIComponent {
    * @param gold player gold
    */
   public void updatePlayerGoldUI(int gold) {
-    CharSequence text = String.format("Gold: %d", gold);
+    CharSequence text = String.format("%d", gold);
     goldLabel.setText(text);
   }
 
@@ -134,7 +156,7 @@ public class PlayerStatsDisplay extends UIComponent {
     // timer;
     timer -= 1000;
     System.out.println(timer);
-    CharSequence TimerText = String.format("Time Left: \n   %s", convertDigital(timer));
+    CharSequence TimerText = String.format("\n   %s", convertDigital(timer));
     timerLabel.setText(TimerText);
     ServiceLocator.getDayNightService().getEvents().trigger("callpastsecond");
 
