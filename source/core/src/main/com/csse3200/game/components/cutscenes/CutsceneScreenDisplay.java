@@ -101,6 +101,8 @@ public class CutsceneScreenDisplay extends UIComponent {
         advanceCutsceneStep();
     }
 
+
+
     /**
      * Sets up the cutscene UI components.
      */
@@ -239,4 +241,7 @@ public class CutsceneScreenDisplay extends UIComponent {
     public void setTable(Table table) {
         this.table = table;
     }
+
+
 }
+

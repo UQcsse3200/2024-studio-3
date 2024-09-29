@@ -6,7 +6,6 @@ import com.csse3200.game.services.ServiceLocator;
 
 /**
  * The BackstoryCutscene class represents a specific cutscene that provides the player's backstory.
- * It defines the scenes, assets, and entities used during the backstory cutscene.
  */
 public class BackstoryCutscene extends Cutscene {
 
@@ -18,17 +17,16 @@ public class BackstoryCutscene extends Cutscene {
     }
 
     /**
-     * Sets up the scenes for the backstory cutscene, including background images,
-     * animation images, and the corresponding text for each scene.
+     * Sets up the scenes for the background images, character sprites and text display
+     * for each scene.
      */
     @Override
     protected void setupScenes() {
-        // Add text to be displayed during the cutscene
+        // text to be displayed during the cutscene
         cutsceneText.add("In the year 2045, the world changed...");
         cutsceneText.add("Humans and animals were forced to coexist in a new order.");
         cutsceneText.add("Our hero, a chef, is one of the last remaining humans...");
 
-        // Add scenes with background images, animations, text, and duration
         scenes.add(new Scene(
                 "images/Cutscenes/Brooklyn_Bistro_Background.png",
                 new String[]{"images/player/Cook_Model32.png"},
@@ -74,7 +72,7 @@ public class BackstoryCutscene extends Cutscene {
      */
     @Override
     public void createEntities() {
-        // Any specific entity creation logic for the backstory cutscene
+        // none
     }
 }
 
