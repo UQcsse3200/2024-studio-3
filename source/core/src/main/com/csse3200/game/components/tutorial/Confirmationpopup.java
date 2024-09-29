@@ -36,10 +36,8 @@ public class Confirmationpopup extends Dialog {
     protected void result(Object object) {
         boolean isTrue = (boolean) object;
         if (isTrue) {
-//            logger.info("Yes clicked");
             game.setScreen(new TutorialScreen(game));
         }else{
-//            logger.info("No clicked");
             game.setScreen(GdxGame.ScreenType.MAIN_GAME);
         }
     }
