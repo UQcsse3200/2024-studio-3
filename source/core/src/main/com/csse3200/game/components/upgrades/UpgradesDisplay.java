@@ -203,9 +203,9 @@ public class UpgradesDisplay extends UIComponent {
         });
 
         // Add buttons to the table with padding
-        buttonTable.add(yesButton).minWidth(200).minHeight(50).pad(10);
-        buttonTable.row();  // Move to the next row
-        buttonTable.add(noButton).minWidth(200).minHeight(50).pad(10);
+        buttonTable.add(yesButton).minWidth(200).minHeight(50).padTop(-100).padLeft(-40);
+        //buttonTable.row();  // Move to the next row
+        buttonTable.add(noButton).minWidth(200).minHeight(50).padTop(-100).padRight(-700);
 
         return buttonTable;
     }
