@@ -119,7 +119,7 @@ public class UpgradesDisplay extends UIComponent {
                 return false;
             }
         });
-
+        // change to this::<function name>
         ServiceLocator.getRandomComboService().getEvents().addListener("notenoughmoney", ()->{System.out.println("YOU DO NOT HAVE ENOUGH MONEY");});
     }
 

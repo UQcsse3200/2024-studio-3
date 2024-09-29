@@ -47,7 +47,7 @@ public class ForestGameArea extends GameArea {
   private static final float WALL_WIDTH = 0.1f;
   private static final String[] forestTextures = {
     "images/special_NPCs/boss.png",
-    "images/special_NPCs/penguin.png",
+    "images/special_NPCs/penguin2.png",
     "images/meals/acai_bowl.png",
     "images/meals/banana_split.png",
     "images/meals/salad.png",
