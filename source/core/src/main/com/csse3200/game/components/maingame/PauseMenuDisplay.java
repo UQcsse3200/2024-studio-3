@@ -115,6 +115,7 @@ public class PauseMenuDisplay extends UIComponent {
 
         TextButton resumeBtn = new TextButton("Resume", skin);
         TextButton saveBtn = new TextButton("Save", skin);
+        TextButton loadBtn = new TextButton("Load", skin);
         TextButton restartBtn = new TextButton("Restart", skin);
         TextButton settingsBtn = new TextButton("Settings", skin);
         TextButton exitBtn = new TextButton("Main Menu", skin);
@@ -131,6 +132,13 @@ public class PauseMenuDisplay extends UIComponent {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 ServiceLocator.getSaveLoadService().save();
+            };
+        });
+
+        loadBtn.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                ServiceLocator.getSaveLoadService().load("saveFile.json");
             };
         });
 
@@ -169,6 +177,8 @@ public class PauseMenuDisplay extends UIComponent {
         buttonTable.add(resumeBtn).minWidth(250).minHeight(53).padTop(20);
         buttonTable.row();
         buttonTable.add(saveBtn).minWidth(250).minHeight(53).padTop(20);
+        buttonTable.row();
+        buttonTable.add(loadBtn).minWidth(250).minHeight(53).padTop(20);
         buttonTable.row();
         buttonTable.add(restartBtn).minWidth(250).minHeight(53).padTop(20);
         buttonTable.row();
