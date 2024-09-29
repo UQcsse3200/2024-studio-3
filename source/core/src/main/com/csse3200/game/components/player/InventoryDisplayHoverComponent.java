@@ -30,6 +30,7 @@ public class InventoryDisplayHoverComponent extends RenderComponent {
     private static final Logger logger = LoggerFactory.getLogger(InventoryDisplayHoverComponent.class);
     private ArrayList<Texture> itemImages;
     private Texture backgroundImage;
+    private Texture selectedBackgroundImage;
     private ShapeRenderer shapeRenderer;
     private Vector2 position;
     private Vector2 scale;
@@ -42,6 +43,7 @@ public class InventoryDisplayHoverComponent extends RenderComponent {
     public void create() {
         super.create();
         backgroundImage = new Texture("images/inventory_ui/item_background.png");
+        selectedBackgroundImage = new Texture("images/inventory_ui/item_background_selected.png");
         shapeRenderer = new ShapeRenderer();
         ServiceLocator.getRenderService().register(this);
 
@@ -94,12 +96,23 @@ public class InventoryDisplayHoverComponent extends RenderComponent {
         if (entity == null || position == null || scale == null)
             return;
         for (int i = 0; i < itemImages.size(); i++) {
-            batch.draw(backgroundImage,
+            // draw selected background image for the next item to be taken out
+            // (if there is more than 1 item displayed)
+            if (i == itemImages.size() - 1 && itemImages.size() > 1) {
+                batch.draw(selectedBackgroundImage,
                     position.x + X_OFFSET,
                     position.y + (i * slotHeight) + Y_OFFSET,
                     slotWidth,
                     slotHeight
-            );
+                );
+            } else {
+                batch.draw(backgroundImage,
+                    position.x + X_OFFSET,
+                    position.y + (i * slotHeight) + Y_OFFSET,
+                    slotWidth,
+                    slotHeight
+                );
+            }
             batch.draw(itemImages.get(i),
                 position.x + X_OFFSET + 0.1f,
                 position.y + (i * slotHeight) + Y_OFFSET + 0.1f,
