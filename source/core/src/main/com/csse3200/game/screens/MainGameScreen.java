@@ -65,6 +65,7 @@ public class MainGameScreen extends ScreenAdapter {
 			"images/red_overlay.jpg",
 			"images/red_fill.png",
 			"images/white_background.png",
+			//background daylight cycle assets
 			"images/background_images/1.0.png",
 			"images/background_images/1.5.png",
 			"images/background_images/2.0.png",

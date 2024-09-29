@@ -85,6 +85,9 @@ public class GameBackgroundDisplay extends UIComponent {
         setBackground();
     }
 
+    /**
+     * sets the background with the image currently stored in currentImage member variable
+     */
     private void setBackground() {
         Texture texture = ServiceLocator.getResourceService().getAsset(currentImage,
                 Texture.class);
@@ -106,12 +109,13 @@ public class GameBackgroundDisplay extends UIComponent {
         if (!lastFrame) {
             long elapsedTime = TimeUtils.timeSinceMillis(timeSinceLastUpdate);
             long elapsedTimeSecs = elapsedTime/1000;
+            //if time to update
             if (elapsedTimeSecs >= this.timePerFrame) {
                 this.currentImageIndex++;
                 this.currentImage = BACKGROUNDTEXTURES[currentImageIndex];
                 this.timeSinceLastUpdate = TimeUtils.millis();
-                table.clear();
-                setBackground();
+                table.clear(); //clears current background
+                setBackground(); //sets background to new image
                 System.out.println("Updated background to " + this.currentImage);
                 if (currentImageIndex >= 35) {
                     this.lastFrame = true; //stops updating when hits last frame of cycle
