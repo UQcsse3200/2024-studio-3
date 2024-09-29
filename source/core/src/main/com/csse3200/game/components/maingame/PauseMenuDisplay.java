@@ -114,6 +114,7 @@ public class PauseMenuDisplay extends UIComponent {
         Table buttonTable = new Table();
 
         TextButton resumeBtn = new TextButton("Resume", skin);
+        TextButton saveBtn = new TextButton("Save", skin);
         TextButton restartBtn = new TextButton("Restart", skin);
         TextButton settingsBtn = new TextButton("Settings", skin);
         TextButton exitBtn = new TextButton("Main Menu", skin);
@@ -124,6 +125,13 @@ public class PauseMenuDisplay extends UIComponent {
             public void clicked(InputEvent event, float x, float y) {
                 toggleVisibility();
             }
+        });
+
+        saveBtn.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                ServiceLocator.getSaveLoadService().save();
+            };
         });
 
         restartBtn.addListener(new ChangeListener() {
@@ -159,6 +167,8 @@ public class PauseMenuDisplay extends UIComponent {
         });
 
         buttonTable.add(resumeBtn).minWidth(250).minHeight(53).padTop(20);
+        buttonTable.row();
+        buttonTable.add(saveBtn).minWidth(250).minHeight(53).padTop(20);
         buttonTable.row();
         buttonTable.add(restartBtn).minWidth(250).minHeight(53).padTop(20);
         buttonTable.row();

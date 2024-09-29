@@ -42,6 +42,7 @@ import com.csse3200.game.entities.factories.ItemFactory;
 import com.csse3200.game.entities.factories.PlateFactory;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
+import com.csse3200.game.services.SaveLoadService;
 import com.csse3200.game.utils.math.GridPoint2Utils;
 
 
@@ -225,7 +226,7 @@ public class ForestGameArea extends GameArea {
     super();
     this.terrainFactory = terrainFactory;
     //this.textDisplay = textDisplay;
-
+    ServiceLocator.registerSaveLoadService(new SaveLoadService());
     ServiceLocator.registerGameArea(this);
   }
 

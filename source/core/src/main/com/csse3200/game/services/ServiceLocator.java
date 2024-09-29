@@ -35,19 +35,13 @@ public class ServiceLocator {
   private static MainGameScreen gameScreen;
   private static CutsceneScreen cutsceneScreen;
   private static MainMenuDisplay mainMenuDisplay;
-
   private static ResourceService resourceService;
-
   private static TicketDetails ticketDetails;
-  //Me new stuff :)
-
-
+  private static SaveLoadService saveLoadService;
   private static DocketService docketService;
   private static LevelService levelService;
-
   private static DayNightService dayNightService;
   private static OrderActions orderActions; //new
-
   // New services (e.g. CustomerMovementService, DialogueService)
   private static CustomerMovementService customerMovementService;
 
@@ -83,6 +77,7 @@ public class ServiceLocator {
     return docketService;
   }
 
+  public static SaveLoadService getSaveLoadService() {return saveLoadService;}
 
   public static TicketDetails getTicketDetails() {
     return ticketDetails;
@@ -211,7 +206,6 @@ public class ServiceLocator {
 
   }
 
-
   public static void registerMainMenuDisplay(MainMenuDisplay display) {
     mainMenuDisplay = display;
   }
@@ -243,6 +237,13 @@ public class ServiceLocator {
     customerMovementService = service;
   }
 
+  public static void registerSaveLoadService(SaveLoadService service) {
+    if (saveLoadService != null) {
+      logger.warn("SaveLoadService is being overwritten!");
+    }
+    saveLoadService = service;
+  }
+
 
   // Clear all services
   public static void clear() {
@@ -259,6 +260,7 @@ public class ServiceLocator {
     gameScreen = null;
     customerMovementService = null;
     dayNightService = null;
+    saveLoadService = null;
   }
 
   private ServiceLocator() {
