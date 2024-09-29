@@ -76,11 +76,11 @@ public class NPCFactory {
 
        public static Entity createUpgradeNPC(Entity target, Vector2 firstPosition, Vector2 secondPosition, UpgradesDisplay upgradesDisplay) {
 
-                Entity penguin = createBaseNPC(target, firstPosition);
-                AITaskComponent aiComponent = new AITaskComponent();
-                aiComponent
-                                .addTask(new PathFollowTask(firstPosition, 30))
-                                .addTask(new PathFollowTask(secondPosition, 30));
+                Entity penguin = createBaseCharacter(firstPosition);
+                // AITaskComponent aiComponent = new AITaskComponent();
+                // aiComponent
+                //                 .addTask(new PathFollowTask(firstPosition, 30))
+                //                 .addTask(new PathFollowTask(secondPosition, 30));
                 
                 // Animation setup
                 AnimationRenderComponent animator = new AnimationRenderComponent(
@@ -89,8 +89,8 @@ public class NPCFactory {
                 animator.addAnimation("walk", 0.3f, Animation.PlayMode.LOOP);
                 animator.addAnimation("turn", 0.3f, Animation.PlayMode.LOOP);
                 penguin.addComponent(animator)
-                        .addComponent(new SpecialNPCAnimationController())
-                        .addComponent(aiComponent);
+                        .addComponent(new SpecialNPCAnimationController());
+                        // .addComponent(aiComponent);
                 
                 // Make sure HoverBox is added
                 if (penguin.getComponent(HoverBoxComponent.class) == null) {
@@ -128,7 +128,7 @@ public class NPCFactory {
          * @return entity
          */
         public static Entity createGhostKing(Entity target, Vector2 targetPosition) {
-                Entity ghostKing = createBaseNPC(target, targetPosition);
+                Entity ghostKing = createStandard(targetPosition);
                 GhostKingConfig config = configs.ghostKing;
 
                 AnimationRenderComponent animator = new AnimationRenderComponent(
@@ -256,6 +256,23 @@ public class NPCFactory {
         }
 
         public static Entity createBaseCharacter(Vector2 targetPosition) {
+                AITaskComponent aiComponent = new AITaskComponent();
+                aiComponent
+                                .addTask(new PathFollowTask(targetPosition, 30)) // Default countdown
+                                .addTask(new TurnTask(10, 0.01f, 10f));
+                Entity npc = new Entity()
+                                .addComponent(new PhysicsComponent())
+                                .addComponent(new PhysicsMovementComponent())
+                                .addComponent(new ColliderComponent())
+                                .addComponent(new HitboxComponent().setLayer(PhysicsLayer.NPC))
+                                .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 1.5f))
+                                .addComponent(aiComponent);
+                PhysicsUtils.setScaledCollider(npc, 0.9f, 0.4f);
+                npc.getComponent(PhysicsComponent.class).getBody().setUserData("Customer");
+                return npc;
+        }
+
+        public static Entity createStandard(Vector2 targetPosition) {
                 AITaskComponent aiComponent = new AITaskComponent();
                 aiComponent
                                 .addTask(new PathFollowTask(targetPosition, 30)) // Default countdown

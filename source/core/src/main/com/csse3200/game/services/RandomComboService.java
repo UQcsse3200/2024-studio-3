@@ -57,6 +57,7 @@ public class RandomComboService extends Component {
     // Function call when YES button is pressed
     public void activateUpgrade() {
         eventHandler.trigger(getSelectedUpgrade()); 
+        
     }
 
     public EventHandler getEvents() {

@@ -881,7 +881,7 @@ public class ForestGameArea extends GameArea {
   // Spawn Upgrade NPC
   private void spawnPenguin(UpgradesDisplay upgradesDisplay) {
     GridPoint2 position = new GridPoint2(1, 5);
-    Vector2 targetPos = new Vector2(1, 4);
+    Vector2 targetPos = new Vector2(2, 6);
     Vector2 targetPos2 = new Vector2(2, 0);
 
     // Create the penguin entity
@@ -889,7 +889,7 @@ public class ForestGameArea extends GameArea {
 
 
     // Spawn the penguin at the desired position
-    spawnEntityAt(penguin, position, true, true);
+    spawnEntityAt(penguin, position, false, false);
 
 }
 

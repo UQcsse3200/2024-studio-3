@@ -73,7 +73,7 @@ public class SpeedBootsUpgrade extends UIComponent implements Upgrade {
      * Activate the speed boot and decrement the cost.
      */
     public void activate() {
-        if (!isActivate && boostStartTime == -1 && combatStatsComponent.getGold() >= 20) {
+        if (!isActivate && boostStartTime == -1 && combatStatsComponent.getGold() >= 200) {
             keyboardPlayerInputComponent.setWalkSpeed(BOOSTED_SPEED);
             activeTimeRemaining = BOOST_DURATION;
             speedCost();
@@ -81,6 +81,9 @@ public class SpeedBootsUpgrade extends UIComponent implements Upgrade {
             isVisible = true;
             layout.setVisible(true);
             setupSpeedMeter();
+        }
+        else{
+            ServiceLocator.getRandomComboService().getEvents().trigger("notenoughmoney");
         }
     }
 

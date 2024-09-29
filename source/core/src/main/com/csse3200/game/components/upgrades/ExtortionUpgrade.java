@@ -36,13 +36,19 @@ public class ExtortionUpgrade implements Upgrade {
      * Activates the extortion upgrade
      */
     public void activate() {
-        this.actviateTime = gameTime.getTime();
-        this.isActive = true;
+        
 
         //Placeholder for halving reputation; subtract gold instead
-        if (combatStatsComponent.getGold() >= 40) combatStatsComponent.addGold(-40);
-        //Upon activation, double gold from orders
-        getTickets().goldMultiplier = 2;
+        if (combatStatsComponent.getGold() >= 40){
+            this.actviateTime = gameTime.getTime();
+            this.isActive = true;
+            combatStatsComponent.addGold(-40);
+            //Upon activation, double gold from orders
+            getTickets().goldMultiplier = 2;
+        }
+        else{
+            ServiceLocator.getRandomComboService().getEvents().trigger("notenoughmoney");
+        }
     }
 
     /**

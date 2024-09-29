@@ -19,7 +19,14 @@ public class LoanUpgrade extends Component implements Upgrade {
         ServiceLocator.getRandomComboService().getEvents().addListener("Loan", this::activate); 
     }
 
-    public void activate() { combatStatsComponent.addGold(100); }
+    public void activate() { 
+        if(combatStatsComponent.getGold() >= 200){
+            combatStatsComponent.addGold(100); 
+        }
+        else{
+        ServiceLocator.getRandomComboService().getEvents().trigger("notenoughmoney"); 
+        }
+    }
 
     public void deactivate() {}
 

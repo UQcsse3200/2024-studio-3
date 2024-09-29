@@ -15,6 +15,7 @@ import java.util.Random;
 public class DayNightService {
     private static final Logger logger = LoggerFactory.getLogger(DayNightService.class);
     public  long FIVE_MINUTES = 5 * 60 * 1000; // 5 minutes in milliseconds
+    public  long SEVENTY_FIVE_PERCENT = (long) (FIVE_MINUTES * 0.75);
     public long lastCheckTime;
     public long lastCheckTime2;
     public long lastCheckTime3;
@@ -50,7 +51,8 @@ public class DayNightService {
         this.lastCheckTime2 = gameTime.getTime();
         this.lastCheckTime3 = gameTime.getTime();
         this.random = new Random();
-        randomChoice = random.nextInt(10) * 1000;
+        randomChoice = random.nextInt(3) * 1000;
+        // randomChoice = random.nextInt((int) SEVENTY_FIVE_PERCENT); 
         System.out.println(randomChoice + "/////////////////////////////////////////////////");
         
 

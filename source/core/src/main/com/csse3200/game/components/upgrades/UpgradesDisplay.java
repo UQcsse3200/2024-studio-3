@@ -73,6 +73,7 @@ public class UpgradesDisplay extends UIComponent {
         backgroundImage.setVisible(false);
 
         return backgroundImage;
+
     }
 
 
@@ -98,7 +99,7 @@ public class UpgradesDisplay extends UIComponent {
 
         Table button = createButtonsTable();
         upgradesTable.addActor(button);
-
+ 
         // Uncomment this sometimes will throw an error
         addUpgradeImage();
 
@@ -118,6 +119,8 @@ public class UpgradesDisplay extends UIComponent {
                 return false;
             }
         });
+
+        ServiceLocator.getRandomComboService().getEvents().addListener("notenoughmoney", ()->{System.out.println("YOU DO NOT HAVE ENOUGH MONEY");});
     }
 
     public void addUpgradeImage() {
