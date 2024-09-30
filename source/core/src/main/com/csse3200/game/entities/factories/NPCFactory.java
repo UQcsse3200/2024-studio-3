@@ -74,13 +74,12 @@ public class NPCFactory {
 
 
 
-       public static Entity createUpgradeNPC(Entity target, Vector2 firstPosition, Vector2 secondPosition, UpgradesDisplay upgradesDisplay) {
+       public static Entity createUpgradeNPC(Vector2 firstPosition, UpgradesDisplay upgradesDisplay) {
 
-                Entity penguin = createBaseCharacter(firstPosition);
-                // AITaskComponent aiComponent = new AITaskComponent();
-                // aiComponent
-                //                 .addTask(new PathFollowTask(firstPosition, 30))
-                //                 .addTask(new PathFollowTask(secondPosition, 30));
+                Entity penguin = createStandard(firstPosition);
+                AITaskComponent aiComponent = new AITaskComponent();
+                aiComponent
+                                .addTask(new PathFollowTask(firstPosition, 30));
                 
                 // Animation setup
                 AnimationRenderComponent animator = new AnimationRenderComponent(
@@ -89,13 +88,27 @@ public class NPCFactory {
                 animator.addAnimation("walk", 0.3f, Animation.PlayMode.LOOP);
                 animator.addAnimation("turn", 0.3f, Animation.PlayMode.LOOP);
                 penguin.addComponent(animator)
-                        .addComponent(new SpecialNPCAnimationController());
-                        // .addComponent(aiComponent);
+                        .addComponent(new SpecialNPCAnimationController())
+                        .addComponent(aiComponent);
                 
-                // Make sure HoverBox is added
-                if (penguin.getComponent(HoverBoxComponent.class) == null) {
-                        penguin.addComponent(new HoverBoxComponent(new Texture("images/special_NPCs/upgrade_sign.png")));
-                }
+                penguin.getEvents().addListener("reachDestination", () -> {
+                        logger.info("Penguin has reached its destination and will be disposed of.");
+                        penguin.dispose();  // Dispose of the penguin entity
+                        });
+
+                // if (penguin.getComponent(HoverBoxComponent.class) == null) {
+                        // penguin.addComponent(new HoverBoxComponent(new Texture("images/special_NPCs/upgrade_sign.png")));
+                final boolean[] isHoverBox = {false};
+                HoverBoxComponent hoverBox = new HoverBoxComponent(new Texture("images/special_NPCs/upgrade_sign.png"));
+                hoverBox.setEnabled(false);  // Disable hover box visibility initially
+                penguin.addComponent(hoverBox);
+                        
+                penguin.getEvents().addListener("ready", () -> {
+                        hoverBox.setEnabled(true);
+                        isHoverBox[0] = true; 
+                        });
+
+                
                 
                 // Add TouchPlayerInputComponent for click detection
                 penguin.addComponent(new TouchPlayerInputComponent());
@@ -103,10 +116,14 @@ public class NPCFactory {
                 
                 // Add a click event listener for the penguin
                 penguin.getEvents().addListener("clicked", () -> {
-                        if (!isClicked[0]) {
+                        if (!isClicked[0] && isHoverBox[0]) {
+                                hoverBox.setEnabled(false);
                                 logger.info("Penguin clicked!");
                                 upgradesDisplay.create();
                                 upgradesDisplay.toggleVisibility();
+                                if(!upgradesDisplay.isVisible){
+                                        penguin.dispose(); 
+                                }
                                 isClicked[0] = true;  
                             } else {
                                 logger.info("Penguin has already been clicked, ignoring.");
@@ -275,15 +292,15 @@ public class NPCFactory {
         public static Entity createStandard(Vector2 targetPosition) {
                 AITaskComponent aiComponent = new AITaskComponent();
                 aiComponent
-                                .addTask(new PathFollowTask(targetPosition, 30)) // Default countdown
-                                .addTask(new TurnTask(10, 0.01f, 10f));
+                                .addTask(new PathFollowTask(targetPosition, 30)); // Default countdown
+                //                 .addTask(new TurnTask(10, 0.01f, 10f));
                 Entity npc = new Entity()
                                 .addComponent(new PhysicsComponent())
                                 .addComponent(new PhysicsMovementComponent())
                                 .addComponent(new ColliderComponent())
                                 .addComponent(new HitboxComponent().setLayer(PhysicsLayer.NPC))
-                                .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 1.5f))
-                                .addComponent(aiComponent);
+                                .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 1.5f));
+                                // .addComponent(aiComponent);
                 PhysicsUtils.setScaledCollider(npc, 0.9f, 0.4f);
                 npc.getComponent(PhysicsComponent.class).getBody().setUserData("Customer");
                 return npc;

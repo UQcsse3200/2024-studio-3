@@ -260,6 +260,7 @@ public class ForestGameArea extends GameArea {
     player = spawnPlayer();
     ServiceLocator.getDayNightService().getEvents().addListener("upgrade", () -> {
       spawnPenguin(upgradesDisplay);});
+      
     
 
     // Check and trigger win/lose state
@@ -879,13 +880,12 @@ public class ForestGameArea extends GameArea {
   }
 
   // Spawn Upgrade NPC
-  private void spawnPenguin(UpgradesDisplay upgradesDisplay) {
-    GridPoint2 position = new GridPoint2(1, 5);
-    Vector2 targetPos = new Vector2(2, 6);
-    Vector2 targetPos2 = new Vector2(2, 0);
-
+  private void spawnPenguin(UpgradesDisplay upgradesDisplay){
+    GridPoint2 position = new GridPoint2(0, 5);
+    
+    Vector2 targetPos = new Vector2(1, 0);
     // Create the penguin entity
-    Entity penguin = NPCFactory.createUpgradeNPC(player, targetPos, targetPos2, upgradesDisplay);
+    Entity penguin = NPCFactory.createUpgradeNPC(targetPos, upgradesDisplay);
 
 
     // Spawn the penguin at the desired position

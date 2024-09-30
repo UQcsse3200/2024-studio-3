@@ -33,7 +33,7 @@ public class UpgradesDisplay extends UIComponent {
     private static final Logger logger = LoggerFactory.getLogger(PauseMenuDisplay.class);
 
     private Image upgradesMenuImage;
-    private boolean isVisible = false;
+    public boolean isVisible = false;
     private List<Image> upgradeImages; // this is to store all the upgrades images
     private Table upgradesTable;
     private Image upgradeImage;
