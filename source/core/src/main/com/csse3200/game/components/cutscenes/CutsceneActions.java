@@ -8,43 +8,78 @@ import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * Handles user actions during cutscenes. Allows for transitioning between scenes,
+ * skipping cutscenes, and exiting to the main menu based on user input.
+ */
 public class CutsceneActions extends Component {
-    private static  final Logger logger = LoggerFactory.getLogger(CutsceneActions.class);
+    private static final Logger logger = LoggerFactory.getLogger(CutsceneActions.class);
+
+    // Reference to the main game instance
     private GdxGame game;
+
+    // Service for handling user input
     private InputService inputService;
 
-    public CutsceneActions(GdxGame game) {this.game = game;}
+    /**
+     * Constructor for CutsceneActions.
+     * @param game The current instance of the game
+     */
+    public CutsceneActions(GdxGame game) {
+        this.game = game;
+    }
 
+    /**
+     * Initializes the component, setting up event listeners for cutscene events and retrieving input service.
+     */
     @Override
     public void create() {
-        entity.getEvents().addListener("nextCutscene", this::nextCutscene);
-        entity.getEvents().addListener("cutsceneEnded", this::nextCutscene);
+        entity.getEvents().addListener("cutsceneEnded", this::cutsceneEnded);
         entity.getEvents().addListener("exitCutscene", this::exitCutscene);
+        entity.getEvents().addListener("nextCutscene", this::nextCutscene);
         inputService = ServiceLocator.getInputService();
     }
 
+    /**
+     * Checks for user input during cutscenes, specifically the space bar to skip to the next scene
+     * or the backspace key to exit to the main menu.
+     */
     @Override
     public void update() {
-        // Check for space bar press
+        // Check if the space bar is pressed to skip the current cutscene or move to the next scene
         if (inputService.keyDown(Input.Keys.SPACE)) {
             logger.debug("Space bar pressed. Moving to next cutscene or level.");
-            nextCutscene();
+            cutsceneEnded(); // Trigger the end of the current cutscene
         }
-        if (inputService.keyDown(Input.Keys.BACKSPACE)){
-            logger.debug("Backspace bar pressed. Moving to the main menu");
-            exitCutscene();
+
+        // Check if the backspace key is pressed to exit the cutscene and return to the main menu
+        if (inputService.keyDown(Input.Keys.BACKSPACE)) {
+            logger.debug("Backspace bar pressed. Moving to the main menu.");
+            exitCutscene(); // Exit the cutscene and go back to the main menu
         }
     }
 
+    /**
+     * Loads the next cutscene in the sequence.
+     */
     private void nextCutscene() {
+        ServiceLocator.getCurrentCutscene().nextCutscene();
+    }
+
+    /**
+     * Ends the current cutscene and transitions to the next level or cutscene in the game.
+     */
+    private void cutsceneEnded() {
         logger.debug("Transitioning to next cutscene or game level.");
-        // Need better logic to determine which level of the game it should be on.
-        // Could also end up transitioning to the next cutscene maybe
+        // Logic for determining what the next screen should be (either next level or cutscene).
         game.setScreen(GdxGame.ScreenType.MAIN_GAME);
     }
 
+    /**
+     * Exits the cutscene and returns to the main menu.
+     */
     private void exitCutscene() {
-        logger.debug("Transitioning to main menu");
+        logger.debug("Transitioning to main menu.");
         game.setScreen(GdxGame.ScreenType.MAIN_MENU);
     }
 

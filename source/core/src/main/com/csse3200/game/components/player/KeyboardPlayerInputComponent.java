@@ -39,8 +39,6 @@ public class KeyboardPlayerInputComponent extends InputComponent {
     keyFlags.put(keycode, 1);
 
     if (keycode == Keys.O) {
-      System.out.println("O clicked");
-
       entity.getEvents().trigger("createOrder");
       return true;
     }
@@ -48,7 +46,15 @@ public class KeyboardPlayerInputComponent extends InputComponent {
     
     if (keycode == Keys.E) {
       // Trigger an interaction attempt
-      entity.getEvents().trigger("interact");
+      entity.getEvents().trigger("interact", "default");
+      return true;
+    } else if (keycode == Keys.J) {
+      // Trigger an attempt to combine existing items in a mixing station
+      entity.getEvents().trigger("interact", "combine");
+      return true;
+    } else if (keycode == Keys.K) {
+      // Trigger an attempt to rotate inventory of a station to update item display
+      entity.getEvents().trigger("interact", "rotate");
       return true;
     }
 
@@ -77,6 +83,9 @@ public class KeyboardPlayerInputComponent extends InputComponent {
         case Keys.P:
           ServiceLocator.getEntityService().getEvents().trigger("toggleEndDayScreen");
           return true;
+          case Keys.L:
+              ServiceLocator.getEntityService().getEvents().trigger("leaveEarly");
+              return true;
       }
     }
 
