@@ -163,8 +163,7 @@ public class StationItemHandlerComponent extends Component {
                 break;
             case "cutting board": // Fall through
             case "blender":
-                //choppingStationRecieveItem();
-                break;
+                break; // Don't do anything since chopping is manual now :)
             default:
                 break;
         }
@@ -184,22 +183,6 @@ public class StationItemHandlerComponent extends Component {
 
         // We know item exists and is cookable
         entity.getEvents().trigger("Cook Ingredient");
-    }
-
-    /**
-     * Function to be called when a chopping station recieves the item
-     */
-    private void choppingStationRecieveItem() {
-        // First check the item is actually available and working
-        ItemComponent item = inventoryComponent.getItemFirst();
-
-        if (item.getEntity().getComponent(IngredientComponent.class) == null
-                || !item.getEntity().getComponent(IngredientComponent.class).getIsChoppable()) {
-            return; // Item doesn't exit or isn't choppable
-        }
-
-        // We know item exits and is choppable
-        entity.getEvents().trigger("Chop Ingredient");
     }
 
     /**
