@@ -42,8 +42,8 @@ public class StationProgressDisplay extends RenderComponent {
     private InventoryComponent stationInventory;
     private static final float X_OFFSET = 0.0f;
     private static final float Y_OFFSET = 0.05F;
-    private static final float barMaxWidth = 1.0f;
-    private static final float barHeight = 0.2f;
+    private final float barMaxWidth = 1.0f;
+    private final float barHeight = 0.2f;
 
 
     @Override
@@ -68,6 +68,7 @@ public class StationProgressDisplay extends RenderComponent {
     public void update() {
         super.update();
         if (entity != null) {
+
             ItemComponent item = entity.getComponent(StationItemHandlerComponent.class).peek();
             if (item != null) {
                 //N! more error handling required
@@ -81,9 +82,14 @@ public class StationProgressDisplay extends RenderComponent {
                 if (timerItem != null) {
                     // if there is a chop or cook component, get the completion percent
                     barPercentage = timerItem.getCompletionPercent() / 100;
+                    logger.info(String.valueOf(barPercentage));
                     if (barPercentage < 1.0f) {
                         // if completion percent is less than 100%, then display the
                         // progress bar
+                        displayBar = true;
+                    } else if (barPercentage >= 1.0f && timerItem instanceof CookIngredientComponent
+                            && ((CookIngredientComponent) timerItem).getIsCooking()) {
+                        barPercentage = 1.0f;
                         displayBar = true;
                     } else {
                         displayBar = false;
@@ -122,6 +128,11 @@ public class StationProgressDisplay extends RenderComponent {
     public void dispose() {
         super.dispose();
         ServiceLocator.getRenderService().unregister(this);
+    }
+
+    @Override
+    public int getLayer() {
+        return 2; // currently overlays the player, but decreasing this to 1 makes it hide behind the stations
     }
 
     @Override

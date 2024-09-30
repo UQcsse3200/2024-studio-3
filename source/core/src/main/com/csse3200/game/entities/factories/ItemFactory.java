@@ -56,7 +56,7 @@ public class ItemFactory {
         Entity banana = new Entity()
                 .addComponent(new IngredientComponent("banana", ItemType.BANANA, 1, 3,
                         10, chopLevel))
-                .addComponent(new CookIngredientComponent());
+                .addComponent(new ChopIngredientComponent());
 
         return banana;
     }
