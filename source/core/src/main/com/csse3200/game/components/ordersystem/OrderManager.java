@@ -71,6 +71,6 @@ public class OrderManager {
             case "steakMeal" -> ServiceLocator.getEntityService().getEvents().trigger("createSteakDocket");
             case "bananaSplit" -> ServiceLocator.getEntityService().getEvents().trigger("createBananaDocket");
             default -> logger.error("No recipe found for preference: " + preference);
-        };
+        }
     }
 }

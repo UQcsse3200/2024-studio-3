@@ -48,14 +48,19 @@ public class MainGameActions extends Component {
     }
 
     private void onCreateAcai() {
+        logger.info("making Acai");
         onCreateOrder(RecipeNameEnums.ACAI_BOWL.getRecipeName());
     }private void onCreateBanana() {
+        logger.info("making Banana");
         onCreateOrder(RecipeNameEnums.BANANA_SPLIT.getRecipeName());
     }private void onCreateSalad() {
+        logger.info("making Salad");
         onCreateOrder(RecipeNameEnums.SALAD.getRecipeName());
     }private void onCreateSteak() {
+        logger.info("making Steak");
         onCreateOrder(RecipeNameEnums.STEAK_MEAL.getRecipeName());
     }private void onCreateFruitSalad() {
+        logger.info("making fruit salad");
         onCreateOrder(RecipeNameEnums.FRUIT_SALAD.getRecipeName());
     }
 
@@ -67,6 +72,10 @@ public class MainGameActions extends Component {
                 logger.warn("No recipe preference set. Falling back to random recipe.");
                 preferredRecipe = RECIPE_NAMES[new Random().nextInt(RECIPE_NAMES.length)];
             }
+//            if (orderCount > 0) {
+//                docketDisplayer.removeBigTicket();
+//            }
+
             docketDisplayer.setRecipe(preferredRecipe);
             docketDisplayer.setStage(ServiceLocator.getRenderService().getStage());
             docketDisplayer.addActors();
