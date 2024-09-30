@@ -3,6 +3,8 @@ package com.csse3200.game.components.items;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.csse3200.game.services.ServiceLocator;
+
 /**
  * The ChopIngredientComponent handles the chopping process for an ingredient in the game.
  * It manages the state of chopped, determines when the chopping is complete, and triggers

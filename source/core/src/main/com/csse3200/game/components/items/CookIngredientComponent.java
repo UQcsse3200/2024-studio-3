@@ -3,6 +3,8 @@ package com.csse3200.game.components.items;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.csse3200.game.services.ServiceLocator;
+
 /**
  * The CookIngredientComponent handles the cooking process for an ingredient in the game.
  * It manages the state of cooking, determines when the cooking is complete, and triggers
@@ -28,8 +30,8 @@ public class CookIngredientComponent extends ItemTimerComponent {
     public void create() {
         super.create();
         // On creation add triggers for rage mode to the timer
-        entity.getEvents().addListener("rageModeOn", this::rageModeOn);
-        entity.getEvents().addListener("rageModeOff", this::rageModeOff);
+         ServiceLocator.getEntityService().getEvents().addListener("rageModeOn", this::rageModeOn);
+        ServiceLocator.getEntityService().getEvents().addListener("rageModeOff", this::rageModeOff);
 
         // Add appriopriate event listeners
         entity.getEvents().addListener("cookIngredient", this::startTimer);

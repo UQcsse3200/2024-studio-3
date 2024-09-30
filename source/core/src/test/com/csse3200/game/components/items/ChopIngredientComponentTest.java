@@ -93,4 +93,20 @@ public class ChopIngredientComponentTest {
         assertFalse(chopIngredientComponent.getIsChopping());
     }
 
+    @Test
+    public void testRageMode() {
+        when(mockTimesource.getTime()).thenReturn(1000L, 6000L);
+        when(mockIngredient.getChopTime()).thenReturn(10);
+        mockEntity.create();
+
+        ServiceLocator.getEntityService().getEvents().trigger("rageModeOn");
+
+        mockEntity.getEvents().trigger("chopIngredient");
+        
+        chopIngredientComponent.update(); // This should trigger chopping
+
+        // ingredient is chopped
+        verify(mockIngredient).chopItem();
+    }
+
 }

@@ -126,6 +126,23 @@ public class CookIngredientComponentTest {
         verify(mockIngredient).burnItem();
         assertFalse(cookIngredientComponent.getIsCooking());
     }
+
+    @Test
+    public void testRageMode() {
+        when(mockTimesource.getTime()).thenReturn(1000L, 6000L);
+        when(mockIngredient.getCookTime()).thenReturn(10);
+        mockEntity.create();
+
+        ServiceLocator.getEntityService().getEvents().trigger("rageModeOn");
+
+        mockEntity.getEvents().trigger("cookIngredient");
+        
+        cookIngredientComponent.update(); // This should trigger chopping
+
+        // ingredient is chopped
+        verify(mockIngredient).cookItem();
+
+    }
 }
 
 
