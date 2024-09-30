@@ -26,24 +26,18 @@ public class SaveLoadService {
     /**
      * Saves the current state of the game into a GameState and writes to the path given
      */
-    public void save(String path) {
-        // Make a new GameState
+    public void save() {
         GameState state = new GameState();
-
         state.setMoney(75);
         state.setDay(2);
-
-        FileLoader.writeClass(state, path, Location.LOCAL);
-
-        logger.debug("The current game state has been saved to the file assets/saves/saveFile.json");
-    }
-
-    public void save() {
-
-        save(ROOT_DIR + File.separator + SAVE_FILE);
+        FileLoader.writeClass(state, (ROOT_DIR + File.separator + SAVE_FILE), Location.LOCAL);
         ServiceLocator.getEntityService().getEvents().trigger("togglePause");
     }
 
+    /**
+     * Loads a gamestate given the file for said gamestate
+     * @param file - the string which is the name of the file
+     */
     public void load(String file) {
         GameState state = FileLoader.readClass(GameState.class, ROOT_DIR + File.separator + file, Location.LOCAL);
         UpdateStats(state);
