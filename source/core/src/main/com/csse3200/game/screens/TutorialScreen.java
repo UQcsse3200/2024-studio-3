@@ -43,7 +43,7 @@ public class TutorialScreen extends ScreenAdapter {
     private static final String[] mainGameTextures = {
             "images/heart.png",
             "images/ordersystem/docket_background.png",
-            "images/ordersystem/pin_line.png",
+            "images/ordersystem/pin_line2.png",
             "images/bird.png",
             "images/textbox.png",
             "images/inventory_ui/slot.png",
