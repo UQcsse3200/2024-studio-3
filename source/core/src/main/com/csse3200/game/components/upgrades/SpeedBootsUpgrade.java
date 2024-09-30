@@ -74,7 +74,7 @@ public class SpeedBootsUpgrade extends UIComponent implements Upgrade {
      */
     public void activate() {
         // Change back to 20 after testing
-        if (!isActivate && boostStartTime == -1 && combatStatsComponent.getGold() >= 200) {
+        if (!isActivate && boostStartTime == -1 && combatStatsComponent.getGold() >= 20) {
             keyboardPlayerInputComponent.setWalkSpeed(BOOSTED_SPEED);
             activeTimeRemaining = BOOST_DURATION;
             speedCost();

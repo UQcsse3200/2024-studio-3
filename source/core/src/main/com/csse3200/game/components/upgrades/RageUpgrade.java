@@ -68,6 +68,9 @@ public class RageUpgrade extends UIComponent implements Upgrade {
         ServiceLocator.getRandomComboService().getEvents().addListener("Rage", this::activate); 
     }
 
+    /**
+     * Create a red overlay image.
+     */
     private void setupRedOverlay() {
         // https://www.freepik.com/free-vector/grunge-red-distressed-textured-background_4043545.htm#query=
         // red%20overlay&position=32&from_view=keyword&track=ais_hybrid&uuid=5e1656db-c1a1-483b-b846-d3d666207271
@@ -79,6 +82,9 @@ public class RageUpgrade extends UIComponent implements Upgrade {
         layout.add(image);
     }
 
+    /**
+     * Set up the meter to display the time when rage is activate
+     */
     private void setupRageMeter() {
         // Made textures in Paint
         Texture whiteTexture = ServiceLocator.getResourceService().getAsset("images/white_background.png", Texture.class);

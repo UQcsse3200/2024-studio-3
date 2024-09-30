@@ -56,6 +56,10 @@ public class UpgradesDisplay extends UIComponent {
     }
 
 
+    /**
+     * Create the upgrade menu to allow user to see which upgrade is generated
+     * @return The upgrade menu background image
+     */
     private Image createUpgradesMenuDisplay() {
         Texture pauseMenuTexture = ServiceLocator
                 .getResourceService().getAsset("images/Upgrade_display.png", Texture.class);
@@ -93,7 +97,7 @@ public class UpgradesDisplay extends UIComponent {
         stage.addActor(upgradesMenuImage);
 
         upgradesTable = new Table();
-        upgradesTable.setFillParent(false);  // if set to true it will take the whole screem
+        upgradesTable.setFillParent(false);  // if set to true it will take the whole screen
         upgradesTable.setSize(400, 300);
         upgradesTable.setPosition(
                 upgradesMenuImage.getX() + 100,
@@ -103,7 +107,6 @@ public class UpgradesDisplay extends UIComponent {
         Table button = createButtonsTable();
         upgradesTable.addActor(button);
  
-        // Uncomment this sometimes will throw an error
         addUpgradeImage();
 
 
@@ -122,11 +125,12 @@ public class UpgradesDisplay extends UIComponent {
                 return false;
             }
         });
-        // change to this::<function name>
-        //displayNotEnoughGoldUI();
         ServiceLocator.getRandomComboService().getEvents().addListener("notenoughmoney", this::displayNotEnoughGoldUI);
     }
 
+    /**
+     * Add associated upgrade image based on the generated upgrade
+     */
     public void addUpgradeImage() {
 //        upgradesTable.clearChildren();
         String upgrade = ServiceLocator.getRandomComboService().getSelectedUpgrade();
@@ -178,6 +182,10 @@ public class UpgradesDisplay extends UIComponent {
 //        return upgradeImage;
 //    }
 
+    /**
+     * Allowing user to decide whether the upgrade is needed or not by pressing YES or NO button
+     * @return The table with buttons
+     */
     private Table createButtonsTable() {
         Table buttonTable = new Table();
 
@@ -212,6 +220,9 @@ public class UpgradesDisplay extends UIComponent {
         return buttonTable;
     }
 
+    /**
+     * Display a message when the user does not have enough gold to purchase the upgrade
+     */
     public void displayNotEnoughGoldUI() {
 
         Texture notEnoughGoldTexture = ServiceLocator.getResourceService()
