@@ -19,6 +19,7 @@ public class Docket extends UIComponent {
     private int cellHash;
     private long startTime;
     long totalRecipeTime;
+    private boolean isPaused = false;
 
     /**
      * Constructs a docket component and initialises its skin.
@@ -118,6 +119,14 @@ public class Docket extends UIComponent {
         return startTime;
     }
 
+    public void setPaused(boolean paused) {
+        this.isPaused = paused;
+    }
+
+    public boolean getPaused() {
+        return isPaused;
+    }
+
     /**
      * Updates the texture of the docket based on the remaining time before it disposes.
      * As the remaining time decreases, the texture changes to indicate the time state
@@ -125,6 +134,10 @@ public class Docket extends UIComponent {
      * @param remainingTimeSecs the remaining time in seconds
      */
     public void updateDocketTexture(double remainingTimeSecs) {
+        if (isPaused){
+            return;
+        }
+
         if (remainingTimeSecs >= this.totalRecipeTime * 0.6) {
             docket.setDrawable(docketSkin.getDrawable(textureNameArray[0]));
         } else if (remainingTimeSecs >= this.totalRecipeTime * 0.3) {
