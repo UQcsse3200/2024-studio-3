@@ -53,16 +53,11 @@ public class OrderManager {
             return;
         }
 
-        // Temporarily create docket when customer spawns
-        // TODO: create docket when player takes order from customer
-        ServiceLocator.getEntityService().getEvents().trigger("createOrder", preference);
-
         Recipe recipe = getRecipe(preference);
         if (recipe != null) {
             logger.info("Displaying order for preference: " + preference);
             logger.info("Ingredients: " + recipe.getIngredients());
             logger.info("Making Time: " + recipe.getMakingTime());
-            // Add more UI logic here, if needed
         }
         switch (customerComponent.getPreference()){
             case "acaiBowl" -> ServiceLocator.getEntityService().getEvents().trigger("createAcaiDocket");

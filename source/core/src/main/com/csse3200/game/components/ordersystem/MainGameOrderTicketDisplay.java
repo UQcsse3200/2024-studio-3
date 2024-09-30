@@ -116,7 +116,7 @@ public class MainGameOrderTicketDisplay extends UIComponent {
     @Override
     public void create() {
         super.create();
-        entity.getEvents().addListener("createOrder", this::addActors);
+        //entity.getEvents().addListener("createOrder", this::addActors);
         ServiceLocator.getDocketService().getEvents().addListener("shiftDocketsLeft", this::shiftDocketsLeft);
         ServiceLocator.getDocketService().getEvents().addListener("shiftDocketsRight", this::shiftDocketsRight);
         // logger.info("Listeners added for shiftDocketsLeft and shiftDocketsRight events");
@@ -143,6 +143,7 @@ public class MainGameOrderTicketDisplay extends UIComponent {
      * Initialises the background, labels, and countdown timer for the order.
      */
     public void addActors() {
+        logger.info("Adding actors");
         Table table = new Table();
         long startTime = TimeUtils.millis();
 

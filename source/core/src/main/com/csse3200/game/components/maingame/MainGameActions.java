@@ -33,7 +33,6 @@ public class MainGameActions extends Component {
     @Override
     public void create() {
         entity.getEvents().addListener("exit", this::onExit);
-        ServiceLocator.getEntityService().getEvents().addListener("createOrder", this::onCreateOrder);
         ServiceLocator.getEntityService().getEvents().addListener("createAcaiDocket", this::onCreateAcai);
         ServiceLocator.getEntityService().getEvents().addListener("createBananaDocket", this::onCreateBanana);
         ServiceLocator.getEntityService().getEvents().addListener("createSaladDocket", this::onCreateSalad);
@@ -65,6 +64,7 @@ public class MainGameActions extends Component {
     }
 
     private void onCreateOrder(String preferredRecipe) {
+        logger.info("creating order");
         int orderCount = MainGameOrderTicketDisplay.getTableArrayList().size();
         if (orderCount < ORDER_LIMIT) {
 //            String preferredRecipe = getPreferredRecipeFromSpawningAnimals();
