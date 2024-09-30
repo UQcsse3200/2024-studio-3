@@ -352,7 +352,9 @@ public class ForestGameArea extends GameArea {
 
 
   }
-
+  /**
+   * Spawns the border around the restaurant
+   */
   private void new_border(){
     GridPoint2 coords = new GridPoint2(0,0);
     Vector2 pos;

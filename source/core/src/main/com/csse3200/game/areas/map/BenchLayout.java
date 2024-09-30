@@ -24,6 +24,10 @@ import java.util.logging.Level;
  */
 public class BenchLayout {
     static final Logger LOGGER = Logger.getLogger(BenchLayout.class.getPackage().getName());
+    /**
+     * Create a level one bench layout
+     * @return ArrayList of benches
+     */
     public static ArrayList<Bench> levelOne() {
         ArrayList<Bench> benches = new ArrayList<Bench>();
         // Bottom bench row
