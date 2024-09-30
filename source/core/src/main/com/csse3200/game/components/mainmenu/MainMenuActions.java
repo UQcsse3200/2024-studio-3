@@ -1,11 +1,15 @@
 package com.csse3200.game.components.mainmenu;
 
+import com.badlogic.gdx.Gdx;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.components.Component;
+import com.csse3200.game.components.tutorial.Confirmationpopup;
 import com.csse3200.game.screens.TutorialScreen;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.csse3200.game.services.ServiceLocator;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 /**
  * This class listens to events relevant to the Main Menu Screen and does something when one of the
@@ -34,7 +38,10 @@ public class MainMenuActions extends Component {
    */
   private void onStart() {
     logger.info("Start game");
-    game.setScreen(GdxGame.ScreenType.MAIN_GAME);
+    Stage stage = ServiceLocator.getRenderService().getStage();
+    Skin skin = new Skin(Gdx.files.internal("flat-earth/skin/flat-earth-ui.json"));
+    new Confirmationpopup("Game Tuto Confirm", skin, stage, game);
+
   }
 
   /**
