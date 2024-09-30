@@ -132,8 +132,6 @@ public class StationItemHandlerComponent extends Component {
         boolean isChopping = item.getComponent(ChopIngredientComponent.class) != null
         && item.getComponent(ChopIngredientComponent.class).getIsChopping();
 
-        System.out.println("IS CHOPPING" + isChopping);
-
         // Do some action based on if its chopping or not
         if (!isChopping) {
             // Start chopping the ingredient
