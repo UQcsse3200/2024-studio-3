@@ -13,13 +13,19 @@ import com.csse3200.game.services.ServiceLocator;
  */
 public abstract class ItemTimerComponent extends Component {
 
+    // The base time multiplier
+    private static final long BASE_MULTIPLIER = 1;
+  
+    // The multiplier for rage mode
+    private static final long RAGE_MODE_MULTIPLIER = 2;
+  
     /**
      * Class member variables.
-     * @param gameTime the global gametime service
-     * @param length finishing time of the timer
-     * @param elapsed the current ammount of time elapsed
-     * @param isRunning if the timer is running starts as false when item created
-     * @param multiplier the current multiplier of the station if cooking
+     * - gameTime the global gametime service
+     * - length finishing time of the timer
+     * - elapsed the current ammount of time elapsed
+     * - isRunning if the timer is running starts as false when item created
+     * - multiplier the current multiplier of the station if cooking
      */
     protected final GameTime gameTime = ServiceLocator.getTimeSource();
     private long prevTime;
@@ -112,7 +118,7 @@ public abstract class ItemTimerComponent extends Component {
      * that the item will take to cook
      */
     protected void rageModeOn() {
-        multiplier = 2;
+        multiplier = RAGE_MODE_MULTIPLIER;
     }
 
     /**
@@ -120,7 +126,7 @@ public abstract class ItemTimerComponent extends Component {
      * the time that the item takes to cook back to normal.
      */
     protected void rageModeOff() {
-        multiplier = 1;
+        multiplier = BASE_MULTIPLIER;
     }
 
 }
