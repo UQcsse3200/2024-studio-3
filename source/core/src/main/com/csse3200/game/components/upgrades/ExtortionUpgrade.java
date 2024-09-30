@@ -22,7 +22,7 @@ public class ExtortionUpgrade extends Component implements Upgrade {
     private CombatStatsComponent combatStatsComponent;
     //TODO will need to add whatever currency dependencies as well as morality and order stuff
 
-    public ExtortionUpgrade(long upgradeDuration) {
+    public ExtortionUpgrade() {
         this.upgradeDuration = upgradeDuration;
         this.isActive = false;
         this.gameTime = ServiceLocator.getTimeSource();

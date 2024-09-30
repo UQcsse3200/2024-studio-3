@@ -274,6 +274,7 @@ public class MainGameScreen extends ScreenAdapter {
 			.addComponent(new RageUpgrade())
 			.addComponent(new LoanUpgrade())
 				.addComponent(new SpeedBootsUpgrade())
+				.addComponent(new ExtortionUpgrade())
 				.addComponent(new PauseMenuActions(this.game))
 				.addComponent(new PauseMenuDisplay(this))
 						.addComponent(new UpgradesDisplay(this))
