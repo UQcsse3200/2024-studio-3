@@ -246,7 +246,12 @@ public class ForestGameArea extends GameArea {
     displayUI();
     spawnTerrain();
     spawnWall();
+    if (this.level == 1) {
+      ServiceLocator.getMapLayout().getEvents().trigger("load","level1");
+    }
+
    // spawnBenches();
+
     //MapLayout map = new MapLayout();
     //String [] map2 = map.load("level1");
 

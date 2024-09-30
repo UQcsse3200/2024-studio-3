@@ -81,6 +81,7 @@ public class MapLayout extends GameArea{
                     logger.info("GELL");
                     logger.info(line);
                     // create array containing map tiles
+                    // spawn bench at
                     for (Bench bench : BenchLayout.levelOne()) {
                         spawnEntity(bench);
                         bench.setPosition(bench.x, bench.y);
