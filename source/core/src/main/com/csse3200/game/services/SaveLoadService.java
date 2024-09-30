@@ -5,9 +5,9 @@ import com.csse3200.game.entities.Entity;
 import com.csse3200.game.files.GameState;
 import com.csse3200.game.files.FileLoader.Location;
 import com.csse3200.game.files.FileLoader;
+import com.csse3200.game.components.CombatStatsComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import com.csse3200.game.components.CombatStatsComponent;
 import java.io.File;
 import java.util.HashMap;
 

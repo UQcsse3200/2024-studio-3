@@ -17,6 +17,9 @@ import com.csse3200.game.files.UserSettings.DisplaySettings;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
 import com.csse3200.game.utils.StringDecorator;
+import com.csse3200.game.files.FileLoader;
+import com.csse3200.game.files.FileLoader.Location;
+import com.badlogic.gdx.files.FileHandle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.util.HashSet;
@@ -33,6 +36,7 @@ public class LoadGameDisplay extends UIComponent {
         addActors();
     }
     private void addActors() {
+        FileHandle[] saves = FileLoader.getFiles("saves", Location.LOCAL);
         rootTable = new Table();
         rootTable.setFillParent(true);
 
@@ -41,11 +45,13 @@ public class LoadGameDisplay extends UIComponent {
 
         savesTable = new Table();
         for (int i = 1; i < 7; i++) {
-            Table load = new Table();
-            load.add(new Label("Save " + i, skin));
-            savesTable.add(load).pad(100,100,100,100);
-            if (i % 2 == 0) {
-                savesTable.row();
+            if (i - 1 < saves.length) {
+                Table load = new Table();
+                load.add(new Label(saves[i-1].name(), skin));
+                savesTable.add(load).pad(100, 100, 100, 100);
+                if (i % 2 == 0) {
+                    savesTable.row();
+                }
             }
         }
         rootTable.add(savesTable).row();
