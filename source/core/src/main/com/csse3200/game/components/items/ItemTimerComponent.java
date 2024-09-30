@@ -39,13 +39,6 @@ public abstract class ItemTimerComponent extends Component {
         this.elapsed = 0;
     }
 
-    @Override
-    public void create() {
-        // Add event listeners for the rage mode
-        ServiceLocator.getEntityService().getEvents().addListener("rageModeOn", this::rageModeOn);
-        ServiceLocator.getEntityService().getEvents().addListener("rageModeOff", this::rageModeOff);
-    }
-
     /**
      * Function to run each frame
      */

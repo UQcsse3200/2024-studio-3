@@ -29,8 +29,8 @@ public class ChopIngredientComponent extends ItemTimerComponent {
     public void create() {
         super.create();
         // Add event listeners for the rage mode
-        //ServiceLocator.getEntityService().getEvents().addListener("rageModeOn", this::rageModeOn);
-        //ServiceLocator.getEntityService().getEvents().addListener("rageModeOff", this::rageModeOff);
+        ServiceLocator.getEntityService().getEvents().addListener("rageModeOn", this::rageModeOn);
+        ServiceLocator.getEntityService().getEvents().addListener("rageModeOff", this::rageModeOff);
 
         // Add appriopriate event listeners
         entity.getEvents().addListener("chopIngredient", this::startTimer);
