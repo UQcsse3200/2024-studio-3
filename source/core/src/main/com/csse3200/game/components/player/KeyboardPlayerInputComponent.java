@@ -42,7 +42,6 @@ public class KeyboardPlayerInputComponent extends InputComponent {
       entity.getEvents().trigger("createOrder");
       return true;
     }
-
     
     if (keycode == Keys.E) {
       // Trigger an interaction attempt
@@ -56,6 +55,9 @@ public class KeyboardPlayerInputComponent extends InputComponent {
       // Trigger an attempt to rotate inventory of a station to update item display
       entity.getEvents().trigger("interact", "rotate");
       return true;
+    } else if (keycode == Keys.Q) {
+      // Attempt to trigger an interaction to chops
+      entity.getEvents().trigger("interact", "chop");
     }
 
     if (!isInteracting) {
@@ -87,11 +89,6 @@ public class KeyboardPlayerInputComponent extends InputComponent {
               ServiceLocator.getEntityService().getEvents().trigger("leaveEarly");
               return true;
       }
-    }
-
-    if (keycode == Keys.SPACE) {
-      entity.getEvents().trigger("attack");
-      return true;
     }
 
     return false;

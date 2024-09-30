@@ -2,12 +2,15 @@ package com.csse3200.game.components.station;
 
 import java.util.ArrayList;
 
+import com.badlogic.gdx.net.Socket;
 import com.csse3200.game.components.Component;
+import com.csse3200.game.components.items.ChopIngredientComponent;
 import com.csse3200.game.components.items.IngredientComponent;
 import com.csse3200.game.components.items.ItemComponent;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.components.player.InventoryDisplay;
 import com.csse3200.game.components.station.loader.StationAcceptableItemsGetter;
+import com.csse3200.game.entities.Entity;
 
 public class StationItemHandlerComponent extends Component {
     /**
@@ -83,6 +86,21 @@ public class StationItemHandlerComponent extends Component {
      * @param type the type of interaction attempt
      */
     public void handleInteraction(InventoryComponent playerInventoryComponent, InventoryDisplay inventoryDisplay, String type) {
+        if (type.equals("default")) {
+            this.handleInteractionDefault(playerInventoryComponent, inventoryDisplay);
+        } else if (type.equals("chop")) {
+            this.handleInteractionChop();
+        } else {
+            // Do nothing, other options aren't relavent...
+        }
+    }
+
+    /**
+     * Function to handle the default interaction between a player and a station.
+     * @param playerInventoryComponent
+     * @param inventoryDisplay
+     */
+    private void handleInteractionDefault(InventoryComponent playerInventoryComponent, InventoryDisplay inventoryDisplay) {
         // Pre calcs
         boolean full = playerInventoryComponent.isFull() & this.inventoryComponent.isFull();
         boolean empty = playerInventoryComponent.isEmpty() & this.inventoryComponent.isEmpty();
@@ -108,6 +126,24 @@ public class StationItemHandlerComponent extends Component {
         }
     }
 
+    private void handleInteractionChop() {
+        // Get if the item is currently chopping
+        Entity item = inventoryComponent.getItemFirst().getEntity();
+        boolean isChopping = item.getComponent(ChopIngredientComponent.class) != null
+        && item.getComponent(ChopIngredientComponent.class).getIsChopping();
+
+        System.out.println("IS CHOPPING" + isChopping);
+
+        // Do some action based on if its chopping or not
+        if (!isChopping) {
+            // Start chopping the ingredient
+            entity.getEvents().trigger("Chop Ingredient");
+        } else {
+            // Stop chopping ingredient
+            entity.getEvents().trigger("Stop Chopping Ingredient");
+        }
+    }
+
     /**
      *
      * @return current Item being stored
@@ -127,7 +163,7 @@ public class StationItemHandlerComponent extends Component {
                 break;
             case "cutting board": // Fall through
             case "blender":
-                choppingStationRecieveItem();
+                //choppingStationRecieveItem();
                 break;
             default:
                 break;
