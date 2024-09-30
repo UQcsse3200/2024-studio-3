@@ -2,15 +2,12 @@ package com.csse3200.game.components.station;
 
 import java.util.ArrayList;
 
-import com.badlogic.gdx.net.Socket;
 import com.csse3200.game.components.Component;
-import com.csse3200.game.components.items.ChopIngredientComponent;
 import com.csse3200.game.components.items.IngredientComponent;
 import com.csse3200.game.components.items.ItemComponent;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.components.player.InventoryDisplay;
 import com.csse3200.game.components.station.loader.StationAcceptableItemsGetter;
-import com.csse3200.game.entities.Entity;
 
 public class StationItemHandlerComponent extends Component {
     /**
