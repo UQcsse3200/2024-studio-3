@@ -39,8 +39,6 @@ public class KeyboardPlayerInputComponent extends InputComponent {
     keyFlags.put(keycode, 1);
 
     if (keycode == Keys.O) {
-      System.out.println("O clicked");
-
       entity.getEvents().trigger("createOrder");
       return true;
     }
@@ -85,6 +83,9 @@ public class KeyboardPlayerInputComponent extends InputComponent {
         case Keys.P:
           ServiceLocator.getEntityService().getEvents().trigger("toggleEndDayScreen");
           return true;
+          case Keys.L:
+              ServiceLocator.getEntityService().getEvents().trigger("leaveEarly");
+              return true;
       }
     }
 

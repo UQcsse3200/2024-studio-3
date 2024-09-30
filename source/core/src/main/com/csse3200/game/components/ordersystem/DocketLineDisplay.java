@@ -42,7 +42,6 @@ public class DocketLineDisplay extends UIComponent {
 						ServiceLocator.getResourceService()
 								.getAsset("images/ordersystem/pin_line2.png", Texture.class));
 
-
 		pinLine.setWidth(Gdx.graphics.getWidth() * 1f); //0.7958f
 		pinLine.setHeight(30);
 		pinLine.setPosition(Gdx.graphics.getWidth() * 0f, Gdx.graphics.getHeight() * 0.938f);

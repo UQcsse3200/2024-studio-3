@@ -83,6 +83,39 @@ class InventoryComponentTest {
   }
 
   @Test
+  void shouldRemoveLastItem() {
+    ItemComponent chocolate = new ItemComponent("Chocolate", ItemType.CHOCOLATE, 1);
+    ItemComponent beef = new ItemComponent("Beef", ItemType.BEEF, 1);
+    inventory.addItem(chocolate);
+    inventory.addItem(beef);
+
+    ItemComponent removed = inventory.removeItem();
+    assertEquals(beef, removed);
+    assertEquals(1, inventory.getSize());
+  }
+
+  @Test
+  void shouldRemoveLastItemWithNull() {
+    ItemComponent chocolate = new ItemComponent("Chocolate", ItemType.CHOCOLATE, 1);
+    ItemComponent beef = new ItemComponent("Beef", ItemType.BEEF, 1);
+    inventory.addItemAt(chocolate, 1);
+
+    ItemComponent removed = inventory.removeItem();
+    assertEquals(chocolate, removed);
+  }
+
+  @Test
+  void shouldRemoveOnlyItem() {
+    ItemComponent chocolate = new ItemComponent("Chocolate", ItemType.CHOCOLATE, 1);
+    inventory.addItem(chocolate);
+
+    ItemComponent removed = inventory.removeItem();
+    assertEquals(chocolate, removed);
+    assertTrue(inventory.isEmpty());
+  }
+
+
+  @Test
   void shouldAddItem() {
     ItemComponent item = new ItemComponent("Beef", ItemType.BEEF, 1);
     inventory.addItem(item);

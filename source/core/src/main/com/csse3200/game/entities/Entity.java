@@ -201,10 +201,14 @@ public class Entity {
 
     /** Dispose of the entity. This will dispose of all components on this entity. */
     public void dispose() {
-        for (Component component : createdComponents) {
+        for (Component component : getCreatedComponents()) {
             component.dispose();
         }
         ServiceLocator.getEntityService().unregister(this);
+    }
+
+    public Array<Component> getCreatedComponents() {
+        return createdComponents;
     }
 
     /**
@@ -219,7 +223,7 @@ public class Entity {
             return;
         }
         createdComponents = components.values().toArray();
-        for (Component component : createdComponents) {
+        for (Component component : getCreatedComponents()) {
             component.create();
         }
         created = true;
@@ -233,7 +237,7 @@ public class Entity {
         if (!enabled) {
             return;
         }
-        for (Component component : createdComponents) {
+        for (Component component : getCreatedComponents()) {
             component.triggerEarlyUpdate();
         }
     }
