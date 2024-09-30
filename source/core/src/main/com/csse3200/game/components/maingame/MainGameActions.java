@@ -20,14 +20,16 @@ public class MainGameActions extends Component {
     private static final int ORDER_LIMIT = 8; // Maximum number of orders allowed
     private static final String[] RECIPE_NAMES = {"acaiBowl", "salad", "fruitSalad", "steakMeal", "bananaSplit"};
     private GdxGame game;
-    private Entity ui = UIFactory.createDocketUI();
-    private final MainGameOrderTicketDisplay docketDisplayer = ui.getComponent(MainGameOrderTicketDisplay.class);
+//    private Entity ui = UIFactory.createDocketUI();
+//    private final MainGameOrderTicketDisplay docketDisplayer = ui.getComponent(MainGameOrderTicketDisplay.class);
+    private MainGameOrderTicketDisplay docketDisplayer;
 
     // List to keep track of currently spawning animals
     private static List<String> currentlySpawningAnimals = new CopyOnWriteArrayList<>();
 
-    public MainGameActions(GdxGame game) {
+    public MainGameActions(GdxGame game, MainGameOrderTicketDisplay docketDisplayer) {
         this.game = game;
+        this.docketDisplayer = docketDisplayer;
     }
 
     @Override
@@ -39,7 +41,7 @@ public class MainGameActions extends Component {
         ServiceLocator.getEntityService().getEvents().addListener("createSaladDocket", this::onCreateSalad);
         ServiceLocator.getEntityService().getEvents().addListener("createSteakDocket", this::onCreateSteak);
         ServiceLocator.getEntityService().getEvents().addListener("createFruitSaladDocket", this::onCreateFruitSalad);
-        entity.getEvents().addListener("orderDone", this::onOrderDone);
+//        entity.getEvents().addListener("orderDone", this::onOrderDone);
     }
 
     private void onExit() {
@@ -82,7 +84,7 @@ public class MainGameActions extends Component {
      * Create a docket for a recipe
      * @param preferredRecipe the name of the recipe to create a docket for
      */
-    private void onCreateOrder(String preferredRecipe) {
+    public void onCreateOrder(String preferredRecipe) {
         int orderCount = MainGameOrderTicketDisplay.getTableArrayList().size();
         if (orderCount < ORDER_LIMIT) {
 //            String preferredRecipe = getPreferredRecipeFromSpawningAnimals();
@@ -93,7 +95,7 @@ public class MainGameActions extends Component {
             docketDisplayer.setRecipe(preferredRecipe);
             docketDisplayer.setStage(ServiceLocator.getRenderService().getStage());
             docketDisplayer.addActors();
-            ServiceLocator.getEntityService().register(ui);
+//            ServiceLocator.getEntityService().register(ui);
         } else {
             logger.info("Order limit of {} reached", ORDER_LIMIT);
         }
@@ -126,14 +128,14 @@ public class MainGameActions extends Component {
     /**
      * Remove all dockets
      */
-    private void onOrderDone() {
-        if (ui != null) {
-            ServiceLocator.getEntityService().unregister(ui);
-            ui.dispose();
-            ui = null;
-            logger.info("Order entity disposed");
-        }
-    }
+//    public void onOrderDone() {
+//        if (ui != null) {
+//            ServiceLocator.getEntityService().unregister(ui);
+//            ui.dispose();
+//            ui = null;
+//            logger.info("Order entity disposed");
+//        }
+//    }
 
     public static void addSpawningAnimal(String animalName) {
         if (!currentlySpawningAnimals.contains(animalName)) {

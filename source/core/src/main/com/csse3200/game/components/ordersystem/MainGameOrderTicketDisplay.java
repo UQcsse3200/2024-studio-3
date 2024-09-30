@@ -17,6 +17,8 @@ import com.csse3200.game.components.player.PlayerStatsDisplay;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.rendering.RenderService;
+import com.csse3200.game.services.PlayerService;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
 import org.slf4j.Logger;
@@ -34,10 +36,8 @@ public class MainGameOrderTicketDisplay extends UIComponent {
     private static final float Z_INDEX = 3f;
     private static final float viewPortHeightMultiplier = 7f / 9f;
     private static final float viewPortWidthMultiplier = 3f / 32f;
-    private static final float viewportHeight =
-            ServiceLocator.getRenderService().getStage().getViewport().getCamera().viewportHeight;
-    private static final float viewportWidth =
-            ServiceLocator.getRenderService().getStage().getViewport().getCamera().viewportWidth;
+    private float viewportHeight;
+    private float viewportWidth;
     private static final int distance = 20;
     private static ArrayList<Table> tableArrayList;
     private static ArrayList<Long> startTimeArrayList;
@@ -53,11 +53,22 @@ public class MainGameOrderTicketDisplay extends UIComponent {
     private DocketMealDisplay mealDisplay;
     private static final float DISTANCE_MULTIPLIER = 0.015f;
     public CombatStatsComponent combatStatsComponent;
+//    private final RenderService renderService = ServiceLocator.getRenderService();
+//    private final PlayerService playerService = ServiceLocator.getPlayerService();
+    private final RenderService renderService;
+    private final PlayerService playerService;
 
     /**
      * Constructs an MainGameOrderTicketDisplay instance
      */
-    public MainGameOrderTicketDisplay() {
+    public MainGameOrderTicketDisplay(RenderService renderService, PlayerService playerService) {
+//    public MainGameOrderTicketDisplay() {
+        this.renderService = renderService;
+        this.playerService = playerService;
+
+        this.viewportHeight = renderService.getStage().getViewport().getCamera().viewportHeight;
+        this.viewportWidth = renderService.getStage().getViewport().getCamera().viewportWidth;
+
         tableArrayList = new ArrayList<>();
         startTimeArrayList = new ArrayList<>();
         backgroundArrayList = new ArrayList<>();
@@ -65,7 +76,8 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         recipeTimeArrayList = new ArrayList<>();
         mealDisplay = new DocketMealDisplay();
         setRecipeValue(2);
-        ServiceLocator.getPlayerService().getEvents().addListener("playerCreated", (Entity player) -> {
+
+        playerService.getEvents().addListener("playerCreated", (Entity player) -> {
             combatStatsComponent = player.getComponent(CombatStatsComponent.class);
         });
     }
@@ -168,6 +180,8 @@ public class MainGameOrderTicketDisplay extends UIComponent {
      * @param index the index of the docket that was removed or shifted.
      */
     public static void reorderDockets(int index) {
+        float viewportWidth = Gdx.graphics.getWidth();
+
         for (int i = index + 1; i < tableArrayList.size(); i++) {
             Table currTable = tableArrayList.get(i);
             currTable.setX(currTable.getX() - (distance + viewportWidth * 3f / 32f));
@@ -378,20 +392,21 @@ public class MainGameOrderTicketDisplay extends UIComponent {
     @Override
     public void update() {
         // No additional update logic needed here, shifting is handled by the OrderActions class
+        logger.warn("in update");
+        logger.warn("table size {}", tableArrayList.size());
         for (int i = 0; i < tableArrayList.size(); i++) {
             Docket currBackground = backgroundArrayList.get(i);
             Table currTable = tableArrayList.get(i);
             Label currCountdown = countdownLabelArrayList.get(i);
             long elapsedTime = TimeUtils.timeSinceMillis(startTimeArrayList.get(i));
             long remainingTime = recipeTimeArrayList.get(i) - elapsedTime;
+            logger.info("remaining time" + remainingTime);
             if (remainingTime > 0) {
                 currCountdown.setText("Timer: " + (remainingTime / 1000));
                 currBackground.updateDocketTexture((double) remainingTime / 1000);
                 currTable.setBackground(currBackground.getImage().getDrawable());
             } else {
-                // if order is successful
                 stageDispose(currBackground, currTable, i);
-
             }
         }
         if (!tableArrayList.isEmpty()) {
@@ -572,6 +587,7 @@ public class MainGameOrderTicketDisplay extends UIComponent {
      * @return the recipe timer
      */
     public long getTimer() {
+        logger.info("timer, {}", getRecipe().getMakingTime() * DEFAULT_TIMER);
         return getRecipe().getMakingTime() * DEFAULT_TIMER;
     }
 

@@ -22,6 +22,7 @@ import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.entities.factories.LevelFactory;
 import com.csse3200.game.entities.factories.RenderFactory;
+import com.csse3200.game.entities.factories.UIFactory;
 import com.csse3200.game.input.InputComponent;
 import com.csse3200.game.input.InputDecorator;
 import com.csse3200.game.input.InputService;
@@ -201,11 +202,15 @@ public class MainGameScreen extends ScreenAdapter {
 
 		docketLineDisplay = new DocketLineDisplay();
 
+		Entity docketUI = UIFactory.createDocketUI();
+    MainGameOrderTicketDisplay docketDisplayer = docketUI.getComponent(MainGameOrderTicketDisplay.class);
+
 		Entity ui = new Entity();
 		ui.addComponent(new InputDecorator(stage, 10))
 		  	.addComponent(docketLineDisplay)
 			.addComponent(new PerformanceDisplay())
-			.addComponent(new MainGameActions(this.game))
+			.addComponent(new MainGameActions(this.game, docketDisplayer))
+//			.addComponent(new MainGameActions(this.game))
 			.addComponent(new MainGameExitDisplay())
 			.addComponent(new Terminal())
 			.addComponent(inputComponent)
@@ -219,10 +224,9 @@ public class MainGameScreen extends ScreenAdapter {
 			.addComponent(new RandomCombination())
 				.addComponent(new SpeedBootsUpgrade());
 
-
-
 		//temporary moral display
 //			.addComponent(new MoralDisplayTemp(this));
 		ServiceLocator.getEntityService().register(ui);
+		ServiceLocator.getEntityService().register(docketUI);
 	}
 }

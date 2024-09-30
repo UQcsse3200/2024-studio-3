@@ -78,7 +78,8 @@ class MainGameOrderTicketDisplayTest {
 		when(ServiceLocator.getDocketService().getEvents()).thenReturn(eventHandler);
 		when(ServiceLocator.getPlayerService().getEvents()).thenReturn(eventHandler2);
 
-		orderTicketDisplay = new MainGameOrderTicketDisplay();
+		orderTicketDisplay = new MainGameOrderTicketDisplay(renderService, playerService);
+//		orderTicketDisplay = new MainGameOrderTicketDisplay();
 //        String[] recipeNames = {"acaiBowl", "salad", "fruitSalad", "steakMeal", "bananaSplit"};
 //        String randomRecipe = recipeNames[new Random().nextInt(recipeNames.length)];
 		orderTicketDisplay.setRecipe("acaiBowl");
