@@ -15,11 +15,13 @@ import com.csse3200.game.physics.components.ColliderComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.rendering.TextureRenderComponent;
 
+import java.util.logging.Logger;
+import java.util.logging.Level;
 /**
  * Utility class for creating benches
  */
 public class BenchGenerator {
-
+    static final Logger LOGGER = Logger.getLogger(BenchGenerator.class.getPackage().getName());
     /**
      * Creates a column of benches
      * @param x - x coordinate
@@ -39,6 +41,7 @@ public class BenchGenerator {
             // add the top part of the bench
             arr.add(new Bench("top", x, endY));
         }
+        LOGGER.log(Level.INFO, "added column of " + arr.size() + " benches");
         return arr;
     }
     public static ArrayList<Bench> createBenchRow(int startX, int endX, int y) {
@@ -53,6 +56,7 @@ public class BenchGenerator {
             // add the right part of the bench
             arr.add(new Bench("right_corner_shadow", endX, y));
         }
+        LOGGER.log(Level.INFO, "added row of " + arr.size() + " benches");
         return arr;
     }
     public static ArrayList<Bench> createBenchRowFlat(int startX, int endX, int y) {
@@ -67,6 +71,7 @@ public class BenchGenerator {
             // add the right part of the bench
             arr.add(new Bench("right_border", endX, y));
         }
+        LOGGER.log(Level.INFO, "added row of " + arr.size() + " flattened benches");
         return arr;
     }
 }

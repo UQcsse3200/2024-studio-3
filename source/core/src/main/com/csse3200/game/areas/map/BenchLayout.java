@@ -16,20 +16,30 @@ import com.csse3200.game.physics.components.ColliderComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.rendering.TextureRenderComponent;
 
+import java.util.logging.Logger;
+import java.util.logging.Level;
+
 /**
  * Class for managing bench layouts
  */
 public class BenchLayout {
+    static final Logger LOGGER = Logger.getLogger(BenchLayout.class.getPackage().getName());
     public static ArrayList<Bench> levelOne() {
         ArrayList<Bench> benches = new ArrayList<Bench>();
         // Bottom bench row
-        benches.addAll(BenchGenerator.createBenchRowFlat(4, 15, 1));
+        benches.addAll(BenchGenerator.createBenchRowFlat(4, 15, 0));
         // Top shadow bench row
-        benches.addAll(BenchGenerator.createBenchRow(4, 14, 10));
+        benches.addAll(BenchGenerator.createBenchRow(4, 6, 6));
         // Left vertical bench column
-        benches.addAll(BenchGenerator.createBenchColumn(4, 3, 7));
+        benches.addAll(BenchGenerator.createBenchColumn(9, 1, 4));
+        benches.addAll(BenchGenerator.createBenchColumn(4, 3, 6));
+
         // Random single bench
-        benches.add(new Bench(7, 8));
+        benches.add(new Bench(7, 6));
+        for (Bench bench : benches) {
+            LOGGER.log(Level.INFO, "added bench: " + bench.type + ", " + bench.x + ", " + bench.y);
+        }
+
         return benches;
     }
 }
