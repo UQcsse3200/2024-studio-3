@@ -115,6 +115,7 @@ public class MainGameScreen extends ScreenAdapter {
 		int currLevel = ServiceLocator.getLevelService().getCurrLevel();
 		ServiceLocator.getLevelService().getEvents().trigger("setGameArea", forestGameArea);
 		ServiceLocator.getLevelService().getEvents().trigger("startLevel", currLevel);
+		//ServiceLocator.getLevelService().getEvents().trigger("mapLevel", currLevel);
 	}
 
 	@Override
