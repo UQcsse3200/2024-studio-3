@@ -135,6 +135,7 @@ public class MainGameScreen extends ScreenAdapter {
 		ServiceLocator.registerDocketService(new DocketService());
         ServiceLocator.registerDayNightService(new DayNightService());
 		ServiceLocator.registerLevelService(new LevelService());
+		ServiceLocator.registerMapLayout(new MapLayout());
 		ServiceLocator.registerGameScreen(this);
 
 		ServiceLocator.registerTicketDetails(new TicketDetails());
@@ -148,11 +149,15 @@ public class MainGameScreen extends ScreenAdapter {
 
 		logger.debug("Initialising main game screen entities");
 		TerrainFactory terrainFactory = new TerrainFactory(renderer.getCamera());
-		ForestGameArea forestGameArea = new ForestGameArea(terrainFactory);
+		int currLevel = ServiceLocator.getLevelService().getCurrLevel();
+		ForestGameArea forestGameArea = new ForestGameArea(terrainFactory, currLevel);
+
 		forestGameArea.create();
+		ServiceLocator.getMapLayout().getEvents().trigger("load","level1");
 		Entity spawnControllerEntity = LevelFactory.createSpawnControllerEntity();
 		ServiceLocator.getEntityService().register(spawnControllerEntity);
-		int currLevel = ServiceLocator.getLevelService().getCurrLevel();
+
+
 		ServiceLocator.getLevelService().getEvents().trigger("setGameArea", forestGameArea);
 		ServiceLocator.getLevelService().getEvents().trigger("startLevel", currLevel);
 		//ServiceLocator.getLevelService().getEvents().trigger("mapLevel", currLevel);

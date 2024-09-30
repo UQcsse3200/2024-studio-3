@@ -3,6 +3,7 @@ package com.csse3200.game.areas;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import com.csse3200.game.services.MapLayout;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -201,6 +202,7 @@ public class ForestGameArea extends GameArea {
   private static Entity customerSpawnController;
 
   private final TerrainFactory terrainFactory;
+  private final int level;
 
   private Entity player;
   private CheckWinLoseComponent winLoseComponent;  // Reference to CheckWinLoseComponent
@@ -225,9 +227,10 @@ public class ForestGameArea extends GameArea {
    * @param terrainFactory TerrainFactory used to create the terrain for the GameArea.
    * @requires terrainFactory != null
    */
-  public ForestGameArea(TerrainFactory terrainFactory) {
+  public ForestGameArea(TerrainFactory terrainFactory, int level) {
     super();
     this.terrainFactory = terrainFactory;
+    this.level = level;
     //this.textDisplay = textDisplay;
 
     ServiceLocator.registerGameArea(this);
@@ -236,11 +239,17 @@ public class ForestGameArea extends GameArea {
   /** Create the game area, including terrain, static entities (trees), dynamic entities (player) */
   @Override
   public void create() {
+    // call load function based on the level argument
+    // return list of items to spawn based on the load function
+    // Baaed on lsit of items to spawn, spawn the items
     loadAssets();
     displayUI();
     spawnTerrain();
     spawnWall();
-    spawnBenches();
+   // spawnBenches();
+    //MapLayout map = new MapLayout();
+    //String [] map2 = map.load("level1");
+
     new_border();
     //ticketDetails();
     spawnStations();
@@ -415,8 +424,8 @@ public class ForestGameArea extends GameArea {
     GridPoint2 binPos = new GridPoint2(5,4);
     Entity bin = StationFactory.createBin();
     spawnEntityAt(bin, binPos, false, false);
-    bin.setPosition(bin.getPosition().x +1f , bin.getPosition().y - 6f);
-    bin.setPosition(bin.getPosition().x + 3f , bin.getPosition().y - 6f);
+   // bin.setPosition(bin.getPosition().x +1f , 4f);
+    bin.setPosition(4f , 4f);
 
     GridPoint2 bananaTreePos = new GridPoint2( 5, 4);
     Entity bananaTree = StationFactory.createBananaBasket();
