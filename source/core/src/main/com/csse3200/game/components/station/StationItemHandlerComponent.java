@@ -90,6 +90,8 @@ public class StationItemHandlerComponent extends Component {
             this.handleInteractionDefault(playerInventoryComponent, inventoryDisplay);
         } else if (type.equals("chop")) {
             this.handleInteractionChop();
+        } else if (type.equals("stopChop")) {
+            this.handleInteractionStopChop();
         } else {
             // Do nothing, other options aren't relavent...
         }
@@ -127,19 +129,13 @@ public class StationItemHandlerComponent extends Component {
     }
 
     private void handleInteractionChop() {
-        // Get if the item is currently chopping
-        Entity item = inventoryComponent.getItemFirst().getEntity();
-        boolean isChopping = item.getComponent(ChopIngredientComponent.class) != null
-        && item.getComponent(ChopIngredientComponent.class).getIsChopping();
+        // Attempt to start chopping the ingredient
+        entity.getEvents().trigger("Chop Ingredient");
+    }
 
-        // Do some action based on if its chopping or not
-        if (!isChopping) {
-            // Start chopping the ingredient
-            entity.getEvents().trigger("Chop Ingredient");
-        } else {
-            // Stop chopping ingredient
-            entity.getEvents().trigger("Stop Chopping Ingredient");
-        }
+    private void handleInteractionStopChop() {
+        // Attempt too stop chopping the ingredient
+        entity.getEvents().trigger("Stop Chopping Ingredient");
     }
 
     /**
