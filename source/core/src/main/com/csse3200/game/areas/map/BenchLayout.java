@@ -23,13 +23,14 @@ public class BenchLayout {
     public static ArrayList<Bench> levelOne() {
         ArrayList<Bench> benches = new ArrayList<Bench>();
         // Bottom bench row
-        benches.addAll(BenchGenerator.createBenchRowFlat(4, 15, 1));
+        benches.addAll(BenchGenerator.createBenchRowFlat(4, 15, 0));
         // Top shadow bench row
-        benches.addAll(BenchGenerator.createBenchRow(4, 14, 10));
+        benches.addAll(BenchGenerator.createBenchRow(4, 6, 6));
         // Left vertical bench column
-        benches.addAll(BenchGenerator.createBenchColumn(4, 3, 7));
+        benches.addAll(BenchGenerator.createBenchColumn(9, 1, 4));
         // Random single bench
-        benches.add(new Bench(7, 8));
+        benches.add(new Bench(7, 6));
+        benches.addAll(BenchGenerator.createBenchColumn(4, 3, 6));
         return benches;
     }
 }
