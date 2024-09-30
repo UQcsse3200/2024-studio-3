@@ -20,7 +20,7 @@ public class LoanUpgrade extends Component implements Upgrade {
     }
 
     public void activate() { 
-        if(combatStatsComponent.getGold() >= 200){
+        if(combatStatsComponent.getGold() >= 20){
             combatStatsComponent.addGold(100); 
         }
         else{

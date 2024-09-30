@@ -197,6 +197,7 @@ public class UpgradesDisplay extends UIComponent {
             public void clicked(InputEvent event, float x, float y) {
                 ServiceLocator.getRandomComboService().activateUpgrade();
                 logger.info("YES button clicked");
+                ServiceLocator.getRandomComboService().getEvents().trigger("response");
                 // displayNotEnoughGoldUI();
                 toggleVisibility();
             }
@@ -208,6 +209,7 @@ public class UpgradesDisplay extends UIComponent {
                 game.resume();
                 logger.info("NO button clicked");
                 // Handle NO button click
+                ServiceLocator.getRandomComboService().getEvents().trigger("response");
                 toggleVisibility();
             }
         });

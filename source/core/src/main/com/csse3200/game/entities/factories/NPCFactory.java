@@ -121,13 +121,16 @@ public class NPCFactory {
                                 logger.info("Penguin clicked!");
                                 upgradesDisplay.create();
                                 upgradesDisplay.toggleVisibility();
-                                if(!upgradesDisplay.isVisible){
-                                        penguin.dispose(); 
-                                }
+                                // if(!upgradesDisplay.isVisible){
+                                //         penguin.dispose(); 
+                                // }
                                 isClicked[0] = true;  
                             } else {
                                 logger.info("Penguin has already been clicked, ignoring.");
                             }     
+                });
+                ServiceLocator.getRandomComboService().getEvents().addListener("response", () ->{
+                        penguin.dispose();
                 });
 
                 return penguin;
