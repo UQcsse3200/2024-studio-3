@@ -20,25 +20,27 @@ import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
 
 /**
- * CutsceneTextDisplay displays scrolling text during a cutscene.
- * It shows text one character at a time and allows skipping to the full text by pressing ENTER.
+ * CutsceneTextDisplay handles displaying scrolling text during a cutscene. The text is displayed
+ * one character at a time, and pressing ENTER will skip the scrolling and display the full text immediately.
  */
 public class CutsceneTextDisplay extends UIComponent {
-    private String text;
-    private StringBuilder currentText;
-    private int curCharIndex = 0;
-    private long lastUpdate = 0L;
+    private String text;  // Full text to be displayed
+    private StringBuilder currentText;  // Text that is currently displayed
+    private int charIndex = 0;  // Index of the current character to be displayed
+    private long lastUpdate = 0L;  // Last time a character was added
+    private long delay = 100L;  // Delay between displaying each character
 
+    // UI components for displaying the text
     private boolean visible;
     private Stack layout;
     private Label label;
-    private final Table table;
+    private Table table;
     private Image displayBox;
+
     private final CutsceneScreen cutscene;
-    private final long delay = 50L;
 
     /**
-     * Default constructor initializes without a specific cutscene.
+     * Default constructor that initializes without a specific cutscene.
      */
     public CutsceneTextDisplay() {
         super();
@@ -49,8 +51,7 @@ public class CutsceneTextDisplay extends UIComponent {
     }
 
     /**
-     * Constructor that links this text display to a cutscene.
-     *
+     * Constructor that links the text display to a specific cutscene.
      * @param cutscene the associated CutsceneScreen
      */
     public CutsceneTextDisplay(CutsceneScreen cutscene) {
@@ -61,14 +62,14 @@ public class CutsceneTextDisplay extends UIComponent {
     }
 
     /**
-     * Sets up the text display with a background and label, and adds it to the stage.
+     * Sets up the text display UI, including the background image and text label, and adds it to the stage.
      */
     @Override
     public void create() {
         super.create();
         // Initially hide the text display
         setVisible(false);
-        // Make table fill the screen and align it to the bottom center of the screen
+        // Set up the table to fill the screen and align it to the bottom center
         table.setFillParent(true);
         table.center().bottom();
         stage.addActor(table);
@@ -79,7 +80,7 @@ public class CutsceneTextDisplay extends UIComponent {
         Texture textboxTexture = ServiceLocator.getResourceService().getAsset("images/textbox.png", Texture.class);
         Drawable textboxDrawable = new TextureRegionDrawable(textboxTexture);
         Image textboxImage = new Image(textboxDrawable);
-        textboxImage.setScale(1.25f);  // Scale up the background
+        textboxImage.setScale(1.25f);  // Scale the background image
         stack.add(textboxImage);
 
         // Set up the label for text display
@@ -87,11 +88,10 @@ public class CutsceneTextDisplay extends UIComponent {
         Label.LabelStyle labelStyle = new Label.LabelStyle(defaultFont, Color.BLACK);
         label = new Label("", labelStyle);
         label.setFontScale(3.0f);
-        // Allow the text to be wrapped and align to the top left
-        label.setWrap(true);
+        label.setWrap(true);  // Enable text wrapping
         label.setAlignment(Align.top | Align.left);
 
-        // Ensure the label has enough space for text to wrap
+        // Add the label to a table for proper alignment and padding
         Table labelTable = new Table();
         labelTable.add(label).padLeft(140).padBottom(10).size(
                 (int) (Gdx.graphics.getWidth() * 0.5), (int) (Gdx.graphics.getHeight() * 0.2));
@@ -100,68 +100,67 @@ public class CutsceneTextDisplay extends UIComponent {
         table.add(stack).padBottom(70).size(
                 (int) (Gdx.graphics.getWidth() * 0.5), (int) (Gdx.graphics.getHeight() * 0.2));
 
-        setupInputListener();  // Add input handling
-        entity.getEvents().addListener("SetText", this::setText);  // Listen for text setting event
+        // Setup input listener to handle user input
+        setupInputListener();
+        entity.getEvents().addListener("SetText", this::setText);  // Event listener to update text display
     }
 
     /**
-     * Sets the text to be displayed.
-     *
-     * @param text the new text to display
+     * Sets the text to be displayed during the cutscene.
+     * @param text The text to display.
      */
     public void setText(String text) {
-        setVisible(true);
+        setVisible(true);  // Make the text display visible
         this.text = text;
-        this.currentText.setLength(0);
-        this.curCharIndex = 0;
+        this.currentText.setLength(0);  // Clear the currently displayed text
+        this.charIndex = 0;  // Start from the beginning of the text
     }
 
     /**
-     * Sets the visibility of the text display.
-     *
-     * @param value true to show the display, false to hide
+     * Controls the visibility of the text display.
+     * @param value Whether the text display should be visible.
      */
     public void setVisible(boolean value) {
         this.visible = value;
-        table.setVisible(value);
+        table.setVisible(value);  // Set the visibility of the table
     }
 
     /**
-     * Returns the current visibility of the text display.
-     *
-     * @return true if visible, false otherwise
+     * Returns whether the text display is currently visible.
+     * @return True if visible, false otherwise.
      */
     public boolean getVisible() {
         return this.visible;
     }
 
     /**
-     * Updates the text display, adding one character at a time.
+     * Updates the text display, adding characters one at a time based on the specified delay.
      */
     @Override
     public void update() {
         long time = ServiceLocator.getTimeSource().getTime();
-        if (this.text != null && curCharIndex < this.text.length()) {
-            if (time - lastUpdate >= this.delay) {
+        if (this.text != null && charIndex < this.text.length()) {
+            // Check if enough time has passed to add the next character
+            if (time - lastUpdate >= delay) {
                 lastUpdate = time;
-                this.currentText.append(text.charAt(curCharIndex));
-                label.setText(currentText.toString());
-                curCharIndex++;
+                this.currentText.append(text.charAt(charIndex));  // Add the next character
+                label.setText(currentText.toString());  // Update the label text
+                charIndex++;  // Increment character index
             }
         }
     }
 
     /**
-     * Sets up the input listener to skip the text display when ENTER is pressed.
+     * Sets up the input listener to allow skipping text scrolling by pressing ENTER.
      */
     private void setupInputListener() {
         stage.addListener(new InputListener() {
             @Override
             public boolean keyDown(InputEvent event, int keycode) {
+                // If ENTER is pressed, skip to displaying the full text
                 if (keycode == com.badlogic.gdx.Input.Keys.ENTER) {
-                    // Skip to the full text when ENTER is pressed
                     label.setText(text);
-                    curCharIndex = text.length();  // Skip to the end of the text
+                    charIndex = text.length();  // Set character index to the end
                     return true;
                 }
                 return false;
@@ -170,8 +169,8 @@ public class CutsceneTextDisplay extends UIComponent {
     }
 
     /**
-     * Overridden to handle custom drawing logic.
-     * In this case, drawing is handled by the stage, so nothing is needed here.
+     * Custom draw method to handle additional rendering.
+     * Drawing is handled by the stage, so no custom drawing is needed here.
      */
     @Override
     public void draw(SpriteBatch batch) {
@@ -179,9 +178,8 @@ public class CutsceneTextDisplay extends UIComponent {
     }
 
     /**
-     * Assigns a stage to this UI component.
-     *
-     * @param stage the stage to be used
+     * Sets the stage for this UI component.
+     * @param stage The stage to assign.
      */
     @Override
     public void setStage(Stage stage) {
@@ -189,9 +187,8 @@ public class CutsceneTextDisplay extends UIComponent {
     }
 
     /**
-     * Provides access to the main table containing the text display.
-     *
-     * @return the table containing the display components
+     * Returns the main table containing the text display UI components.
+     * @return The table containing the display components.
      */
     public Table getTable() {
         return table;

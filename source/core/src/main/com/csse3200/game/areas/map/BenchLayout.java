@@ -32,6 +32,7 @@ public class BenchLayout {
         benches.addAll(BenchGenerator.createBenchRow(4, 6, 6));
         // Left vertical bench column
         benches.addAll(BenchGenerator.createBenchColumn(9, 1, 4));
+<<<<<<< HEAD
         benches.addAll(BenchGenerator.createBenchColumn(4, 3, 6));
 
         // Random single bench
@@ -40,6 +41,11 @@ public class BenchLayout {
             LOGGER.log(Level.INFO, "added bench: " + bench.type + ", " + bench.x + ", " + bench.y);
         }
 
+=======
+        // Random single bench
+        benches.add(new Bench(7, 6));
+        benches.addAll(BenchGenerator.createBenchColumn(4, 3, 6));
+>>>>>>> ba7c44e0db94d7dc828363237f5039625b6352ac
         return benches;
     }
 }

@@ -383,7 +383,7 @@ public class ForestGameArea extends GameArea {
     for (int y=0;y<9;y++) {
       Entity left_border = ObstacleFactory.spawnBorderTileVertical();
       spawnEntityAt(left_border, coords, true, true);
-      left_border.setPosition(13.87f, y);
+      left_border.setPosition(13.89f, y);
     }
 
     for (int y=0;y<9;y++) {
