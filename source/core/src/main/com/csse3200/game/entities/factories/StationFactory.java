@@ -11,6 +11,7 @@ import com.csse3200.game.components.TooltipsDisplay;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.components.station.*;
 import com.csse3200.game.components.player.InventoryDisplayHoverComponent;
+import com.csse3200.game.components.station.StationProgressDisplay;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.PhysicsUtils;
@@ -74,6 +75,7 @@ public class StationFactory {
             .addComponent(new TooltipsDisplay())
             .addComponent(new InventoryComponent(1))
             .addComponent(new InventoryDisplayHoverComponent())
+            .addComponent(new StationProgressDisplay())
             .addComponent(new StationChoppingComponent())
             .addComponent(new StationItemHandlerComponent("cutting board"));
 

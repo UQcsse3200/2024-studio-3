@@ -2,10 +2,13 @@ package com.csse3200.game.components.station;
 
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.csse3200.game.components.Component;
+import com.csse3200.game.components.cutscenes.IntroCutscene;
 import com.csse3200.game.components.items.ItemComponent;
 import com.csse3200.game.components.items.ItemType;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.entities.Entity;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 
@@ -13,6 +16,7 @@ import java.util.ArrayList;
  * Give the player a fire extinguisher when they interact with it
  */
 public class FireExtinguisherHandlerComponent extends Component {
+    private static final Logger logger = LoggerFactory.getLogger(FireExtinguisherHandlerComponent.class);
     public FireExtinguisherHandlerComponent() {
 
     }
@@ -51,7 +55,7 @@ public class FireExtinguisherHandlerComponent extends Component {
     public void givePutExtinguisher(Entity player) {
         InventoryComponent inventory = player.getComponent(InventoryComponent.class);
         if (inventory == null) {
-            System.out.println("No inventory component found");
+            logger.error("No inventory component found");
             return;
         }
         // Check to see if already holding a fire extinguisher
@@ -98,7 +102,7 @@ public class FireExtinguisherHandlerComponent extends Component {
         InventoryComponent inventory = player.getComponent(InventoryComponent.class);
         // Check if the inventory is full
         if (inventory.isFull()) {
-            System.out.println("Can't give the player the fire extinguisher since inventory is full");
+            logger.info("Can't give the player the fire extinguisher since inventory is full");
         } else {
             // Create a fire extinguisher
             ItemComponent fireExtinguisher = new ItemComponent("Fire Extinguisher", ItemType.FIREEXTINGUISHER, 1);
