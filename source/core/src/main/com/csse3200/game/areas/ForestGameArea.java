@@ -264,6 +264,7 @@ public class ForestGameArea extends GameArea {
 
     // Spawn the player
     player = spawnPlayer();
+    ServiceLocator.getPlayerService().setPlayer(player);
 
     // Check and trigger win/lose state
     ServiceLocator.getDayNightService().getEvents().addListener("endGame", this::checkEndOfDayGameState);

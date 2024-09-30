@@ -29,8 +29,9 @@ public class SaveLoadService {
      */
     public void save() {
         GameState state = new GameState();
-        state.setMoney(75);
-        state.setDay(2);
+        Entity player = ServiceLocator.getPlayerService().getPlayer();
+        state.setMoney(player.getComponent(CombatStatsComponent.class).getGold());
+        state.setDay(ServiceLocator.getDayNightService().getDay());
         FileLoader.writeClass(state, (ROOT_DIR + File.separator + SAVE_FILE), Location.LOCAL);
         ServiceLocator.getEntityService().getEvents().trigger("togglePause");
     }

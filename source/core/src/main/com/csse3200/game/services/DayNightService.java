@@ -53,7 +53,7 @@ public class DayNightService {
         this.lastCheckTime2 = gameTime.getTime();
         this.lastCheckTime3 = gameTime.getTime();
         this.random = new Random();
-        day = 0;
+        day = 1;
         randomChoice = random.nextInt(10) * 1000;
         System.out.println(randomChoice + "/////////////////////////////////////////////////");
         
