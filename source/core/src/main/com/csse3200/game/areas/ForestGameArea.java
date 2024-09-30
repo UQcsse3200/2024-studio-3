@@ -29,6 +29,7 @@ import com.csse3200.game.entities.factories.PlateFactory;
 import com.csse3200.game.entities.factories.PlayerFactory;
 import com.csse3200.game.entities.factories.StationFactory;
 import com.csse3200.game.screens.MoralDecisionDisplay;
+import com.csse3200.game.screens.MoralDayOne;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.utils.math.GridPoint2Utils;
@@ -833,7 +834,8 @@ public class ForestGameArea extends GameArea {
   private void createMoralScreen() {
     Entity moralScreen = new Entity();
     moralScreen
-            .addComponent(new MoralDecisionDisplay())
+            //.addComponent(new MoralDecisionDisplay())
+            .addComponent(new MoralDayOne())
             .addComponent(new MoralDecision());
     ServiceLocator.getEntityService().registerMoral(moralScreen);
   }
