@@ -5,6 +5,8 @@ import com.csse3200.game.ai.tasks.DefaultTask;
 import com.csse3200.game.ai.tasks.PriorityTask;
 import com.csse3200.game.ai.tasks.Task;
 import com.csse3200.game.ai.tasks.TaskRunner;
+import com.csse3200.game.entities.factories.NPCFactory;
+import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -53,14 +55,7 @@ public class PathFollowTask extends DefaultTask implements PriorityTask {
 
         this.owner.getEntity().getEvents().trigger("wanderStart");
 
-        this.owner.getEntity().getEvents().addListener("leaveEarly", (Object idObj) -> {
-            if (idObj instanceof Integer) {
-                int id = (Integer) idObj;
-                if (this.Customer_id == id) {
-                    triggerMoveToPredefinedPosition();
-                }
-            }
-        });
+        ServiceLocator.getEntityService().getEvents().addListener("leaveEarly", this::triggerMoveToPredefinedPosition);
     }
 
     @Override
@@ -74,6 +69,7 @@ public class PathFollowTask extends DefaultTask implements PriorityTask {
         elapsedTime += getDeltaTime();
         elapsedTime2 += getDeltaTime(); 
 
+        // Check if it's time to move to the predefined position
         if (!hasMovedToPredefined && elapsedTime >= WAIT_TIME) {
             triggerMoveToPredefinedPosition();
             hasMovedToPredefined = true;
@@ -95,6 +91,11 @@ public class PathFollowTask extends DefaultTask implements PriorityTask {
                 if (currentTarget.epsilonEquals(targetPos)) {
                     owner.getEntity().getEvents().trigger("reachDestination");
                     currentTask.stop();
+                    // Check if the entity reached the predefined position
+                    if (targetPos.epsilonEquals(predefinedTargetPos, 0.1f)) {
+                        // Remove the customer from the game
+                        removeCustomerEntity();
+                    }
                 } else if (currentTarget.epsilonEquals(targetPos.x, owner.getEntity().getPosition().y, 0.1f)) {
                     currentTarget.set(targetPos);
                     startMoving();
@@ -103,7 +104,6 @@ public class PathFollowTask extends DefaultTask implements PriorityTask {
             currentTask.update();
         }
     }
-
     private void startMoving() {
         if (movementTask == null) {
             return;
@@ -128,8 +128,14 @@ public class PathFollowTask extends DefaultTask implements PriorityTask {
         this.targetPos = predefinedTargetPos;
         this.currentTarget = new Vector2(targetPos.x, owner.getEntity().getPosition().y);
         startMoving();
+        NPCFactory.decreaseCustomerCount();
     }
 
+    private void removeCustomerEntity() {
+        logger.info("Customer reached predefined position and will be removed.");
+        ServiceLocator.getEntityService().unregister(owner.getEntity());
+        owner.getEntity().dispose(); // Dispose of the entity
+    }
     private float getDeltaTime() {
         return 1 / 60f;
     }

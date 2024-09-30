@@ -2,6 +2,8 @@ package com.csse3200.game.components.ordersystem;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -54,7 +56,9 @@ public class MainGameOrderTicketDisplay extends UIComponent {
     private static final float DISTANCE_MULTIPLIER = 0.015f;
     public CombatStatsComponent combatStatsComponent;
     public int goldMultiplier = 1;
-
+    private boolean isPaused = false;
+    private long pauseStartTime = 0;
+    private long totalPausedDuration = 0;
     /**
      * Constructs an MainGameOrderTicketDisplay instance
      */
@@ -93,6 +97,18 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         return recipe != null ? recipe.getName() : null;
     }
 
+    public void setPaused(boolean paused) {
+        this.isPaused = paused;
+        if (paused) {
+            pauseStartTime = TimeUtils.millis();
+        } else {
+            totalPausedDuration += TimeUtils.timeSinceMillis(pauseStartTime);
+        }
+
+        for (Docket docket : backgroundArrayList) {
+            docket.setPaused(paused);
+        }
+    }
 
     /**
      * Initialises the display and sets up event listeners for creating and shifting orders.
@@ -109,6 +125,17 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         //From team 2, i used your dispose method here when listening for a new day, so current dockets get removed
         //when the end of day occurs
         ServiceLocator.getDocketService().getEvents().addListener("Dispose", this::dispose);
+
+        stage.addListener(new InputListener() {
+            @Override
+            public boolean keyDown(InputEvent event, int keycode) {
+                if (keycode == com.badlogic.gdx.Input.Keys.O) {
+                    setPaused(!isPaused);
+                    return true;
+                }
+                return false;
+            }
+        });
     }
 
     /**
@@ -124,7 +151,7 @@ public class MainGameOrderTicketDisplay extends UIComponent {
 
         table.setFillParent(false);
         table.setSize(viewportWidth * 3f / 32f, 5f / 27f * viewportHeight); // DEFAULT_HEIGHT
-        float xVal = cntXval(225f, tableArrayList.size());
+        float xVal = cntXval(250f, tableArrayList.size());
         float yVal = viewportHeight * viewPortHeightMultiplier;
         table.setPosition(xVal, yVal);
         Docket background = new Docket(getTimer());
@@ -279,7 +306,7 @@ public class MainGameOrderTicketDisplay extends UIComponent {
     private void updateDocketPositions() {
         for (int i = 0; i < tableArrayList.size(); i++) {
             Table table = tableArrayList.get(i);
-            float xVal = cntXval(225f, i + 1);
+            float xVal = cntXval(250f, i + 1);
 
             table.setPosition(xVal, table.getY());
         }
@@ -302,9 +329,9 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         float enlargedDocketWidth = normalDocketWidth * 1.7f;
         float enlargedDocketHeight = normalDocketHeight * 1.7f;
 
-        float dynamicDistanceLeft = 0.175f; // 225f Percentage of the width to place first docket
+        float dynamicDistanceLeft = 0.105f; // 225f Percentage of the width to place first docket
         float leftHandSideDistance = viewportWidth * dynamicDistanceLeft;
-        float dynamicDistanceRight = 0.09f; //115f Percentage of the width to place the enlarged/tail docket
+        float dynamicDistanceRight = 0.045f; //115f Percentage of the width to place the enlarged/tail docket
         float rightHandSideDistance = viewportWidth * dynamicDistanceRight;
 
 
@@ -378,19 +405,23 @@ public class MainGameOrderTicketDisplay extends UIComponent {
      */
     @Override
     public void update() {
+        if (isPaused) {
+            return;
+        }
+
         // No additional update logic needed here, shifting is handled by the OrderActions class
         for (int i = 0; i < tableArrayList.size(); i++) {
             Docket currBackground = backgroundArrayList.get(i);
             Table currTable = tableArrayList.get(i);
             Label currCountdown = countdownLabelArrayList.get(i);
-            long elapsedTime = TimeUtils.timeSinceMillis(startTimeArrayList.get(i));
+            long elapsedTime = TimeUtils.timeSinceMillis(startTimeArrayList.get(i)) - totalPausedDuration;
             long remainingTime = recipeTimeArrayList.get(i) - elapsedTime;
+
             if (remainingTime > 0) {
                 currCountdown.setText("Timer: " + (remainingTime / 1000));
                 currBackground.updateDocketTexture((double) remainingTime / 1000);
                 currTable.setBackground(currBackground.getImage().getDrawable());
             } else {
-                // if order is successful
                 stageDispose(currBackground, currTable, i);
 
             }

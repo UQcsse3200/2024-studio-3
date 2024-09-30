@@ -108,13 +108,10 @@ public class PlayerActions extends Component {
   /**
    * Triggers an interaction event. It holds the logic in how to interact with a given station
    */
-  void interact() {
+  void interact(String type) {
     // Get the closest fixture all call an interact method on it
     Fixture interactable = interactionSensor.getClosestFixture();
     if (interactable != null) {
-      // We need to notify the input that we are inside an interaction
-      //entity.getEvents().trigger("startInteraction");
-
       // Uses attached information to Fixture on station creation to identify entity belonging
       // too
       Entity station = ((BodyUserData) interactable.getBody().getUserData()).entity;
@@ -132,9 +129,9 @@ public class PlayerActions extends Component {
         return;
       }
       // Code to freeze player, not a current feature
-      entity.getEvents().trigger("startInteraction");
+      //entity.getEvents().trigger("startInteraction");
       // Logic for what interaction even to call on the station
-      station.getEvents().trigger("Station Interaction", playerInventory, displayInventory);
+      station.getEvents().trigger("Station Interaction", playerInventory, displayInventory, type);
     }
   }
 
