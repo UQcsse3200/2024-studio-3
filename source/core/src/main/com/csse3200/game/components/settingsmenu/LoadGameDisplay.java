@@ -20,6 +20,9 @@ import com.csse3200.game.utils.StringDecorator;
 import com.csse3200.game.files.FileLoader;
 import com.csse3200.game.files.FileLoader.Location;
 import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.csse3200.game.files.GameState;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.util.HashSet;
@@ -46,8 +49,17 @@ public class LoadGameDisplay extends UIComponent {
         savesTable = new Table();
         for (int i = 1; i < 7; i++) {
             if (i - 1 < saves.length) {
+                String save = saves[i-1].name();
                 Table load = new Table();
-                load.add(new Label(saves[i-1].name(), skin));
+                load.add(new Label(save, skin));
+                load.addListener(new InputListener() {
+                    @Override
+                    public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                        entity.getEvents().trigger("start");
+                        entity.getEvents().trigger("loadGame", save);
+                        return true;
+                    }
+                });
                 savesTable.add(load).pad(100, 100, 100, 100);
                 if (i % 2 == 0) {
                     savesTable.row();

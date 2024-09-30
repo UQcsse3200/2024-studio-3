@@ -21,6 +21,7 @@ public class SaveLoadService {
         ServiceLocator.getPlayerService().getEvents().addListener("playerCreated", (Entity player) -> {
             this.combatStatsComponent = player.getComponent(CombatStatsComponent.class);
         });
+        ServiceLocator.getEntityService().getEvents().addListener("loadGame", this::load);
     }
 
     /**
