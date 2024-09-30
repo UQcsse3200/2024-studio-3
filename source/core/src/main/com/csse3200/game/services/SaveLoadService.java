@@ -30,7 +30,7 @@ public class SaveLoadService {
         // Make a new GameState
         GameState state = new GameState();
 
-        state.setMoney(200);
+        state.setMoney(75);
         state.setDay(2);
 
         FileLoader.writeClass(state, path, Location.LOCAL);
@@ -39,12 +39,15 @@ public class SaveLoadService {
     }
 
     public void save() {
+
         save(ROOT_DIR + File.separator + SAVE_FILE);
+        ServiceLocator.getEntityService().getEvents().trigger("togglePause");
     }
 
     public void load(String file) {
         GameState state = FileLoader.readClass(GameState.class, ROOT_DIR + File.separator + file, Location.LOCAL);
         UpdateStats(state);
+        ServiceLocator.getEntityService().getEvents().trigger("togglePause");
     }
 
     public void UpdateStats(GameState state) {

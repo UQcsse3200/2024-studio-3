@@ -31,6 +31,7 @@ public class PauseMenuDisplay extends UIComponent {
         super();
         this.game = game;
         isVisible = false;
+        ServiceLocator.getEntityService().getEvents().addListener("togglePause", this::toggleVisibility);
     }
 
     /**
@@ -174,19 +175,19 @@ public class PauseMenuDisplay extends UIComponent {
             }
         });
 
-        buttonTable.add(resumeBtn).minWidth(250).minHeight(53).padTop(20);
+        buttonTable.add(resumeBtn).minWidth(250).minHeight(53).padTop(10);
         buttonTable.row();
-        buttonTable.add(saveBtn).minWidth(250).minHeight(53).padTop(20);
+        buttonTable.add(saveBtn).minWidth(250).minHeight(53).padTop(10);
         buttonTable.row();
-        buttonTable.add(loadBtn).minWidth(250).minHeight(53).padTop(20);
+        buttonTable.add(loadBtn).minWidth(250).minHeight(53).padTop(10);
         buttonTable.row();
-        buttonTable.add(restartBtn).minWidth(250).minHeight(53).padTop(20);
+        buttonTable.add(restartBtn).minWidth(250).minHeight(53).padTop(10);
         buttonTable.row();
-        buttonTable.add(settingsBtn).minWidth(250).minHeight(53).padTop(20);
+        buttonTable.add(settingsBtn).minWidth(250).minHeight(53).padTop(10);
         buttonTable.row();
-        buttonTable.add(exitBtn).minWidth(250).minHeight(53).padTop(20);
+        buttonTable.add(exitBtn).minWidth(250).minHeight(53).padTop(10);
         buttonTable.row();
-        buttonTable.add(quitBtn).minWidth(250).minHeight(53).padTop(20);
+        buttonTable.add(quitBtn).minWidth(250).minHeight(53).padTop(10);
 
         return buttonTable;
     }
