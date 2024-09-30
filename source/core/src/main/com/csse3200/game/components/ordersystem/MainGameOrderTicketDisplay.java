@@ -2,6 +2,8 @@ package com.csse3200.game.components.ordersystem;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -53,6 +55,9 @@ public class MainGameOrderTicketDisplay extends UIComponent {
     private DocketMealDisplay mealDisplay;
     private static final float DISTANCE_MULTIPLIER = 0.015f;
     public CombatStatsComponent combatStatsComponent;
+    private boolean isPaused = false;
+    private long pauseStartTime = 0;
+    private long totalPausedDuration = 0;
 
     /**
      * Constructs an MainGameOrderTicketDisplay instance
@@ -92,6 +97,18 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         return recipe != null ? recipe.getName() : null;
     }
 
+    public void setPaused(boolean paused) {
+        this.isPaused = paused;
+        if (paused) {
+            pauseStartTime = TimeUtils.millis();
+        } else {
+            totalPausedDuration += TimeUtils.timeSinceMillis(pauseStartTime);
+        }
+
+        for (Docket docket : backgroundArrayList) {
+            docket.setPaused(paused);
+        }
+    }
 
     /**
      * Initialises the display and sets up event listeners for creating and shifting orders.
@@ -108,6 +125,17 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         //From team 2, i used your dispose method here when listening for a new day, so current dockets get removed
         //when the end of day occurs
         ServiceLocator.getDocketService().getEvents().addListener("Dispose", this::dispose);
+
+        stage.addListener(new InputListener() {
+            @Override
+            public boolean keyDown(InputEvent event, int keycode) {
+                if (keycode == com.badlogic.gdx.Input.Keys.O) {
+                    setPaused(!isPaused);
+                    return true;
+                }
+                return false;
+            }
+        });
     }
 
     /**
@@ -377,19 +405,23 @@ public class MainGameOrderTicketDisplay extends UIComponent {
      */
     @Override
     public void update() {
+        if (isPaused) {
+            return;
+        }
+
         // No additional update logic needed here, shifting is handled by the OrderActions class
         for (int i = 0; i < tableArrayList.size(); i++) {
             Docket currBackground = backgroundArrayList.get(i);
             Table currTable = tableArrayList.get(i);
             Label currCountdown = countdownLabelArrayList.get(i);
-            long elapsedTime = TimeUtils.timeSinceMillis(startTimeArrayList.get(i));
+            long elapsedTime = TimeUtils.timeSinceMillis(startTimeArrayList.get(i)) - totalPausedDuration;
             long remainingTime = recipeTimeArrayList.get(i) - elapsedTime;
+
             if (remainingTime > 0) {
                 currCountdown.setText("Timer: " + (remainingTime / 1000));
                 currBackground.updateDocketTexture((double) remainingTime / 1000);
                 currTable.setBackground(currBackground.getImage().getDrawable());
             } else {
-                // if order is successful
                 stageDispose(currBackground, currTable, i);
 
             }
