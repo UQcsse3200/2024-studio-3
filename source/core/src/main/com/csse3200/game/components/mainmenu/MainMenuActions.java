@@ -2,8 +2,10 @@ package com.csse3200.game.components.mainmenu;
 
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.components.Component;
+import com.csse3200.game.screens.TutorialScreen;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import com.csse3200.game.services.ServiceLocator;
 
 /**
  * This class listens to events relevant to the Main Menu Screen and does something when one of the
@@ -23,6 +25,8 @@ public class MainMenuActions extends Component {
     entity.getEvents().addListener("load", this::onLoad);
     entity.getEvents().addListener("exit", this::onExit);
     entity.getEvents().addListener("settings", this::onSettings);
+    entity.getEvents().addListener("tutorial", this::onTutorial);
+    entity.getEvents().addListener("cutscene", this::onCutscene);
   }
 
   /**
@@ -39,6 +43,7 @@ public class MainMenuActions extends Component {
    */
   private void onLoad() {
     logger.info("Load game");
+    game.setScreen(GdxGame.ScreenType.LOAD_GAME);
   }
 
   /**
@@ -56,4 +61,31 @@ public class MainMenuActions extends Component {
     logger.info("Launching settings screen");
     game.setScreen(GdxGame.ScreenType.SETTINGS);
   }
+
+  /**
+   * Swaps to the Tutorial Screen.
+   */
+  public void onTutorial() {
+    logger.debug("Tutorial button clicked");
+
+//    // Stop any ongoing tasks in MainMenuDisplay (e.g., animalMoveTask)
+    ServiceLocator.getMainMenuDisplay().stopBackgroundTasks();
+
+    // Transition to the tutorial screen
+    game.setScreen(new TutorialScreen(game));
+  }
+
+  /**
+   * Starts the cutscene
+   */
+  public void onCutscene() {
+    logger.info("Starting cutscene");
+
+    // Stop any background tasks
+    ServiceLocator.getMainMenuDisplay().stopBackgroundTasks();
+
+    // Now we can transition to the cutscene
+    game.setScreen(GdxGame.ScreenType.CUTSCENE);
+  }
+
 }

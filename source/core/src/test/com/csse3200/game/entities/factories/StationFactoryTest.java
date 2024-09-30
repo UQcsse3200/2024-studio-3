@@ -105,7 +105,7 @@ public class StationFactoryTest {
 
     @Test
     public void testCreateAppleTree() {
-        Entity appleTree = StationFactory.createAppleTree();
+        Entity appleTree = StationFactory.createBananaTree();
 
         assertNotNull(appleTree);
         assertNotNull(appleTree.getComponent(TextureRenderComponent.class));

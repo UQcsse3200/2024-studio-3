@@ -2,6 +2,7 @@ package com.csse3200.game.services;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.csse3200.game.events.EventHandler; 
+import java.util.Random;
 
 
 
@@ -16,11 +17,17 @@ public class DayNightService {
     public  long FIVE_MINUTES = 5 * 60 * 1000; // 5 minutes in milliseconds
     public long lastCheckTime;
     public long lastCheckTime2;
+    public long lastCheckTime3;
     private final GameTime gameTime;
     private boolean endOfDayTriggered = false;
     private boolean pastSecond = false;
+    private boolean pastUpgrade = false; 
     private final EventHandler enddayEventHandler;
     private final EventHandler docketServiceEventHandler;
+    private Random random;
+    private int randomChoice;
+    private int day;
+    
 
     /**
      * Constructs a new DayNightService. Initializes the game time and event handler,
@@ -28,10 +35,12 @@ public class DayNightService {
      */
     public DayNightService() {
         this(new EventHandler());
+        day = 0;
     }
 
     public DayNightService(EventHandler enddayEventHandler) {
         this(enddayEventHandler, ServiceLocator.getDocketService().getEvents());
+        day = 0;
     }
 
     public DayNightService(EventHandler enddayEventHandler, EventHandler docketServiceEventHandler) {
@@ -40,7 +49,15 @@ public class DayNightService {
         this.docketServiceEventHandler = docketServiceEventHandler;
 
         this.lastCheckTime = gameTime.getTime();
+        System.out.println(lastCheckTime+"asdfghjkjhgfdsasdfghjhgfdsasdfghjhgfdsdfghjhgfs");
         this.lastCheckTime2 = gameTime.getTime();
+        this.lastCheckTime3 = gameTime.getTime();
+        this.random = new Random();
+        day = 0;
+        randomChoice = random.nextInt(10) * 1000;
+        System.out.println(randomChoice + "/////////////////////////////////////////////////");
+        
+
         create();
     }
 
@@ -60,7 +77,6 @@ public class DayNightService {
         // ***Working version of Day cycle used "decisionDone"***
         enddayEventHandler.addListener("decisionDone", this::startNewDay);
         // enddayEventHandler.addListener("animationDone", this::startNewDay);
-
         enddayEventHandler.addListener("callpastsecond", this::updatepastSecond);
     }
 
@@ -76,6 +92,13 @@ public class DayNightService {
             pastSecond = true;
             enddayEventHandler.trigger("Second");
             lastCheckTime2 = currentTime;
+        }
+
+        if (currentTime - lastCheckTime3 >= randomChoice && !pastUpgrade) {
+            pastUpgrade = true;
+            enddayEventHandler.trigger("upgrade");
+            randomChoice = random.nextInt(10) * 1000;
+            // lastCheckTime3 = currentTime;
         }
 
         if (currentTime - lastCheckTime >= FIVE_MINUTES && !endOfDayTriggered) {
@@ -98,11 +121,20 @@ public class DayNightService {
         ServiceLocator.getDayNightService().getEvents().trigger("endGame");
         logger.info("It's a new Day!");
         enddayEventHandler.trigger("newday");
+        // randomChoice = random.nextInt(10) * 1000;
+        // System.out.println(randomChoice + "lllllllllllllllllllllllllllllllllllllll");
+
+        // enddayEventHandler.trigger("upgrade");
         // // Resume the game time and reset the last check time
         lastCheckTime = gameTime.getTime(); // Reset lastCheckTime to the current time
+        lastCheckTime3 = gameTime.getTime();
         endOfDayTriggered = false;
+        pastUpgrade = false;
+        day += 1;
         gameTime.setTimeScale(1); // Resume game time
     }
+
+    public int getDay() { return day;}
 
     public EventHandler getEvents() {
         return enddayEventHandler;
