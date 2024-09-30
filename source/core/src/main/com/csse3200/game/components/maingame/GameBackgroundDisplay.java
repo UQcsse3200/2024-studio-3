@@ -20,13 +20,13 @@ public class GameBackgroundDisplay extends UIComponent {
     private static final Logger logger = LoggerFactory.getLogger(PauseMenuDisplay.class);
     private float screenWidth = Gdx.app.getGraphics().getWidth();
     private float screenHeight = Gdx.app.getGraphics().getHeight();
-    private float timePerFrame = 300/36; //seconds spent on each frame (assuming
+    protected float timePerFrame = 300/36; //seconds spent on each frame (assuming
     // 5min day)
     private boolean lastFrame;
-    private long timeSinceLastUpdate;
-    private String currentImage;
-    private int currentImageIndex;
-    private static final String[] BACKGROUNDTEXTURES = {"images/background_images/1.0.png",
+    protected long timeSinceLastUpdate;
+    protected String currentImage;
+    protected int currentImageIndex;
+    public static final String[] BACKGROUNDTEXTURES = {"images/background_images/1.0.png",
             "images/background_images/1.5.png",
             "images/background_images/2.0.png",
             "images/background_images/2.5.png",
@@ -74,6 +74,18 @@ public class GameBackgroundDisplay extends UIComponent {
         this.timeSinceLastUpdate = TimeUtils.millis();
     }
 
+    public String getCurrentImage() {
+        return this.currentImage;
+    }
+
+    public Table getTable() {
+        return this.table;
+    }
+
+    public void setTable(Table table) {
+        this.table = table;
+    }
+
     @Override
     public void create() {
         super.create();
@@ -88,7 +100,7 @@ public class GameBackgroundDisplay extends UIComponent {
     /**
      * sets the background with the image currently stored in currentImage member variable
      */
-    private void setBackground() {
+    public void setBackground() {
         Texture texture = ServiceLocator.getResourceService().getAsset(currentImage,
                 Texture.class);
         Image image = new Image(texture);
@@ -107,13 +119,13 @@ public class GameBackgroundDisplay extends UIComponent {
     @Override
     public void update() {
         if (!lastFrame) {
-            long elapsedTime = TimeUtils.timeSinceMillis(timeSinceLastUpdate);
+            long elapsedTime = ServiceLocator.getTimeSource().getTimeSince(timeSinceLastUpdate);
             long elapsedTimeSecs = elapsedTime/1000;
             //if time to update
             if (elapsedTimeSecs >= this.timePerFrame) {
                 this.currentImageIndex++;
                 this.currentImage = BACKGROUNDTEXTURES[currentImageIndex];
-                this.timeSinceLastUpdate = TimeUtils.millis();
+                this.timeSinceLastUpdate = ServiceLocator.getTimeSource().getTime();
                 table.clear(); //clears current background
                 setBackground(); //sets background to new image
                 System.out.println("Updated background to " + this.currentImage);
