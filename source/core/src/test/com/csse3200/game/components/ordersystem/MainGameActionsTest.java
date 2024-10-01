@@ -1,17 +1,13 @@
 package com.csse3200.game.components.ordersystem;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.csse3200.game.GdxGame;
-import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
-import com.csse3200.game.entities.factories.UIFactory;
 import com.csse3200.game.events.EventHandler;
 import com.csse3200.game.extensions.GameExtension;
 import com.csse3200.game.rendering.RenderService;
@@ -21,7 +17,6 @@ import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.components.maingame.MainGameActions;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -31,11 +26,8 @@ import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import java.util.ArrayList;
-import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 /**
@@ -59,23 +51,18 @@ class MainGameActionsTest {
 	@Mock
 	PlayerService playerService;
 	@Mock
-	EventHandler eventHandler;
-	@Mock
 	EventHandler eventHandler2;
-	@Mock
-	EventHandler eventHandler3;
 	@Mock
 	ResourceService resourceService;
 	@Mock
 	Texture textureMock;
-	@Mock
-	Entity entity;
+	@Mock Table table;
 	MainGameOrderTicketDisplay orderTicketDisplay;
 	GdxGame mockGame;
 	private static final Logger logger = LoggerFactory.getLogger(MainGameActionsTest.class);
 	private MainGameActions mainGameActions;
 	MockedStatic<MainGameOrderTicketDisplay> mockedStatic;
-
+	ArrayList<Table> tableArrayList;
 
 	/**
 	 * Sets up the environment before each test by initializing services
@@ -97,9 +84,9 @@ class MainGameActionsTest {
 		orderTicketDisplay = mock(MainGameOrderTicketDisplay.class);
 		mockedStatic = mockStatic(MainGameOrderTicketDisplay.class);
 
-		ArrayList<Table> mockOrderList = new ArrayList<>();
-		mockOrderList.add(mock(Table.class));
-		mockedStatic.when(MainGameOrderTicketDisplay::getTableArrayList).thenReturn(mockOrderList);
+		tableArrayList = new ArrayList<>();
+		tableArrayList.add(table);
+		mockedStatic.when(MainGameOrderTicketDisplay::getTableArrayList).thenReturn(tableArrayList);
 
 		mainGameActions = new MainGameActions(mockGame, orderTicketDisplay);
 	}
@@ -112,16 +99,14 @@ class MainGameActionsTest {
 		mockedStatic.close();
 	}
 
-
 	/**
 	 * Test should create order when table is below the limit
 	 */
 	@Test
 	public void testOnCreateOrderBelowLimit() {
-		mainGameActions.onCreateOrder("acaiBowl");
-		mainGameActions.onCreateOrder("acaiBowl");
-		verify(orderTicketDisplay, times(2)).setRecipe("acaiBowl");
-		verify(orderTicketDisplay, times(2)).addActors();
+		mainGameActions.onCreateOrder(null);
+		verify(orderTicketDisplay, times(1)).setRecipe(anyString());
+		verify(orderTicketDisplay, times(1)).addActors();
 	}
 
 	/**
@@ -129,16 +114,63 @@ class MainGameActionsTest {
 	 */
 	@Test
 	public void testOnCreateOrderAboveLimit() {
-		ArrayList<Table> mockOrderList = new ArrayList<>();
-
 		int limit = 8;
 		for (int i = 0; i < limit; i++) {
-			mockOrderList.add(mock(Table.class));
+			tableArrayList.add(table);
 		}
-		mockedStatic.when(MainGameOrderTicketDisplay::getTableArrayList).thenReturn(mockOrderList);
-		MainGameActions mainGameActions = new MainGameActions(mock(GdxGame.class), orderTicketDisplay);
-		mainGameActions.onCreateOrder("acaiBowl");
 
+		mainGameActions.onCreateOrder(null);
 		verify(orderTicketDisplay, never()).setRecipe(anyString());
+		verify(orderTicketDisplay, never()).addActors();
+	}
+
+	/**
+	 * Test should set Acai Bowl recipe
+	 */
+	@Test
+	public void testOnCreateAcai() {
+		mainGameActions.onCreateAcai();
+		verify(orderTicketDisplay, times(1)).setRecipe(RecipeNameEnums.ACAI_BOWL.getRecipeName());
+		verify(orderTicketDisplay, times(1)).addActors();
+	}
+
+	/**
+	 * Test should set Banana Split recipe
+	 */
+	@Test
+	public void testOnCreateBanana() {
+		mainGameActions.onCreateBanana();
+		verify(orderTicketDisplay, times(1)).setRecipe(RecipeNameEnums.BANANA_SPLIT.getRecipeName());
+		verify(orderTicketDisplay, times(1)).addActors();
+	}
+
+	/**
+	 * Test should set Salad recipe
+	 */
+	@Test
+	public void testOnCreateSalad() {
+		mainGameActions.onCreateSalad();
+		verify(orderTicketDisplay, times(1)).setRecipe(RecipeNameEnums.SALAD.getRecipeName());
+		verify(orderTicketDisplay, times(1)).addActors();
+	}
+
+	/**
+	 * Test should set Steak recipe
+	 */
+	@Test
+	public void testOnCreateSteak() {
+		mainGameActions.onCreateSteak();
+		verify(orderTicketDisplay, times(1)).setRecipe(RecipeNameEnums.STEAK_MEAL.getRecipeName());
+		verify(orderTicketDisplay, times(1)).addActors();
+	}
+
+	/**
+	 * Test should set Fruit Salad recipe
+	 */
+	@Test
+	public void testOnCreateFruitSalad() {
+		mainGameActions.onCreateFruitSalad();
+	verify(orderTicketDisplay, times(1)).setRecipe(RecipeNameEnums.FRUIT_SALAD.getRecipeName());
+		verify(orderTicketDisplay, times(1)).addActors();
 	}
 }

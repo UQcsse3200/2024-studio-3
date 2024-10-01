@@ -6,7 +6,6 @@ import com.csse3200.game.components.npc.CustomerComponent;
 import com.csse3200.game.components.ordersystem.MainGameOrderTicketDisplay;
 import com.csse3200.game.components.ordersystem.RecipeNameEnums;
 import com.csse3200.game.entities.Entity;
-import com.csse3200.game.entities.factories.UIFactory;
 import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,11 +19,7 @@ public class MainGameActions extends Component {
     private static final int ORDER_LIMIT = 8; // Maximum number of orders allowed
     private static final String[] RECIPE_NAMES = {"acaiBowl", "salad", "fruitSalad", "steakMeal", "bananaSplit"};
     private GdxGame game;
-//    private Entity ui = UIFactory.createDocketUI();
-//    private final MainGameOrderTicketDisplay docketDisplayer = ui.getComponent(MainGameOrderTicketDisplay.class);
     private MainGameOrderTicketDisplay docketDisplayer;
-
-    // List to keep track of currently spawning animals
     private static List<String> currentlySpawningAnimals = new CopyOnWriteArrayList<>();
 
     public MainGameActions(GdxGame game, MainGameOrderTicketDisplay docketDisplayer) {
@@ -41,7 +36,6 @@ public class MainGameActions extends Component {
         ServiceLocator.getEntityService().getEvents().addListener("createSaladDocket", this::onCreateSalad);
         ServiceLocator.getEntityService().getEvents().addListener("createSteakDocket", this::onCreateSteak);
         ServiceLocator.getEntityService().getEvents().addListener("createFruitSaladDocket", this::onCreateFruitSalad);
-//        entity.getEvents().addListener("orderDone", this::onOrderDone);
     }
 
     private void onExit() {
@@ -50,33 +44,33 @@ public class MainGameActions extends Component {
     }
 
     /**
-     * Creates Acai Bowl Docket
+     * Creates Açai Bowl Docket
      */
-    private void onCreateAcai() {
+    public void onCreateAcai() {
         onCreateOrder(RecipeNameEnums.ACAI_BOWL.getRecipeName());
     }
     /**
      * Creates Banana Split Docket
      */
-    private void onCreateBanana() {
+    public void onCreateBanana() {
         onCreateOrder(RecipeNameEnums.BANANA_SPLIT.getRecipeName());
     }
     /**
      * Creates Salad Docket
      */
-    private void onCreateSalad() {
+    public void onCreateSalad() {
         onCreateOrder(RecipeNameEnums.SALAD.getRecipeName());
     }
     /**
      * Creates Steak Docket
      */
-    private void onCreateSteak() {
+    public void onCreateSteak() {
         onCreateOrder(RecipeNameEnums.STEAK_MEAL.getRecipeName());
     }
     /**
      * Creates Fruit Salad Docket
      */
-    private void onCreateFruitSalad() {
+    public void onCreateFruitSalad() {
         onCreateOrder(RecipeNameEnums.FRUIT_SALAD.getRecipeName());
     }
 
@@ -95,7 +89,6 @@ public class MainGameActions extends Component {
             docketDisplayer.setRecipe(preferredRecipe);
             docketDisplayer.setStage(ServiceLocator.getRenderService().getStage());
             docketDisplayer.addActors();
-//            ServiceLocator.getEntityService().register(ui);
         } else {
             logger.info("Order limit of {} reached", ORDER_LIMIT);
         }
@@ -124,18 +117,6 @@ public class MainGameActions extends Component {
         logger.warn("Entity with name '{}' not found", animalName);
         return null;
     }
-
-    /**
-     * Remove all dockets
-     */
-//    public void onOrderDone() {
-//        if (ui != null) {
-//            ServiceLocator.getEntityService().unregister(ui);
-//            ui.dispose();
-//            ui = null;
-//            logger.info("Order entity disposed");
-//        }
-//    }
 
     public static void addSpawningAnimal(String animalName) {
         if (!currentlySpawningAnimals.contains(animalName)) {

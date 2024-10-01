@@ -45,7 +45,6 @@ public class TutorialScreenDisplay extends UIComponent {
         RenderService renderService = ServiceLocator.getRenderService();
 
         this.game = game;
-//        this.orderTicketDisplay = new MainGameOrderTicketDisplay();
         this.orderTicketDisplay = new MainGameOrderTicketDisplay(renderService, playerService);
 //        this.orderBtnDisplay = new MainGameOrderBtnDisplay();
     }

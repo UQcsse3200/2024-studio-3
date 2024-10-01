@@ -53,8 +53,6 @@ public class MainGameOrderTicketDisplay extends UIComponent {
     private DocketMealDisplay mealDisplay;
     private static final float DISTANCE_MULTIPLIER = 0.015f;
     public CombatStatsComponent combatStatsComponent;
-//    private final RenderService renderService = ServiceLocator.getRenderService();
-//    private final PlayerService playerService = ServiceLocator.getPlayerService();
     private final RenderService renderService;
     private final PlayerService playerService;
 
@@ -62,7 +60,6 @@ public class MainGameOrderTicketDisplay extends UIComponent {
      * Constructs an MainGameOrderTicketDisplay instance
      */
     public MainGameOrderTicketDisplay(RenderService renderService, PlayerService playerService) {
-//    public MainGameOrderTicketDisplay() {
         this.renderService = renderService;
         this.playerService = playerService;
 
@@ -91,7 +88,6 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         this.recipe = new Recipe(recipeName);
     }
 
-
     /**
      * Gets recipe data
      *
@@ -104,7 +100,6 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         return recipe != null ? recipe.getName() : null;
     }
 
-
     /**
      * Initialises the display and sets up event listeners for creating and shifting orders.
      */
@@ -114,7 +109,6 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         entity.getEvents().addListener("createOrder", this::addActors);
         ServiceLocator.getDocketService().getEvents().addListener("shiftDocketsLeft", this::shiftDocketsLeft);
         ServiceLocator.getDocketService().getEvents().addListener("shiftDocketsRight", this::shiftDocketsRight);
-        // logger.info("Listeners added for shiftDocketsLeft and shiftDocketsRight events");
         ServiceLocator.getDocketService().getEvents().addListener("removeBigTicket", this::removeBigTicket);
 
         //From team 2, i used your dispose method here when listening for a new day, so current dockets get removed
@@ -215,7 +209,7 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         updateDocketPositions();
         updateDocketSizes();
 
-        logger.info("Docket positions updated after left shift");
+//        logger.info("Docket positions updated after left shift");
     }
 
 
@@ -283,7 +277,7 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         updateDocketPositions();
         updateDocketSizes();
 
-        logger.info("Docket positions updated after right shift");
+//        logger.info("Docket positions updated after right shift");
     }
 
     /**
@@ -392,15 +386,12 @@ public class MainGameOrderTicketDisplay extends UIComponent {
     @Override
     public void update() {
         // No additional update logic needed here, shifting is handled by the OrderActions class
-        logger.warn("in update");
-        logger.warn("table size {}", tableArrayList.size());
         for (int i = 0; i < tableArrayList.size(); i++) {
             Docket currBackground = backgroundArrayList.get(i);
             Table currTable = tableArrayList.get(i);
             Label currCountdown = countdownLabelArrayList.get(i);
             long elapsedTime = TimeUtils.timeSinceMillis(startTimeArrayList.get(i));
             long remainingTime = recipeTimeArrayList.get(i) - elapsedTime;
-            logger.info("remaining time" + remainingTime);
             if (remainingTime > 0) {
                 currCountdown.setText("Timer: " + (remainingTime / 1000));
                 currBackground.updateDocketTexture((double) remainingTime / 1000);
@@ -587,7 +578,6 @@ public class MainGameOrderTicketDisplay extends UIComponent {
      * @return the recipe timer
      */
     public long getTimer() {
-        logger.info("timer, {}", getRecipe().getMakingTime() * DEFAULT_TIMER);
         return getRecipe().getMakingTime() * DEFAULT_TIMER;
     }
 
