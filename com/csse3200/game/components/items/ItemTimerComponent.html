@@ -172,6 +172,16 @@ loadScripts(document, 'script');</script>
 <div class="block">Determines if the timer is finished.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#rageModeOff()" class="member-name-link">rageModeOff</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Method to call when rage mode is deactivated by the user.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#rageModeOn()" class="member-name-link">rageModeOn</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Method to call when rage mode is activated by the user.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setLength(long)" class="member-name-link">setLength</a><wbr>(long&nbsp;length)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Set the length of the timer.</div>
@@ -224,7 +234,8 @@ loadScripts(document, 'script');</script>
  - gameTime the global gametime service
  - length finishing time of the timer
  - elapsed the current ammount of time elapsed
- - isRunning if the timer is running starts as false when item created</div>
+ - isRunning if the timer is running starts as false when item created
+ - multiplier the current multiplier of the station if cooking</div>
 </section>
 </li>
 <li>
@@ -338,6 +349,22 @@ loadScripts(document, 'script');</script>
 <div class="member-signature"><span class="modifiers">protected abstract</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">updateItem</span>()</div>
 <div class="block">Method to update an item to a new state depending on the item type.
  Abtract since cooking and chopping will have different implementations.</div>
+</section>
+</li>
+<li>
+<section class="detail" id="rageModeOn()">
+<h3>rageModeOn</h3>
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">rageModeOn</span>()</div>
+<div class="block">Method to call when rage mode is activated by the user. Reduces the time
+ that the item will take to cook</div>
+</section>
+</li>
+<li>
+<section class="detail" id="rageModeOff()">
+<h3>rageModeOff</h3>
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">rageModeOff</span>()</div>
+<div class="block">Method to call when rage mode is deactivated by the user. Changes back
+ the time that the item takes to cook back to normal.</div>
 </section>
 </li>
 </ul>
