@@ -64,8 +64,8 @@ public class TutorialScreenDisplay extends UIComponent {
         advanceTutorialStep();  // Ensure textDisplay is initialized before calling this method
 
         // Add event listeners for create order
-        entity.getEvents().addListener("createOrder", this::onCreateOrderPressed);
-        ServiceLocator.getInputService().getEvents().addListener("createOrder", this::onCreateOrderPressed);
+//        entity.getEvents().addListener("createOrder", this::onCreateOrderPressed);
+//        ServiceLocator.getInputService().getEvents().addListener("createOrder", this::onCreateOrderPressed);
 
         stage.addActor(table);
     }
@@ -124,11 +124,10 @@ public class TutorialScreenDisplay extends UIComponent {
         textDisplay.setVisible(true);
 
         // Combine both instructions into one
-        createTextBox("Press 'Create Order' and then use [ and ] keys to switch dockets.");
+        createTextBox("Press [ and ] keys to switch dockets.");
 
         // Check if both the order button is pressed and the dockets are shifted
-        if (createOrderPressed &&
-                (Gdx.input.isKeyJustPressed(Input.Keys.LEFT_BRACKET) || Gdx.input.isKeyJustPressed(Input.Keys.RIGHT_BRACKET))) {
+        if ((Gdx.input.isKeyJustPressed(Input.Keys.LEFT_BRACKET) || Gdx.input.isKeyJustPressed(Input.Keys.RIGHT_BRACKET))) {
 
             docketsShifted = true;
             logger.debug("Dockets shifted and create order pressed");
@@ -161,20 +160,20 @@ public class TutorialScreenDisplay extends UIComponent {
                 }
                 break;
             case 3:
-                if (createOrderPressed) {
-                    textDisplay.setText("Now use [ and ] keys to switch dockets.");
+//                if (createOrderPressed) {
+//                    textDisplay.setText("Now use [ and ] keys to switch dockets.");
 
-                    // Check if the user presses [ or ]
-                    if (Gdx.input.isKeyJustPressed(Input.Keys.LEFT_BRACKET) || Gdx.input.isKeyJustPressed(Input.Keys.RIGHT_BRACKET)) {
-                        docketsShifted = true;
-                        logger.debug("Dockets shifted");
-                    }
-
-                    if (createOrderPressed && docketsShifted) {
-                        logger.debug("Advancing tutorial after dockets shifted");
-                        advanceTutorialStep();
-                    }
+                // Check if the user presses [ or ]
+                if (Gdx.input.isKeyJustPressed(Input.Keys.LEFT_BRACKET) || Gdx.input.isKeyJustPressed(Input.Keys.RIGHT_BRACKET)) {
+                    docketsShifted = true;
+                    logger.debug("Dockets shifted");
                 }
+
+                if (docketsShifted) {
+                    logger.debug("Advancing tutorial after dockets shifted");
+                    advanceTutorialStep();
+                }
+                //}
                 break;
             case 4:
                 if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
