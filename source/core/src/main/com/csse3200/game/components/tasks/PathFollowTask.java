@@ -5,6 +5,7 @@ import com.csse3200.game.ai.tasks.DefaultTask;
 import com.csse3200.game.ai.tasks.PriorityTask;
 import com.csse3200.game.ai.tasks.Task;
 import com.csse3200.game.ai.tasks.TaskRunner;
+import com.csse3200.game.entities.factories.NPCFactory;
 import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -109,6 +110,7 @@ public class PathFollowTask extends DefaultTask implements PriorityTask {
         this.targetPos = predefinedTargetPos;
         this.currentTarget = new Vector2(targetPos.x, owner.getEntity().getPosition().y);
         startMoving();
+        NPCFactory.decreaseCustomerCount();
     }
 
     private void removeCustomerEntity() {

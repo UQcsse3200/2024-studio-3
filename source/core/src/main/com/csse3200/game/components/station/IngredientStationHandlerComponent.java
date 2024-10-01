@@ -71,6 +71,10 @@ public class IngredientStationHandlerComponent extends Component {
      * @param type the type of interaction attempt
      */
     public void handleInteraction(InventoryComponent playerInventoryComponent, InventoryDisplay inventoryDisplay, String type) {
+        if (!type.equals("default")) { // Return if not default interaction
+            return;
+        }
+        
         if (playerInventoryComponent.isFull()) {
             // do nothing
         } else {

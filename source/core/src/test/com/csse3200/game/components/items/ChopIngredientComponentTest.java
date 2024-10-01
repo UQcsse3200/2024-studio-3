@@ -1,6 +1,7 @@
 package com.csse3200.game.components.items;
 
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.services.GameTime;
 import com.csse3200.game.extensions.GameExtension;
 import com.csse3200.game.services.ServiceLocator;
@@ -27,6 +28,8 @@ public class ChopIngredientComponentTest {
     public void setUp() {
         // Clear service locator before tests
         ServiceLocator.clear();
+
+        ServiceLocator.registerEntityService(new EntityService());
 
         mockEntity = new Entity();
         mockIngredient = mock(IngredientComponent.class);
@@ -88,6 +91,22 @@ public class ChopIngredientComponentTest {
         assertTrue(chopIngredientComponent.getIsChopping());
         mockEntity.getEvents().trigger("stopChoppingIngredient");
         assertFalse(chopIngredientComponent.getIsChopping());
+    }
+
+    @Test
+    public void testRageMode() {
+        when(mockTimesource.getTime()).thenReturn(1000L, 6000L);
+        when(mockIngredient.getChopTime()).thenReturn(10);
+        mockEntity.create();
+
+        ServiceLocator.getEntityService().getEvents().trigger("rageModeOn");
+
+        mockEntity.getEvents().trigger("chopIngredient");
+        
+        chopIngredientComponent.update(); // This should trigger chopping
+
+        // ingredient is chopped
+        verify(mockIngredient).chopItem();
     }
 
 }
