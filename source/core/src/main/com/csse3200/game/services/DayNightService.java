@@ -14,6 +14,7 @@ import java.util.Random;
  */
 public class DayNightService {
     private static final Logger logger = LoggerFactory.getLogger(DayNightService.class);
+    public static final int MAX_DAYS = 5; // Maximum number of days
     public  long FIVE_MINUTES = 5 * 60 * 1000; // 5 minutes in milliseconds
     public long lastCheckTime;
     public long lastCheckTime2;
@@ -53,10 +54,9 @@ public class DayNightService {
         this.lastCheckTime2 = gameTime.getTime();
         this.lastCheckTime3 = gameTime.getTime();
         this.random = new Random();
-        day = 1;
+        day = 0; // was 1 but probably should be 0? ask calvin
         randomChoice = random.nextInt(10) * 1000;
         System.out.println(randomChoice + "/////////////////////////////////////////////////");
-        
 
         create();
     }
@@ -120,7 +120,7 @@ public class DayNightService {
     private void startNewDay() {
 
         // Checking if the game should end (i.e. it's the 5th day)
-        if (day >= 5) {
+        if (day >= MAX_DAYS) { // should this be MAX_DAYS - 1?
             logger.info("Game has ended after 5 days!");
             ServiceLocator.getDayNightService().getEvents().trigger("endGame");
             return;
