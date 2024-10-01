@@ -6,7 +6,6 @@ import com.csse3200.game.components.npc.CustomerComponent;
 import com.csse3200.game.components.ordersystem.MainGameOrderTicketDisplay;
 import com.csse3200.game.components.ordersystem.RecipeNameEnums;
 import com.csse3200.game.entities.Entity;
-import com.csse3200.game.entities.factories.UIFactory;
 import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,12 +21,10 @@ public class MainGameActions extends Component {
     private static final Logger logger = LoggerFactory.getLogger(MainGameActions.class);
     private static final int ORDER_LIMIT = 8;
     private static final String[] RECIPE_NAMES = {"acaiBowl", "salad", "fruitSalad", "steakMeal", "bananaSplit"};
-    private GdxGame game;
-    private static List<String> currentlySpawningAnimals = new CopyOnWriteArrayList<>();
-    private Entity ui;
-    private MainGameOrderTicketDisplay docketDisplayer;
-//    Entity docketUI = UIFactory.createDocketUI();
-//    MainGameOrderTicketDisplay docketDisplayer = docketUI.getComponent(MainGameOrderTicketDisplay.class);
+    private final GdxGame game;
+    private static final List<String> currentlySpawningAnimals = new CopyOnWriteArrayList<>();
+    private final Entity ui;
+    private final MainGameOrderTicketDisplay docketDisplayer;
 
     /**
      * MainGameActions constructor

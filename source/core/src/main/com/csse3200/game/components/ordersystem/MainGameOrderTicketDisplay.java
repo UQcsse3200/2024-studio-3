@@ -36,9 +36,8 @@ public class MainGameOrderTicketDisplay extends UIComponent {
     private static final Logger logger = LoggerFactory.getLogger(MainGameOrderTicketDisplay.class);
     private static final float Z_INDEX = 3f;
     private static final float viewPortHeightMultiplier = 7f / 9f;
-    private static final float viewPortWidthMultiplier = 3f / 32f;
-    private float viewportHeight;
-    private float viewportWidth;
+    private final float viewportHeight;
+    private final float viewportWidth;
     private static final int distance = 20;
     private static ArrayList<Table> tableArrayList;
     private static ArrayList<Long> startTimeArrayList;
@@ -50,8 +49,7 @@ public class MainGameOrderTicketDisplay extends UIComponent {
     private static int recipeValue;
     private Recipe recipe;
     public InventoryComponent inventoryComponent;
-    private Image mealImage;
-    private DocketMealDisplay mealDisplay;
+    private final DocketMealDisplay mealDisplay;
     private static final float DISTANCE_MULTIPLIER = 0.015f;
     public CombatStatsComponent combatStatsComponent;
     private boolean isPaused = false;
@@ -128,7 +126,7 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         ServiceLocator.getDocketService().getEvents().addListener("shiftDocketsRight", this::shiftDocketsRight);
         ServiceLocator.getDocketService().getEvents().addListener("removeBigTicket", this::removeBigTicket);
 
-        //From team 2, i used your dispose method here when listening for a new day, so current dockets get removed
+        //From team 2, I used your dispose method here when listening for a new day, so current dockets get removed
         //when the end of day occurs
         ServiceLocator.getDocketService().getEvents().addListener("Dispose", this::dispose);
 
@@ -172,7 +170,7 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         Label recipeNameLabel = new Label(getRecipe().getName(), skin);
         table.add(recipeNameLabel).padLeft(10f).row();
 
-        mealImage = mealDisplay.getMealImage(getRecipe().getName());
+        Image mealImage = mealDisplay.getMealImage(getRecipe().getName());
         table.add(mealImage).row();
 
         recipeTimeArrayList.add(getTimer());
@@ -364,14 +362,12 @@ public class MainGameOrderTicketDisplay extends UIComponent {
                 table.setZIndex(10);
                 // Apply enlarged font size
                 for (int j = 0; j < cells.size; j++) {
-                    if (cells.get(j).getActor() instanceof Label) {
-                        Label label = (Label) cells.get(j).getActor();
+                    if (cells.get(j).getActor() instanceof Label label) {
                         label.setFontScale(viewportWidth / 1920f);
                         if (label.getText().toString().contains("Timer")) {
                             cells.get(j).padBottom(5f);
                         }
-                    } else if (cells.get(j).getActor() instanceof Image) {
-                        Image image = (Image) cells.get(j).getActor();
+                    } else if (cells.get(j).getActor() instanceof Image image) {
                         cells.get(j).padBottom(10f);
                         image.setScaling(Scaling.fit);
                     }
@@ -382,14 +378,12 @@ public class MainGameOrderTicketDisplay extends UIComponent {
                 table.setPosition(xVal, yPosNormal);
                 table.setZIndex(5);
                 for (int j = 0; j < cells.size; j++) {
-                    if (cells.get(j).getActor() instanceof Label) {
-                        Label label = (Label) cells.get(j).getActor();
+                    if (cells.get(j).getActor() instanceof Label label) {
                         label.setFontScale(0.7f * (viewportWidth / 1920f));
                         if (label.getText().toString().contains("Timer")) {
                             cells.get(j).padBottom(0f);
                         }
-                    } else if (cells.get(j).getActor() instanceof Image) {
-                        Image image = (Image) cells.get(j).getActor();
+                    } else if (cells.get(j).getActor() instanceof Image image) {
                         cells.get(j).padBottom(5f);
                         image.setScaling(Scaling.fit);
                     }
@@ -403,7 +397,7 @@ public class MainGameOrderTicketDisplay extends UIComponent {
      *
      * @param currentWidth current width of the game window screen.
      * @param currentHeight current height of the game window screen.
-     * @return
+     * @return scaling factor
      */
     public static float getScalingFactor(float currentWidth, float currentHeight) {
         float widthFactor = currentWidth / 1920;
@@ -480,19 +474,18 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         boolean ingredientBool = false;
         for (int i = 0; i < children.size; i++) {
             Actor actor = children.get(i);
-            if (actor instanceof Label) {
-                Label label = (Label) actor;
+            if (actor instanceof Label label) {
                 String text = label.getText().toString();
                 if (i == 0) {
                     orderNum = text.replace("Order ", "");
                 } else if (text.startsWith("Timer:")) {
                     timeLeft = text.replace("Timer: ", "");
                 } else { // handling meal name
-                    if (ingredientBool == false) { // only handles the ingredient meal
+                    if (!ingredientBool) { // only handles the ingredient meal
                         meal = text;
                         ingredientBool = true;
                     } else {
-                        //if you want to parse the individual ingredients of the recipe, factor the text value here
+                        // TODO: if you want to parse the individual ingredients of the recipe, factor the text value here
                         continue;
                     }
 
@@ -542,7 +535,7 @@ public class MainGameOrderTicketDisplay extends UIComponent {
     @Override
     public void dispose() {
         // Cleanup resources
-        //from team 2, i reset the ordernumb back to 0, for each new day when dispose is called
+        //from team 2, I reset the ordernumb back to 0, for each new day when dispose is called
 //        orderNumb = 0;
         for (Table table : tableArrayList) {
             table.clear();

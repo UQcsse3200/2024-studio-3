@@ -14,7 +14,6 @@ import org.slf4j.LoggerFactory;
  */
 public class OrderActions extends InputComponent {
     private static final Logger logger = LoggerFactory.getLogger(OrderActions.class);
-    private GdxGame game;
     private static final int SHIFT_LEFT_KEY = Input.Keys.LEFT_BRACKET; // Key for shifting left
     private static final int SHIFT_RIGHT_KEY = Input.Keys.RIGHT_BRACKET; // Key for shifting right
 
@@ -30,7 +29,6 @@ public class OrderActions extends InputComponent {
      */
     public OrderActions(GdxGame game) {
         super(5);
-        this.game = game;
     }
 
     /**

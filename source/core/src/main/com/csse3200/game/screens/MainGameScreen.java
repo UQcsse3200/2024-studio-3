@@ -162,7 +162,7 @@ public class MainGameScreen extends ScreenAdapter {
 
 	/**
 	 * Render the screen
-	 * @param delta
+	 * @param delta time span between the current frame and the last frame in seconds.
 	 */
 	@Override
 	public void render(float delta) {
