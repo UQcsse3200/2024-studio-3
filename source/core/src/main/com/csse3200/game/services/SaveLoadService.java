@@ -48,5 +48,6 @@ public class SaveLoadService {
 
     public void UpdateStats(GameState state) {
         this.combatStatsComponent.setGold(state.getMoney());
+        ServiceLocator.getDayNightService().setDay(state.getDay());
     }
 }

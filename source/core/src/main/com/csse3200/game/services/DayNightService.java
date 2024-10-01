@@ -16,9 +16,9 @@ public class DayNightService {
     private static final Logger logger = LoggerFactory.getLogger(DayNightService.class);
     public static final int MAX_DAYS = 5; // Maximum number of days
     public  long FIVE_MINUTES = 5 * 60 * 1000; // 5 minutes in milliseconds
-    public long lastCheckTime;
-    public long lastCheckTime2;
-    public long lastCheckTime3;
+    public long lastSecondCheck;
+    public long lastUpgradeCheck;
+    public long lastEndOfDayCheck;
     private final GameTime gameTime;
     private boolean endOfDayTriggered = false;
     private boolean pastSecond = false;
@@ -48,31 +48,16 @@ public class DayNightService {
         gameTime = ServiceLocator.getTimeSource();
         this.enddayEventHandler = enddayEventHandler;
         this.docketServiceEventHandler = docketServiceEventHandler;
-
-        this.lastCheckTime = gameTime.getTime();
-        System.out.println(lastCheckTime+"asdfghjkjhgfdsasdfghjhgfdsasdfghjhgfdsdfghjhgfs");
-        this.lastCheckTime2 = gameTime.getTime();
-        this.lastCheckTime3 = gameTime.getTime();
+        this.lastSecondCheck = gameTime.getTime();
+        this.lastUpgradeCheck = gameTime.getTime();
+        this.lastEndOfDayCheck = gameTime.getTime();
         this.random = new Random();
         day = 0; // was 1 but probably should be 0? ask calvin
         randomChoice = random.nextInt(10) * 1000;
-        System.out.println(randomChoice + "/////////////////////////////////////////////////");
 
         create();
     }
 
-    /**
-     * Sets up event listeners for handling end-of-day and timer-related events.
-     *
-     * Our working version was with the "decisionDone" listener, however, we limited our
-     * Day cycle to end for just one day on request of Team 6 and added an "animationDone" listener
-     * instead for when team 6 extends their functionality for multiple days.
-     * This should listen to a trigger for when the animation is done executing at the end of a day,
-     * but currently team 6 has decided to keep it simple and end the game in one day.
-     *
-     * Okay, when resolving merge conflict, seems team 6 kept our "decisionDone" listener,
-     * So I'm going to keep that in for now.
-     */
     public void create() {
         // ***Working version of Day cycle used "decisionDone"***
         enddayEventHandler.addListener("decisionDone", this::startNewDay);
@@ -87,21 +72,20 @@ public class DayNightService {
     public void update() {
         long currentTime = gameTime.getTime(); // Get the current game time
 
-        // Check if 5 minutes have passed and trigger the end of the day
-        if(currentTime - lastCheckTime2 >= 1000 && !pastSecond){
+        // Check if it has been 1 second
+        if(currentTime - lastSecondCheck >= 1000 && !pastSecond){
             pastSecond = true;
             enddayEventHandler.trigger("Second");
-            lastCheckTime2 = currentTime;
+            lastSecondCheck = currentTime;
         }
 
-        if (currentTime - lastCheckTime3 >= randomChoice && !pastUpgrade) {
+        if (currentTime - lastUpgradeCheck >= randomChoice && !pastUpgrade) {
             pastUpgrade = true;
             enddayEventHandler.trigger("upgrade");
             randomChoice = random.nextInt(10) * 1000;
-            // lastCheckTime3 = currentTime;
         }
 
-        if (currentTime - lastCheckTime >= FIVE_MINUTES && !endOfDayTriggered) {
+        if (currentTime - lastEndOfDayCheck >= FIVE_MINUTES && !endOfDayTriggered) {
             endOfDayTriggered = true; 
             gameTime.setTimeScale(0);
             docketServiceEventHandler.trigger("Dispose");
@@ -128,13 +112,9 @@ public class DayNightService {
 
         logger.info("It's a new Day!");
         enddayEventHandler.trigger("newday");
-        // randomChoice = random.nextInt(10) * 1000;
-        // System.out.println(randomChoice + "lllllllllllllllllllllllllllllllllllllll");
-
-        // enddayEventHandler.trigger("upgrade");
         // // Resume the game time and reset the last check time
-        lastCheckTime = gameTime.getTime(); // Reset lastCheckTime to the current time
-        lastCheckTime3 = gameTime.getTime();
+        lastSecondCheck = gameTime.getTime(); // Reset lastCheckTime to the current time
+        lastEndOfDayCheck = gameTime.getTime();
         endOfDayTriggered = false;
         pastUpgrade = false;
         day += 1;
@@ -142,6 +122,8 @@ public class DayNightService {
     }
 
     public int getDay() { return day;}
+
+    public void setDay(int day) { this.day = day;}
 
     public EventHandler getEvents() {
         return enddayEventHandler;
