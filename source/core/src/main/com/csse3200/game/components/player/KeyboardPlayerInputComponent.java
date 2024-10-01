@@ -20,7 +20,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
   private static HashMap<Integer, Integer> keyFlags = new HashMap<>();
   private static final String WALKSTOP = "walkStop";
   //private Entity player;
-  private boolean isChopping;
+  private boolean isChopping = false;
 
   private boolean isInteracting = false;
 
@@ -44,6 +44,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
     if (isChopping && keycode != Keys.Q) {
       // We know item exits and is choppable
       entity.getEvents().trigger("interact", "stopChop");
+      isChopping = false;
     }
 
     if (keycode == Keys.O) {
