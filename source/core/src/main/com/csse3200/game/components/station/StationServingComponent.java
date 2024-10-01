@@ -147,19 +147,14 @@ public class StationServingComponent extends Component {
             java.util.List<String> orderIngredients = orderRecipe.getIngredients();
             logger.info("Order ingredients: " + orderIngredients);
 
-            // get player ingredients
-            // String itemName = item.getItemName();
-            // String playerMeal = switch (itemName) {
-            //     case "acai bowl" -> "acaiBowl";
-            //     case "salad" -> "salad";
-            //     case "fruit salad" -> "fruitSalad";
-            //     case "steak meal" -> "steakMeal";
-            //     case "banana split" -> "bananaSplit";
-            //     default -> {
-            //         logger.error("No recipe found for this item: " + itemName);
-            //         yield null; // yield a default value or handle the error as needed
-            //     }
-            // };
+            int orderedMealPrice = switch (orderedMeal) {
+                case "acaiBowl" -> 20;
+                case "salad" -> 25;
+                case "fruitSalad" -> 20;
+                case "steakMeal" -> 40;
+                case "bananaSplit" -> 25;
+                default -> 10;
+            };
 
             logger.info("Player meal: " + playerMeal);
             Recipe playerRecipe = OrderManager.getRecipe(playerMeal);
@@ -183,26 +178,26 @@ public class StationServingComponent extends Component {
                     String faceImagePath;
                     int gold = ServiceLocator.getLevelService().getCurrGold();
                     logger.info ("Gold amount: " + gold);
-                    gold += 10;
+                    gold += orderedMealPrice;
                     switch (scoreDescription) {
                         case "Grin Face":
                             faceImagePath = "images/customer_faces/grin_face.png";
-                            gold += 2;
+                            gold += 10;
                             break;
                         case "Smile Face":
                             faceImagePath = "images/customer_faces/smile_face.png";
-                            gold += 1;
+                            gold += 5;
                             break;
                         case "Neutral Face":
                             faceImagePath = "images/customer_faces/neutral_face.png";
                             break;
                         case "Frown Face":
                             faceImagePath = "images/customer_faces/frown_face.png";
-                            gold -= 1;
+                            gold -= 5;
                             break;
                         case "Angry Face":
                             faceImagePath = "images/customer_faces/angry_face.png";
-                            gold -= 2;
+                            gold -= 10;
                             break;
                         default:
                             logger.error("No image found for preference: " + scoreDescription);
