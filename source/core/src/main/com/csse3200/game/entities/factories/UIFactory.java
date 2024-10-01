@@ -17,9 +17,7 @@ public class UIFactory {
      * @return the entity with a MainGameOrderTicketDisplay component
      */
     public static Entity createDocketUI() {
-        PlayerService playerService = ServiceLocator.getPlayerService();
-        RenderService renderService = ServiceLocator.getRenderService();
-        return new Entity().addComponent(new MainGameOrderTicketDisplay(renderService, playerService));
+        return new Entity().addComponent(new MainGameOrderTicketDisplay(ServiceLocator.getRenderService(), ServiceLocator.getPlayerService()));
 //        return new Entity().addComponent(new MainGameOrderTicketDisplay());
     }
 }

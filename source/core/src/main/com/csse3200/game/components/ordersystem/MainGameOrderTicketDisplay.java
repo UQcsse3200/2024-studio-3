@@ -56,6 +56,8 @@ public class MainGameOrderTicketDisplay extends UIComponent {
     public CombatStatsComponent combatStatsComponent;
     private final RenderService renderService;
     private final PlayerService playerService;
+//    private final RenderService renderService = ServiceLocator.getRenderService();
+//    private final PlayerService playerService = ServiceLocator.getPlayerService();
     private boolean isPaused = false;
     private long pauseStartTime = 0;
     private long totalPausedDuration = 0;
@@ -64,6 +66,7 @@ public class MainGameOrderTicketDisplay extends UIComponent {
      * Constructs an MainGameOrderTicketDisplay instance
      */
     public MainGameOrderTicketDisplay(RenderService renderService, PlayerService playerService) {
+//    public MainGameOrderTicketDisplay() {
         this.renderService = renderService;
         this.playerService = playerService;
 
@@ -100,6 +103,11 @@ public class MainGameOrderTicketDisplay extends UIComponent {
     public Recipe getRecipe() {
         return this.recipe;
     }
+
+    /**
+     * Get recipe name
+     * @return recipe name
+     */
     public String getCurrentRecipeName() {
         return recipe != null ? recipe.getName() : null;
     }

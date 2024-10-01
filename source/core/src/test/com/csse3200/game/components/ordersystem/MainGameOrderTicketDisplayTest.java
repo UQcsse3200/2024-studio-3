@@ -138,6 +138,9 @@ class MainGameOrderTicketDisplayTest {
 		// assertEquals("Timer: 30000", countdownLabel.getText().toString());
 	}
 
+	/**
+	 * Test should add and remove tables to MainGameOrderTicketDisplay array
+	 */
 	@Test
 	void shouldAddTablesToArrayAndRemove() {
 		orderTicketDisplay.addActors();
@@ -195,6 +198,9 @@ class MainGameOrderTicketDisplayTest {
 		  MainGameOrderTicketDisplay.getCountdownLabelArrayList().get(0).getText().toString(), "Timer should orderTicketDisplay correct countdown");
 	}*/
 
+	/**
+	 * Test should dispose the stage
+	 */
 	@Test
 	public void testDisposeClearsComponents() {
 		orderTicketDisplay.addActors();
@@ -204,7 +210,7 @@ class MainGameOrderTicketDisplayTest {
 	}
 
 	/**
-	 * test stage disposes
+	 * Test should dispose of stage
 	 */
 	@Test
 	void testStageDispose() {
@@ -235,7 +241,7 @@ class MainGameOrderTicketDisplayTest {
 	}
 
 	/**
-	 * test stage sets
+	 * Test should set the stage
 	 */
 	@Test
 	void testSetStage() {
@@ -328,7 +334,9 @@ class MainGameOrderTicketDisplayTest {
 		assertNotNull(table, "Table should not be null for bananaSplit");
 	}
 
-
+	/**
+	 * Test shoulg get the Z index
+	 */
 	@Test
 	void testGetZIndex() {
 		assertEquals(3f, orderTicketDisplay.getZIndex());

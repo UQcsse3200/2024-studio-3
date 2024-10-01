@@ -6,6 +6,7 @@ import com.csse3200.game.components.npc.CustomerComponent;
 import com.csse3200.game.components.ordersystem.MainGameOrderTicketDisplay;
 import com.csse3200.game.components.ordersystem.RecipeNameEnums;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.entities.factories.UIFactory;
 import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,9 +23,11 @@ public class MainGameActions extends Component {
     private static final int ORDER_LIMIT = 8;
     private static final String[] RECIPE_NAMES = {"acaiBowl", "salad", "fruitSalad", "steakMeal", "bananaSplit"};
     private GdxGame game;
-    private MainGameOrderTicketDisplay docketDisplayer;
     private static List<String> currentlySpawningAnimals = new CopyOnWriteArrayList<>();
     private Entity ui;
+    private MainGameOrderTicketDisplay docketDisplayer;
+//    Entity docketUI = UIFactory.createDocketUI();
+//    MainGameOrderTicketDisplay docketDisplayer = docketUI.getComponent(MainGameOrderTicketDisplay.class);
 
     /**
      * MainGameActions constructor
@@ -39,6 +42,9 @@ public class MainGameActions extends Component {
 //        this.docketDisplayer = ui.getComponent(MainGameOrderTicketDisplay.class);
     }
 
+    /**
+     * Create actions
+     */
     @Override
     public void create() {
         entity.getEvents().addListener("exit", this::onExit);
@@ -50,6 +56,9 @@ public class MainGameActions extends Component {
         ServiceLocator.getEntityService().getEvents().addListener("createFruitSaladDocket", this::onCreateFruitSalad);
     }
 
+    /**
+     * Exit main game screen
+     */
     private void onExit() {
         logger.info("Exiting main game screen");
         game.setScreen(GdxGame.ScreenType.MAIN_MENU);
@@ -106,7 +115,7 @@ public class MainGameActions extends Component {
             docketDisplayer.setRecipe(preferredRecipe);
             docketDisplayer.setStage(ServiceLocator.getRenderService().getStage());
             docketDisplayer.addActors();
-            ServiceLocator.getEntityService().register(ui);
+//            ServiceLocator.getEntityService().register(ui);
         } else {
             logger.info("Order limit of {} reached", ORDER_LIMIT);
         }

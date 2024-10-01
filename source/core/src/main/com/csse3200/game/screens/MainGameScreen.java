@@ -117,6 +117,10 @@ public class MainGameScreen extends ScreenAdapter {
     private DocketLineDisplay docketLineDisplay;
     private MainGameOrderTicketDisplay orderTicketDisplay;
 
+	/**
+	 * Constructs the main game screen
+	 * @param game the GdxGame
+	 */
 	public MainGameScreen(GdxGame game) {
 		this.game = game;
 
@@ -158,6 +162,10 @@ public class MainGameScreen extends ScreenAdapter {
 		ServiceLocator.getLevelService().getEvents().trigger("startLevel", currLevel);
 	}
 
+	/**
+	 * Render the screen
+	 * @param delta
+	 */
 	@Override
 	public void render(float delta) {
 		if (!isPaused) {
@@ -169,6 +177,11 @@ public class MainGameScreen extends ScreenAdapter {
 		Gdx.gl.glClearColor(0f/255f, 0f/255f, 0f/255f, 1);
 	}
 
+	/**
+	 * Resize the screen and docket
+	 * @param width width of screen
+	 * @param height height of screen
+	 */
 	@Override
 	public void resize(int width, int height) {
 		renderer.resize(width, height);
@@ -179,6 +192,9 @@ public class MainGameScreen extends ScreenAdapter {
 		logger.trace("Resized renderer: ({} x {})", width, height);
 	}
 
+	/**
+	 * Pause game
+	 */
 	@Override
 	public void pause() {
 		logger.info("Game paused");
@@ -191,6 +207,9 @@ public class MainGameScreen extends ScreenAdapter {
 		}
 	}
 
+	/**
+	 * Resume game
+	 */
 	@Override
 	public void resume() {
 		logger.info("Game resumed");
@@ -203,6 +222,9 @@ public class MainGameScreen extends ScreenAdapter {
 		}
 	}
 
+	/**
+	 * Dispose of services
+	 */
 	@Override
 	public void dispose() {
 		logger.debug("Disposing main game screen");
@@ -217,6 +239,9 @@ public class MainGameScreen extends ScreenAdapter {
 		ServiceLocator.clear();
 	}
 
+	/**
+	 * Reset screen UI
+	 */
 	public void resetScreen() {
 		EntityService entityService = ServiceLocator.getEntityService();
 		entityService.dispose();
@@ -224,6 +249,9 @@ public class MainGameScreen extends ScreenAdapter {
 		createUI();
 	}
 
+	/**
+	 * Loads assets to resourceService
+	 */
 	private void loadAssets() {
 		logger.debug("Loading assets");
 		ResourceService resourceService = ServiceLocator.getResourceService();
@@ -232,6 +260,9 @@ public class MainGameScreen extends ScreenAdapter {
 		ServiceLocator.getResourceService().loadAll();
 	}
 
+	/**
+	 * Unloads the assets from resourceService
+	 */
 	private void unloadAssets() {
 		logger.debug("Unloading assets");
 		ResourceService resourceService = ServiceLocator.getResourceService();
@@ -239,6 +270,10 @@ public class MainGameScreen extends ScreenAdapter {
 		resourceService.unloadAssets(DocketMealDisplay.getMealDocketTextures());
 	}
 
+	/**
+	 * Get game
+	 * @return the GDXGame
+	 */
 	public GdxGame getGame() {
 		return game;
 	}
@@ -255,15 +290,15 @@ public class MainGameScreen extends ScreenAdapter {
 
 		docketLineDisplay = new DocketLineDisplay();
 
-		Entity docketUI = UIFactory.createDocketUI();
-        MainGameOrderTicketDisplay docketDisplayer = docketUI.getComponent(MainGameOrderTicketDisplay.class);
+//		Entity docketUI = UIFactory.createDocketUI();
+//        MainGameOrderTicketDisplay docketDisplayer = docketUI.getComponent(MainGameOrderTicketDisplay.class);
 
 		Entity ui = new Entity();
 		ui.addComponent(new GameBackgroundDisplay())
 			.addComponent(new InputDecorator(stage, 10))
 		  	.addComponent(docketLineDisplay)
 			.addComponent(new PerformanceDisplay())
-			.addComponent(new MainGameActions(this.game, docketDisplayer))
+			.addComponent(new MainGameActions(this.game, UIFactory.createDocketUI().getComponent(MainGameOrderTicketDisplay.class)))
 //			.addComponent(new MainGameActions(this.game, docketUI))
 			.addComponent(new MainGameExitDisplay())
 			.addComponent(new Terminal())
@@ -280,7 +315,7 @@ public class MainGameScreen extends ScreenAdapter {
 
 		//temporary moral display
 //			.addComponent(new MoralDisplayTemp(this));
-		// ServiceLocator.getEntityService().register(docketUI);
+//		ServiceLocator.getEntityService().register(docketUI);
 		ServiceLocator.getEntityService().register(ui);
 	}
 }

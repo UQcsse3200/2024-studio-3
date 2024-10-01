@@ -41,11 +41,9 @@ public class TutorialScreenDisplay extends UIComponent {
     private boolean dPressedLastFrame = false;
 
     public TutorialScreenDisplay(GdxGame game) {
-        PlayerService playerService = ServiceLocator.getPlayerService();
-        RenderService renderService = ServiceLocator.getRenderService();
 
         this.game = game;
-        this.orderTicketDisplay = new MainGameOrderTicketDisplay(renderService, playerService);
+//        this.orderTicketDisplay = new MainGameOrderTicketDisplay(ServiceLocator.getRenderService(), ServiceLocator.getPlayerService());
 //        this.orderBtnDisplay = new MainGameOrderBtnDisplay();
     }
 
