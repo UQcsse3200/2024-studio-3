@@ -20,7 +20,7 @@ public class GameBackgroundDisplay extends UIComponent {
     protected long timeSinceLastUpdate;
     protected String currentImage;
     protected int currentImageIndex;
-    public static final String[] BACKGROUNDTEXTURES = {"images/background_images/1.0.png",
+    public static final String[] BACKGROUND_TEXTURES = {"images/background_images/1.0.png",
             "images/background_images/1.5.png",
             "images/background_images/2.0.png",
             "images/background_images/2.5.png",
@@ -120,11 +120,12 @@ public class GameBackgroundDisplay extends UIComponent {
             //if time to update
             if (elapsedTimeSecs >= this.timePerFrame) {
                 this.currentImageIndex++;
-                this.currentImage = BACKGROUNDTEXTURES[currentImageIndex];
+                this.currentImage = BACKGROUND_TEXTURES[currentImageIndex];
                 this.timeSinceLastUpdate = ServiceLocator.getTimeSource().getTime();
                 table.clear(); //clears current background
                 setBackground(); //sets background to new image
-                logger.debug("Updated background to " + this.currentImage);
+                String message = "Updated background to " + this.currentImage;
+                logger.debug(message);
                 if (currentImageIndex >= 35) {
                     this.lastFrame = true; //stops updating when hits last frame of cycle
                 }

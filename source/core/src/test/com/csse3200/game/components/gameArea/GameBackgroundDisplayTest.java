@@ -1,44 +1,23 @@
 package com.csse3200.game.components.gameArea;
 
-import com.badlogic.gdx.Files;
-import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Graphics;
+
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.csse3200.game.GdxGame;
-import com.csse3200.game.components.cutscenes.IntroCutscene;
 import com.csse3200.game.components.maingame.GameBackgroundDisplay;
-import com.csse3200.game.components.player.InventoryDisplay;
-import com.csse3200.game.components.player.PlayerAnimationController;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
-import com.csse3200.game.events.EventHandler;
 import com.csse3200.game.extensions.GameExtension;
-import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.csse3200.game.rendering.RenderService;
 import com.csse3200.game.services.GameTime;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.mockito.Spy;
-
-import java.security.Provider;
-
-import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(GameExtension.class)
@@ -46,24 +25,18 @@ public class GameBackgroundDisplayTest {
     private AutoCloseable mocks;
     private Entity entity;
     private GameBackgroundDisplay gameBackgroundDisplay;
-    private RenderService renderService;
-    private Stage stage;
-    private EntityService entityService;
     private GameTime gameTime;
-    private Texture texture;
-    private Table table;
-    private ResourceService resourceService;
 
     @BeforeEach
     void init() {
         mocks = MockitoAnnotations.openMocks(this);
-        renderService = mock(RenderService.class);
-        entityService = mock(EntityService.class);
-        resourceService = mock(ResourceService.class);
-        stage = mock(Stage.class);
+        RenderService renderService = mock(RenderService.class);
+        EntityService entityService = mock(EntityService.class);
+        ResourceService resourceService = mock(ResourceService.class);
+        Stage stage = mock(Stage.class);
         gameTime = mock(GameTime.class);
-        texture = mock(Texture.class);
-        table = mock(Table.class);
+        Texture texture = mock(Texture.class);
+        Table table = mock(Table.class);
 
 
         ServiceLocator.registerRenderService(renderService);
@@ -94,7 +67,7 @@ public class GameBackgroundDisplayTest {
     }
 
     @Test
-    public void isInitalised() {
+    public void isInitialised() {
         //assertTrue(true);
         entity.create();
         verify(gameBackgroundDisplay).create();
@@ -104,7 +77,7 @@ public class GameBackgroundDisplayTest {
     public void initialImage() {
         String initialImage = "images/background_images/1.0.png";
         String currentImage = gameBackgroundDisplay.getCurrentImage();
-        assertEquals(initialImage, currentImage);
+        Assertions.assertEquals(initialImage, currentImage);
     }
 
     @Test
@@ -127,7 +100,7 @@ public class GameBackgroundDisplayTest {
         gameBackgroundDisplay.update();
         String secondImage = "images/background_images/1.5.png";
         String currentImage = gameBackgroundDisplay.getCurrentImage();
-        assertEquals(secondImage, currentImage);
+        Assertions.assertEquals(secondImage, currentImage);
     }
 
     @Test
@@ -153,21 +126,37 @@ public class GameBackgroundDisplayTest {
         }
         String nthImage = "images/background_images/7.0.png";
         String currentImage = gameBackgroundDisplay.getCurrentImage();
-        assertEquals(nthImage, currentImage);
+        Assertions.assertEquals(nthImage, currentImage);
     }
 
     @Test
     public void stopsUpdating() {
-        long timeLapsed = 360000; //360 seconds (6 minutes) - should stop updating after 5
-        //until 6 minutes has passed, update gameBackgroundDisplay
-        while(timeLapsed > 0) {
-            when(gameTime.getTimeSince(anyLong())).thenReturn(timeLapsed);
+        long oneMinute = 360000;
+        long fiveMinutes = 300000;
+
+        updateBackground(fiveMinutes);
+        //has 35 updates (reaches final frame)
+        verify(gameBackgroundDisplay, times(35)).setBackground();
+
+        updateBackground(oneMinute); //total time = 6 minutes
+        //no further updates
+        verify(gameBackgroundDisplay, times(35)).setBackground();
+    }
+
+    @Test
+    public void correctFinalUpdate() {
+        long fiveMinutes = 300000;
+        updateBackground(fiveMinutes);
+        String finalImage = "images/background_images/18.5.png";
+        Assertions.assertEquals(gameBackgroundDisplay.getCurrentImage(), finalImage);
+    }
+
+    public void updateBackground(long time) {
+        while (time > 0) {
+            when(gameTime.getTimeSince(anyLong())).thenReturn(time);
             gameBackgroundDisplay.update();
-            timeLapsed -= 300000/36;
+            time -= 300000/36;
         }
-        String nthImage = "images/background_images/18.5.png";
-        String currentImage = gameBackgroundDisplay.getCurrentImage();
-        assertEquals(nthImage, currentImage);
     }
 
 }
