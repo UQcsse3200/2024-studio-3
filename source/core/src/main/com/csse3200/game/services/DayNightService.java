@@ -19,6 +19,7 @@ public class DayNightService {
     public long lastSecondCheck;
     public long lastUpgradeCheck;
     public long lastEndOfDayCheck;
+    public long timeRemaining;
     private final GameTime gameTime;
     private boolean endOfDayTriggered = false;
     private boolean pastSecond = false;
@@ -51,6 +52,7 @@ public class DayNightService {
         this.lastSecondCheck = gameTime.getTime();
         this.lastUpgradeCheck = gameTime.getTime();
         this.lastEndOfDayCheck = gameTime.getTime();
+        this.timeRemaining = FIVE_MINUTES;
         this.random = new Random();
         day = 0; // was 1 but probably should be 0? ask calvin
         randomChoice = random.nextInt(10) * 1000;
@@ -75,7 +77,8 @@ public class DayNightService {
         // Check if it has been 1 second
         if(currentTime - lastSecondCheck >= 1000 && !pastSecond){
             pastSecond = true;
-            enddayEventHandler.trigger("Second");
+            this.timeRemaining -= 1000;
+            enddayEventHandler.trigger("Second", this.timeRemaining);
             lastSecondCheck = currentTime;
         }
 
@@ -85,9 +88,10 @@ public class DayNightService {
             randomChoice = random.nextInt(10) * 1000;
         }
 
-        if (currentTime - lastEndOfDayCheck >= FIVE_MINUTES && !endOfDayTriggered) {
+        if (this.timeRemaining == 0 && !endOfDayTriggered) {
             endOfDayTriggered = true; 
             gameTime.setTimeScale(0);
+            this.timeRemaining = FIVE_MINUTES;
             docketServiceEventHandler.trigger("Dispose");
             enddayEventHandler.trigger("endOfDay"); // Trigger the end of the day event
         }
