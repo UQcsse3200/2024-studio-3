@@ -33,7 +33,6 @@ public class CutsceneTextDisplay extends UIComponent {
     // UI components for displaying the text
     private boolean visible;
     private Label label;
-    public Boolean labelSet = false;
     private Table table;
 
     /**
@@ -60,8 +59,6 @@ public class CutsceneTextDisplay extends UIComponent {
     }
 
     private void setupUI() {
-        // Initially hide the text display
-        setVisible(false);
         // Set up the table to fill the screen and align it to the bottom center
         table.setFillParent(true);
         table.center().bottom();
@@ -79,7 +76,7 @@ public class CutsceneTextDisplay extends UIComponent {
         // Set up the label for text display
         BitmapFont defaultFont = new BitmapFont();
         Label.LabelStyle labelStyle = new Label.LabelStyle(defaultFont, Color.BLACK);
-        label = new Label("", labelStyle);
+        label = new Label("Press Enter to continue", labelStyle);
         label.setFontScale(3.0f);
         label.setWrap(true);  // Enable text wrapping
         label.setAlignment(Align.top | Align.left);
@@ -92,8 +89,6 @@ public class CutsceneTextDisplay extends UIComponent {
 
         table.add(stack).padBottom(70).size(
                 (int) (Gdx.graphics.getWidth() * 0.5), (int) (Gdx.graphics.getHeight() * 0.2));
-
-        labelSet = true;
     }
 
     /**
@@ -101,17 +96,7 @@ public class CutsceneTextDisplay extends UIComponent {
      * @param text The text to display.
      */
     public void setText(String text) {
-        setVisible(true);  // Make the text display visible
         this.text = text;
-    }
-
-    /**
-     * Controls the visibility of the text display.
-     * @param value Whether the text display should be visible.
-     */
-    public void setVisible(boolean value) {
-        this.visible = value;
-        table.setVisible(value);  // Set the visibility of the table
     }
 
     /**

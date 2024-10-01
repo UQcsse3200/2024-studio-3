@@ -60,7 +60,6 @@ public class CutsceneScreenDisplay extends UIComponent {
     private void setupUI() {
         // Initialize the text display and add it to the stage, hidden initially
         textDisplay = new CutsceneTextDisplay();
-        textDisplay.setVisible(false);
         stage.addActor(textDisplay.getTable());
 
         // Positioning the table at the bottom-right of the screen
@@ -136,7 +135,6 @@ public class CutsceneScreenDisplay extends UIComponent {
             table.clear();  // Clear the table safely
         }
         if (textDisplay != null) {
-            textDisplay.setVisible(false);
             textDisplay.getTable().clear();  // Clear the text display table
         }
     }
