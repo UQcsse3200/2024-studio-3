@@ -11,6 +11,7 @@ import com.csse3200.game.components.TooltipsDisplay;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.components.station.*;
 import com.csse3200.game.components.player.InventoryDisplayHoverComponent;
+import com.csse3200.game.components.station.StationProgressDisplay;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.PhysicsUtils;
@@ -42,7 +43,8 @@ public class StationFactory {
         .addComponent(new StationCookingComponent())
         .addComponent(new StationItemHandlerComponent("oven"))
         .addComponent(new InventoryComponent(1))
-        .addComponent(new InventoryDisplayHoverComponent());
+        .addComponent(new InventoryDisplayHoverComponent())
+        .addComponent(new StationProgressDisplay());
 
 
     //set scale
@@ -74,6 +76,7 @@ public class StationFactory {
             .addComponent(new TooltipsDisplay())
             .addComponent(new InventoryComponent(1))
             .addComponent(new InventoryDisplayHoverComponent())
+            .addComponent(new StationProgressDisplay())
             .addComponent(new StationChoppingComponent())
             .addComponent(new StationItemHandlerComponent("cutting board"));
 
@@ -104,7 +107,8 @@ public class StationFactory {
         .addComponent(new InventoryComponent(1))
         .addComponent(new InventoryDisplayHoverComponent())
         .addComponent(new StationCookingComponent())  
-        .addComponent(new StationItemHandlerComponent("stove"));
+        .addComponent(new StationItemHandlerComponent("stove"))
+        .addComponent(new StationProgressDisplay());
 
     stove.getComponent(InteractionComponent.class).setAsBox(stove.getScale());
     stove.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);

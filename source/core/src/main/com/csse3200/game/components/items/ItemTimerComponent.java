@@ -13,18 +13,26 @@ import com.csse3200.game.services.ServiceLocator;
  */
 public abstract class ItemTimerComponent extends Component {
 
+    // The base time multiplier
+    private static final long BASE_MULTIPLIER = 1;
+  
+    // The multiplier for rage mode
+    private static final long RAGE_MODE_MULTIPLIER = 2;
+  
     /**
      * Class member variables.
-     * @param gameTime the global gametime service
-     * @param length finishing time of the timer
-     * @param elapsed the current ammount of time elapsed
-     * @param isRunning if the timer is running starts as false when item created
+     * - gameTime the global gametime service
+     * - length finishing time of the timer
+     * - elapsed the current ammount of time elapsed
+     * - isRunning if the timer is running starts as false when item created
+     * - multiplier the current multiplier of the station if cooking
      */
     protected final GameTime gameTime = ServiceLocator.getTimeSource();
     private long prevTime;
     protected long length;
     protected long elapsed;
     protected boolean isRunning;
+    private long multiplier = 1;
 
     /**
      * TimerComponent initialiser creates a timer which has the legnth set to
@@ -48,7 +56,7 @@ public abstract class ItemTimerComponent extends Component {
         }
 
         // Update the elapsed time
-        this.elapsed += (gameTime.getTime() - prevTime);
+        this.elapsed += (gameTime.getTime() - prevTime) * multiplier;
         prevTime = gameTime.getTime();
     }
 
@@ -104,5 +112,21 @@ public abstract class ItemTimerComponent extends Component {
      * Abtract since cooking and chopping will have different implementations.
      */
     protected abstract void updateItem();
+
+    /**
+     * Method to call when rage mode is activated by the user. Reduces the time
+     * that the item will take to cook
+     */
+    protected void rageModeOn() {
+        multiplier = RAGE_MODE_MULTIPLIER;
+    }
+
+    /**
+     * Method to call when rage mode is deactivated by the user. Changes back
+     * the time that the item takes to cook back to normal.
+     */
+    protected void rageModeOff() {
+        multiplier = BASE_MULTIPLIER;
+    }
 
 }

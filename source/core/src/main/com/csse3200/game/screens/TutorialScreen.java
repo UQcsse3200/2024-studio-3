@@ -6,8 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.areas.ForestGameArea;
 import com.csse3200.game.areas.terrain.TerrainFactory;
-import com.csse3200.game.components.maingame.MainGameActions;
-import com.csse3200.game.components.maingame.TextDisplay;
+import com.csse3200.game.components.maingame.*;
 import com.csse3200.game.components.ordersystem.MainGameOrderBtnDisplay;
 import com.csse3200.game.components.ordersystem.OrderActions;
 import com.csse3200.game.entities.Entity;
@@ -23,8 +22,6 @@ import com.csse3200.game.rendering.Renderer;
 import com.csse3200.game.services.*;
 import com.csse3200.game.ui.terminal.Terminal;
 import com.csse3200.game.ui.terminal.TerminalDisplay;
-import com.csse3200.game.components.maingame.EndDayDisplay;
-import com.csse3200.game.components.maingame.MainGameExitDisplay;
 import com.csse3200.game.components.gamearea.PerformanceDisplay;
 import com.csse3200.game.components.tutorial.TutorialScreenDisplay;
 import com.csse3200.game.components.tutorial.TutorialTextDisplay;
@@ -161,7 +158,8 @@ public class TutorialScreen extends ScreenAdapter {
         InputComponent inputComponent = ServiceLocator.getInputService().getInputFactory().createForTerminal();
 
         Entity ui = new Entity();
-        ui.addComponent(new InputDecorator(stage, 10))
+        ui.addComponent(new GameBackgroundDisplay())
+                .addComponent(new InputDecorator(stage, 10))
                 .addComponent(new PerformanceDisplay())
                 .addComponent(new MainGameActions(this.game))
                 .addComponent(new MainGameExitDisplay())
