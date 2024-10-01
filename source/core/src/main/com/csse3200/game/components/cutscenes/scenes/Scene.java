@@ -72,4 +72,8 @@ public class Scene {
         // Set the dialogue text in the CutsceneScreenDisplay component
         ServiceLocator.getCutsceneScreen().getCutsceneScreenDisplay().setCutsceneText(sceneText);
     }
+
+    public Array<String> getCutsceneText() {
+        return sceneText; // Make sure sceneText is defined as Array<String>
+    }
 }

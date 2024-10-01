@@ -1,5 +1,7 @@
 package com.csse3200.game.services;
 
+import com.badlogic.gdx.scenes.scene2d.Group;
+import com.csse3200.game.GdxGame;
 import com.csse3200.game.components.cutscenes.Cutscene;
 import com.csse3200.game.screens.CutsceneScreen;
 import com.csse3200.game.components.mainmenu.MainMenuDisplay;
@@ -37,6 +39,7 @@ public class ServiceLocator {
   private static CutsceneScreen cutsceneScreen;
   private static Cutscene currentCutscene;
   private static MainMenuDisplay mainMenuDisplay;
+  private static GdxGame gameInstance;
 
   private static ResourceService resourceService;
 
@@ -278,6 +281,24 @@ public class ServiceLocator {
   public static MainMenuDisplay getMainMenuDisplay() {
     return ServiceLocator.mainMenuDisplay;
   }
+
+  public static GdxGame getGdxGame() {
+    if (gameInstance == null) {
+      throw new IllegalStateException("GdxGame instance has not been set");
+    }
+    return gameInstance;
+  }
+
+  public static void setGdxGame(GdxGame game) {
+    if (gameInstance != null) {
+      logger.warn("Overwriting an existing GdxGame instance.");
+    }
+    gameInstance = game;
+    logger.debug("GdxGame instance has been set.");
+  }
+
+
+
 }
 
 

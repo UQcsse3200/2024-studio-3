@@ -3,6 +3,8 @@ package com.csse3200.game;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.csse3200.game.components.cutscenes.BackstoryCutscene;
+import com.csse3200.game.components.cutscenes.Cutscene;
 import com.csse3200.game.screens.CutsceneScreen;
 import com.csse3200.game.files.UserSettings;
 import com.csse3200.game.screens.MainGameScreen;
@@ -21,7 +23,7 @@ import static com.badlogic.gdx.Gdx.app;
 public class GdxGame extends Game {
   private static final Logger logger = LoggerFactory.getLogger(GdxGame.class);
   private Screen previousScreen;
-
+  private Cutscene currentCutscene;
   @Override
   public void create() {
     logger.info("Creating game");
@@ -91,8 +93,17 @@ public class GdxGame extends Game {
         return null;
     }
   }
+  public void setCurrentCutscene(Cutscene currentCutscene) {
+    this.currentCutscene = currentCutscene;
+  }
 
-  public enum ScreenType {
+  public Cutscene getCurrentCutscene() {
+    return currentCutscene;
+  }
+
+
+
+    public enum ScreenType {
     MAIN_MENU, MAIN_GAME, SETTINGS, CUTSCENE
   }
 
