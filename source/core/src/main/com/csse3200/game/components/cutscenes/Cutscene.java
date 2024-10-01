@@ -151,7 +151,6 @@ public abstract class Cutscene extends Component {
     protected void createEntitiesForScene(Scene scene) {
         // Create the background entity for the scene
         Entity background = CutsceneFactory.createBackground(scene.getBackgroundImagePath());
-        System.out.println("Added background");
         entities.add(background);
         ServiceLocator.getEntityService().register(background);
 
@@ -164,7 +163,6 @@ public abstract class Cutscene extends Component {
                 Vector2 animationPosition = animationPositions[i];
                 // Assume that the animation is called idle for now.
                 Entity animation = CutsceneFactory.createAnimation(animationPath, "idle");
-                System.out.println("Creating animation entity:" + animationPath);
                 entities.add(animation);
                 animation.setPosition(animationPosition);
                 ServiceLocator.getEntityService().register(animation);
@@ -175,20 +173,15 @@ public abstract class Cutscene extends Component {
         if (scene.getImagePaths() != null) {
             String[] imagePaths = scene.getImagePaths();
             Vector2[] imagePositions = scene.getImagePositions();
-            System.out.println("Found some images");
-            System.out.println("They have size:" + imagePaths.length);
             for (int i = 0; i < imagePaths.length; i++) {
                 String imagePath = imagePaths[i];
                 Vector2 imagePosition = imagePositions[i];
                 // Assume that the animation is called idle for now.
                 Entity image = CutsceneFactory.createImage(imagePath);
-                System.out.println("Creating image entity:" + imagePath);
                 entities.add(image);
                 image.setPosition(imagePosition);
                 ServiceLocator.getEntityService().register(image);
             }
-        } else {
-            System.out.println("No images available");
         }
     }
 
