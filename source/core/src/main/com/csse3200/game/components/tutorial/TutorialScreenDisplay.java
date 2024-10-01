@@ -30,7 +30,7 @@ public class TutorialScreenDisplay extends UIComponent {
     private MainGameOrderTicketDisplay orderTicketDisplay;
     private MainGameOrderBtnDisplay orderBtnDisplay;
     private boolean createOrderPressed = false;
-    private boolean docketsShifted = false;
+    boolean docketsShifted = false;
     private Table table;
     private TutorialTextDisplay textDisplay;
     private boolean wPressedLastFrame = false;
