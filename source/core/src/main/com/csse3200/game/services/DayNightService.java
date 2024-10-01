@@ -118,7 +118,14 @@ public class DayNightService {
      * time updates
      */
     private void startNewDay() {
-        ServiceLocator.getDayNightService().getEvents().trigger("endGame");
+
+        // Checking if the game should end (i.e. it's the 5th day)
+        if (day >= 5) {
+            logger.info("Game has ended after 5 days!");
+            ServiceLocator.getDayNightService().getEvents().trigger("endGame");
+            return;
+        }
+
         logger.info("It's a new Day!");
         enddayEventHandler.trigger("newday");
         // randomChoice = random.nextInt(10) * 1000;
