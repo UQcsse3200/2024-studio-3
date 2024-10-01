@@ -131,8 +131,8 @@ public class GameBackgroundDisplayTest {
     }
 
     @Test
-    public void correctNumberChangesAfter100Sec() {
-        long timeLapsed = 100000; //100 seconds
+    public void correctNumberChangesAfter102Sec() {
+        long timeLapsed = 102000; //102 seconds
         //until 100 seconds has passed, update gameBackgroundDisplay
         while(timeLapsed > 0) {
             when(gameTime.getTimeSince(anyLong())).thenReturn(timeLapsed);
@@ -143,8 +143,8 @@ public class GameBackgroundDisplayTest {
     }
 
     @Test
-    public void correctChangeAfter100Sec() {
-        long timeLapsed = 100000; //100 seconds
+    public void correctChangeAfter102Sec() {
+        long timeLapsed = 102000; //102 seconds
         //until 100 seconds has passed, update gameBackgroundDisplay
         while(timeLapsed > 0) {
             when(gameTime.getTimeSince(anyLong())).thenReturn(timeLapsed);
