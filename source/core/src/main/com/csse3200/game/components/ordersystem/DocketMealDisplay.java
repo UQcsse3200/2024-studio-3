@@ -16,7 +16,11 @@ public class DocketMealDisplay {
             "images/ordersystem/steak_meal_docket.png",
             "images/ordersystem/acai_bowl_docket.png",
             "images/ordersystem/banana_split_docket.png",
-            "images/fireExtinguisher/Fire_Extinguisher.png"
+            "images/ordersystem/salad_docket_vertical.png",
+            "images/ordersystem/fruit_salad_docket_vertical.png",
+            "images/ordersystem/steak_meal_docket_vertical.png",
+            "images/ordersystem/acai_bowl_docket_vertical.png",
+            "images/ordersystem/banana_split_docket_vertical.png"
     };
 
     public static String[] getMealDocketTextures() {
@@ -30,26 +34,22 @@ public class DocketMealDisplay {
 
             return switch (mealName) {
                 case "salad" -> {
-//                    mealImage = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.local("images/ordersystem/salad_docket.png"))));
-                    yield "images/ordersystem/salad_docket.png";
+                    mealImage = "images/ordersystem/salad_docket.png";
+                    yield mealImage;
                 }
                 case "fruitSalad" -> {
-//                    mealImage = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.local("images/ordersystem/fruit_salad_docket.png"))));
                     mealImage = "images/ordersystem/fruit_salad_docket.png";
                     yield mealImage;
                 }
                 case "steakMeal" -> {
-//                    mealImage = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.local("images/ordersystem/steak_meal_docket.png"))));
                     mealImage = "images/ordersystem/steak_meal_docket.png";
                     yield mealImage;
                 }
                 case "acaiBowl" -> {
-//                    mealImage = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.local("images/ordersystem/acai_bowl_docket.png"))));
                     mealImage = "images/ordersystem/acai_bowl_docket.png";
                     yield mealImage;
                 }
                 case "bananaSplit" -> {
-//                    mealImage = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.local("images/ordersystem/banana_split_docket.png"))));
                     mealImage = "images/ordersystem/banana_split_docket.png";
                     yield mealImage;
                 }
@@ -60,27 +60,23 @@ public class DocketMealDisplay {
 
             return switch (mealName) {
                 case "salad" -> {
-//                    mealImage = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.local("images/ordersystem/salad_docket.png"))));
-                    yield "images/ordersystem/salad_docket.png";
+                    mealImage = "images/ordersystem/salad_docket_vertical.png";
+                    yield mealImage;
                 }
                 case "fruitSalad" -> {
-//                    mealImage = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.local("images/ordersystem/fruit_salad_docket.png"))));
-                    mealImage = "images/ordersystem/fruit_salad_docket.png";
+                    mealImage = "images/ordersystem/fruit_salad_docket_vertical.png";
                     yield mealImage;
                 }
                 case "steakMeal" -> {
-//                    mealImage = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.local("images/ordersystem/steak_meal_docket.png"))));
-                    mealImage = "images/ordersystem/steak_meal_docket.png";
+                    mealImage = "images/ordersystem/steak_meal_docket_vertical.png";
                     yield mealImage;
                 }
                 case "acaiBowl" -> {
-//                    mealImage = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.local("images/ordersystem/acai_bowl_docket.png"))));
-                    mealImage = "images/ordersystem/acai_bowl_docket.png";
+                    mealImage = "images/ordersystem/acai_bowl_docket_vertical.png";
                     yield mealImage;
                 }
                 case "bananaSplit" -> {
-//                    mealImage = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.local("images/ordersystem/banana_split_docket.png"))));
-                    mealImage = "images/ordersystem/banana_split_docket.png";
+                    mealImage = "images/ordersystem/banana_split_docket_vertical.png";
                     yield mealImage;
                 }
                 default -> null;

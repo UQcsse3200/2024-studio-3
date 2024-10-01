@@ -128,7 +128,6 @@ public class MainGameOrderTicketDisplay extends UIComponent {
 
     private void loadTextures() {
         for(String path : DocketMealDisplay.getMealDocketTextures()){
-            System.out.println(path);
             texture_map.put(path, new Texture(Gdx.files.local(path)));
         }
     }
@@ -352,7 +351,7 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         float xPosEnlarged = viewportWidth - enlargedDocketWidth - rightHandSideDistance;
         float yPosEnlarged = (viewportHeight * 0.938f) - (enlargedDocketHeight - 15);
 
-        float yPosNormal = (viewportHeight * 0.938f) - (normalDocketHeight - 15);
+        float yPosNormal = (viewportHeight * 0.938f) - (normalDocketHeight*0.8f - 15);
 
         for (int i = 0; i < tableArrayList.size(); i++) {
             Table table = tableArrayList.get(i);
@@ -383,7 +382,7 @@ public class MainGameOrderTicketDisplay extends UIComponent {
                     }
                 }
             } else { // Non-enlarged dockets
-                table.setSize(normalDocketWidth, normalDocketHeight);
+                table.setSize(normalDocketWidth*1.3f, normalDocketHeight*0.8f);
                 float xVal = cntXval(leftHandSideDistance,i + 1);
                 table.setPosition(xVal, yPosNormal);
                 table.setZIndex(5);
