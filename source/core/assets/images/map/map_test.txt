@@ -6,7 +6,7 @@ X08 Y06 Y23 Y97
 O
 O
 O
-O
+b5
 O
 O
 X08
