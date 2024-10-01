@@ -2,11 +2,11 @@ Hel
 1
 3
 =
-X8Y06Y23Y97
+X08 Y06 Y23 Y97
 O
 O
 O
 O
 O
 O
-X8
+X08

@@ -251,23 +251,13 @@ public class ForestGameArea extends GameArea {
       ServiceLocator.getMapLayout().getEvents().trigger("load","level1");
     }
 
-   // spawnBenches();
-
-    //MapLayout map = new MapLayout();
-    //String [] map2 = map.load("level1");
-
     new_border();
     //ticketDetails();
     spawnStations();
-    // Spawn beef
-//    spawnBeef("cooked");
-//    spawnStrawberry("chopped");
-//    spawnLettuce("chopped");
     customerSpawnController = spawnCustomerController();
 
     //spawnplates
       spawnStackPlate(5); //testplate spawn
-      //spawnPlatewithMeal();
 
     // Spawn the player
     player = spawnPlayer();
@@ -307,14 +297,6 @@ public class ForestGameArea extends GameArea {
     ui.addComponent(new GameAreaDisplay("Kitchen"));
     spawnEntity(ui);
   }
-  /*
-  private void ticketDetails(){
-    Entity ticket = new Entity();
-    ticket.addComponent(new TicketDetails());
-    spawnEntity(ticket);
-
-  }*/
-
   private void spawnTerrain() {
     // Background terrain
     terrain = terrainFactory.createTerrain(TerrainType.KITCHEN_DEMO);
@@ -480,12 +462,6 @@ public class ForestGameArea extends GameArea {
     servery = StationFactory.createSubmissionWindow();
     spawnEntityAt(servery, serveryPos, false, false);
     servery.setPosition(servery.getPosition().x + 2, servery.getPosition().y);
-
-    // Bench
-    GridPoint2 middlePos = new GridPoint2(5,4);
-    Entity middle = StationFactory.createMainBenchTable();
-    spawnEntityAt(middle, middlePos, false, false);
-    middle.setPosition(middle.getPosition().x - 2f, middle.getPosition().y - 5f);
 
     // Cutting Board
     GridPoint2 cuttingPos = new GridPoint2(5,4);
