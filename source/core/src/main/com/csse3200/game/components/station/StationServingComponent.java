@@ -110,7 +110,7 @@ public class StationServingComponent extends Component {
     public void submitMeal(ItemComponent item) {
 
         //ServiceLocator.getLevelService.getCurrGold() + 2;
-        ServiceLocator.getLevelService().setCurrGold(ServiceLocator.getLevelService().getCurrGold() + 10);
+        // ServiceLocator.getLevelService().setCurrGold(ServiceLocator.getLevelService().getCurrGold() + 10);
 
         String[] bigTicketInfo = bigTicket.getCurrentBigTicketInfo();
 
@@ -181,31 +181,35 @@ public class StationServingComponent extends Component {
                 HoverBoxComponent hoverBox = customer.getComponent(HoverBoxComponent.class);
                 if (hoverBox != null) {
                     String faceImagePath;
+                    int gold = ServiceLocator.getLevelService().getCurrGold();
+                    logger.info ("Gold amount: " + gold);
+                    gold += 10;
                     switch (scoreDescription) {
                         case "Grin Face":
                             faceImagePath = "images/customer_faces/grin_face.png";
-                            ServiceLocator.getLevelService().setCurrGold(ServiceLocator.getLevelService().getCurrGold() + 2);
+                            gold += 2;
                             break;
                         case "Smile Face":
                             faceImagePath = "images/customer_faces/smile_face.png";
-                            ServiceLocator.getLevelService().setCurrGold(ServiceLocator.getLevelService().getCurrGold() + 1);
+                            gold += 1;
                             break;
                         case "Neutral Face":
                             faceImagePath = "images/customer_faces/neutral_face.png";
                             break;
                         case "Frown Face":
                             faceImagePath = "images/customer_faces/frown_face.png";
-                            ServiceLocator.getLevelService().setCurrGold(ServiceLocator.getLevelService().getCurrGold() - 1);
+                            gold -= 1;
                             break;
                         case "Angry Face":
                             faceImagePath = "images/customer_faces/angry_face.png";
-                            ServiceLocator.getLevelService().setCurrGold(ServiceLocator.getLevelService().getCurrGold() - 2);
+                            gold -= 2;
                             break;
                         default:
                             logger.error("No image found for preference: " + scoreDescription);
                             faceImagePath = "images/customer_faces/angry_face.png"; // Provide a default image
                     }
                     hoverBox.setTexture(new Texture(faceImagePath));
+                    ServiceLocator.getLevelService().setCurrGold(gold);
                 }
             }
 
