@@ -18,6 +18,5 @@ public class UIFactory {
      */
     public static Entity createDocketUI() {
         return new Entity().addComponent(new MainGameOrderTicketDisplay(ServiceLocator.getRenderService(), ServiceLocator.getPlayerService()));
-//        return new Entity().addComponent(new MainGameOrderTicketDisplay());
     }
 }

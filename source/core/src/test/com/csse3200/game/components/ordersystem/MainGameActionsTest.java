@@ -60,7 +60,6 @@ class MainGameActionsTest {
 	@Mock Entity entity;
 	MainGameOrderTicketDisplay orderTicketDisplay;
 	GdxGame mockGame;
-	private static final Logger logger = LoggerFactory.getLogger(MainGameActionsTest.class);
 	private MainGameActions mainGameActions;
 	MockedStatic<MainGameOrderTicketDisplay> mockedStatic;
 	ArrayList<Table> tableArrayList;
@@ -87,9 +86,9 @@ class MainGameActionsTest {
 
 		tableArrayList = new ArrayList<>();
 		tableArrayList.add(table);
+		when(entity.getComponent(MainGameOrderTicketDisplay.class)).thenReturn(orderTicketDisplay);
 		mockedStatic.when(MainGameOrderTicketDisplay::getTableArrayList).thenReturn(tableArrayList);
 
-//		mainGameActions = new MainGameActions(mockGame, orderTicketDisplay);
 		mainGameActions = new MainGameActions(mockGame, entity);
 	}
 
@@ -104,75 +103,75 @@ class MainGameActionsTest {
 	/**
 	 * Test should create order when table is below the limit
 	 */
-//	@Test
-//	public void testOnCreateOrderBelowLimit() {
-//		mainGameActions.onCreateOrder(null);
-//		verify(orderTicketDisplay, times(1)).setRecipe(anyString());
-//		verify(orderTicketDisplay, times(1)).addActors();
-//	}
+	@Test
+	public void testOnCreateOrderBelowLimit() {
+		mainGameActions.onCreateOrder(null);
+		verify(orderTicketDisplay, times(1)).setRecipe(anyString());
+		verify(orderTicketDisplay, times(1)).addActors();
+	}
 
 	/**
 	 * Test should not create the order when the table size is full
 	 */
-//	@Test
-//	public void testOnCreateOrderAboveLimit() {
-//		int limit = 8;
-//		for (int i = 0; i < limit; i++) {
-//			tableArrayList.add(table);
-//		}
-//
-//		mainGameActions.onCreateOrder(null);
-//		verify(orderTicketDisplay, never()).setRecipe(anyString());
-//		verify(orderTicketDisplay, never()).addActors();
-//	}
+	@Test
+	public void testOnCreateOrderAboveLimit() {
+		int limit = 8;
+		for (int i = 0; i < limit; i++) {
+			tableArrayList.add(table);
+		}
+
+		mainGameActions.onCreateOrder(null);
+		verify(orderTicketDisplay, never()).setRecipe(anyString());
+		verify(orderTicketDisplay, never()).addActors();
+	}
 
 	/**
 	 * Test should set Acai Bowl recipe
 	 */
-//	@Test
-//	public void testOnCreateAcai() {
-//		mainGameActions.onCreateAcai();
-//		verify(orderTicketDisplay, times(1)).setRecipe(RecipeNameEnums.ACAI_BOWL.getRecipeName());
-//		verify(orderTicketDisplay, times(1)).addActors();
-//	}
+	@Test
+	public void testOnCreateAcai() {
+		mainGameActions.onCreateAcai();
+		verify(orderTicketDisplay, times(1)).setRecipe(RecipeNameEnums.ACAI_BOWL.getRecipeName());
+		verify(orderTicketDisplay, times(1)).addActors();
+	}
 
 	/**
 	 * Test should set Banana Split recipe
 	 */
-//	@Test
-//	public void testOnCreateBanana() {
-//		mainGameActions.onCreateBanana();
-//		verify(orderTicketDisplay, times(1)).setRecipe(RecipeNameEnums.BANANA_SPLIT.getRecipeName());
-//		verify(orderTicketDisplay, times(1)).addActors();
-//	}
+	@Test
+	public void testOnCreateBanana() {
+		mainGameActions.onCreateBanana();
+		verify(orderTicketDisplay, times(1)).setRecipe(RecipeNameEnums.BANANA_SPLIT.getRecipeName());
+		verify(orderTicketDisplay, times(1)).addActors();
+	}
 
 	/**
 	 * Test should set Salad recipe
 	 */
-//	@Test
-//	public void testOnCreateSalad() {
-//		mainGameActions.onCreateSalad();
-//		verify(orderTicketDisplay, times(1)).setRecipe(RecipeNameEnums.SALAD.getRecipeName());
-//		verify(orderTicketDisplay, times(1)).addActors();
-//	}
+	@Test
+	public void testOnCreateSalad() {
+		mainGameActions.onCreateSalad();
+		verify(orderTicketDisplay, times(1)).setRecipe(RecipeNameEnums.SALAD.getRecipeName());
+		verify(orderTicketDisplay, times(1)).addActors();
+	}
 
 	/**
 	 * Test should set Steak recipe
 	 */
-//	@Test
-//	public void testOnCreateSteak() {
-//		mainGameActions.onCreateSteak();
-//		verify(orderTicketDisplay, times(1)).setRecipe(RecipeNameEnums.STEAK_MEAL.getRecipeName());
-//		verify(orderTicketDisplay, times(1)).addActors();
-//	}
+	@Test
+	public void testOnCreateSteak() {
+		mainGameActions.onCreateSteak();
+		verify(orderTicketDisplay, times(1)).setRecipe(RecipeNameEnums.STEAK_MEAL.getRecipeName());
+		verify(orderTicketDisplay, times(1)).addActors();
+	}
 
 	/**
 	 * Test should set Fruit Salad recipe
 	 */
-//	@Test
-//	public void testOnCreateFruitSalad() {
-//		mainGameActions.onCreateFruitSalad();
-//		verify(orderTicketDisplay, times(1)).setRecipe(RecipeNameEnums.FRUIT_SALAD.getRecipeName());
-//		verify(orderTicketDisplay, times(1)).addActors();
-//	}
+	@Test
+	public void testOnCreateFruitSalad() {
+		mainGameActions.onCreateFruitSalad();
+		verify(orderTicketDisplay, times(1)).setRecipe(RecipeNameEnums.FRUIT_SALAD.getRecipeName());
+		verify(orderTicketDisplay, times(1)).addActors();
+	}
 }

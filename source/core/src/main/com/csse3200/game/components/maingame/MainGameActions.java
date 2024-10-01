@@ -34,10 +34,8 @@ public class MainGameActions extends Component {
      * @param game the GDXGame
      * @param docketUI the docket ui
      */
-//    public MainGameActions(GdxGame game, Entity ui) {
     public MainGameActions(GdxGame game, Entity docketUI) {
         this.game = game;
-//        this.docketDisplayer = docketDisplayer;
         this.ui = docketUI;
         this.docketDisplayer = docketUI.getComponent(MainGameOrderTicketDisplay.class);
     }

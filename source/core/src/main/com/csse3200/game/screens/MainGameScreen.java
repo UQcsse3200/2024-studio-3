@@ -44,8 +44,6 @@ import com.csse3200.game.components.maingame.TextDisplay;
 import com.csse3200.game.components.gamearea.PerformanceDisplay;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import com.csse3200.game.components.player.InventoryDisplay;
-import java.util.Arrays;
 import com.csse3200.game.components.ordersystem.DocketLineDisplay;
 import com.csse3200.game.components.player.InventoryDisplay;
 import java.util.Arrays;
@@ -290,9 +288,6 @@ public class MainGameScreen extends ScreenAdapter {
 
 		docketLineDisplay = new DocketLineDisplay();
 
-//		Entity docketUI = UIFactory.createDocketUI();
-//        MainGameOrderTicketDisplay docketDisplayer = docketUI.getComponent(MainGameOrderTicketDisplay.class);
-
 		Entity ui = new Entity();
 		ui.addComponent(new GameBackgroundDisplay())
 			.addComponent(new InputDecorator(stage, 10))
@@ -314,7 +309,6 @@ public class MainGameScreen extends ScreenAdapter {
 
 		//temporary moral display
 //			.addComponent(new MoralDisplayTemp(this));
-//		ServiceLocator.getEntityService().register(docketUI);
 		ServiceLocator.getEntityService().register(ui);
 	}
 }

@@ -54,10 +54,6 @@ public class MainGameOrderTicketDisplay extends UIComponent {
     private DocketMealDisplay mealDisplay;
     private static final float DISTANCE_MULTIPLIER = 0.015f;
     public CombatStatsComponent combatStatsComponent;
-    private final RenderService renderService;
-    private final PlayerService playerService;
-//    private final RenderService renderService = ServiceLocator.getRenderService();
-//    private final PlayerService playerService = ServiceLocator.getPlayerService();
     private boolean isPaused = false;
     private long pauseStartTime = 0;
     private long totalPausedDuration = 0;
@@ -66,10 +62,6 @@ public class MainGameOrderTicketDisplay extends UIComponent {
      * Constructs an MainGameOrderTicketDisplay instance
      */
     public MainGameOrderTicketDisplay(RenderService renderService, PlayerService playerService) {
-//    public MainGameOrderTicketDisplay() {
-        this.renderService = renderService;
-        this.playerService = playerService;
-
         this.viewportHeight = renderService.getStage().getViewport().getCamera().viewportHeight;
         this.viewportWidth = renderService.getStage().getViewport().getCamera().viewportWidth;
 
