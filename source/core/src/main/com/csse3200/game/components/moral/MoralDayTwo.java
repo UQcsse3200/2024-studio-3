@@ -1,10 +1,10 @@
-package com.csse3200.game.screens;
+package com.csse3200.game.components.moral;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -12,25 +12,27 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.csse3200.game.GdxGame;
-import com.badlogic.gdx.utils.TimeUtils;
-import com.csse3200.game.components.Component;
+import com.badlogic.gdx.utils.Array;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.screens.MainGameScreen;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
-public class MoralDayOne extends UIComponent {
-
-    private static final Logger logger = LoggerFactory.getLogger(MoralDayOne.class);
+public class MoralDayTwo extends UIComponent {
+    private static final Logger logger = LoggerFactory.getLogger(MoralDayTwo.class);
 
     private Table layout; // Layout manager
+    private int moralStep = 0;
     private boolean isVisible;
     private final MainGameScreen game;
     private Image backgroundImage;
     private String question = "Set Question";
+
+//    private MoralTextDisplay textDisplay;
+//
+//    private Table table;
 
 
     /**
@@ -38,7 +40,7 @@ public class MoralDayOne extends UIComponent {
      * Initializes the display and sets its visibility to false.
      * Retrieves the main game screen from the ServiceLocator.
      */
-    public MoralDayOne() {
+    public MoralDayTwo() {
         super();
         this.game = ServiceLocator.getGameScreen();
         isVisible = false;
@@ -68,6 +70,16 @@ public class MoralDayOne extends UIComponent {
         Drawable blackBackground = new TextureRegionDrawable(new TextureRegion(pixmapTex));
         layout.setBackground(blackBackground);
 
+//        // Initialise the textDisplay before using it
+//        textDisplay = new MoralTextDisplay();
+//        textDisplay.setVisible(false);  // Initially hidden
+//        stage.addActor(textDisplay.getTable());  // Add it to the stage
+//
+//        layout.add(textDisplay.getTable()).pad(10).row();
+//        //stage.addActor(table);
+//
+//        moralChoice();  // Ensure textDisplay is initialized before calling this method
+
 
 
         // load and position the racoon image slightly to the left
@@ -90,9 +102,7 @@ public class MoralDayOne extends UIComponent {
         button.setColor(Color.GREEN);
         Button.ButtonStyle buttonStyle = new Button.ButtonStyle();
         Button noButton = new Button(button, buttonStyle);
-//        decisionTable.add(yesButton).pad(10);
         decisionTable.add(noButton).pad(10).row();
-//        layout.add(decisionTable).center().row();
 
 
         entity.getEvents().addListener("triggerMoralScreen", this::toggleVisibility);
@@ -104,14 +114,63 @@ public class MoralDayOne extends UIComponent {
         });
     }
 
+//    /**
+//     * Proceeds to the next tutorial step using a switch-case.
+//     */
+//    public void moralChoice() {
+//        moralStep++;
+//        switch (moralStep) {
+//            case 1:
+//                showMovementTutorial();
+//                break;
+//            case 2:
+//                showItemPickupTutorial();
+//                break;
+//            default:
+//                logger.error("Unexpected tutorial step: " + moralStep);
+//        }
+//    }
+//
+//    /**
+//     * Creates tutorial text box. Calls set text.
+//     * @param text being displayed into textbox.
+//     */
+//    private void createTextBox(String text) {
+//        Array<Entity> entities = ServiceLocator.getEntityService().getEntities();
+//
+//        for (int i = 0; i < entities.size; i++) {
+//            Entity entity = entities.get(i);
+//            entity.getEvents().trigger("SetText", text);
+//        }
+//    }
+//
+//
+//
+//    /**
+//     * Displays the movement tutorial. The player needs to use W/A/S/D to move.
+//     */
+//    private void showMovementTutorial() {
+//        textDisplay.setVisible(true);
+//        createTextBox("Not bad, human. You made enough to pay rent. Maybe there’s some hope for you.");
+//    }
+//
+//    /**
+//     * Displays the item pickup tutorial. The player needs to press E to pick up an item.
+//     */
+//    private void showItemPickupTutorial() {
+//        textDisplay.setVisible(true);
+//        createTextBox("Here’s an offer—you wash some of my dirty money through your restaurant, and tomorrow you " +
+//                "won’t need to stress about the budget. What do you say?");
+//    }
+
 
 
     /**
      * Initialise the User Interface
      */
     private void initialiseUI() {
-        Label titleLabel = new Label("moral deiciosn", new Label.LabelStyle(new BitmapFont(), Color.PINK));
-        layout.add(titleLabel).pad(10).row();
+//        Label titleLabel = new Label("moral deiciosn", new Label.LabelStyle(new BitmapFont(), Color.PINK));
+//        layout.add(titleLabel).pad(10).row();
     }
 
 
@@ -177,8 +236,26 @@ public class MoralDayOne extends UIComponent {
      */
     @Override
     public void update() {
-
+//        switch (moralStep) {
+//            case 1:
+//                if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
+//                    moralChoice();
+//                }
+//                break;
+//        }
     }
+
+//    @Override
+//    public void dispose() {
+//        super.dispose();
+//
+//        if (textDisplay != null) {
+//            textDisplay.setVisible(false);
+//            textDisplay.getTable().clear();
+//        }
+//    }
+
+
 
     @Override
     public void draw(SpriteBatch batch) {
@@ -189,3 +266,4 @@ public class MoralDayOne extends UIComponent {
     public void setStage(Stage stage) {
     }
 }
+
