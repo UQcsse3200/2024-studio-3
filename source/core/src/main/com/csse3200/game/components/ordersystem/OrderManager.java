@@ -53,20 +53,19 @@ public class OrderManager {
             return;
         }
 
-        // Temporarily create docket when customer spawns
-        // TODO: create docket when player takes order from customer
-        ServiceLocator.getEntityService().getEvents().trigger("createOrder", preference);
-
         Recipe recipe = getRecipe(preference);
         if (recipe != null) {
             logger.info("Displaying order for preference: " + preference);
             logger.info("Ingredients: " + recipe.getIngredients());
             logger.info("Making Time: " + recipe.getMakingTime());
-            // Add more UI logic here, if needed
-        } else {
-            logger.error("No recipe found for preference: " + preference);
-            // Handle case where no recipe is found
-            // e.g., show a default message or placeholder
+        }
+        switch (customerComponent.getPreference()){
+            case "acaiBowl" -> ServiceLocator.getEntityService().getEvents().trigger("createAcaiDocket");
+            case "salad" -> ServiceLocator.getEntityService().getEvents().trigger("createSaladDocket");
+            case "fruitSalad" -> ServiceLocator.getEntityService().getEvents().trigger("createFruitSaladDocket");
+            case "steakMeal" -> ServiceLocator.getEntityService().getEvents().trigger("createSteakDocket");
+            case "bananaSplit" -> ServiceLocator.getEntityService().getEvents().trigger("createBananaDocket");
+            default -> logger.error("No recipe found for preference: " + preference);
         }
     }
 }

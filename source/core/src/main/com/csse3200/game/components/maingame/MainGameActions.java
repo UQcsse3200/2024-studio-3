@@ -14,14 +14,22 @@ import java.util.List;
 import java.util.Random;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+/**
+ * Actions on the main game
+ */
 public class MainGameActions extends Component {
     private static final Logger logger = LoggerFactory.getLogger(MainGameActions.class);
-    private static final int ORDER_LIMIT = 8; // Maximum number of orders allowed
+    private static final int ORDER_LIMIT = 8;
     private static final String[] RECIPE_NAMES = {"acaiBowl", "salad", "fruitSalad", "steakMeal", "bananaSplit"};
     private GdxGame game;
     private MainGameOrderTicketDisplay docketDisplayer;
     private static List<String> currentlySpawningAnimals = new CopyOnWriteArrayList<>();
 
+    /**
+     * MainGameActions constructor
+     * @param game the GDXGame
+     * @param docketDisplayer the docket UI
+     */
     public MainGameActions(GdxGame game, MainGameOrderTicketDisplay docketDisplayer) {
         this.game = game;
         this.docketDisplayer = docketDisplayer;
@@ -30,7 +38,6 @@ public class MainGameActions extends Component {
     @Override
     public void create() {
         entity.getEvents().addListener("exit", this::onExit);
-        ServiceLocator.getEntityService().getEvents().addListener("createOrder", this::onCreateOrder);
         ServiceLocator.getEntityService().getEvents().addListener("createAcaiDocket", this::onCreateAcai);
         ServiceLocator.getEntityService().getEvents().addListener("createBananaDocket", this::onCreateBanana);
         ServiceLocator.getEntityService().getEvents().addListener("createSaladDocket", this::onCreateSalad);
@@ -49,24 +56,28 @@ public class MainGameActions extends Component {
     public void onCreateAcai() {
         onCreateOrder(RecipeNameEnums.ACAI_BOWL.getRecipeName());
     }
+
     /**
      * Creates Banana Split Docket
      */
     public void onCreateBanana() {
         onCreateOrder(RecipeNameEnums.BANANA_SPLIT.getRecipeName());
     }
+
     /**
      * Creates Salad Docket
      */
     public void onCreateSalad() {
         onCreateOrder(RecipeNameEnums.SALAD.getRecipeName());
     }
+
     /**
      * Creates Steak Docket
      */
     public void onCreateSteak() {
         onCreateOrder(RecipeNameEnums.STEAK_MEAL.getRecipeName());
     }
+
     /**
      * Creates Fruit Salad Docket
      */
