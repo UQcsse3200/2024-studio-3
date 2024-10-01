@@ -399,75 +399,76 @@ public class ForestGameArea extends GameArea {
 
 
   private void spawnStations() {
-    GridPoint2 ovenPos = new GridPoint2(5,3);
-    Entity oven = StationFactory.createOven();
-    spawnEntityAt(oven, ovenPos, true, false);
-    oven.setPosition(oven.getPosition().x + 0.5f, oven.getPosition().y );
-
-    GridPoint2 stovePos = new GridPoint2(5,1);
-    Entity stove = StationFactory.createStove();
-    spawnEntityAt(stove, stovePos, false, false);
-    stove.setPosition(stove.getPosition().x + 2.5f , stove.getPosition().y );
-
-    GridPoint2 binPos = new GridPoint2(5,4);
-    Entity bin = StationFactory.createBin();
-    spawnEntityAt(bin, binPos, false, false);
-   // bin.setPosition(bin.getPosition().x +1f , 4f);
-    bin.setPosition(4f , 4f);
-
-    GridPoint2 bananaTreePos = new GridPoint2( 5, 4);
-    Entity bananaTree = StationFactory.createBananaBasket();
-    spawnEntityAt(bananaTree, bananaTreePos, false, false);
-    bananaTree.setPosition(bananaTree.getPosition().x - 4f , bananaTree.getPosition().y - 2f);
-
-    GridPoint2 strawberryPos = new GridPoint2( 5, 4);
-    Entity strawberryStation = StationFactory.createStrawberryBasket();
-    spawnEntityAt(strawberryStation, strawberryPos, false, false);
-    strawberryStation.setPosition(strawberryStation.getPosition().x - 2f , strawberryStation.getPosition().y - 2f);
-
-    GridPoint2 lettucePos = new GridPoint2( 5, 4);
-    Entity lettuceStation = StationFactory.createLettuceBasket();
-    spawnEntityAt(lettuceStation, lettucePos, false, false);
-    lettuceStation.setPosition(lettuceStation.getPosition().x + 0f , lettuceStation.getPosition().y - 2f);
-
-    GridPoint2 tomatoPos = new GridPoint2( 5, 4);
-    Entity tomatoStation = StationFactory.createTomatoBasket();
-    spawnEntityAt(tomatoStation, tomatoPos, false, false);
-    tomatoStation.setPosition(tomatoStation.getPosition().x + 2f , tomatoStation.getPosition().y - 2f);
-
-    GridPoint2 cucumberPos = new GridPoint2( 5, 3);
-    Entity cucumberStation = StationFactory.createCucumberBasket();
-    spawnEntityAt(cucumberStation, cucumberPos, false, false);
-    cucumberStation.setPosition(cucumberStation.getPosition().x + 2f , cucumberStation.getPosition().y - 2f);
-
-    GridPoint2 acaiPos = new GridPoint2( 5, 4);
-    Entity acaiStation = StationFactory.createAcaiBasket();
-    spawnEntityAt(acaiStation, acaiPos, false, false);
-    acaiStation.setPosition(acaiStation.getPosition().x  , acaiStation.getPosition().y - 6f);
-
-    GridPoint2 beefPos = new GridPoint2( 5, 4);
-    Entity beefStation = StationFactory.createBeefFridge();
-    spawnEntityAt(beefStation, beefPos, false, false);
-    beefStation.setPosition(beefStation.getPosition().x  , beefStation.getPosition().y - 5f);
-
-    GridPoint2 chocolatePos = new GridPoint2( 3, 2);
-    Entity chocolateStation = StationFactory.createChocolateFridge();
-    spawnEntityAt(chocolateStation, chocolatePos, false, false);
-    chocolateStation.setPosition(chocolateStation.getPosition().x  , chocolateStation.getPosition().y);
-
-    GridPoint2 serveryPos = new GridPoint2(1,1);
-    Entity servery = StationFactory.createSubmissionWindow();
-    spawnEntityAt(servery, serveryPos, false, false);
-    servery.setPosition(servery.getPosition().x + 2, servery.getPosition().y + 0.5f);
-    servery = StationFactory.createSubmissionWindow();
-    spawnEntityAt(servery, serveryPos, false, false);
-    servery.setPosition(servery.getPosition().x + 2, servery.getPosition().y);
-
-    // Cutting Board
-    GridPoint2 cuttingPos = new GridPoint2(5,4);
-    Entity board = StationFactory.createCuttingBoard();
-    spawnEntityAt(board, cuttingPos, false, false);
-    board.setPosition(board.getPosition().x + 1f, board.getPosition().y - 5f);
+    int a = 0;
+    //GridPoint2 ovenPos = new GridPoint2(5,3);
+    //Entity oven = StationFactory.createOven();
+    //spawnEntityAt(oven, ovenPos, true, false);
+    //oven.setPosition(oven.getPosition().x + 0.5f, oven.getPosition().y );
+//
+    //GridPoint2 stovePos = new GridPoint2(5,1);
+    //Entity stove = StationFactory.createStove();
+    //spawnEntityAt(stove, stovePos, false, false);
+    //stove.setPosition(stove.getPosition().x + 2.5f , stove.getPosition().y );
+//
+    //GridPoint2 binPos = new GridPoint2(5,4);
+    //Entity bin = StationFactory.createBin();
+    //spawnEntityAt(bin, binPos, false, false);
+   //// bin.setPosition(bin.getPosition().x +1f , 4f);
+    //bin.setPosition(4f , 4f);
+//
+    //GridPoint2 bananaTreePos = new GridPoint2( 5, 4);
+    //Entity bananaTree = StationFactory.createBananaBasket();
+    //spawnEntityAt(bananaTree, bananaTreePos, false, false);
+    //bananaTree.setPosition(bananaTree.getPosition().x - 4f , bananaTree.getPosition().y - 2f);
+//
+    //GridPoint2 strawberryPos = new GridPoint2( 5, 4);
+    //Entity strawberryStation = StationFactory.createStrawberryBasket();
+    //spawnEntityAt(strawberryStation, strawberryPos, false, false);
+    //strawberryStation.setPosition(strawberryStation.getPosition().x - 2f , strawberryStation.getPosition().y - 2f);
+//
+    //GridPoint2 lettucePos = new GridPoint2( 5, 4);
+    //Entity lettuceStation = StationFactory.createLettuceBasket();
+    //spawnEntityAt(lettuceStation, lettucePos, false, false);
+    //lettuceStation.setPosition(lettuceStation.getPosition().x + 0f , lettuceStation.getPosition().y - 2f);
+//
+    //GridPoint2 tomatoPos = new GridPoint2( 5, 4);
+    //Entity tomatoStation = StationFactory.createTomatoBasket();
+    //spawnEntityAt(tomatoStation, tomatoPos, false, false);
+    //tomatoStation.setPosition(tomatoStation.getPosition().x + 2f , tomatoStation.getPosition().y - 2f);
+//
+    //GridPoint2 cucumberPos = new GridPoint2( 5, 3);
+    //Entity cucumberStation = StationFactory.createCucumberBasket();
+    //spawnEntityAt(cucumberStation, cucumberPos, false, false);
+    //cucumberStation.setPosition(cucumberStation.getPosition().x + 2f , cucumberStation.getPosition().y - 2f);
+//
+    //GridPoint2 acaiPos = new GridPoint2( 5, 4);
+    //Entity acaiStation = StationFactory.createAcaiBasket();
+    //spawnEntityAt(acaiStation, acaiPos, false, false);
+    //acaiStation.setPosition(acaiStation.getPosition().x  , acaiStation.getPosition().y - 6f);
+//
+    //GridPoint2 beefPos = new GridPoint2( 5, 4);
+    //Entity beefStation = StationFactory.createBeefFridge();
+    //spawnEntityAt(beefStation, beefPos, false, false);
+    //beefStation.setPosition(beefStation.getPosition().x  , beefStation.getPosition().y - 5f);
+//
+    //GridPoint2 chocolatePos = new GridPoint2( 3, 2);
+    //Entity chocolateStation = StationFactory.createChocolateFridge();
+    //spawnEntityAt(chocolateStation, chocolatePos, false, false);
+    //chocolateStation.setPosition(chocolateStation.getPosition().x  , chocolateStation.getPosition().y);
+//
+    //GridPoint2 serveryPos = new GridPoint2(1,1);
+    //Entity servery = StationFactory.createSubmissionWindow();
+    //spawnEntityAt(servery, serveryPos, false, false);
+    //servery.setPosition(servery.getPosition().x + 2, servery.getPosition().y + 0.5f);
+    //servery = StationFactory.createSubmissionWindow();
+    //spawnEntityAt(servery, serveryPos, false, false);
+    //servery.setPosition(servery.getPosition().x + 2, servery.getPosition().y);
+//
+    //// Cutting Board
+    //GridPoint2 cuttingPos = new GridPoint2(5,4);
+    //Entity board = StationFactory.createCuttingBoard();
+    //spawnEntityAt(board, cuttingPos, false, false);
+    //board.setPosition(board.getPosition().x + 1f, board.getPosition().y - 5f);
   }
 
   /**

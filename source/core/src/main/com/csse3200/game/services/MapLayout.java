@@ -7,6 +7,8 @@ import com.csse3200.game.areas.map.BenchGenerator;
 import com.csse3200.game.areas.map.BenchLayout;
 import com.csse3200.game.entities.benches.Bench;
 import com.csse3200.game.events.EventHandler;
+import com.csse3200.game.entities.factories.StationFactory;
+import com.csse3200.game.entities.Entity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,7 +21,7 @@ public class MapLayout extends GameArea{
     private static final String mapLevel1 = "images/map/map_test.txt";
     private int strToNum;
     private int strToNum2;
-    private ArrayList<Bench> testArray = new ArrayList<>();
+    private ArrayList<Bench> benches = new ArrayList<>();
     private Bench bench;
     private static final Logger logger = LoggerFactory.getLogger(MapLayout.class);
 
@@ -40,7 +42,11 @@ public class MapLayout extends GameArea{
     }
 
     /**
-     * Yxy ->
+     * Xab -> spawns a horizontal bench from column `a` that is `b` long
+     * Yab -> spawns a vertical bench from column `a` that is `b` long
+     * ba  -> spawns a banana basket at the `a` column
+     * sa  -> spawns a strawberry basket at the `a` column
+     * the row of the object is determined by the row of the text in the file.
      * @param level
      */
     public void load(String level) {
@@ -65,23 +71,24 @@ public class MapLayout extends GameArea{
 
                     // Log the current square being processed
                     logger.info("Checking square at row " + row + ", column " + col + ": " + square);
-
+                    strToNum = Integer.valueOf(parts[col+1]);
+                    strToNum2 = Integer.valueOf(parts[col+2]);
                     // Spawn single bench row when 'X'
-                    if (square.equals("X")) {
-                        strToNum = Integer.valueOf(parts[col+1]);
-                        strToNum2 = Integer.valueOf(parts[col+2]);
-                        testArray.addAll(BenchGenerator.createBenchRow(strToNum + 4,
-                                 strToNum2 + 4, row-4));
-                        col += 3;
-                        logger.info("Spawning entity at row " + row + ", column " + col);
-                    }
-                    // Spawn bench collumn when 'Y'
-                    else if (square.equals("Y")) {
-                        strToNum = Integer.valueOf(parts[col+1]);
-                        testArray.addAll(BenchGenerator.createBenchColumn(strToNum + 4,
-                                row-4, Integer.parseInt(parts[col+2])));
-                        col += 3;
-                        logger.info("Spawning entity at row " + row + ", column " + col);
+                    switch (square) {
+                        case "X":
+                            benches.addAll(BenchGenerator.createBenchRow(strToNum + 4,
+                                    strToNum2 + 4, row-4));
+                            col += 3;
+                            logger.info("Spawning entity at row " + row + ", column " + col);
+                            break;
+                        case "Y":
+                            benches.addAll(BenchGenerator.createBenchColumn(strToNum + 4,
+                                    row-4, Integer.parseInt(parts[col+2])));
+                            col += 3;
+                            logger.info("Spawning entity at row " + row + ", column " + col);
+                        //case "b":
+                            //spawnBananaBasket(row, strToNum);
+                            //col += 2;
                     }
                 }
                 row++;
@@ -98,9 +105,15 @@ public class MapLayout extends GameArea{
             }
         }
 
-        for (Bench bench : testArray) {
+        for (Bench bench : benches) {
             spawnEntity(bench);
             bench.setPosition(bench.x, bench.y);
         }
+    }
+    private void spawnBananaBasket(int x, int y) {
+        Entity entity = StationFactory.createBananaBasket();
+        spawnEntity(entity);
+        entity.setPosition(x, y);
+
     }
 }
