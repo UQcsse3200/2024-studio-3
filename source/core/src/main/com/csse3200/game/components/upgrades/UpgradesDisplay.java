@@ -42,7 +42,6 @@ public class UpgradesDisplay extends UIComponent {
 //    private Skin skin;
     private static final String[] upgradeTexturePaths = {
             "images/SpeedBoot.png",
-            "images/Rage.png",
             "images/Extortion1.png",
             "images/Loan1.png",
         "images/notEnoughGold.png",
@@ -143,9 +142,6 @@ public class UpgradesDisplay extends UIComponent {
                 break;
             case "Speed":
                 texturePath = "images/SpeedBoot.png";
-                break;
-            case "Rage":
-                texturePath = "images/Rage.png";
                 break;
             case "Loan":
                 texturePath = "images/Loan1.png";

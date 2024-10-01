@@ -18,7 +18,7 @@ public class RandomComboService extends Component {
     private Random random;
     private int randomChoice;
     private EventHandler eventHandler;
-    private int total_upgrades = 4; 
+    private int total_upgrades = 3;
 
     public RandomComboService() {
         this(new EventHandler());
@@ -42,9 +42,6 @@ public class RandomComboService extends Component {
                 upgrade = "Loan";
                 break;
             case 2:
-                upgrade = "Rage";
-                break;
-            case 3:
                 upgrade = "Speed";
                 break;
             default:
