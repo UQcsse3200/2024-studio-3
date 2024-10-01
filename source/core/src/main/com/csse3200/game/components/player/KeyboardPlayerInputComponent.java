@@ -37,6 +37,15 @@ public class KeyboardPlayerInputComponent extends InputComponent {
   @Override
   public boolean keyDown(int keycode) {
     keyFlags.put(keycode, 1);
+
+    if (keycode == Keys.O) {
+      System.out.println("O clicked");
+
+      entity.getEvents().trigger("createOrder");
+      return true;
+    }
+
+    
     if (keycode == Keys.E) {
       // Trigger an interaction attempt
       entity.getEvents().trigger("interact");
@@ -67,6 +76,13 @@ public class KeyboardPlayerInputComponent extends InputComponent {
           walkDirection.add(Vector2Utils.RIGHT);
           entity.getEvents().trigger("walked");
           triggerWalkEvent();
+          return true;
+        case Keys.M:
+          int day = 0;
+          ServiceLocator.getEntityService().getMoralScreen().getEvents().trigger("triggerMoralScreen",day);
+          return true;
+        case Keys.P:
+          ServiceLocator.getEntityService().getEvents().trigger("toggleEndDayScreen");
           return true;
       }
     }
@@ -197,7 +213,9 @@ public class KeyboardPlayerInputComponent extends InputComponent {
   public void create() {
     super.create();
     entity.getEvents().addListener("interactionEnd", this::whenInteractionEnds);
-    entity.getEvents().addListener("startInteraction", this::startInteraction);
+    // Meant to restrict movement on some stations, not a current feature and clashing
+    // with existing system
+    //entity.getEvents().addListener("startInteraction", this::startInteraction);
   }
 
   /**

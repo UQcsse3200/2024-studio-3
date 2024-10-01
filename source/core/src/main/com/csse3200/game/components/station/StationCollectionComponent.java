@@ -7,7 +7,7 @@ import com.csse3200.game.services.ServiceLocator;
 
 /**
  * StationCollectionComponent.java
- * </p>
+ *
  * StationCollectionComponentAllows for items to be collected from a station. It
  * works by being able to create an item when the player interacted with a
  * collection station. This includes the fridge and collection basket.

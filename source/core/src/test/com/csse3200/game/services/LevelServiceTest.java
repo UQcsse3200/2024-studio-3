@@ -31,10 +31,6 @@ class LevelServiceTest {
         assertNotNull(levelService.getCurrLevel());
         assertNotNull(levelService.getEvents());
         EventListener0 mockListener = mock(EventListener0.class);
-        /*levelServiceSpy.getEvents().trigger("startLevel", 1);
-        levelServiceSpy.getEvents().trigger("createCustomer");
-        verify(levelServiceSpy).getEvents().trigger("startLevel", 1);
-        verify(levelServiceSpy).getEvents().trigger("createCustomer");*/
         levelServiceSpy.getEvents().addListener("mockEvent",mockListener);
         levelServiceSpy.getEvents().trigger("mockEvent");
         verify(mockListener).handle();
@@ -53,9 +49,25 @@ class LevelServiceTest {
     }
 
     @Test
+    void shouldIncrementLevelByOneIfTriggerIsTrue() {
+        levelServiceSpy.togglePlayerFinishedLevel();
+        assertEquals(levelServiceSpy.getCurrLevel(), 2);
+    }
+
+    @Test
     void shouldIncrementLevelByOne() {
         levelServiceSpy.incrementLevel();
         assertEquals(levelServiceSpy.getCurrLevel(), 2);
+    }
+
+    @Test
+    void shouldIncrementLevelMultipleTimesByTrigger() {
+        int level = 0;
+        for (int i = 0; i < 4; i++) {
+            levelServiceSpy.togglePlayerFinishedLevel();
+            level = levelServiceSpy.getCurrLevel();
+        }
+        assertEquals(5, level);
     }
 
     @Test
@@ -77,5 +89,17 @@ class LevelServiceTest {
             //doReturn(eventHandler).when(levelServiceSpy).getEvents();
             verify(mockEventListener, atMost(11)).handle(anyInt());
         }
+    }
+
+    @Test
+    void shouldCorrectlyReturnAndSetGold() {
+        int gold = levelServiceSpy.getCurrGold();
+        //Test default value
+        assertEquals(50, gold);
+        //Check that it updates and retrieves correctly
+        levelServiceSpy.setCurrGold(100);
+        verify(levelServiceSpy).setCurrGold(100);
+        gold = levelServiceSpy.getCurrGold();
+        assertEquals(100, gold);
     }
 }
