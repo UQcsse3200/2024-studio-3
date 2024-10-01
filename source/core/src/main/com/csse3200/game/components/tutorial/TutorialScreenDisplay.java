@@ -131,7 +131,7 @@ public class TutorialScreenDisplay extends UIComponent {
     private void showItemPickupTutorial() {
         textDisplay.setVisible(true);
         createTextBox("Press E to pick up items.");
-        ServiceLocator.getTutorialService().getEvents().addListener("itemPickedUp", this::onInteraction);
+        ServiceLocator.getInputService().getEvents().addListener("interact", this::onInteraction);
     }
 
     /**
