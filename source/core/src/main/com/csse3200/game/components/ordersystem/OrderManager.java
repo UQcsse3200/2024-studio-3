@@ -3,6 +3,7 @@ package com.csse3200.game.components.ordersystem;
 import com.csse3200.game.files.FileLoader;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.components.npc.CustomerComponent;
+import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -57,11 +58,14 @@ public class OrderManager {
             logger.info("Displaying order for preference: " + preference);
             logger.info("Ingredients: " + recipe.getIngredients());
             logger.info("Making Time: " + recipe.getMakingTime());
-            // Add more UI logic here, if needed
-        } else {
-            logger.error("No recipe found for preference: " + preference);
-            // Handle case where no recipe is found
-            // e.g., show a default message or placeholder
+        }
+        switch (customerComponent.getPreference()){
+            case "acaiBowl" -> ServiceLocator.getEntityService().getEvents().trigger("createAcaiDocket");
+            case "salad" -> ServiceLocator.getEntityService().getEvents().trigger("createSaladDocket");
+            case "fruitSalad" -> ServiceLocator.getEntityService().getEvents().trigger("createFruitSaladDocket");
+            case "steakMeal" -> ServiceLocator.getEntityService().getEvents().trigger("createSteakDocket");
+            case "bananaSplit" -> ServiceLocator.getEntityService().getEvents().trigger("createBananaDocket");
+            default -> logger.error("No recipe found for preference: " + preference);
         }
     }
 }

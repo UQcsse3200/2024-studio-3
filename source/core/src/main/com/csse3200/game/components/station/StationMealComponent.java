@@ -81,6 +81,11 @@ public class StationMealComponent extends Component {
         System.out.printf("BEFORE STATION ITEMS: %s\n", this.inventoryComponent.getItemNames());
         System.out.printf("BEFORE PLAYER ITEMS: %s\n", playerInventoryComponent.getItemNames());
 
+        // Don't do anything if 'chop' is sent
+        if (Objects.equals(type, "chop")) {
+            return;
+        }
+
         // Check if interaction was a combine attempt
         if (Objects.equals(type, "combine")) {
             this.processMeal();
