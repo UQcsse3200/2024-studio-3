@@ -25,7 +25,7 @@ public class CutsceneFactory {
         Entity background = new Entity();
 
         // Create and add a texture component to the entity for rendering the background
-        TextureRenderComponent textureComponent = new TextureRenderComponent(bgImgPath);
+        TextureRenderComponent textureComponent = new BackgroundRenderComponent(bgImgPath);
         background.addComponent(textureComponent);
         textureComponent.scaleEntity();  // Scale the entity based on the texture size
 
