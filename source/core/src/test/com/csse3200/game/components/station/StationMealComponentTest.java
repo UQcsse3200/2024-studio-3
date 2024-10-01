@@ -41,7 +41,6 @@ public class StationMealComponentTest {
     protected InventoryDisplay inventoryDisplay;
     protected ArrayList<String> acceptableItems;
 
-
     @BeforeEach
     void setUp() {
         // Clear service locator before each
@@ -87,7 +86,7 @@ public class StationMealComponentTest {
         // Set up time
         when(mockTime.getTime()).thenReturn(1000L, 10000L);
 
-        // all acceptable items in the game (only ingredients and meals)
+        // all acceptable items in the game (only ingredients might need to change)
         acceptableItems = new ArrayList<>();
         acceptableItems.add("fish");
         acceptableItems.add("banana");
@@ -98,18 +97,12 @@ public class StationMealComponentTest {
         acceptableItems.add("tomato");
         acceptableItems.add("strawberry");
         acceptableItems.add("chocolate");
-        acceptableItems.add("fruitsalad");
-        acceptableItems.add("acaibowl");
-        acceptableItems.add("salad");
-        acceptableItems.add("steakmeal");
-        acceptableItems.add("bananasplit");
 
         // initialise the station meal component
         mealHandler = new StationMealComponent("combining", acceptableItems);
 
         // assign mock meal entity to mealHandler
         mealHandler.setEntity(mockMealEntity);
-
         mealHandler.create();
     }
 
@@ -134,6 +127,8 @@ public class StationMealComponentTest {
 
     @Test
     void tooLittleShouldntMakeMeal() {
+        ItemComponent banana = new ItemComponent("lettuce", ItemType.LETTUCE, 1);
+        playerInventory.addItem(banana);
         // call the combine function to "attempt" to combine
         mealHandler.handleInteraction(playerInventory, inventoryDisplay, "combine");
         // check if any component in inventory is of a meal type
@@ -173,10 +168,9 @@ public class StationMealComponentTest {
         // mock items to be added
         ItemComponent item1 = new ItemComponent("banana", ItemType.BANANA, 1);
         ItemComponent item2 = new ItemComponent("lettuce", ItemType.LETTUCE, 1);
-        // picked up and added both items
-        playerInventory.addItem(item1);
-        mealHandler.handleInteraction(playerInventory, inventoryDisplay, "combine");
-        playerInventory.addItem(item2);
+        // add items and mock keypress for combining
+        stationInventory.addItem(item1);
+        stationInventory.addItem(item2);
         mealHandler.handleInteraction(playerInventory, inventoryDisplay, "combine");
         // check if any component in inventory is of a meal type
         for (int index = 0; index < stationInventory.getCapacity(); index++) {
@@ -192,46 +186,113 @@ public class StationMealComponentTest {
 
     @Test
     void shouldMakeAcaiBowl() {
-//        ItemComponent acai = new ItemComponent("banana", ItemType.BANANA, 1);
-//        ItemComponent banana = new ItemComponent("lettuce", ItemType.LETTUCE, 1);
-//        playerInventory.addItem(acai);
-//        mealHandler.handleInteraction(playerInventory, inventoryDisplay, "combine");
-//        playerInventory.addItem(banana);
-//        mealHandler.handleInteraction(playerInventory, inventoryDisplay, "combine");
-//        // check if any component in inventory is of a meal type
-//        for (int index = 0; index < stationInventory.getCapacity(); index++) {
-//            ItemComponent item = stationInventory.getItemAt(index);
-//            if (item.getItemName().equals("acaibowl")) {
-//                assertTrue(true);
-//            }
-//        }
-//        // else didnt make, so fail
-//        fail();
+        // acai banana
+        ItemComponent acai = new IngredientComponent("acai", ItemType.ACAI, 1, 0, 0, "unknown");
+        ItemComponent banana = new IngredientComponent("banana", ItemType.BANANA, 1, 0, 0, "unknown");
+        // add items and mock keypress for combining
+        stationInventory.addItem(acai);
+        stationInventory.addItem(banana);
+        mealHandler.handleInteraction(playerInventory, inventoryDisplay, "combine");
+        // check if any component in inventory is of an acai bowl meal type
+        boolean found = false;
+        for (int index = 0; index < stationInventory.getCapacity(); index++) {
+            ItemComponent item = stationInventory.getItemAt(index);
+            if (item != null && item.getItemName().equals("acai bowl")) {
+                found = true;
+            }
+        }
+        // assert true if found
+        assertTrue(found);
     }
 
     @Test
     void shouldMakeBananaSplit() {
         // banana strawberry chocolate
+        ItemComponent strawberry = new IngredientComponent("strawberry", ItemType.STRAWBERRY, 1, 0, 0, "unknown");
+        ItemComponent banana = new IngredientComponent("banana", ItemType.BANANA, 1, 0, 0, "unknown");
+        ItemComponent chocolate = new IngredientComponent("chocolate", ItemType.ACAI, 1, 0, 0, "unknown");
+        // add items and mock keypress for combining
+        stationInventory.addItem(strawberry);
+        stationInventory.addItem(banana);
+        stationInventory.addItem(chocolate);
+        mealHandler.handleInteraction(playerInventory, inventoryDisplay, "combine");
+        // check if any component in inventory is of a banana split meal type
+        boolean found = false;
+        for (int index = 0; index < stationInventory.getCapacity(); index++) {
+            ItemComponent item = stationInventory.getItemAt(index);
+            if (item != null && item.getItemName().equals("Banana Split")) {
+                found = true;
+            }
+        }
+        // assert true if found
+        assertTrue(found);
     }
 
     @Test
     void shouldMakeFruitSalad() {
         // banana strawberry
-
+        ItemComponent strawberry = new IngredientComponent("strawberry", ItemType.STRAWBERRY, 1, 0, 0, "unknown");
+        ItemComponent banana = new IngredientComponent("banana", ItemType.BANANA, 1, 0, 0, "unknown");
+        // add items and mock keypress for combining
+        stationInventory.addItem(strawberry);
+        stationInventory.addItem(banana);
+        mealHandler.handleInteraction(playerInventory, inventoryDisplay, "combine");
+        // check if any component in inventory is of a fruit salad meal type
+        boolean found = false;
+        for (int index = 0; index < stationInventory.getCapacity(); index++) {
+            ItemComponent item = stationInventory.getItemAt(index);
+            if (item != null && item.getItemName().equals("fruit salad")) {
+                found = true;
+            }
+        }
+        // assert true if found
+        assertTrue(found);
     }
 
     @Test
     void shouldMakeSalad() {
         // tomato cucumber lettuce
-
-
-
+        ItemComponent tomato = new IngredientComponent("tomato", ItemType.TOMATO, 1, 0, 0, "unknown");
+        ItemComponent cucumber = new IngredientComponent("cucumber", ItemType.CUCUMBER, 1, 0, 0, "unknown");
+        ItemComponent lettuce = new IngredientComponent("lettuce", ItemType.LETTUCE, 1, 0, 0, "unknown");
+        // add items and mock keypress for combining
+        stationInventory.addItem(tomato);
+        stationInventory.addItem(cucumber);
+        stationInventory.addItem(lettuce);
+        mealHandler.handleInteraction(playerInventory, inventoryDisplay, "combine");
+        // check if any component in inventory is of a salad meal type
+        boolean found = false;
+        for (int index = 0; index < stationInventory.getCapacity(); index++) {
+            ItemComponent item = stationInventory.getItemAt(index);
+            if (item != null && item.getItemName().equals("Salad")) {
+                found = true;
+            }
+        }
+        // assert true if found
+        assertTrue(found);
     }
 
     @Test
     void shouldMakeSteakMeal() {
         // beef tomato cucumber
-
+        ItemComponent tomato = new IngredientComponent("tomato", ItemType.TOMATO, 1, 0, 0, "unknown");
+        ItemComponent cucumber = new IngredientComponent("cucumber", ItemType.CUCUMBER, 1, 0, 0, "unknown");
+        ItemComponent beef = new IngredientComponent("beef", ItemType.BEEF, 1, 0, 0, "unknown");
+        // add items and mock keypress for combining
+        stationInventory.addItem(tomato);
+        stationInventory.addItem(cucumber);
+        stationInventory.addItem(beef);
+        mealHandler.handleInteraction(playerInventory, inventoryDisplay, "combine");
+        // check if any component in inventory is of a steak meal type
+        boolean found = false;
+        for (int index = 0; index < stationInventory.getCapacity(); index++) {
+            ItemComponent item = stationInventory.getItemAt(index);
+            if (item != null && item.getItemName().equals("Steak Meal")) {
+                found = true;
+            }
+        }
+        // assert true if found
+        assertTrue(found);
     }
 
 
