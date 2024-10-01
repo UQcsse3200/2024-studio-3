@@ -14,7 +14,7 @@ import java.util.Random;
  */
 public class DayNightService {
     private static final Logger logger = LoggerFactory.getLogger(DayNightService.class);
-    public  long FIVE_MINUTES = 5 * 60 * 1000; // 5 minutes in milliseconds
+    public  long FIVE_MINUTES = 1 * 60 * 1000; // 5 minutes in milliseconds
     public long lastCheckTime;
     public long lastCheckTime2;
     public long lastCheckTime3;
@@ -82,27 +82,32 @@ public class DayNightService {
      * end-of-day events or timer-related events.
      */
     public void update() {
+        if (gameTime.isPaused()) {
+            return;
+        }
+
         long currentTime = gameTime.getTime(); // Get the current game time
 
-        // Check if 5 minutes have passed and trigger the end of the day
-        if(currentTime - lastCheckTime2 >= 1000 && !pastSecond){
+        // Check if 1 second has passed and trigger the "Second" event
+        if (currentTime - lastCheckTime2 >= 1000 && !pastSecond) {
             pastSecond = true;
             enddayEventHandler.trigger("Second");
             lastCheckTime2 = currentTime;
         }
 
+        // Check if random upgrade time has been reached
         if (currentTime - lastCheckTime3 >= randomChoice && !pastUpgrade) {
             pastUpgrade = true;
             enddayEventHandler.trigger("upgrade");
-            randomChoice = random.nextInt(10) * 1000;
-            // lastCheckTime3 = currentTime;
+            randomChoice = random.nextInt(10) * 1000;  // Generate a new random time for the next upgrade
         }
 
+        // Check if 5 minutes have passed and trigger the end of the day
         if (currentTime - lastCheckTime >= FIVE_MINUTES && !endOfDayTriggered) {
-            endOfDayTriggered = true; 
-            gameTime.setTimeScale(0);
+            endOfDayTriggered = true;
+            gameTime.setTimeScale(0);  // Stop the game time
             docketServiceEventHandler.trigger("Dispose");
-            enddayEventHandler.trigger("endOfDay"); // Trigger the end of the day event
+            enddayEventHandler.trigger("endOfDay");  // Trigger the end of the day event
         }
     }
 
