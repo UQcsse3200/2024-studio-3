@@ -150,7 +150,7 @@ public class CutsceneScreen extends ScreenAdapter {
                 .addComponent(new TerminalDisplay())
                 .addComponent(new CutsceneActions(this.game))
                 .addComponent(cutsceneScreenDisplay)
-                .addComponent(new CutsceneTextDisplay(this));
+                .addComponent(new CutsceneTextDisplay());
 
         // Register the UI entity with the entity service
         ServiceLocator.getEntityService().register(ui);

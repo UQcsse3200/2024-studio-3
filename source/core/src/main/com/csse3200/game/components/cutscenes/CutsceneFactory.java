@@ -9,11 +9,6 @@ import com.csse3200.game.components.TooltipsDisplay;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.components.station.StationServingComponent;
 import com.csse3200.game.entities.Entity;
-import com.csse3200.game.physics.PhysicsLayer;
-import com.csse3200.game.physics.PhysicsUtils;
-import com.csse3200.game.physics.components.ColliderComponent;
-import com.csse3200.game.physics.components.InteractionComponent;
-import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.csse3200.game.rendering.TextureRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
@@ -34,7 +29,7 @@ public class CutsceneFactory {
         Entity background = new Entity();
 
         // Create and add a texture component to the entity for rendering the background
-        TextureRenderComponent textureComponent = new TextureRenderComponent(bgImgPath);
+        TextureRenderComponent textureComponent = new BackgroundRenderComponent(bgImgPath);
         background.addComponent(textureComponent);
         textureComponent.scaleEntity();  // Scale the entity based on the texture size
 
@@ -59,14 +54,39 @@ public class CutsceneFactory {
      * Creates an animation entity with the specified image path. The entity
      * will have a texture component for rendering the animation.
      *
+     * Creates an animation called "idle" which is the only possible
+     *
      * @param animationImgPath The file path of the animation image to use.
+     * @param animName The name of the animation that will be played.
      * @return A new animation entity.
      */
-    public static Entity createAnimation(String animationImgPath) {
+    public static Entity createAnimation(String animationImgPath, String animName) {
         Entity animation = new Entity();
 
         // Create and add a texture component to the entity for rendering the animation
-        TextureRenderComponent textureComponent = new TextureRenderComponent(animationImgPath);
+        AnimationRenderComponent animator = new AnimationRenderComponent(
+                ServiceLocator.getResourceService()
+                        .getAsset(animationImgPath, TextureAtlas.class));
+        animator.addAnimation(animName, 0.3f, Animation.PlayMode.LOOP);
+
+        // Scale the entity based on the texture size
+        animator.scaleEntity();
+
+        return animation;
+    }
+
+    /**
+     * Creates an image entity with the specified image path. The entity
+     * will have a texture component for rendering the image.
+     *
+     * @param imgPath The file path of the animation image to use.
+     * @return A new animation entity.
+     */
+    public static Entity createImage(String imgPath) {
+        Entity animation = new Entity();
+
+        // Create and add a texture component to the entity for rendering the animation
+        TextureRenderComponent textureComponent = new TextureRenderComponent(imgPath);
         animation.addComponent(textureComponent);
 
         // Scale the entity based on the texture size
@@ -81,19 +101,8 @@ public class CutsceneFactory {
      * @param animationAtlasPath The file path of the atlas file to use.
      * @return A new animation entity.
      */
-    public static Entity createProperAnimation(String animationAtlasPath) {
-        Entity animation = new Entity()
-                .addComponent(new PhysicsComponent())
-                .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
-                .addComponent(new InteractionComponent(PhysicsLayer.INTERACTABLE))
-                .addComponent(new TooltipsDisplay())
-                .addComponent(new InventoryComponent(1))
-                .addComponent(new StationServingComponent());
-
-        animation.getComponent(InteractionComponent.class).setAsBox(animation.getScale());
-        animation.getComponent(PhysicsComponent.class).setBodyType(BodyDef.BodyType.StaticBody);
-        PhysicsUtils.setScaledCollider(animation, 1f, 1f);
-
+    public static Entity createBadEndAnimation(String animationAtlasPath) {
+        Entity animation = new Entity();
 
         AnimationRenderComponent animator =
                 new AnimationRenderComponent(

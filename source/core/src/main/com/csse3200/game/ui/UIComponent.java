@@ -11,7 +11,7 @@ import com.csse3200.game.services.ServiceLocator;
  * A generic component for rendering onto the ui.
  */
 public abstract class UIComponent extends RenderComponent implements Renderable {
-  private static final int UI_LAYER = 2;
+  private static final int UI_LAYER = 3;
   protected static final Skin skin =
       new Skin(Gdx.files.internal("flat-earth/skin/flat-earth-ui.json"));
   protected Stage stage;
