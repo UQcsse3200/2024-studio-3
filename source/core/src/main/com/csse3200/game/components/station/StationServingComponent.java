@@ -4,6 +4,8 @@ import com.csse3200.game.components.Component;
 import com.csse3200.game.components.ScoreSystem.ScoreSystem;
 import com.csse3200.game.components.items.ItemComponent;
 import com.csse3200.game.components.ordersystem.OrderActions;
+import com.csse3200.game.components.ordersystem.OrderManager;
+import com.csse3200.game.components.ordersystem.Recipe;
 import com.csse3200.game.components.ordersystem.TicketDetails;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.components.player.InventoryDisplay;
@@ -13,6 +15,7 @@ import com.csse3200.game.services.ServiceLocator;
 import com.badlogic.gdx.scenes.scene2d.ui.List;
 import com.csse3200.game.components.items.IngredientComponent;
 import com.csse3200.game.components.items.MealComponent;
+import com.csse3200.game.components.npc.CustomerComponent;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -67,6 +70,7 @@ public class StationServingComponent extends Component {
     public void handleInteraction(InventoryComponent playerInventoryComponent, InventoryDisplay inventoryDisplay, String type) {
         if (playerInventoryComponent.isFull()) {
             ItemComponent item = playerInventoryComponent.getItemFirst();
+            scoreMeal(item);
             playerInventoryComponent.removeAt(0);
             inventoryDisplay.update();
             submitMeal(item);
@@ -85,9 +89,9 @@ public class StationServingComponent extends Component {
         String[] bigTicketInfo = bigTicket.getCurrentBigTicketInfo();
 
         if (bigTicketInfo[0] != null) {
-            logger.info(bigTicketInfo[0]); // order number ("5")
-            logger.info(bigTicketInfo[1]); // meal ("tomato soup")
-            logger.info(bigTicketInfo[2]); // time left ("32")
+            // logger.info(bigTicketInfo[0]); // order number ("5")
+            // logger.info(bigTicketInfo[1]); // meal ("tomato soup")
+            // logger.info(bigTicketInfo[2]); // time left ("32")
 
             // Call to team 1's function with the big ticket info
             //TBD(item, bigTicketInfo[0], bigTicketInfo[1], bigTicketInfo[2]);
@@ -105,34 +109,48 @@ public class StationServingComponent extends Component {
 
     }
 
-    /*
-    * private void scoreMeal(ItemComponent item) {
-    * String[] bigTicketInfo = orderActions.getCurrentBigTicketInfo();
-    * if (bigTicketInfo != null && bigTicketInfo.length >= 2) {
-    * String orderNumber = bigTicketInfo[0];
-    * String orderedMeal = bigTicketInfo[1];
-    *
-    * // Get the list of ingredient names from the MealComponent
-    * List<String> playerIngredients = item.getIngredients() // convert to
-    * List<String>
-    *
-    * List<String> orderIngredients = orderedMeal.getIngredients() // replace with
-    * actual code
-    *
-    * int score = ScoreSystem.compareLists(playerIngredients, orderIngredients);
-    * String scoreDescription = ScoreSystem.getScoreDescription(score);
-    *
-    * logger.info("Order number: " + orderNumber);
-    * logger.info("Score: " + score + "%");
-    * logger.info("Description: " + scoreDescription);
-    *
-    * } else {
-    * logger.warn("No current order to score the meal for.");
-    * }
-    *
-    * return score;
-    * }
-    * }
-    */
+    private void scoreMeal(ItemComponent item) {
+        String[] bigTicketInfo = bigTicket.getCurrentBigTicketInfo();
+        if (bigTicketInfo != null && bigTicketInfo.length >= 2) {
+            String orderNumber = bigTicketInfo[0];
+            String orderedMeal = bigTicketInfo[1];
+            logger.info("Ordered meal: " + orderedMeal);
+            // get order ticket ingredients
+            Recipe orderRecipe = OrderManager.getRecipe(orderedMeal);
+            java.util.List<String> orderIngredients = orderRecipe.getIngredients();
+            logger.info("Order ingredients: " + orderIngredients);
+
+            // get player ingredients
+            String itemName = item.getItemName();
+            String playerMeal = switch (itemName) {
+                case "acai bowl" -> "acaiBowl";
+                case "salad" -> "salad";
+                case "fruit salad" -> "fruitSalad";
+                case "steak meal" -> "steakMeal";
+                case "banana split" -> "bananaSplit";
+                default -> {
+                    logger.error("No recipe found for this item: " + itemName);
+                    yield null; // You can yield a default value or handle the error as needed
+                }
+            };
+
+            logger.info("Player meal: " + playerMeal);
+            Recipe playerRecipe = OrderManager.getRecipe(playerMeal);
+            // null because chocolate isn't a meal. so getRecipe returns a null error
+            java.util.List<String> playerIngredients = playerRecipe.getIngredients();
+            logger.info("Player ingredients: " + playerIngredients);
+
+            int score = ScoreSystem.compareLists(playerIngredients, orderIngredients);
+            String scoreDescription = ScoreSystem.getScoreDescription(score);
+            // Before scoreMeal, hoverbox display the order
+            // After scoreMeal is complete, replace the order with face
+            // Increment gold according to score
+            logger.info("Order number: " + orderNumber);
+            logger.info("Score: " + score + "%");
+            logger.info("Description: " + scoreDescription);
+        } else {
+        logger.warn("No current order to score the meal for.");
+        }
+    }
 
 }
