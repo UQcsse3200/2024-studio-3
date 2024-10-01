@@ -18,12 +18,15 @@ import com.badlogic.gdx.utils.Align;
 import com.csse3200.game.screens.CutsceneScreen;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * CutsceneTextDisplay handles displaying scrolling text during a cutscene. The text is displayed
  * one character at a time, and pressing ENTER will skip the scrolling and display the full text immediately.
  */
 public class CutsceneTextDisplay extends UIComponent {
+    private static final Logger logger = LoggerFactory.getLogger(CutsceneTextDisplay.class);
     private String text;  // Full text to be displayed
     private StringBuilder currentText;  // Text that is currently displayed
     private int charIndex = 0;  // Index of the current character to be displayed
@@ -113,8 +116,10 @@ public class CutsceneTextDisplay extends UIComponent {
         setVisible(true);  // Make the text display visible
         this.text = text;
         this.currentText.setLength(0);  // Clear the currently displayed text
-        this.charIndex = 0;  // Start from the beginning of the text
+        this.charIndex = 0;  // Set character index to the end// Start from the beginning of the text
     }
+
+
 
     /**
      * Controls the visibility of the text display.
@@ -159,8 +164,10 @@ public class CutsceneTextDisplay extends UIComponent {
             public boolean keyDown(InputEvent event, int keycode) {
                 // If ENTER is pressed, skip to displaying the full text
                 if (keycode == com.badlogic.gdx.Input.Keys.ENTER) {
-                    label.setText(text);
-                    charIndex = text.length();  // Set character index to the end
+                    logger.info("Space bar pressed. Moving to next piece of text");
+                    Cutscene currentCutscene = ServiceLocator.getCurrentCutscene();
+                    currentCutscene.setTextForScene(currentCutscene.currentScene);
+                    label.setText(currentCutscene.currentText);
                     return true;
                 }
                 return false;
