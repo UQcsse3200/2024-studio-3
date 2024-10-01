@@ -22,8 +22,8 @@ import org.slf4j.LoggerFactory;
  */
 public class CutsceneScreenDisplay extends UIComponent {
     private static final Logger logger = LoggerFactory.getLogger(CutsceneScreenDisplay.class);
-    private final GdxGame game;
-    private Table table;
+    public final GdxGame game;
+    Table table;
     private CutsceneTextDisplay textDisplay;
 
     // The current step in the cutscene sequence

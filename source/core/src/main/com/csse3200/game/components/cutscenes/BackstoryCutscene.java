@@ -1,131 +1,111 @@
-//package com.csse3200.game.components.cutscenes;
-//
-//import com.badlogic.gdx.graphics.Texture;
-//import com.csse3200.game.GdxGame;
-//import com.csse3200.game.services.ServiceLocator;
-//import com.csse3200.game.components.cutscenes.scenes.Scene;
-//
-//public class BackstoryCutscene extends Cutscene {
-//    private BackstoryCutsceneDisplay cutsceneDisplay;
-//
-//    public BackstoryCutscene() {
-//        super();
-//        this.cutsceneDisplay = new BackstoryCutsceneDisplay(ServiceLocator.getGdxGame());
-//    }
-//
-//    @Override
-//    protected void setupScenes() {
-//        scenes.add(new Scene("images/Cutscenes/scene1_background.png", new String[]{"Text for scene 1"}, 5.0f));
-//        scenes.add(new Scene("images/Cutscenes/scene2_background.png", new String[]{"Text for scene 2"}, 4.0f));
-//        scenes.add(new Scene("images/Cutscenes/scene3_background.png", new String[]{"Text for scene 3"}, 3.0f));
-//        // Add more scenes as needed.
-//    }
-//
-//    @Override
-//    protected void loadAssets() {
-//        for (Scene scene : scenes) {
-//            ServiceLocator.getResourceService().loadTexture(scene.getBackgroundImagePath());
-//            // Load other assets like sounds or animations as needed.
-//        }
-//    }
-//
-//    @Override
-//    public void start() {
-//        super.start();
-//        cutsceneDisplay.create();
-//        cutsceneDisplay.showScene(currentSceneIndex);
-//    }
-//
-//    @Override
-//    public void dispose() {
-//        super.dispose();
-//        cutsceneDisplay.dispose();
-//    }
-//
-//    @Override
-//    public void createEntities() {
-//        // none
-//    }
-//
-//    public Scene getCurrentScene() {
-//        return scenes.get(currentSceneIndex);
-//    }
-//}
-
 package com.csse3200.game.components.cutscenes;
 
 import com.badlogic.gdx.utils.Array;
-import com.csse3200.game.GdxGame;
-import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.components.cutscenes.scenes.Scene;
+import com.csse3200.game.services.ResourceService;
+import com.csse3200.game.services.ServiceLocator;
 
 /**
  * Specific cutscene class handling the backstory of the game.
  */
 public class BackstoryCutscene extends Cutscene {
-    private BackstoryCutsceneDisplay cutsceneDisplay;
-
+    /**
+     * Constructor for BackstoryCutscene.
+     */
     public BackstoryCutscene() {
-        super();  // Calls the constructor of the superclass Cutscene
-        this.cutsceneDisplay = new BackstoryCutsceneDisplay(ServiceLocator.getGdxGame());
+        super();
     }
 
+    /**
+     * Sets up the scenes for the backstory cutscene, including background images,
+     * animations, and the corresponding text for each scene.
+     */
     @Override
     protected void setupScenes() {
-        // Initialize scenes with their respective background images, animation paths (if any), text, and duration
+        // Add cutscene text
+        cutsceneText.add("In the year 2045, the world changed...");
+        cutsceneText.add("Humans and animals were forced to coexist in a new order.");
+        cutsceneText.add("Our hero, a chef, is one of the last remaining humans...");
+
+        // Add scenes with background images, text, and duration
         scenes.add(new Scene(
-                "images/Cutscenes/scene1_background.png",
-                null, // No animations for this scene
-                new Array<>(new String[]{"Text for scene 1"}),
+                "images/Cutscenes/Brooklyn_Bistro_Background.png",
+                null,  // No animations for this scene
+                new Array<>(new String[]{"In the year 2045, the world changed..."}),
                 5.0f
         ));
         scenes.add(new Scene(
-                "images/Cutscenes/scene2_background.png",
-                null, // No animations for this scene
-                new Array<>(new String[]{"Text for scene 2"}),
+                "images/Cutscenes/Kitchen_Background.png",
+                null,  // No animations for this scene
+                new Array<>(new String[]{"Humans and animals were forced to coexist in a new order."}),
                 4.0f
         ));
         scenes.add(new Scene(
-                "images/Cutscenes/scene3_background.png",
-                null, // No animations for this scene
-                new Array<>(new String[]{"Text for scene 3"}),
+                "images/Cutscenes/Kitchen_Background.png",
+                null,  // No animations for this scene
+                new Array<>(new String[]{"Humans and animals were forced to coexist in a new order."}),
+                4.0f
+        ));
+        scenes.add(new Scene(
+                "images/Cutscenes/Kitchen_Background.png",
+                null,  // No animations for this scene
+                new Array<>(new String[]{"Humans and animals were forced to coexist in a new order."}),
+                4.0f
+        ));
+        scenes.add(new Scene(
+                "images/Cutscenes/Kitchen_Background.png",
+                null,  // No animations for this scene
+                new Array<>(new String[]{"Humans and animals were forced to coexist in a new order."}),
+                4.0f
+        ));
+        scenes.add(new Scene(
+                "images/Cutscenes/Farm_Background.png",
+                null,  // No animations for this scene
+                new Array<>(new String[]{"Our hero, a chef, is one of the last remaining humans..."}),
                 3.0f
         ));
-        // Add more scenes as needed
     }
 
+    /**
+     * Loads the assets needed for the backstory cutscene, including textures for backgrounds.
+     */
+//    @Override
+//    protected void loadAssets() {
+//        // Load the background images for the cutscene
+//        textures = new String[] {
+//                "images/Cutscenes/scene1_background.png",
+//                "images/Cutscenes/scene2_background.png",
+//                "images/Cutscenes/scene3_background.png"
+//        };
+//
+//        // Get the resource service to load assets
+//        ResourceService resourceService = ServiceLocator.getResourceService();
+//        resourceService.loadTextures(textures);
+//        resourceService.loadAll();  // Ensure all assets are loaded
+//    }
     @Override
     protected void loadAssets() {
-        // Load background images and other assets for each scene
+        // Load assets for the backstory cutscene
         for (Scene scene : scenes) {
             ServiceLocator.getResourceService().loadTextures(new String[]{scene.getBackgroundImagePath()});
-            // Optionally load other types of assets such as sounds or animations
         }
     }
 
-    @Override
-    public void start() {
-        super.start();  // Calls the start method of the superclass which handles the setup
-        cutsceneDisplay.create();
-        cutsceneDisplay.showScene(currentSceneIndex);
-    }
-
-    @Override
-    public void dispose() {
-        super.dispose();
-        cutsceneDisplay.dispose();
-    }
-
+    /**
+     * Handles specific entity creation logic for the backstory cutscene.
+     * Currently, there is no specific logic for creating entities.
+     */
     @Override
     public void createEntities() {
-        // Create entities for each scene as needed (e.g., background, characters, interactive elements)
-        for (Scene scene : scenes) {
-            createEntitiesForScene(scene);
-        }
+        // Any specific entity creation logic for the backstory cutscene
     }
 
-    public Scene getCurrentScene() {
-        return scenes.get(currentSceneIndex);
+    /**
+     * Returns the cutscene text that will be displayed during the cutscene.
+     *
+     * @return Array<String> of cutscene text.
+     */
+    public Array<String> getCutsceneText() {
+        return cutsceneText;
     }
 }
-
