@@ -18,7 +18,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class MoralDayFour extends UIComponent {
-    private static final Logger logger = LoggerFactory.getLogger(MoralDayTwo.class);
+    private static final Logger logger = LoggerFactory.getLogger(MoralDayFour.class);
 
     private Table layout; // Layout manager
     private int moralStep = 0;
@@ -80,7 +80,7 @@ public class MoralDayFour extends UIComponent {
 
 
         // load and position the racoon image slightly to the left
-        Texture imgTexture = new Texture(Gdx.files.internal("images/moral_scenes/drugbackground.png"));
+        Texture imgTexture = new Texture(Gdx.files.internal("images/moral_scenes/drugs.png"));
         Drawable imgDrawable = new TextureRegionDrawable(imgTexture);
         backgroundImage = new Image(imgDrawable);
 

@@ -83,7 +83,7 @@ public class MoralDayTwo extends UIComponent {
 
 
         // load and position the racoon image slightly to the left
-        Texture imgTexture = new Texture(Gdx.files.internal("images/moral_scenes/drugbackground.png"));
+        Texture imgTexture = new Texture(Gdx.files.internal("images/moral_scenes/gamblingnight.png"));
         Drawable imgDrawable = new TextureRegionDrawable(imgTexture);
         backgroundImage = new Image(imgDrawable);
 

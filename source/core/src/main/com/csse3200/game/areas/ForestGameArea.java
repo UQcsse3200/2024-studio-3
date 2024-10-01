@@ -831,8 +831,8 @@ public class ForestGameArea extends GameArea {
     Entity moralScreen = new Entity();
     moralScreen
             //.addComponent(new MoralDecisionDisplay())
-            .addComponent(new MoralDayOne())
-            //.addComponent(new MoralDayTwo())
+            //.addComponent(new MoralDayOne())
+            .addComponent(new MoralDayTwo())
             //.addComponent(new MoralDayThree())
             //.addComponent(new MoralDayFour())
             .addComponent(new MoralDecision());
