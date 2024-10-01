@@ -74,7 +74,29 @@ public class StationServingComponent extends Component {
     public void handleInteraction(InventoryComponent playerInventoryComponent, InventoryDisplay inventoryDisplay, String type) {
         if (playerInventoryComponent.isFull()) {
             ItemComponent item = playerInventoryComponent.getItemFirst();
-            scoreMeal(item);
+            String itemName = item.getItemName();
+            String playerMeal;
+            switch (itemName) {
+                case "acai bowl":
+                    playerMeal = "acaiBowl";
+                    break;
+                case "salad":
+                    playerMeal = "salad";
+                    break;
+                case "fruit salad":
+                    playerMeal = "fruitSalad";
+                    break;
+                case "steak meal":
+                    playerMeal = "steakMeal";
+                    break;
+                case "banana split":
+                    playerMeal = "bananaSplit";
+                    break;
+                default:
+                    logger.error("No recipe found for this item: " + itemName);
+                    return; // Exit the method
+            }
+            scoreMeal(playerMeal);
             playerInventoryComponent.removeAt(0);
             inventoryDisplay.update();
             submitMeal(item);
@@ -88,7 +110,7 @@ public class StationServingComponent extends Component {
     public void submitMeal(ItemComponent item) {
 
         //ServiceLocator.getLevelService.getCurrGold() + 2;
-        ServiceLocator.getLevelService().setCurrGold(ServiceLocator.getLevelService().getCurrGold() + 2);
+        ServiceLocator.getLevelService().setCurrGold(ServiceLocator.getLevelService().getCurrGold() + 10);
 
         String[] bigTicketInfo = bigTicket.getCurrentBigTicketInfo();
 
@@ -113,7 +135,7 @@ public class StationServingComponent extends Component {
 
     }
 
-    private String scoreMeal(ItemComponent item) {
+    private String scoreMeal(String playerMeal) {
         String[] bigTicketInfo = bigTicket.getCurrentBigTicketInfo();
         String scoreDescription = null;
         if (bigTicketInfo != null && bigTicketInfo.length >= 2) {
@@ -126,18 +148,18 @@ public class StationServingComponent extends Component {
             logger.info("Order ingredients: " + orderIngredients);
 
             // get player ingredients
-            String itemName = item.getItemName();
-            String playerMeal = switch (itemName) {
-                case "acai bowl" -> "acaiBowl";
-                case "salad" -> "salad";
-                case "fruit salad" -> "fruitSalad";
-                case "steak meal" -> "steakMeal";
-                case "banana split" -> "bananaSplit";
-                default -> {
-                    logger.error("No recipe found for this item: " + itemName);
-                    yield null; // You can yield a default value or handle the error as needed
-                }
-            };
+            // String itemName = item.getItemName();
+            // String playerMeal = switch (itemName) {
+            //     case "acai bowl" -> "acaiBowl";
+            //     case "salad" -> "salad";
+            //     case "fruit salad" -> "fruitSalad";
+            //     case "steak meal" -> "steakMeal";
+            //     case "banana split" -> "bananaSplit";
+            //     default -> {
+            //         logger.error("No recipe found for this item: " + itemName);
+            //         yield null; // yield a default value or handle the error as needed
+            //     }
+            // };
 
             logger.info("Player meal: " + playerMeal);
             Recipe playerRecipe = OrderManager.getRecipe(playerMeal);
@@ -162,18 +184,22 @@ public class StationServingComponent extends Component {
                     switch (scoreDescription) {
                         case "Grin Face":
                             faceImagePath = "images/customer_faces/grin_face.png";
+                            ServiceLocator.getLevelService().setCurrGold(ServiceLocator.getLevelService().getCurrGold() + 2);
                             break;
                         case "Smile Face":
                             faceImagePath = "images/customer_faces/smile_face.png";
+                            ServiceLocator.getLevelService().setCurrGold(ServiceLocator.getLevelService().getCurrGold() + 1);
                             break;
                         case "Neutral Face":
                             faceImagePath = "images/customer_faces/neutral_face.png";
                             break;
                         case "Frown Face":
                             faceImagePath = "images/customer_faces/frown_face.png";
+                            ServiceLocator.getLevelService().setCurrGold(ServiceLocator.getLevelService().getCurrGold() - 1);
                             break;
                         case "Angry Face":
                             faceImagePath = "images/customer_faces/angry_face.png";
+                            ServiceLocator.getLevelService().setCurrGold(ServiceLocator.getLevelService().getCurrGold() - 2);
                             break;
                         default:
                             logger.error("No image found for preference: " + scoreDescription);
