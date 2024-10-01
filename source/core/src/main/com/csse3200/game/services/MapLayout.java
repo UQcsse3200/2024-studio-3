@@ -6,6 +6,8 @@ import com.csse3200.game.areas.GameArea;
 import com.csse3200.game.areas.map.BenchGenerator;
 import com.csse3200.game.areas.map.BenchLayout;
 import com.csse3200.game.entities.benches.Bench;
+import com.csse3200.game.entities.Entity;
+import com.csse3200.game.entities.factories.StationFactory;
 import com.csse3200.game.events.EventHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,7 +20,10 @@ public class MapLayout extends GameArea{
     private EventHandler mapEventHandler;
     private static final String mapLevel1 = "images/map/map_test.txt";
     private int strToNum;
-    private ArrayList<Bench> testArray = new ArrayList<>();
+    private int strToNum2;
+    private ArrayList<Bench> benches = new ArrayList<Bench>();
+    private ArrayList<Entity> stations = new ArrayList<Entity>();
+
     private Bench bench;
     private static final Logger logger = LoggerFactory.getLogger(MapLayout.class);
 
@@ -38,6 +43,10 @@ public class MapLayout extends GameArea{
         return mapEventHandler;
     }
 
+    /**
+     * Yxy ->
+     * @param level
+     */
     public void load(String level) {
         BufferedReader reader = null;
         try {
@@ -64,18 +73,25 @@ public class MapLayout extends GameArea{
                     // Spawn single bench row when 'X'
                     if (square.equals("X")) {
                         strToNum = Integer.valueOf(parts[col+1]);
-                        testArray.addAll(BenchGenerator.createBenchRow(col+4,
-                                 strToNum + 4, row-4));
-                        col++;
+                        strToNum2 = Integer.valueOf(parts[col+2]);
+                        benches.addAll(BenchGenerator.createBenchRow(strToNum + 4,
+                                 strToNum2 + 4, row-4));
+                        col += 3;
                         logger.info("Spawning entity at row " + row + ", column " + col);
                     }
                     // Spawn bench collumn when 'Y'
                     else if (square.equals("Y")) {
                         strToNum = Integer.valueOf(parts[col+1]);
-                        testArray.addAll(BenchGenerator.createBenchColumn(strToNum + 4,
+                        benches.addAll(BenchGenerator.createBenchColumn(strToNum + 4,
                                 row-4, Integer.parseInt(parts[col+2])));
-                        col += 2;
+                        col += 3;
                         logger.info("Spawning entity at row " + row + ", column " + col);
+                    }
+                    else if (square.equals("b")) {
+                        strToNum = Integer.valueOf(parts[col+1]);
+                        Entity station = StationFactory.createBananaBasket();
+                        station.setPosition(strToNum, row);
+                        stations.add(station);
                     }
                 }
                 row++;
@@ -92,15 +108,12 @@ public class MapLayout extends GameArea{
             }
         }
 
-        /*
-        for (Bench bench : BenchLayout.levelOne()) {
+        for (Bench bench : benches) {
             spawnEntity(bench);
             bench.setPosition(bench.x, bench.y);
         }
-        */
-        for (Bench bench : testArray) {
-            spawnEntity(bench);
-            bench.setPosition(bench.x, bench.y);
+        for (Entity station : stations) {
+            spawnEntity(station);
         }
     }
 }
