@@ -30,15 +30,11 @@ public class CutsceneTextDisplay extends UIComponent {
     private String text;  // Full text to be displayed
     private StringBuilder currentText;  // Text that is currently displayed
     private int charIndex = 0;  // Index of the current character to be displayed
-    private long lastUpdate = 0L;  // Last time a character was added
-    private long delay = 100L;  // Delay between displaying each character
 
     // UI components for displaying the text
     private boolean visible;
-    private Stack layout;
     private Label label;
     private Table table;
-    private Image displayBox;
 
     private final CutsceneScreen cutscene;
 
@@ -70,6 +66,14 @@ public class CutsceneTextDisplay extends UIComponent {
     @Override
     public void create() {
         super.create();
+        setupUI();
+
+        // Setup input listener to handle user input
+        setupInputListener();
+        entity.getEvents().addListener("SetText", this::setText);  // Event listener to update text display
+    }
+
+    private void setupUI() {
         // Initially hide the text display
         setVisible(false);
         // Set up the table to fill the screen and align it to the bottom center
@@ -102,10 +106,6 @@ public class CutsceneTextDisplay extends UIComponent {
 
         table.add(stack).padBottom(70).size(
                 (int) (Gdx.graphics.getWidth() * 0.5), (int) (Gdx.graphics.getHeight() * 0.2));
-
-        // Setup input listener to handle user input
-        setupInputListener();
-        entity.getEvents().addListener("SetText", this::setText);  // Event listener to update text display
     }
 
     /**
@@ -119,8 +119,6 @@ public class CutsceneTextDisplay extends UIComponent {
         this.charIndex = 0;  // Set character index to the end// Start from the beginning of the text
     }
 
-
-
     /**
      * Controls the visibility of the text display.
      * @param value Whether the text display should be visible.
@@ -128,31 +126,6 @@ public class CutsceneTextDisplay extends UIComponent {
     public void setVisible(boolean value) {
         this.visible = value;
         table.setVisible(value);  // Set the visibility of the table
-    }
-
-    /**
-     * Returns whether the text display is currently visible.
-     * @return True if visible, false otherwise.
-     */
-    public boolean getVisible() {
-        return this.visible;
-    }
-
-    /**
-     * Updates the text display, adding characters one at a time based on the specified delay.
-     */
-    @Override
-    public void update() {
-        long time = ServiceLocator.getTimeSource().getTime();
-        if (this.text != null && charIndex < this.text.length()) {
-            // Check if enough time has passed to add the next character
-            if (time - lastUpdate >= delay) {
-                lastUpdate = time;
-                this.currentText.append(text.charAt(charIndex));  // Add the next character
-                label.setText(currentText.toString());  // Update the label text
-                charIndex++;  // Increment character index
-            }
-        }
     }
 
     /**

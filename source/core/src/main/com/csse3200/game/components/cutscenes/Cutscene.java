@@ -194,14 +194,11 @@ public abstract class Cutscene extends Component {
 
     public void setTextForScene(Scene scene) {
         Array<String> sceneText = scene.getSceneText();
-        System.out.println("We are setting the text");
         if (sceneText.size > textIndex) {
-            System.out.println("We are setting the new piece of text:" + sceneText.get(textIndex));
             currentText = sceneText.get(textIndex);
             textIndex++;
         }
         else {
-            System.out.println("We are moving to the next scene");
             textIndex = 0;
             nextCutscene();
         }
