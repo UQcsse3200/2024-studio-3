@@ -31,11 +31,11 @@ public class MoralDayOne extends UIComponent {
     private final MainGameScreen game;
     private Image backgroundImage;
     private String question = "Set Question";
-    private Label timerLabel; // Timer label
-    private long startTime; // Track the start time
-
-    private static final long DEFAULT_TIMER = 10000; // 10 seconds (in milliseconds)
-    private long remainingTime; // Remaining time in milliseconds
+//    private Label timerLabel; // Timer label
+//    private long startTime; // Track the start time
+//
+//    private static final long DEFAULT_TIMER = 10000; // 10 seconds (in milliseconds)
+//    private long remainingTime; // Remaining time in milliseconds
 
 
 
@@ -55,6 +55,7 @@ public class MoralDayOne extends UIComponent {
         this.game = ServiceLocator.getGameScreen();
         isVisible = false;
     }
+
 
     /**
      * Creates the moral decision screen.
@@ -80,6 +81,7 @@ public class MoralDayOne extends UIComponent {
         layout.setBackground(blackBackground);
 
         // set up the label using table layout
+//        BitmapFont font = new BitmapFont();
 //        Label titleLabel = new Label("Moral Decision",skin);
 //        layout.add(titleLabel).pad(10).row();
 
@@ -88,8 +90,13 @@ public class MoralDayOne extends UIComponent {
         Drawable imgDrawable = new TextureRegionDrawable(imgTexture);
         backgroundImage = new Image(imgDrawable);
 
-        // add racoon image to the table and shift it left by adjusting padding
-        layout.add(backgroundImage).left();
+//        backgroundImage.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+//
+//        layout.setBackground(new TextureRegionDrawable(new TextureRegion(imgTexture)));
+
+
+        layout.add(backgroundImage).fill().expand();
+
 
 //        // Add a secondary table to the left side of the view.
 //        Table questionSet = new Table();
@@ -124,18 +131,128 @@ public class MoralDayOne extends UIComponent {
             show();
         });
     }
+    
+    
 
 
-//    private void setupInputListener() {
-//        stage.addListener(new InputListener() {
-//            @Override
-//            public boolean keyDown(InputEvent event, int keycode) {
-//                if (keycode == com.badlogic.gdx.Input.Keys.M) {
-//                    toggleVisibility();
-//                    return true;
-//                }
-//                return false;
-//            }
+//    @Override
+//    public void create() {
+//        super.create();
+//
+//        // create a table layout
+//        layout = new Table();
+//        layout.setFillParent(true);
+//        layout.setVisible(isVisible);
+//        layout.setSkin(skin);
+//        stage.addActor(layout);
+//
+//        // load and position the background image to cover the entire screen
+//        Texture imgTexture = new Texture(Gdx.files.internal("images/moral_scenes/drugbackground.png"));
+//        backgroundImage = new Image(new TextureRegionDrawable(new TextureRegion(imgTexture)));
+//
+//        // Make the background image cover the entire screen
+//        backgroundImage.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+//
+//        // Set background image to fill the table (it will stretch the image to fit the screen)
+//        layout.setBackground(new TextureRegionDrawable(new TextureRegion(imgTexture)));
+//
+//
+//        // Add the image as the first item to the layout table
+//        layout.add(backgroundImage).fill().expand();
+//
+//        // add another table inside the existing table, in order to show the Decision question and buttons for yes/no
+//        Table decisionTable = new Table();
+//        Skin btnSkin = skin;
+//        btnSkin.setScale(2);
+//        Label decisionLabel = new Label(question, btnSkin);
+//        decisionTable.add(decisionLabel).pad(10).row();
+//        Actor button = new Actor();
+//        button.setHeight(50);
+//        button.setWidth(100);
+//        button.setColor(Color.GREEN);
+//        Button.ButtonStyle buttonStyle = new Button.ButtonStyle();
+//        Button noButton = new Button(button, buttonStyle);
+////        decisionTable.add(yesButton).pad(10);
+//        decisionTable.add(noButton).pad(10).row();
+////        layout.add(decisionTable).center().row();
+//
+//
+//        entity.getEvents().addListener("triggerMoralScreen", this::toggleVisibility);
+//
+//        //from team 2, added the listener for when game day ends to toggle visibility
+//        ServiceLocator.getDayNightService().getEvents().addListener("TOMORAL", () -> {
+//            logger.info("TOMORAL event received in MoralDecisionDisplay");
+//            show();
+//        });
+//    }
+
+
+//    /**
+//     * Creates the moral decision screen.
+//     */
+//    @Override
+//    public void create() {
+//        super.create();
+//
+//        // create a table layout
+//        layout = new Table();
+//        layout.setFillParent(true);
+//        layout.setVisible(isVisible);
+//        layout.setSkin(skin);
+//        stage.addActor(layout);
+//
+//        // create gray background
+//        Pixmap pixmap = new Pixmap(1, 1, Pixmap.Format.RGBA8888);
+//        pixmap.setColor(Color.GRAY);
+//        pixmap.fill();
+//        Texture pixmapTex = new Texture(pixmap);
+//        pixmap.dispose();
+//        Drawable blackBackground = new TextureRegionDrawable(new TextureRegion(pixmapTex));
+//        layout.setBackground(blackBackground);
+//
+//        // set up the label using table layout
+////        Label titleLabel = new Label("Moral Decision",skin);
+////        layout.add(titleLabel).pad(10).row();
+//
+//        // load and position the racoon image slightly to the left
+//        Texture imgTexture = new Texture(Gdx.files.internal("images/moral_scenes/drugbackground.png"));
+//        Drawable imgDrawable = new TextureRegionDrawable(imgTexture);
+//        backgroundImage = new Image(imgDrawable);
+//
+//        // add racoon image to the table and shift it left by adjusting padding
+//        layout.add(backgroundImage).left();
+//
+////        // Add a secondary table to the left side of the view.
+////        Table questionSet = new Table();
+////        Label questionLabel = new Label("Do you want to save the racoon?", skin);
+////        questionSet.add(questionLabel).pad(10).row();
+////        // add the secondary table to the main table
+////        layout.add(questionSet).padRight(100).right().row();
+//
+//
+//        // add another table inside the existing table, in order to show the Decision question and buttons for yes/no
+//        Table decisionTable = new Table();
+//        Skin btnSkin = skin;
+//        btnSkin.setScale(2);
+//        Label decisionLabel = new Label(question, btnSkin);
+//        decisionTable.add(decisionLabel).pad(10).row();
+//        Actor button = new Actor();
+//        button.setHeight(50);
+//        button.setWidth(100);
+//        button.setColor(Color.GREEN);
+//        Button.ButtonStyle buttonStyle = new Button.ButtonStyle();
+//        Button noButton = new Button(button, buttonStyle);
+////        decisionTable.add(yesButton).pad(10);
+//        decisionTable.add(noButton).pad(10).row();
+////        layout.add(decisionTable).center().row();
+//
+//
+//        entity.getEvents().addListener("triggerMoralScreen", this::toggleVisibility);
+//
+//        //from team 2, added the listener for when game day ends to toggle visibility
+//        ServiceLocator.getDayNightService().getEvents().addListener("TOMORAL", () -> {
+//            logger.info("TOMORAL event received in MoralDecisionDisplay");
+//            show();
 //        });
 //    }
 
@@ -148,16 +265,16 @@ public class MoralDayOne extends UIComponent {
         layout.add(titleLabel).pad(10).row();
     }
 
-    /**
-     * Updates the timer label with the remaining time in seconds.
-     * @param timerLabel the label to update
-     * @param remainingTime the remaining time in milliseconds
-     */
-    private void updateTimerLabel(Label timerLabel, long remainingTime) {
-        // Convert remaining time to seconds and update the label's text
-        String timeLeft = "Timer: " + (remainingTime / 1000) + "s";
-        timerLabel.setText(timeLeft);
-    }
+//    /**
+//     * Updates the timer label with the remaining time in seconds.
+//     * @param timerLabel the label to update
+//     * @param remainingTime the remaining time in milliseconds
+//     */
+//    private void updateTimerLabel(Label timerLabel, long remainingTime) {
+//        // Convert remaining time to seconds and update the label's text
+//        String timeLeft = "Timer: " + (remainingTime / 1000) + "s";
+//        timerLabel.setText(timeLeft);
+//    }
 
     /**
      * Sets the question to be displayed on the moral decision screen.
@@ -176,8 +293,8 @@ public class MoralDayOne extends UIComponent {
         isVisible = true;
         layout.setVisible(isVisible);
         game.pause(); // Pause the game when the display is shown
-        startTime = TimeUtils.millis(); // Set the start time when shown
-        remainingTime = DEFAULT_TIMER; // Reset timer to the default value
+//        startTime = TimeUtils.millis(); // Set the start time when shown
+//        remainingTime = DEFAULT_TIMER; // Reset timer to the default value
 
     }
 
@@ -223,24 +340,24 @@ public class MoralDayOne extends UIComponent {
 //        this.create();
 
 
-        // time stuff
-        if (isVisible) {
-            // Calculate the elapsed time since the moral decision screen was shown
-            long elapsedTime = TimeUtils.timeSinceMillis(startTime);
-
-            // Calculate the remaining time by subtracting the elapsed time from the default timer
-            remainingTime = DEFAULT_TIMER - elapsedTime;
-
-            // If there's still time left, update the label with the remaining time in seconds
-            if (remainingTime > 0) {
-                // Replace the timer text in the timer label
-                updateTimerLabel(timerLabel, remainingTime);
-
-            } else {
-                // If the time has expired, hide the moral decision screen
-                hide();
-            }
-        }
+//        // time stuff
+//        if (isVisible) {
+//            // Calculate the elapsed time since the moral decision screen was shown
+//            long elapsedTime = TimeUtils.timeSinceMillis(startTime);
+//
+//            // Calculate the remaining time by subtracting the elapsed time from the default timer
+//            remainingTime = DEFAULT_TIMER - elapsedTime;
+//
+//            // If there's still time left, update the label with the remaining time in seconds
+//            if (remainingTime > 0) {
+//                // Replace the timer text in the timer label
+//                updateTimerLabel(timerLabel, remainingTime);
+//
+//            } else {
+//                // If the time has expired, hide the moral decision screen
+//                hide();
+//            }
+//        }
     }
 
     @Override

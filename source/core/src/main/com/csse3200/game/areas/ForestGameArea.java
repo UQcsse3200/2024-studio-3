@@ -829,7 +829,7 @@ public class ForestGameArea extends GameArea {
   private void createMoralScreen() {
     Entity moralScreen = new Entity();
     moralScreen
-//            .addComponent(new MoralDecisionDisplay())
+            //.addComponent(new MoralDecisionDisplay())
             .addComponent(new MoralDayOne())
             .addComponent(new MoralDecision());
     ServiceLocator.getEntityService().registerMoral(moralScreen);
