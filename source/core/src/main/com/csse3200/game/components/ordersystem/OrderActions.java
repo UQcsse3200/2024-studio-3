@@ -43,7 +43,6 @@ public class OrderActions extends InputComponent {
         ServiceLocator.getDocketService().getEvents().addListener("removeOrder", this::onRemoveOrder);
         ServiceLocator.getDocketService().getEvents().addListener(
                 "reorderDockets", MainGameOrderTicketDisplay::reorderDockets);
-        entity.getEvents().addListener("changeColour", this::onChangeColour);
     }
 
     /**
@@ -64,7 +63,6 @@ public class OrderActions extends InputComponent {
             return true;
         }
 
-//        logger.info("pls work");
         return false;
     }
 
@@ -78,6 +76,7 @@ public class OrderActions extends InputComponent {
     public boolean keyUp(int keycode) {
         return false;
     }
+
     /**
      * Handles key typed events. Currently does nothing. - Tia
      *
@@ -96,17 +95,6 @@ public class OrderActions extends InputComponent {
      */
     private void onRemoveOrder(int index) {
         logger.info("Remove order");
-//        logger.info("Remove order");
         ServiceLocator.getDocketService().getEvents().trigger("reorderDockets", index);
     }
-
-    /**
-     * Changes order colour based on recipe timer
-     */
-    private void onChangeColour() {
-//        logger.info("Move order");
-        // do something
-    }
-
-
 }

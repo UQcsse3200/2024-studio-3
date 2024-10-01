@@ -228,7 +228,7 @@ class MainGameOrderTicketDisplayTest {
 		logger.info("Table: {}", table);
 		logger.info("Background: {}", background);
 
-		orderTicketDisplay.stageDispose(background, table, 0);
+		orderTicketDisplay.stageDispose(background, table, 0, true);
 
 		assertTrue(table.getChildren().isEmpty(), "Table should be cleared of children.");
 		assertTrue(hasChildrenBeforeDispose, "Table should have had children before dispose.");

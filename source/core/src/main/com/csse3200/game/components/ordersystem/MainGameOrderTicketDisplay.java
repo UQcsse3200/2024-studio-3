@@ -249,7 +249,7 @@ public class MainGameOrderTicketDisplay extends UIComponent {
      * @param table  the table representing the docket.
      * @param i  the index of the docket.
      */
-    public void stageDispose(Docket docket, Table table, int i) {
+    public void stageDispose(Docket docket, Table table, int i, Boolean isSuccess) {
         logger.info("Dispose Docket");
         table.setBackground((Drawable) null);
         table.clear();
@@ -261,7 +261,9 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         startTimeArrayList.remove(i);
         countdownLabelArrayList.remove(i);
         recipeTimeArrayList.remove(i);
-        combatStatsComponent.addGold(getRecipeValue());
+        if (isSuccess) {
+            combatStatsComponent.addGold(getRecipeValue());
+        }
     }
 
     /**
@@ -433,7 +435,7 @@ public class MainGameOrderTicketDisplay extends UIComponent {
                 currTable.setBackground(currBackground.getImage().getDrawable());
             } else {
                 logger.info("Remaining time is 0");
-                stageDispose(currBackground, currTable, i);
+                stageDispose(currBackground, currTable, i, false);
             }
         }
         if (!tableArrayList.isEmpty()) {
@@ -452,7 +454,7 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         Docket currBackground = backgroundArrayList.get(index);
         Table currTable = tableArrayList.get(index);
 
-        stageDispose(currBackground, currTable, index);
+        stageDispose(currBackground, currTable, index, true);
     }
 
     /**
