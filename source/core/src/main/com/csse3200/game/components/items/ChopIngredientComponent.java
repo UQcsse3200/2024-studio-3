@@ -3,6 +3,8 @@ package com.csse3200.game.components.items;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.csse3200.game.services.ServiceLocator;
+
 /**
  * The ChopIngredientComponent handles the chopping process for an ingredient in the game.
  * It manages the state of chopped, determines when the chopping is complete, and triggers
@@ -27,6 +29,11 @@ public class ChopIngredientComponent extends ItemTimerComponent {
      */
     @Override
     public void create() {
+        super.create();
+        // Add event listeners for the rage mode
+        ServiceLocator.getEntityService().getEvents().addListener("rageModeOn", this::rageModeOn);
+        ServiceLocator.getEntityService().getEvents().addListener("rageModeOff", this::rageModeOff);
+
         // Add appriopriate event listeners
         entity.getEvents().addListener("chopIngredient", this::startTimer);
         entity.getEvents().addListener("stopChoppingIngredient", this::stopTimer);
@@ -53,7 +60,7 @@ public class ChopIngredientComponent extends ItemTimerComponent {
         // update the elapsed time
         super.update();
 
-        String s = String.format("The elapsed time of item: %s, has been updated to %d ms, completion is at %.2f percent", item.getItemName(), this.elapsed, getCompletionPercent());
+        String s = String.format("The completion of %s is at %.2f percent", item.getItemName(), getCompletionPercent());
         logger.info(s);
 
         // Check if the timer is finished

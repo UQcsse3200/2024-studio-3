@@ -37,12 +37,12 @@ public class Renderer implements Disposable {
     debugRenderer.setActive(false);
 
     init(
-        camera,
-        GAME_SCREEN_WIDTH,
-        spriteBatch,
-        new Stage(new ScreenViewport(), spriteBatch),
-        ServiceLocator.getRenderService(),
-        debugRenderer);
+            camera,
+            GAME_SCREEN_WIDTH,
+            spriteBatch,
+            new Stage(new ScreenViewport(), spriteBatch),
+            ServiceLocator.getRenderService(),
+            debugRenderer);
   }
 
   /**
@@ -57,22 +57,22 @@ public class Renderer implements Disposable {
    * @param debugRenderer Debug renderer to render
    */
   public Renderer(
-      CameraComponent camera,
-      float gameWidth,
-      SpriteBatch batch,
-      Stage stage,
-      RenderService renderService,
-      DebugRenderer debugRenderer) {
+          CameraComponent camera,
+          float gameWidth,
+          SpriteBatch batch,
+          Stage stage,
+          RenderService renderService,
+          DebugRenderer debugRenderer) {
     init(camera, gameWidth, batch, stage, renderService, debugRenderer);
   }
 
   private void init(
-      CameraComponent camera,
-      float gameWidth,
-      SpriteBatch batch,
-      Stage stage,
-      RenderService renderService,
-      DebugRenderer debugRenderer) {
+          CameraComponent camera,
+          float gameWidth,
+          SpriteBatch batch,
+          Stage stage,
+          RenderService renderService,
+          DebugRenderer debugRenderer) {
 
     this.camera = camera;
     this.gameWidth = gameWidth;
