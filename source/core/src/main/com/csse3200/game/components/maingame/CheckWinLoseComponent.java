@@ -8,12 +8,12 @@ import com.csse3200.game.services.ServiceLocator;
 public class CheckWinLoseComponent extends Component {
 
     private CombatStatsComponent combatStatsComponent;
-    private int winAmount;
-    private int loseThreshold;
+    private int baseWinAmount;
+    private int baseLossThreshold;
 
-    public CheckWinLoseComponent(int winAmount, int loseThreshold) {
-        this.winAmount = winAmount;
-        this.loseThreshold = loseThreshold;
+    public CheckWinLoseComponent(int baseWinAmount, int baseLossThreshold) {
+        this.baseWinAmount = baseWinAmount;
+        this.baseLossThreshold = baseLossThreshold;
 
         // Listen for player creation and retrieve the CombatStatsComponent
         ServiceLocator.getPlayerService().getEvents().addListener("playerCreated", (Entity player) -> {
@@ -29,9 +29,16 @@ public class CheckWinLoseComponent extends Component {
             return "GAME_IN_PROGRESS";  // Ensuring combatStatsComponent is initialised
         }
 
-        if (hasLost()) {
+        // Get the current day from DayNightService
+        int currentDay = ServiceLocator.getDayNightService().getDay();
+
+        // Adjust win and loss thresholds based on the current day
+        int adjustedWinAmount = getAdjustedWinAmount(currentDay);
+        int adjustedLossThreshold = getAdjustedLossThreshold(currentDay);
+
+        if (hasLost(adjustedLossThreshold)) {
             return "LOSE";
-        } else if (hasWon()) {
+        } else if (hasWon(adjustedWinAmount)) {
             return "WIN";
         } else {
             return "GAME_IN_PROGRESS";
@@ -39,16 +46,32 @@ public class CheckWinLoseComponent extends Component {
     }
 
     /**
-     * Returns true if the player has lost (gold less than loseThreshold).
+     * Calculate the adjusted win amount based on the current day.
      */
-    public boolean hasLost() {
-        return combatStatsComponent != null && combatStatsComponent.getGold() < loseThreshold;
+    private int getAdjustedWinAmount(int currentDay) {
+        // Increase the win amount as the days progress
+        return baseWinAmount + (currentDay * 10);  // Example: increase by 10 per day
+    }
+
+    /**
+     * Calculate the adjusted loss threshold based on the current day.
+     */
+    private int getAdjustedLossThreshold(int currentDay) {
+        // Increase the loss threshold as the days progress
+        return baseLossThreshold + (currentDay * 5);  // Example: increase by 5 per day
+    }
+
+    /**
+     * Returns true if the player has lost (gold less than lossThreshold).
+     */
+    public boolean hasLost(int adjustedLossThreshold) {
+        return combatStatsComponent != null && combatStatsComponent.getGold() < adjustedLossThreshold;
     }
 
     /**
      * Returns true if the player has won (gold >= winAmount).
      */
-    public boolean hasWon() {
-        return combatStatsComponent != null && combatStatsComponent.getGold() >= winAmount;
+    public boolean hasWon(int adjustedWinAmount) {
+        return combatStatsComponent != null && combatStatsComponent.getGold() >= adjustedWinAmount;
     }
 }
