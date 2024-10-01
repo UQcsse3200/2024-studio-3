@@ -10,6 +10,7 @@ import com.csse3200.game.areas.terrain.TerrainFactory;
 public class GoodEnd extends ForestGameArea {
     private TerrainFactory terrainFactory;
 
+
     /**
      * Initialise this ForestGameArea to use the provided TerrainFactory.
      *
@@ -17,7 +18,7 @@ public class GoodEnd extends ForestGameArea {
      * @requires terrainFactory != null
      */
     public GoodEnd(TerrainFactory terrainFactory) {
-        super(terrainFactory);
+        super(terrainFactory, 1);
         this.terrainFactory = terrainFactory;
     }
 

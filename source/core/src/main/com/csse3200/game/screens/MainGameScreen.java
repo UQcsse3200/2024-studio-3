@@ -1,14 +1,19 @@
 package com.csse3200.game.screens;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.csse3200.game.GdxGame;
+import com.csse3200.game.ai.tasks.AITaskComponent;
+import com.csse3200.game.ai.tasks.Task;
 import com.csse3200.game.areas.ForestGameArea;
 import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.components.maingame.*;
 import com.csse3200.game.components.levels.LevelComponent;
 import com.csse3200.game.components.maingame.MainGameActions;
+import com.csse3200.game.components.mainmenu.MainMenuBackground;
+import com.csse3200.game.components.tasks.PathFollowTask;
 import com.csse3200.game.components.upgrades.LoanUpgrade;
 import com.csse3200.game.components.upgrades.RageUpgrade;
 import com.csse3200.game.components.upgrades.RandomCombination;
@@ -55,17 +60,54 @@ public class MainGameScreen extends ScreenAdapter {
 			"images/heart.png",
 			// order system assets
 			"images/ordersystem/docket_background.png",
-			"images/ordersystem/pin_line.png",
+			"images/ordersystem/pin_line2.png",
 			"images/bird.png",
 			"images/point.png",
 			"images/coin.png",
 			"images/textbox.png",
 			"images/red_overlay.jpg",
 			"images/red_fill.png",
-			"images/white_background.png"
+			"images/white_background.png",
+			//background daylight cycle assets
+			"images/background_images/1.0.png",
+			"images/background_images/1.5.png",
+			"images/background_images/2.0.png",
+			"images/background_images/2.5.png",
+			"images/background_images/3.0.png",
+			"images/background_images/3.5.png",
+			"images/background_images/4.0.png",
+			"images/background_images/4.5.png",
+			"images/background_images/5.0.png",
+			"images/background_images/5.5.png",
+			"images/background_images/6.0.png",
+			"images/background_images/6.5.png",
+			"images/background_images/7.0.png",
+			"images/background_images/7.5.png",
+			"images/background_images/8.0.png",
+			"images/background_images/8.5.png",
+			"images/background_images/9.0.png",
+			"images/background_images/9.5.png",
+			"images/background_images/10.0.png",
+			"images/background_images/10.5.png",
+			"images/background_images/11.0.png",
+			"images/background_images/11.5.png",
+			"images/background_images/12.0.png",
+			"images/background_images/12.5.png",
+			"images/background_images/13.0.png",
+			"images/background_images/13.5.png",
+			"images/background_images/14.0.png",
+			"images/background_images/14.5.png",
+			"images/background_images/15.0.png",
+			"images/background_images/15.5.png",
+			"images/background_images/16.0.png",
+			"images/background_images/16.5.png",
+			"images/background_images/17.0.png",
+			"images/background_images/17.5.png",
+			"images/background_images/18.0.png",
+			"images/background_images/18.5.png"
 	};
 	// Modified the camera position to fix layout
-	private static final Vector2 CAMERA_POSITION = new Vector2(7.5f, 6.0f);
+	private static final Vector2 CAMERA_POSITION = new Vector2(7f, 4.5f);
 
   private final GdxGame game;
   private final Renderer renderer;
@@ -93,6 +135,7 @@ public class MainGameScreen extends ScreenAdapter {
 		ServiceLocator.registerDocketService(new DocketService());
         ServiceLocator.registerDayNightService(new DayNightService());
 		ServiceLocator.registerLevelService(new LevelService());
+		ServiceLocator.registerMapLayout(new MapLayout());
 		ServiceLocator.registerGameScreen(this);
 
 		ServiceLocator.registerTicketDetails(new TicketDetails());
@@ -106,13 +149,18 @@ public class MainGameScreen extends ScreenAdapter {
 
 		logger.debug("Initialising main game screen entities");
 		TerrainFactory terrainFactory = new TerrainFactory(renderer.getCamera());
-		ForestGameArea forestGameArea = new ForestGameArea(terrainFactory);
+		int currLevel = ServiceLocator.getLevelService().getCurrLevel();
+		ForestGameArea forestGameArea = new ForestGameArea(terrainFactory, currLevel);
+
 		forestGameArea.create();
+
 		Entity spawnControllerEntity = LevelFactory.createSpawnControllerEntity();
 		ServiceLocator.getEntityService().register(spawnControllerEntity);
-		int currLevel = ServiceLocator.getLevelService().getCurrLevel();
+
+
 		ServiceLocator.getLevelService().getEvents().trigger("setGameArea", forestGameArea);
 		ServiceLocator.getLevelService().getEvents().trigger("startLevel", currLevel);
+		//ServiceLocator.getLevelService().getEvents().trigger("mapLevel", currLevel);
 	}
 
 	@Override
@@ -123,6 +171,7 @@ public class MainGameScreen extends ScreenAdapter {
 			ServiceLocator.getEntityService().update();
 		}
 		renderer.render();
+		Gdx.gl.glClearColor(0f/255f, 0f/255f, 0f/255f, 1);
 
 	}
 
@@ -140,12 +189,24 @@ public class MainGameScreen extends ScreenAdapter {
 	public void pause() {
 		logger.info("Game paused");
 		isPaused = true;
+		for (Entity entity : ServiceLocator.getEntityService().getEntities()) {
+			AITaskComponent aiComponent = entity.getComponent(AITaskComponent.class);
+			if (aiComponent != null) {
+				aiComponent.pause();
+			}
+		}
 	}
 
 	@Override
 	public void resume() {
 		logger.info("Game resumed");
 		isPaused = false;
+		for (Entity entity : ServiceLocator.getEntityService().getEntities()) {
+			AITaskComponent aiComponent = entity.getComponent(AITaskComponent.class);
+			if (aiComponent != null) {
+				aiComponent.resume();
+			}
+		}
 	}
 
 	@Override
@@ -202,7 +263,8 @@ public class MainGameScreen extends ScreenAdapter {
 		docketLineDisplay = new DocketLineDisplay();
 
 		Entity ui = new Entity();
-		ui.addComponent(new InputDecorator(stage, 10))
+		ui.addComponent(new GameBackgroundDisplay())
+		.addComponent(new InputDecorator(stage, 10))
 		  	.addComponent(docketLineDisplay)
 			.addComponent(new PerformanceDisplay())
 			.addComponent(new MainGameActions(this.game))

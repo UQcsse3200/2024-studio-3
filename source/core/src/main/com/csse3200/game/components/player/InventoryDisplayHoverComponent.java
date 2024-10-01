@@ -29,17 +29,21 @@ import com.csse3200.game.physics.components.PhysicsComponent;
 public class InventoryDisplayHoverComponent extends RenderComponent {
     private static final Logger logger = LoggerFactory.getLogger(InventoryDisplayHoverComponent.class);
     private ArrayList<Texture> itemImages;
+    private Texture backgroundImage;
+    private Texture selectedBackgroundImage;
     private ShapeRenderer shapeRenderer;
     private Vector2 position;
     private Vector2 scale;
     private static final float X_OFFSET = 0.2f;
     private static final float Y_OFFSET = 1.0F;
-    private static final float slotWidth = 0.5f;
-    private static final float slotHeight = 0.5f;
+    private static final float slotWidth = 0.6f;
+    private static final float slotHeight = 0.6f;
 
     @Override
     public void create() {
         super.create();
+        backgroundImage = new Texture("images/inventory_ui/item_background.png");
+        selectedBackgroundImage = new Texture("images/inventory_ui/item_background_selected.png");
         shapeRenderer = new ShapeRenderer();
         ServiceLocator.getRenderService().register(this);
 
@@ -55,7 +59,8 @@ public class InventoryDisplayHoverComponent extends RenderComponent {
     }
 
     /**
-     *
+     * Updates the item images to reflect the current items
+     * in the inventory
      */
     private void updateImages() {
         itemImages = new ArrayList<>();
@@ -91,11 +96,28 @@ public class InventoryDisplayHoverComponent extends RenderComponent {
         if (entity == null || position == null || scale == null)
             return;
         for (int i = 0; i < itemImages.size(); i++) {
+            // draw selected background image for the next item to be taken out
+            // (if there is more than 1 item displayed)
+            if (i == itemImages.size() - 1 && itemImages.size() > 1) {
+                batch.draw(selectedBackgroundImage,
+                    position.x + X_OFFSET,
+                    position.y + (i * slotHeight) + Y_OFFSET,
+                    slotWidth,
+                    slotHeight
+                );
+            } else {
+                batch.draw(backgroundImage,
+                    position.x + X_OFFSET,
+                    position.y + (i * slotHeight) + Y_OFFSET,
+                    slotWidth,
+                    slotHeight
+                );
+            }
             batch.draw(itemImages.get(i),
-                position.x + X_OFFSET,
-                position.y + (i * slotHeight) + Y_OFFSET,
-                slotWidth,
-                slotHeight
+                position.x + X_OFFSET + 0.1f,
+                position.y + (i * slotHeight) + Y_OFFSET + 0.1f,
+                slotWidth - 0.2f,
+                slotHeight - 0.2f
             );
         }
     }

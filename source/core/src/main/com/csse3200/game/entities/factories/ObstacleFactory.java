@@ -15,23 +15,6 @@ import com.csse3200.game.rendering.TextureRenderComponent;
  */
 public class ObstacleFactory {
 
-  /**
-   * Creates a tree entity.
-   * @return entity
-   */
-  public static Entity createTree() {
-    Entity tree =
-        new Entity()
-            .addComponent(new TextureRenderComponent("images/tree.png"))
-            .addComponent(new PhysicsComponent())
-            .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
-
-    tree.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
-    tree.getComponent(TextureRenderComponent.class).scaleEntity();
-    tree.scaleHeight(2.5f);
-    PhysicsUtils.setScaledCollider(tree, 0.5f, 0.2f);
-    return tree;
-  }
 
   /**
    * Creates an invisible physics wall.
@@ -66,78 +49,59 @@ public class ObstacleFactory {
     return border;
   }
 
-  /**
-   * Creates a separation border between customer and chef
-   */
-  public static Entity verticalSeparation(){
+
+
+  public static Entity spawnBorderTile(){
     Entity border = new Entity()
-            .addComponent(new TextureRenderComponent("images/frame/vertical_border.png"))
+            .addComponent(new TextureRenderComponent("images/frame/border_test.png"))
             .addComponent(new PhysicsComponent())
             .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
 
-    float width=-0.15f,height=131.9f,scalefactor=9f;
-    border.setScale(width, height/scalefactor);
+   // float width=-1f,height=131,scalefactor=11f;
+    float height = 1f;
     border.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
-    PhysicsUtils.setScaledCollider(border, -2.0f, (height - 5) / height);
+
+    PhysicsUtils.setScaledCollider(border, 1, (height-5)/height );
     return border;
   }
 
-//  bench.setScale(width, height);
-//  bench.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
-//  PhysicsUtils.setScaledCollider(bench, 1.5f, 0.75f);
-
-  public static Entity horizontalSeparation(){
+  public static Entity spawnBorderTileVertical(){
     Entity border = new Entity()
-            .addComponent(new TextureRenderComponent("images/frame/horizontal_border.png"))
+            .addComponent(new TextureRenderComponent("images/frame/side_border.png"))
             .addComponent(new PhysicsComponent())
             .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
 
-    float width = 177.4f, height = 1f, scalefactor = 11f;
+    // float width=-1f,height=131,scalefactor=11f;
+    float height = 16;
     border.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
-    border.setScale(width/scalefactor, height/scalefactor);
-    PhysicsUtils.setScaledCollider(border, 1, (height - 5) / height);
+    PhysicsUtils.setScaledCollider(border, 1, (height-5)/height );
     return border;
   }
 
-  public static Entity Door(String type){
-    Entity border = new Entity()
-            .addComponent(new TextureRenderComponent("images/frame/" + type + ".png"))
-            .addComponent(new PhysicsComponent())
-            .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
-    float width = 22f, height = 10.2f, scalefactor = 11f;
-    border.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
-    PhysicsUtils.setScaledCollider(border, 1.0F, 0.8F);
-    border.setScale(width/scalefactor, height/scalefactor);
-    PhysicsUtils.setScaledCollider(border, 1, (height - 5) / height);
-    return border;
-  }
 
   public static Entity wall(){
     Entity border = new Entity()
             .addComponent(new TextureRenderComponent("images/frame/wall.png"))
             .addComponent(new PhysicsComponent())
             .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
-    float width = 132f, height = 10.2f, scalefactor = 11f;
+
     border.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
-    PhysicsUtils.setScaledCollider(border, 1.0F, 0.8F);
-    border.setScale(width/scalefactor, height/scalefactor);
-    PhysicsUtils.setScaledCollider(border, 1, (height - 5) / height);
+    border.setScale(3,2);
+    PhysicsUtils.setScaledCollider(border, 1, 1);
     return border;
   }
 
-  /**
-   * Creats an entry and exit door
-   * @param s Name of door to be spawned
-   * @param tileSize Width of door according to the size of the tiles
-   */
-  public static Entity createDoor(String s,float tileSize) {
+  public static Entity door(String s){
     Entity door = new Entity()
-            .addComponent(new TextureRenderComponent("images/frame/"+s+".png"));
-    door.scaleWidth(tileSize);
+            .addComponent(new TextureRenderComponent("images/frame/"+s+".png"))
+            .addComponent(new PhysicsComponent())
+            .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
+
+    door.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
+    door.setScale(2f,2f);
+    PhysicsUtils.setScaledCollider(door, 1, 1);
     return door;
   }
-
-
 
 
   private ObstacleFactory() {
