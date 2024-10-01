@@ -24,20 +24,25 @@ public class MainGameActions extends Component {
     private GdxGame game;
     private MainGameOrderTicketDisplay docketDisplayer;
     private static List<String> currentlySpawningAnimals = new CopyOnWriteArrayList<>();
+    private Entity ui;
 
     /**
      * MainGameActions constructor
      * @param game the GDXGame
-     * @param docketDisplayer the docket UI
+     * @param docketDisplayer the docket entity
      */
+//    public MainGameActions(GdxGame game, Entity ui) {
     public MainGameActions(GdxGame game, MainGameOrderTicketDisplay docketDisplayer) {
         this.game = game;
         this.docketDisplayer = docketDisplayer;
+//        this.ui = ui;
+//        this.docketDisplayer = ui.getComponent(MainGameOrderTicketDisplay.class);
     }
 
     @Override
     public void create() {
         entity.getEvents().addListener("exit", this::onExit);
+        ServiceLocator.getEntityService().getEvents().addListener("createOrder", this::onCreateOrder);
         ServiceLocator.getEntityService().getEvents().addListener("createAcaiDocket", this::onCreateAcai);
         ServiceLocator.getEntityService().getEvents().addListener("createBananaDocket", this::onCreateBanana);
         ServiceLocator.getEntityService().getEvents().addListener("createSaladDocket", this::onCreateSalad);
@@ -49,6 +54,7 @@ public class MainGameActions extends Component {
         logger.info("Exiting main game screen");
         game.setScreen(GdxGame.ScreenType.MAIN_MENU);
     }
+
 
     /**
      * Creates Açai Bowl Docket
@@ -100,6 +106,7 @@ public class MainGameActions extends Component {
             docketDisplayer.setRecipe(preferredRecipe);
             docketDisplayer.setStage(ServiceLocator.getRenderService().getStage());
             docketDisplayer.addActors();
+            ServiceLocator.getEntityService().register(ui);
         } else {
             logger.info("Order limit of {} reached", ORDER_LIMIT);
         }

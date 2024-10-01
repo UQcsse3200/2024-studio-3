@@ -110,12 +110,12 @@ public class MainGameScreen extends ScreenAdapter {
 	// Modified the camera position to fix layout
 	private static final Vector2 CAMERA_POSITION = new Vector2(7f, 4.5f);
 
-  private final GdxGame game;
-  private final Renderer renderer;
-  private final PhysicsEngine physicsEngine;
-  private boolean isPaused = false;
-  private DocketLineDisplay docketLineDisplay;
-  private MainGameOrderTicketDisplay orderTicketDisplay;
+    private final GdxGame game;
+    private final Renderer renderer;
+    private final PhysicsEngine physicsEngine;
+    private boolean isPaused = false;
+    private DocketLineDisplay docketLineDisplay;
+    private MainGameOrderTicketDisplay orderTicketDisplay;
 
 	public MainGameScreen(GdxGame game) {
 		this.game = game;
@@ -134,7 +134,7 @@ public class MainGameScreen extends ScreenAdapter {
 		ServiceLocator.registerEntityService(new EntityService());
 		ServiceLocator.registerRenderService(new RenderService());
 		ServiceLocator.registerDocketService(new DocketService());
-        ServiceLocator.registerDayNightService(new DayNightService());
+		ServiceLocator.registerDayNightService(new DayNightService());
 		ServiceLocator.registerLevelService(new LevelService());
 		ServiceLocator.registerGameScreen(this);
 
@@ -167,7 +167,6 @@ public class MainGameScreen extends ScreenAdapter {
 		}
 		renderer.render();
 		Gdx.gl.glClearColor(0f/255f, 0f/255f, 0f/255f, 1);
-
 	}
 
 	@Override
@@ -240,7 +239,6 @@ public class MainGameScreen extends ScreenAdapter {
 		resourceService.unloadAssets(DocketMealDisplay.getMealDocketTextures());
 	}
 
-
 	public GdxGame getGame() {
 		return game;
 	}
@@ -258,14 +256,15 @@ public class MainGameScreen extends ScreenAdapter {
 		docketLineDisplay = new DocketLineDisplay();
 
 		Entity docketUI = UIFactory.createDocketUI();
-    MainGameOrderTicketDisplay docketDisplayer = docketUI.getComponent(MainGameOrderTicketDisplay.class);
+        MainGameOrderTicketDisplay docketDisplayer = docketUI.getComponent(MainGameOrderTicketDisplay.class);
 
 		Entity ui = new Entity();
 		ui.addComponent(new GameBackgroundDisplay())
-		.addComponent(new InputDecorator(stage, 10))
+			.addComponent(new InputDecorator(stage, 10))
 		  	.addComponent(docketLineDisplay)
 			.addComponent(new PerformanceDisplay())
 			.addComponent(new MainGameActions(this.game, docketDisplayer))
+//			.addComponent(new MainGameActions(this.game, docketUI))
 			.addComponent(new MainGameExitDisplay())
 			.addComponent(new Terminal())
 			.addComponent(inputComponent)
@@ -277,11 +276,11 @@ public class MainGameScreen extends ScreenAdapter {
 			.addComponent(new RageUpgrade())
 			.addComponent(new LoanUpgrade())
 			.addComponent(new RandomCombination())
-				.addComponent(new SpeedBootsUpgrade());
+			.addComponent(new SpeedBootsUpgrade());
 
 		//temporary moral display
 //			.addComponent(new MoralDisplayTemp(this));
+		// ServiceLocator.getEntityService().register(docketUI);
 		ServiceLocator.getEntityService().register(ui);
-		ServiceLocator.getEntityService().register(docketUI);
 	}
 }

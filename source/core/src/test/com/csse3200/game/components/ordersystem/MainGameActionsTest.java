@@ -57,6 +57,7 @@ class MainGameActionsTest {
 	@Mock
 	Texture textureMock;
 	@Mock Table table;
+	@Mock Entity entity;
 	MainGameOrderTicketDisplay orderTicketDisplay;
 	GdxGame mockGame;
 	private static final Logger logger = LoggerFactory.getLogger(MainGameActionsTest.class);
@@ -89,6 +90,7 @@ class MainGameActionsTest {
 		mockedStatic.when(MainGameOrderTicketDisplay::getTableArrayList).thenReturn(tableArrayList);
 
 		mainGameActions = new MainGameActions(mockGame, orderTicketDisplay);
+//		mainGameActions = new MainGameActions(mockGame, entity);
 	}
 
 	/**

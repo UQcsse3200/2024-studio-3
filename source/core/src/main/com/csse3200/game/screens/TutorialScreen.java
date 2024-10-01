@@ -169,6 +169,7 @@ public class TutorialScreen extends ScreenAdapter {
                 .addComponent(new PerformanceDisplay())
 //                .addComponent(new MainGameActions(this.game))
                 .addComponent(new MainGameActions(this.game, docketDisplayer))
+//                .addComponent(new MainGameActions(this.game, docketUI))
                 .addComponent(new MainGameExitDisplay())
                 .addComponent(new Terminal())
                 .addComponent(inputComponent)
