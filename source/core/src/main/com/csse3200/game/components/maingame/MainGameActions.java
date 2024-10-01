@@ -32,14 +32,14 @@ public class MainGameActions extends Component {
     /**
      * MainGameActions constructor
      * @param game the GDXGame
-     * @param docketDisplayer the docket entity
+     * @param docketUI the docket ui
      */
 //    public MainGameActions(GdxGame game, Entity ui) {
-    public MainGameActions(GdxGame game, MainGameOrderTicketDisplay docketDisplayer) {
+    public MainGameActions(GdxGame game, Entity docketUI) {
         this.game = game;
-        this.docketDisplayer = docketDisplayer;
-//        this.ui = ui;
-//        this.docketDisplayer = ui.getComponent(MainGameOrderTicketDisplay.class);
+//        this.docketDisplayer = docketDisplayer;
+        this.ui = docketUI;
+        this.docketDisplayer = docketUI.getComponent(MainGameOrderTicketDisplay.class);
     }
 
     /**
@@ -115,7 +115,7 @@ public class MainGameActions extends Component {
             docketDisplayer.setRecipe(preferredRecipe);
             docketDisplayer.setStage(ServiceLocator.getRenderService().getStage());
             docketDisplayer.addActors();
-//            ServiceLocator.getEntityService().register(ui);
+            ServiceLocator.getEntityService().register(ui);
         } else {
             logger.info("Order limit of {} reached", ORDER_LIMIT);
         }
