@@ -17,6 +17,7 @@ import java.util.Objects;
 public class MapLayout extends GameArea{
     private EventHandler mapEventHandler;
     private static final String mapLevel1 = "images/map/map_test.txt";
+    private int strToNum;
     private ArrayList<Bench> testArray = new ArrayList<>();
     private Bench bench;
     private static final Logger logger = LoggerFactory.getLogger(MapLayout.class);
@@ -60,14 +61,20 @@ public class MapLayout extends GameArea{
                     // Log the current square being processed
                     logger.info("Checking square at row " + row + ", column " + col + ": " + square);
 
-                    // Spawn single bench when 'X'
+                    // Spawn single bench row when 'X'
                     if (square.equals("X")) {
-                        testArray.addAll(BenchGenerator.createBenchRow(col+4, col+4, row-4));
+                        strToNum = Integer.valueOf(parts[col+1]);
+                        testArray.addAll(BenchGenerator.createBenchRow(col+4,
+                                 strToNum + 4, row-4));
+                        col++;
                         logger.info("Spawning entity at row " + row + ", column " + col);
                     }
-                    // Spawn benchrowflat when 'x'
-                    else if (square.equals("b")) {
-                        testArray.addAll(BenchGenerator.createBenchRowFlat(col+4, col+4, row-4));
+                    // Spawn bench collumn when 'Y'
+                    else if (square.equals("Y")) {
+                        strToNum = Integer.valueOf(parts[col+1]);
+                        testArray.addAll(BenchGenerator.createBenchColumn(strToNum + 4,
+                                row-4, Integer.parseInt(parts[col+2])));
+                        col += 2;
                         logger.info("Spawning entity at row " + row + ", column " + col);
                     }
                 }
