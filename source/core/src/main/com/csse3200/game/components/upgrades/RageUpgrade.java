@@ -65,7 +65,7 @@ public class RageUpgrade extends UIComponent implements Upgrade {
 
         // https://freesound.org/people/noirenex/sounds/159399/
         powerDownSound = Gdx.audio.newSound(Gdx.files.internal("sounds/power_down.wav"));
-        ServiceLocator.getRandomComboService().getEvents().addListener("Rage", this::activate); 
+        ServiceLocator.getRandomComboService().getEvents().addListener("Rage", this::activateRageMode);
     }
 
     /**
@@ -112,9 +112,9 @@ public class RageUpgrade extends UIComponent implements Upgrade {
             public boolean keyDown(InputEvent event, int keycode) {
                 if (keycode == com.badlogic.gdx.Input.Keys.R) {
                     if (isRageActive) {
-                        deactivate();
+                        deactivateRageMode();
                     } else if (rageMeter.getValue() == 1f){
-                        activate();
+                        activateRageMode();
                     }
                     return true;
                 }
@@ -162,7 +162,7 @@ public class RageUpgrade extends UIComponent implements Upgrade {
             rageTimeRemaining -= timesource.getDeltaTime();
             rageMeter.setValue(rageTimeRemaining / rageTime);
             if (rageTimeRemaining <= 0) {
-                deactivate();
+                deactivateRageMode();
             }
 
         } else if (isRageFilling) {
