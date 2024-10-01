@@ -1,8 +1,10 @@
 package com.csse3200.game.components.cutscenes;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
@@ -18,6 +20,16 @@ public class CutsceneScreenDisplay extends UIComponent {
     private static final Logger logger = LoggerFactory.getLogger(CutsceneScreenDisplay.class);
     private Table table;
     private CutsceneTextDisplay textDisplay;
+    private Skin skin = null;
+
+    public CutsceneScreenDisplay(Skin skin) {
+        super(skin);
+        this.skin = skin;
+    }
+
+    public CutsceneScreenDisplay() {
+        super();
+    }
 
     /**
      * Initializes the cutscene UI, sets up buttons and listeners, and starts the cutscene text display.
@@ -38,8 +50,7 @@ public class CutsceneScreenDisplay extends UIComponent {
      */
     private void setupUI() {
         // Initialize the text display and add it to the stage, hidden initially
-        textDisplay = new CutsceneTextDisplay();
-        stage.addActor(textDisplay.getTable());
+        setupTextDisplay();
 
         // Positioning the table at the bottom-right of the screen
         table.bottom().right();
@@ -76,6 +87,14 @@ public class CutsceneScreenDisplay extends UIComponent {
     }
 
     /**
+     * Sets up the text display for the screen
+     */
+    public void setupTextDisplay() {
+        textDisplay = new CutsceneTextDisplay(this.skin);
+        stage.addActor(textDisplay.getTable());
+    }
+
+    /**
      * Disposes of the cutscene screen display, clearing any UI elements.
      */
     @Override
@@ -85,7 +104,7 @@ public class CutsceneScreenDisplay extends UIComponent {
         if (table != null) {
             table.clear();  // Clear the table safely
         }
-        if (textDisplay != null) {
+        if (textDisplay != null && textDisplay.getTable() != null) {
             textDisplay.getTable().clear();  // Clear the text display table
         }
     }
@@ -98,16 +117,19 @@ public class CutsceneScreenDisplay extends UIComponent {
         // Drawing is handled by the stage, so no implementation needed here
     }
 
+
+    /**
+     * Gets the stage component for the cutscene display.
+     * @return The Stage component for the cutscene.
+     */
+    public Stage getStage() { return stage; }
+
     /**
      * Sets the stage for the cutscene display.
      * @param stage The stage to be set.
      */
     @Override
     public void setStage(Stage stage) {
-        if (stage == null) {
-            logger.error("Attempted to set a null stage.");
-            return;
-        }
         this.stage = stage;
     }
 
@@ -118,4 +140,24 @@ public class CutsceneScreenDisplay extends UIComponent {
     public void setTable(Table table) {
         this.table = table;
     }
+
+    /**
+     * Gets the table for the cutscene UI.
+     * @return The Table component
+     */
+    public Table getTable() {
+        return table;
+    }
+
+    /**
+     * Gets the cutscene text display component for the cutscene.
+     * @return A CutsceneTextDisplay component for the cutscene.
+     */
+    public CutsceneTextDisplay getTextDisplay() { return textDisplay; }
+
+    /**
+     * Sets the Cutscene Text Display Component for the cutscene.
+     * @param textDisplay the CutsceneTextDisplay to be set.
+     */
+    public void setTextDisplay(CutsceneTextDisplay textDisplay) { this.textDisplay = textDisplay; }
 }

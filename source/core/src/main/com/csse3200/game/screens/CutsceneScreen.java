@@ -137,7 +137,7 @@ public class CutsceneScreen extends ScreenAdapter {
         logger.debug("Creating UI");
         Stage stage = ServiceLocator.getRenderService().getStage();  // Get the stage from the render service
         InputComponent inputComponent = ServiceLocator.getInputService().getInputFactory().createForTerminal();  // Create input component
-        cutsceneScreenDisplay = new CutsceneScreenDisplay(this.game);  // Initialize the cutscene screen display
+        cutsceneScreenDisplay = new CutsceneScreenDisplay();  // Initialize the cutscene screen display
 
         // Create and configure the UI entity with various components
         Entity ui = new Entity();
