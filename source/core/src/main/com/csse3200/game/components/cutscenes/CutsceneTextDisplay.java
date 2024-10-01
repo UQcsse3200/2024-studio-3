@@ -33,6 +33,7 @@ public class CutsceneTextDisplay extends UIComponent {
     // UI components for displaying the text
     private boolean visible;
     private Label label;
+    public Boolean labelSet = false;
     private Table table;
 
     /**
@@ -91,6 +92,8 @@ public class CutsceneTextDisplay extends UIComponent {
 
         table.add(stack).padBottom(70).size(
                 (int) (Gdx.graphics.getWidth() * 0.5), (int) (Gdx.graphics.getHeight() * 0.2));
+
+        labelSet = true;
     }
 
     /**

@@ -106,7 +106,6 @@ public class CutsceneScreenDisplay extends UIComponent {
      */
     private void createTextBox() {
         Array<Entity> entities = ServiceLocator.getEntityService().getEntities();
-
         // Trigger the "SetText" event on all entities
         for (int i = 0; i < entities.size; i++) {
             Entity entity = entities.get(i);

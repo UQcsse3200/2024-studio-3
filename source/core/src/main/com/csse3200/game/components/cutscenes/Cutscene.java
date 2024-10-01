@@ -72,7 +72,7 @@ public abstract class Cutscene extends Component {
     public void create() {
         entity.getEvents().addListener("nextCutscene", this::nextCutscene);
         loadScene(currentSceneIndex);
-        currentText = "";
+        textIndex--;
     }
 
     /**
