@@ -45,16 +45,19 @@ public class Bench extends Entity{
         addComponent(new TextureRenderComponent("images/stations/benches/" + type + ".png"));
         addComponent(new PhysicsComponent());
         addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
+
         addComponent(new InteractionComponent(PhysicsLayer.INTERACTABLE));
         addComponent(new TooltipsDisplay());
-        addComponent(new StationItemHandlerComponent(type));
-        addComponent(new InventoryDisplayHoverComponent());
         addComponent(new InventoryComponent(4));
+        addComponent(new InventoryDisplayHoverComponent());
         addComponent(new StationMealComponent("combining", new ArrayList<>()));
+
+        getComponent(InteractionComponent.class).setAsBox(getScale());
 
         setScale(1f, 1f);
         getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
-        PhysicsUtils.setScaledCollider(this, 1.05f, 0.75f);
+        PhysicsUtils.setScaledCollider(this, 1f, 0.75f);
+
     }
 
     /**
