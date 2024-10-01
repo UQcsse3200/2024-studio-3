@@ -46,12 +46,8 @@ public abstract class Cutscene extends Component {
     // Assets used in the cutscene
     protected String[] textures;
     protected String[] animations;
-    protected Vector2[] animationPositions;
 
     protected String[] images;
-    protected Vector2[] imagePositions;
-    protected String[] sounds;
-    protected String[] music;
 
     // The index the text is under, after it increases too large, then it goes to the next scene
     protected int textIndex;

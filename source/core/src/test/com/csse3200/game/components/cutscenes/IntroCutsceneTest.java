@@ -26,9 +26,6 @@ public class IntroCutsceneTest {
     private ResourceService resourceService;
     private GameTime gameTime;
     private Entity entity;
-    private EventHandler eventHandler;
-    private Texture mockTexture;
-    private Graphics mockGraphics;
 
     @Before
     public void setUp() {
@@ -36,9 +33,9 @@ public class IntroCutsceneTest {
         resourceService = mock(ResourceService.class);
         gameTime = mock(GameTime.class);
         entity = mock(Entity.class);
-        eventHandler = mock(EventHandler.class);
-        mockTexture = mock(Texture.class);
-        mockGraphics = mock(Graphics.class);
+        EventHandler eventHandler = mock(EventHandler.class);
+        Texture mockTexture = mock(Texture.class);
+        Graphics mockGraphics = mock(Graphics.class);
 
         // Mock the entity's event system
         when(entity.getEvents()).thenReturn(eventHandler);
@@ -139,7 +136,7 @@ public class IntroCutsceneTest {
         // Mock the dispose method to avoid null pointer exception
         doNothing().when(entity).dispose();
         // Ensure that createdComponents in entity are initialized
-        when(entity.getCreatedComponents()).thenReturn(new Array<Component>());
+        when(entity.getCreatedComponents()).thenReturn(new Array<>());
         assert Objects.equals(entity.getCreatedComponents(), new Array<Component>());
 
         // Call update before the scene duration is up
@@ -147,9 +144,9 @@ public class IntroCutsceneTest {
         verify(entity, never()).getEvents();  // No events triggered before time is up
 
         // Set the entities to null to avoid disposing errors
-        introCutscene.entities = new ArrayList<Entity>();
+        introCutscene.entities = new ArrayList<>();
         // Set the number of scenes to 1 so that it simulates ending a cutscene
-        introCutscene.scenes = new ArrayList<Scene>();
+        introCutscene.scenes = new ArrayList<>();
 
         // Call update after the duration has passed
         introCutscene.update();

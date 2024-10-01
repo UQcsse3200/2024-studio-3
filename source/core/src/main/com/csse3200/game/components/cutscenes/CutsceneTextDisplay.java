@@ -15,7 +15,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
-import com.csse3200.game.screens.CutsceneScreen;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
 import org.slf4j.Logger;
@@ -27,13 +26,10 @@ import org.slf4j.LoggerFactory;
  */
 public class CutsceneTextDisplay extends UIComponent {
     private static final Logger logger = LoggerFactory.getLogger(CutsceneTextDisplay.class);
-    private String text;  // Full text to be displayed
-    private StringBuilder currentText;  // Text that is currently displayed
 
     // UI components for displaying the text
-    private boolean visible;
     private Label label;
-    private Table table;
+    private final Table table;
 
     /**
      * Default constructor that initializes without a specific cutscene.
@@ -41,8 +37,6 @@ public class CutsceneTextDisplay extends UIComponent {
     public CutsceneTextDisplay() {
         super();
         this.table = new Table();
-        this.visible = true;
-        this.currentText = new StringBuilder();
     }
 
     /**
@@ -55,7 +49,6 @@ public class CutsceneTextDisplay extends UIComponent {
 
         // Setup input listener to handle user input
         setupInputListener();
-        entity.getEvents().addListener("SetText", this::setText);  // Event listener to update text display
     }
 
     private void setupUI() {
@@ -91,13 +84,6 @@ public class CutsceneTextDisplay extends UIComponent {
                 (int) (Gdx.graphics.getWidth() * 0.5), (int) (Gdx.graphics.getHeight() * 0.2));
     }
 
-    /**
-     * Sets the text to be displayed during the cutscene.
-     * @param text The text to display.
-     */
-    public void setText(String text) {
-        this.text = text;
-    }
 
     /**
      * Sets up the input listener to allow skipping text scrolling by pressing ENTER.

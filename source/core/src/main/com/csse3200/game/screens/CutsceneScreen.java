@@ -4,7 +4,6 @@ import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.csse3200.game.GdxGame;
-import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.components.cutscenes.CutsceneActions;
 import com.csse3200.game.components.cutscenes.CutsceneArea;
 import com.csse3200.game.components.cutscenes.CutsceneScreenDisplay;
@@ -68,7 +67,6 @@ public class CutsceneScreen extends ScreenAdapter {
         createUI();  // Create and set up the user interface
 
         logger.debug("Initialising Cutscene game screen entities");
-        TerrainFactory terrainFactory = new TerrainFactory(renderer.getCamera());
         CutsceneArea cutsceneArea = new CutsceneArea(cutsceneVal);  // Initialize the cutscene area
         cutsceneArea.create();  // Create the cutscene area
     }

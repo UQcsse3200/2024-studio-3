@@ -49,7 +49,6 @@ public class CutsceneFactory {
     /**
      * Creates an animation entity with the specified image path. The entity
      * will have a texture component for rendering the animation.
-     *
      * Creates an animation called "idle" which is the only possible
      *
      * @param animationImgPath The file path of the animation image to use.
