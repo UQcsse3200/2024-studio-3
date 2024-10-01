@@ -100,13 +100,6 @@ public class CutsceneScreenDisplay extends UIComponent {
         createTextBox();
     }
 
-    /**
-     * Sets the text steps for the cutscene.
-     * @param cutsceneText An array of strings representing each step of the cutscene.
-     */
-    public void setCutsceneText(String cutsceneText) {
-        textDisplay.setText(cutsceneText);
-    }
 
     /**
      * Creates a text box entity to display the specified text.

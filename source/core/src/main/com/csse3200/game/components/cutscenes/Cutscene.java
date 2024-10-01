@@ -197,7 +197,6 @@ public abstract class Cutscene extends Component {
         System.out.println("We are setting the text");
         if (sceneText.size > textIndex) {
             System.out.println("We are setting the new piece of text:" + sceneText.get(textIndex));
-            ServiceLocator.getCutsceneScreen().getCutsceneScreenDisplay().setCutsceneText(sceneText.get(textIndex));
             currentText = sceneText.get(textIndex);
             textIndex++;
         }
