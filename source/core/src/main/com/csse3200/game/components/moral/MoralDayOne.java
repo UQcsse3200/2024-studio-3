@@ -32,9 +32,9 @@ public class MoralDayOne extends UIComponent {
     private Image backgroundImage;
     private String question = "Set Question";
 
-    private MoralTextDisplay textDisplay;
-
-    private Table table;
+//    private MoralTextDisplay textDisplay;
+//
+//    private Table table;
 
 
     /**
@@ -72,15 +72,15 @@ public class MoralDayOne extends UIComponent {
         Drawable blackBackground = new TextureRegionDrawable(new TextureRegion(pixmapTex));
         layout.setBackground(blackBackground);
 
-        // Initialise the textDisplay before using it
-        textDisplay = new MoralTextDisplay();
-        textDisplay.setVisible(false);  // Initially hidden
-        stage.addActor(textDisplay.getTable());  // Add it to the stage
-
-        layout.add(textDisplay.getTable()).pad(10).row();
-        //stage.addActor(table);
-
-        moralChoice();  // Ensure textDisplay is initialized before calling this method
+//        // Initialise the textDisplay before using it
+//        textDisplay = new MoralTextDisplay();
+//        textDisplay.setVisible(false);  // Initially hidden
+//        stage.addActor(textDisplay.getTable());  // Add it to the stage
+//
+//        layout.add(textDisplay.getTable()).pad(10).row();
+//        //stage.addActor(table);
+//
+//        moralChoice();  // Ensure textDisplay is initialized before calling this method
 
 
 
@@ -116,54 +116,54 @@ public class MoralDayOne extends UIComponent {
         });
     }
 
-    /**
-     * Proceeds to the next tutorial step using a switch-case.
-     */
-    public void moralChoice() {
-        moralStep++;
-        switch (moralStep) {
-            case 1:
-                showMovementTutorial();
-                break;
-            case 2:
-                showItemPickupTutorial();
-                break;
-            default:
-                logger.error("Unexpected tutorial step: " + moralStep);
-        }
-    }
-
-    /**
-     * Creates tutorial text box. Calls set text.
-     * @param text being displayed into textbox.
-     */
-    private void createTextBox(String text) {
-        Array<Entity> entities = ServiceLocator.getEntityService().getEntities();
-
-        for (int i = 0; i < entities.size; i++) {
-            Entity entity = entities.get(i);
-            entity.getEvents().trigger("SetText", text);
-        }
-    }
-
-
-
-    /**
-     * Displays the movement tutorial. The player needs to use W/A/S/D to move.
-     */
-    private void showMovementTutorial() {
-        textDisplay.setVisible(true);
-        createTextBox("Not bad, human. You made enough to pay rent. Maybe there’s some hope for you.");
-    }
-
-    /**
-     * Displays the item pickup tutorial. The player needs to press E to pick up an item.
-     */
-    private void showItemPickupTutorial() {
-        textDisplay.setVisible(true);
-        createTextBox("Here’s an offer—you wash some of my dirty money through your restaurant, and tomorrow you " +
-                "won’t need to stress about the budget. What do you say?");
-    }
+//    /**
+//     * Proceeds to the next tutorial step using a switch-case.
+//     */
+//    public void moralChoice() {
+//        moralStep++;
+//        switch (moralStep) {
+//            case 1:
+//                showMovementTutorial();
+//                break;
+//            case 2:
+//                showItemPickupTutorial();
+//                break;
+//            default:
+//                logger.error("Unexpected tutorial step: " + moralStep);
+//        }
+//    }
+//
+//    /**
+//     * Creates tutorial text box. Calls set text.
+//     * @param text being displayed into textbox.
+//     */
+//    private void createTextBox(String text) {
+//        Array<Entity> entities = ServiceLocator.getEntityService().getEntities();
+//
+//        for (int i = 0; i < entities.size; i++) {
+//            Entity entity = entities.get(i);
+//            entity.getEvents().trigger("SetText", text);
+//        }
+//    }
+//
+//
+//
+//    /**
+//     * Displays the movement tutorial. The player needs to use W/A/S/D to move.
+//     */
+//    private void showMovementTutorial() {
+//        textDisplay.setVisible(true);
+//        createTextBox("Not bad, human. You made enough to pay rent. Maybe there’s some hope for you.");
+//    }
+//
+//    /**
+//     * Displays the item pickup tutorial. The player needs to press E to pick up an item.
+//     */
+//    private void showItemPickupTutorial() {
+//        textDisplay.setVisible(true);
+//        createTextBox("Here’s an offer—you wash some of my dirty money through your restaurant, and tomorrow you " +
+//                "won’t need to stress about the budget. What do you say?");
+//    }
 
 
 
@@ -233,29 +233,29 @@ public class MoralDayOne extends UIComponent {
     }
 
 
-    /**
-     * Updates the moral decision screen.
-     */
-    @Override
-    public void update() {
-        switch (moralStep) {
-            case 1:
-                if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
-                    moralChoice();
-                }
-                break;
-        }
-    }
-
-    @Override
-    public void dispose() {
-        super.dispose();
-
-        if (textDisplay != null) {
-            textDisplay.setVisible(false);
-            textDisplay.getTable().clear();
-        }
-    }
+//    /**
+//     * Updates the moral decision screen.
+//     */
+//    @Override
+//    public void update() {
+//        switch (moralStep) {
+//            case 1:
+//                if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
+//                    moralChoice();
+//                }
+//                break;
+//        }
+//    }
+//
+//    @Override
+//    public void dispose() {
+//        super.dispose();
+//
+//        if (textDisplay != null) {
+//            textDisplay.setVisible(false);
+//            textDisplay.getTable().clear();
+//        }
+//    }
 
 
 
