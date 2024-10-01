@@ -65,6 +65,7 @@ public class ForestGameArea extends GameArea {
     "images/ingredients/raw_lettuce.png",
     "images/ingredients/raw_chocolate.png",
     "images/money.png",
+    "images/hourglass.png",
     "images/meals/fruit_salad.png",
     "images/ingredients/raw_banana.png",
     "images/ingredients/chopped_banana.png",
