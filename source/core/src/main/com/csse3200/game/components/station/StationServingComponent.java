@@ -1,6 +1,7 @@
 package com.csse3200.game.components.station;
 
 import com.csse3200.game.components.Component;
+import com.csse3200.game.components.ScoreSystem.HoverBoxComponent;
 import com.csse3200.game.components.ScoreSystem.ScoreSystem;
 import com.csse3200.game.components.items.ItemComponent;
 import com.csse3200.game.components.ordersystem.OrderActions;
@@ -9,13 +10,16 @@ import com.csse3200.game.components.ordersystem.Recipe;
 import com.csse3200.game.components.ordersystem.TicketDetails;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.components.player.InventoryDisplay;
+import com.csse3200.game.entities.Entity;
 import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.csse3200.game.physics.components.InteractionComponent;
 import com.csse3200.game.services.ServiceLocator;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.ui.List;
 import com.csse3200.game.components.items.IngredientComponent;
 import com.csse3200.game.components.items.MealComponent;
 import com.csse3200.game.components.npc.CustomerComponent;
+import com.csse3200.game.components.npc.CustomerManager;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -109,8 +113,9 @@ public class StationServingComponent extends Component {
 
     }
 
-    private void scoreMeal(ItemComponent item) {
+    private String scoreMeal(ItemComponent item) {
         String[] bigTicketInfo = bigTicket.getCurrentBigTicketInfo();
+        String scoreDescription = null;
         if (bigTicketInfo != null && bigTicketInfo.length >= 2) {
             String orderNumber = bigTicketInfo[0];
             String orderedMeal = bigTicketInfo[1];
@@ -141,16 +146,49 @@ public class StationServingComponent extends Component {
             logger.info("Player ingredients: " + playerIngredients);
 
             int score = ScoreSystem.compareLists(playerIngredients, orderIngredients);
-            String scoreDescription = ScoreSystem.getScoreDescription(score);
+            scoreDescription = ScoreSystem.getScoreDescription(score);
             // Before scoreMeal, hoverbox display the order
             // After scoreMeal is complete, replace the order with face
             // Increment gold according to score
             logger.info("Order number: " + orderNumber);
             logger.info("Score: " + score + "%");
             logger.info("Description: " + scoreDescription);
+
+            Entity customer = CustomerManager.getCustomerByOrder(orderNumber);
+            if (customer != null) {
+                HoverBoxComponent hoverBox = customer.getComponent(HoverBoxComponent.class);
+                if (hoverBox != null) {
+                    String faceImagePath;
+                    switch (scoreDescription) {
+                        case "Grin Face":
+                            faceImagePath = "images/customer_faces/grin_face.png";
+                            break;
+                        case "Smile Face":
+                            faceImagePath = "images/customer_faces/smile_face.png";
+                            break;
+                        case "Neutral Face":
+                            faceImagePath = "images/customer_faces/neutral_face.png";
+                            break;
+                        case "Frown Face":
+                            faceImagePath = "images/customer_faces/frown_face.png";
+                            break;
+                        case "Angry Face":
+                            faceImagePath = "images/customer_faces/angry_face.png";
+                            break;
+                        default:
+                            logger.error("No image found for preference: " + scoreDescription);
+                            faceImagePath = "images/customer_faces/angry_face.png"; // Provide a default image
+                    }
+                    hoverBox.setTexture(new Texture(faceImagePath));
+                }
+            }
+
+            // Remove customer from mapping after serving
+            CustomerManager.removeCustomerByOrder(orderNumber);
         } else {
         logger.warn("No current order to score the meal for.");
         }
+        return scoreDescription;
     }
 
 }

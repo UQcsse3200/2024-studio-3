@@ -9,6 +9,7 @@ import com.csse3200.game.ai.tasks.AITaskComponent;
 import com.csse3200.game.areas.ForestGameArea;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.npc.CustomerComponent;
+import com.csse3200.game.components.npc.CustomerManager;
 import com.csse3200.game.components.ordersystem.OrderManager;
 import com.csse3200.game.components.npc.GhostAnimationController;
 import com.csse3200.game.components.npc.SpecialNPCAnimationController;
@@ -40,6 +41,7 @@ public class NPCFactory {
 
         private static final Logger logger = LoggerFactory.getLogger(NPCFactory.class);
         private static int customerCount = 0;
+        private static int orderID = 1;
 
         /**
          * Creates a ghost entity.
@@ -112,7 +114,16 @@ public class NPCFactory {
                 };
 
                 // Ensure CustomerComponent is added
-                customer.addComponent(new CustomerComponent(config));
+                String orderNumber = String.valueOf(orderID);
+                logger.info("Order number: " + orderNumber);
+                CustomerComponent customerComponent = new CustomerComponent(config);
+                customerComponent.setOrderNumber(orderNumber);
+                customer.addComponent(customerComponent);
+
+                CustomerManager.addCustomer(orderNumber, customer);
+
+                String preference = customer.getComponent(CustomerComponent.class).getPreference();
+                String imagePath = getMealImagePath(preference);
 
                 AnimationRenderComponent animator = new AnimationRenderComponent(
                                 ServiceLocator.getResourceService()
@@ -131,14 +142,30 @@ public class NPCFactory {
                 logger.debug("Created customer " + name + " with initial position: " + customer.getPosition());
 
                 if (customer.getComponent(HoverBoxComponent.class) == null) {
-                        customer.addComponent(new HoverBoxComponent(new Texture("images/customer_faces/angry_face.png")));
-                        System.out.println("Added HoverBoxComponent to customer: " + name);
-                } else {
-                        System.out.println("HoverBoxComponent already exists for customer: " + name);
+                        customer.addComponent(new HoverBoxComponent(new Texture(imagePath)));
                 }
                 customerCount++;
+                orderID++;
 
                 return customer;
+        }
+
+        private static String getMealImagePath(String preference) {
+                switch (preference) {
+                    case "acaiBowl":
+                        return "images/meals/acai_bowl.png";
+                    case "salad":
+                        return "images/meals/salad.png";
+                    case "fruitSalad":
+                        return "images/meals/fruit_salad.png";
+                    case "steakMeal":
+                        return "images/meals/steak_meal.png";
+                    case "bananaSplit":
+                        return "images/meals/banana_split.png";
+                    default:
+                        logger.error("No image found for preference: " + preference);
+                        return "images/meals/incorrect_meal.png"; // Provide a default image
+                }
         }
 
         public static Entity createBasicCustomer(String name, Vector2 targetPosition) {
