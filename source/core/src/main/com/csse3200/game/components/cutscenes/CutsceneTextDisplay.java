@@ -29,32 +29,17 @@ public class CutsceneTextDisplay extends UIComponent {
     private static final Logger logger = LoggerFactory.getLogger(CutsceneTextDisplay.class);
     private String text;  // Full text to be displayed
     private StringBuilder currentText;  // Text that is currently displayed
-    private int charIndex = 0;  // Index of the current character to be displayed
 
     // UI components for displaying the text
     private boolean visible;
     private Label label;
     private Table table;
 
-    private final CutsceneScreen cutscene;
-
     /**
      * Default constructor that initializes without a specific cutscene.
      */
     public CutsceneTextDisplay() {
         super();
-        this.cutscene = null;
-        this.table = new Table();
-        this.visible = true;
-        this.currentText = new StringBuilder();
-    }
-
-    /**
-     * Constructor that links the text display to a specific cutscene.
-     * @param cutscene the associated CutsceneScreen
-     */
-    public CutsceneTextDisplay(CutsceneScreen cutscene) {
-        this.cutscene = cutscene;
         this.table = new Table();
         this.visible = true;
         this.currentText = new StringBuilder();
@@ -115,8 +100,6 @@ public class CutsceneTextDisplay extends UIComponent {
     public void setText(String text) {
         setVisible(true);  // Make the text display visible
         this.text = text;
-        this.currentText.setLength(0);  // Clear the currently displayed text
-        this.charIndex = 0;  // Set character index to the end// Start from the beginning of the text
     }
 
     /**
