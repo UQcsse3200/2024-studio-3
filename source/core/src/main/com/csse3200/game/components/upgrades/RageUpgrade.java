@@ -109,7 +109,7 @@ public class RageUpgrade extends UIComponent {
     }
 
     public void activateRageMode() {
-        entity.getEvents().trigger("rageModeOn");
+        ServiceLocator.getEntityService().getEvents().trigger("rageModeOn");
         rageSoundId = rageSound.play();
         rageSound.setVolume(rageSoundId, 0.25f);
 
@@ -120,7 +120,7 @@ public class RageUpgrade extends UIComponent {
     }
 
     public void deactivateRageMode() {
-        entity.getEvents().trigger("rageModeOff");
+        ServiceLocator.getEntityService().getEvents().trigger("rageModeOff");
         powerDownId = powerDownSound.play();
         powerDownSound.setVolume(powerDownId, 0.25f);
 
