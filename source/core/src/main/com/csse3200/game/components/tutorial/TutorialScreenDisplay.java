@@ -30,6 +30,10 @@ public class TutorialScreenDisplay extends UIComponent {
     private boolean docketsShifted = false;
     private Table table;
     private TutorialTextDisplay textDisplay;
+    private  int  i = 0;
+    private boolean playerMoved = false;
+    private boolean itemInteracted = false;
+    private boolean CreateOrder=false;
 
     public TutorialScreenDisplay(GdxGame game) {
         this.game = game;
@@ -57,6 +61,8 @@ public class TutorialScreenDisplay extends UIComponent {
         // Add event listeners for create order
         entity.getEvents().addListener("createOrder", this::onCreateOrderPressed);
         ServiceLocator.getInputService().getEvents().addListener("createOrder", this::onCreateOrderPressed);
+        ServiceLocator.getInputService().getEvents().addListener("walked", this::onPlayerMoved);
+        ServiceLocator.getInputService().getEvents().addListener("interact", this::onInteraction);// start the tutorial from the first step
 
         stage.addActor(table);
     }
@@ -97,7 +103,27 @@ public class TutorialScreenDisplay extends UIComponent {
     private void showMovementTutorial() {
         textDisplay.setVisible(true);
         createTextBox("Use W/A/S/D to move around.");
+        ServiceLocator.getInputService().getEvents().addListener("playerMoved", this::onPlayerMoved);
     }
+    /**
+     * Called when the player moves. Proceeds to the next tutorial step.
+     */
+    private void onPlayerMoved() {
+
+        if(i == 0)
+        {playerMoved = true;  // Set the flag when player moves
+            advanceTutorialStep();
+        i++;}
+    }
+    private void onInteraction() {
+
+        if(i == 1)//hacky way to implement tutorial
+        {  itemInteracted = true;  // Set the flag when interaction occurs
+            advanceTutorialStep(); // Advance to the next step
+        i++;}
+
+    }
+
 
     /**
      * Displays the item pickup tutorial. The player needs to press E to pick up an item.
@@ -105,6 +131,7 @@ public class TutorialScreenDisplay extends UIComponent {
     private void showItemPickupTutorial() {
         textDisplay.setVisible(true);
         createTextBox("Press E to pick up items.");
+        ServiceLocator.getTutorialService().getEvents().addListener("itemPickedUp", this::onInteraction);
     }
 
     /**
@@ -135,8 +162,8 @@ public class TutorialScreenDisplay extends UIComponent {
         textDisplay.setVisible(true);
 
         // Combine both instructions into one
-        createTextBox("Press 'Create Order' and then use [ and ] keys to switch dockets.");
-
+        createTextBox("press create order and use [ and ] keys to switch dockets.");
+        ServiceLocator.getInputService().getEvents().addListener("createOrder", this::onCreateOrderPressed);
         // Check if both the order button is pressed and the dockets are shifted
         if (createOrderPressed &&
                 (Gdx.input.isKeyJustPressed(Input.Keys.LEFT_BRACKET) || Gdx.input.isKeyJustPressed(Input.Keys.RIGHT_BRACKET))) {
@@ -160,17 +187,18 @@ public class TutorialScreenDisplay extends UIComponent {
     @Override
     public void update() {
         switch (tutorialStep) {
-            case 1:
-                if (Gdx.input.isKeyJustPressed(Input.Keys.W) || Gdx.input.isKeyJustPressed(Input.Keys.A) ||
-                        Gdx.input.isKeyJustPressed(Input.Keys.S) || Gdx.input.isKeyJustPressed(Input.Keys.D)) {
-                    advanceTutorialStep();
-                }
-                break;
-            case 2:
-                if (Gdx.input.isKeyJustPressed(Input.Keys.E)) {
-                    advanceTutorialStep();
-                }
-                break;
+            case 1:  // Movement tutorial
+            if (playerMoved) {
+                advanceTutorialStep(); // Proceed to the next step if player moved
+                playerMoved = false; // Reset the flag
+            }
+            break;
+        case 2:  // Item pickup tutorial
+            if (itemInteracted) {
+                advanceTutorialStep(); // Proceed to the next step if item interacted
+                itemInteracted = false; // Reset the flag
+            }
+            break;
             case 3:
                 if (createOrderPressed) {
                     textDisplay.setText("Now use [ and ] keys to switch dockets.");
