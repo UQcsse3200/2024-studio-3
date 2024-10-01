@@ -17,10 +17,8 @@ import org.slf4j.LoggerFactory;
 
 public class GameBackgroundDisplay extends UIComponent {
     private Table table;
-    private static final Logger logger = LoggerFactory.getLogger(PauseMenuDisplay.class);
-    private float screenWidth = Gdx.app.getGraphics().getWidth();
-    private float screenHeight = Gdx.app.getGraphics().getHeight();
-    protected float timePerFrame = 300/36; //seconds spent on each frame (assuming
+    private static final Logger logger = LoggerFactory.getLogger(GameBackgroundDisplay.class);
+    protected float timePerFrame = 300/36f; //seconds spent on each frame (assuming
     // 5min day)
     private boolean lastFrame;
     protected long timeSinceLastUpdate;
@@ -110,10 +108,12 @@ public class GameBackgroundDisplay extends UIComponent {
 
     @Override
     protected void draw(SpriteBatch batch) {
+        // draw is handled
     }
 
     @Override
     public void setStage(Stage mock) {
+        // setStage is handled
     }
 
     @Override
@@ -128,7 +128,7 @@ public class GameBackgroundDisplay extends UIComponent {
                 this.timeSinceLastUpdate = ServiceLocator.getTimeSource().getTime();
                 table.clear(); //clears current background
                 setBackground(); //sets background to new image
-                System.out.println("Updated background to " + this.currentImage);
+                logger.debug("Updated background to " + this.currentImage);
                 if (currentImageIndex >= 35) {
                     this.lastFrame = true; //stops updating when hits last frame of cycle
                 }
