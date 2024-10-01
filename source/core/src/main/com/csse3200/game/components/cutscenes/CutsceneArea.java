@@ -44,6 +44,10 @@ public class CutsceneArea extends GameArea {
                 currentCutscene = new IntroCutscene();  // Initialize the intro cutscene
                 ServiceLocator.setCurrentCutscene(currentCutscene);  // Set the current cutscene in the service locator
                 break;
+            case 1:
+                logger.debug("Loading badEnd cutscene");
+                currentCutscene = new BadEndCutscene();
+                ServiceLocator.setCurrentCutscene(currentCutscene);
             default:
                 logger.error("Invalid cutscene value: {}", cutsceneValue);  // Log an error if the cutscene value is invalid
                 return;
@@ -54,8 +58,10 @@ public class CutsceneArea extends GameArea {
         cutsceneEntity.addComponent(currentCutscene);
         ServiceLocator.getEntityService().register(cutsceneEntity);
 
+
+
         // Start the cutscene
-        currentCutscene.start();
+        //currentCutscene.start();
     }
 
     /**

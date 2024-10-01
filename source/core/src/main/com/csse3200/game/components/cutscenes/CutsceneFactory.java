@@ -1,9 +1,22 @@
 package com.csse3200.game.components.cutscenes;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.csse3200.game.components.TooltipsDisplay;
+import com.csse3200.game.components.player.InventoryComponent;
+import com.csse3200.game.components.station.StationServingComponent;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.physics.PhysicsLayer;
+import com.csse3200.game.physics.PhysicsUtils;
+import com.csse3200.game.physics.components.ColliderComponent;
+import com.csse3200.game.physics.components.InteractionComponent;
+import com.csse3200.game.physics.components.PhysicsComponent;
+import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.csse3200.game.rendering.TextureRenderComponent;
+import com.csse3200.game.services.ServiceLocator;
 
 /**
  * A factory class for creating entities used in cutscenes, such as backgrounds and animations.
@@ -58,6 +71,44 @@ public class CutsceneFactory {
 
         // Scale the entity based on the texture size
         textureComponent.scaleEntity();
+
+        return animation;
+    }
+
+    /**
+     * Creates an animation entity with the specified atlas path.
+     *
+     * @param animationAtlasPath The file path of the atlas file to use.
+     * @return A new animation entity.
+     */
+    public static Entity createProperAnimation(String animationAtlasPath) {
+        Entity animation = new Entity()
+                .addComponent(new PhysicsComponent())
+                .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
+                .addComponent(new InteractionComponent(PhysicsLayer.INTERACTABLE))
+                .addComponent(new TooltipsDisplay())
+                .addComponent(new InventoryComponent(1))
+                .addComponent(new StationServingComponent());
+
+        animation.getComponent(InteractionComponent.class).setAsBox(animation.getScale());
+        animation.getComponent(PhysicsComponent.class).setBodyType(BodyDef.BodyType.StaticBody);
+        PhysicsUtils.setScaledCollider(animation, 1f, 1f);
+
+
+        AnimationRenderComponent animator =
+                new AnimationRenderComponent(
+                        ServiceLocator.getResourceService().getAsset(animationAtlasPath, TextureAtlas.class)); // images/stations/Servery_Animation/servery.atlas
+        animator.addAnimation("bad_end", 0.1f, Animation.PlayMode.LOOP);
+
+        animation.addComponent(animator);
+
+        /**
+         TextureRenderComponent textureComponent = new TextureRenderComponent(animationImgPath);
+         animation.addComponent(textureComponent);
+
+         // Scale the entity based on the texture size
+         textureComponent.scaleEntity();
+         */
 
         return animation;
     }
