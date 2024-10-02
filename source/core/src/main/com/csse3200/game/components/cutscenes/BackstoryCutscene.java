@@ -3,7 +3,6 @@ package com.csse3200.game.components.cutscenes;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.components.cutscenes.scenes.Scene;
-import com.csse3200.game.entities.Entity;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
 
@@ -129,11 +128,12 @@ public class BackstoryCutscene extends Cutscene {
         scenes.add(scene10);
         scenes.add(scene11);
         scenes.add(scene12);
+
     }
 
-//    /**
-//     * Loads the assets needed for the backstory cutscene, including textures for backgrounds.
-//     */
+    /**
+     * Loads the assets needed for the backstory cutscene, including textures for backgrounds.
+     */
 //    @Override
 //    protected void loadAssets() {
 //        // Load the assets for the backstory cutscene
@@ -142,32 +142,22 @@ public class BackstoryCutscene extends Cutscene {
 //        }
 //        ServiceLocator.getResourceService().loadAll();
 //    }
-@Override
-protected void loadAssets() {
-    // Store all the background images needed for the cutscenes in an array
-    String[] textures = new String[]{
-            "images/Cutscenes/Brooklyn_Bistro_Background.png",
-            "images/Cutscenes/Kitchen_Background.png",
-            "images/Cutscenes/Food_Critic_Background.png",
-            "images/Cutscenes/Animals_in_Kitchen_Background.png",
-            "images/Cutscenes/Farm_Background.png",
-            "images/Cutscenes/graveyard_mafia.png",
-            "images/Cutscenes/deserted_city_opt1.png",
-            "images/Cutscenes/graveyard_mafia_chef.png",
-            "images/Cutscenes/new_beastly_bistro_pt2.png",
-            "images/Cutscenes/new_beastly_bistro.png",
-            "images/Cutscenes/resized_black_image.png"
-    };
+    @Override
+    protected void loadAssets() {
+        // Collect all textures into a list first
+        Array<String> texturePaths = new Array<>();
 
-    // Load the textures using the resource service
-    ResourceService resourceService = ServiceLocator.getResourceService();
-    resourceService.loadTextures(textures);
-    resourceService.loadTextures(images);
-    resourceService.loadTextureAtlases(animations);
+        // Load the assets for the backstory cutscene
+        for (Scene scene : scenes) {
+            texturePaths.add(scene.getBackgroundImagePath());
+        }
 
-    // Call loadAll to ensure all assets are loaded
-    resourceService.loadAll();
-}
+        // Now load all textures in a single call
+        ServiceLocator.getResourceService().loadTextures(texturePaths.toArray(String.class));
+
+        // Finally, call loadAll to ensure all assets are loaded
+        ServiceLocator.getResourceService().loadAll();
+    }
 
     /**
      * Handles specific entity creation logic for the backstory cutscene.
