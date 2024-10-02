@@ -35,15 +35,15 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFont
 import java.util.ArrayList;
 
     public class EndDayDisplay extends UIComponent {
-        private Table layout; // Layout manager
+        public Table layout; // Layout manager
         public boolean isVisible;
         private static final Logger logger = LoggerFactory.getLogger(com.csse3200.game.components.maingame.EndDayDisplay.class);
         private final MainGameScreen gameScreen;
-        private final GdxGame game;
-        private Image birdImage;
-        private Image pointImage1;
-        private Image pointImage2;
-        private Image pointImage3;
+        public GdxGame game;
+        public Image birdImage;
+        public Image pointImage1;
+        public Image pointImage2;
+        public Image pointImage3;
         private float imageX;
         private int currentGold;
         private Label goldLabel;
@@ -78,7 +78,10 @@ import java.util.ArrayList;
             createBackground();
             setupImages();
             setupUI();
+            addListeners();
+        }
 
+        public void addListeners() {
             ServiceLocator.getDocketService().getEvents().addListener("goldUpdated", this::handleGoldUpdate);
             ServiceLocator.getLevelService().getEvents().addListener("customerSpawned", this::updateCustomerList);
             ServiceLocator.getLevelService().getEvents().addListener("endDayDisplay", this::show);
@@ -95,7 +98,7 @@ import java.util.ArrayList;
          * This method loads a texture from the resource service and sets it as the background
          * for the layout. The image used is specified in the texture path 'images/endday.png'.
          */
-        private void createBackground() {
+        public void createBackground() {
             // Create a background
             Texture texture = ServiceLocator.getResourceService()
                     .getAsset("images/endday.png", Texture.class);
@@ -108,7 +111,7 @@ import java.util.ArrayList;
          * This method initializes and positions images that are used to enhance the visual
          * representation of the display, such as birds and points icons.
          */
-        private void setupImages() {
+        public void setupImages() {
             birdImage = createImage("images/bird.png");
             pointImage1 = createImage("images/point.png");
             pointImage2 = createImage("images/point.png");
@@ -123,7 +126,7 @@ import java.util.ArrayList;
          * @param texturePath the path to the texture asset
          * @return an initialized Image actor with the specified texture
          */
-        private Image createImage(String texturePath) {
+        public Image createImage(String texturePath) {
             Texture texture = ServiceLocator.getResourceService().getAsset(texturePath, Texture.class);
             Image image = new Image(new TextureRegionDrawable(new TextureRegion(texture)));
             image.setVisible(false);
@@ -137,7 +140,7 @@ import java.util.ArrayList;
          * This method arranges all the interactive and non-interactive elements within
          * the display, ensuring proper layout and functionality.
          */
-        private void setupUI() {
+        public void setupUI() {
             addSpacer();
             setupGoldDisplay();
             setupCustomerLists();
@@ -149,7 +152,7 @@ import java.util.ArrayList;
          * This method helps in aligning other UI components by adding customizable space
          * in the layout table.
          */
-        private void addSpacer() {
+        public void addSpacer() {
             Table spacer = new Table();
             spacer.add().height(4 * birdImage.getHeight() / 5);
             layout.add(spacer).row();
@@ -160,7 +163,7 @@ import java.util.ArrayList;
          * This method configures a label to show the amount of gold collected, updating
          * its value in real time during the display.
          */
-        private void setupGoldDisplay() {
+        public void setupGoldDisplay() {
             Texture coinTexture = ServiceLocator.getResourceService()
                     .getAsset("images/coin.png", Texture.class);
             Drawable coinDrawable = new TextureRegionDrawable(new TextureRegion(coinTexture));
@@ -189,7 +192,7 @@ import java.util.ArrayList;
          * This method configures two lists to show which customers passed and which failed,
          * providing direct feedback to the player.
          */
-        private void setupCustomerLists() {
+        public void setupCustomerLists() {
             // Customer lists
             List<String> passedCustomers = new List<>(skin);
             List<String> failedCustomers = new List<>(skin);
@@ -233,7 +236,7 @@ import java.util.ArrayList;
          * This method creates a button that when clicked, will toggle the visibility of
          * the end-of-day display, effectively closing it.
          */
-        private void addCloseButton() {
+        public void addCloseButton() {
             TextButton.TextButtonStyle style = new TextButton.TextButtonStyle();
             Texture texture = ServiceLocator.getResourceService()
                     .getAsset("images/finish.png", Texture.class);
@@ -241,7 +244,12 @@ import java.util.ArrayList;
             style.up = new TextureRegionDrawable(new TextureRegion(texture));
             // style.down = new TextureRegionDrawable(new TextureRegion(new Texture("button_down.png")));
 
-            BitmapFont font = new BitmapFont(Gdx.files.internal("default.fnt"));
+            FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("flat-earth/skin/fonts/Tiny5-Regular.ttf"));
+            FreeTypeFontParameter parameter = new FreeTypeFontParameter();
+            parameter.size = 30;
+            parameter.gamma = 1.8f;
+            BitmapFont font = generator.generateFont(parameter);
+            generator.dispose();
             style.font = font;
             style.fontColor = Color.RED;
 
@@ -318,7 +326,7 @@ import java.util.ArrayList;
          *
          * @param delta the time elapsed since the last frame update
          */
-        private void updateBirdPosition(float delta) {
+        public void updateBirdPosition(float delta) {
             imageX -= 200 * delta;
             if (imageX + birdImage.getWidth() < 0) {
                 imageX = Gdx.graphics.getWidth();
@@ -335,7 +343,7 @@ import java.util.ArrayList;
          * This method gradually updates the displayed gold amount from the previous value
          * to the current value, using a simple animation.
          */
-        private void animateGoldChange() {
+        public void animateGoldChange() {
             float duration = 1.0f;
             goldLabel.addAction(Actions.sequence(
                     Actions.run(() -> goldLabel.setText(String.valueOf(STARTING_GOLD))),
@@ -384,6 +392,6 @@ import java.util.ArrayList;
 
         @Override
         public void setStage(Stage mock) {
-
+            this.stage = mock;
         }
     }
