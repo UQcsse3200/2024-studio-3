@@ -12,6 +12,8 @@ import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.util.HashMap;
 import com.csse3200.game.events.EventHandler;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class SaveLoadService {
     private static final Logger logger = LoggerFactory.getLogger(SaveLoadService.class);
@@ -34,6 +36,10 @@ public class SaveLoadService {
         state.setMoney(player.getComponent(CombatStatsComponent.class).getGold());
         state.setDay(ServiceLocator.getDayNightService().getDay());
         state.setDecisions(ServiceLocator.getEntityService().getMoralSystem().getComponent(MoralDecision.class).getListOfDecisions());
+        LocalDateTime currentDateTime = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy_HH-mm-ss");
+        String formattedDateTime = currentDateTime.format(formatter);
+        state.setModTime(formattedDateTime);
         FileLoader.writeClass(state, (ROOT_DIR + File.separator + saveFile), Location.LOCAL);
         ServiceLocator.getEntityService().getEvents().trigger("togglePause");
     }

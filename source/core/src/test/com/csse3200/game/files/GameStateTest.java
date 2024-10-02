@@ -32,20 +32,8 @@ class GameStateTest {
     }
 
     @Test
-    void testSetAndGetModDay() {
-        gameState.setModDay(12);
-        assertEquals(12, gameState.getModDay());
-    }
-
-    @Test
-    void testSetAndGetModHour() {
-        gameState.setModHour(10);
-        assertEquals(10, gameState.getModHour());
-    }
-
-    @Test
-    void testSetAndGetModMin() {
-        gameState.setModMin(45);
-        assertEquals(45, gameState.getModMin());
+    void testSetAndGetModTime() {
+        gameState.setModTime("THIS AN EXAMPLE");
+        assertEquals("THIS AN EXAMPLE", gameState.getModTime());
     }
 }

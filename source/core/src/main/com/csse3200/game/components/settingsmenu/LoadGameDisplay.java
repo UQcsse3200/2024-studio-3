@@ -1,6 +1,7 @@
 package com.csse3200.game.components.settingsmenu;
 
 import com.badlogic.gdx.Gdx;
+import com.csse3200.game.files.GameState;
 import com.badlogic.gdx.Graphics.DisplayMode;
 import com.badlogic.gdx.Graphics.Monitor;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -26,6 +27,7 @@ import com.csse3200.game.files.GameState;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.util.HashSet;
+import java.io.File;
 import java.util.Set;
 
 public class LoadGameDisplay extends UIComponent {
@@ -51,7 +53,11 @@ public class LoadGameDisplay extends UIComponent {
             if (i - 1 < saves.length) {
                 String save = saves[i-1].name().split("[.]")[0];
                 Table load = new Table();
-                load.add(new Label(save, skin));
+                load.add(new Label(save, skin)).row();
+                GameState state = FileLoader.readClass(GameState.class, "saves" + File.separator + save + ".json", Location.LOCAL);
+                load.add(new Label("Last Modified: " + state.getModTime(), skin)).row();
+                load.add(new Label("Day " + state.getDay(), skin));
+                load.add(new Label("| Money: " + state.getMoney(), skin)).row();
                 load.addListener(new InputListener() {
                     @Override
                     public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {

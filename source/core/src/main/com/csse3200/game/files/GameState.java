@@ -7,9 +7,7 @@ import java.util.List;
     // Mod = Modification Time
     private int day;
     private int money;
-    private int ModDay;
-    private int ModHour;
-    private int ModMin;
+    private String ModTime;
     private List<Decision> decisions;
 
     public GameState() {}
@@ -51,57 +49,21 @@ import java.util.List;
     }
 
     /**
-     * Gets the modification day of the game state.
+     * Gets the modification time of the game state.
      *
-     * @return integer representing the last modification day.
+     * @return integer representing the last modification time.
      */
-    public int getModDay() {
-        return ModDay;
+    public String getModTime() {
+        return ModTime;
     }
 
     /**
-     * Gets the modification hour of the game state.
-     *
-     * @return integer representing the last modification hour.
-     */
-    public int getModHour() {
-        return ModHour;
-    }
-
-    /**
-     * Gets the modification minute of the game state.
-     *
-     * @return integer representing the last modification minute.
-     */
-    public int getModMin() {
-        return ModMin;
-    }
-
-    /**
-     * Sets the modification day of the game state.
+     * Sets the modification time of the game state.
      *
      * @param modDay integer representing the last modification day.
      */
-    public void setModDay(int modDay) {
-        ModDay = modDay;
-    }
-
-    /**
-     * Sets the modification hour of the game state.
-     *
-     * @param modHour integer representing the last modification hour.
-     */
-    public void setModHour(int modHour) {
-        ModHour = modHour;
-    }
-
-    /**
-     * Sets the modification minute of the game state.
-     *
-     * @param modMin integer representing the last modification minute.
-     */
-    public void setModMin(int modMin) {
-        ModMin = modMin;
+    public void setModTime(String modTime) {
+        this.ModTime = modTime;
     }
 
     public List<Decision> getDecisions() {
