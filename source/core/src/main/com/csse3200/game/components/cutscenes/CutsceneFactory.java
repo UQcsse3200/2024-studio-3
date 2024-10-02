@@ -77,7 +77,7 @@ public class CutsceneFactory {
      * @param imgPath The file path of the animation image to use.
      * @return A new animation entity.
      */
-    public static Entity createImage(String imgPath) {
+    public static Entity createImage(String imgPath, float imageScale) {
         Entity animation = new Entity();
 
         // Create and add a texture component to the entity for rendering the animation
@@ -86,6 +86,7 @@ public class CutsceneFactory {
 
         // Scale the entity based on the texture size
         textureComponent.scaleEntity();
+        animation.setScale(animation.getScale().x * imageScale, animation.getScale().y * imageScale);
 
         return animation;
     }
