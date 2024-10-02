@@ -174,29 +174,8 @@ public class MainGameScreen extends ScreenAdapter {
 			ServiceLocator.getDayNightService().update();
 			ServiceLocator.getEntityService().update();
 		}
-
-		if ( isPaused){
-			renderPauseMenu();
-			return;
-		}
-
 		renderer.render();
 		Gdx.gl.glClearColor(0f/255f, 0f/255f, 0f/255f, 1);
-	}
-
-	/**
-	 * Resize the screen and docket
-	 * @param width width of screen
-	 * @param height height of screen
-	 */
-	/**
-	 * Return freeze screen
-	 */
-
-	private void renderPauseMenu() {
-		Stage stage = ServiceLocator.getRenderService().getStage();
-		stage.act();
-		stage.draw();
 	}
 
 	/**
@@ -332,8 +311,6 @@ public class MainGameScreen extends ScreenAdapter {
 			.addComponent(new LoanUpgrade())
 			.addComponent(new RandomCombination())
 			.addComponent(new SpeedBootsUpgrade());
-
-
 
 		//temporary moral display
 //			.addComponent(new MoralDisplayTemp(this));

@@ -1,6 +1,5 @@
 package com.csse3200.game.services;
 
-import com.csse3200.game.GdxGame;
 import com.csse3200.game.components.cutscenes.Cutscene;
 import com.csse3200.game.screens.CutsceneScreen;
 import com.csse3200.game.components.mainmenu.MainMenuDisplay;
@@ -34,7 +33,6 @@ public class ServiceLocator {
   private static InputService inputService;
   private static PlayerService playerService;
   private static GameArea gameArea;
-  private static GdxGame game;
   private static MainGameScreen gameScreen;
   private static CutsceneScreen cutsceneScreen;
   private static Cutscene currentCutscene;
@@ -192,14 +190,6 @@ public class ServiceLocator {
     orderActions = source;
   }
 
-  public static void registerGame(GdxGame new_game) {
-    logger.debug("Registering GdxGame");
-    game = new_game;
-  }
-
-  public static GdxGame getGame() {
-    return game;
-  }
 
   public static void registerLevelService(LevelService source) {
     if (levelService == null) {
