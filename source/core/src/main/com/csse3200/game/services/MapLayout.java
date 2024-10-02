@@ -67,7 +67,7 @@ public class MapLayout extends GameArea{
                 for (int col = 0; col < parts.length; col++) {
                     String square = parts[col];
 
-                    // Log the current square being processed
+                    // Log the current square being processed a
                     logger.info("Checking square at row " + row + ", column " + col + ": " + square);
 
                     // Spawn single bench row when 'X'
