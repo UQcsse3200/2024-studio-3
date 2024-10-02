@@ -1,6 +1,10 @@
 package com.csse3200.game.components.moral;
 
+import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.Component;
+import com.csse3200.game.components.maingame.CheckWinLoseComponent;
+import com.csse3200.game.components.upgrades.SpeedBootsUpgrade;
+import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12,10 +16,16 @@ import java.util.List;
  */
 public class MoralDecision extends Component {
 
+    static final int MORALGOLD_D1 = 40;
+    static final int MORALGOLD_D2 = 30;
+    static final int MORALGOLD_D4 = -20;
+
+
+
     private static final Logger logger = LoggerFactory.getLogger(MoralDecision.class);
 
     private final List<Decision> ListOfDecisions = new ArrayList<>();
-    private Integer currentMorality = 0;
+    private Boolean currentMorality = true;
 
     /**
      * Adds a new Question, assuming it is good and worth 10 points.
@@ -24,7 +34,7 @@ public class MoralDecision extends Component {
      * @return true if the decision was added successfully
      */
     public boolean addQuestion(String question) {
-        ListOfDecisions.add(new Decision(question, true, 10));
+        ListOfDecisions.add(new Decision(question, true));
         return true;
     }
 
@@ -33,11 +43,10 @@ public class MoralDecision extends Component {
      *
      * @param question the question or statement of the decision
      * @param isGood whether the decision is good
-     * @param decisionPoints points associated with the decision
      * @return true if the decision was added successfully
      */
-    public boolean addQuestion(String question, boolean isGood, int decisionPoints) {
-        ListOfDecisions.add(new Decision(question, isGood, decisionPoints));
+    public boolean addQuestion(String question, boolean isGood) {
+        ListOfDecisions.add(new Decision(question, isGood));
         return true;
     }
 
@@ -80,7 +89,7 @@ public class MoralDecision extends Component {
      *
      * @return the current morality score
      */
-    public Integer getCurrentMorality() {
+    public Boolean getCurrentMorality() {
         return currentMorality;
     }
 
@@ -89,7 +98,7 @@ public class MoralDecision extends Component {
      *
      * @param currentMorality the new morality score
      */
-    public void setCurrentMorality(Integer currentMorality) {
+    public void setCurrentMorality(Boolean currentMorality) {
         this.currentMorality = currentMorality;
     }
 
@@ -103,7 +112,22 @@ public class MoralDecision extends Component {
     public boolean setDecision(int index, boolean decision) {
         logger.debug("Setting decision for index: {} to {}", index, decision);
         ListOfDecisions.get(index).setDecision(decision);
-        currentMorality += ListOfDecisions.get(index).getDecisionPoints();
+        //currentMorality += ListOfDecisions.get(index).getDecisionPoints();
+
+        if (!decision){
+            setCurrentMorality(false);
+            switch (index){
+                case 0 -> ServiceLocator.getPlayerService().getPlayer().getComponent(CombatStatsComponent.class).addGold(MORALGOLD_D1);
+                case 1 -> ServiceLocator.getPlayerService().getPlayer().getComponent(CombatStatsComponent.class).addGold(MORALGOLD_D2);
+                case 2 -> ServiceLocator.getPlayerService().getPlayer().getComponent(SpeedBootsUpgrade.class).activate();
+                case 3 -> ServiceLocator.getPlayerService().getPlayer().getComponent(CheckWinLoseComponent.class).decreaseLoseThreshold();
+                default -> logger.error("moral decision with unknown index");
+            }
+        } else {
+            if (index == 0) {setCurrentMorality(true);}
+            if (index == 3) {ServiceLocator.getPlayerService().getPlayer().getComponent(CombatStatsComponent.class).addGold(MORALGOLD_D4);}
+
+        }
         return true;
     }
 
@@ -131,7 +155,7 @@ public class MoralDecision extends Component {
      */
     public void clearDecisions() {
         ListOfDecisions.clear();
-        currentMorality = 0;
+        currentMorality = true;
     }
 
     /**
