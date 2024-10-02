@@ -265,6 +265,9 @@ public class ForestGameArea extends GameArea {
       spawnStackPlate(5); //testplate spawn
       //spawnPlatewithMeal();
 
+    createMoralScreen();
+    createMoralSystem();
+
     // Spawn the player
     logger.warn("HERHEHEHAEHDAHEQ");
     player = spawnPlayer();
@@ -275,8 +278,6 @@ public class ForestGameArea extends GameArea {
     // Check and trigger win/loss state
     ServiceLocator.getDayNightService().getEvents().addListener("endGame", this::checkEndOfGameState);
 
-    createMoralScreen();
-    createMoralSystem();
     createEndDayScreen();
     playMusic();
   }

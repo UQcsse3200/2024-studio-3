@@ -49,10 +49,10 @@ public class SaveLoadService {
         if (state != null) {
             this.combatStatsComponent.setGold(state.getMoney());
             ServiceLocator.getDayNightService().setDay(state.getDay());
-            /*MoralDecision system = ServiceLocator.getEntityService().getMoralSystem().getComponent(MoralDecision.class);
+            MoralDecision system = ServiceLocator.getEntityService().getMoralSystem().getComponent(MoralDecision.class);
             for (Decision decision: system.getListOfDecisions()) {
                 system.addDecision(decision);
-            }*/
+            }
         }
 
     }
