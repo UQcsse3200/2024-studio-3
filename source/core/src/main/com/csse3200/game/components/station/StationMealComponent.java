@@ -86,6 +86,10 @@ public class StationMealComponent extends Component {
             return;
         }
 
+        // Don't do anything if 'chop' is sent
+        if (Objects.equals(type, "receive")) {
+        }
+
         // Check if interaction was a combine attempt
         if (Objects.equals(type, "combine")) {
             this.processMeal();
@@ -222,7 +226,7 @@ public class StationMealComponent extends Component {
      */
     private void rotateInventory() {
         ItemComponent last = this.inventoryComponent.removeItem();
-        for (int index = this.inventoryComponent.getCapacity() - 1; index >= 0; index--) {
+        for (int index = this.inventoryComponent.getSize() - 1; index >= 0; index--) {
             if (this.inventoryComponent.getItemAt(index) != null) {
                 ItemComponent holder = this.inventoryComponent.removeAt(index);
                 this.inventoryComponent.addItemAt(last, index);
