@@ -128,6 +128,8 @@ public class DayNightService {
         endOfDayTriggered = false;
         pastUpgrade = false; 
         gameTime.setTimeScale(1); // Resume game time
+
+
     }
 
     public EventHandler getEvents() {

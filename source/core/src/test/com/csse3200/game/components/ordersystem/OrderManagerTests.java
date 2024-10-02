@@ -35,11 +35,14 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
+import com.csse3200.game.files.FileLoader;
 
 /**
  * Unit tests for the MainGameOrderTicketDisplay class.
@@ -47,62 +50,75 @@ import static org.mockito.Mockito.*;
 @ExtendWith(GameExtension.class)
 @ExtendWith(MockitoExtension.class)
 class OrderManagerTest {
-    @Mock RenderService renderService;
-    @Spy OrthographicCamera camera;
-    @Mock Stage stage;
-    @Mock Viewport viewport;
-    @Mock DocketService docketService;
-    @Mock PlayerService playerService;
-    @Mock EventHandler eventHandler;
-    @Mock EventHandler eventHandler2;
-    @Mock EventHandler eventHandler3;
-    @Mock ResourceService resourceService;
-    @Mock Texture textureMock;
-    MainGameOrderTicketDisplay orderTicketDisplay;
-    @Mock CombatStatsComponent combatStatsComponent;
+//    @Mock RenderService renderService;
+//    @Spy OrthographicCamera camera;
+//    @Mock Stage stage;
+//    @Mock Viewport viewport;
+//    @Mock DocketService docketService;
+//    @Mock PlayerService playerService;
+//    @Mock EventHandler eventHandler;
+//    @Mock EventHandler eventHandler2;
+//    @Mock EventHandler eventHandler3;
+//    @Mock ResourceService resourceService;
+//    @Mock Texture textureMock;
+//    MainGameOrderTicketDisplay orderTicketDisplay;
+//    @Mock CombatStatsComponent combatStatsComponent;
+//
+//    @Mock OrderManager orderManager;
+//    @Mock EntityService entityService;
+//
+//    private static final Logger logger = LoggerFactory.getLogger(MainGameOrderTicketDisplayTest.class);
+//
 
-    @Mock OrderManager orderManager;
-    @Mock EntityService entityService;
+    private EventHandler eventHandler;
+    private Entity customer;
+    private CustomerComponent customerComponent;
+    private Recipe recipe;
 
-    private static final Logger logger = LoggerFactory.getLogger(MainGameOrderTicketDisplayTest.class);
-
-    /**
-     * Sets up the environment before each test by initializing services and MainGameOrderTicketDisplay instance
-     */
 
     @BeforeEach
     void setup(){
-        ServiceLocator.registerRenderService(renderService);
-        ServiceLocator.registerPlayerService(playerService);
-        ServiceLocator.registerEntityService(entityService);
-        when(ServiceLocator.getRenderService().getStage()).thenReturn(stage);
-        when(ServiceLocator.getRenderService().getStage().getViewport()).thenReturn(viewport);
-        lenient().when(ServiceLocator.getRenderService().getStage().getViewport().getCamera()).thenReturn(camera);
-        resourceService = mock(ResourceService.class);
-        ResourceService mockResourceService = mock(ResourceService.class);
-        CustomerPersonalityConfig mockCustomerPersonalityConfig = new CustomerPersonalityConfig();
-        BaseCustomerConfig mockBaseCustomerConfig = new BaseCustomerConfig();
+        recipe = mock(Recipe.class);
+
 
     }
 
     @Test
-    void testTriggerCall(){
-        CustomerPersonalityConfig mockConfigs = new CustomerPersonalityConfig();
-        mockConfigs.name = "Hank";
-        mockConfigs.type = "Gorilla";
-        mockConfigs.countDown = 20;
-        mockConfigs.preference = "bananaSplit";
-        mockConfigs.reputation = 100;
+    void getRecipeTest(){
+        Map<String, Recipe> mockRecipes = new HashMap<>();
+        Recipe bananaSplitRecipe = mock(Recipe.class);
+        when(bananaSplitRecipe.getName()).thenReturn("bananaSplit");
+        mockRecipes.put("bananaSplit", bananaSplitRecipe);
+        mockStatic(FileLoader.class);
+        when(FileLoader.readClass(eq(Map.class), eq("configs/recipe.json"))).thenReturn(mockRecipes);
+        OrderManager.loadRecipes();
+
+        Recipe recipe = OrderManager.getRecipe("bananaSplit");
+
+        assertNotNull(recipe, "Recipe should not be null");
+        assertEquals("bananaSplit", recipe.getName(), "Recipe name should be bananaSplit");
+
+    }
+
+    @Test
+    void displayOrderTest(){
+
+        eventHandler = mock(EventHandler.class);
+        EntityService entityService = mock(EntityService.class);
+        ServiceLocator.registerEntityService(entityService);
 
 
-        CustomerComponent components = new CustomerComponent(mockConfigs);
-        Entity customer = new Entity();
-        customer.addComponent(components);
 
-//        OrderManager orderManager1 = new OrderManager();
-//        MainGameOrderTicketDisplay mainOrder= new MainGameOrderTicketDisplay();
-//
-//        OrderManager.displayOrder(customer);
+        customer = mock(Entity.class);
+        customerComponent = mock(CustomerComponent.class);
+        when(customer.getComponent(CustomerComponent.class)).thenReturn(customerComponent);
 
+        // Set up expected behavior for CustomerComponent
+        when(customerComponent.getPreference()).thenReturn("bananaSplit");
+        when(OrderManager.getRecipe("BananaSplit")).thenReturn(recipe);
+        when(entityService.getEvents()).thenReturn(eventHandler);
+
+        OrderManager.displayOrder(customer);
+        verify(eventHandler).trigger("createBananaDocket");
     }
 }
