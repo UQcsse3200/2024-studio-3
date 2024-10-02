@@ -21,12 +21,10 @@ public class Decision {
      *
      * @param statement the statement of the decision
      * @param isGood whether the decision is good
-     * @param decisionPoints points associated with the decision
      */
-    public Decision(String statement, boolean isGood, int decisionPoints) {
+    public Decision(String statement, boolean isGood) {
         this.statement = statement;
         this.isGood = isGood;
-        this.decisionPoints = decisionPoints;
         this.decisionMade = MoralEnum.Value.Pending;
     }
 
