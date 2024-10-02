@@ -3,6 +3,8 @@ package com.csse3200.game.physics;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import com.badlogic.gdx.physics.box2d.PolygonShape;
+import com.badlogic.gdx.physics.box2d.Fixture;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.CircleShape;
@@ -19,10 +21,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
-/**
- * It is difficult to check whether the shape of a Fixture matches a given bounding box, so bbox
- * functionality is unfortunately not tested.
- */
 @ExtendWith(GameExtension.class)
 class ColliderComponentTest {
   @BeforeEach
@@ -136,5 +134,67 @@ class ColliderComponentTest {
 
     Vector2 realPos = PhysicsTestUtils.getRectanglePosition(component);
     assertEquals(position, realPos);
+  }
+
+  @Test
+  void shouldUseDefaultBox() {
+    Entity entity = new Entity();
+    entity.addComponent(new PhysicsComponent());
+    ColliderComponent component = new ColliderComponent();
+    entity.addComponent(component);
+
+    entity.setScale(5f, 5f);
+    entity.create();
+    assertTrue(component.getFixture().getShape() instanceof PolygonShape);
+  }
+
+  @Test
+  void shouldHandleNegativeFriction() {
+    Entity entity = new Entity();
+    entity.addComponent(new PhysicsComponent());
+    ColliderComponent component = new ColliderComponent();
+    entity.addComponent(component);
+
+    component.setFriction(-1f);
+    entity.create();
+    assertEquals(-1f, component.getFixture().getFriction());
+  }
+
+  @Test
+  void shouldNotCreateDuplicateFixture() {
+    Entity entity = new Entity();
+    entity.addComponent(new PhysicsComponent());
+    ColliderComponent component = new ColliderComponent();
+    entity.addComponent(component);
+
+    entity.create();
+    Fixture firstFixture = component.getFixture();
+    entity.create();
+    assertEquals(firstFixture, component.getFixture());
+  }
+
+  @Test
+  void shouldHandleLargeEdgeCase() {
+    Entity entity = new Entity();
+    entity.addComponent(new PhysicsComponent());
+    ColliderComponent component = new ColliderComponent();
+    entity.addComponent(component);
+
+    Vector2 largeBox = new Vector2(10000f, 10000f);
+    component.setAsBox(largeBox);
+    entity.create();
+    assertTrue(component.getFixture().getShape() instanceof PolygonShape);
+  }
+
+  @Test
+  void shouldCreateInOrder() {
+    Entity entity = new Entity();
+    entity.addComponent(new PhysicsComponent());
+    ColliderComponent component = new ColliderComponent();
+    entity.addComponent(component);
+
+    component.setSensor(true);
+    entity.create();
+    assertTrue(component.getFixture().isSensor());
   }
 }
