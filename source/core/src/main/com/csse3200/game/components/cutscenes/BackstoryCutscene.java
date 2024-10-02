@@ -71,63 +71,75 @@ public class BackstoryCutscene extends Cutscene {
         Scene scene1 = new Scene("images/Cutscenes/Brooklyn_Bistro_Background.png");
         scene1.setSceneText(scene1Text);
         scene1.setDuration(5.0f);
+        scenes.add(scene1);
 
         Scene scene2 = new Scene("images/Cutscenes/Kitchen_Background.png");
         scene2.setSceneText(scene2Text);
         scene2.setDuration(4.0f);
+        scenes.add(scene2);
 
         Scene scene3 = new Scene("images/Cutscenes/Food_Critic_Background.png");
         scene3.setSceneText(scene3Text);
         scene3.setDuration(3.0f);
+        scenes.add(scene3);
 
         Scene scene4 = new Scene("images/Cutscenes/Food_Critic_Background.png");
         scene4.setSceneText(scene4Text);
         scene4.setDuration(3.0f);
+        scenes.add(scene4);
 
         Scene scene5 = new Scene("images/Cutscenes/Animals_in_Kitchen_Background.png");
         scene5.setSceneText(scene5Text);
         scene5.setDuration(3.0f);
+        scenes.add(scene5);
 
         Scene scene6 = new Scene("images/Cutscenes/Farm_Background.png");
         scene6.setSceneText(scene6Text);
         scene6.setDuration(3.0f);
+        scenes.add(scene6);
 
         Scene scene7 = new Scene("images/Cutscenes/graveyard_mafia.png");
         scene7.setSceneText(scene7Text);
         scene7.setDuration(3.0f);
+        scenes.add(scene7);
 
         Scene scene8 = new Scene("images/Cutscenes/deserted_city_opt1.png");
         scene8.setSceneText(scene8Text);
         scene8.setDuration(3.0f);
+        scenes.add(scene8);
 
         Scene scene9 = new Scene("images/Cutscenes/graveyard_mafia_chef.png");
         scene9.setSceneText(scene9Text);
         scene9.setDuration(3.0f);
+        scenes.add(scene9);
 
         Scene scene10 = new Scene("images/Cutscenes/new_beastly_bistro_pt2.png");
         scene10.setSceneText(scene10Text);
         scene10.setDuration(3.0f);
+        scenes.add(scene10);
 
         Scene scene11 = new Scene("images/Cutscenes/new_beastly_bistro.png");
         scene11.setSceneText(scene11Text);
         scene11.setDuration(3.0f);
+        scenes.add(scene11);
 
         Scene scene12 = new Scene("images/Cutscenes/resized_black_image.png");
         scene12.setSceneText(scene12Text);
         scene12.setDuration(3.0f);
-
-        scenes.add(scene1);
-        scenes.add(scene2);
-        scenes.add(scene3);
-        scenes.add(scene4);
-        scenes.add(scene5);
-        scenes.add(scene6);
-        scenes.add(scene7);
-        scenes.add(scene8);
-        scenes.add(scene9);
-        scenes.add(scene10);
-        scenes.add(scene11);
         scenes.add(scene12);
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     }
 
@@ -142,21 +154,55 @@ public class BackstoryCutscene extends Cutscene {
 //        }
 //        ServiceLocator.getResourceService().loadAll();
 //    }
+//    @Override
+//    protected void loadAssets() {
+//        // Collect all textures into a list first
+//        Array<String> texturePaths = new Array<>();
+//
+//        // Load the assets for the backstory cutscene
+//        for (Scene scene : scenes) {
+//            texturePaths.add(scene.getBackgroundImagePath());
+//        }
+//
+//        // Now load all textures in a single call
+//        ServiceLocator.getResourceService().loadTextures(texturePaths.toArray(String.class));
+//
+//        // Finally, call loadAll to ensure all assets are loaded
+//        ServiceLocator.getResourceService().loadAll();
+//    }
+
     @Override
     protected void loadAssets() {
-        // Collect all textures into a list first
-        Array<String> texturePaths = new Array<>();
+        // Load the background images for the backstory cutscene
+         textures = new String[] {
+                "images/Cutscenes/Brooklyn_Bistro_Background.png",
+                "images/Cutscenes/Kitchen_Background.png",
+                "images/Cutscenes/Food_Critic_Background.png",
+                "images/Cutscenes/Food_Critic_Background.png",
+                "images/Cutscenes/Animals_in_Kitchen_Background.png",
+                "images/Cutscenes/Farm_Background.png",
+                "images/Cutscenes/graveyard_mafia.png",
+                "images/Cutscenes/deserted_city_opt1.png",
+                "images/Cutscenes/graveyard_mafia_chef.png",
+                "images/Cutscenes/new_beastly_bistro_pt2.png",
+                "images/Cutscenes/new_beastly_bistro.png",
+                "images/Cutscenes/resized_black_image.png"
+        };
 
-        // Load the assets for the backstory cutscene
-        for (Scene scene : scenes) {
-            texturePaths.add(scene.getBackgroundImagePath());
-        }
+        // Load any additional images for the cutscene (if applicable)
+        String[] images = new String[] {
+                // Add any specific images here if needed, e.g. character sprites, etc.
+        };
 
-        // Now load all textures in a single call
-        ServiceLocator.getResourceService().loadTextures(texturePaths.toArray(String.class));
+        // Load animations for the cutscene (if applicable)
+        String[] animations = new String[] {
+                // Add any animation atlases here if needed
+        };
 
-        // Finally, call loadAll to ensure all assets are loaded
-        ServiceLocator.getResourceService().loadAll();
+        // Get the resource service to load the assets
+        ResourceService resourceService = ServiceLocator.getResourceService();
+        resourceService.loadTextures(textures);
+        resourceService.loadAll();
     }
 
     /**

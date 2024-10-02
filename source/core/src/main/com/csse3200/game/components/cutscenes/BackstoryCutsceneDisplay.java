@@ -78,12 +78,25 @@ public class BackstoryCutsceneDisplay extends UIComponent {
     /**
      * Sets up the text display for the screen, adjusting its size and position.
      */
+//    public void setupTextDisplay() {
+//        textDisplay = new CutsceneTextDisplay(this.skin);
+//
+//        // Customize text display size and position
+//        textDisplay.getTable().setScale(0.8f); // Make the text display smaller
+//        textDisplay.getTable().top().center(); // Position it higher up
+//
+//        // Add the customized text display to the stage
+//        stage.addActor(textDisplay.getTable());
+//    }
     public void setupTextDisplay() {
         textDisplay = new CutsceneTextDisplay(this.skin);
 
         // Customize text display size and position
-        textDisplay.getTable().setScale(0.8f); // Make the text display smaller
-        textDisplay.getTable().top().center(); // Position it higher up
+        textDisplay.getTable().setScale(0.2f); // Make the text display smaller
+
+        // Position the text display higher above the sprite's head
+        textDisplay.getTable().top().left(); // Align the text box at the top of the screen, left aligned
+        textDisplay.getTable().padTop(200f); // Adjust this padding to position it above the sprite’s head
 
         // Add the customized text display to the stage
         stage.addActor(textDisplay.getTable());

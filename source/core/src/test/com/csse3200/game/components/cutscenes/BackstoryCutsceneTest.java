@@ -86,37 +86,25 @@ public class BackstoryCutsceneTest {
 
     @Test
     public void testLoadAssets() {
-        // Call the method to load assets
-        backstoryCutscene.loadAssets();
-
-        // Capture the arguments passed to loadTextures
-        ArgumentCaptor<String[]> captor = ArgumentCaptor.forClass(String[].class);
-
-        // Verify that loadTextures was called three times (once for each scene)
-        verify(resourceService, times(1)).loadTextures(captor.capture());
+        // Verify that the textures are loaded with the correct paths
+        verify(resourceService, times(1)).loadTextures(new String[]{
+                "images/Cutscenes/Brooklyn_Bistro_Background.png",
+                "images/Cutscenes/Kitchen_Background.png",
+                "images/Cutscenes/Food_Critic_Background.png",
+                "images/Cutscenes/Food_Critic_Background.png",
+                "images/Cutscenes/Animals_in_Kitchen_Background.png",
+                "images/Cutscenes/Farm_Background.png",
+                "images/Cutscenes/graveyard_mafia.png",
+                "images/Cutscenes/deserted_city_opt1.png",
+                "images/Cutscenes/graveyard_mafia_chef.png",
+                "images/Cutscenes/new_beastly_bistro_pt2.png",
+                "images/Cutscenes/new_beastly_bistro.png",
+                "images/Cutscenes/resized_black_image.png"
+        });
 
         // Verify that loadAll is called exactly once
         verify(resourceService, times(1)).loadAll();
 
-        // Check the captured arguments for the loaded textures
-        String[][] expectedPaths = {
-                {"images/Cutscenes/Brooklyn_Bistro_Background.png"},
-                {"images/Cutscenes/Kitchen_Background.png"},
-                {"images/Cutscenes/Food_Critic_Background.png"},
-                {"images/Cutscenes/Food_Critic_Background.png"},
-                {"images/Cutscenes/Animals_in_Kitchen_Background.png"},
-                {"images/Cutscenes/Farm_Background.png"},
-                {"images/Cutscenes/graveyard_mafia.png"},
-                {"images/Cutscenes/deserted_city_opt1.png"},
-                {"images/Cutscenes/graveyard_mafia_chef.png"},
-                {"images/Cutscenes/new_beastly_bistro_pt2.png"},
-                {"images/Cutscenes/new_beastly_bistro.png"},
-                {"images/Cutscenes/resized_black_image.png"}
-        };
-
-        for (int i = 0; i < 3; i++) {
-            assertArrayEquals(expectedPaths[i], captor.getAllValues().get(i));
-        }
     }
 
     /**
@@ -125,7 +113,7 @@ public class BackstoryCutsceneTest {
     @Test
     public void testSetupScenes() {
         // Setup the scenes
-        System.out.println("Number of scenes: " + backstoryCutscene.scenes.size());
+
         // Verify the number of scenes created
         assert backstoryCutscene.scenes.size() == 12; // Should match the total number of scenes added
 
