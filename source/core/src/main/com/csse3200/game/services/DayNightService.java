@@ -55,7 +55,7 @@ public class DayNightService {
         this.lastEndOfDayCheck = gameTime.getTime();
         this.timeRemaining = FIVE_MINUTES;
         this.random = new Random();
-        day = 0; // was 1 but probably should be 0? ask calvin
+        day = 1; // was 1 but probably should be 0? ask calvin
         randomChoice = random.nextInt(10) * 1000;
 
         create();
@@ -109,7 +109,7 @@ public class DayNightService {
     private void startNewDay() {
 
         // Checking if the game should end (i.e. it's the 5th day)
-        if (day >= MAX_DAYS) { // should this be MAX_DAYS - 1?
+        if (day > MAX_DAYS) { // should this be MAX_DAYS - 1?
             logger.info("Game has ended after 5 days!");
             ServiceLocator.getDayNightService().getEvents().trigger("endGame");
             return;
