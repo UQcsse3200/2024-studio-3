@@ -3,6 +3,7 @@ package com.csse3200.game.components.cutscenes;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.components.cutscenes.scenes.Scene;
+import com.csse3200.game.entities.Entity;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
 
@@ -161,6 +162,8 @@ protected void loadAssets() {
     // Load the textures using the resource service
     ResourceService resourceService = ServiceLocator.getResourceService();
     resourceService.loadTextures(textures);
+    resourceService.loadTextures(images);
+    resourceService.loadTextureAtlases(animations);
 
     // Call loadAll to ensure all assets are loaded
     resourceService.loadAll();
