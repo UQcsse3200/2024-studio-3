@@ -18,44 +18,29 @@ import com.badlogic.gdx.utils.Align;
 import com.csse3200.game.screens.CutsceneScreen;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * CutsceneTextDisplay handles displaying scrolling text during a cutscene. The text is displayed
  * one character at a time, and pressing ENTER will skip the scrolling and display the full text immediately.
  */
 public class CutsceneTextDisplay extends UIComponent {
+    private static final Logger logger = LoggerFactory.getLogger(CutsceneTextDisplay.class);
     private String text;  // Full text to be displayed
     private StringBuilder currentText;  // Text that is currently displayed
-    private int charIndex = 0;  // Index of the current character to be displayed
-    private long lastUpdate = 0L;  // Last time a character was added
-    private long delay = 100L;  // Delay between displaying each character
 
     // UI components for displaying the text
     private boolean visible;
-    private Stack layout;
     private Label label;
+    public Boolean labelSet = false;
     private Table table;
-    private Image displayBox;
-
-    private final CutsceneScreen cutscene;
 
     /**
      * Default constructor that initializes without a specific cutscene.
      */
     public CutsceneTextDisplay() {
         super();
-        this.cutscene = null;
-        this.table = new Table();
-        this.visible = true;
-        this.currentText = new StringBuilder();
-    }
-
-    /**
-     * Constructor that links the text display to a specific cutscene.
-     * @param cutscene the associated CutsceneScreen
-     */
-    public CutsceneTextDisplay(CutsceneScreen cutscene) {
-        this.cutscene = cutscene;
         this.table = new Table();
         this.visible = true;
         this.currentText = new StringBuilder();
@@ -67,6 +52,14 @@ public class CutsceneTextDisplay extends UIComponent {
     @Override
     public void create() {
         super.create();
+        setupUI();
+
+        // Setup input listener to handle user input
+        setupInputListener();
+        entity.getEvents().addListener("SetText", this::setText);  // Event listener to update text display
+    }
+
+    private void setupUI() {
         // Initially hide the text display
         setVisible(false);
         // Set up the table to fill the screen and align it to the bottom center
@@ -100,9 +93,7 @@ public class CutsceneTextDisplay extends UIComponent {
         table.add(stack).padBottom(70).size(
                 (int) (Gdx.graphics.getWidth() * 0.5), (int) (Gdx.graphics.getHeight() * 0.2));
 
-        // Setup input listener to handle user input
-        setupInputListener();
-        entity.getEvents().addListener("SetText", this::setText);  // Event listener to update text display
+        labelSet = true;
     }
 
     /**
@@ -112,8 +103,6 @@ public class CutsceneTextDisplay extends UIComponent {
     public void setText(String text) {
         setVisible(true);  // Make the text display visible
         this.text = text;
-        this.currentText.setLength(0);  // Clear the currently displayed text
-        this.charIndex = 0;  // Start from the beginning of the text
     }
 
     /**
@@ -126,31 +115,6 @@ public class CutsceneTextDisplay extends UIComponent {
     }
 
     /**
-     * Returns whether the text display is currently visible.
-     * @return True if visible, false otherwise.
-     */
-    public boolean getVisible() {
-        return this.visible;
-    }
-
-    /**
-     * Updates the text display, adding characters one at a time based on the specified delay.
-     */
-    @Override
-    public void update() {
-        long time = ServiceLocator.getTimeSource().getTime();
-        if (this.text != null && charIndex < this.text.length()) {
-            // Check if enough time has passed to add the next character
-            if (time - lastUpdate >= delay) {
-                lastUpdate = time;
-                this.currentText.append(text.charAt(charIndex));  // Add the next character
-                label.setText(currentText.toString());  // Update the label text
-                charIndex++;  // Increment character index
-            }
-        }
-    }
-
-    /**
      * Sets up the input listener to allow skipping text scrolling by pressing ENTER.
      */
     private void setupInputListener() {
@@ -159,8 +123,10 @@ public class CutsceneTextDisplay extends UIComponent {
             public boolean keyDown(InputEvent event, int keycode) {
                 // If ENTER is pressed, skip to displaying the full text
                 if (keycode == com.badlogic.gdx.Input.Keys.ENTER) {
-                    label.setText(text);
-                    charIndex = text.length();  // Set character index to the end
+                    logger.info("Space bar pressed. Moving to next piece of text");
+                    Cutscene currentCutscene = ServiceLocator.getCurrentCutscene();
+                    currentCutscene.setTextForScene(currentCutscene.currentScene);
+                    label.setText(currentCutscene.currentText);
                     return true;
                 }
                 return false;

@@ -1,7 +1,9 @@
 package com.csse3200.game.components.cutscenes;
 
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.csse3200.game.components.Component;
+import com.csse3200.game.components.cutscenes.scenes.AnimatedScene;
 import com.csse3200.game.components.cutscenes.scenes.Scene;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.services.GameTime;
@@ -23,6 +25,9 @@ public abstract class Cutscene extends Component {
     // List of scenes in the cutscene
     protected List<Scene> scenes = new ArrayList<>();
 
+    // List of animated scenes in the cutscene
+    protected List<AnimatedScene> animatedScenes = new ArrayList<>();
+
     // List of entities involved in the cutscene
     protected List<Entity> entities = new ArrayList<>();
 
@@ -36,7 +41,14 @@ public abstract class Cutscene extends Component {
     protected float timeStart = 0f;
 
     // The current scene being displayed
-    protected Scene currentScene;
+    public Scene currentScene;
+    public String currentText;
+
+    // The current animated scene being displayed
+    protected AnimatedScene currentAnimatedScene;
+
+    // Whether the scenes are fully animated
+    public boolean IsAnimatedScenes = false;
 
     // Game time service to keep track of time
     protected GameTime gameTime;
@@ -44,8 +56,15 @@ public abstract class Cutscene extends Component {
     // Assets used in the cutscene
     protected String[] textures;
     protected String[] animations;
+    protected Vector2[] animationPositions;
+
+    protected String[] images;
+    protected Vector2[] imagePositions;
     protected String[] sounds;
     protected String[] music;
+
+    // The index the text is under, after it increases too large, then it goes to the next scene
+    protected int textIndex;
 
     /**
      * Constructor for the Cutscene class. Initializes the game time and loads assets and scenes.
@@ -63,6 +82,7 @@ public abstract class Cutscene extends Component {
     public void create() {
         entity.getEvents().addListener("nextCutscene", this::nextCutscene);
         loadScene(currentSceneIndex);
+        textIndex--;
     }
 
     /**
@@ -72,9 +92,16 @@ public abstract class Cutscene extends Component {
     public void update() {
         float currentTime = gameTime.getTime();
         // Check if the current scene has finished
-        if (currentScene != null && (currentTime - timeStart) > currentScene.getDuration()) {
-            logger.info("Scene {} finished. Moving to next scene.", currentSceneIndex);
-            nextCutscene();
+        if (!IsAnimatedScenes) {
+            if ((currentScene != null) && (currentTime - timeStart) > currentScene.getDuration()) {
+                logger.info("Scene {} finished. Moving to next scene.", currentSceneIndex);
+                nextCutscene();
+            }
+        } else {
+            if ((currentAnimatedScene != null) && (currentTime - timeStart) > currentAnimatedScene.getDuration()) {
+                logger.info("Scene {} finished. Moving to next scene.", currentSceneIndex);
+                nextCutscene();
+            }
         }
     }
 
@@ -85,12 +112,22 @@ public abstract class Cutscene extends Component {
         disposeEntities();  // Dispose of current entities before moving to the next scene
 
         currentSceneIndex++;
-        if (currentSceneIndex < scenes.size()) {
-            logger.info("Loading next scene: {}", currentSceneIndex);
-            loadScene(currentSceneIndex);
+        if (!IsAnimatedScenes) {
+            if (currentSceneIndex < scenes.size()) {
+                logger.info("Loading next scene: {}", currentSceneIndex);
+                loadScene(currentSceneIndex);
+            } else {
+                logger.info("Cutscene finished. Triggering next event.");
+                ServiceLocator.getCutsceneScreen().getCutsceneScreenDisplay().getEntity().getEvents().trigger("cutsceneEnded");
+            }
         } else {
-            logger.info("Cutscene finished. Triggering next event.");
-            ServiceLocator.getCutsceneScreen().getCutsceneScreenDisplay().getEntity().getEvents().trigger("cutsceneEnded");
+            if (currentSceneIndex < animatedScenes.size()) {
+                logger.info("Loading next scene: {}", currentSceneIndex);
+                loadScene(currentSceneIndex);
+            } else {
+                logger.info("Cutscene finished. Triggering next event.");
+                ServiceLocator.getCutsceneScreen().getCutsceneScreenDisplay().getEntity().getEvents().trigger("cutsceneEnded");
+            }
         }
     }
 
@@ -99,10 +136,31 @@ public abstract class Cutscene extends Component {
      * @param sceneIndex Index of the scene to load
      */
     protected void loadScene(int sceneIndex) {
-        if (sceneIndex >= scenes.size()) {
-            logger.error("No more scenes available.");
-            nextCutscene();
-            return;
+        if (!IsAnimatedScenes) {
+            if (sceneIndex >= scenes.size()) {
+                logger.error("No more scenes available.");
+                nextCutscene();
+                return;
+            }
+
+            currentScene = scenes.get(sceneIndex);
+            logger.info("Loading scene {}", sceneIndex);
+
+            loadAssetsForScene(currentScene);  // Load assets needed for the current scene
+            createEntitiesForScene(currentScene);  // Create entities for the current scene
+
+        } else {
+            if (sceneIndex >= animatedScenes.size()) {
+                logger.error("No more scenes available.");
+                nextCutscene();
+                return;
+            }
+
+            currentAnimatedScene = animatedScenes.get(sceneIndex);
+            logger.info("Loading scene {}", sceneIndex);
+
+            loadAssetsForScene(currentAnimatedScene);  // Load assets needed for the current scene
+            createEntitiesForScene(currentAnimatedScene);  // Create entities for the current scene
         }
 
         currentScene = scenes.get(sceneIndex);
@@ -110,6 +168,8 @@ public abstract class Cutscene extends Component {
 
         loadAssetsForScene(currentScene);  // Load assets needed for the current scene
         createEntitiesForScene(currentScene);  // Create entities for the current scene
+
+        setTextForScene(currentScene);
 
         // Reset the timer to track how long the scene is active
         timeStart = gameTime.getTime();
@@ -133,6 +193,18 @@ public abstract class Cutscene extends Component {
     }
 
     /**
+     * Loads the assets needed for a specific scene, including textures and animations.
+     * @param scene The scene for which to load assets
+     */
+    protected void loadAssetsForScene(AnimatedScene scene) {
+        textures = new String[] {scene.getAtlasFilePath()};
+        ResourceService resourceService = ServiceLocator.getResourceService();
+        resourceService.loadTextureAtlases(textures);
+
+        resourceService.loadAll();
+    }
+
+    /**
      * Creates entities for the given scene, such as background and animation entities.
      * @param scene The scene for which to create entities
      */
@@ -144,12 +216,56 @@ public abstract class Cutscene extends Component {
 
         // Create animation entities if they exist in the scene
         if (scene.getAnimationImagePaths() != null) {
-            for (String animationPath : scene.getAnimationImagePaths()) {
-                Entity animation = CutsceneFactory.createAnimation(animationPath);
+            String[] animationPaths = scene.getAnimationImagePaths();
+            Vector2[] animationPositions = scene.getAnimationPositions();
+            for (int i = 0; i < animationPaths.length; i++) {
+                String animationPath = animationPaths[i];
+                Vector2 animationPosition = animationPositions[i];
+                // Assume that the animation is called idle for now.
+                Entity animation = CutsceneFactory.createAnimation(animationPath, "idle");
                 entities.add(animation);
+                animation.setPosition(animationPosition);
                 ServiceLocator.getEntityService().register(animation);
             }
         }
+
+        //Create the image entities if they exist in the scene
+        if (scene.getImagePaths() != null) {
+            String[] imagePaths = scene.getImagePaths();
+            Vector2[] imagePositions = scene.getImagePositions();
+            for (int i = 0; i < imagePaths.length; i++) {
+                String imagePath = imagePaths[i];
+                Vector2 imagePosition = imagePositions[i];
+                // Assume that the animation is called idle for now.
+                Entity image = CutsceneFactory.createImage(imagePath);
+                entities.add(image);
+                image.setPosition(imagePosition);
+                ServiceLocator.getEntityService().register(image);
+            }
+        }
+    }
+
+    public void setTextForScene(Scene scene) {
+        Array<String> sceneText = scene.getSceneText();
+        if (sceneText.size > textIndex) {
+            currentText = sceneText.get(textIndex);
+            textIndex++;
+        }
+        else {
+            textIndex = 0;
+            nextCutscene();
+        }
+    }
+
+    /**
+     * Creates entities for the given scene, such as background and animation entities.
+     * @param scene The scene for which to create entities
+     */
+    protected void createEntitiesForScene(AnimatedScene scene) {
+        // Create animation entities
+        Entity animation = CutsceneFactory.createBadEndAnimation(scene.getAtlasFilePath());
+        entities.add(animation);
+        ServiceLocator.getEntityService().register(animation);
     }
 
     /**

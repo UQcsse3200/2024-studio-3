@@ -1,576 +1,576 @@
-cutscene_badend.png
+cutscene_badEnd.png
 size: 37184, 450
 format: RGBA8888
 filter: Nearest, Nearest
 repeat: none
-frame1
-  rotate: false
-  xy: 0, 0
-  size: 448, 256
-  orig: 448, 256
-  offset: 0, 0
-  index: -1
-frame2
+bad_end
+   rotate: false
+   xy: 0, 0
+   size: 448, 256
+   orig: 448, 256
+   offset: 0, 0
+   index: -1
+bad_end
    rotate: false
    xy: 449, 0
    size: 448, 256
    orig: 448, 256
    offset: 0, 0
    index: -1
-frame3
+bad_end
    rotate: false
    xy: 898, 0
    size: 448, 256
    orig: 448, 256
    offset: 0, 0
    index: -1
-frame4
+bad_end
    rotate: false
    xy: 1347, 0
    size: 448, 256
    orig: 448, 256
    offset: 0, 0
    index: -1
-frame5
+bad_end
    rotate: false
    xy: 1796, 0
    size: 448, 256
    orig: 448, 256
    offset: 0, 0
    index: -1
-frame6
+bad_end
    rotate: false
    xy: 2245, 0
    size: 448, 256
    orig: 448, 256
    offset: 0, 0
    index: -1
-frame7
+bad_end
    rotate: false
    xy: 2694, 0
    size: 448, 256
    orig: 448, 256
    offset: 0, 0
    index: -1
-frame8
+bad_end
    rotate: false
    xy: 3143, 0
    size: 448, 256
    orig: 448, 256
    offset: 0, 0
    index: -1
-frame9
+bad_end
    rotate: false
    xy: 3592, 0
    size: 448, 256
    orig: 448, 256
    offset: 0, 0
    index: -1
-frame10
+bad_end
    rotate: false
    xy: 4041, 0
    size: 448, 256
    orig: 448, 256
    offset: 0, 0
    index: -1
-frame11
+bad_end
    rotate: false
    xy: 4490, 0
    size: 448, 256
    orig: 448, 256
    offset: 0, 0
    index: -1
-frame12
+bad_end
    rotate: false
    xy: 4939, 0
    size: 448, 256
    orig: 448, 256
    offset: 0, 0
    index: -1
-frame13
+bad_end
    rotate: false
    xy: 5388, 0
    size: 448, 256
    orig: 448, 256
    offset: 0, 0
    index: -1
-frame14
+bad_end
    rotate: false
    xy: 5837, 0
    size: 448, 256
    orig: 448, 256
    offset: 0, 0
    index: -1
-frame15
+bad_end
    rotate: false
    xy: 6286, 0
    size: 448, 256
    orig: 448, 256
    offset: 0, 0
    index: -1
-frame16
+bad_end
    rotate: false
    xy: 6735, 0
    size: 448, 256
    orig: 448, 256
    offset: 0, 0
    index: -1
-frame17
+bad_end
    rotate: false
    xy: 7184, 0
    size: 448, 256
    orig: 448, 256
    offset: 0, 0
    index: -1
-frame18
+bad_end
    rotate: false
    xy: 7633, 0
    size: 448, 256
    orig: 448, 256
    offset: 0, 0
    index: -1
-frame19
+bad_end
    rotate: false
    xy: 8082, 0
    size: 448, 256
    orig: 448, 256
    offset: 0, 0
    index: -1
-frame20
+bad_end
    rotate: false
    xy: 8531, 0
    size: 448, 256
    orig: 448, 256
    offset: 0, 0
    index: -1
-frame21
+bad_end
    rotate: false
    xy: 8980, 0
    size: 448, 256
    orig: 448, 256
    offset: 0, 0
    index: -1
-frame22
+bad_end
    rotate: false
    xy: 9429, 0
    size: 448, 256
    orig: 448, 256
    offset: 0, 0
    index: -1
-frame23
+bad_end
    rotate: false
    xy: 9878, 0
    size: 448, 256
    orig: 448, 256
    offset: 0, 0
    index: -1
-frame24
+bad_end
    rotate: false
    xy: 10327, 0
    size: 448, 256
    orig: 448, 256
    offset: 0, 0
    index: -1
-frame25
+bad_end
    rotate: false
    xy: 10776, 0
    size: 448, 256
    orig: 448, 256
    offset: 0, 0
    index: -1
-frame26
+bad_end
    rotate: false
    xy: 11225, 0
    size: 448, 256
    orig: 448, 256
    offset: 0, 0
    index: -1
-frame27
+bad_end
    rotate: false
    xy: 11674, 0
    size: 448, 256
    orig: 448, 256
    offset: 0, 0
    index: -1
-frame28
+bad_end
    rotate: false
    xy: 12123, 0
    size: 448, 256
    orig: 448, 256
    offset: 0, 0
    index: -1
-frame29
+bad_end
    rotate: false
    xy: 12572, 0
    size: 448, 256
    orig: 448, 256
    offset: 0, 0
    index: -1
-frame30
+bad_end
    rotate: false
    xy: 13021, 0
    size: 448, 256
    orig: 448, 256
    offset: 0, 0
    index: -1
-frame31
+bad_end
    rotate: false
    xy: 13470, 0
    size: 448, 256
    orig: 448, 256
    offset: 0, 0
    index: -1
-frame32
+bad_end
    rotate: false
    xy: 13919, 0
    size: 448, 256
    orig: 448, 256
    offset: 0, 0
    index: -1
-frame33
+bad_end
    rotate: false
    xy: 14368, 0
    size: 448, 256
    orig: 448, 256
    offset: 0, 0
    index: -1
-frame34
+bad_end
    rotate: false
    xy: 14817, 0
    size: 448, 256
    orig: 448, 256
    offset: 0, 0
    index: -1
-frame35
+bad_end
    rotate: false
    xy: 15266, 0
    size: 448, 256
    orig: 448, 256
    offset: 0, 0
    index: -1
-frame36
+bad_end
    rotate: false
    xy: 15715, 0
    size: 448, 256
    orig: 448, 256
    offset: 0, 0
    index: -1
-frame37
+bad_end
    rotate: false
    xy: 16164, 0
    size: 448, 256
    orig: 448, 256
    offset: 0, 0
    index: -1
-frame38
+bad_end
    rotate: false
    xy: 16613, 0
    size: 448, 256
    orig: 448, 256
    offset: 0, 0
    index: -1
-frame39
+bad_end
    rotate: false
    xy: 17062, 0
    size: 448, 256
    orig: 448, 256
    offset: 0, 0
    index: -1
-frame40
+bad_end
    rotate: false
    xy: 17511, 0
    size: 448, 256
    orig: 448, 256
    offset: 0, 0
    index: -1
-frame41
+bad_end
    rotate: false
    xy: 17960, 0
    size: 448, 256
    orig: 448, 256
    offset: 0, 0
    index: -1
-frame42
+bad_end
    rotate: false
    xy: 18409, 0
    size: 448, 256
    orig: 448, 256
    offset: 0, 0
    index: -1
-frame43
+bad_end
    rotate: false
    xy: 18858, 0
    size: 448, 256
    orig: 448, 256
    offset: 0, 0
    index: -1
-frame44
+bad_end
    rotate: false
    xy: 19307, 0
    size: 448, 256
    orig: 448, 256
    offset: 0, 0
    index: -1
-frame45
+bad_end
    rotate: false
    xy: 19756, 0
    size: 448, 256
    orig: 448, 256
    offset: 0, 0
    index: -1
-frame46
+bad_end
    rotate: false
    xy: 20205, 0
    size: 448, 256
    orig: 448, 256
    offset: 0, 0
    index: -1
-frame47
+bad_end
    rotate: false
    xy: 20654, 0
    size: 448, 256
    orig: 448, 256
    offset: 0, 0
    index: -1
-frame48
+bad_end
    rotate: false
    xy: 21103, 0
    size: 448, 256
    orig: 448, 256
    offset: 0, 0
    index: -1
-frame49
+bad_end
    rotate: false
    xy: 21552, 0
    size: 448, 256
    orig: 448, 256
    offset: 0, 0
    index: -1
-frame50
+bad_end
    rotate: false
    xy: 22001, 0
    size: 448, 256
    orig: 448, 256
    offset: 0, 0
    index: -1
-frame51
+bad_end
    rotate: false
    xy: 22450, 0
    size: 448, 256
    orig: 448, 256
    offset: 0, 0
    index: -1
-frame52
+bad_end
    rotate: false
    xy: 22899, 0
    size: 448, 256
    orig: 448, 256
    offset: 0, 0
    index: -1
-frame53
+bad_end
    rotate: false
    xy: 23348, 0
    size: 448, 256
    orig: 448, 256
    offset: 0, 0
    index: -1
-frame54
+bad_end
    rotate: false
    xy: 23797, 0
    size: 448, 256
    orig: 448, 256
    offset: 0, 0
    index: -1
-frame55
+bad_end
    rotate: false
    xy: 24246, 0
    size: 448, 256
    orig: 448, 256
    offset: 0, 0
    index: -1
-frame56
+bad_end
    rotate: false
    xy: 24695, 0
    size: 448, 256
    orig: 448, 256
    offset: 0, 0
    index: -1
-frame57
+bad_end
    rotate: false
    xy: 25144, 0
    size: 448, 256
    orig: 448, 256
    offset: 0, 0
    index: -1
-frame58
+bad_end
    rotate: false
    xy: 25593, 0
    size: 448, 256
    orig: 448, 256
    offset: 0, 0
    index: -1
-frame59
+bad_end
    rotate: false
    xy: 26042, 0
    size: 448, 256
    orig: 448, 256
    offset: 0, 0
    index: -1
-frame60
+bad_end
    rotate: false
    xy: 26491, 0
    size: 448, 256
    orig: 448, 256
    offset: 0, 0
    index: -1
-frame61
+bad_end
    rotate: false
    xy: 26940, 0
    size: 448, 256
    orig: 448, 256
    offset: 0, 0
    index: -1
-frame62
+bad_end
    rotate: false
    xy: 27389, 0
    size: 448, 256
    orig: 448, 256
    offset: 0, 0
    index: -1
-frame63
+bad_end
    rotate: false
    xy: 27838, 0
    size: 448, 256
    orig: 448, 256
    offset: 0, 0
    index: -1
-frame64
+bad_end
    rotate: false
    xy: 28287, 0
    size: 448, 256
    orig: 448, 256
    offset: 0, 0
    index: -1
-frame65
+bad_end
    rotate: false
    xy: 28736, 0
    size: 448, 256
    orig: 448, 256
    offset: 0, 0
    index: -1
-frame66
+bad_end
    rotate: false
    xy: 29185, 0
    size: 448, 256
    orig: 448, 256
    offset: 0, 0
    index: -1
-frame67
+bad_end
    rotate: false
    xy: 29634, 0
    size: 448, 256
    orig: 448, 256
    offset: 0, 0
    index: -1
-frame68
+bad_end
    rotate: false
    xy: 30083, 0
    size: 448, 256
    orig: 448, 256
    offset: 0, 0
    index: -1
-frame69
+bad_end
    rotate: false
    xy: 30532, 0
    size: 448, 256
    orig: 448, 256
    offset: 0, 0
    index: -1
-frame70
+bad_end
    rotate: false
    xy: 30981, 0
    size: 448, 256
    orig: 448, 256
    offset: 0, 0
    index: -1
-frame71
+bad_end
    rotate: false
    xy: 31430, 0
    size: 448, 256
    orig: 448, 256
    offset: 0, 0
    index: -1
-frame72
+bad_end
    rotate: false
    xy: 31879, 0
    size: 448, 256
    orig: 448, 256
    offset: 0, 0
    index: -1
-frame73
+bad_end
    rotate: false
    xy: 32328, 0
    size: 448, 256
    orig: 448, 256
    offset: 0, 0
    index: -1
-frame74
+bad_end
    rotate: false
    xy: 32777, 0
    size: 448, 256
    orig: 448, 256
    offset: 0, 0
    index: -1
-frame75
+bad_end
    rotate: false
    xy: 33226, 0
    size: 448, 256
    orig: 448, 256
    offset: 0, 0
    index: -1
-frame76
+bad_end
    rotate: false
    xy: 33675, 0
    size: 448, 256
    orig: 448, 256
    offset: 0, 0
    index: -1
-frame77
+bad_end
    rotate: false
    xy: 34124, 0
    size: 448, 256
    orig: 448, 256
    offset: 0, 0
    index: -1
-frame78
+bad_end
    rotate: false
    xy: 34573, 0
    size: 448, 256
    orig: 448, 256
    offset: 0, 0
    index: -1
-frame79
+bad_end
    rotate: false
    xy: 35022, 0
    size: 448, 256
    orig: 448, 256
    offset: 0, 0
    index: -1
-frame80
+bad_end
    rotate: false
    xy: 35471, 0
    size: 448, 256
    orig: 448, 256
    offset: 0, 0
    index: -1
-frame81
+bad_end
    rotate: false
    xy: 35920, 0
    size: 448, 256
    orig: 448, 256
    offset: 0, 0
    index: -1
-frame82
+bad_end
    rotate: false
    xy: 36369, 0
    size: 448, 256

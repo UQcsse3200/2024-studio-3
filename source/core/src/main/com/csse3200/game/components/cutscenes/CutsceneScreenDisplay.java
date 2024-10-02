@@ -52,7 +52,12 @@ public class CutsceneScreenDisplay extends UIComponent {
         }
 
         setupUI();
+    }
 
+    /**
+     * Sets up the cutscene UI components.
+     */
+    private void setupUI() {
         // Initialize the text display and add it to the stage, hidden initially
         textDisplay = new CutsceneTextDisplay();
         textDisplay.setVisible(false);
@@ -91,87 +96,20 @@ public class CutsceneScreenDisplay extends UIComponent {
         stage.addActor(topRightTable);
         stage.addActor(table);
 
-        // Adding sample text for the cutscene
-        cutsceneText.add("Hello guys");
-
         // Initialize the first text in the cutscene
-        createTextBox("Start text");
-
-        // Move to the first step in the cutscene
-        advanceCutsceneStep();
+        createTextBox();
     }
 
-    /**
-     * Sets up the cutscene UI components.
-     */
-    private void setupUI() {
-        // Currently only the text display is used, more UI elements can be added if needed
-    }
-
-    /**
-     * Sets the text steps for the cutscene.
-     * @param cutsceneText An array of strings representing each step of the cutscene.
-     */
-    public void setCutsceneText(Array<String> cutsceneText) {
-        this.cutsceneText.clear();
-        this.cutsceneText.addAll(cutsceneText);
-        cutsceneStep = 0;  // Reset to the first step
-    }
-
-    /**
-     * Gets the current cutscene text.
-     * @return An array of strings representing each step of the cutscene.
-     */
-    public Array<String> getCutsceneText() {
-        return cutsceneText;
-    }
-
-    /**
-     * Gets the current step of the cutscene.
-     * @return The current step in the cutscene sequence.
-     */
-    public int getCutsceneStep() {
-        return cutsceneStep;
-    }
-
-    /**
-     * Advances to the next step of the cutscene, displaying the corresponding text.
-     * If all steps are completed, it ends the cutscene.
-     */
-    public void advanceCutsceneStep() {
-        logger.info("Cutscene Step: {}, cutsceneText.size {}", cutsceneStep, cutsceneText.size);
-        if (cutsceneStep < cutsceneText.size) {
-            // Display the text for the current step
-            String text = cutsceneText.get(cutsceneStep);
-            textDisplay.setText(text);
-            cutsceneStep++;  // Move to the next step
-        } else {
-            // End the cutscene if all steps are complete
-            textDisplay.setText("The cutscene ends.");
-        }
-    }
-
-    /**
-     * Updates the cutscene, allowing the player to advance to the next step by pressing the space bar.
-     */
-    @Override
-    public void update() {
-        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
-            advanceCutsceneStep();
-        }
-    }
 
     /**
      * Creates a text box entity to display the specified text.
-     * @param text The text to display in the text box.
      */
-    private void createTextBox(String text) {
+    private void createTextBox() {
         Array<Entity> entities = ServiceLocator.getEntityService().getEntities();
-
         // Trigger the "SetText" event on all entities
         for (int i = 0; i < entities.size; i++) {
             Entity entity = entities.get(i);
-            entity.getEvents().trigger("SetText", text);
+            entity.getEvents().trigger("SetText", "");
         }
     }
 
@@ -230,6 +168,7 @@ public class CutsceneScreenDisplay extends UIComponent {
      */
     public void setTextDisplay(CutsceneTextDisplay textDisplay) {
         this.textDisplay = textDisplay;
+        entity.getEvents().trigger("SetText", textDisplay);
     }
 
     /**

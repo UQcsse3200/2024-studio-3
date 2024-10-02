@@ -1,5 +1,7 @@
 package com.csse3200.game.components.cutscenes;
 
+import com.badlogic.gdx.math.Vector;
+import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.components.cutscenes.scenes.Scene;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
@@ -29,20 +31,27 @@ public class IntroCutscene extends Cutscene {
         cutsceneText.add("Third bit of text");
 
         // Add scenes with background images, animations, text, and duration
-        scenes.add(new Scene(
-                "images/Cutscenes/Beastly_Bistro_Background.png",
-                new String[]{"images/player/Cook_Model32.png"},
-                cutsceneText, 3.0f));
 
-        scenes.add(new Scene(
-                "images/Cutscenes/Graveyard_Scene.png",
-                new String[]{"images/player/Cook_Model32.png"},
-                cutsceneText, 4.0f));
+        Scene scene1 = new Scene("images/Cutscenes/Beastly_Bistro_Background.png");
+        scene1.setImages(
+                new String[]{"images/meals/acai_bowl.png"},
+                new Vector2[] {new Vector2(4, 2)}
+        );
 
-        scenes.add(new Scene(
-                "images/Cutscenes/Beastly_Bistro_Background.png",
-                new String[]{"images/player/Cook_Model32.png"},
-                cutsceneText, 2.0f));
+        scene1.setSceneText(cutsceneText);
+        scene1.setDuration(3.0f);
+
+        scenes.add(scene1);
+
+        Scene scene2 = new Scene("images/Cutscenes/Graveyard_Scene.png");
+        scene2.setImages(
+                new String[]{"images/meals/acai_bowl.png"},
+                new Vector2[] {new Vector2(2, 2)}
+        );
+        scene2.setSceneText(cutsceneText);
+        scene2.setDuration(3.0f);
+
+        scenes.add(scene2);
     }
 
     /**
@@ -60,11 +69,14 @@ public class IntroCutscene extends Cutscene {
         // Load the animation images for the cutscene
         animations = new String[] {"images/player/Cook_Model32.png"};
 
+        images = new String[] {"images/meals/acai_bowl.png"};
+
         // Get the resource service to load assets
         ResourceService resourceService = ServiceLocator.getResourceService();
         resourceService.loadTextures(textures);
+        resourceService.loadTextures(images);
         resourceService.loadTextureAtlases(animations);
-        resourceService.loadAll();  // Ensure all assets are loaded
+        resourceService.loadAll();
     }
 
     /**
