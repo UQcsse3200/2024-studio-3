@@ -19,14 +19,12 @@ import java.util.Objects;
 
 public class MapLayout{
     private EventHandler mapEventHandler;
-    //private static final String mapLevel1 = "images/map/map_test.txt";
     private static final String mapBase = "images/map/map_base.txt";
-    private static final String mapLevel1 = "images/map/map_one.txt";
+    private static final String mapLevel1 = "images/map/map_three.txt";
     private static final String mapLevel2 = "images/map/map_two.txt";
     private static final String mapLevel3 = "images/map/map_three.txt";
     private static final String mapLevel4 = "images/map/map_four.txt";
     private static final String mapLevel5 = "images/map/map_five.txt";
-
     private int strToNum;
     private int strToNum2;
     private ArrayList<Bench> benches = new ArrayList<Bench>();
