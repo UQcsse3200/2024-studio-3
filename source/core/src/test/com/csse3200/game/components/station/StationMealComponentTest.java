@@ -221,7 +221,7 @@ public class StationMealComponentTest {
         boolean found = false;
         for (int index = 0; index < stationInventory.getCapacity(); index++) {
             ItemComponent item = stationInventory.getItemAt(index);
-            if (item != null && item.getItemName().equals("Banana Split")) {
+            if (item != null && item.getItemName().equals("banana split")) {
                 found = true;
             }
         }
@@ -265,7 +265,7 @@ public class StationMealComponentTest {
         boolean found = false;
         for (int index = 0; index < stationInventory.getCapacity(); index++) {
             ItemComponent item = stationInventory.getItemAt(index);
-            if (item != null && item.getItemName().equals("Salad")) {
+            if (item != null && item.getItemName().equals("salad")) {
                 found = true;
             }
         }
@@ -288,7 +288,7 @@ public class StationMealComponentTest {
         boolean found = false;
         for (int index = 0; index < stationInventory.getCapacity(); index++) {
             ItemComponent item = stationInventory.getItemAt(index);
-            if (item != null && item.getItemName().equals("Steak Meal")) {
+            if (item != null && item.getItemName().equals("steak meal")) {
                 found = true;
             }
         }
@@ -402,17 +402,15 @@ public class StationMealComponentTest {
 
     @Test
     void onlyMealShouldBeTransferredToPlayerWhenMealIsMade() {
-        ItemComponent tomato = new IngredientComponent("tomato", ItemType.TOMATO, 1, 0, 0, "unknown");
-        playerInventory.addItem(tomato);
+        ItemComponent strawberry = new IngredientComponent("strawberry", ItemType.STRAWBERRY, 1, 0, 0, "unknown");
+        playerInventory.addItem(strawberry);
 
-        ItemComponent cucumber = new IngredientComponent("cucumber", ItemType.CUCUMBER, 1, 0, 0, "unknown");
-        ItemComponent beef = new IngredientComponent("beef", ItemType.BEEF, 1, 0, 0, "unknown");
-        stationInventory.addItem(cucumber);
-        stationInventory.addItem(beef);
+        ItemComponent banana = new IngredientComponent("banana", ItemType.BANANA, 1, 0, 0, "unknown");
+        stationInventory.addItem(banana);
 
         mealHandler.handleInteraction(playerInventory, inventoryDisplay, "receive");
         assertTrue(playerInventory.isEmpty());
-        assertTrue(stationInventory.find(tomato));
+        assertTrue(stationInventory.find(banana));
 
         mealHandler.handleInteraction(playerInventory, inventoryDisplay, "combine");
 
@@ -420,7 +418,7 @@ public class StationMealComponentTest {
         int index;
         for (index = 0; index < stationInventory.getCapacity(); index++) {
             ItemComponent item = stationInventory.getItemAt(index);
-            if (item != null && item.getItemName().equals("Steak Meal")) {
+            if (item != null && item.getItemName().equals("fruit salad")) {
                 found = true;
                 break;
             }
