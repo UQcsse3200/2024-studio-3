@@ -1,4 +1,5 @@
 package com.csse3200.game.services;
+import com.csse3200.game.components.maingame.CheckWinLoseComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.csse3200.game.events.EventHandler; 
@@ -112,6 +113,27 @@ public class DayNightService {
             logger.info("Game has ended after 5 days!");
             ServiceLocator.getDayNightService().getEvents().trigger("endGame");
             return;
+
+        } else {
+
+            // Get the player's CheckWinLoseComponent to check for Day 1-4 win/loss conditions
+            CheckWinLoseComponent checkWinLoseComponent = ServiceLocator.getPlayerService().getPlayer()
+                    .getComponent(CheckWinLoseComponent.class);
+
+            if (checkWinLoseComponent == null) {
+                logger.error("CheckWinLoseComponent not found on player entity!");
+                return;
+            }
+
+            // For days 1-4, check if the player has lost
+            String gameState = checkWinLoseComponent.checkGameState();
+
+            if ("LOSE".equals(gameState)) {
+                logger.info("Game over! Player lost on day {}!", day);
+                ServiceLocator.getDayNightService().getEvents().trigger("endGame");
+                return;
+
+            }
         }
 
         logger.info("It's a new Day!");
