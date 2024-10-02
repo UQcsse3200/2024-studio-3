@@ -101,23 +101,35 @@ public class CutsceneFactory {
      * @param animationAtlasPath The file path of the atlas file to use.
      * @return A new animation entity.
      */
-    public static Entity createBadEndAnimation(String animationAtlasPath) {
+    public static Entity createFullAnimation(String animationAtlasPath, String animName) {
         Entity animation = new Entity();
 
         AnimationRenderComponent animator =
                 new AnimationRenderComponent(
                         ServiceLocator.getResourceService().getAsset(animationAtlasPath, TextureAtlas.class)); // images/stations/Servery_Animation/servery.atlas
-        animator.addAnimation("bad_end", 0.1f, Animation.PlayMode.LOOP);
-
+        animator.addAnimation(animName, 0.1f, Animation.PlayMode.NORMAL);
         animation.addComponent(animator);
 
-        /**
-         TextureRenderComponent textureComponent = new TextureRenderComponent(animationImgPath);
-         animation.addComponent(textureComponent);
 
-         // Scale the entity based on the texture size
-         textureComponent.scaleEntity();
-         */
+        /**
+        animator.scaleEntity();
+
+
+        animator.startAnimation(animName);
+
+        // Calculate the aspect ratio of the screen
+        float aspectRatio = (float) Gdx.graphics.getWidth() / Gdx.graphics.getHeight();
+        float screenToHeight = Gdx.graphics.getHeight() * 2.7f; // Adjust scaling factor if needed
+        animation.setScale(screenToHeight * aspectRatio, screenToHeight);
+
+
+        // Center the background entity on the screen
+        float y_pos = -screenToHeight / 2;
+        float x_pos = -(screenToHeight * aspectRatio) / 2;
+        animation.setPosition(new Vector2(0, 0)); // x_pos, y_pos
+
+        */
+
 
         return animation;
     }
