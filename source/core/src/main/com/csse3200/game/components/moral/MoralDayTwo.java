@@ -19,6 +19,7 @@ import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import com.csse3200.game.components.maingame.TextDisplay;
 
 public class MoralDayTwo extends UIComponent {
     private static final Logger logger = LoggerFactory.getLogger(MoralDayTwo.class);
@@ -61,33 +62,10 @@ public class MoralDayTwo extends UIComponent {
         layout.setSkin(skin);
         stage.addActor(layout);
 
-        // create gray background
-        Pixmap pixmap = new Pixmap(1, 1, Pixmap.Format.RGBA8888);
-        pixmap.setColor(Color.GRAY);
-        pixmap.fill();
-        Texture pixmapTex = new Texture(pixmap);
-        pixmap.dispose();
-        Drawable blackBackground = new TextureRegionDrawable(new TextureRegion(pixmapTex));
-        layout.setBackground(blackBackground);
-
-//        // Initialise the textDisplay before using it
-//        textDisplay = new MoralTextDisplay();
-//        textDisplay.setVisible(false);  // Initially hidden
-//        stage.addActor(textDisplay.getTable());  // Add it to the stage
-//
-//        layout.add(textDisplay.getTable()).pad(10).row();
-//        //stage.addActor(table);
-//
-//        moralChoice();  // Ensure textDisplay is initialized before calling this method
-
-
-
-        // load and position the racoon image slightly to the left
         Texture imgTexture = new Texture(Gdx.files.internal("images/moral_scenes/gamblingnight.png"));
-        Drawable imgDrawable = new TextureRegionDrawable(imgTexture);
-        backgroundImage = new Image(imgDrawable);
+        Drawable imgDrawable = new TextureRegionDrawable(new TextureRegion(imgTexture));
 
-        layout.add(backgroundImage).fill().expand();
+        layout.setBackground(imgDrawable);
 
 
         // add another table inside the existing table, in order to show the Decision question and buttons for yes/no
@@ -113,56 +91,6 @@ public class MoralDayTwo extends UIComponent {
             show();
         });
     }
-
-//    /**
-//     * Proceeds to the next tutorial step using a switch-case.
-//     */
-//    public void moralChoice() {
-//        moralStep++;
-//        switch (moralStep) {
-//            case 1:
-//                showMovementTutorial();
-//                break;
-//            case 2:
-//                showItemPickupTutorial();
-//                break;
-//            default:
-//                logger.error("Unexpected tutorial step: " + moralStep);
-//        }
-//    }
-//
-//    /**
-//     * Creates tutorial text box. Calls set text.
-//     * @param text being displayed into textbox.
-//     */
-//    private void createTextBox(String text) {
-//        Array<Entity> entities = ServiceLocator.getEntityService().getEntities();
-//
-//        for (int i = 0; i < entities.size; i++) {
-//            Entity entity = entities.get(i);
-//            entity.getEvents().trigger("SetText", text);
-//        }
-//    }
-//
-//
-//
-//    /**
-//     * Displays the movement tutorial. The player needs to use W/A/S/D to move.
-//     */
-//    private void showMovementTutorial() {
-//        textDisplay.setVisible(true);
-//        createTextBox("Not bad, human. You made enough to pay rent. Maybe there’s some hope for you.");
-//    }
-//
-//    /**
-//     * Displays the item pickup tutorial. The player needs to press E to pick up an item.
-//     */
-//    private void showItemPickupTutorial() {
-//        textDisplay.setVisible(true);
-//        createTextBox("Here’s an offer—you wash some of my dirty money through your restaurant, and tomorrow you " +
-//                "won’t need to stress about the budget. What do you say?");
-//    }
-
 
 
     /**
@@ -229,31 +157,6 @@ public class MoralDayTwo extends UIComponent {
     public boolean getVisible() {
         return this.isVisible;
     }
-
-
-    /**
-     * Updates the moral decision screen.
-     */
-    @Override
-    public void update() {
-//        switch (moralStep) {
-//            case 1:
-//                if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
-//                    moralChoice();
-//                }
-//                break;
-//        }
-    }
-
-//    @Override
-//    public void dispose() {
-//        super.dispose();
-//
-//        if (textDisplay != null) {
-//            textDisplay.setVisible(false);
-//            textDisplay.getTable().clear();
-//        }
-//    }
 
 
 

@@ -16,6 +16,7 @@ import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import com.csse3200.game.components.maingame.TextDisplay;
 
 public class MoralDayFour extends UIComponent {
     private static final Logger logger = LoggerFactory.getLogger(MoralDayFour.class);
@@ -58,33 +59,10 @@ public class MoralDayFour extends UIComponent {
         layout.setSkin(skin);
         stage.addActor(layout);
 
-        // create gray background
-        Pixmap pixmap = new Pixmap(1, 1, Pixmap.Format.RGBA8888);
-        pixmap.setColor(Color.GRAY);
-        pixmap.fill();
-        Texture pixmapTex = new Texture(pixmap);
-        pixmap.dispose();
-        Drawable blackBackground = new TextureRegionDrawable(new TextureRegion(pixmapTex));
-        layout.setBackground(blackBackground);
-
-//        // Initialise the textDisplay before using it
-//        textDisplay = new MoralTextDisplay();
-//        textDisplay.setVisible(false);  // Initially hidden
-//        stage.addActor(textDisplay.getTable());  // Add it to the stage
-//
-//        layout.add(textDisplay.getTable()).pad(10).row();
-//        //stage.addActor(table);
-//
-//        moralChoice();  // Ensure textDisplay is initialized before calling this method
-
-
-
-        // load and position the racoon image slightly to the left
         Texture imgTexture = new Texture(Gdx.files.internal("images/moral_scenes/drugs.png"));
-        Drawable imgDrawable = new TextureRegionDrawable(imgTexture);
-        backgroundImage = new Image(imgDrawable);
+        Drawable imgDrawable = new TextureRegionDrawable(new TextureRegion(imgTexture));
 
-        layout.add(backgroundImage).fill().expand();
+        layout.setBackground(imgDrawable);
 
 
         // add another table inside the existing table, in order to show the Decision question and buttons for yes/no
