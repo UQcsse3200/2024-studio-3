@@ -87,7 +87,7 @@ public class StationMealComponent extends Component {
         }
 
         // Don't do anything if 'chop' is sent
-        if (Objects.equals(type, "receive")) {
+        if (type.equals("receive")) {
         }
 
         // Check if interaction was a combine attempt
