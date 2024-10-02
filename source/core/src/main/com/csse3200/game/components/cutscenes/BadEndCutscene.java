@@ -20,29 +20,34 @@ public class BadEndCutscene extends Cutscene {
                 "images/Cutscenes/cutscene_badEnd.atlas",
                 "bad_end", 20));
 
-        //animatedScenes.add(new AnimatedScene(
-        //        "images/stations/Servery_Animation/servery.atlas",
-        //        "servery_idle", 20)); // servery_idle
-
         animatedScenes.add(new AnimatedScene(
-                "images/Cutscenes/cutscene_badEnd.atlas",
+                "images/Cutscenes/cutscene_badEnd2.atlas",
                 "bad_end2", 20));
 
         animatedScenes.add(new AnimatedScene(
-                "images/Cutscenes/cutscene_badEnd.atlas",
+                "images/Cutscenes/cutscene_badEnd3.atlas",
                 "bad_end3", 20));
 
         animatedScenes.add(new AnimatedScene(
-                "images/Cutscenes/cutscene_badEnd.atlas",
+                "images/Cutscenes/cutscene_badEnd4.atlas",
                 "bad_end4", 20));
 
         animatedScenes.add(new AnimatedScene(
-                "images/Cutscenes/cutscene_badEnd.atlas",
+                "images/Cutscenes/cutscene_badEnd5.atlas",
                 "bad_end5", 20));
 
         animatedScenes.add(new AnimatedScene(
-                "images/Cutscenes/cutscene_badEnd.atlas",
+                "images/Cutscenes/cutscene_badEnd6.atlas",
                 "bad_end6", 20));
+
+        animatedScenes.add(new AnimatedScene(
+                "images/Cutscenes/cutscene_badEnd7.atlas",
+                "bad_end7", 20));
+
+        animatedScenes.add(new AnimatedScene(
+                "images/Cutscenes/cutscene_badEnd8.atlas",
+                "bad_end8", 20));
+
     }
 
     @Override
@@ -52,8 +57,7 @@ public class BadEndCutscene extends Cutscene {
         };
 
         animations = new String[] {
-                "images/Cutscenes/cutscene_badEnd.atlas",
-                "images/stations/Servery_Animation/servery.atlas"
+
         };
         ResourceService resourceService = ServiceLocator.getResourceService();
         resourceService.loadTextures(textures);

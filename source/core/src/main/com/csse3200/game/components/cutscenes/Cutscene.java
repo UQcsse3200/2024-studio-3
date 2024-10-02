@@ -148,13 +148,6 @@ public abstract class Cutscene extends Component {
             loadAssetsForScene(currentScene);  // Load assets needed for the current scene
             createEntitiesForScene(currentScene);  // Create entities for the current scene
 
-            /**
-            currentScene = scenes.get(sceneIndex);
-            logger.info("Loading scene {}", sceneIndex);
-
-            loadAssetsForScene(currentScene);  // Load assets needed for the current scene
-            createEntitiesForScene(currentScene);  // Create entities for the current scene
-            */
 
             setTextForScene(currentScene);
         } else {

@@ -127,7 +127,7 @@ public class CutsceneFactory {
         AnimationRenderComponent animator =
                 new AnimationRenderComponent(
                         ServiceLocator.getResourceService().getAsset(animationAtlasPath, TextureAtlas.class)); // images/stations/Servery_Animation/servery.atlas
-        animator.addAnimation(animName, 0.1f, Animation.PlayMode.NORMAL);
+        animator.addAnimation(animName, 0.2f, Animation.PlayMode.NORMAL);
         animation.addComponent(animator);
         animator.startAnimation(animName);
 
