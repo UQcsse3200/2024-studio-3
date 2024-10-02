@@ -18,7 +18,8 @@ import java.util.Objects;
 
 public class MapLayout extends GameArea{
     private EventHandler mapEventHandler;
-    private static final String mapLevel1 = "images/map/map_test.txt";
+    //private static final String mapLevel1 = "images/map/map_test.txt";
+    private static final String mapLevel1 = "images/map/map_two.txt";
     private int strToNum;
     private int strToNum2;
     private ArrayList<Bench> benches = new ArrayList<Bench>();
@@ -79,7 +80,7 @@ public class MapLayout extends GameArea{
                         col += 3;
                         logger.info("Spawning entity at row " + row + ", column " + col);
                     }
-                    // Spawn bench collumn when 'Y'
+                    // Spawn bench column when 'Y'
                     else if (square.equals("Y")) {
                         strToNum = Integer.valueOf(parts[col+1]);
                         strToNum2 = Integer.valueOf(parts[col+2]);
