@@ -180,9 +180,13 @@ public class MainGameScreen extends ScreenAdapter {
 
 		renderer.render();
 		Gdx.gl.glClearColor(0f/255f, 0f/255f, 0f/255f, 1);
-
 	}
 
+	/**
+	 * Resize the screen and docket
+	 * @param width width of screen
+	 * @param height height of screen
+	 */
 	/**
 	 * Return freeze screen
 	 */
@@ -326,6 +330,8 @@ public class MainGameScreen extends ScreenAdapter {
 			.addComponent(new LoanUpgrade())
 			.addComponent(new RandomCombination())
 			.addComponent(new SpeedBootsUpgrade());
+
+
 
 		//temporary moral display
 //			.addComponent(new MoralDisplayTemp(this));
