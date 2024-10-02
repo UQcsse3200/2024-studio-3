@@ -266,6 +266,7 @@ public class ForestGameArea extends GameArea {
       //spawnPlatewithMeal();
 
     // Spawn the player
+    logger.warn("HERHEHEHAEHDAHEQ");
     player = spawnPlayer();
     ServiceLocator.getPlayerService().registerPlayer(player);
     ServiceLocator.getSaveLoadService().combatStatsComponent = player.getComponent(CombatStatsComponent.class);

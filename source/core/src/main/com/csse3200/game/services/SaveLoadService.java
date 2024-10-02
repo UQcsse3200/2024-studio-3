@@ -16,9 +16,8 @@ import com.csse3200.game.events.EventHandler;
 public class SaveLoadService {
     private static final Logger logger = LoggerFactory.getLogger(SaveLoadService.class);
     private final EventHandler eventHandler;
-    private static final String ROOT_DIR = "assets/saves";
+    private static final String ROOT_DIR = "saves";
     private String saveFile = "begin.json";
-    public boolean created = false;
     public CombatStatsComponent combatStatsComponent;
 
     public SaveLoadService() {
@@ -29,11 +28,12 @@ public class SaveLoadService {
      * Saves the current state of the game into a GameState and writes to the path given
      */
     public void save() {
+        logger.warn(saveFile);
         GameState state = new GameState();
         Entity player = ServiceLocator.getPlayerService().getPlayer();
         state.setMoney(player.getComponent(CombatStatsComponent.class).getGold());
         state.setDay(ServiceLocator.getDayNightService().getDay());
-        //state.setDecisions(MoralDecision.getListOfDecisions());
+        state.setDecisions(ServiceLocator.getEntityService().getMoralSystem().getComponent(MoralDecision.class).getListOfDecisions());
         FileLoader.writeClass(state, (ROOT_DIR + File.separator + saveFile), Location.LOCAL);
         ServiceLocator.getEntityService().getEvents().trigger("togglePause");
     }
@@ -44,12 +44,16 @@ public class SaveLoadService {
      */
     public void load() {
         logger.warn(saveFile);
-        GameState state = FileLoader.readClass(GameState.class, ROOT_DIR + File.separator + saveFile, Location.INTERNAL);
-        this.combatStatsComponent.setGold(state.getMoney());
-        ServiceLocator.getDayNightService().setDay(state.getDay());
-        /*for (Decision decision: state.getDecisions()) {
-            ServiceLocator.getEntityService().getEvents().trigger("addDecision", decision);
-        }*/
+        logger.warn("YAYAYAYA");
+        GameState state = FileLoader.readClass(GameState.class, ROOT_DIR + File.separator + saveFile, Location.LOCAL);
+        if (state != null) {
+            this.combatStatsComponent.setGold(state.getMoney());
+            ServiceLocator.getDayNightService().setDay(state.getDay());
+            /*MoralDecision system = ServiceLocator.getEntityService().getMoralSystem().getComponent(MoralDecision.class);
+            for (Decision decision: system.getListOfDecisions()) {
+                system.addDecision(decision);
+            }*/
+        }
 
     }
 
