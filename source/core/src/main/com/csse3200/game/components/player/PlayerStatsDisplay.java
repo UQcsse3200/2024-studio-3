@@ -3,10 +3,18 @@ package com.csse3200.game.components.player;
 import java.util.concurrent.TimeUnit;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.glutils.PixmapTextureData;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
@@ -30,7 +38,7 @@ public class PlayerStatsDisplay extends UIComponent {
   private static Label timerLabel;
   public static long timer;
   private static String digitaltime;
-
+  private float width_of_screen=Gdx.graphics.getWidth(),height_of_screen=Gdx.graphics.getHeight();
 
 
   /**
@@ -60,7 +68,9 @@ public class PlayerStatsDisplay extends UIComponent {
     table = new Table();
     table.top().left();
     table.setFillParent(true);
+//    table.setSize(200f,150f);
     table.padTop(45f).padLeft(5f);
+//    table.setPosition(5,height_of_screen - (table.getHeight()*2));
 
     goldTable = new Table();
     goldTable.bottom().left();
@@ -68,12 +78,13 @@ public class PlayerStatsDisplay extends UIComponent {
     goldTable.padBottom(45f).padLeft(100f);
 
     timerTable = new Table();
-    timerTable.bottom().right();
-    timerTable.setFillParent(true);
-    timerTable.padBottom(45f).padRight(55f);
+//    timerTable.bottom().right();
+    timerTable.setSize(200f,150f);
+    timerTable.setPosition(width_of_screen - timerTable.getWidth(), 100f);
 
-    // timer and gold font
-    //newFont = new Skin(Gdx.files.internal("flat-earth/skin/flat-earth-ui.png"));
+    Texture texture = new Texture(Gdx.files.internal("images/component_background.png"));
+    TextureRegionDrawable drawable = new TextureRegionDrawable(new TextureRegion(texture));
+    timerTable.setBackground(drawable);
 
     // Heart image
     float heartSideLength = 30f;
@@ -101,7 +112,7 @@ public class PlayerStatsDisplay extends UIComponent {
     //Label for the Current Day
     CharSequence dayText = String.format("Day: %d", currentday); // Start with Day 1
     dayLabel = new Label(dayText, skin, "large");
-    table.add(dayLabel);
+    table.add(dayLabel).colspan(2);
     stage.addActor(table);
     table.row();
 
@@ -111,8 +122,11 @@ public class PlayerStatsDisplay extends UIComponent {
     // Timer label for the remaining time in the day
     CharSequence TimerText = String.format("\n   %s", convertDigital(timer));
     timerLabel = new Label(TimerText, skin, "large");
-    timerTable.add(timerImage).size(heartSideLength).pad(5);
-    timerTable.add(timerLabel);
+    timerLabel.setFontScale(0.65f);
+
+    timerTable.add(timerImage).size(heartSideLength);
+    timerTable.add(timerLabel).padRight(0.5f).padBottom(20f);
+
     stage.addActor(timerTable);
   }
 
