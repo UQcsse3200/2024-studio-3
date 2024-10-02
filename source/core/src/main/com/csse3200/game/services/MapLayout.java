@@ -19,7 +19,7 @@ import java.util.Objects;
 public class MapLayout extends GameArea{
     private EventHandler mapEventHandler;
     //private static final String mapLevel1 = "images/map/map_test.txt";
-    private static final String mapLevel1 = "images/map/map_base.txt";
+    private static final String mapLevel1 = "images/map/map_three.txt";
     private int strToNum;
     private int strToNum2;
     private ArrayList<Bench> benches = new ArrayList<Bench>();
