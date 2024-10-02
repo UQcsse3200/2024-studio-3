@@ -20,7 +20,7 @@ import java.util.Objects;
 public class MapLayout{
     private EventHandler mapEventHandler;
     private static final String mapBase = "images/map/map_base.txt";
-    private static final String mapLevel1 = "images/map/map_three.txt";
+    private static final String mapLevel1 = "images/map/map_four.txt";
     private static final String mapLevel2 = "images/map/map_two.txt";
     private static final String mapLevel3 = "images/map/map_three.txt";
     private static final String mapLevel4 = "images/map/map_four.txt";
