@@ -48,9 +48,9 @@ public class MainMenuActions extends Component {
       entity.getEvents().trigger("loadGame", saveFile);
     } else {
       LocalDateTime currentDateTime = LocalDateTime.now();
-      DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+      DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy_HH-mm-ss");
       String formattedDateTime = currentDateTime.format(formatter);
-      ServiceLocator.getSaveLoadService().setSaveFile(formattedDateTime);
+      ServiceLocator.getSaveLoadService().setSaveFile(formattedDateTime + ".json");
       new Confirmationpopup("Game Tuto Confirm", skin, stage, game);
     }
   }
