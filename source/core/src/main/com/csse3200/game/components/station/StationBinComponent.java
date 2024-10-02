@@ -14,8 +14,6 @@ import org.slf4j.LoggerFactory;
  *
  * StationBinComponent throughs away an item
  *
- * {@link #submitMeal(ItemComponent)}: Function which controls the submission of a meal by the
- * class.
  */
 public class StationBinComponent extends Component {
 
