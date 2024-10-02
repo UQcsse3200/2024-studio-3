@@ -3,6 +3,7 @@ package com.csse3200.game.components.moral;
 import com.csse3200.game.components.Component;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import com.csse3200.game.services.*;
 
 import java.util.ArrayList;
 import java.util.List;
