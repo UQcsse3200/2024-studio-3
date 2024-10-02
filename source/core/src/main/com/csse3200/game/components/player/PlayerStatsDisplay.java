@@ -26,6 +26,7 @@ public class PlayerStatsDisplay extends UIComponent {
   private static Label timerLabel;
   public static long timer;
   private static String digitaltime;
+  private static PlayerStatsDisplay instance;
 
 
 
@@ -35,6 +36,7 @@ public class PlayerStatsDisplay extends UIComponent {
   @Override
   public void create() {
     super.create();
+    instance = this;
     addActors();
     timer =  ServiceLocator.getDayNightService().FIVE_MINUTES;
   
@@ -47,6 +49,10 @@ public class PlayerStatsDisplay extends UIComponent {
     ServiceLocator.getDayNightService().getEvents().addListener("Second", (Long time) -> {
       updateTime(time);
     });
+  }
+
+  public static PlayerStatsDisplay getInstance() {
+    return instance;
   }
 
   /**

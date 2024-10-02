@@ -171,7 +171,7 @@ public class ItemFactory {
      */
     public static Entity createSalad(List<IngredientComponent> ingredients) {
         Entity salad = new Entity()
-                .addComponent(new MealComponent("Salad", ItemType.SALAD, 3, ingredients, 10));
+                .addComponent(new MealComponent("salad", ItemType.SALAD, 3, ingredients, 10));
         return salad;
     }
 
@@ -182,7 +182,7 @@ public class ItemFactory {
      */
     public static Entity createSteakMeal(List<IngredientComponent> ingredients) {
         Entity steakMeal = new Entity()
-                .addComponent(new MealComponent("Steak Meal", ItemType.STEAKMEAL, 3, ingredients, 10));
+                .addComponent(new MealComponent("steak meal", ItemType.STEAKMEAL, 3, ingredients, 10));
         return steakMeal;
     }
 
@@ -194,7 +194,7 @@ public class ItemFactory {
      */
     public static Entity createBananaSplit(List<IngredientComponent> ingredients) {
         Entity bananaSplit = new Entity()
-                .addComponent(new MealComponent("Banana Split", ItemType.BANANASPLIT, 3, ingredients, 10));
+                .addComponent(new MealComponent("banana split", ItemType.BANANASPLIT, 3, ingredients, 10));
         return bananaSplit;
     }
 
