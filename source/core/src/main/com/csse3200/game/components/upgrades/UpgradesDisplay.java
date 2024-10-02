@@ -26,10 +26,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 
+/**
+ * A UI component for displaying and interacting with the upgrades menu in the game.
+ */
 public class UpgradesDisplay extends UIComponent {
     private final MainGameScreen game;
     private static final String[] upgradesMenuTexture = {"images/Upgrade_display.png"};
-    //TODO why is this pauseMenuDisplay??
     private static final Logger logger = LoggerFactory.getLogger(PauseMenuDisplay.class);
 
     private Image upgradesMenuImage;
@@ -47,7 +49,10 @@ public class UpgradesDisplay extends UIComponent {
         "images/notEnoughGold.png",
     };
 
-
+    /**
+     *
+     * This initializes the list of upgrade images but does not create the menu UI components.
+     */
     public UpgradesDisplay(MainGameScreen game) {
         super();
         this.game = game;
@@ -82,7 +87,10 @@ public class UpgradesDisplay extends UIComponent {
 
     }
 
-
+    /**
+     * Initializes the UI components of the upgrade display, loads the necessary textures,
+     * and sets up the event listeners for displaying or hiding the upgrade menu.
+     */
     @Override
     public void create() {
         super.create();
@@ -156,27 +164,6 @@ public class UpgradesDisplay extends UIComponent {
 
     }
 
-//    public void addRandomUpgradeImage() {
-//        upgradesTable.clearChildren();
-//
-//        // make it random
-//        int randomIndex = (int) (Math.random() * upgradeTexturePaths.length);
-//        String randomTexturePath = upgradeTexturePaths[randomIndex];
-//
-//        Image upgradeImage = createUpgradeImage(randomTexturePath);
-//
-//        // Add the upgrade image to the table
-//        upgradesTable.add(upgradeImage).pad(10);
-//        upgradeImages.add(upgradeImage);
-//    }
-//
-//
-//    private Image createUpgradeImage(String texturePath) {
-//        Texture upgradeTexture = ServiceLocator.getResourceService().getAsset(texturePath, Texture.class);
-//        Image upgradeImage = new Image(upgradeTexture);
-//        upgradeImage.setSize(150, 150);
-//        return upgradeImage;
-//    }
 
     /**
      * Allowing user to decide whether the upgrade is needed or not by pressing YES or NO button
