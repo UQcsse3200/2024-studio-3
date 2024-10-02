@@ -103,6 +103,7 @@ public class CombatStatsComponent extends Component {
    * @param gold gold
    */
   public void setGold(int gold) {
+    logger.info("combatstatsgold, {}", gold);
     this.gold = Math.max(gold, 0);
     if (entity != null) {
       entity.getEvents().trigger("updateGold", this.gold);

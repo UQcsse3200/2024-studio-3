@@ -3,9 +3,12 @@ package com.csse3200.game.components.player;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector2;
+import com.csse3200.game.components.ordersystem.MainGameOrderBtnDisplay;
 import com.csse3200.game.input.InputComponent;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.utils.math.Vector2Utils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
 
@@ -15,6 +18,7 @@ import java.util.HashMap;
  */
 public class KeyboardPlayerInputComponent extends InputComponent {
   //private static final float ROOT2INV = 1f / (float) Math.sqrt(2f);
+  private static final Logger logger = LoggerFactory.getLogger(KeyboardPlayerInputComponent.class);
   private Vector2 walkDirection = Vector2.Zero.cpy();
   public float walkSpeed = 1f;
   private static HashMap<Integer, Integer> keyFlags = new HashMap<>();
@@ -48,6 +52,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
     }
 
     if (keycode == Keys.O) {
+      logger.info("Create order key pressed");
       entity.getEvents().trigger("createOrder");
       return true;
     }

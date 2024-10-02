@@ -226,6 +226,9 @@ public class EndDayDisplay extends UIComponent {
      * @param gold the new gold amount
      */
     private void handleGoldUpdate(int gold) {
+        logger.info("gold, {}", gold);
+        logger.info("ServiceLocator.getLevelService().getCurrGold(), {}", ServiceLocator.getLevelService().getCurrGold());
+        logger.info("currentGold, {}", currentGold);
         currentGold = gold;
         goldLabel.setText(currentGold);
     }
@@ -282,6 +285,7 @@ public class EndDayDisplay extends UIComponent {
      * Animates the gold change.
      */
     private void animateGoldChange() {
+        logger.info("animate gold, starting gold {}, currentGold {}", STARTING_GOLD, currentGold);
         float duration = 1.0f;
         goldLabel.addAction(Actions.sequence(
                 Actions.run(() -> goldLabel.setText(String.valueOf(STARTING_GOLD))),

@@ -58,7 +58,7 @@ public class LevelComponent extends Component {
                 customerSpawned();
                 spawnCustomer();
                 //ServiceLocator.getLevelService().getEvents().trigger("createCustomer", gameArea);
-                logger.info("Spawned {} customer(s) so far", numbCustomersSpawned);
+                //logger.info("Spawned {} customer(s) so far", numbCustomersSpawned);
                 if (numbCustomersSpawned == levelSpawnCap) {
                     logger.info("Hit the spawn limit of {} with {}", getLevelSpawnCap(), getNumbCustomersSpawned());
                     toggleNowSpawning();
@@ -85,7 +85,7 @@ public class LevelComponent extends Component {
     private void spawnCustomer() {
         int index = rand.nextInt(customerNameArray.size());
         customerSpawnController.getEvents().trigger(customerNameArray.get(index));
-        logger.info("Spawned {}", customerNameArray.get(index));
+        logger.info("Spawned Customer {}. {}", numbCustomersSpawned, customerNameArray.get(index));
         ServiceLocator.getLevelService().getEvents().trigger("customerSpawned", customerNameArray.get(index));
     }
 

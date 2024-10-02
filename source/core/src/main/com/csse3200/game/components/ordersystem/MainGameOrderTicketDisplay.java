@@ -147,7 +147,7 @@ public class MainGameOrderTicketDisplay extends UIComponent {
      * Initialises the background, labels, and countdown timer for the order.
      */
     public void addActors() {
-        logger.info("Adding actors");
+        // logger.info("Adding actors");
         Table table = new Table();
         long startTime = TimeUtils.millis();
 
@@ -247,7 +247,7 @@ public class MainGameOrderTicketDisplay extends UIComponent {
      * @param table  the table representing the docket.
      * @param i  the index of the docket.
      */
-    public void stageDispose(Docket docket, Table table, int i, Boolean isSuccess) {
+    public void stageDispose(Docket docket, Table table, int i) {
         logger.info("Dispose Docket");
         table.setBackground((Drawable) null);
         table.clear();
@@ -259,12 +259,6 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         startTimeArrayList.remove(i);
         countdownLabelArrayList.remove(i);
         recipeTimeArrayList.remove(i);
-        // combatStatsComponent.addGold(getRecipeValue());
-        // Commenting out because gold is already incremented in StationServingComponent.java in scoreMeal() method.
-        // ServiceLocator.getLevelService().setCurrGold(ServiceLocator.getLevelService().getCurrGold() + 10);
-        // if (isSuccess) {
-        //    combatStatsComponent.addGold(getRecipeValue());
-        // }
     }
 
     /**
@@ -431,8 +425,8 @@ public class MainGameOrderTicketDisplay extends UIComponent {
                 currBackground.updateDocketTexture((double) remainingTime / 1000);
                 currTable.setBackground(currBackground.getImage().getDrawable());
             } else {
-                logger.info("Remaining time is 0");
-                stageDispose(currBackground, currTable, i, false);
+                logger.info("Order Expired");
+                stageDispose(currBackground, currTable, i);
             }
         }
         if (!tableArrayList.isEmpty()) {
@@ -451,7 +445,7 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         Docket currBackground = backgroundArrayList.get(index);
         Table currTable = tableArrayList.get(index);
 
-        stageDispose(currBackground, currTable, index, true);
+        stageDispose(currBackground, currTable, index);
     }
 
     /**

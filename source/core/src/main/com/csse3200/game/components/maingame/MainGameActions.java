@@ -100,6 +100,7 @@ public class MainGameActions extends Component {
      * @param preferredRecipe the name of the recipe to create a docket for
      */
     public void onCreateOrder(String preferredRecipe) {
+        logger.info("Creating docket: {}", preferredRecipe);
         int orderCount = MainGameOrderTicketDisplay.getTableArrayList().size();
         if (orderCount < ORDER_LIMIT) {
 //            String preferredRecipe = getPreferredRecipeFromSpawningAnimals();

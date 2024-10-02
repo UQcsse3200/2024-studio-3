@@ -52,12 +52,13 @@ public class LevelService {
     }
 
     public int getCurrGold() {
+        logger.info("currGold is {}", currGold);
         return currGold;
     }
 
     public void setCurrGold(int gold) {
         currGold = gold;
-        logger.info("Gold is {}", getCurrGold());
+        logger.info("setCurrGold({}). Gold is {}", gold, getCurrGold());
     }
 
     /**
