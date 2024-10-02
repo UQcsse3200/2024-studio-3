@@ -72,6 +72,7 @@ public class PlayerStatsDisplay extends UIComponent {
     table.padTop(45f).padLeft(5f);
 //    table.setPosition(5,height_of_screen - (table.getHeight()*2));
 
+
     goldTable = new Table();
     goldTable.bottom().left();
     goldTable.setFillParent(true);
@@ -91,13 +92,14 @@ public class PlayerStatsDisplay extends UIComponent {
     heartImage = new Image(ServiceLocator.getResourceService().getAsset("images/heart.png", Texture.class));
 
     // Health text
-    int health = entity.getComponent(CombatStatsComponent.class).getHealth();
-    CharSequence healthText = String.format("Health: %d", health);
-    healthLabel = new Label(healthText, skin, "large");
-
-    table.add(heartImage).size(heartSideLength).pad(5);
-    table.add(healthLabel);
-    table.row();
+//    int health = entity.getComponent(CombatStatsComponent.class).getHealth();
+//    CharSequence healthText = String.format("Health: %d", health);
+//    healthLabel = new Label(healthText, skin, "large");
+//    healthLabel.setScale(0.65f);
+//
+//    table.add(heartImage).size(heartSideLength).padTop(20).padLeft(20);
+//    table.add(healthLabel);
+//    table.row();
 
      goldImage = new Image(ServiceLocator.getResourceService().getAsset("images/money.png", Texture.class));
      int gold = entity.getComponent(CombatStatsComponent.class).getGold();
@@ -109,10 +111,19 @@ public class PlayerStatsDisplay extends UIComponent {
      stage.addActor(goldTable);
      goldTable.row();
 
+    Table table2 = new Table();
+    table2.top().left();
+    table2.setFillParent(true);
+    table2.padTop(45f);
+
+    Image sample_image= new Image(ServiceLocator.getResourceService().getAsset("images/component_background_2.png", Texture.class));
+    table2.add(sample_image).size(250,100).row();
+    stage.addActor(table2);
+
     //Label for the Current Day
     CharSequence dayText = String.format("Day: %d", currentday); // Start with Day 1
     dayLabel = new Label(dayText, skin, "large");
-    table.add(dayLabel).colspan(2);
+    table.add(dayLabel).padLeft(80).padTop(30);
     stage.addActor(table);
     table.row();
 
