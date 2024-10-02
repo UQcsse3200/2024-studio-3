@@ -75,7 +75,7 @@ public class MapLayout extends GameArea{
                         strToNum = Integer.valueOf(parts[col+1]);
                         strToNum2 = Integer.valueOf(parts[col+2]);
                         benches.addAll(BenchGenerator.createBenchRow(strToNum + 4,
-                                strToNum2 + 4, row-4));
+                                strToNum + strToNum2 + 4, row-4));
                         col += 3;
                         logger.info("Spawning entity at row " + row + ", column " + col);
                     }
@@ -105,7 +105,6 @@ public class MapLayout extends GameArea{
                         stations.add(station);
                         col+=3;
                     }
-                    /*
                     // spawn a lettuce basket
                     else if (square.equals("l")) {
                         strToNum = Integer.valueOf(parts[col+1]);
@@ -114,7 +113,6 @@ public class MapLayout extends GameArea{
                         stations.add(station);
                         col+=3;
                     }
-                    */
                     // spawn a tomato basket
                     else if (square.equals("t")) {
                         strToNum = Integer.valueOf(parts[col+1]);
@@ -131,10 +129,58 @@ public class MapLayout extends GameArea{
                         stations.add(station);
                         col+=3;
                     }
-                    //stove
-                    else if (square.equals("c")) {
+                    //stove E
+                    else if (square.equals("E")) {
                         strToNum = Integer.valueOf(parts[col+1]);
-                        Entity station = StationFactory.createCucumberBasket();
+                        Entity station = StationFactory.createStove();
+                        station.setPosition(strToNum+4, row-4);
+                        stations.add(station);
+                        col+=3;
+                    }
+                    //Oven O
+                    else if (square.equals("O")) {
+                        strToNum = Integer.valueOf(parts[col+1]);
+                        Entity station = StationFactory.createOven();
+                        station.setPosition(strToNum+4, row-4);
+                        stations.add(station);
+                        col+=3;
+                    }
+                    //beef fridge B
+                    else if (square.equals("B")) {
+                        strToNum = Integer.valueOf(parts[col+1]);
+                        Entity station = StationFactory.createBeefFridge();
+                        station.setPosition(strToNum+4, row-4);
+                        stations.add(station);
+                        col+=3;
+                    }
+                    //chocolate fridge C
+                    else if (square.equals("C")) {
+                        strToNum = Integer.valueOf(parts[col+1]);
+                        Entity station = StationFactory.createChocolateFridge();
+                        station.setPosition(strToNum+4, row-4);
+                        stations.add(station);
+                        col+=3;
+                    }
+                    // cutting board G
+                    else if (square.equals("G")) {
+                        strToNum = Integer.valueOf(parts[col+1]);
+                        Entity station = StationFactory.createCuttingBoard();
+                        station.setPosition(strToNum+4, row-4);
+                        stations.add(station);
+                        col+=3;
+                    }
+                    // bin N
+                    else if (square.equals("N")) {
+                        strToNum = Integer.valueOf(parts[col+1]);
+                        Entity station = StationFactory.createBin();
+                        station.setPosition(strToNum+4, row-4);
+                        stations.add(station);
+                        col+=3;
+                    }
+                    // servery/submission S
+                    else if (square.equals("S")) {
+                        strToNum = Integer.valueOf(parts[col+1]);
+                        Entity station = StationFactory.createSubmissionWindow();
                         station.setPosition(strToNum+4, row-4);
                         stations.add(station);
                         col+=3;
