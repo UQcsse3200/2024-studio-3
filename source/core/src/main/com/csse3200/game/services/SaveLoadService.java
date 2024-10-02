@@ -16,19 +16,13 @@ import com.csse3200.game.events.EventHandler;
 public class SaveLoadService {
     private static final Logger logger = LoggerFactory.getLogger(SaveLoadService.class);
     private final EventHandler eventHandler;
-    private static final String ROOT_DIR = "saves";
-    private String saveFile = "saveFile.json";
+    private static final String ROOT_DIR = "assets/saves";
+    private String saveFile = "begin.json";
     public boolean created = false;
     public CombatStatsComponent combatStatsComponent;
 
     public SaveLoadService() {
         this.eventHandler = new EventHandler();
-        ServiceLocator.getPlayerService().getEvents().addListener("playerCreated", (Entity player) -> {
-            logger.warn("HELLO");
-            this.combatStatsComponent = player.getComponent(CombatStatsComponent.class);
-            this.created = true;
-            this.load();
-        });
     }
 
     /**
@@ -49,7 +43,8 @@ public class SaveLoadService {
      * @param file - the string which is the name of the file
      */
     public void load() {
-        GameState state = FileLoader.readClass(GameState.class, ROOT_DIR + File.separator + saveFile, Location.LOCAL);
+        logger.warn(saveFile);
+        GameState state = FileLoader.readClass(GameState.class, ROOT_DIR + File.separator + saveFile, Location.INTERNAL);
         this.combatStatsComponent.setGold(state.getMoney());
         ServiceLocator.getDayNightService().setDay(state.getDay());
         /*for (Decision decision: state.getDecisions()) {
