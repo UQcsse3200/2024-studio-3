@@ -260,6 +260,7 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         countdownLabelArrayList.remove(i);
         recipeTimeArrayList.remove(i);
         // combatStatsComponent.addGold(getRecipeValue());
+        // Commenting out because gold is already incremented in StationServingComponent.java in scoreMeal() method.
         // ServiceLocator.getLevelService().setCurrGold(ServiceLocator.getLevelService().getCurrGold() + 10);
         // if (isSuccess) {
         //    combatStatsComponent.addGold(getRecipeValue());

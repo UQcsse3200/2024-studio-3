@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.csse3200.game.entities.Entity;
 
+// This class is used to link a specific customer to a specific ticket by a unique order number.
 public class CustomerManager {
     private static Map<String, Entity> orderToCustomerMap = new HashMap<>();
 
