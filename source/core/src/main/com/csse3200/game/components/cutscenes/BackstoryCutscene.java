@@ -41,13 +41,13 @@ public class BackstoryCutscene extends Cutscene {
                 4.0f
         ));
         scenes.add(new Scene(
-                "images/Cutscenes/Kitchen_Background.png",
+                "images/Cutscenes/Food_Critic_Background.png",
                 null,  // No animations for this scene
                 new Array<>(new String[]{"Humans and animals were forced to coexist in a new order."}),
                 4.0f
         ));
         scenes.add(new Scene(
-                "images/Cutscenes/Kitchen_Background.png",
+                "images/Cutscenes/Food_Critic_Background.png",
                 null,  // No animations for this scene
                 new Array<>(new String[]{"Humans and animals were forced to coexist in a new order."}),
                 4.0f
