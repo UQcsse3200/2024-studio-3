@@ -117,13 +117,14 @@ public class PlayerStatsDisplay extends UIComponent {
     table2.padTop(45f);
 
     Image sample_image= new Image(ServiceLocator.getResourceService().getAsset("images/component_background_2.png", Texture.class));
-    table2.add(sample_image).size(250,100).row();
+    table2.add(sample_image).size(150,100).row();
     stage.addActor(table2);
 
     //Label for the Current Day
     CharSequence dayText = String.format("Day: %d", currentday); // Start with Day 1
     dayLabel = new Label(dayText, skin, "large");
-    table.add(dayLabel).padLeft(80).padTop(30);
+    dayLabel.setFontScale(0.65f);
+    table.add(dayLabel).padLeft(45).padTop(38);
     stage.addActor(table);
     table.row();
 
