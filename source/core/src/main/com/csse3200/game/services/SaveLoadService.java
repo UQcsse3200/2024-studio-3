@@ -14,7 +14,7 @@ import java.util.HashMap;
 public class SaveLoadService {
     private static final Logger logger = LoggerFactory.getLogger(SaveLoadService.class);
     private static final String ROOT_DIR = "saves";
-    private static final String SAVE_FILE = "saveFile.json";
+    private String saveFile = "saveFile.json";
     private CombatStatsComponent combatStatsComponent;
 
     public SaveLoadService() {
@@ -32,7 +32,7 @@ public class SaveLoadService {
         Entity player = ServiceLocator.getPlayerService().getPlayer();
         state.setMoney(player.getComponent(CombatStatsComponent.class).getGold());
         state.setDay(ServiceLocator.getDayNightService().getDay());
-        FileLoader.writeClass(state, (ROOT_DIR + File.separator + SAVE_FILE), Location.LOCAL);
+        FileLoader.writeClass(state, (ROOT_DIR + File.separator + saveFile), Location.LOCAL);
         ServiceLocator.getEntityService().getEvents().trigger("togglePause");
     }
 
@@ -49,5 +49,13 @@ public class SaveLoadService {
     public void UpdateStats(GameState state) {
         this.combatStatsComponent.setGold(state.getMoney());
         ServiceLocator.getDayNightService().setDay(state.getDay());
+    }
+
+    public String getSaveFile() {
+        return saveFile;
+    }
+
+    public void setSaveFile(String filename) {
+        saveFile = filename;
     }
 }

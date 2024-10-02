@@ -1,6 +1,7 @@
 package com.csse3200.game.components.mainmenu;
 
 import com.badlogic.gdx.Gdx;
+import com.csse3200.game.services.SaveLoadService;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.tutorial.Confirmationpopup;
@@ -10,6 +11,9 @@ import org.slf4j.LoggerFactory;
 import com.csse3200.game.services.ServiceLocator;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 
 /**
  * This class listens to events relevant to the Main Menu Screen and does something when one of the
@@ -36,12 +40,19 @@ public class MainMenuActions extends Component {
   /**
    * Swaps to the Main Game screen.
    */
-  private void onStart() {
+  private void onStart(String saveFile) {
     logger.info("Start game");
     Stage stage = ServiceLocator.getRenderService().getStage();
     Skin skin = new Skin(Gdx.files.internal("flat-earth/skin/flat-earth-ui.json"));
-    new Confirmationpopup("Game Tuto Confirm", skin, stage, game);
-
+    if (saveFile.length() > 0) {
+      entity.getEvents().trigger("loadGame", saveFile);
+    } else {
+      LocalDateTime currentDateTime = LocalDateTime.now();
+      DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+      String formattedDateTime = currentDateTime.format(formatter);
+      ServiceLocator.getSaveLoadService().setSaveFile(formattedDateTime);
+      new Confirmationpopup("Game Tuto Confirm", skin, stage, game);
+    }
   }
 
   /**
