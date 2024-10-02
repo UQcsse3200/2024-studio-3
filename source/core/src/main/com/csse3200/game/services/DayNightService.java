@@ -57,7 +57,7 @@ public class DayNightService {
         this.lastEndOfDayCheck = gameTime.getTime();
         this.timeRemaining = FIVE_MINUTES;
         this.random = new Random();
-        day = 1; // was 1 but probably should be 0? ask calvin
+        day = 1;
         randomChoice = random.nextInt(10) * 1000;
 
         create();
@@ -66,14 +66,13 @@ public class DayNightService {
     public void create() {
         // ***Working version of Day cycle used "decisionDone"***
         enddayEventHandler.addListener("decisionDone", this::startNewDay);
-        // enddayEventHandler.addListener("animationDone", this::startNewDay);
         enddayEventHandler.addListener("callpastsecond", this::updatepastSecond);
 
         // Listen for high-quality meal events
         ServiceLocator.getEntityService().getEvents().addListener("mealHighQuality", this::incrementHighQualityMealCount);
     }
 
-    private void incrementHighQualityMealCount() {
+    public void incrementHighQualityMealCount() {
         highQualityMeals += 1;
         logger.info("High-quality meal served! Total: " + highQualityMeals);
     }
@@ -187,6 +186,21 @@ public class DayNightService {
         pastSecond = false;
     }
 
+    public int getHighQualityMeals() {
+        return highQualityMeals;
+    }
+
+    public boolean isPastSecond() {
+        return pastSecond;
+    }
+
+    public void setPastSecond(boolean pastSecond) {
+        this.pastSecond = pastSecond;
+    }
+
+    public void setRandomChoice(int randomChoice) {
+        this.randomChoice = randomChoice;
+    }
 }
 
 
