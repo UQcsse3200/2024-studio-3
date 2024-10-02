@@ -28,17 +28,14 @@ public class DayNightServiceTest {
 
     @BeforeEach
     public void setUp() {
-        // Mock and register GameTime
         gameTime = mock(GameTime.class);
         when(gameTime.getTime()).thenReturn(0L);
         ServiceLocator.registerTimeSource(gameTime);
 
-        // Mock and register EntityService
         entityService = mock(EntityService.class);
         when(entityService.getEvents()).thenReturn(new EventHandler());
         ServiceLocator.registerEntityService(entityService);
 
-        // Mock and register PlayerService
         playerService = mock(PlayerService.class);
         playerEntity = mock(Entity.class);
         checkWinLoseComponent = mock(CheckWinLoseComponent.class);
@@ -48,11 +45,9 @@ public class DayNightServiceTest {
         when(playerService.getPlayer()).thenReturn(playerEntity);
         ServiceLocator.registerPlayerService(playerService);
 
-        // Create EventHandlers
         enddayEventHandler = new EventHandler();
         docketServiceEventHandler = new EventHandler();
 
-        // Initialize DayNightService
         dayNightService = new DayNightService(enddayEventHandler, docketServiceEventHandler);
         ServiceLocator.registerDayNightService(dayNightService);
     }

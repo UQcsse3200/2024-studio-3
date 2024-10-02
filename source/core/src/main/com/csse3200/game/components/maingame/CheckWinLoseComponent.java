@@ -49,17 +49,15 @@ public class CheckWinLoseComponent extends Component {
     /**
      * Calculate the adjusted win amount based on the current day.
      */
-    private int getAdjustedWinAmount(int currentDay) {
-        // Increase the win amount as the days progress
-        return baseWinAmount + (currentDay * 10);  // Example: increase by 10 per day
+    public int getAdjustedWinAmount(int currentDay) {
+        return baseWinAmount + (currentDay * 10);
     }
 
     /**
      * Calculate the adjusted loss threshold based on the current day.
      */
-    private int getAdjustedLossThreshold(int currentDay) {
-        // Increase the loss threshold as the days progress
-        return baseLossThreshold + (currentDay * 5);  // Example: increase by 5 per day
+    public int getAdjustedLossThreshold(int currentDay) {
+        return baseLossThreshold + (currentDay * 5);
     }
 
     /**
