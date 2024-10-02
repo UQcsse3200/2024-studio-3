@@ -66,6 +66,7 @@ public class LoadGameDisplay extends UIComponent {
                     }
                 });
                 savesTable.add(load).pad(100, 100, 100, 100);
+                // Make sure every row has two save files
                 if (i % 2 == 0) {
                     savesTable.row();
                 }

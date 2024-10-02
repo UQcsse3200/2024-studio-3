@@ -30,7 +30,6 @@ public class SaveLoadService {
      * Saves the current state of the game into a GameState and writes to the path given
      */
     public void save() {
-        logger.warn(saveFile);
         GameState state = new GameState();
         Entity player = ServiceLocator.getPlayerService().getPlayer();
         state.setMoney(player.getComponent(CombatStatsComponent.class).getGold());
@@ -49,10 +48,9 @@ public class SaveLoadService {
      * @param file - the string which is the name of the file
      */
     public void load() {
-        logger.warn(saveFile);
-        logger.warn("YAYAYAYA");
         GameState state = FileLoader.readClass(GameState.class, ROOT_DIR + File.separator + saveFile, Location.LOCAL);
-        if (state != null) {
+
+        if (state != null) { // if the file exists
             this.combatStatsComponent.setGold(state.getMoney());
             ServiceLocator.getDayNightService().setDay(state.getDay());
             MoralDecision system = ServiceLocator.getEntityService().getMoralSystem().getComponent(MoralDecision.class);
