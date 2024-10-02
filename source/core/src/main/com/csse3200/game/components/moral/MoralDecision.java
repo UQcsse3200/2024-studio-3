@@ -16,7 +16,7 @@ public class MoralDecision extends Component {
     private static final Logger logger = LoggerFactory.getLogger(MoralDecision.class);
 
     private final List<Decision> ListOfDecisions = new ArrayList<>();
-    private Integer currentMorality = 0;
+//    private Integer currentMorality = 0;
 
     /**
      * Adds a new Question, assuming it is good and worth 10 points.
@@ -33,12 +33,12 @@ public class MoralDecision extends Component {
      * Adds a new Question with the specified question, goodness, and decision points.
      *
      * @param question the question or statement of the decision
-     * @param isGood whether the decision is good
-     * @param decisionPoints points associated with the decision
+     * @param isGood whether the effect is positive or negative
+     * @param effectMoney Money to be added or subtracted. Add/sub controlled by isGood
      * @return true if the decision was added successfully
      */
-    public boolean addQuestion(String question, boolean isGood, int decisionPoints) {
-        ListOfDecisions.add(new Decision(question, isGood, decisionPoints));
+    public boolean addQuestion(String question, boolean isGood, int effectMoney) {
+        ListOfDecisions.add(new Decision(question, isGood, effectMoney));
         return true;
     }
 
@@ -77,24 +77,6 @@ public class MoralDecision extends Component {
     }
 
     /**
-     * Returns the current morality score.
-     *
-     * @return the current morality score
-     */
-    public Integer getCurrentMorality() {
-        return currentMorality;
-    }
-
-    /**
-     * Sets the current morality score.
-     *
-     * @param currentMorality the new morality score
-     */
-    public void setCurrentMorality(Integer currentMorality) {
-        this.currentMorality = currentMorality;
-    }
-
-    /**
      * Sets the decision result at the specified index and updates the morality score.
      *
      * @param index the index of the decision
@@ -104,7 +86,6 @@ public class MoralDecision extends Component {
     public boolean setDecision(int index, boolean decision) {
         logger.debug("Setting decision for index: {} to {}", index, decision);
         ListOfDecisions.get(index).setDecision(decision);
-        currentMorality += ListOfDecisions.get(index).getDecisionPoints();
         return true;
     }
 
@@ -123,7 +104,7 @@ public class MoralDecision extends Component {
      * @param index the index of the decision
      * @return the statement of the decision
      */
-    public String getDecisionStatement(int index) {
+    public String getDecisionQuestion(int index) {
         return ListOfDecisions.get(index).getStatement();
     }
 
@@ -132,7 +113,6 @@ public class MoralDecision extends Component {
      */
     public void clearDecisions() {
         ListOfDecisions.clear();
-        currentMorality = 0;
     }
 
     /**

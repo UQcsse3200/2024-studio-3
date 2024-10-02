@@ -25,7 +25,6 @@ import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.areas.terrain.TerrainFactory.TerrainType;
-import com.csse3200.game.areas.map.BenchGenerator;
 import com.csse3200.game.areas.map.BenchLayout;
 import com.csse3200.game.components.gamearea.GameAreaDisplay;
 import com.csse3200.game.components.maingame.CheckWinLoseComponent;
@@ -35,7 +34,7 @@ import com.csse3200.game.components.npc.PersonalCustomerEnums;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.benches.Bench;
 import com.csse3200.game.entities.configs.PlayerConfig;
-import com.csse3200.game.screens.MoralDecisionDisplay;
+import com.csse3200.game.components.moral.MoralDayTwo;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.services.SaveLoadService;
@@ -276,6 +275,7 @@ public class ForestGameArea extends GameArea {
     ServiceLocator.getDayNightService().getEvents().addListener("endGame", this::checkEndOfGameState);
 
     createMoralScreen();
+    createMoralSystem();
     createEndDayScreen();
     playMusic();
   }
@@ -842,9 +842,20 @@ public class ForestGameArea extends GameArea {
   private void createMoralScreen() {
     Entity moralScreen = new Entity();
     moralScreen
-            .addComponent(new MoralDecisionDisplay())
-            .addComponent(new MoralDecision());
+            //.addComponent(new MoralDecisionDisplay())
+            //.addComponent(new MoralDayOne())
+            .addComponent(new MoralDayTwo());
+            //.addComponent(new MoralDayThree())
+            //.addComponent(new MoralDayFour())
+//            .addComponent(new MoralDecision());
     ServiceLocator.getEntityService().registerMoral(moralScreen);
+  }
+
+  private void createMoralSystem() {
+    Entity moralSystem = new Entity();
+    moralSystem
+            .addComponent(new MoralDecision());
+    ServiceLocator.getEntityService().registerMoralSystem(moralSystem);
   }
 
   /**
