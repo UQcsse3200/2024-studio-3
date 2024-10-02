@@ -45,6 +45,7 @@ import com.csse3200.game.components.gamearea.PerformanceDisplay;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.csse3200.game.components.ordersystem.DocketLineDisplay;
+import com.csse3200.game.services.GameTime;
 import com.csse3200.game.components.player.InventoryDisplay;
 import java.util.Arrays;
 
@@ -197,6 +198,7 @@ public class MainGameScreen extends ScreenAdapter {
 	public void pause() {
 		logger.info("Game paused");
 		isPaused = true;
+		ServiceLocator.getTimeSource().pause();
 		for (Entity entity : ServiceLocator.getEntityService().getEntities()) {
 			AITaskComponent aiComponent = entity.getComponent(AITaskComponent.class);
 			if (aiComponent != null) {
@@ -212,6 +214,7 @@ public class MainGameScreen extends ScreenAdapter {
 	public void resume() {
 		logger.info("Game resumed");
 		isPaused = false;
+		ServiceLocator.getTimeSource().resume();
 		for (Entity entity : ServiceLocator.getEntityService().getEntities()) {
 			AITaskComponent aiComponent = entity.getComponent(AITaskComponent.class);
 			if (aiComponent != null) {
