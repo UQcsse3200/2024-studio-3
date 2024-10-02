@@ -156,6 +156,7 @@ public class ForestGameArea extends GameArea {
           "images/inventory_ui/null_image.png"
   };
   private static final String[] forestTextureAtlases = {
+          "images/Cutscenes/cutscene_badEnd.atlas",
     "images/terrain_iso_grass.atlas",
     "images/ghost.atlas",
     "images/ghostKing.atlas",
@@ -267,7 +268,7 @@ public class ForestGameArea extends GameArea {
 
     // Spawn the player
     player = spawnPlayer();
-    ServiceLocator.getPlayerService().setPlayer(player);
+    ServiceLocator.getPlayerService().registerPlayer(player);
     ServiceLocator.getSaveLoadService().combatStatsComponent = player.getComponent(CombatStatsComponent.class);
     ServiceLocator.getSaveLoadService().load();
 
@@ -738,7 +739,7 @@ public class ForestGameArea extends GameArea {
   private void playMusic() {
     Music music = ServiceLocator.getResourceService().getAsset(backgroundMusic, Music.class);
     music.setLooping(true);
-    music.setVolume(0.02f);
+    music.setVolume(0.05f);
     music.play();
   }
 

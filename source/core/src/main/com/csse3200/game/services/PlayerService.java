@@ -26,10 +26,6 @@ public class PlayerService {
 		return playerEventHandler;
 	}
 
-	public void setPlayer(Entity player) {
-		this.player = player;
-	}
-
 	/**
    * Register the player entity.
    * @param playerEntity The player entity to register.

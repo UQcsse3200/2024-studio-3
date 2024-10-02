@@ -18,6 +18,7 @@ public class DayNightService {
     private static final Logger logger = LoggerFactory.getLogger(DayNightService.class);
     public static final int MAX_DAYS = 5; // Maximum number of days
     public  long FIVE_MINUTES = 5 * 60 * 1000; // 5 minutes in milliseconds
+    public long lastCheckTime;
     public long lastSecondCheck;
     public long lastUpgradeCheck;
     public long lastEndOfDayCheck;

@@ -1,0 +1,115 @@
+package com.csse3200.game.components.cutscenes;
+
+import com.badlogic.gdx.math.Vector2;
+import com.csse3200.game.components.cutscenes.scenes.Scene;
+import com.csse3200.game.services.ResourceService;
+import com.csse3200.game.services.ServiceLocator;
+
+/**
+ * The IntroCutscene class represents a specific cutscene that plays at the start of the game.
+ * It defines the scenes, assets, and entities used during the intro cutscene.
+ */
+public class GoodEndCutscene extends Cutscene {
+
+    /**
+     * Constructor for the GoodEndCutscene class.
+     */
+    public GoodEndCutscene() {
+        super();
+    }
+
+    /**
+     * Sets up the scenes for the intro cutscene, including background images,
+     * animation images, and the corresponding text for each scene.
+     */
+    @Override
+    protected void setupScenes() {
+        // Add text to be displayed during the cutscene
+        cutsceneText.add("First bit of text");
+        cutsceneText.add("Second bit of text");
+        cutsceneText.add("Third bit of text");
+
+        // Add scenes with background images, animations, text, and duration
+
+        Scene scene1 = new Scene("images/Cutscenes/good_end_0.png");
+        scene1.setImages(
+                new String[]{"images/meals/acai_bowl.png"},
+                new Vector2[] {new Vector2(4, 2)}
+        );
+
+        scene1.setSceneText(cutsceneText);
+        scene1.setDuration(3.0f);
+
+        scenes.add(scene1);
+
+        Scene scene2 = new Scene("images/Cutscenes/good_end_1.png");
+        scene2.setImages(
+                new String[]{"images/meals/acai_bowl.png"},
+                new Vector2[] {new Vector2(2, 2)}
+        );
+        scene2.setSceneText(cutsceneText);
+        scene2.setDuration(3.0f);
+
+        scenes.add(scene2);
+
+        Scene scene3 = new Scene("images/Cutscenes/good_end_2.png");
+        scene3.setImages(
+                new String[]{"images/meals/acai_bowl.png"},
+                new Vector2[] {new Vector2(2, 2)}
+        );
+        scene3.setSceneText(cutsceneText);
+        scene3.setDuration(3.0f);
+
+        scenes.add(scene3);
+
+        Scene scene4 = new Scene("images/Cutscenes/good_end_3.png");
+        scene4.setImages(
+                new String[]{"images/meals/acai_bowl.png"},
+                new Vector2[] {new Vector2(2, 2)}
+        );
+        scene4.setSceneText(cutsceneText);
+        scene4.setDuration(3.0f);
+
+        scenes.add(scene4);
+
+    }
+
+    /**
+     * Loads the assets needed for the intro cutscene, including textures for backgrounds
+     * and animations.
+     */
+    @Override
+    protected void loadAssets() {
+        // Load the background images for the cutscene
+        // Load the background images for the cutscene
+        textures = new String[] {
+                "images/Cutscenes/Beastly_Bistro_Background.png",
+                "images/Cutscenes/Graveyard_Scene.png",
+                "images/Cutscenes/good_end_0.png",
+                "images/Cutscenes/good_end_1.png",
+                "images/Cutscenes/good_end_2.png",
+                "images/Cutscenes/good_end_3.png"
+        };
+
+        // Load the animation images for the cutscene
+        animations = new String[] {"images/player/Cook_Model32.png"};
+
+        images = new String[] {"images/meals/acai_bowl.png"};
+
+        // Get the resource service to load assets
+        ResourceService resourceService = ServiceLocator.getResourceService();
+        resourceService.loadTextures(textures);
+        resourceService.loadTextures(images);
+        resourceService.loadTextureAtlases(animations);
+        resourceService.loadAll();
+    }
+
+    /**
+     * Handles specific entity creation logic for the intro cutscene.
+     * Currently, there is no specific logic for creating entities.
+     */
+    @Override
+    public void createEntities() {
+        // Any specific entity creation logic for the intro cutscene
+    }
+}

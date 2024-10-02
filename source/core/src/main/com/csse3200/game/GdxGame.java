@@ -97,13 +97,17 @@ public class GdxGame extends Game {
         return new LoadGameScreen(this);
       case CUTSCENE:
         return new CutsceneScreen(this, 0);
+      case GOOD_END:
+        return new CutsceneScreen(this, 1);
+      case BAD_END:
+        return new CutsceneScreen(this, 2);
       default:
         return null;
     }
   }
 
   public enum ScreenType {
-    MAIN_MENU, MAIN_GAME, SETTINGS, LOAD_GAME, CUTSCENE
+    MAIN_MENU, MAIN_GAME, SETTINGS, LOAD_GAME, CUTSCENE, GOOD_END, BAD_END
   }
 
   /**
