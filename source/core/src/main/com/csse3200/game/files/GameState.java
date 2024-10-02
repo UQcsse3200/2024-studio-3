@@ -1,5 +1,5 @@
 package com.csse3200.game.files;
-
+import com.badlogic.gdx.math.Vector2;
  public class GameState {
     // Mod = Modification Time
     private int day;
@@ -7,6 +7,7 @@ package com.csse3200.game.files;
     private int ModDay;
     private int ModHour;
     private int ModMin;
+    private Vector2 position;
 
     public GameState() {}
 
@@ -99,4 +100,8 @@ package com.csse3200.game.files;
     public void setModMin(int modMin) {
         ModMin = modMin;
     }
-}
+
+     public Vector2 getPosition() {return position;}
+
+     public void setPosition(Vector2 position) {this.position = position;}
+ }

@@ -5,7 +5,7 @@ import com.csse3200.game.components.npc.PersonalCustomerEnums;
 import com.badlogic.gdx.utils.Null;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.components.maingame.TextDisplay;
-
+import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.entities.benches.Bench;
 import com.csse3200.game.entities.configs.PlayerConfig;
 import com.csse3200.game.screens.MoralDecisionDisplay;
@@ -268,9 +268,11 @@ public class ForestGameArea extends GameArea {
     // Spawn the player
     player = spawnPlayer();
     ServiceLocator.getPlayerService().setPlayer(player);
+    ServiceLocator.getSaveLoadService().combatStatsComponent = player.getComponent(CombatStatsComponent.class);
+    ServiceLocator.getSaveLoadService().load();
 
     // Check and trigger win/loss state
-    ServiceLocator.getDayNightService().getEvents().addListener("endGame", this::checkEndOfDayGameState);
+    ServiceLocator.getDayNightService().getEvents().addListener("endGame", this::checkEndOfGameState);
 
     createMoralScreen();
     createEndDayScreen();
@@ -280,10 +282,10 @@ public class ForestGameArea extends GameArea {
   /***
    * Checks using the checkWinLoseComponent if to call a cutscene and which one to call
    */
-  private void checkEndOfDayGameState() {
+  private void checkEndOfGameState() {
     String gameState = player.getComponent(CheckWinLoseComponent.class).checkGameState();
 
-    if ("LOSE".equals(gameState)) {
+    if ("LOSE".equals(gameState) || "GAME_IN_PROGRESS".equals(gameState)) {
       createTextBox("You *oink* two-legged moron! You're ruining my " +
               "business' *oink* reputation! Get out!");
       triggerFiredEnd();  // Trigger the fired (bad) ending

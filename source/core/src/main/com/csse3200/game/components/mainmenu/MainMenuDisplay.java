@@ -173,7 +173,7 @@ public class MainMenuDisplay extends UIComponent {
           public void changed(ChangeEvent changeEvent, Actor actor) {
             logger.debug("Start button clicked");
             animalMoveTask.cancel();
-            entity.getEvents().trigger("start", "");
+            entity.getEvents().trigger("start", "begin.json");
           }
         });
 
