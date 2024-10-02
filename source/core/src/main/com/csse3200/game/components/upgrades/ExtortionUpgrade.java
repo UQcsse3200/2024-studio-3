@@ -62,6 +62,7 @@ public class ExtortionUpgrade extends Component implements Upgrade {
     /**
      * checks to see if the duration of ugprade has ended and consequently deactivates
      */
+    @Override
     public void update() {
         if (isActive && (gameTime.getTime() - actviateTime >= upgradeDuration)) {
             deactivate();
