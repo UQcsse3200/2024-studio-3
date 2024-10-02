@@ -112,8 +112,7 @@ public class NPCFactory {
                         case "Moonki" -> configs.Moonki;
                         default -> configs.Default;
                 };
-
-                // Ensure CustomerComponent is added
+                // orderID is to link a specific customer to a specific order ticket
                 String orderNumber = String.valueOf(orderID);
                 logger.info("Order number: " + orderNumber);
                 CustomerComponent customerComponent = new CustomerComponent(config);
@@ -122,7 +121,9 @@ public class NPCFactory {
 
                 CustomerManager.addCustomer(orderNumber, customer);
 
+                // gets the preference of the customer
                 String preference = customer.getComponent(CustomerComponent.class).getPreference();
+                // finding the correct imagePath to display the customer's meal image above them when spawning in
                 String imagePath = getMealImagePath(preference);
 
                 AnimationRenderComponent animator = new AnimationRenderComponent(

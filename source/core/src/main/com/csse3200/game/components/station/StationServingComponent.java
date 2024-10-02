@@ -137,6 +137,12 @@ public class StationServingComponent extends Component {
 
     }
 
+    /**
+     * Function that is called to score the meal.
+     * Updates the HoverBoxComponent to display customer satisfaction by face types.
+     * Increments the gold and updates the gold in the UI according to customer satisfaction and actual ordered meal price.
+     * @param playerMeal - the meal that the player is currently submitting to the customer.
+     */
     private String scoreMeal(String playerMeal) {
         String[] bigTicketInfo = bigTicket.getCurrentBigTicketInfo();
         String scoreDescription = null;
@@ -219,6 +225,11 @@ public class StationServingComponent extends Component {
         return scoreDescription;
     }
 
+        /**
+         * Function that is called to player gold UI.
+         * Calls another method from PlayerStatsDisplay.java to update the gold.
+         * @param gold - the amount of gold the player currently have after serving the customer.
+         */
         private void updateGoldUI(int gold) {
         PlayerStatsDisplay playerStatsDisplay = PlayerStatsDisplay.getInstance();
         if (playerStatsDisplay != null) {
