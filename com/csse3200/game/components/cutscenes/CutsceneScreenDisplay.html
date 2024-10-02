@@ -112,7 +112,7 @@ loadScripts(document, 'script');</script>
 <h2>Field Summary</h2>
 <div class="inherited-list">
 <h3 id="fields-inherited-from-class-com.csse3200.game.ui.UIComponent">Fields inherited from class&nbsp;com.csse3200.game.ui.<a href="../../ui/UIComponent.html" title="class in com.csse3200.game.ui">UIComponent</a></h3>
-<code><a href="../../ui/UIComponent.html#skin">skin</a>, <a href="../../ui/UIComponent.html#stage">stage</a></code></div>
+<code><a href="../../ui/UIComponent.html#stage">stage</a></code></div>
 <div class="inherited-list">
 <h3 id="fields-inherited-from-class-com.csse3200.game.components.Component">Fields inherited from class&nbsp;com.csse3200.game.components.<a href="../Component.html" title="class in com.csse3200.game.components">Component</a></h3>
 <code><a href="../Component.html#enabled">enabled</a>, <a href="../Component.html#entity">entity</a></code></div>
@@ -126,10 +126,10 @@ loadScripts(document, 'script');</script>
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Constructor</div>
 <div class="table-header col-last">Description</div>
-<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(com.csse3200.game.GdxGame)" class="member-name-link">CutsceneScreenDisplay</a><wbr>(<a href="../../GdxGame.html" title="class in com.csse3200.game">GdxGame</a>&nbsp;game)</code></div>
-<div class="col-last even-row-color">
-<div class="block">Constructor for CutsceneScreenDisplay.</div>
-</div>
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E()" class="member-name-link">CutsceneScreenDisplay</a>()</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(com.badlogic.gdx.scenes.scene2d.ui.Skin)" class="member-name-link">CutsceneScreenDisplay</a><wbr>(com.badlogic.gdx.scenes.scene2d.ui.Skin&nbsp;skin)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
 </div>
 </section>
 </li>
@@ -145,59 +145,54 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#advanceCutsceneStep()" class="member-name-link">advanceCutsceneStep</a>()</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#create()" class="member-name-link">create</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Advances to the next step of the cutscene, displaying the corresponding text.</div>
-</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#create()" class="member-name-link">create</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Initializes the cutscene UI, sets up buttons and listeners, and starts the cutscene text display.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#dispose()" class="member-name-link">dispose</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#dispose()" class="member-name-link">dispose</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Disposes of the cutscene screen display, clearing any UI elements.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#draw(com.badlogic.gdx.graphics.g2d.SpriteBatch)" class="member-name-link">draw</a><wbr>(com.badlogic.gdx.graphics.g2d.SpriteBatch&nbsp;batch)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#draw(com.badlogic.gdx.graphics.g2d.SpriteBatch)" class="member-name-link">draw</a><wbr>(com.badlogic.gdx.graphics.g2d.SpriteBatch&nbsp;batch)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Draw method for rendering the cutscene screen.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getCutsceneStep()" class="member-name-link">getCutsceneStep</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Gets the current step of the cutscene.</div>
-</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>com.badlogic.gdx.utils.Array<wbr>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getCutsceneText()" class="member-name-link">getCutsceneText</a>()</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>com.badlogic.gdx.scenes.scene2d.Stage</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getStage()" class="member-name-link">getStage</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Gets the current cutscene text.</div>
+<div class="block">Gets the stage component for the cutscene display.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>com.badlogic.gdx.scenes.scene2d.ui.Table</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getTable()" class="member-name-link">getTable</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Gets the table for the cutscene UI.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="CutsceneTextDisplay.html" title="class in com.csse3200.game.components.cutscenes">CutsceneTextDisplay</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getTextDisplay()" class="member-name-link">getTextDisplay</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Gets the cutscene text display component for the cutscene.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setCutsceneText(com.badlogic.gdx.utils.Array)" class="member-name-link">setCutsceneText</a><wbr>(com.badlogic.gdx.utils.Array&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;cutsceneText)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setStage(com.badlogic.gdx.scenes.scene2d.Stage)" class="member-name-link">setStage</a><wbr>(com.badlogic.gdx.scenes.scene2d.Stage&nbsp;stage)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Sets the text steps for the cutscene.</div>
-</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setStage(com.badlogic.gdx.scenes.scene2d.Stage)" class="member-name-link">setStage</a><wbr>(com.badlogic.gdx.scenes.scene2d.Stage&nbsp;stage)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Sets the stage for the cutscene display.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setTable(com.badlogic.gdx.scenes.scene2d.ui.Table)" class="member-name-link">setTable</a><wbr>(com.badlogic.gdx.scenes.scene2d.ui.Table&nbsp;table)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setTable(com.badlogic.gdx.scenes.scene2d.ui.Table)" class="member-name-link">setTable</a><wbr>(com.badlogic.gdx.scenes.scene2d.ui.Table&nbsp;table)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Sets the table for the cutscene UI.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setTextDisplay(com.csse3200.game.components.cutscenes.CutsceneTextDisplay)" class="member-name-link">setTextDisplay</a><wbr>(<a href="CutsceneTextDisplay.html" title="class in com.csse3200.game.components.cutscenes">CutsceneTextDisplay</a>&nbsp;textDisplay)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Sets the text display for the cutscene.</div>
-</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#update()" class="member-name-link">update</a>()</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setTextDisplay(com.csse3200.game.components.cutscenes.CutsceneTextDisplay)" class="member-name-link">setTextDisplay</a><wbr>(<a href="CutsceneTextDisplay.html" title="class in com.csse3200.game.components.cutscenes">CutsceneTextDisplay</a>&nbsp;textDisplay)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Updates the cutscene, allowing the player to advance to the next step by pressing the space bar.</div>
+<div class="block">Sets the Cutscene Text Display Component for the cutscene.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setupTextDisplay()" class="member-name-link">setupTextDisplay</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Sets up the text display for the screen</div>
 </div>
 </div>
 </div>
@@ -210,7 +205,7 @@ loadScripts(document, 'script');</script>
 <code><a href="../../rendering/RenderComponent.html#compareTo(com.csse3200.game.rendering.Renderable)">compareTo</a>, <a href="../../rendering/RenderComponent.html#render(com.badlogic.gdx.graphics.g2d.SpriteBatch)">render</a></code></div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-com.csse3200.game.components.Component">Methods inherited from class&nbsp;com.csse3200.game.components.<a href="../Component.html" title="class in com.csse3200.game.components">Component</a></h3>
-<code><a href="../Component.html#earlyUpdate()">earlyUpdate</a>, <a href="../Component.html#getEntity()">getEntity</a>, <a href="../Component.html#setEnabled(boolean)">setEnabled</a>, <a href="../Component.html#setEntity(com.csse3200.game.entities.Entity)">setEntity</a>, <a href="../Component.html#toString()">toString</a>, <a href="../Component.html#triggerEarlyUpdate()">triggerEarlyUpdate</a>, <a href="../Component.html#triggerUpdate()">triggerUpdate</a></code></div>
+<code><a href="../Component.html#earlyUpdate()">earlyUpdate</a>, <a href="../Component.html#getEntity()">getEntity</a>, <a href="../Component.html#setEnabled(boolean)">setEnabled</a>, <a href="../Component.html#setEntity(com.csse3200.game.entities.Entity)">setEntity</a>, <a href="../Component.html#toString()">toString</a>, <a href="../Component.html#triggerEarlyUpdate()">triggerEarlyUpdate</a>, <a href="../Component.html#triggerUpdate()">triggerUpdate</a>, <a href="../Component.html#update()">update</a></code></div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-java.lang.Object">Methods inherited from class&nbsp;java.lang.<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></h3>
 <code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html#clone()" title="class or interface in java.lang" class="external-link">clone</a>, <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html#equals(java.lang.Object)" title="class or interface in java.lang" class="external-link">equals</a>, <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html#finalize()" title="class or interface in java.lang" class="external-link">finalize</a>, <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html#getClass()" title="class or interface in java.lang" class="external-link">getClass</a>, <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html#hashCode()" title="class or interface in java.lang" class="external-link">hashCode</a>, <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html#notify()" title="class or interface in java.lang" class="external-link">notify</a>, <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html#notifyAll()" title="class or interface in java.lang" class="external-link">notifyAll</a>, <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html#wait()" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html#wait(long)" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html#wait(long,int)" title="class or interface in java.lang" class="external-link">wait</a></code></div>
@@ -232,14 +227,15 @@ loadScripts(document, 'script');</script>
 <h2>Constructor Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="&lt;init&gt;(com.csse3200.game.GdxGame)">
+<section class="detail" id="&lt;init&gt;(com.badlogic.gdx.scenes.scene2d.ui.Skin)">
 <h3>CutsceneScreenDisplay</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">CutsceneScreenDisplay</span><wbr><span class="parameters">(<a href="../../GdxGame.html" title="class in com.csse3200.game">GdxGame</a>&nbsp;game)</span></div>
-<div class="block">Constructor for CutsceneScreenDisplay.</div>
-<dl class="notes">
-<dt>Parameters:</dt>
-<dd><code>game</code> - The main game instance.</dd>
-</dl>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">CutsceneScreenDisplay</span><wbr><span class="parameters">(com.badlogic.gdx.scenes.scene2d.ui.Skin&nbsp;skin)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="&lt;init&gt;()">
+<h3>CutsceneScreenDisplay</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">CutsceneScreenDisplay</span>()</div>
 </section>
 </li>
 </ul>
@@ -262,55 +258,10 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="setCutsceneText(com.badlogic.gdx.utils.Array)">
-<h3>setCutsceneText</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setCutsceneText</span><wbr><span class="parameters">(com.badlogic.gdx.utils.Array&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;cutsceneText)</span></div>
-<div class="block">Sets the text steps for the cutscene.</div>
-<dl class="notes">
-<dt>Parameters:</dt>
-<dd><code>cutsceneText</code> - An array of strings representing each step of the cutscene.</dd>
-</dl>
-</section>
-</li>
-<li>
-<section class="detail" id="getCutsceneText()">
-<h3>getCutsceneText</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">com.badlogic.gdx.utils.Array&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</span>&nbsp;<span class="element-name">getCutsceneText</span>()</div>
-<div class="block">Gets the current cutscene text.</div>
-<dl class="notes">
-<dt>Returns:</dt>
-<dd>An array of strings representing each step of the cutscene.</dd>
-</dl>
-</section>
-</li>
-<li>
-<section class="detail" id="getCutsceneStep()">
-<h3>getCutsceneStep</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">getCutsceneStep</span>()</div>
-<div class="block">Gets the current step of the cutscene.</div>
-<dl class="notes">
-<dt>Returns:</dt>
-<dd>The current step in the cutscene sequence.</dd>
-</dl>
-</section>
-</li>
-<li>
-<section class="detail" id="advanceCutsceneStep()">
-<h3>advanceCutsceneStep</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">advanceCutsceneStep</span>()</div>
-<div class="block">Advances to the next step of the cutscene, displaying the corresponding text.
- If all steps are completed, it ends the cutscene.</div>
-</section>
-</li>
-<li>
-<section class="detail" id="update()">
-<h3>update</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">update</span>()</div>
-<div class="block">Updates the cutscene, allowing the player to advance to the next step by pressing the space bar.</div>
-<dl class="notes">
-<dt>Overrides:</dt>
-<dd><code><a href="../Component.html#update()">update</a></code>&nbsp;in class&nbsp;<code><a href="../Component.html" title="class in com.csse3200.game.components">Component</a></code></dd>
-</dl>
+<section class="detail" id="setupTextDisplay()">
+<h3>setupTextDisplay</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setupTextDisplay</span>()</div>
+<div class="block">Sets up the text display for the screen</div>
 </section>
 </li>
 <li>
@@ -340,6 +291,17 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
+<section class="detail" id="getStage()">
+<h3>getStage</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">com.badlogic.gdx.scenes.scene2d.Stage</span>&nbsp;<span class="element-name">getStage</span>()</div>
+<div class="block">Gets the stage component for the cutscene display.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>The Stage component for the cutscene.</dd>
+</dl>
+</section>
+</li>
+<li>
 <section class="detail" id="setStage(com.badlogic.gdx.scenes.scene2d.Stage)">
 <h3>setStage</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setStage</span><wbr><span class="parameters">(com.badlogic.gdx.scenes.scene2d.Stage&nbsp;stage)</span></div>
@@ -351,17 +313,6 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="setTextDisplay(com.csse3200.game.components.cutscenes.CutsceneTextDisplay)">
-<h3>setTextDisplay</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setTextDisplay</span><wbr><span class="parameters">(<a href="CutsceneTextDisplay.html" title="class in com.csse3200.game.components.cutscenes">CutsceneTextDisplay</a>&nbsp;textDisplay)</span></div>
-<div class="block">Sets the text display for the cutscene.</div>
-<dl class="notes">
-<dt>Parameters:</dt>
-<dd><code>textDisplay</code> - The text display to be set.</dd>
-</dl>
-</section>
-</li>
-<li>
 <section class="detail" id="setTable(com.badlogic.gdx.scenes.scene2d.ui.Table)">
 <h3>setTable</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setTable</span><wbr><span class="parameters">(com.badlogic.gdx.scenes.scene2d.ui.Table&nbsp;table)</span></div>
@@ -369,6 +320,39 @@ loadScripts(document, 'script');</script>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>table</code> - The table to be set.</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getTable()">
+<h3>getTable</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">com.badlogic.gdx.scenes.scene2d.ui.Table</span>&nbsp;<span class="element-name">getTable</span>()</div>
+<div class="block">Gets the table for the cutscene UI.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>The Table component</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getTextDisplay()">
+<h3>getTextDisplay</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="CutsceneTextDisplay.html" title="class in com.csse3200.game.components.cutscenes">CutsceneTextDisplay</a></span>&nbsp;<span class="element-name">getTextDisplay</span>()</div>
+<div class="block">Gets the cutscene text display component for the cutscene.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>A CutsceneTextDisplay component for the cutscene.</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="setTextDisplay(com.csse3200.game.components.cutscenes.CutsceneTextDisplay)">
+<h3>setTextDisplay</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setTextDisplay</span><wbr><span class="parameters">(<a href="CutsceneTextDisplay.html" title="class in com.csse3200.game.components.cutscenes">CutsceneTextDisplay</a>&nbsp;textDisplay)</span></div>
+<div class="block">Sets the Cutscene Text Display Component for the cutscene.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>textDisplay</code> - the CutsceneTextDisplay to be set.</dd>
 </dl>
 </section>
 </li>

@@ -185,10 +185,6 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Add a priority task to the list of tasks.</div>
 </dd>
-<dt><a href="com/csse3200/game/components/cutscenes/CutsceneScreenDisplay.html#advanceCutsceneStep()" class="member-name-link">advanceCutsceneStep()</a> - Method in class com.csse3200.game.components.cutscenes.<a href="com/csse3200/game/components/cutscenes/CutsceneScreenDisplay.html" title="class in com.csse3200.game.components.cutscenes">CutsceneScreenDisplay</a></dt>
-<dd>
-<div class="block">Advances to the next step of the cutscene, displaying the corresponding text.</div>
-</dd>
 <dt><a href="com/csse3200/game/components/tutorial/TutorialScreenDisplay.html#advanceTutorialStep()" class="member-name-link">advanceTutorialStep()</a> - Method in class com.csse3200.game.components.tutorial.<a href="com/csse3200/game/components/tutorial/TutorialScreenDisplay.html" title="class in com.csse3200.game.components.tutorial">TutorialScreenDisplay</a></dt>
 <dd>
 <div class="block">Proceeds to the next tutorial step using a switch-case.</div>
@@ -247,6 +243,14 @@ loadScripts(document, 'script');</script>
 <dt><a href="com/csse3200/game/components/mainmenu/MainMenuDisplay.html#background()" class="member-name-link">background()</a> - Method in class com.csse3200.game.components.mainmenu.<a href="com/csse3200/game/components/mainmenu/MainMenuDisplay.html" title="class in com.csse3200.game.components.mainmenu">MainMenuDisplay</a></dt>
 <dd>
 <div class="block">Creates the background of the main menu.</div>
+</dd>
+<dt><a href="com/csse3200/game/components/cutscenes/BackgroundRenderComponent.html" class="type-name-link" title="class in com.csse3200.game.components.cutscenes">BackgroundRenderComponent</a> - Class in <a href="com/csse3200/game/components/cutscenes/package-summary.html">com.csse3200.game.components.cutscenes</a></dt>
+<dd>
+<div class="block">BackgroundRenderComponent is a specialized component for rendering background textures.</div>
+</dd>
+<dt><a href="com/csse3200/game/components/cutscenes/BackgroundRenderComponent.html#%3Cinit%3E(java.lang.String)" class="member-name-link">BackgroundRenderComponent(String)</a> - Constructor for class com.csse3200.game.components.cutscenes.<a href="com/csse3200/game/components/cutscenes/BackgroundRenderComponent.html" title="class in com.csse3200.game.components.cutscenes">BackgroundRenderComponent</a></dt>
+<dd>
+<div class="block">Constructor that initializes the background with a texture path.</div>
 </dd>
 <dt><a href="com/csse3200/game/components/items/ItemType.html#BANANA" class="member-name-link">BANANA</a> - Enum constant in enum class com.csse3200.game.components.items.<a href="com/csse3200/game/components/items/ItemType.html" title="enum class in com.csse3200.game.components.items">ItemType</a></dt>
 <dd>&nbsp;</dd>
@@ -831,7 +835,7 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Create an Açaí bowl meal item.</div>
 </dd>
-<dt><a href="com/csse3200/game/components/cutscenes/CutsceneFactory.html#createAnimation(java.lang.String)" class="member-name-link">createAnimation(String)</a> - Static method in class com.csse3200.game.components.cutscenes.<a href="com/csse3200/game/components/cutscenes/CutsceneFactory.html" title="class in com.csse3200.game.components.cutscenes">CutsceneFactory</a></dt>
+<dt><a href="com/csse3200/game/components/cutscenes/CutsceneFactory.html#createAnimation(java.lang.String,java.lang.String)" class="member-name-link">createAnimation(String, String)</a> - Static method in class com.csse3200.game.components.cutscenes.<a href="com/csse3200/game/components/cutscenes/CutsceneFactory.html" title="class in com.csse3200.game.components.cutscenes">CutsceneFactory</a></dt>
 <dd>
 <div class="block">Creates an animation entity with the specified image path.</div>
 </dd>
@@ -981,6 +985,10 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Creates a ghost king entity at a specific target position.</div>
 </dd>
+<dt><a href="com/csse3200/game/components/cutscenes/CutsceneFactory.html#createImage(java.lang.String)" class="member-name-link">createImage(String)</a> - Static method in class com.csse3200.game.components.cutscenes.<a href="com/csse3200/game/components/cutscenes/CutsceneFactory.html" title="class in com.csse3200.game.components.cutscenes">CutsceneFactory</a></dt>
+<dd>
+<div class="block">Creates an image entity with the specified image path.</div>
+</dd>
 <dt><a href="com/csse3200/game/physics/PhysicsEngine.html#createJoint(com.badlogic.gdx.physics.box2d.JointDef)" class="member-name-link">createJoint(JointDef)</a> - Method in class com.csse3200.game.physics.<a href="com/csse3200/game/physics/PhysicsEngine.html" title="class in com.csse3200.game.physics">PhysicsEngine</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/entities/factories/ItemFactory.html#createLettuce(java.lang.String)" class="member-name-link">createLettuce(String)</a> - Static method in class com.csse3200.game.entities.factories.<a href="com/csse3200/game/entities/factories/ItemFactory.html" title="class in com.csse3200.game.entities.factories">ItemFactory</a></dt>
@@ -1073,6 +1081,8 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/cutscenes/Cutscene.html#currentSceneIndex" class="member-name-link">currentSceneIndex</a> - Variable in class com.csse3200.game.components.cutscenes.<a href="com/csse3200/game/components/cutscenes/Cutscene.html" title="class in com.csse3200.game.components.cutscenes">Cutscene</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/components/cutscenes/Cutscene.html#currentText" class="member-name-link">currentText</a> - Variable in class com.csse3200.game.components.cutscenes.<a href="com/csse3200/game/components/cutscenes/Cutscene.html" title="class in com.csse3200.game.components.cutscenes">Cutscene</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/entities/configs/NPCConfigs.html#customer" class="member-name-link">customer</a> - Variable in class com.csse3200.game.entities.configs.<a href="com/csse3200/game/entities/configs/NPCConfigs.html" title="class in com.csse3200.game.entities.configs">NPCConfigs</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/entities/configs/BaseCustomerConfig.html#Customer_id" class="member-name-link">Customer_id</a> - Variable in class com.csse3200.game.entities.configs.<a href="com/csse3200/game/entities/configs/BaseCustomerConfig.html" title="class in com.csse3200.game.entities.configs">BaseCustomerConfig</a></dt>
@@ -1160,10 +1170,10 @@ loadScripts(document, 'script');</script>
 <div class="block">The CutsceneScreenDisplay class manages the user interface for displaying cutscenes,
  including text display, buttons to advance or exit the cutscene, and handling user input.</div>
 </dd>
-<dt><a href="com/csse3200/game/components/cutscenes/CutsceneScreenDisplay.html#%3Cinit%3E(com.csse3200.game.GdxGame)" class="member-name-link">CutsceneScreenDisplay(GdxGame)</a> - Constructor for class com.csse3200.game.components.cutscenes.<a href="com/csse3200/game/components/cutscenes/CutsceneScreenDisplay.html" title="class in com.csse3200.game.components.cutscenes">CutsceneScreenDisplay</a></dt>
-<dd>
-<div class="block">Constructor for CutsceneScreenDisplay.</div>
-</dd>
+<dt><a href="com/csse3200/game/components/cutscenes/CutsceneScreenDisplay.html#%3Cinit%3E()" class="member-name-link">CutsceneScreenDisplay()</a> - Constructor for class com.csse3200.game.components.cutscenes.<a href="com/csse3200/game/components/cutscenes/CutsceneScreenDisplay.html" title="class in com.csse3200.game.components.cutscenes">CutsceneScreenDisplay</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/components/cutscenes/CutsceneScreenDisplay.html#%3Cinit%3E(com.badlogic.gdx.scenes.scene2d.ui.Skin)" class="member-name-link">CutsceneScreenDisplay(Skin)</a> - Constructor for class com.csse3200.game.components.cutscenes.<a href="com/csse3200/game/components/cutscenes/CutsceneScreenDisplay.html" title="class in com.csse3200.game.components.cutscenes">CutsceneScreenDisplay</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/cutscenes/Cutscene.html#cutsceneText" class="member-name-link">cutsceneText</a> - Variable in class com.csse3200.game.components.cutscenes.<a href="com/csse3200/game/components/cutscenes/Cutscene.html" title="class in com.csse3200.game.components.cutscenes">Cutscene</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/cutscenes/CutsceneTextDisplay.html" class="type-name-link" title="class in com.csse3200.game.components.cutscenes">CutsceneTextDisplay</a> - Class in <a href="com/csse3200/game/components/cutscenes/package-summary.html">com.csse3200.game.components.cutscenes</a></dt>
@@ -1174,10 +1184,8 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Default constructor that initializes without a specific cutscene.</div>
 </dd>
-<dt><a href="com/csse3200/game/components/cutscenes/CutsceneTextDisplay.html#%3Cinit%3E(com.csse3200.game.screens.CutsceneScreen)" class="member-name-link">CutsceneTextDisplay(CutsceneScreen)</a> - Constructor for class com.csse3200.game.components.cutscenes.<a href="com/csse3200/game/components/cutscenes/CutsceneTextDisplay.html" title="class in com.csse3200.game.components.cutscenes">CutsceneTextDisplay</a></dt>
-<dd>
-<div class="block">Constructor that links the text display to a specific cutscene.</div>
-</dd>
+<dt><a href="com/csse3200/game/components/cutscenes/CutsceneTextDisplay.html#%3Cinit%3E(com.badlogic.gdx.scenes.scene2d.ui.Skin)" class="member-name-link">CutsceneTextDisplay(Skin)</a> - Constructor for class com.csse3200.game.components.cutscenes.<a href="com/csse3200/game/components/cutscenes/CutsceneTextDisplay.html" title="class in com.csse3200.game.components.cutscenes">CutsceneTextDisplay</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/station/loader/StationAcceptableItemsConfig.html#cuttingBoard" class="member-name-link">cuttingBoard</a> - Variable in class com.csse3200.game.components.station.loader.<a href="com/csse3200/game/components/station/loader/StationAcceptableItemsConfig.html" title="class in com.csse3200.game.components.station.loader">StationAcceptableItemsConfig</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/entities/configs/MultiStationRecipeConfig.html#cuttingBoard" class="member-name-link">cuttingBoard</a> - Variable in class com.csse3200.game.entities.configs.<a href="com/csse3200/game/entities/configs/MultiStationRecipeConfig.html" title="class in com.csse3200.game.entities.configs">MultiStationRecipeConfig</a></dt>
@@ -1766,6 +1774,10 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Gets the animation image paths for the scene.</div>
 </dd>
+<dt><a href="com/csse3200/game/components/cutscenes/scenes/Scene.html#getAnimationPositions()" class="member-name-link">getAnimationPositions()</a> - Method in class com.csse3200.game.components.cutscenes.scenes.<a href="com/csse3200/game/components/cutscenes/scenes/Scene.html" title="class in com.csse3200.game.components.cutscenes.scenes">Scene</a></dt>
+<dd>
+<div class="block">Gets the animation positions for the scene.</div>
+</dd>
 <dt><a href="com/csse3200/game/services/ResourceService.html#getAsset(java.lang.String,java.lang.Class)" class="member-name-link">getAsset(String, Class&lt;T&gt;)</a> - Method in class com.csse3200.game.services.<a href="com/csse3200/game/services/ResourceService.html" title="class in com.csse3200.game.services">ResourceService</a></dt>
 <dd>
 <div class="block">Load an asset from a file.</div>
@@ -1895,14 +1907,6 @@ loadScripts(document, 'script');</script>
 <dt><a href="com/csse3200/game/screens/CutsceneScreen.html#getCutsceneScreenDisplay()" class="member-name-link">getCutsceneScreenDisplay()</a> - Method in class com.csse3200.game.screens.<a href="com/csse3200/game/screens/CutsceneScreen.html" title="class in com.csse3200.game.screens">CutsceneScreen</a></dt>
 <dd>
 <div class="block">Gets the CutsceneScreenDisplay component for this screen.</div>
-</dd>
-<dt><a href="com/csse3200/game/components/cutscenes/CutsceneScreenDisplay.html#getCutsceneStep()" class="member-name-link">getCutsceneStep()</a> - Method in class com.csse3200.game.components.cutscenes.<a href="com/csse3200/game/components/cutscenes/CutsceneScreenDisplay.html" title="class in com.csse3200.game.components.cutscenes">CutsceneScreenDisplay</a></dt>
-<dd>
-<div class="block">Gets the current step of the cutscene.</div>
-</dd>
-<dt><a href="com/csse3200/game/components/cutscenes/CutsceneScreenDisplay.html#getCutsceneText()" class="member-name-link">getCutsceneText()</a> - Method in class com.csse3200.game.components.cutscenes.<a href="com/csse3200/game/components/cutscenes/CutsceneScreenDisplay.html" title="class in com.csse3200.game.components.cutscenes">CutsceneScreenDisplay</a></dt>
-<dd>
-<div class="block">Gets the current cutscene text.</div>
 </dd>
 <dt><a href="com/csse3200/game/entities/configs/MultiStationRecipeConfig.html#getCuttingBoard()" class="member-name-link">getCuttingBoard()</a> - Method in class com.csse3200.game.entities.configs.<a href="com/csse3200/game/entities/configs/MultiStationRecipeConfig.html" title="class in com.csse3200.game.entities.configs">MultiStationRecipeConfig</a></dt>
 <dd>&nbsp;</dd>
@@ -2048,6 +2052,14 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Returns the image representing the docket.</div>
 </dd>
+<dt><a href="com/csse3200/game/components/cutscenes/scenes/Scene.html#getImagePaths()" class="member-name-link">getImagePaths()</a> - Method in class com.csse3200.game.components.cutscenes.scenes.<a href="com/csse3200/game/components/cutscenes/scenes/Scene.html" title="class in com.csse3200.game.components.cutscenes.scenes">Scene</a></dt>
+<dd>
+<div class="block">Gets the animation image paths for the scene.</div>
+</dd>
+<dt><a href="com/csse3200/game/components/cutscenes/scenes/Scene.html#getImagePositions()" class="member-name-link">getImagePositions()</a> - Method in class com.csse3200.game.components.cutscenes.scenes.<a href="com/csse3200/game/components/cutscenes/scenes/Scene.html" title="class in com.csse3200.game.components.cutscenes.scenes">Scene</a></dt>
+<dd>
+<div class="block">Gets the image positions for the scene.</div>
+</dd>
 <dt><a href="com/csse3200/game/entities/configs/MultiStationRecipeConfig.html#getIngredient()" class="member-name-link">getIngredient()</a> - Method in class com.csse3200.game.entities.configs.<a href="com/csse3200/game/entities/configs/MultiStationRecipeConfig.html" title="class in com.csse3200.game.entities.configs">MultiStationRecipeConfig</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/entities/configs/SingleStationRecipeConfig.html#getIngredient()" class="member-name-link">getIngredient()</a> - Method in class com.csse3200.game.entities.configs.<a href="com/csse3200/game/entities/configs/SingleStationRecipeConfig.html" title="class in com.csse3200.game.entities.configs">SingleStationRecipeConfig</a></dt>
@@ -2133,6 +2145,10 @@ loadScripts(document, 'script');</script>
 </dd>
 <dt><a href="com/csse3200/game/areas/terrain/TerrainComponent.html#getLayer()" class="member-name-link">getLayer()</a> - Method in class com.csse3200.game.areas.terrain.<a href="com/csse3200/game/areas/terrain/TerrainComponent.html" title="class in com.csse3200.game.areas.terrain">TerrainComponent</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/components/cutscenes/BackgroundRenderComponent.html#getLayer()" class="member-name-link">getLayer()</a> - Method in class com.csse3200.game.components.cutscenes.<a href="com/csse3200/game/components/cutscenes/BackgroundRenderComponent.html" title="class in com.csse3200.game.components.cutscenes">BackgroundRenderComponent</a></dt>
+<dd>
+<div class="block">Overrides the getLayer method to return the default layer.</div>
+</dd>
 <dt><a href="com/csse3200/game/components/ScoreSystem/HoverBoxComponent.html#getLayer()" class="member-name-link">getLayer()</a> - Method in class com.csse3200.game.components.ScoreSystem.<a href="com/csse3200/game/components/ScoreSystem/HoverBoxComponent.html" title="class in com.csse3200.game.components.ScoreSystem">HoverBoxComponent</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/station/StationProgressDisplay.html#getLayer()" class="member-name-link">getLayer()</a> - Method in class com.csse3200.game.components.station.<a href="com/csse3200/game/components/station/StationProgressDisplay.html" title="class in com.csse3200.game.components.station">StationProgressDisplay</a></dt>
@@ -2144,6 +2160,8 @@ loadScripts(document, 'script');</script>
 <div class="block">Layer to be rendered in.</div>
 </dd>
 <dt><a href="com/csse3200/game/rendering/RenderComponent.html#getLayer()" class="member-name-link">getLayer()</a> - Method in class com.csse3200.game.rendering.<a href="com/csse3200/game/rendering/RenderComponent.html" title="class in com.csse3200.game.rendering">RenderComponent</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/rendering/TextureRenderComponent.html#getLayer()" class="member-name-link">getLayer()</a> - Method in class com.csse3200.game.rendering.<a href="com/csse3200/game/rendering/TextureRenderComponent.html" title="class in com.csse3200.game.rendering">TextureRenderComponent</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/ui/UIComponent.html#getLayer()" class="member-name-link">getLayer()</a> - Method in class com.csse3200.game.ui.<a href="com/csse3200/game/ui/UIComponent.html" title="class in com.csse3200.game.ui">UIComponent</a></dt>
 <dd>&nbsp;</dd>
@@ -2347,6 +2365,10 @@ loadScripts(document, 'script');</script>
 </dd>
 <dt><a href="com/csse3200/game/components/npc/CustomerComponent.html#getSpawnTimer()" class="member-name-link">getSpawnTimer()</a> - Method in class com.csse3200.game.components.npc.<a href="com/csse3200/game/components/npc/CustomerComponent.html" title="class in com.csse3200.game.components.npc">CustomerComponent</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/components/cutscenes/CutsceneScreenDisplay.html#getStage()" class="member-name-link">getStage()</a> - Method in class com.csse3200.game.components.cutscenes.<a href="com/csse3200/game/components/cutscenes/CutsceneScreenDisplay.html" title="class in com.csse3200.game.components.cutscenes">CutsceneScreenDisplay</a></dt>
+<dd>
+<div class="block">Gets the stage component for the cutscene display.</div>
+</dd>
 <dt><a href="com/csse3200/game/rendering/Renderer.html#getStage()" class="member-name-link">getStage()</a> - Method in class com.csse3200.game.rendering.<a href="com/csse3200/game/rendering/Renderer.html" title="class in com.csse3200.game.rendering">Renderer</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/rendering/RenderService.html#getStage()" class="member-name-link">getStage()</a> - Method in class com.csse3200.game.rendering.<a href="com/csse3200/game/rendering/RenderService.html" title="class in com.csse3200.game.rendering">RenderService</a></dt>
@@ -2381,6 +2403,10 @@ loadScripts(document, 'script');</script>
 </dd>
 <dt><a href="com/csse3200/game/components/station/loader/StationAcceptableItemsConfig.html#getStoveConfig()" class="member-name-link">getStoveConfig()</a> - Method in class com.csse3200.game.components.station.loader.<a href="com/csse3200/game/components/station/loader/StationAcceptableItemsConfig.html" title="class in com.csse3200.game.components.station.loader">StationAcceptableItemsConfig</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/components/cutscenes/CutsceneScreenDisplay.html#getTable()" class="member-name-link">getTable()</a> - Method in class com.csse3200.game.components.cutscenes.<a href="com/csse3200/game/components/cutscenes/CutsceneScreenDisplay.html" title="class in com.csse3200.game.components.cutscenes">CutsceneScreenDisplay</a></dt>
+<dd>
+<div class="block">Gets the table for the cutscene UI.</div>
+</dd>
 <dt><a href="com/csse3200/game/components/cutscenes/CutsceneTextDisplay.html#getTable()" class="member-name-link">getTable()</a> - Method in class com.csse3200.game.components.cutscenes.<a href="com/csse3200/game/components/cutscenes/CutsceneTextDisplay.html" title="class in com.csse3200.game.components.cutscenes">CutsceneTextDisplay</a></dt>
 <dd>
 <div class="block">Returns the main table containing the text display UI components.</div>
@@ -2400,6 +2426,10 @@ loadScripts(document, 'script');</script>
 <dt><a href="com/csse3200/game/components/maingame/TextDisplay.html#getText()" class="member-name-link">getText()</a> - Method in class com.csse3200.game.components.maingame.<a href="com/csse3200/game/components/maingame/TextDisplay.html" title="class in com.csse3200.game.components.maingame">TextDisplay</a></dt>
 <dd>
 <div class="block">Gets the text in the blocks allocated by the algorithm</div>
+</dd>
+<dt><a href="com/csse3200/game/components/cutscenes/CutsceneScreenDisplay.html#getTextDisplay()" class="member-name-link">getTextDisplay()</a> - Method in class com.csse3200.game.components.cutscenes.<a href="com/csse3200/game/components/cutscenes/CutsceneScreenDisplay.html" title="class in com.csse3200.game.components.cutscenes">CutsceneScreenDisplay</a></dt>
+<dd>
+<div class="block">Gets the cutscene text display component for the cutscene.</div>
 </dd>
 <dt><a href="com/csse3200/game/components/ordersystem/Docket.html#getTextureNameArray()" class="member-name-link">getTextureNameArray()</a> - Method in class com.csse3200.game.components.ordersystem.<a href="com/csse3200/game/components/ordersystem/Docket.html" title="class in com.csse3200.game.components.ordersystem">Docket</a></dt>
 <dd>
@@ -2459,10 +2489,6 @@ loadScripts(document, 'script');</script>
 <dt><a href="com/csse3200/game/components/ordersystem/MainGameOrderTicketDisplay.html#getViewportWidth()" class="member-name-link">getViewportWidth()</a> - Method in class com.csse3200.game.components.ordersystem.<a href="com/csse3200/game/components/ordersystem/MainGameOrderTicketDisplay.html" title="class in com.csse3200.game.components.ordersystem">MainGameOrderTicketDisplay</a></dt>
 <dd>
 <div class="block">Returns the viewportWidth.</div>
-</dd>
-<dt><a href="com/csse3200/game/components/cutscenes/CutsceneTextDisplay.html#getVisible()" class="member-name-link">getVisible()</a> - Method in class com.csse3200.game.components.cutscenes.<a href="com/csse3200/game/components/cutscenes/CutsceneTextDisplay.html" title="class in com.csse3200.game.components.cutscenes">CutsceneTextDisplay</a></dt>
-<dd>
-<div class="block">Returns whether the text display is currently visible.</div>
 </dd>
 <dt><a href="com/csse3200/game/components/maingame/TextDisplay.html#getVisible()" class="member-name-link">getVisible()</a> - Method in class com.csse3200.game.components.maingame.<a href="com/csse3200/game/components/maingame/TextDisplay.html" title="class in com.csse3200.game.components.maingame">TextDisplay</a></dt>
 <dd>
@@ -2660,6 +2686,8 @@ loadScripts(document, 'script');</script>
 </dl>
 <h2 class="title" id="I:I">I</h2>
 <dl class="index">
+<dt><a href="com/csse3200/game/components/cutscenes/Cutscene.html#images" class="member-name-link">images</a> - Variable in class com.csse3200.game.components.cutscenes.<a href="com/csse3200/game/components/cutscenes/Cutscene.html" title="class in com.csse3200.game.components.cutscenes">Cutscene</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/ai/tasks/Task.Status.html#INACTIVE" class="member-name-link">INACTIVE</a> - Enum constant in enum class com.csse3200.game.ai.tasks.<a href="com/csse3200/game/ai/tasks/Task.Status.html" title="enum class in com.csse3200.game.ai.tasks">Task.Status</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/player/InventoryComponent.html#increaseCapacity(int)" class="member-name-link">increaseCapacity(int)</a> - Method in class com.csse3200.game.components.player.<a href="com/csse3200/game/components/player/InventoryComponent.html" title="class in com.csse3200.game.components.player">InventoryComponent</a></dt>
@@ -3290,8 +3318,6 @@ loadScripts(document, 'script');</script>
 <dt><a href="com/csse3200/game/entities/configs/MultiStationRecipeConfig.html#%3Cinit%3E()" class="member-name-link">MultiStationRecipeConfig()</a> - Constructor for class com.csse3200.game.entities.configs.<a href="com/csse3200/game/entities/configs/MultiStationRecipeConfig.html" title="class in com.csse3200.game.entities.configs">MultiStationRecipeConfig</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/entities/factories/DishFactory.html#multiStationRecipes" class="member-name-link">multiStationRecipes</a> - Static variable in class com.csse3200.game.entities.factories.<a href="com/csse3200/game/entities/factories/DishFactory.html" title="class in com.csse3200.game.entities.factories">DishFactory</a></dt>
-<dd>&nbsp;</dd>
-<dt><a href="com/csse3200/game/components/cutscenes/Cutscene.html#music" class="member-name-link">music</a> - Variable in class com.csse3200.game.components.cutscenes.<a href="com/csse3200/game/components/cutscenes/Cutscene.html" title="class in com.csse3200.game.components.cutscenes">Cutscene</a></dt>
 <dd>&nbsp;</dd>
 </dl>
 <h2 class="title" id="I:N">N</h2>
@@ -3956,7 +3982,7 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">The Scene class represents an individual scene within a cutscene.</div>
 </dd>
-<dt><a href="com/csse3200/game/components/cutscenes/scenes/Scene.html#%3Cinit%3E(java.lang.String,java.lang.String%5B%5D,com.badlogic.gdx.utils.Array,float)" class="member-name-link">Scene(String, String[], Array&lt;String&gt;, float)</a> - Constructor for class com.csse3200.game.components.cutscenes.scenes.<a href="com/csse3200/game/components/cutscenes/scenes/Scene.html" title="class in com.csse3200.game.components.cutscenes.scenes">Scene</a></dt>
+<dt><a href="com/csse3200/game/components/cutscenes/scenes/Scene.html#%3Cinit%3E(java.lang.String)" class="member-name-link">Scene(String)</a> - Constructor for class com.csse3200.game.components.cutscenes.scenes.<a href="com/csse3200/game/components/cutscenes/scenes/Scene.html" title="class in com.csse3200.game.components.cutscenes.scenes">Scene</a></dt>
 <dd>
 <div class="block">Constructor for the Scene class.</div>
 </dd>
@@ -4024,6 +4050,8 @@ loadScripts(document, 'script');</script>
 </dd>
 <dt><a href="com/csse3200/game/rendering/DebugRenderer.html#setActive(boolean)" class="member-name-link">setActive(boolean)</a> - Method in class com.csse3200.game.rendering.<a href="com/csse3200/game/rendering/DebugRenderer.html" title="class in com.csse3200.game.rendering">DebugRenderer</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/components/cutscenes/scenes/Scene.html#setAnimationImages(java.lang.String%5B%5D,com.badlogic.gdx.math.Vector2%5B%5D)" class="member-name-link">setAnimationImages(String[], Vector2[])</a> - Method in class com.csse3200.game.components.cutscenes.scenes.<a href="com/csse3200/game/components/cutscenes/scenes/Scene.html" title="class in com.csse3200.game.components.cutscenes.scenes">Scene</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/physics/components/ColliderComponent.html#setAsBox(com.badlogic.gdx.math.Vector2)" class="member-name-link">setAsBox(Vector2)</a> - Method in class com.csse3200.game.physics.components.<a href="com/csse3200/game/physics/components/ColliderComponent.html" title="class in com.csse3200.game.physics.components">ColliderComponent</a></dt>
 <dd>
 <div class="block">Set physics as a box with a given size.</div>
@@ -4036,6 +4064,8 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Set physics as a box with a given size.</div>
 </dd>
+<dt><a href="com/csse3200/game/components/cutscenes/scenes/Scene.html#setBackgroundImagePath(java.lang.String)" class="member-name-link">setBackgroundImagePath(String)</a> - Method in class com.csse3200.game.components.cutscenes.scenes.<a href="com/csse3200/game/components/cutscenes/scenes/Scene.html" title="class in com.csse3200.game.components.cutscenes.scenes">Scene</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/CombatStatsComponent.html#setBaseAttack(int)" class="member-name-link">setBaseAttack(int)</a> - Method in class com.csse3200.game.components.<a href="com/csse3200/game/components/CombatStatsComponent.html" title="class in com.csse3200.game.components">CombatStatsComponent</a></dt>
 <dd>
 <div class="block">Sets the entity's attack damage.</div>
@@ -4076,10 +4106,6 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Gets the Entity responsible for storing and handling all customer spawn events</div>
 </dd>
-<dt><a href="com/csse3200/game/components/cutscenes/CutsceneScreenDisplay.html#setCutsceneText(com.badlogic.gdx.utils.Array)" class="member-name-link">setCutsceneText(Array&lt;String&gt;)</a> - Method in class com.csse3200.game.components.cutscenes.<a href="com/csse3200/game/components/cutscenes/CutsceneScreenDisplay.html" title="class in com.csse3200.game.components.cutscenes">CutsceneScreenDisplay</a></dt>
-<dd>
-<div class="block">Sets the text steps for the cutscene.</div>
-</dd>
 <dt><a href="com/csse3200/game/rendering/RenderService.html#setDebug(com.csse3200.game.rendering.DebugRenderer)" class="member-name-link">setDebug(DebugRenderer)</a> - Method in class com.csse3200.game.rendering.<a href="com/csse3200/game/rendering/RenderService.html" title="class in com.csse3200.game.rendering">RenderService</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/moral/Decision.html#setDecision(boolean)" class="member-name-link">setDecision(boolean)</a> - Method in class com.csse3200.game.components.moral.<a href="com/csse3200/game/components/moral/Decision.html" title="class in com.csse3200.game.components.moral">Decision</a></dt>
@@ -4102,6 +4128,8 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Sets the image associated with this docket.</div>
 </dd>
+<dt><a href="com/csse3200/game/components/cutscenes/scenes/Scene.html#setDuration(float)" class="member-name-link">setDuration(float)</a> - Method in class com.csse3200.game.components.cutscenes.scenes.<a href="com/csse3200/game/components/cutscenes/scenes/Scene.html" title="class in com.csse3200.game.components.cutscenes.scenes">Scene</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/Component.html#setEnabled(boolean)" class="member-name-link">setEnabled(boolean)</a> - Method in class com.csse3200.game.components.<a href="com/csse3200/game/components/Component.html" title="class in com.csse3200.game.components">Component</a></dt>
 <dd>
 <div class="block">Enable or disable the component.</div>
@@ -4142,6 +4170,8 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">set Plate id for a single state</div>
 </dd>
+<dt><a href="com/csse3200/game/components/cutscenes/scenes/Scene.html#setImages(java.lang.String%5B%5D,com.badlogic.gdx.math.Vector2%5B%5D)" class="member-name-link">setImages(String[], Vector2[])</a> - Method in class com.csse3200.game.components.cutscenes.scenes.<a href="com/csse3200/game/components/cutscenes/scenes/Scene.html" title="class in com.csse3200.game.components.cutscenes.scenes">Scene</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/items/MealComponent.html#setIngredients(java.util.List)" class="member-name-link">setIngredients(List&lt;IngredientComponent&gt;)</a> - Method in class com.csse3200.game.components.items.<a href="com/csse3200/game/components/items/MealComponent.html" title="class in com.csse3200.game.components.items">MealComponent</a></dt>
 <dd>
 <div class="block">Sets the list of ingredients for the meal and recalculates the meal's new quality.</div>
@@ -4242,13 +4272,11 @@ loadScripts(document, 'script');</script>
 </dd>
 <dt><a href="com/csse3200/game/physics/PhysicsUtils.html#setScaledCollider(com.csse3200.game.entities.Entity,float,float)" class="member-name-link">setScaledCollider(Entity, float, float)</a> - Static method in class com.csse3200.game.physics.<a href="com/csse3200/game/physics/PhysicsUtils.html" title="class in com.csse3200.game.physics">PhysicsUtils</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/components/cutscenes/scenes/Scene.html#setSceneText(com.badlogic.gdx.utils.Array)" class="member-name-link">setSceneText(Array&lt;String&gt;)</a> - Method in class com.csse3200.game.components.cutscenes.scenes.<a href="com/csse3200/game/components/cutscenes/scenes/Scene.html" title="class in com.csse3200.game.components.cutscenes.scenes">Scene</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/GdxGame.html#setScreen(com.csse3200.game.GdxGame.ScreenType)" class="member-name-link">setScreen(GdxGame.ScreenType)</a> - Method in class com.csse3200.game.<a href="com/csse3200/game/GdxGame.html" title="class in com.csse3200.game">GdxGame</a></dt>
 <dd>
 <div class="block">Sets the game's screen to a new screen of the provided type.</div>
-</dd>
-<dt><a href="com/csse3200/game/components/cutscenes/scenes/Scene.html#setScript()" class="member-name-link">setScript()</a> - Method in class com.csse3200.game.components.cutscenes.scenes.<a href="com/csse3200/game/components/cutscenes/scenes/Scene.html" title="class in com.csse3200.game.components.cutscenes.scenes">Scene</a></dt>
-<dd>
-<div class="block">Sets the dialogue text for the cutscene using the CutsceneTextDisplay component.</div>
 </dd>
 <dt><a href="com/csse3200/game/components/player/InventoryComponent.html#setSelected(int)" class="member-name-link">setSelected(int)</a> - Method in class com.csse3200.game.components.player.<a href="com/csse3200/game/components/player/InventoryComponent.html" title="class in com.csse3200.game.components.player">InventoryComponent</a></dt>
 <dd>
@@ -4371,10 +4399,6 @@ loadScripts(document, 'script');</script>
 </dd>
 <dt><a href="com/csse3200/game/components/CustomerBehaviorComponent.html#setTargetPosition(com.badlogic.gdx.math.Vector2)" class="member-name-link">setTargetPosition(Vector2)</a> - Method in class com.csse3200.game.components.<a href="com/csse3200/game/components/CustomerBehaviorComponent.html" title="class in com.csse3200.game.components">CustomerBehaviorComponent</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="com/csse3200/game/components/cutscenes/CutsceneTextDisplay.html#setText(java.lang.String)" class="member-name-link">setText(String)</a> - Method in class com.csse3200.game.components.cutscenes.<a href="com/csse3200/game/components/cutscenes/CutsceneTextDisplay.html" title="class in com.csse3200.game.components.cutscenes">CutsceneTextDisplay</a></dt>
-<dd>
-<div class="block">Sets the text to be displayed during the cutscene.</div>
-</dd>
 <dt><a href="com/csse3200/game/components/maingame/TextDisplay.html#setText(java.lang.String)" class="member-name-link">setText(String)</a> - Method in class com.csse3200.game.components.maingame.<a href="com/csse3200/game/components/maingame/TextDisplay.html" title="class in com.csse3200.game.components.maingame">TextDisplay</a></dt>
 <dd>
 <div class="block">Sets the text in allocated blocks based on text limit</div>
@@ -4383,8 +4407,10 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/cutscenes/CutsceneScreenDisplay.html#setTextDisplay(com.csse3200.game.components.cutscenes.CutsceneTextDisplay)" class="member-name-link">setTextDisplay(CutsceneTextDisplay)</a> - Method in class com.csse3200.game.components.cutscenes.<a href="com/csse3200/game/components/cutscenes/CutsceneScreenDisplay.html" title="class in com.csse3200.game.components.cutscenes">CutsceneScreenDisplay</a></dt>
 <dd>
-<div class="block">Sets the text display for the cutscene.</div>
+<div class="block">Sets the Cutscene Text Display Component for the cutscene.</div>
 </dd>
+<dt><a href="com/csse3200/game/components/cutscenes/Cutscene.html#setTextForScene(com.csse3200.game.components.cutscenes.scenes.Scene)" class="member-name-link">setTextForScene(Scene)</a> - Method in class com.csse3200.game.components.cutscenes.<a href="com/csse3200/game/components/cutscenes/Cutscene.html" title="class in com.csse3200.game.components.cutscenes">Cutscene</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/rendering/TextureRenderComponent.html#setTexture(java.lang.String)" class="member-name-link">setTexture(String)</a> - Method in class com.csse3200.game.rendering.<a href="com/csse3200/game/rendering/TextureRenderComponent.html" title="class in com.csse3200.game.rendering">TextureRenderComponent</a></dt>
 <dd>
 <div class="block">Updates the texture with a new one.</div>
@@ -4420,9 +4446,9 @@ loadScripts(document, 'script');</script>
 <div class="block">Sets up the scenes for the intro cutscene, including background images,
  animation images, and the corresponding text for each scene.</div>
 </dd>
-<dt><a href="com/csse3200/game/components/cutscenes/CutsceneTextDisplay.html#setVisible(boolean)" class="member-name-link">setVisible(boolean)</a> - Method in class com.csse3200.game.components.cutscenes.<a href="com/csse3200/game/components/cutscenes/CutsceneTextDisplay.html" title="class in com.csse3200.game.components.cutscenes">CutsceneTextDisplay</a></dt>
+<dt><a href="com/csse3200/game/components/cutscenes/CutsceneScreenDisplay.html#setupTextDisplay()" class="member-name-link">setupTextDisplay()</a> - Method in class com.csse3200.game.components.cutscenes.<a href="com/csse3200/game/components/cutscenes/CutsceneScreenDisplay.html" title="class in com.csse3200.game.components.cutscenes">CutsceneScreenDisplay</a></dt>
 <dd>
-<div class="block">Controls the visibility of the text display.</div>
+<div class="block">Sets up the text display for the screen</div>
 </dd>
 <dt><a href="com/csse3200/game/components/maingame/TextDisplay.html#setVisible(boolean)" class="member-name-link">setVisible(boolean)</a> - Method in class com.csse3200.game.components.maingame.<a href="com/csse3200/game/components/maingame/TextDisplay.html" title="class in com.csse3200.game.components.maingame">TextDisplay</a></dt>
 <dd>
@@ -4482,8 +4508,6 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Create a sorted intmap with the specified capacity</div>
 </dd>
-<dt><a href="com/csse3200/game/components/cutscenes/Cutscene.html#sounds" class="member-name-link">sounds</a> - Variable in class com.csse3200.game.components.cutscenes.<a href="com/csse3200/game/components/cutscenes/Cutscene.html" title="class in com.csse3200.game.components.cutscenes">Cutscene</a></dt>
-<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/entities/factories/ObstacleFactory.html#spawnBorderTile()" class="member-name-link">spawnBorderTile()</a> - Static method in class com.csse3200.game.entities.factories.<a href="com/csse3200/game/entities/factories/ObstacleFactory.html" title="class in com.csse3200.game.entities.factories">ObstacleFactory</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/entities/factories/ObstacleFactory.html#spawnBorderTileVertical()" class="member-name-link">spawnBorderTileVertical()</a> - Static method in class com.csse3200.game.entities.factories.<a href="com/csse3200/game/entities/factories/ObstacleFactory.html" title="class in com.csse3200.game.entities.factories">ObstacleFactory</a></dt>
@@ -4822,6 +4846,8 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/maingame/TextDisplay.html#%3Cinit%3E(com.csse3200.game.screens.MainGameScreen)" class="member-name-link">TextDisplay(MainGameScreen)</a> - Constructor for class com.csse3200.game.components.maingame.<a href="com/csse3200/game/components/maingame/TextDisplay.html" title="class in com.csse3200.game.components.maingame">TextDisplay</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/components/cutscenes/Cutscene.html#textIndex" class="member-name-link">textIndex</a> - Variable in class com.csse3200.game.components.cutscenes.<a href="com/csse3200/game/components/cutscenes/Cutscene.html" title="class in com.csse3200.game.components.cutscenes">Cutscene</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/entities/configs/BaseCustomerConfig.html#texture" class="member-name-link">texture</a> - Variable in class com.csse3200.game.entities.configs.<a href="com/csse3200/game/entities/configs/BaseCustomerConfig.html" title="class in com.csse3200.game.entities.configs">BaseCustomerConfig</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/rendering/TextureRenderComponent.html" class="type-name-link" title="class in com.csse3200.game.rendering">TextureRenderComponent</a> - Class in <a href="com/csse3200/game/rendering/package-summary.html">com.csse3200.game.rendering</a></dt>
@@ -5040,6 +5066,8 @@ loadScripts(document, 'script');</script>
 </dd>
 <dt><a href="com/csse3200/game/ui/UIComponent.html#%3Cinit%3E()" class="member-name-link">UIComponent()</a> - Constructor for class com.csse3200.game.ui.<a href="com/csse3200/game/ui/UIComponent.html" title="class in com.csse3200.game.ui">UIComponent</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/ui/UIComponent.html#%3Cinit%3E(com.badlogic.gdx.scenes.scene2d.ui.Skin)" class="member-name-link">UIComponent(Skin)</a> - Constructor for class com.csse3200.game.ui.<a href="com/csse3200/game/ui/UIComponent.html" title="class in com.csse3200.game.ui">UIComponent</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/entities/factories/UIFactory.html" class="type-name-link" title="class in com.csse3200.game.entities.factories">UIFactory</a> - Class in <a href="com/csse3200/game/entities/factories/package-summary.html">com.csse3200.game.entities.factories</a></dt>
 <dd>
 <div class="block">Creates new UI</div>
@@ -5095,19 +5123,6 @@ loadScripts(document, 'script');</script>
 <dt><a href="com/csse3200/game/components/cutscenes/Cutscene.html#update()" class="member-name-link">update()</a> - Method in class com.csse3200.game.components.cutscenes.<a href="com/csse3200/game/components/cutscenes/Cutscene.html" title="class in com.csse3200.game.components.cutscenes">Cutscene</a></dt>
 <dd>
 <div class="block">Updates the cutscene, transitioning to the next scene if the current scene's duration has passed.</div>
-</dd>
-<dt><a href="com/csse3200/game/components/cutscenes/CutsceneActions.html#update()" class="member-name-link">update()</a> - Method in class com.csse3200.game.components.cutscenes.<a href="com/csse3200/game/components/cutscenes/CutsceneActions.html" title="class in com.csse3200.game.components.cutscenes">CutsceneActions</a></dt>
-<dd>
-<div class="block">Checks for user input during cutscenes, specifically the space bar to skip to the next scene
- or the backspace key to exit to the main menu.</div>
-</dd>
-<dt><a href="com/csse3200/game/components/cutscenes/CutsceneScreenDisplay.html#update()" class="member-name-link">update()</a> - Method in class com.csse3200.game.components.cutscenes.<a href="com/csse3200/game/components/cutscenes/CutsceneScreenDisplay.html" title="class in com.csse3200.game.components.cutscenes">CutsceneScreenDisplay</a></dt>
-<dd>
-<div class="block">Updates the cutscene, allowing the player to advance to the next step by pressing the space bar.</div>
-</dd>
-<dt><a href="com/csse3200/game/components/cutscenes/CutsceneTextDisplay.html#update()" class="member-name-link">update()</a> - Method in class com.csse3200.game.components.cutscenes.<a href="com/csse3200/game/components/cutscenes/CutsceneTextDisplay.html" title="class in com.csse3200.game.components.cutscenes">CutsceneTextDisplay</a></dt>
-<dd>
-<div class="block">Updates the text display, adding characters one at a time based on the specified delay.</div>
 </dd>
 <dt><a href="com/csse3200/game/components/items/ChopIngredientComponent.html#update()" class="member-name-link">update()</a> - Method in class com.csse3200.game.components.items.<a href="com/csse3200/game/components/items/ChopIngredientComponent.html" title="class in com.csse3200.game.components.items">ChopIngredientComponent</a></dt>
 <dd>
