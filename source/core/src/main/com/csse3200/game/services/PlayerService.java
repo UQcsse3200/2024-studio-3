@@ -10,7 +10,6 @@ public class PlayerService {
 	private final EventHandler playerEventHandler;
 	private Entity player;
 
-
 	/**
 	 * Creates new PlayerService instance
 	 * Initialises the EventHandler to manage player events

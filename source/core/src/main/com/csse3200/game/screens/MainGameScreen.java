@@ -133,6 +133,7 @@ public class MainGameScreen extends ScreenAdapter {
 
 		ServiceLocator.registerInputService(new InputService());
 		ServiceLocator.registerPlayerService(new PlayerService());
+		ServiceLocator.registerSaveLoadService(new SaveLoadService());
 		ServiceLocator.registerResourceService(new ResourceService());
 
 		ServiceLocator.registerEntityService(new EntityService());

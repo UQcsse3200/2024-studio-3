@@ -55,8 +55,7 @@ public class LoadGameDisplay extends UIComponent {
                 load.addListener(new InputListener() {
                     @Override
                     public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                        ServiceLocator.getEntityService().getEvents().trigger("loadGame", save);
-                        entity.getEvents().trigger("start");
+                        entity.getEvents().trigger("start", save + ".json");
                         return true;
                     }
                 });

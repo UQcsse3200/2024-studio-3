@@ -1,5 +1,8 @@
 package com.csse3200.game.files;
 import com.badlogic.gdx.math.Vector2;
+import com.csse3200.game.components.moral.*;
+import java.util.ArrayList;
+import java.util.List;
  public class GameState {
     // Mod = Modification Time
     private int day;
@@ -7,7 +10,7 @@ import com.badlogic.gdx.math.Vector2;
     private int ModDay;
     private int ModHour;
     private int ModMin;
-    private Vector2 position;
+    private List<Decision> decisions;
 
     public GameState() {}
 
@@ -101,7 +104,11 @@ import com.badlogic.gdx.math.Vector2;
         ModMin = modMin;
     }
 
-     public Vector2 getPosition() {return position;}
+    public List<Decision> getDecisions() {
+        return decisions;
+    }
 
-     public void setPosition(Vector2 position) {this.position = position;}
+    public void setDecisions(List<Decision> decisions) {
+        this.decisions = decisions;
+    }
  }
