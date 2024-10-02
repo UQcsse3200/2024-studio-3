@@ -92,6 +92,7 @@ public class StationServingComponent extends Component {
             // Call to team 1's function with the big ticket info
             //TBD(item, bigTicketInfo[0], bigTicketInfo[1], bigTicketInfo[2]);
             // remove ticket
+            logger.info("Submitting meal and removing docket");
             ServiceLocator.getDocketService().getEvents().trigger("removeOrder", -1); // removes the order from the orderaction list
             ServiceLocator.getDocketService().getEvents().trigger("removeBigTicket"); // removes the order from the display list
 
