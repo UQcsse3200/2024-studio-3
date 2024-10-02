@@ -1,5 +1,6 @@
 package com.csse3200.game.components.cutscenes;
 
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.cutscenes.scenes.Scene;
@@ -36,7 +37,8 @@ public abstract class Cutscene extends Component {
     protected float timeStart = 0f;
 
     // The current scene being displayed
-    protected Scene currentScene;
+    public Scene currentScene;
+    public String currentText;
 
     // Game time service to keep track of time
     protected GameTime gameTime;
@@ -44,8 +46,11 @@ public abstract class Cutscene extends Component {
     // Assets used in the cutscene
     protected String[] textures;
     protected String[] animations;
-    protected String[] sounds;
-    protected String[] music;
+
+    protected String[] images;
+
+    // The index the text is under, after it increases too large, then it goes to the next scene
+    protected int textIndex;
 
     /**
      * Constructor for the Cutscene class. Initializes the game time and loads assets and scenes.
@@ -63,6 +68,7 @@ public abstract class Cutscene extends Component {
     public void create() {
         entity.getEvents().addListener("nextCutscene", this::nextCutscene);
         loadScene(currentSceneIndex);
+        textIndex--;
     }
 
     /**
@@ -111,6 +117,8 @@ public abstract class Cutscene extends Component {
         loadAssetsForScene(currentScene);  // Load assets needed for the current scene
         createEntitiesForScene(currentScene);  // Create entities for the current scene
 
+        setTextForScene(currentScene);
+
         // Reset the timer to track how long the scene is active
         timeStart = gameTime.getTime();
     }
@@ -144,11 +152,46 @@ public abstract class Cutscene extends Component {
 
         // Create animation entities if they exist in the scene
         if (scene.getAnimationImagePaths() != null) {
-            for (String animationPath : scene.getAnimationImagePaths()) {
-                Entity animation = CutsceneFactory.createAnimation(animationPath);
+            String[] animationPaths = scene.getAnimationImagePaths();
+            Vector2[] animationPositions = scene.getAnimationPositions();
+            for (int i = 0; i < animationPaths.length; i++) {
+                String animationPath = animationPaths[i];
+                Vector2 animationPosition = animationPositions[i];
+                // Assume that the animation is called idle for now.
+                Entity animation = CutsceneFactory.createAnimation(animationPath, "idle");
                 entities.add(animation);
+                animation.setPosition(animationPosition);
                 ServiceLocator.getEntityService().register(animation);
             }
+        }
+
+        //Create the image entities if they exist in the scene
+        if (scene.getImagePaths() != null) {
+            String[] imagePaths = scene.getImagePaths();
+            Vector2[] imagePositions = scene.getImagePositions();
+            float[] imageScales = scene.getImageScales();
+            for (int i = 0; i < imagePaths.length; i++) {
+                String imagePath = imagePaths[i];
+                Vector2 imagePosition = imagePositions[i];
+                float imageScale = imageScales[i];
+                // Assume that the animation is called idle for now.
+                Entity image = CutsceneFactory.createImage(imagePath, imageScale);
+                entities.add(image);
+                image.setPosition(imagePosition);
+                ServiceLocator.getEntityService().register(image);
+            }
+        }
+    }
+
+    public void setTextForScene(Scene scene) {
+        Array<String> sceneText = scene.getSceneText();
+        if (sceneText.size > textIndex) {
+            currentText = sceneText.get(textIndex);
+            textIndex++;
+        }
+        else {
+            textIndex = 0;
+            nextCutscene();
         }
     }
 
