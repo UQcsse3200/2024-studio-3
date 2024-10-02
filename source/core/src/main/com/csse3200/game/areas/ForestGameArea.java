@@ -3,6 +3,10 @@ package com.csse3200.game.areas;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import com.csse3200.game.components.moral.MoralDayOne;
+import com.csse3200.game.components.moral.MoralDayTwo;
+import com.csse3200.game.components.moral.MoralDayThree;
+import com.csse3200.game.components.moral.MoralDayFour;
 import com.csse3200.game.entities.factories.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -828,10 +832,10 @@ public class ForestGameArea extends GameArea {
     Entity moralScreen = new Entity();
     moralScreen
             //.addComponent(new MoralDecisionDisplay())
-            //.addComponent(new MoralDayOne())
+            .addComponent(new MoralDayOne())
             .addComponent(new MoralDayTwo())
-            //.addComponent(new MoralDayThree())
-            //.addComponent(new MoralDayFour())
+            .addComponent(new MoralDayThree())
+            .addComponent(new MoralDayFour())
             .addComponent(new MoralDecision());
     ServiceLocator.getEntityService().registerMoral(moralScreen);
   }
