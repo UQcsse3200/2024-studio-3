@@ -96,7 +96,7 @@ loadScripts(document, 'script');</script>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">SpawnRecipeCommands</span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>
 implements <a href="Command.html" title="interface in com.csse3200.game.ui.terminal.commands">Command</a></span></div>
-<div class="block">A command for toggling debug mode on and off.</div>
+<div class="block">A command for spawning recipes into the players inventory.</div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -127,7 +127,7 @@ implements <a href="Command.html" title="interface in com.csse3200.game.ui.termi
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#action(java.util.ArrayList)" class="member-name-link">action</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/ArrayList.html" title="class or interface in java.util" class="external-link">ArrayList</a>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;args)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Toggles debug mode on or off if the corresponding argument is received.</div>
+<div class="block">Processes the 'spawn' command and spawns the specified meal if the argument is valid.</div>
 </div>
 </div>
 </div>
@@ -164,14 +164,15 @@ implements <a href="Command.html" title="interface in com.csse3200.game.ui.termi
 <section class="detail" id="action(java.util.ArrayList)">
 <h3>action</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">action</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/ArrayList.html" title="class or interface in java.util" class="external-link">ArrayList</a>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;args)</span></div>
-<div class="block">Toggles debug mode on or off if the corresponding argument is received.</div>
+<div class="block">Processes the 'spawn' command and spawns the specified meal if the argument is valid.
+ If the player's inventory is not empty, the current item is removed before adding the new one.</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="Command.html#action(java.util.ArrayList)">action</a></code>&nbsp;in interface&nbsp;<code><a href="Command.html" title="interface in com.csse3200.game.ui.terminal.commands">Command</a></code></dd>
 <dt>Parameters:</dt>
-<dd><code>args</code> - command arguments</dd>
+<dd><code>args</code> - List of command arguments (expects 1 argument specifying the recipe name)</dd>
 <dt>Returns:</dt>
-<dd>command was successful</dd>
+<dd>true if the command executed successfully, false otherwise</dd>
 </dl>
 </section>
 </li>

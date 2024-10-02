@@ -140,7 +140,8 @@ loadScripts(document, 'script');</script>
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Constructor</div>
 <div class="table-header col-last">Description</div>
-<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E()" class="member-name-link">MainGameOrderTicketDisplay</a>()</code></div>
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(com.csse3200.game.rendering.RenderService,com.csse3200.game.services.PlayerService)" class="member-name-link">MainGameOrderTicketDisplay</a><wbr>(<a href="../../rendering/RenderService.html" title="class in com.csse3200.game.rendering">RenderService</a>&nbsp;renderService,
+ <a href="../../services/PlayerService.html" title="class in com.csse3200.game.services">PlayerService</a>&nbsp;playerService)</code></div>
 <div class="col-last even-row-color">
 <div class="block">Constructs an MainGameOrderTicketDisplay instance</div>
 </div>
@@ -190,7 +191,9 @@ loadScripts(document, 'script');</script>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getCurrentRecipeName()" class="member-name-link">getCurrentRecipeName</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Get recipe name</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="Recipe.html" title="class in com.csse3200.game.components.ordersystem">Recipe</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getRecipe()" class="member-name-link">getRecipe</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
@@ -286,9 +289,10 @@ loadScripts(document, 'script');</script>
 <div class="block">Shifts the order tickets to the right by moving the last ticket to the beginning of the list.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#stageDispose(com.csse3200.game.components.ordersystem.Docket,com.badlogic.gdx.scenes.scene2d.ui.Table,int)" class="member-name-link">stageDispose</a><wbr>(<a href="Docket.html" title="class in com.csse3200.game.components.ordersystem">Docket</a>&nbsp;docket,
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#stageDispose(com.csse3200.game.components.ordersystem.Docket,com.badlogic.gdx.scenes.scene2d.ui.Table,int,java.lang.Boolean)" class="member-name-link">stageDispose</a><wbr>(<a href="Docket.html" title="class in com.csse3200.game.components.ordersystem">Docket</a>&nbsp;docket,
  com.badlogic.gdx.scenes.scene2d.ui.Table&nbsp;table,
- int&nbsp;i)</code></div>
+ int&nbsp;i,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a>&nbsp;isSuccess)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Removes and disposes of a docket from the stage and its associated resources.</div>
 </div>
@@ -360,9 +364,10 @@ loadScripts(document, 'script');</script>
 <h2>Constructor Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="&lt;init&gt;()">
+<section class="detail" id="&lt;init&gt;(com.csse3200.game.rendering.RenderService,com.csse3200.game.services.PlayerService)">
 <h3>MainGameOrderTicketDisplay</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">MainGameOrderTicketDisplay</span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">MainGameOrderTicketDisplay</span><wbr><span class="parameters">(<a href="../../rendering/RenderService.html" title="class in com.csse3200.game.rendering">RenderService</a>&nbsp;renderService,
+ <a href="../../services/PlayerService.html" title="class in com.csse3200.game.services">PlayerService</a>&nbsp;playerService)</span></div>
 <div class="block">Constructs an MainGameOrderTicketDisplay instance</div>
 </section>
 </li>
@@ -400,6 +405,11 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="getCurrentRecipeName()">
 <h3>getCurrentRecipeName</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getCurrentRecipeName</span>()</div>
+<div class="block">Get recipe name</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>recipe name</dd>
+</dl>
 </section>
 </li>
 <li>
@@ -447,11 +457,12 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="stageDispose(com.csse3200.game.components.ordersystem.Docket,com.badlogic.gdx.scenes.scene2d.ui.Table,int)">
+<section class="detail" id="stageDispose(com.csse3200.game.components.ordersystem.Docket,com.badlogic.gdx.scenes.scene2d.ui.Table,int,java.lang.Boolean)">
 <h3>stageDispose</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">stageDispose</span><wbr><span class="parameters">(<a href="Docket.html" title="class in com.csse3200.game.components.ordersystem">Docket</a>&nbsp;docket,
  com.badlogic.gdx.scenes.scene2d.ui.Table&nbsp;table,
- int&nbsp;i)</span></div>
+ int&nbsp;i,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a>&nbsp;isSuccess)</span></div>
 <div class="block">Removes and disposes of a docket from the stage and its associated resources.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -509,6 +520,7 @@ loadScripts(document, 'script');</script>
 <dd><code>currentWidth</code> - current width of the game window screen.</dd>
 <dd><code>currentHeight</code> - current height of the game window screen.</dd>
 <dt>Returns:</dt>
+<dd>scaling factor</dd>
 </dl>
 </section>
 </li>

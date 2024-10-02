@@ -95,10 +95,7 @@ loadScripts(document, 'script');</script>
 <span class="extends-implements">extends <a href="../Component.html" title="class in com.csse3200.game.components">Component</a></span></div>
 <div class="block">StationBinComponent.java
 
- StationBinComponent throughs away an item
-
- <a href="#submitMeal(com.csse3200.game.components.items.ItemComponent)"><code>submitMeal(ItemComponent)</code></a>: Function which controls the submission of a meal by the
- class.</div>
+ StationBinComponent throughs away an item</div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -141,18 +138,18 @@ loadScripts(document, 'script');</script>
 <div class="block">On creation a listener for Submit Meal will be added to the station.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#handleInteraction(com.csse3200.game.components.player.InventoryComponent,com.csse3200.game.components.player.InventoryDisplay,java.lang.String)" class="member-name-link">handleInteraction</a><wbr>(<a href="../player/InventoryComponent.html" title="class in com.csse3200.game.components.player">InventoryComponent</a>&nbsp;playerInventoryComponent,
- <a href="../player/InventoryDisplay.html" title="class in com.csse3200.game.components.player">InventoryDisplay</a>&nbsp;inventoryDisplay,
- <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;type)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#disposeItem(com.csse3200.game.components.items.ItemComponent)" class="member-name-link">disposeItem</a><wbr>(<a href="../items/ItemComponent.html" title="class in com.csse3200.game.components.items">ItemComponent</a>&nbsp;item)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Handles any interaction with station, using current state of player and station
- inventory to determine intended interaction</div>
-</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#submitMeal(com.csse3200.game.components.items.ItemComponent)" class="member-name-link">submitMeal</a><wbr>(<a href="../items/ItemComponent.html" title="class in com.csse3200.game.components.items">ItemComponent</a>&nbsp;item)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Function which calls to identify the current ticket info, as well as the item in the inventory
  Calls another function which grades the submission</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#handleInteraction(com.csse3200.game.components.player.InventoryComponent,com.csse3200.game.components.player.InventoryDisplay,java.lang.String)" class="member-name-link">handleInteraction</a><wbr>(<a href="../player/InventoryComponent.html" title="class in com.csse3200.game.components.player">InventoryComponent</a>&nbsp;playerInventoryComponent,
+ <a href="../player/InventoryDisplay.html" title="class in com.csse3200.game.components.player">InventoryDisplay</a>&nbsp;inventoryDisplay,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;type)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Handles any interaction with station, using current state of player and station
+ inventory to determine intended interaction</div>
 </div>
 </div>
 </div>
@@ -216,9 +213,9 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="submitMeal(com.csse3200.game.components.items.ItemComponent)">
-<h3>submitMeal</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">submitMeal</span><wbr><span class="parameters">(<a href="../items/ItemComponent.html" title="class in com.csse3200.game.components.items">ItemComponent</a>&nbsp;item)</span></div>
+<section class="detail" id="disposeItem(com.csse3200.game.components.items.ItemComponent)">
+<h3>disposeItem</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">disposeItem</span><wbr><span class="parameters">(<a href="../items/ItemComponent.html" title="class in com.csse3200.game.components.items">ItemComponent</a>&nbsp;item)</span></div>
 <div class="block">Function which calls to identify the current ticket info, as well as the item in the inventory
  Calls another function which grades the submission</div>
 <dl class="notes">
