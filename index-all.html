@@ -181,7 +181,7 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Adds a new Question, assuming it is good and worth 10 points.</div>
 </dd>
-<dt><a href="com/csse3200/game/components/moral/MoralDecision.html#addQuestion(java.lang.String,boolean,int)" class="member-name-link">addQuestion(String, boolean, int)</a> - Method in class com.csse3200.game.components.moral.<a href="com/csse3200/game/components/moral/MoralDecision.html" title="class in com.csse3200.game.components.moral">MoralDecision</a></dt>
+<dt><a href="com/csse3200/game/components/moral/MoralDecision.html#addQuestion(java.lang.String,boolean)" class="member-name-link">addQuestion(String, boolean)</a> - Method in class com.csse3200.game.components.moral.<a href="com/csse3200/game/components/moral/MoralDecision.html" title="class in com.csse3200.game.components.moral">MoralDecision</a></dt>
 <dd>
 <div class="block">Adds a new Question with the specified question, goodness, and decision points.</div>
 </dd>
@@ -696,6 +696,28 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/mainmenu/MainMenuDisplay.html#create()" class="member-name-link">create()</a> - Method in class com.csse3200.game.components.mainmenu.<a href="com/csse3200/game/components/mainmenu/MainMenuDisplay.html" title="class in com.csse3200.game.components.mainmenu">MainMenuDisplay</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/components/moral/MoralDayFour.html#create()" class="member-name-link">create()</a> - Method in class com.csse3200.game.components.moral.<a href="com/csse3200/game/components/moral/MoralDayFour.html" title="class in com.csse3200.game.components.moral">MoralDayFour</a></dt>
+<dd>
+<div class="block">Creates the moral decision screen.</div>
+</dd>
+<dt><a href="com/csse3200/game/components/moral/MoralDayOne.html#create()" class="member-name-link">create()</a> - Method in class com.csse3200.game.components.moral.<a href="com/csse3200/game/components/moral/MoralDayOne.html" title="class in com.csse3200.game.components.moral">MoralDayOne</a></dt>
+<dd>
+<div class="block">Creates the moral decision screen.</div>
+</dd>
+<dt><a href="com/csse3200/game/components/moral/MoralDayThree.html#create()" class="member-name-link">create()</a> - Method in class com.csse3200.game.components.moral.<a href="com/csse3200/game/components/moral/MoralDayThree.html" title="class in com.csse3200.game.components.moral">MoralDayThree</a></dt>
+<dd>
+<div class="block">Creates the moral decision screen.</div>
+</dd>
+<dt><a href="com/csse3200/game/components/moral/MoralDayTwo.html#create()" class="member-name-link">create()</a> - Method in class com.csse3200.game.components.moral.<a href="com/csse3200/game/components/moral/MoralDayTwo.html" title="class in com.csse3200.game.components.moral">MoralDayTwo</a></dt>
+<dd>
+<div class="block">Creates the moral decision screen.</div>
+</dd>
+<dt><a href="com/csse3200/game/components/moral/MoralDecisionDisplay.html#create()" class="member-name-link">create()</a> - Method in class com.csse3200.game.components.moral.<a href="com/csse3200/game/components/moral/MoralDecisionDisplay.html" title="class in com.csse3200.game.components.moral">MoralDecisionDisplay</a></dt>
+<dd>
+<div class="block">Creates the moral decision screen.</div>
+</dd>
+<dt><a href="com/csse3200/game/components/moral/MoralTextDisplay.html#create()" class="member-name-link">create()</a> - Method in class com.csse3200.game.components.moral.<a href="com/csse3200/game/components/moral/MoralTextDisplay.html" title="class in com.csse3200.game.components.moral">MoralTextDisplay</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/npc/GhostAnimationController.html#create()" class="member-name-link">create()</a> - Method in class com.csse3200.game.components.npc.<a href="com/csse3200/game/components/npc/GhostAnimationController.html" title="class in com.csse3200.game.components.npc">GhostAnimationController</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/npc/SpecialNPCAnimationController.html#create()" class="member-name-link">create()</a> - Method in class com.csse3200.game.components.npc.<a href="com/csse3200/game/components/npc/SpecialNPCAnimationController.html" title="class in com.csse3200.game.components.npc">SpecialNPCAnimationController</a></dt>
@@ -807,10 +829,6 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/rendering/RenderComponent.html#create()" class="member-name-link">create()</a> - Method in class com.csse3200.game.rendering.<a href="com/csse3200/game/rendering/RenderComponent.html" title="class in com.csse3200.game.rendering">RenderComponent</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="com/csse3200/game/screens/MoralDecisionDisplay.html#create()" class="member-name-link">create()</a> - Method in class com.csse3200.game.screens.<a href="com/csse3200/game/screens/MoralDecisionDisplay.html" title="class in com.csse3200.game.screens">MoralDecisionDisplay</a></dt>
-<dd>
-<div class="block">Creates the moral decision screen.</div>
-</dd>
 <dt><a href="com/csse3200/game/services/DayNightService.html#create()" class="member-name-link">create()</a> - Method in class com.csse3200.game.services.<a href="com/csse3200/game/services/DayNightService.html" title="class in com.csse3200.game.services">DayNightService</a></dt>
 <dd>
 <div class="block">Sets up event listeners for handling end-of-day and timer-related events.</div>
@@ -1260,11 +1278,13 @@ loadScripts(document, 'script');</script>
 <div class="block">The Decision class represents a moral decision with a statement,
  whether it is good or bad, and associated decision points.</div>
 </dd>
-<dt><a href="com/csse3200/game/components/moral/Decision.html#%3Cinit%3E(java.lang.String,boolean,int)" class="member-name-link">Decision(String, boolean, int)</a> - Constructor for class com.csse3200.game.components.moral.<a href="com/csse3200/game/components/moral/Decision.html" title="class in com.csse3200.game.components.moral">Decision</a></dt>
+<dt><a href="com/csse3200/game/components/moral/Decision.html#%3Cinit%3E(java.lang.String,boolean)" class="member-name-link">Decision(String, boolean)</a> - Constructor for class com.csse3200.game.components.moral.<a href="com/csse3200/game/components/moral/Decision.html" title="class in com.csse3200.game.components.moral">Decision</a></dt>
 <dd>
 <div class="block">Constructs a new Decision with the specified statement, goodness, and decision points.</div>
 </dd>
 <dt><a href="com/csse3200/game/entities/factories/NPCFactory.html#decreaseCustomerCount()" class="member-name-link">decreaseCustomerCount()</a> - Static method in class com.csse3200.game.entities.factories.<a href="com/csse3200/game/entities/factories/NPCFactory.html" title="class in com.csse3200.game.entities.factories">NPCFactory</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/components/maingame/CheckWinLoseComponent.html#decreaseLoseThreshold()" class="member-name-link">decreaseLoseThreshold()</a> - Method in class com.csse3200.game.components.maingame.<a href="com/csse3200/game/components/maingame/CheckWinLoseComponent.html" title="class in com.csse3200.game.components.maingame">CheckWinLoseComponent</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/entities/configs/NPCConfigs.html#Default" class="member-name-link">Default</a> - Variable in class com.csse3200.game.entities.configs.<a href="com/csse3200/game/entities/configs/NPCConfigs.html" title="class in com.csse3200.game.entities.configs">NPCConfigs</a></dt>
 <dd>&nbsp;</dd>
@@ -1500,6 +1520,18 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/mainmenu/MainMenuDisplay.html#draw(com.badlogic.gdx.graphics.g2d.SpriteBatch)" class="member-name-link">draw(SpriteBatch)</a> - Method in class com.csse3200.game.components.mainmenu.<a href="com/csse3200/game/components/mainmenu/MainMenuDisplay.html" title="class in com.csse3200.game.components.mainmenu">MainMenuDisplay</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/components/moral/MoralDayFour.html#draw(com.badlogic.gdx.graphics.g2d.SpriteBatch)" class="member-name-link">draw(SpriteBatch)</a> - Method in class com.csse3200.game.components.moral.<a href="com/csse3200/game/components/moral/MoralDayFour.html" title="class in com.csse3200.game.components.moral">MoralDayFour</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/components/moral/MoralDayOne.html#draw(com.badlogic.gdx.graphics.g2d.SpriteBatch)" class="member-name-link">draw(SpriteBatch)</a> - Method in class com.csse3200.game.components.moral.<a href="com/csse3200/game/components/moral/MoralDayOne.html" title="class in com.csse3200.game.components.moral">MoralDayOne</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/components/moral/MoralDayThree.html#draw(com.badlogic.gdx.graphics.g2d.SpriteBatch)" class="member-name-link">draw(SpriteBatch)</a> - Method in class com.csse3200.game.components.moral.<a href="com/csse3200/game/components/moral/MoralDayThree.html" title="class in com.csse3200.game.components.moral">MoralDayThree</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/components/moral/MoralDayTwo.html#draw(com.badlogic.gdx.graphics.g2d.SpriteBatch)" class="member-name-link">draw(SpriteBatch)</a> - Method in class com.csse3200.game.components.moral.<a href="com/csse3200/game/components/moral/MoralDayTwo.html" title="class in com.csse3200.game.components.moral">MoralDayTwo</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/components/moral/MoralDecisionDisplay.html#draw(com.badlogic.gdx.graphics.g2d.SpriteBatch)" class="member-name-link">draw(SpriteBatch)</a> - Method in class com.csse3200.game.components.moral.<a href="com/csse3200/game/components/moral/MoralDecisionDisplay.html" title="class in com.csse3200.game.components.moral">MoralDecisionDisplay</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/components/moral/MoralTextDisplay.html#draw(com.badlogic.gdx.graphics.g2d.SpriteBatch)" class="member-name-link">draw(SpriteBatch)</a> - Method in class com.csse3200.game.components.moral.<a href="com/csse3200/game/components/moral/MoralTextDisplay.html" title="class in com.csse3200.game.components.moral">MoralTextDisplay</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/ordersystem/Docket.html#draw(com.badlogic.gdx.graphics.g2d.SpriteBatch)" class="member-name-link">draw(SpriteBatch)</a> - Method in class com.csse3200.game.components.ordersystem.<a href="com/csse3200/game/components/ordersystem/Docket.html" title="class in com.csse3200.game.components.ordersystem">Docket</a></dt>
 <dd>
 <div class="block">Draws the docket component.</div>
@@ -1543,8 +1575,6 @@ loadScripts(document, 'script');</script>
 <div class="block">Draw the renderable.</div>
 </dd>
 <dt><a href="com/csse3200/game/rendering/TextureRenderComponent.html#draw(com.badlogic.gdx.graphics.g2d.SpriteBatch)" class="member-name-link">draw(SpriteBatch)</a> - Method in class com.csse3200.game.rendering.<a href="com/csse3200/game/rendering/TextureRenderComponent.html" title="class in com.csse3200.game.rendering">TextureRenderComponent</a></dt>
-<dd>&nbsp;</dd>
-<dt><a href="com/csse3200/game/screens/MoralDecisionDisplay.html#draw(com.badlogic.gdx.graphics.g2d.SpriteBatch)" class="member-name-link">draw(SpriteBatch)</a> - Method in class com.csse3200.game.screens.<a href="com/csse3200/game/screens/MoralDecisionDisplay.html" title="class in com.csse3200.game.screens">MoralDecisionDisplay</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/ui/terminal/TerminalDisplay.html#draw(com.badlogic.gdx.graphics.g2d.SpriteBatch)" class="member-name-link">draw(SpriteBatch)</a> - Method in class com.csse3200.game.ui.terminal.<a href="com/csse3200/game/ui/terminal/TerminalDisplay.html" title="class in com.csse3200.game.ui.terminal">TerminalDisplay</a></dt>
 <dd>&nbsp;</dd>
@@ -2002,7 +2032,9 @@ loadScripts(document, 'script');</script>
 <div class="block">Gets the duration of the scene.</div>
 </dd>
 <dt><a href="com/csse3200/game/entities/EntityService.html#getEndDayScreen()" class="member-name-link">getEndDayScreen()</a> - Method in class com.csse3200.game.entities.<a href="com/csse3200/game/entities/EntityService.html" title="class in com.csse3200.game.entities">EntityService</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Get the end day screen entity.</div>
+</dd>
 <dt><a href="com/csse3200/game/services/DayNightService.html#getEndOfDayTriggered()" class="member-name-link">getEndOfDayTriggered()</a> - Method in class com.csse3200.game.services.<a href="com/csse3200/game/services/DayNightService.html" title="class in com.csse3200.game.services">DayNightService</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/ui/terminal/Terminal.html#getEnteredMessage()" class="member-name-link">getEnteredMessage()</a> - Method in class com.csse3200.game.ui.terminal.<a href="com/csse3200/game/ui/terminal/Terminal.html" title="class in com.csse3200.game.ui.terminal">Terminal</a></dt>
@@ -2247,7 +2279,13 @@ loadScripts(document, 'script');</script>
 <dt><a href="com/csse3200/game/components/ordersystem/DocketMealDisplay.html#getMealImage(java.lang.String)" class="member-name-link">getMealImage(String)</a> - Method in class com.csse3200.game.components.ordersystem.<a href="com/csse3200/game/components/ordersystem/DocketMealDisplay.html" title="class in com.csse3200.game.components.ordersystem">DocketMealDisplay</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/entities/EntityService.html#getMoralScreen()" class="member-name-link">getMoralScreen()</a> - Method in class com.csse3200.game.entities.<a href="com/csse3200/game/entities/EntityService.html" title="class in com.csse3200.game.entities">EntityService</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Get the moral screen entity.</div>
+</dd>
+<dt><a href="com/csse3200/game/entities/EntityService.html#getMoralSystem()" class="member-name-link">getMoralSystem()</a> - Method in class com.csse3200.game.entities.<a href="com/csse3200/game/entities/EntityService.html" title="class in com.csse3200.game.entities">EntityService</a></dt>
+<dd>
+<div class="block">Get the moral system entity.</div>
+</dd>
 <dt><a href="com/csse3200/game/services/CustomerMovementService.html#getMovementTarget(int)" class="member-name-link">getMovementTarget(int)</a> - Method in class com.csse3200.game.services.<a href="com/csse3200/game/services/CustomerMovementService.html" title="class in com.csse3200.game.services">CustomerMovementService</a></dt>
 <dd>
 <div class="block">Gets the current target position for a customer.</div>
@@ -2476,6 +2514,8 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Returns the main table containing the text display UI components.</div>
 </dd>
+<dt><a href="com/csse3200/game/components/moral/MoralTextDisplay.html#getTable()" class="member-name-link">getTable()</a> - Method in class com.csse3200.game.components.moral.<a href="com/csse3200/game/components/moral/MoralTextDisplay.html" title="class in com.csse3200.game.components.moral">MoralTextDisplay</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/tutorial/TutorialTextDisplay.html#getTable()" class="member-name-link">getTable()</a> - Method in class com.csse3200.game.components.tutorial.<a href="com/csse3200/game/components/tutorial/TutorialTextDisplay.html" title="class in com.csse3200.game.components.tutorial">TutorialTextDisplay</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/ordersystem/MainGameOrderTicketDisplay.html#getTableArrayList()" class="member-name-link">getTableArrayList()</a> - Static method in class com.csse3200.game.components.ordersystem.<a href="com/csse3200/game/components/ordersystem/MainGameOrderTicketDisplay.html" title="class in com.csse3200.game.components.ordersystem">MainGameOrderTicketDisplay</a></dt>
@@ -2559,12 +2599,30 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Gets the visibility of the textbox on the screen</div>
 </dd>
-<dt><a href="com/csse3200/game/components/tutorial/TutorialTextDisplay.html#getVisible()" class="member-name-link">getVisible()</a> - Method in class com.csse3200.game.components.tutorial.<a href="com/csse3200/game/components/tutorial/TutorialTextDisplay.html" title="class in com.csse3200.game.components.tutorial">TutorialTextDisplay</a></dt>
-<dd>&nbsp;</dd>
-<dt><a href="com/csse3200/game/screens/MoralDecisionDisplay.html#getVisible()" class="member-name-link">getVisible()</a> - Method in class com.csse3200.game.screens.<a href="com/csse3200/game/screens/MoralDecisionDisplay.html" title="class in com.csse3200.game.screens">MoralDecisionDisplay</a></dt>
+<dt><a href="com/csse3200/game/components/moral/MoralDayFour.html#getVisible()" class="member-name-link">getVisible()</a> - Method in class com.csse3200.game.components.moral.<a href="com/csse3200/game/components/moral/MoralDayFour.html" title="class in com.csse3200.game.components.moral">MoralDayFour</a></dt>
 <dd>
 <div class="block">Returns the visibility of the moral decision screen.</div>
 </dd>
+<dt><a href="com/csse3200/game/components/moral/MoralDayOne.html#getVisible()" class="member-name-link">getVisible()</a> - Method in class com.csse3200.game.components.moral.<a href="com/csse3200/game/components/moral/MoralDayOne.html" title="class in com.csse3200.game.components.moral">MoralDayOne</a></dt>
+<dd>
+<div class="block">Returns the visibility of the moral decision screen.</div>
+</dd>
+<dt><a href="com/csse3200/game/components/moral/MoralDayThree.html#getVisible()" class="member-name-link">getVisible()</a> - Method in class com.csse3200.game.components.moral.<a href="com/csse3200/game/components/moral/MoralDayThree.html" title="class in com.csse3200.game.components.moral">MoralDayThree</a></dt>
+<dd>
+<div class="block">Returns the visibility of the moral decision screen.</div>
+</dd>
+<dt><a href="com/csse3200/game/components/moral/MoralDayTwo.html#getVisible()" class="member-name-link">getVisible()</a> - Method in class com.csse3200.game.components.moral.<a href="com/csse3200/game/components/moral/MoralDayTwo.html" title="class in com.csse3200.game.components.moral">MoralDayTwo</a></dt>
+<dd>
+<div class="block">Returns the visibility of the moral decision screen.</div>
+</dd>
+<dt><a href="com/csse3200/game/components/moral/MoralDecisionDisplay.html#getVisible()" class="member-name-link">getVisible()</a> - Method in class com.csse3200.game.components.moral.<a href="com/csse3200/game/components/moral/MoralDecisionDisplay.html" title="class in com.csse3200.game.components.moral">MoralDecisionDisplay</a></dt>
+<dd>
+<div class="block">Returns the visibility of the moral decision screen.</div>
+</dd>
+<dt><a href="com/csse3200/game/components/moral/MoralTextDisplay.html#getVisible()" class="member-name-link">getVisible()</a> - Method in class com.csse3200.game.components.moral.<a href="com/csse3200/game/components/moral/MoralTextDisplay.html" title="class in com.csse3200.game.components.moral">MoralTextDisplay</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/components/tutorial/TutorialTextDisplay.html#getVisible()" class="member-name-link">getVisible()</a> - Method in class com.csse3200.game.components.tutorial.<a href="com/csse3200/game/components/tutorial/TutorialTextDisplay.html" title="class in com.csse3200.game.components.tutorial">TutorialTextDisplay</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/items/ItemComponent.html#getWeight()" class="member-name-link">getWeight()</a> - Method in class com.csse3200.game.components.items.<a href="com/csse3200/game/components/items/ItemComponent.html" title="class in com.csse3200.game.components.items">ItemComponent</a></dt>
 <dd>
 <div class="block">Gets the weight of the item</div>
@@ -3350,15 +3408,39 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/ui/terminal/commands/MoralCommands.html#%3Cinit%3E()" class="member-name-link">MoralCommands()</a> - Constructor for class com.csse3200.game.ui.terminal.commands.<a href="com/csse3200/game/ui/terminal/commands/MoralCommands.html" title="class in com.csse3200.game.ui.terminal.commands">MoralCommands</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/components/moral/MoralDayFour.html" class="type-name-link" title="class in com.csse3200.game.components.moral">MoralDayFour</a> - Class in <a href="com/csse3200/game/components/moral/package-summary.html">com.csse3200.game.components.moral</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/components/moral/MoralDayFour.html#%3Cinit%3E()" class="member-name-link">MoralDayFour()</a> - Constructor for class com.csse3200.game.components.moral.<a href="com/csse3200/game/components/moral/MoralDayFour.html" title="class in com.csse3200.game.components.moral">MoralDayFour</a></dt>
+<dd>
+<div class="block">Constructor for the MoralDecisionDisplay class.</div>
+</dd>
+<dt><a href="com/csse3200/game/components/moral/MoralDayOne.html" class="type-name-link" title="class in com.csse3200.game.components.moral">MoralDayOne</a> - Class in <a href="com/csse3200/game/components/moral/package-summary.html">com.csse3200.game.components.moral</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/components/moral/MoralDayOne.html#%3Cinit%3E()" class="member-name-link">MoralDayOne()</a> - Constructor for class com.csse3200.game.components.moral.<a href="com/csse3200/game/components/moral/MoralDayOne.html" title="class in com.csse3200.game.components.moral">MoralDayOne</a></dt>
+<dd>
+<div class="block">Constructor for the MoralDecisionDisplay class.</div>
+</dd>
+<dt><a href="com/csse3200/game/components/moral/MoralDayThree.html" class="type-name-link" title="class in com.csse3200.game.components.moral">MoralDayThree</a> - Class in <a href="com/csse3200/game/components/moral/package-summary.html">com.csse3200.game.components.moral</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/components/moral/MoralDayThree.html#%3Cinit%3E()" class="member-name-link">MoralDayThree()</a> - Constructor for class com.csse3200.game.components.moral.<a href="com/csse3200/game/components/moral/MoralDayThree.html" title="class in com.csse3200.game.components.moral">MoralDayThree</a></dt>
+<dd>
+<div class="block">Constructor for the MoralDecisionDisplay class.</div>
+</dd>
+<dt><a href="com/csse3200/game/components/moral/MoralDayTwo.html" class="type-name-link" title="class in com.csse3200.game.components.moral">MoralDayTwo</a> - Class in <a href="com/csse3200/game/components/moral/package-summary.html">com.csse3200.game.components.moral</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/components/moral/MoralDayTwo.html#%3Cinit%3E()" class="member-name-link">MoralDayTwo()</a> - Constructor for class com.csse3200.game.components.moral.<a href="com/csse3200/game/components/moral/MoralDayTwo.html" title="class in com.csse3200.game.components.moral">MoralDayTwo</a></dt>
+<dd>
+<div class="block">Constructor for the MoralDecisionDisplay class.</div>
+</dd>
 <dt><a href="com/csse3200/game/components/moral/MoralDecision.html" class="type-name-link" title="class in com.csse3200.game.components.moral">MoralDecision</a> - Class in <a href="com/csse3200/game/components/moral/package-summary.html">com.csse3200.game.components.moral</a></dt>
 <dd>
 <div class="block">The MoralDecision class manages a list of moral decisions and tracks the current morality score.</div>
 </dd>
 <dt><a href="com/csse3200/game/components/moral/MoralDecision.html#%3Cinit%3E()" class="member-name-link">MoralDecision()</a> - Constructor for class com.csse3200.game.components.moral.<a href="com/csse3200/game/components/moral/MoralDecision.html" title="class in com.csse3200.game.components.moral">MoralDecision</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="com/csse3200/game/screens/MoralDecisionDisplay.html" class="type-name-link" title="class in com.csse3200.game.screens">MoralDecisionDisplay</a> - Class in <a href="com/csse3200/game/screens/package-summary.html">com.csse3200.game.screens</a></dt>
+<dt><a href="com/csse3200/game/components/moral/MoralDecisionDisplay.html" class="type-name-link" title="class in com.csse3200.game.components.moral">MoralDecisionDisplay</a> - Class in <a href="com/csse3200/game/components/moral/package-summary.html">com.csse3200.game.components.moral</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="com/csse3200/game/screens/MoralDecisionDisplay.html#%3Cinit%3E()" class="member-name-link">MoralDecisionDisplay()</a> - Constructor for class com.csse3200.game.screens.<a href="com/csse3200/game/screens/MoralDecisionDisplay.html" title="class in com.csse3200.game.screens">MoralDecisionDisplay</a></dt>
+<dt><a href="com/csse3200/game/components/moral/MoralDecisionDisplay.html#%3Cinit%3E()" class="member-name-link">MoralDecisionDisplay()</a> - Constructor for class com.csse3200.game.components.moral.<a href="com/csse3200/game/components/moral/MoralDecisionDisplay.html" title="class in com.csse3200.game.components.moral">MoralDecisionDisplay</a></dt>
 <dd>
 <div class="block">Constructor for the MoralDecisionDisplay class.</div>
 </dd>
@@ -3371,6 +3453,12 @@ loadScripts(document, 'script');</script>
 <div class="block">Represents an enumeration of moral values.</div>
 </dd>
 <dt><a href="com/csse3200/game/components/moral/MoralEnum.html#%3Cinit%3E()" class="member-name-link">MoralEnum()</a> - Constructor for class com.csse3200.game.components.moral.<a href="com/csse3200/game/components/moral/MoralEnum.html" title="class in com.csse3200.game.components.moral">MoralEnum</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/components/moral/MoralTextDisplay.html" class="type-name-link" title="class in com.csse3200.game.components.moral">MoralTextDisplay</a> - Class in <a href="com/csse3200/game/components/moral/package-summary.html">com.csse3200.game.components.moral</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/components/moral/MoralTextDisplay.html#%3Cinit%3E()" class="member-name-link">MoralTextDisplay()</a> - Constructor for class com.csse3200.game.components.moral.<a href="com/csse3200/game/components/moral/MoralTextDisplay.html" title="class in com.csse3200.game.components.moral">MoralTextDisplay</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/components/moral/MoralTextDisplay.html#%3Cinit%3E(com.csse3200.game.components.moral.MoralDayOne)" class="member-name-link">MoralTextDisplay(MoralDayOne)</a> - Constructor for class com.csse3200.game.components.moral.<a href="com/csse3200/game/components/moral/MoralTextDisplay.html" title="class in com.csse3200.game.components.moral">MoralTextDisplay</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/input/InputComponent.html#mouseMoved(int,int)" class="member-name-link">mouseMoved(int, int)</a> - Method in class com.csse3200.game.input.<a href="com/csse3200/game/input/InputComponent.html" title="class in com.csse3200.game.input">InputComponent</a></dt>
 <dd>&nbsp;</dd>
@@ -3866,7 +3954,9 @@ loadScripts(document, 'script');</script>
 <dt><a href="com/csse3200/game/services/ServiceLocator.html#registerDocketService(com.csse3200.game.services.DocketService)" class="member-name-link">registerDocketService(DocketService)</a> - Static method in class com.csse3200.game.services.<a href="com/csse3200/game/services/ServiceLocator.html" title="class in com.csse3200.game.services">ServiceLocator</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/entities/EntityService.html#registerEndDay(com.csse3200.game.entities.Entity)" class="member-name-link">registerEndDay(Entity)</a> - Method in class com.csse3200.game.entities.<a href="com/csse3200/game/entities/EntityService.html" title="class in com.csse3200.game.entities">EntityService</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Register the end day screen entity.</div>
+</dd>
 <dt><a href="com/csse3200/game/services/ServiceLocator.html#registerEntityService(com.csse3200.game.entities.EntityService)" class="member-name-link">registerEntityService(EntityService)</a> - Static method in class com.csse3200.game.services.<a href="com/csse3200/game/services/ServiceLocator.html" title="class in com.csse3200.game.services">ServiceLocator</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/services/ServiceLocator.html#registerGame(com.csse3200.game.GdxGame)" class="member-name-link">registerGame(GdxGame)</a> - Static method in class com.csse3200.game.services.<a href="com/csse3200/game/services/ServiceLocator.html" title="class in com.csse3200.game.services">ServiceLocator</a></dt>
@@ -3882,7 +3972,13 @@ loadScripts(document, 'script');</script>
 <dt><a href="com/csse3200/game/services/ServiceLocator.html#registerMainMenuDisplay(com.csse3200.game.components.mainmenu.MainMenuDisplay)" class="member-name-link">registerMainMenuDisplay(MainMenuDisplay)</a> - Static method in class com.csse3200.game.services.<a href="com/csse3200/game/services/ServiceLocator.html" title="class in com.csse3200.game.services">ServiceLocator</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/entities/EntityService.html#registerMoral(com.csse3200.game.entities.Entity)" class="member-name-link">registerMoral(Entity)</a> - Method in class com.csse3200.game.entities.<a href="com/csse3200/game/entities/EntityService.html" title="class in com.csse3200.game.entities">EntityService</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Register the moral screen entity.</div>
+</dd>
+<dt><a href="com/csse3200/game/entities/EntityService.html#registerMoralSystem(com.csse3200.game.entities.Entity)" class="member-name-link">registerMoralSystem(Entity)</a> - Method in class com.csse3200.game.entities.<a href="com/csse3200/game/entities/EntityService.html" title="class in com.csse3200.game.entities">EntityService</a></dt>
+<dd>
+<div class="block">Register the moral system entity.</div>
+</dd>
 <dt><a href="com/csse3200/game/services/CustomerMovementService.html#registerMovement(int,com.badlogic.gdx.math.Vector2)" class="member-name-link">registerMovement(int, Vector2)</a> - Method in class com.csse3200.game.services.<a href="com/csse3200/game/services/CustomerMovementService.html" title="class in com.csse3200.game.services">CustomerMovementService</a></dt>
 <dd>
 <div class="block">Registers a new customer movement with their target position.</div>
@@ -4222,7 +4318,7 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/services/ServiceLocator.html#setCurrentCutscene(com.csse3200.game.components.cutscenes.Cutscene)" class="member-name-link">setCurrentCutscene(Cutscene)</a> - Static method in class com.csse3200.game.services.<a href="com/csse3200/game/services/ServiceLocator.html" title="class in com.csse3200.game.services">ServiceLocator</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="com/csse3200/game/components/moral/MoralDecision.html#setCurrentMorality(java.lang.Integer)" class="member-name-link">setCurrentMorality(Integer)</a> - Method in class com.csse3200.game.components.moral.<a href="com/csse3200/game/components/moral/MoralDecision.html" title="class in com.csse3200.game.components.moral">MoralDecision</a></dt>
+<dt><a href="com/csse3200/game/components/moral/MoralDecision.html#setCurrentMorality(java.lang.Boolean)" class="member-name-link">setCurrentMorality(Boolean)</a> - Method in class com.csse3200.game.components.moral.<a href="com/csse3200/game/components/moral/MoralDecision.html" title="class in com.csse3200.game.components.moral">MoralDecision</a></dt>
 <dd>
 <div class="block">Sets the current morality score.</div>
 </dd>
@@ -4376,7 +4472,23 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Set Quantity of plate in stack</div>
 </dd>
-<dt><a href="com/csse3200/game/screens/MoralDecisionDisplay.html#setQuestion(java.lang.String)" class="member-name-link">setQuestion(String)</a> - Method in class com.csse3200.game.screens.<a href="com/csse3200/game/screens/MoralDecisionDisplay.html" title="class in com.csse3200.game.screens">MoralDecisionDisplay</a></dt>
+<dt><a href="com/csse3200/game/components/moral/MoralDayFour.html#setQuestion(java.lang.String)" class="member-name-link">setQuestion(String)</a> - Method in class com.csse3200.game.components.moral.<a href="com/csse3200/game/components/moral/MoralDayFour.html" title="class in com.csse3200.game.components.moral">MoralDayFour</a></dt>
+<dd>
+<div class="block">Sets the question to be displayed on the moral decision screen.</div>
+</dd>
+<dt><a href="com/csse3200/game/components/moral/MoralDayOne.html#setQuestion(java.lang.String)" class="member-name-link">setQuestion(String)</a> - Method in class com.csse3200.game.components.moral.<a href="com/csse3200/game/components/moral/MoralDayOne.html" title="class in com.csse3200.game.components.moral">MoralDayOne</a></dt>
+<dd>
+<div class="block">Sets the question to be displayed on the moral decision screen.</div>
+</dd>
+<dt><a href="com/csse3200/game/components/moral/MoralDayThree.html#setQuestion(java.lang.String)" class="member-name-link">setQuestion(String)</a> - Method in class com.csse3200.game.components.moral.<a href="com/csse3200/game/components/moral/MoralDayThree.html" title="class in com.csse3200.game.components.moral">MoralDayThree</a></dt>
+<dd>
+<div class="block">Sets the question to be displayed on the moral decision screen.</div>
+</dd>
+<dt><a href="com/csse3200/game/components/moral/MoralDayTwo.html#setQuestion(java.lang.String)" class="member-name-link">setQuestion(String)</a> - Method in class com.csse3200.game.components.moral.<a href="com/csse3200/game/components/moral/MoralDayTwo.html" title="class in com.csse3200.game.components.moral">MoralDayTwo</a></dt>
+<dd>
+<div class="block">Sets the question to be displayed on the moral decision screen.</div>
+</dd>
+<dt><a href="com/csse3200/game/components/moral/MoralDecisionDisplay.html#setQuestion(java.lang.String)" class="member-name-link">setQuestion(String)</a> - Method in class com.csse3200.game.components.moral.<a href="com/csse3200/game/components/moral/MoralDecisionDisplay.html" title="class in com.csse3200.game.components.moral">MoralDecisionDisplay</a></dt>
 <dd>
 <div class="block">Sets the question to be displayed on the moral decision screen.</div>
 </dd>
@@ -4471,6 +4583,18 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/mainmenu/MainMenuDisplay.html#setStage(com.badlogic.gdx.scenes.scene2d.Stage)" class="member-name-link">setStage(Stage)</a> - Method in class com.csse3200.game.components.mainmenu.<a href="com/csse3200/game/components/mainmenu/MainMenuDisplay.html" title="class in com.csse3200.game.components.mainmenu">MainMenuDisplay</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/components/moral/MoralDayFour.html#setStage(com.badlogic.gdx.scenes.scene2d.Stage)" class="member-name-link">setStage(Stage)</a> - Method in class com.csse3200.game.components.moral.<a href="com/csse3200/game/components/moral/MoralDayFour.html" title="class in com.csse3200.game.components.moral">MoralDayFour</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/components/moral/MoralDayOne.html#setStage(com.badlogic.gdx.scenes.scene2d.Stage)" class="member-name-link">setStage(Stage)</a> - Method in class com.csse3200.game.components.moral.<a href="com/csse3200/game/components/moral/MoralDayOne.html" title="class in com.csse3200.game.components.moral">MoralDayOne</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/components/moral/MoralDayThree.html#setStage(com.badlogic.gdx.scenes.scene2d.Stage)" class="member-name-link">setStage(Stage)</a> - Method in class com.csse3200.game.components.moral.<a href="com/csse3200/game/components/moral/MoralDayThree.html" title="class in com.csse3200.game.components.moral">MoralDayThree</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/components/moral/MoralDayTwo.html#setStage(com.badlogic.gdx.scenes.scene2d.Stage)" class="member-name-link">setStage(Stage)</a> - Method in class com.csse3200.game.components.moral.<a href="com/csse3200/game/components/moral/MoralDayTwo.html" title="class in com.csse3200.game.components.moral">MoralDayTwo</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/components/moral/MoralDecisionDisplay.html#setStage(com.badlogic.gdx.scenes.scene2d.Stage)" class="member-name-link">setStage(Stage)</a> - Method in class com.csse3200.game.components.moral.<a href="com/csse3200/game/components/moral/MoralDecisionDisplay.html" title="class in com.csse3200.game.components.moral">MoralDecisionDisplay</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/components/moral/MoralTextDisplay.html#setStage(com.badlogic.gdx.scenes.scene2d.Stage)" class="member-name-link">setStage(Stage)</a> - Method in class com.csse3200.game.components.moral.<a href="com/csse3200/game/components/moral/MoralTextDisplay.html" title="class in com.csse3200.game.components.moral">MoralTextDisplay</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/ordersystem/Docket.html#setStage(com.badlogic.gdx.scenes.scene2d.Stage)" class="member-name-link">setStage(Stage)</a> - Method in class com.csse3200.game.components.ordersystem.<a href="com/csse3200/game/components/ordersystem/Docket.html" title="class in com.csse3200.game.components.ordersystem">Docket</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/ordersystem/DocketLineDisplay.html#setStage(com.badlogic.gdx.scenes.scene2d.Stage)" class="member-name-link">setStage(Stage)</a> - Method in class com.csse3200.game.components.ordersystem.<a href="com/csse3200/game/components/ordersystem/DocketLineDisplay.html" title="class in com.csse3200.game.components.ordersystem">DocketLineDisplay</a></dt>
@@ -4513,8 +4637,6 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/rendering/TextureRenderComponent.html#setStage(com.badlogic.gdx.scenes.scene2d.Stage)" class="member-name-link">setStage(Stage)</a> - Method in class com.csse3200.game.rendering.<a href="com/csse3200/game/rendering/TextureRenderComponent.html" title="class in com.csse3200.game.rendering">TextureRenderComponent</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="com/csse3200/game/screens/MoralDecisionDisplay.html#setStage(com.badlogic.gdx.scenes.scene2d.Stage)" class="member-name-link">setStage(Stage)</a> - Method in class com.csse3200.game.screens.<a href="com/csse3200/game/screens/MoralDecisionDisplay.html" title="class in com.csse3200.game.screens">MoralDecisionDisplay</a></dt>
-<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/ui/terminal/TerminalDisplay.html#setStage(com.badlogic.gdx.scenes.scene2d.Stage)" class="member-name-link">setStage(Stage)</a> - Method in class com.csse3200.game.ui.terminal.<a href="com/csse3200/game/ui/terminal/TerminalDisplay.html" title="class in com.csse3200.game.ui.terminal">TerminalDisplay</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/areas/GameArea.html#setStaticXY(int,int)" class="member-name-link">setStaticXY(int, int)</a> - Static method in class com.csse3200.game.areas.<a href="com/csse3200/game/areas/GameArea.html" title="class in com.csse3200.game.areas">GameArea</a></dt>
@@ -4537,6 +4659,8 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Sets the text in allocated blocks based on text limit</div>
 </dd>
+<dt><a href="com/csse3200/game/components/moral/MoralTextDisplay.html#setText(java.lang.String)" class="member-name-link">setText(String)</a> - Method in class com.csse3200.game.components.moral.<a href="com/csse3200/game/components/moral/MoralTextDisplay.html" title="class in com.csse3200.game.components.moral">MoralTextDisplay</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/tutorial/TutorialTextDisplay.html#setText(java.lang.String)" class="member-name-link">setText(String)</a> - Method in class com.csse3200.game.components.tutorial.<a href="com/csse3200/game/components/tutorial/TutorialTextDisplay.html" title="class in com.csse3200.game.components.tutorial">TutorialTextDisplay</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/cutscenes/CutsceneScreenDisplay.html#setTextDisplay(com.csse3200.game.components.cutscenes.CutsceneTextDisplay)" class="member-name-link">setTextDisplay(CutsceneTextDisplay)</a> - Method in class com.csse3200.game.components.cutscenes.<a href="com/csse3200/game/components/cutscenes/CutsceneScreenDisplay.html" title="class in com.csse3200.game.components.cutscenes">CutsceneScreenDisplay</a></dt>
@@ -4595,6 +4719,8 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Set visiblility of the textbox</div>
 </dd>
+<dt><a href="com/csse3200/game/components/moral/MoralTextDisplay.html#setVisible(boolean)" class="member-name-link">setVisible(boolean)</a> - Method in class com.csse3200.game.components.moral.<a href="com/csse3200/game/components/moral/MoralTextDisplay.html" title="class in com.csse3200.game.components.moral">MoralTextDisplay</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/tutorial/TutorialTextDisplay.html#setVisible(boolean)" class="member-name-link">setVisible(boolean)</a> - Method in class com.csse3200.game.components.tutorial.<a href="com/csse3200/game/components/tutorial/TutorialTextDisplay.html" title="class in com.csse3200.game.components.tutorial">TutorialTextDisplay</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/player/KeyboardPlayerInputComponent.html#setWalkSpeed(float)" class="member-name-link">setWalkSpeed(float)</a> - Method in class com.csse3200.game.components.player.<a href="com/csse3200/game/components/player/KeyboardPlayerInputComponent.html" title="class in com.csse3200.game.components.player">KeyboardPlayerInputComponent</a></dt>
@@ -5230,9 +5356,17 @@ loadScripts(document, 'script');</script>
 <div class="block">Unregister a renderable.</div>
 </dd>
 <dt><a href="com/csse3200/game/entities/EntityService.html#unregisterEndDay()" class="member-name-link">unregisterEndDay()</a> - Method in class com.csse3200.game.entities.<a href="com/csse3200/game/entities/EntityService.html" title="class in com.csse3200.game.entities">EntityService</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Unregister the end day screen entity.</div>
+</dd>
 <dt><a href="com/csse3200/game/entities/EntityService.html#unregisterMoral()" class="member-name-link">unregisterMoral()</a> - Method in class com.csse3200.game.entities.<a href="com/csse3200/game/entities/EntityService.html" title="class in com.csse3200.game.entities">EntityService</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Unregister the moral screen entity.</div>
+</dd>
+<dt><a href="com/csse3200/game/entities/EntityService.html#unregisterMoralSystem()" class="member-name-link">unregisterMoralSystem()</a> - Method in class com.csse3200.game.entities.<a href="com/csse3200/game/entities/EntityService.html" title="class in com.csse3200.game.entities">EntityService</a></dt>
+<dd>
+<div class="block">Unregister the moral system entity.</div>
+</dd>
 <dt><a href="com/csse3200/game/utils/math/Vector2Utils.html#UP" class="member-name-link">UP</a> - Static variable in class com.csse3200.game.utils.math.<a href="com/csse3200/game/utils/math/Vector2Utils.html" title="class in com.csse3200.game.utils.math">Vector2Utils</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/ai/tasks/AITaskComponent.html#update()" class="member-name-link">update()</a> - Method in class com.csse3200.game.ai.tasks.<a href="com/csse3200/game/ai/tasks/AITaskComponent.html" title="class in com.csse3200.game.ai.tasks">AITaskComponent</a></dt>
@@ -5281,6 +5415,20 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">This function will add text after a certain amount of time given the delay constant</div>
 </dd>
+<dt><a href="com/csse3200/game/components/moral/MoralDayFour.html#update()" class="member-name-link">update()</a> - Method in class com.csse3200.game.components.moral.<a href="com/csse3200/game/components/moral/MoralDayFour.html" title="class in com.csse3200.game.components.moral">MoralDayFour</a></dt>
+<dd>
+<div class="block">Updates the moral decision screen.</div>
+</dd>
+<dt><a href="com/csse3200/game/components/moral/MoralDayThree.html#update()" class="member-name-link">update()</a> - Method in class com.csse3200.game.components.moral.<a href="com/csse3200/game/components/moral/MoralDayThree.html" title="class in com.csse3200.game.components.moral">MoralDayThree</a></dt>
+<dd>
+<div class="block">Updates the moral decision screen.</div>
+</dd>
+<dt><a href="com/csse3200/game/components/moral/MoralDecisionDisplay.html#update()" class="member-name-link">update()</a> - Method in class com.csse3200.game.components.moral.<a href="com/csse3200/game/components/moral/MoralDecisionDisplay.html" title="class in com.csse3200.game.components.moral">MoralDecisionDisplay</a></dt>
+<dd>
+<div class="block">Updates the moral decision screen.</div>
+</dd>
+<dt><a href="com/csse3200/game/components/moral/MoralTextDisplay.html#update()" class="member-name-link">update()</a> - Method in class com.csse3200.game.components.moral.<a href="com/csse3200/game/components/moral/MoralTextDisplay.html" title="class in com.csse3200.game.components.moral">MoralTextDisplay</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/ordersystem/MainGameOrderTicketDisplay.html#update()" class="member-name-link">update()</a> - Method in class com.csse3200.game.components.ordersystem.<a href="com/csse3200/game/components/ordersystem/MainGameOrderTicketDisplay.html" title="class in com.csse3200.game.components.ordersystem">MainGameOrderTicketDisplay</a></dt>
 <dd>
 <div class="block">Updates the state of all order tickets, including countdown timers and their positions on the screen.</div>
@@ -5351,10 +5499,6 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/physics/PhysicsEngine.html#update()" class="member-name-link">update()</a> - Method in class com.csse3200.game.physics.<a href="com/csse3200/game/physics/PhysicsEngine.html" title="class in com.csse3200.game.physics">PhysicsEngine</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="com/csse3200/game/screens/MoralDecisionDisplay.html#update()" class="member-name-link">update()</a> - Method in class com.csse3200.game.screens.<a href="com/csse3200/game/screens/MoralDecisionDisplay.html" title="class in com.csse3200.game.screens">MoralDecisionDisplay</a></dt>
-<dd>
-<div class="block">Updates the moral decision screen.</div>
-</dd>
 <dt><a href="com/csse3200/game/services/DayNightService.html#update()" class="member-name-link">update()</a> - Method in class com.csse3200.game.services.<a href="com/csse3200/game/services/DayNightService.html" title="class in com.csse3200.game.services">DayNightService</a></dt>
 <dd>
 <div class="block">Updates the game state by checking if enough time has passed to trigger

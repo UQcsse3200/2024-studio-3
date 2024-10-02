@@ -141,9 +141,8 @@ loadScripts(document, 'script');</script>
 <div class="block">Adds a new Question, assuming it is good and worth 10 points.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#addQuestion(java.lang.String,boolean,int)" class="member-name-link">addQuestion</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;question,
- boolean&nbsp;isGood,
- int&nbsp;decisionPoints)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#addQuestion(java.lang.String,boolean)" class="member-name-link">addQuestion</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;question,
+ boolean&nbsp;isGood)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Adds a new Question with the specified question, goodness, and decision points.</div>
 </div>
@@ -152,7 +151,7 @@ loadScripts(document, 'script');</script>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Clears all decisions from the list.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Integer.html" title="class or interface in java.lang" class="external-link">Integer</a></code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getCurrentMorality()" class="member-name-link">getCurrentMorality</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Returns the current morality score.</div>
@@ -193,7 +192,7 @@ loadScripts(document, 'script');</script>
 <div class="block">Removes the decision with the specified question from the list.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setCurrentMorality(java.lang.Integer)" class="member-name-link">setCurrentMorality</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Integer.html" title="class or interface in java.lang" class="external-link">Integer</a>&nbsp;currentMorality)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setCurrentMorality(java.lang.Boolean)" class="member-name-link">setCurrentMorality</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a>&nbsp;currentMorality)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Sets the current morality score.</div>
 </div>
@@ -251,17 +250,15 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="addQuestion(java.lang.String,boolean,int)">
+<section class="detail" id="addQuestion(java.lang.String,boolean)">
 <h3>addQuestion</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">addQuestion</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;question,
- boolean&nbsp;isGood,
- int&nbsp;decisionPoints)</span></div>
+ boolean&nbsp;isGood)</span></div>
 <div class="block">Adds a new Question with the specified question, goodness, and decision points.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>question</code> - the question or statement of the decision</dd>
 <dd><code>isGood</code> - whether the decision is good</dd>
-<dd><code>decisionPoints</code> - points associated with the decision</dd>
 <dt>Returns:</dt>
 <dd>true if the decision was added successfully</dd>
 </dl>
@@ -307,7 +304,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getCurrentMorality()">
 <h3>getCurrentMorality</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Integer.html" title="class or interface in java.lang" class="external-link">Integer</a></span>&nbsp;<span class="element-name">getCurrentMorality</span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a></span>&nbsp;<span class="element-name">getCurrentMorality</span>()</div>
 <div class="block">Returns the current morality score.</div>
 <dl class="notes">
 <dt>Returns:</dt>
@@ -316,9 +313,9 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="setCurrentMorality(java.lang.Integer)">
+<section class="detail" id="setCurrentMorality(java.lang.Boolean)">
 <h3>setCurrentMorality</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setCurrentMorality</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Integer.html" title="class or interface in java.lang" class="external-link">Integer</a>&nbsp;currentMorality)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setCurrentMorality</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a>&nbsp;currentMorality)</span></div>
 <div class="block">Sets the current morality score.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
