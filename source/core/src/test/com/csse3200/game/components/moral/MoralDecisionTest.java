@@ -1,16 +1,25 @@
 package com.csse3200.game.components.moral;
 
 
+import com.csse3200.game.components.CombatStatsComponent;
+import com.csse3200.game.components.Component;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.extensions.GameExtension;
+import com.csse3200.game.services.PlayerService;
+import com.csse3200.game.services.ServiceLocator;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 @ExtendWith(GameExtension.class)
 public class MoralDecisionTest {
     private Entity testEntity;
+    private Entity player;
+    private CombatStatsComponent combatStatsComponent;
+
 
     @BeforeEach
     void init() {
@@ -28,13 +37,13 @@ public class MoralDecisionTest {
 
     @Test
     void addQuestion_withParameters_shouldAddQuestionSuccessfully() {
-        testEntity.getComponent(MoralDecision.class).addQuestion("Is this a good decision?", true, 10);
+        testEntity.getComponent(MoralDecision.class).addQuestion("Is this a good decision?", true);
         Assertions.assertEquals(1, testEntity.getComponent(MoralDecision.class).getListOfDecisions().size());
     }
 
     @Test
     void addDecision_shouldAddDecisionSuccessfully() {
-        var testDecision = new Decision("Is this a good decision?", true, 10);
+        var testDecision = new Decision("Is this a good decision?", true);
         testDecision.setDecision(true);
         testEntity.getComponent(MoralDecision.class).addDecision(testDecision);
         Assertions.assertEquals(1, testEntity.getComponent(MoralDecision.class).getListOfDecisions().size());
@@ -62,16 +71,24 @@ public class MoralDecisionTest {
 
     @Test
     void setDecision_shouldUpdateMoralityScore() {
-        testEntity.getComponent(MoralDecision.class).addQuestion("Is this a good decision?", true, 10);
+        testEntity.getComponent(MoralDecision.class).addQuestion("Is this a good decision?", true);
         testEntity.getComponent(MoralDecision.class).setDecision(0, true);
-        Assertions.assertEquals(10, testEntity.getComponent(MoralDecision.class).getCurrentMorality());
+        Assertions.assertEquals(true, testEntity.getComponent(MoralDecision.class).getCurrentMorality());
     }
 
     @Test
     void setDecision_withNegativePoints_shouldUpdateMoralityScore() {
-        testEntity.getComponent(MoralDecision.class).addQuestion("Is this a bad decision?", false, 5);
+        player = mock(Entity.class);
+        combatStatsComponent = mock(CombatStatsComponent.class);
+        PlayerService playerService = mock(PlayerService.class);
+        ServiceLocator.registerPlayerService(playerService);
+        playerService.registerPlayer(player);
+        when(ServiceLocator.getPlayerService().getPlayer()).thenReturn(player);
+        when(player.getComponent(CombatStatsComponent.class)).thenReturn(combatStatsComponent);
+
+        testEntity.getComponent(MoralDecision.class).addQuestion("Is this a bad decision?", false);
         testEntity.getComponent(MoralDecision.class).setDecision(0, false);
-        Assertions.assertEquals(-5, testEntity.getComponent(MoralDecision.class).getCurrentMorality());
+        Assertions.assertEquals(false, testEntity.getComponent(MoralDecision.class).getCurrentMorality());
     }
 
     @Test
@@ -90,7 +107,7 @@ public class MoralDecisionTest {
 
     @Test
     void removeDecision_byObject_shouldRemoveDecision() {
-        var testDecision = new Decision("Is this a good decision?", true, 10);
+        var testDecision = new Decision("Is this a good decision?", true);
         testEntity.getComponent(MoralDecision.class).addDecision(testDecision);
         testEntity.getComponent(MoralDecision.class).removeDecision(testDecision);
         Assertions.assertEquals(0, testEntity.getComponent(MoralDecision.class).getListOfDecisions().size());
