@@ -78,7 +78,8 @@ class MainGameOrderTicketDisplayTest {
 		when(ServiceLocator.getDocketService().getEvents()).thenReturn(eventHandler);
 		when(ServiceLocator.getPlayerService().getEvents()).thenReturn(eventHandler2);
 
-		orderTicketDisplay = new MainGameOrderTicketDisplay();
+		orderTicketDisplay = new MainGameOrderTicketDisplay(renderService, playerService);
+//		orderTicketDisplay = new MainGameOrderTicketDisplay();
 //        String[] recipeNames = {"acaiBowl", "salad", "fruitSalad", "steakMeal", "bananaSplit"};
 //        String randomRecipe = recipeNames[new Random().nextInt(recipeNames.length)];
 		orderTicketDisplay.setRecipe("acaiBowl");
@@ -137,6 +138,9 @@ class MainGameOrderTicketDisplayTest {
 		// assertEquals("Timer: 30000", countdownLabel.getText().toString());
 	}
 
+	/**
+	 * Test should add and remove tables to MainGameOrderTicketDisplay array
+	 */
 	@Test
 	void shouldAddTablesToArrayAndRemove() {
 		orderTicketDisplay.addActors();
@@ -194,6 +198,9 @@ class MainGameOrderTicketDisplayTest {
 		  MainGameOrderTicketDisplay.getCountdownLabelArrayList().get(0).getText().toString(), "Timer should orderTicketDisplay correct countdown");
 	}*/
 
+	/**
+	 * Test should dispose the stage
+	 */
 	@Test
 	public void testDisposeClearsComponents() {
 		orderTicketDisplay.addActors();
@@ -203,7 +210,7 @@ class MainGameOrderTicketDisplayTest {
 	}
 
 	/**
-	 * test stage disposes
+	 * Test should dispose of stage
 	 */
 	@Test
 	void testStageDispose() {
@@ -227,14 +234,14 @@ class MainGameOrderTicketDisplayTest {
 		logger.info("Table: {}", table);
 		logger.info("Background: {}", background);
 
-		orderTicketDisplay.stageDispose(background, table, 0);
+		orderTicketDisplay.stageDispose(background, table, 0, true);
 
 		assertTrue(table.getChildren().isEmpty(), "Table should be cleared of children.");
 		assertTrue(hasChildrenBeforeDispose, "Table should have had children before dispose.");
 	}
 
 	/**
-	 * test stage sets
+	 * Test should set the stage
 	 */
 	@Test
 	void testSetStage() {
@@ -327,7 +334,9 @@ class MainGameOrderTicketDisplayTest {
 		assertNotNull(table, "Table should not be null for bananaSplit");
 	}
 
-
+	/**
+	 * Test shoulg get the Z index
+	 */
 	@Test
 	void testGetZIndex() {
 		assertEquals(3f, orderTicketDisplay.getZIndex());

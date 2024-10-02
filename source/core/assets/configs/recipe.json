@@ -30,7 +30,7 @@
     "ingredient":["beef","tomato","cucumber"],
     "cuttingBoard":["tomato","cucumber"],
     "fryingPan":["beef"],
-    "oven":["tomato","cucumber"],
+    "oven":[],
     "produceBasket": ["tomato", "cucumber"],
     "fridge": ["beef"],
     "makingTime":5,

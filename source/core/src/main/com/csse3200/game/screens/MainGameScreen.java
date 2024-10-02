@@ -26,6 +26,7 @@ import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.entities.factories.LevelFactory;
 import com.csse3200.game.entities.factories.RenderFactory;
+import com.csse3200.game.entities.factories.UIFactory;
 import com.csse3200.game.input.InputComponent;
 import com.csse3200.game.input.InputDecorator;
 import com.csse3200.game.input.InputService;
@@ -42,9 +43,8 @@ import com.csse3200.game.components.maingame.TextDisplay;
 import com.csse3200.game.components.gamearea.PerformanceDisplay;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import com.csse3200.game.components.player.InventoryDisplay;
-import java.util.Arrays;
 import com.csse3200.game.components.ordersystem.DocketLineDisplay;
+import com.csse3200.game.services.GameTime;
 import com.csse3200.game.components.player.InventoryDisplay;
 import java.util.Arrays;
 
@@ -110,13 +110,17 @@ public class MainGameScreen extends ScreenAdapter {
 	// Modified the camera position to fix layout
 	private static final Vector2 CAMERA_POSITION = new Vector2(7f, 4.5f);
 
-  private final GdxGame game;
-  private final Renderer renderer;
-  private final PhysicsEngine physicsEngine;
-  private boolean isPaused = false;
-  private DocketLineDisplay docketLineDisplay;
-  private MainGameOrderTicketDisplay orderTicketDisplay;
+    private final GdxGame game;
+    private final Renderer renderer;
+    private final PhysicsEngine physicsEngine;
+    private boolean isPaused = false;
+    private DocketLineDisplay docketLineDisplay;
+    private MainGameOrderTicketDisplay orderTicketDisplay;
 
+	/**
+	 * Constructs the main game screen
+	 * @param game the GdxGame
+	 */
 	public MainGameScreen(GdxGame game) {
 		this.game = game;
 
@@ -134,7 +138,7 @@ public class MainGameScreen extends ScreenAdapter {
 		ServiceLocator.registerEntityService(new EntityService());
 		ServiceLocator.registerRenderService(new RenderService());
 		ServiceLocator.registerDocketService(new DocketService());
-        ServiceLocator.registerDayNightService(new DayNightService());
+		ServiceLocator.registerDayNightService(new DayNightService());
 		ServiceLocator.registerRandomComboService(new RandomComboService());
 		ServiceLocator.registerLevelService(new LevelService());
 		ServiceLocator.registerGameScreen(this);
@@ -150,7 +154,7 @@ public class MainGameScreen extends ScreenAdapter {
 
 		logger.debug("Initialising main game screen entities");
 		TerrainFactory terrainFactory = new TerrainFactory(renderer.getCamera());
-		UpgradesDisplay upgradesDisplay = new UpgradesDisplay(this); 
+		UpgradesDisplay upgradesDisplay = new UpgradesDisplay(this);
 		ForestGameArea forestGameArea = new ForestGameArea(terrainFactory, upgradesDisplay);
 		forestGameArea.create();
 		Entity spawnControllerEntity = LevelFactory.createSpawnControllerEntity();
@@ -160,6 +164,10 @@ public class MainGameScreen extends ScreenAdapter {
 		ServiceLocator.getLevelService().getEvents().trigger("startLevel", currLevel);
 	}
 
+	/**
+	 * Render the screen
+	 * @param delta time span between the current frame and the last frame in seconds.
+	 */
 	@Override
 	public void render(float delta) {
 		if (!isPaused) {
@@ -167,11 +175,36 @@ public class MainGameScreen extends ScreenAdapter {
 			ServiceLocator.getDayNightService().update();
 			ServiceLocator.getEntityService().update();
 		}
+
+		if ( isPaused){
+			renderPauseMenu();
+			return;
+		}
+
 		renderer.render();
 		Gdx.gl.glClearColor(0f/255f, 0f/255f, 0f/255f, 1);
-
 	}
 
+	/**
+	 * Resize the screen and docket
+	 * @param width width of screen
+	 * @param height height of screen
+	 */
+	/**
+	 * Return freeze screen
+	 */
+
+	private void renderPauseMenu() {
+		Stage stage = ServiceLocator.getRenderService().getStage();
+		stage.act();
+		stage.draw();
+	}
+
+	/**
+	 * Resize the screen and docket
+	 * @param width width of screen
+	 * @param height height of screen
+	 */
 	@Override
 	public void resize(int width, int height) {
 		renderer.resize(width, height);
@@ -182,10 +215,14 @@ public class MainGameScreen extends ScreenAdapter {
 		logger.trace("Resized renderer: ({} x {})", width, height);
 	}
 
+	/**
+	 * Pause game
+	 */
 	@Override
 	public void pause() {
 		logger.info("Game paused");
 		isPaused = true;
+		ServiceLocator.getTimeSource().pause();
 		for (Entity entity : ServiceLocator.getEntityService().getEntities()) {
 			AITaskComponent aiComponent = entity.getComponent(AITaskComponent.class);
 			if (aiComponent != null) {
@@ -194,10 +231,14 @@ public class MainGameScreen extends ScreenAdapter {
 		}
 	}
 
+	/**
+	 * Resume game
+	 */
 	@Override
 	public void resume() {
 		logger.info("Game resumed");
 		isPaused = false;
+		ServiceLocator.getTimeSource().resume();
 		for (Entity entity : ServiceLocator.getEntityService().getEntities()) {
 			AITaskComponent aiComponent = entity.getComponent(AITaskComponent.class);
 			if (aiComponent != null) {
@@ -206,6 +247,9 @@ public class MainGameScreen extends ScreenAdapter {
 		}
 	}
 
+	/**
+	 * Dispose of services
+	 */
 	@Override
 	public void dispose() {
 		logger.debug("Disposing main game screen");
@@ -220,6 +264,9 @@ public class MainGameScreen extends ScreenAdapter {
 		ServiceLocator.clear();
 	}
 
+	/**
+	 * Reset screen UI
+	 */
 	public void resetScreen() {
 		EntityService entityService = ServiceLocator.getEntityService();
 		entityService.dispose();
@@ -227,6 +274,9 @@ public class MainGameScreen extends ScreenAdapter {
 		createUI();
 	}
 
+	/**
+	 * Loads assets to resourceService
+	 */
 	private void loadAssets() {
 		logger.debug("Loading assets");
 		ResourceService resourceService = ServiceLocator.getResourceService();
@@ -235,6 +285,9 @@ public class MainGameScreen extends ScreenAdapter {
 		ServiceLocator.getResourceService().loadAll();
 	}
 
+	/**
+	 * Unloads the assets from resourceService
+	 */
 	private void unloadAssets() {
 		logger.debug("Unloading assets");
 		ResourceService resourceService = ServiceLocator.getResourceService();
@@ -242,7 +295,10 @@ public class MainGameScreen extends ScreenAdapter {
 		resourceService.unloadAssets(DocketMealDisplay.getMealDocketTextures());
 	}
 
-
+	/**
+	 * Get game
+	 * @return the GDXGame
+	 */
 	public GdxGame getGame() {
 		return game;
 	}
@@ -261,10 +317,10 @@ public class MainGameScreen extends ScreenAdapter {
 
 		Entity ui = new Entity();
 		ui.addComponent(new GameBackgroundDisplay())
-		.addComponent(new InputDecorator(stage, 10))
+			.addComponent(new InputDecorator(stage, 10))
 		  	.addComponent(docketLineDisplay)
 			.addComponent(new PerformanceDisplay())
-			.addComponent(new MainGameActions(this.game))
+			.addComponent(new MainGameActions(this.game, UIFactory.createDocketUI()))
 			.addComponent(new MainGameExitDisplay())
 			.addComponent(new Terminal())
 			.addComponent(inputComponent)

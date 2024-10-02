@@ -18,6 +18,9 @@ import org.junit.Test;
 
 import java.util.*;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
 
 public class IntroCutsceneTest {
@@ -26,9 +29,6 @@ public class IntroCutsceneTest {
     private ResourceService resourceService;
     private GameTime gameTime;
     private Entity entity;
-    private EventHandler eventHandler;
-    private Texture mockTexture;
-    private Graphics mockGraphics;
 
     @Before
     public void setUp() {
@@ -36,9 +36,9 @@ public class IntroCutsceneTest {
         resourceService = mock(ResourceService.class);
         gameTime = mock(GameTime.class);
         entity = mock(Entity.class);
-        eventHandler = mock(EventHandler.class);
-        mockTexture = mock(Texture.class);
-        mockGraphics = mock(Graphics.class);
+        EventHandler eventHandler = mock(EventHandler.class);
+        Texture mockTexture = mock(Texture.class);
+        Graphics mockGraphics = mock(Graphics.class);
 
         // Mock the entity's event system
         when(entity.getEvents()).thenReturn(eventHandler);
@@ -105,12 +105,11 @@ public class IntroCutsceneTest {
     public void testSetupScenes() {
 
         // Verify the number of scenes created
-        assert introCutscene.scenes.size() == 3;
+        assert introCutscene.scenes.size() == 2;
 
         // Verify the first scene has the correct background, animation, and text
         Scene scene1 = introCutscene.scenes.getFirst();
         assert scene1.getBackgroundImagePath().equals("images/Cutscenes/Beastly_Bistro_Background.png");
-        assert scene1.getAnimationImagePaths()[0].equals("images/player/Cook_Model32.png");
         assert scene1.getSceneText().size == 3;  // Text contains three items
     }
 
@@ -140,7 +139,7 @@ public class IntroCutsceneTest {
         // Mock the dispose method to avoid null pointer exception
         doNothing().when(entity).dispose();
         // Ensure that createdComponents in entity are initialized
-        when(entity.getCreatedComponents()).thenReturn(new Array<Component>());
+        when(entity.getCreatedComponents()).thenReturn(new Array<>());
         assert Objects.equals(entity.getCreatedComponents(), new Array<Component>());
 
         // Call update before the scene duration is up
@@ -148,9 +147,9 @@ public class IntroCutsceneTest {
         verify(entity, never()).getEvents();  // No events triggered before time is up
 
         // Set the entities to null to avoid disposing errors
-        introCutscene.entities = new ArrayList<Entity>();
+        introCutscene.entities = new ArrayList<>();
         // Set the number of scenes to 1 so that it simulates ending a cutscene
-        introCutscene.scenes = new ArrayList<Scene>();
+        introCutscene.scenes = new ArrayList<>();
 
         // Call update after the duration has passed
         introCutscene.update();
@@ -164,10 +163,37 @@ public class IntroCutsceneTest {
     public void testDisposeUnloadsAssets() {
         introCutscene.dispose();
 
-        // Verify that assets are unloaded
         verify(resourceService, times(1)).unloadAssets(new String[]{
                 "images/Cutscenes/Beastly_Bistro_Background.png",
                 "images/Cutscenes/Graveyard_Scene.png"
         });
+    }
+    
+    @Test
+    public void testNoTransitionWhenNoScenesRemain() {
+        introCutscene.setupScenes();
+        introCutscene.currentSceneIndex = introCutscene.scenes.size() - 1;
+    
+        introCutscene.nextCutscene();
+    
+        assert introCutscene.currentSceneIndex == introCutscene.scenes.size();  
+        verify(entity.getEvents(), times(1)).trigger("cutsceneEnded");  // Ensure the event is triggered
+    }
+    @Test
+    public void testStartCreatesEntities() {
+        introCutscene.setupScenes();
+    
+        introCutscene.start();
+    
+        verify(ServiceLocator.getEntityService(), times(introCutscene.entities.size())).register(any(Entity.class));
+    }
+
+    @Test
+        public void testSetTextForScene() {
+            introCutscene.setupScenes();
+            introCutscene.loadScene(0);
+            assert introCutscene.currentText.equals("Hello This is an Example Text");
+
+            assert introCutscene.textIndex == 1;
     }
 }

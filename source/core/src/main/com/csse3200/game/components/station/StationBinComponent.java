@@ -4,6 +4,8 @@ import com.csse3200.game.components.Component;
 import com.csse3200.game.components.items.ItemComponent;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.components.player.InventoryDisplay;
+import com.csse3200.game.services.ServiceLocator;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12,8 +14,6 @@ import org.slf4j.LoggerFactory;
  *
  * StationBinComponent throughs away an item
  *
- * {@link #submitMeal(ItemComponent)}: Function which controls the submission of a meal by the
- * class.
  */
 public class StationBinComponent extends Component {
 
@@ -45,7 +45,7 @@ public class StationBinComponent extends Component {
             ItemComponent item = playerInventoryComponent.getItemFirst();
             playerInventoryComponent.removeAt(0);
             inventoryDisplay.update();
-            submitMeal(item);
+            disposeItem(item);
         }
     }
     /**
@@ -53,8 +53,10 @@ public class StationBinComponent extends Component {
      * Calls another function which grades the submission
      * @param item reference to the item being submitted by the user
      */
-    public void submitMeal(ItemComponent item) {
+    public void disposeItem(ItemComponent item) {
         // Remove item
-        //item.dispose();
+        ServiceLocator.getEntityService().unregister(item.getEntity());
+
+        logger.info("Disposing of item");
     }
 }
