@@ -8,6 +8,7 @@ import com.csse3200.game.services.ServiceLocator;
 
 /** Render a static texture. */
 public class TextureRenderComponent extends RenderComponent {
+  private static final int IMAGE_LAYER = 2;
   private Texture texture;
   private String texturePath;
 
@@ -85,5 +86,10 @@ public class TextureRenderComponent extends RenderComponent {
   @Override
   public void setStage(Stage mock) {
 
+  }
+
+  @Override
+  public int getLayer() {
+    return IMAGE_LAYER;
   }
 }

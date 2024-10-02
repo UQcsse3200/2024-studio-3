@@ -4,6 +4,8 @@ import com.csse3200.game.components.Component;
 import com.csse3200.game.ui.terminal.commands.Command;
 import com.csse3200.game.ui.terminal.commands.DebugCommand;
 import com.csse3200.game.ui.terminal.commands.MoralCommands;
+import com.csse3200.game.ui.terminal.commands.SpawnRecipeCommands;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,6 +32,7 @@ public class Terminal extends Component {
     this.commands = commands;
     addCommand("question", new MoralCommands());
     addCommand("debug", new DebugCommand());
+    addCommand("spawn",new SpawnRecipeCommands());
   }
 
   /** @return message entered by user */
