@@ -103,7 +103,7 @@ public class MealComponent extends ItemComponent {
         int finalQuality = qualityScore - penalty;
 
         // Trigger event for 100% quality meal
-        if (finalQuality == 100) {
+        if (finalQuality == 100 && ServiceLocator.getEntityService() != null) {
             ServiceLocator.getEntityService().getEvents().trigger("mealHighQuality");
         }
 
