@@ -45,11 +45,13 @@ public class SaveLoadService {
     public void load() {
         logger.warn(saveFile);
         GameState state = FileLoader.readClass(GameState.class, ROOT_DIR + File.separator + saveFile, Location.INTERNAL);
-        this.combatStatsComponent.setGold(state.getMoney());
-        ServiceLocator.getDayNightService().setDay(state.getDay());
-        /*for (Decision decision: state.getDecisions()) {
-            ServiceLocator.getEntityService().getEvents().trigger("addDecision", decision);
-        }*/
+        if (state != null) {
+            this.combatStatsComponent.setGold(state.getMoney());
+            ServiceLocator.getDayNightService().setDay(state.getDay());
+            /*for (Decision decision: state.getDecisions()) {
+                ServiceLocator.getEntityService().getEvents().trigger("addDecision", decision);
+            }*/
+        }
 
     }
 
