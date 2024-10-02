@@ -46,6 +46,7 @@ public class MainMenuActions extends Component {
     Skin skin = new Skin(Gdx.files.internal("flat-earth/skin/flat-earth-ui.json"));
     if (saveFile.length() > 0) {
       entity.getEvents().trigger("loadGame", saveFile);
+      logger.warn("HERE3");
     } else {
       LocalDateTime currentDateTime = LocalDateTime.now();
       DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy_HH-mm-ss");
@@ -53,6 +54,7 @@ public class MainMenuActions extends Component {
       ServiceLocator.getSaveLoadService().setSaveFile(formattedDateTime + ".json");
       new Confirmationpopup("Game Tuto Confirm", skin, stage, game);
     }
+    game.setScreen(GdxGame.ScreenType.MAIN_GAME);
   }
 
   /**

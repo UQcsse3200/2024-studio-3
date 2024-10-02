@@ -21,6 +21,7 @@ public class SaveLoadService {
         ServiceLocator.getPlayerService().getEvents().addListener("playerCreated", (Entity player) -> {
             this.combatStatsComponent = player.getComponent(CombatStatsComponent.class);
         });
+        logger.warn("HERE");
         ServiceLocator.getEntityService().getEvents().addListener("loadGame", this::load);
     }
 
@@ -32,6 +33,7 @@ public class SaveLoadService {
         Entity player = ServiceLocator.getPlayerService().getPlayer();
         state.setMoney(player.getComponent(CombatStatsComponent.class).getGold());
         state.setDay(ServiceLocator.getDayNightService().getDay());
+        state.setPosition(player.getPosition());
         FileLoader.writeClass(state, (ROOT_DIR + File.separator + saveFile), Location.LOCAL);
         ServiceLocator.getEntityService().getEvents().trigger("togglePause");
     }
@@ -41,14 +43,18 @@ public class SaveLoadService {
      * @param file - the string which is the name of the file
      */
     public void load(String file) {
+        logger.warn("HERE2");
         GameState state = FileLoader.readClass(GameState.class, ROOT_DIR + File.separator + file, Location.LOCAL);
         UpdateStats(state);
-        ServiceLocator.getEntityService().getEvents().trigger("togglePause");
     }
 
     public void UpdateStats(GameState state) {
         this.combatStatsComponent.setGold(state.getMoney());
         ServiceLocator.getDayNightService().setDay(state.getDay());
+        logger.warn(ServiceLocator.getPlayerService().getPlayer().getPosition().toString());
+        logger.warn(state.getPosition().toString());
+        ServiceLocator.getPlayerService().getPlayer().setPosition(state.getPosition());
+        logger.warn(ServiceLocator.getPlayerService().getPlayer().getPosition().toString());
     }
 
     public String getSaveFile() {
