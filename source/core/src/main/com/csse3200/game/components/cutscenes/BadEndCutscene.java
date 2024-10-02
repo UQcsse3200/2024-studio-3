@@ -20,20 +20,27 @@ public class BadEndCutscene extends Cutscene {
                 "images/Cutscenes/cutscene_badEnd.atlas",
                 "bad_end", 20));
 
-        //animatedScenes.add(new AnimatedScene(
-        //        "images/stations/Servery_Animation/servery.atlas",
-        //        "servery_idle", 20));
+        animatedScenes.add(new AnimatedScene(
+                "images/stations/Servery_Animation/servery.atlas",
+                "servery_idle", 20)); // servery_idle
+
+        animatedScenes.add(new AnimatedScene(
+                "images/Cutscenes/cutscene_badEnd.atlas",
+                "bad_end2", 20));
     }
 
     @Override
     protected void loadAssets() {
-        // redundant doesn't do anything
+        textures = new String[] {
+                "images/Cutscenes/Beastly_Bistro_Background.png",
+        };
 
         animations = new String[] {
                 "images/Cutscenes/cutscene_badEnd.atlas",
                 "images/stations/Servery_Animation/servery.atlas"
         };
         ResourceService resourceService = ServiceLocator.getResourceService();
+        resourceService.loadTextures(textures);
         resourceService.loadTextureAtlases(animations);
         resourceService.loadAll();
     }

@@ -148,6 +148,15 @@ public abstract class Cutscene extends Component {
             loadAssetsForScene(currentScene);  // Load assets needed for the current scene
             createEntitiesForScene(currentScene);  // Create entities for the current scene
 
+            /**
+            currentScene = scenes.get(sceneIndex);
+            logger.info("Loading scene {}", sceneIndex);
+
+            loadAssetsForScene(currentScene);  // Load assets needed for the current scene
+            createEntitiesForScene(currentScene);  // Create entities for the current scene
+            */
+
+            setTextForScene(currentScene);
         } else {
             if (sceneIndex >= animatedScenes.size()) {
                 logger.error("No more scenes available.");
@@ -155,22 +164,17 @@ public abstract class Cutscene extends Component {
                 return;
             }
 
+
+
             currentAnimatedScene = animatedScenes.get(sceneIndex);
             animName = currentAnimatedScene.getAnimName();
             logger.info("Loading scene {}", sceneIndex);
 
             loadAssetsForScene(currentAnimatedScene);  // Load assets needed for the current scene
+
             createEntitiesForScene(currentAnimatedScene);  // Create entities for the current scene
+
         }
-
-        currentScene = scenes.get(sceneIndex);
-        logger.info("Loading scene {}", sceneIndex);
-
-        loadAssetsForScene(currentScene);  // Load assets needed for the current scene
-        createEntitiesForScene(currentScene);  // Create entities for the current scene
-
-        setTextForScene(currentScene);
-
         // Reset the timer to track how long the scene is active
         timeStart = gameTime.getTime();
     }

@@ -95,40 +95,41 @@ public class CutsceneFactory {
     }
 
     /**
-     * Creates an animation entity with the specified atlas path.
+     * Creates a full screen animation entity with the specified atlas path.
      *
      * @param animationAtlasPath The file path of the atlas file to use.
+     * @param animName The name of the animation in the atlas file.
      * @return A new animation entity.
      */
     public static Entity createFullAnimation(String animationAtlasPath, String animName) {
         Entity animation = new Entity();
 
+        // Create and add a texture component to the entity for rendering the background
+        TextureRenderComponent textureComponent = new BackgroundRenderComponent("images/Cutscenes/Beastly_Bistro_Background.png");
+        animation.addComponent(textureComponent);
+        textureComponent.scaleEntity();  // Scale the entity based on the texture size
+
+        // Calculate the aspect ratio of the image
+        float aspectRatio = textureComponent.getWidth() / textureComponent.getHeight();
+
+        // Calculate the scale factor needed to fit the screen height-wise, applying a scaling factor of 2.7
+        float screenToHeight = Gdx.graphics.getHeight() / textureComponent.getHeight() * 2.7f;
+
+        // Set the entity's scale to maintain the image's aspect ratio and fit the screen height-wise
+        animation.setScale(screenToHeight * aspectRatio, screenToHeight);
+
+        // Center the background entity on the screen
+        float y_pos = -screenToHeight / 2;
+        float x_pos = -(screenToHeight * aspectRatio) / 2;
+        animation.setPosition(new Vector2(x_pos, y_pos));
+
+        // render the animation to be placed over the texture
         AnimationRenderComponent animator =
                 new AnimationRenderComponent(
                         ServiceLocator.getResourceService().getAsset(animationAtlasPath, TextureAtlas.class)); // images/stations/Servery_Animation/servery.atlas
         animator.addAnimation(animName, 0.1f, Animation.PlayMode.NORMAL);
         animation.addComponent(animator);
-
-
-        /**
-        animator.scaleEntity();
-
-
         animator.startAnimation(animName);
-
-        // Calculate the aspect ratio of the screen
-        float aspectRatio = (float) Gdx.graphics.getWidth() / Gdx.graphics.getHeight();
-        float screenToHeight = Gdx.graphics.getHeight() * 2.7f; // Adjust scaling factor if needed
-        animation.setScale(screenToHeight * aspectRatio, screenToHeight);
-
-
-        // Center the background entity on the screen
-        float y_pos = -screenToHeight / 2;
-        float x_pos = -(screenToHeight * aspectRatio) / 2;
-        animation.setPosition(new Vector2(0, 0)); // x_pos, y_pos
-
-        */
-
 
         return animation;
     }
