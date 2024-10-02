@@ -24,18 +24,18 @@ public class TutorialScreenDisplay extends UIComponent {
     private final GdxGame game;
     private Skin skin;
     private PlayerActions playerActions;
-    private int tutorialStep = 0;
+    int tutorialStep = 0;
     private MainGameOrderTicketDisplay orderTicketDisplay;
     private MainGameOrderBtnDisplay orderBtnDisplay;
     private boolean createOrderPressed = false;
     boolean docketsShifted = false;
     private Table table;
-    private TutorialTextDisplay textDisplay;
+    TutorialTextDisplay textDisplay;
     private boolean wPressedLastFrame = false;
     private boolean aPressedLastFrame = false;
     private boolean sPressedLastFrame = false;
     private boolean dPressedLastFrame = false;
-    private  int  i = 0;
+    int  i = 0;
     public TutorialScreenDisplay(GdxGame game) {
 
         this.game = game;
@@ -115,7 +115,7 @@ public class TutorialScreenDisplay extends UIComponent {
      * Called when the player moves. Proceeds to the next tutorial step.
      * @return true if the tutorial step should advance, false otherwise.
      */
-    private boolean onPlayerMoved() {
+    boolean onPlayerMoved() {
         if (i == 0) {
             advanceTutorialStep();
             i++;
@@ -128,7 +128,7 @@ public class TutorialScreenDisplay extends UIComponent {
      * Called when the player interacts. Proceeds to the next tutorial step.
      * @return true if the tutorial step should advance, false otherwise.
      */
-    private boolean onInteraction() {
+    boolean onInteraction() {
         if (i == 1) {
             advanceTutorialStep(); // Advance tutorial step
             i++;
@@ -154,7 +154,7 @@ public class TutorialScreenDisplay extends UIComponent {
         textDisplay.setVisible(true);
 
         // Combine both instructions into one
-        createTextBox("Press [ and ] keys to switch dockets.");
+        createTextBox("click create order and then Press [ and ] keys to switch dockets.");
 
         // Check if both the order button is pressed and the dockets are shifted
         if ((Gdx.input.isKeyJustPressed(Input.Keys.LEFT_BRACKET) || Gdx.input.isKeyJustPressed(Input.Keys.RIGHT_BRACKET))) {
