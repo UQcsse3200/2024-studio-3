@@ -1,9 +1,7 @@
 package com.csse3200.game.services;
 
-import com.badlogic.gdx.scenes.scene2d.Group;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.components.cutscenes.Cutscene;
-import com.csse3200.game.components.cutscenes.CutsceneTextDisplay;
 import com.csse3200.game.screens.CutsceneScreen;
 import com.csse3200.game.components.mainmenu.MainMenuDisplay;
 import org.slf4j.Logger;
@@ -36,13 +34,11 @@ public class ServiceLocator {
   private static InputService inputService;
   private static PlayerService playerService;
   private static GameArea gameArea;
+  private static GdxGame game;
   private static MainGameScreen gameScreen;
   private static CutsceneScreen cutsceneScreen;
   private static Cutscene currentCutscene;
   private static MainMenuDisplay mainMenuDisplay;
-  private static GdxGame gameInstance;
-  private static CutsceneTextDisplay cutsceneTextDisplay;
-
 
   private static ResourceService resourceService;
 
@@ -201,6 +197,14 @@ public class ServiceLocator {
     orderActions = source;
   }
 
+  public static void registerGame(GdxGame new_game) {
+    logger.debug("Registering GdxGame");
+    game = new_game;
+  }
+
+  public static GdxGame getGame() {
+    return game;
+  }
 
   public static void registerLevelService(LevelService source) {
     if (levelService == null) {
@@ -283,40 +287,6 @@ public class ServiceLocator {
 
   public static MainMenuDisplay getMainMenuDisplay() {
     return ServiceLocator.mainMenuDisplay;
-  }
-
-  public static GdxGame getGdxGame() {
-    if (gameInstance == null) {
-      throw new IllegalStateException("GdxGame instance has not been set");
-    }
-    return gameInstance;
-  }
-
-  public static void setGdxGame(GdxGame game) {
-    if (gameInstance != null) {
-      logger.warn("Overwriting an existing GdxGame instance.");
-    }
-    gameInstance = game;
-    logger.debug("GdxGame instance has been set.");
-  }
-
-
-  /**
-   * Gets the current CutsceneTextDisplay instance.
-   *
-   * @return the CutsceneTextDisplay instance, or null if not initialized.
-   */
-  public static CutsceneTextDisplay getCutsceneTextDisplay() {
-    return cutsceneTextDisplay;
-  }
-
-  /**
-   * Sets the CutsceneTextDisplay instance.
-   *
-   * @param display The CutsceneTextDisplay instance to set.
-   */
-  public static void setCutsceneTextDisplay(CutsceneTextDisplay display) {
-    cutsceneTextDisplay = display;
   }
 }
 
