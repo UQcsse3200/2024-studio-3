@@ -61,10 +61,11 @@ public class MainGameScreen extends ScreenAdapter {
 			// order system assets
 			"images/ordersystem/docket_background.png",
 			"images/ordersystem/pin_line.png",
+			"images/endday.png",
 			"images/bird.png",
 			"images/point.png",
 			"images/coin.png",
-			"images/textbox.png",
+			"images/finish.png",
 			"images/red_overlay.jpg",
 			"images/red_fill.png",
 			"images/white_background.png",
