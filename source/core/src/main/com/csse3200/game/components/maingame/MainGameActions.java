@@ -39,6 +39,20 @@ public class MainGameActions extends Component {
         ServiceLocator.getEntityService().getEvents().addListener("createSteakDocket", this::onCreateSteak);
         ServiceLocator.getEntityService().getEvents().addListener("createFruitSaladDocket", this::onCreateFruitSalad);
         entity.getEvents().addListener("orderDone", this::onOrderDone);
+        ServiceLocator.getEntityService().getEvents().addListener("goodEnd", this::onGoodEnd);
+    }
+
+    /**
+     * Starts good ending cutscene
+     */
+    public void onGoodEnd(){
+        logger.info("Starting good cutscene");
+
+        // Stop any background tasks
+        // ServiceLocator.getMainMenuDisplay().stopBackgroundTasks();
+
+        // Now we can transition to the cutscene
+        game.setScreen(GdxGame.ScreenType.GOOD_END);
     }
 
     private void onExit() {
