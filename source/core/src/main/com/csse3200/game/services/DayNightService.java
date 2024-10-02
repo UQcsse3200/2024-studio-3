@@ -82,6 +82,11 @@ public class DayNightService {
      * end-of-day events or timer-related events.
      */
     public void update() {
+        if(gameTime.isPaused()){
+            logger.info("Paused at DayNightService");
+            return;
+        }
+
         long currentTime = gameTime.getTime(); // Get the current game time
 
         // Check if 5 minutes have passed and trigger the end of the day
@@ -99,7 +104,7 @@ public class DayNightService {
         }
 
         if (currentTime - lastCheckTime >= FIVE_MINUTES && !endOfDayTriggered) {
-            endOfDayTriggered = true; 
+            endOfDayTriggered = true;
             gameTime.setTimeScale(0);
             docketServiceEventHandler.trigger("Dispose");
             enddayEventHandler.trigger("endOfDay"); // Trigger the end of the day event

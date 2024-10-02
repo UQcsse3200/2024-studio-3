@@ -11,10 +11,17 @@ import com.csse3200.game.services.ServiceLocator;
  * A generic component for rendering onto the ui.
  */
 public abstract class UIComponent extends RenderComponent implements Renderable {
-  private static final int UI_LAYER = 2;
-  protected static final Skin skin =
-      new Skin(Gdx.files.internal("flat-earth/skin/flat-earth-ui.json"));
+  private static final int UI_LAYER = 3;
+  protected static Skin skin = new Skin(Gdx.files.internal("flat-earth/skin/flat-earth-ui.json"));
   protected Stage stage;
+
+  public UIComponent(Skin skin) {
+    UIComponent.skin = skin != null ? skin : new Skin(Gdx.files.internal("flat-earth/skin/flat-earth-ui.json"));
+  }
+
+  public UIComponent() {
+    this(null);
+  }
 
   @Override
   public void create() {
