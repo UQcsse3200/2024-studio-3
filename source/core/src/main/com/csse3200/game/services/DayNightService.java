@@ -18,6 +18,7 @@ public class DayNightService {
     private static final Logger logger = LoggerFactory.getLogger(DayNightService.class);
     public static final int MAX_DAYS = 5; // Maximum number of days
     public  long FIVE_MINUTES = 5 * 60 * 1000; // 5 minutes in milliseconds
+    public long lastCheckTime;
     public long lastSecondCheck;
     public long lastUpgradeCheck;
     public long lastEndOfDayCheck;
@@ -93,6 +94,11 @@ public class DayNightService {
      * end-of-day events or timer-related events.
      */
     public void update() {
+        if(gameTime.isPaused()){
+            logger.info("Paused at DayNightService");
+            return;
+        }
+
         long currentTime = gameTime.getTime(); // Get the current game time
 
         // Check if it has been 1 second
@@ -109,8 +115,8 @@ public class DayNightService {
             randomChoice = random.nextInt(10) * 1000;
         }
 
-        if (this.timeRemaining == 0 && !endOfDayTriggered) {
-            endOfDayTriggered = true; 
+        if (currentTime - lastCheckTime >= FIVE_MINUTES && !endOfDayTriggered) {
+            endOfDayTriggered = true;
             gameTime.setTimeScale(0);
             this.timeRemaining = FIVE_MINUTES;
             docketServiceEventHandler.trigger("Dispose");
