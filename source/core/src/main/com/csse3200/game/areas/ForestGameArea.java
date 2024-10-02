@@ -1,7 +1,5 @@
 package com.csse3200.game.areas;
 
-
-
 import com.csse3200.game.components.maingame.CheckWinLoseComponent;
 import com.csse3200.game.components.npc.PersonalCustomerEnums;
 import com.badlogic.gdx.utils.Null;
@@ -243,7 +241,6 @@ public class ForestGameArea extends GameArea {
     super();
     this.terrainFactory = terrainFactory;
     //this.textDisplay = textDisplay;
-    ServiceLocator.registerSaveLoadService(new SaveLoadService());
     ServiceLocator.registerGameArea(this);
   }
 
