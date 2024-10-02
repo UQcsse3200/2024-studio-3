@@ -252,16 +252,19 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         table.setBackground((Drawable) null);
         table.clear();
         table.remove();
-        ServiceLocator.getDocketService().getEvents().trigger("removeOrder", i);
+        // ServiceLocator.getDocketService().getEvents().trigger("removeOrder", i);
         docket.dispose();
         tableArrayList.remove(i);
         backgroundArrayList.remove(i);
         startTimeArrayList.remove(i);
         countdownLabelArrayList.remove(i);
         recipeTimeArrayList.remove(i);
-        if (isSuccess) {
-            combatStatsComponent.addGold(getRecipeValue());
-        }
+        // combatStatsComponent.addGold(getRecipeValue());
+        // Commenting out because gold is already incremented in StationServingComponent.java in scoreMeal() method.
+        // ServiceLocator.getLevelService().setCurrGold(ServiceLocator.getLevelService().getCurrGold() + 10);
+        // if (isSuccess) {
+        //    combatStatsComponent.addGold(getRecipeValue());
+        // }
     }
 
     /**

@@ -16,19 +16,26 @@ public class OrderManager {
 
     static {
         try {
-            recipes = loadRecipes();
+            loadRecipes();
         } catch (Exception e) {
             logger.error("Failed to load recipes", e);
         }
     }
 
-    static Map<String, Recipe> loadRecipes() {
-        Map<String, Recipe> loadedRecipes = FileLoader.readClass(Map.class, "configs/recipe.json");
-        if (loadedRecipes == null) {
-            logger.error("Loaded recipes map is null. Initializing with empty map.");
-            loadedRecipes = new HashMap<>();
+    static void loadRecipes() {
+        // List of recipe names to load
+        String[] recipeNames = {"acaiBowl", "salad", "fruitSalad", "steakMeal", "bananaSplit"};
+
+        for (String recipeName : recipeNames) {
+            Recipe recipe = new Recipe(recipeName);
+            if (recipe.isValid()) {
+                recipes.put(recipeName, recipe);
+            } else {
+                logger.error("Failed to load recipe: " + recipeName);
+            }
         }
-        return loadedRecipes;
+
+        logger.info("Recipes loaded: " + recipes.keySet());
     }
 
     public static Recipe getRecipe(String recipeName) {
