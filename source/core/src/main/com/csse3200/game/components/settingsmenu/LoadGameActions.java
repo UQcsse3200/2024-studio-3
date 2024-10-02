@@ -23,8 +23,8 @@ public class LoadGameActions extends Component {
      * Exits the game.
      */
     private void onExit() {
-        logger.info("Exit game");
-        game.exit();
+        logger.info("Exit load game");
+        game.setScreen(GdxGame.ScreenType.MAIN_MENU);
     }
 
     /**
