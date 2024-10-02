@@ -8,7 +8,7 @@ import com.csse3200.game.components.maingame.TextDisplay;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.entities.benches.Bench;
 import com.csse3200.game.entities.configs.PlayerConfig;
-import com.csse3200.game.components.moral.MoralDecisionDisplay;
+import com.csse3200.game.screens.MoralDecisionDisplay;
 
 import java.util.ArrayList;
 import java.util.List;
