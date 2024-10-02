@@ -34,6 +34,11 @@ public class Recipe {
 		}
 	}
 
+
+    public boolean isValid() {
+        return singleStationRecipe != null || multiStationRecipe != null;
+    }
+
 	/**
 	 * Gets recipe ingredients
 	 * @return recipe ingredients
