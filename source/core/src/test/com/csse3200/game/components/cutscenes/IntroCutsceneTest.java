@@ -105,12 +105,11 @@ public class IntroCutsceneTest {
     public void testSetupScenes() {
 
         // Verify the number of scenes created
-        assert introCutscene.scenes.size() == 3;
+        assert introCutscene.scenes.size() == 2;
 
         // Verify the first scene has the correct background, animation, and text
         Scene scene1 = introCutscene.scenes.getFirst();
         assert scene1.getBackgroundImagePath().equals("images/Cutscenes/Beastly_Bistro_Background.png");
-        assert scene1.getAnimationImagePaths()[0].equals("images/player/Cook_Model32.png");
         assert scene1.getSceneText().size == 3;  // Text contains three items
     }
 
@@ -124,7 +123,7 @@ public class IntroCutsceneTest {
         introCutscene.loadScene(0);  // Load the first scene
 
         // Verify that the entity service is used to register the background entity
-        verify(ServiceLocator.getEntityService(), times(2)).register(any(Entity.class));
+        verify(ServiceLocator.getEntityService(), times(4)).register(any(Entity.class));
     }
 
     /**

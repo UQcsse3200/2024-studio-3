@@ -49,14 +49,14 @@ public class LoadGameDisplay extends UIComponent {
         savesTable = new Table();
         for (int i = 1; i < 7; i++) {
             if (i - 1 < saves.length) {
-                String save = saves[i-1].name();
+                String save = saves[i-1].name().split("[.]")[0];
                 Table load = new Table();
                 load.add(new Label(save, skin));
                 load.addListener(new InputListener() {
                     @Override
                     public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                        ServiceLocator.getEntityService().getEvents().trigger("loadGame", save);
                         entity.getEvents().trigger("start");
-                        entity.getEvents().trigger("loadGame", save);
                         return true;
                     }
                 });

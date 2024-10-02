@@ -48,8 +48,6 @@ public class CutsceneActions extends Component {
     public void update() {
         // Check if the space bar is pressed to skip the current cutscene or move to the next scene
         if (inputService.keyDown(Input.Keys.SPACE)) {
-            logger.debug("Space bar pressed. Moving to next cutscene or level.");
-            cutsceneEnded(); // Trigger the end of the current cutscene
         }
 
         // Check if the backspace key is pressed to exit the cutscene and return to the main menu

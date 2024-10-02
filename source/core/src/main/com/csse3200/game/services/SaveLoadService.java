@@ -10,18 +10,24 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.util.HashMap;
+import com.csse3200.game.events.EventHandler;
 
 public class SaveLoadService {
     private static final Logger logger = LoggerFactory.getLogger(SaveLoadService.class);
+    private final EventHandler eventHandler;
     private static final String ROOT_DIR = "saves";
-    private static final String SAVE_FILE = "saveFile.json";
-    private CombatStatsComponent combatStatsComponent;
+    private String saveFile = "saveFile.json";
+    public boolean created = false;
+    public CombatStatsComponent combatStatsComponent;
 
     public SaveLoadService() {
+        this.eventHandler = new EventHandler();
         ServiceLocator.getPlayerService().getEvents().addListener("playerCreated", (Entity player) -> {
+            logger.warn("HELLO");
             this.combatStatsComponent = player.getComponent(CombatStatsComponent.class);
+            this.created = true;
+            this.load();
         });
-        ServiceLocator.getEntityService().getEvents().addListener("loadGame", this::load);
     }
 
     /**
@@ -29,9 +35,11 @@ public class SaveLoadService {
      */
     public void save() {
         GameState state = new GameState();
-        state.setMoney(75);
-        state.setDay(2);
-        FileLoader.writeClass(state, (ROOT_DIR + File.separator + SAVE_FILE), Location.LOCAL);
+        Entity player = ServiceLocator.getPlayerService().getPlayer();
+        state.setMoney(player.getComponent(CombatStatsComponent.class).getGold());
+        state.setDay(ServiceLocator.getDayNightService().getDay());
+        state.setPosition(player.getPosition());
+        FileLoader.writeClass(state, (ROOT_DIR + File.separator + saveFile), Location.LOCAL);
         ServiceLocator.getEntityService().getEvents().trigger("togglePause");
     }
 
@@ -39,13 +47,30 @@ public class SaveLoadService {
      * Loads a gamestate given the file for said gamestate
      * @param file - the string which is the name of the file
      */
-    public void load(String file) {
-        GameState state = FileLoader.readClass(GameState.class, ROOT_DIR + File.separator + file, Location.LOCAL);
+    public void load() {
+        GameState state = FileLoader.readClass(GameState.class, ROOT_DIR + File.separator + saveFile, Location.LOCAL);
         UpdateStats(state);
-        ServiceLocator.getEntityService().getEvents().trigger("togglePause");
     }
 
     public void UpdateStats(GameState state) {
+        logger.warn("CRAZY");
         this.combatStatsComponent.setGold(state.getMoney());
+        ServiceLocator.getDayNightService().setDay(state.getDay());
+        logger.warn(ServiceLocator.getPlayerService().getPlayer().getPosition().toString());
+        logger.warn(state.getPosition().toString());
+        ServiceLocator.getPlayerService().getPlayer().setPosition(state.getPosition());
+        logger.warn(ServiceLocator.getPlayerService().getPlayer().getPosition().toString());
+    }
+
+    public String getSaveFile() {
+        return saveFile;
+    }
+
+    public EventHandler getEvents() {
+        return eventHandler;
+    }
+
+    public void setSaveFile(String filename) {
+        saveFile = filename;
     }
 }
