@@ -17,7 +17,12 @@ public class BadEndCutscene extends Cutscene {
     @Override
     protected void setupScenes() {
         animatedScenes.add(new AnimatedScene(
-                "images/Cutscenes/cutscene_badEnd.atlas", 20));
+                "images/Cutscenes/cutscene_badEnd.atlas",
+                "bad_end", 20));
+
+        //animatedScenes.add(new AnimatedScene(
+        //        "images/stations/Servery_Animation/servery.atlas",
+        //        "servery_idle", 20));
     }
 
     @Override
@@ -25,7 +30,8 @@ public class BadEndCutscene extends Cutscene {
         // redundant doesn't do anything
 
         animations = new String[] {
-                "images/Cutscenes/cutscene_badEnd.atlas"
+                "images/Cutscenes/cutscene_badEnd.atlas",
+                "images/stations/Servery_Animation/servery.atlas"
         };
         ResourceService resourceService = ServiceLocator.getResourceService();
         resourceService.loadTextureAtlases(animations);

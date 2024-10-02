@@ -47,6 +47,9 @@ public abstract class Cutscene extends Component {
     // The current animated scene being displayed
     protected AnimatedScene currentAnimatedScene;
 
+    // The name of the animation as found in the atlas file
+    protected String animName;
+
     // Whether the scenes are fully animated
     public boolean IsAnimatedScenes = false;
 
@@ -157,6 +160,7 @@ public abstract class Cutscene extends Component {
             }
 
             currentAnimatedScene = animatedScenes.get(sceneIndex);
+            animName = currentAnimatedScene.getAnimName();
             logger.info("Loading scene {}", sceneIndex);
 
             loadAssetsForScene(currentAnimatedScene);  // Load assets needed for the current scene
@@ -263,7 +267,7 @@ public abstract class Cutscene extends Component {
      */
     protected void createEntitiesForScene(AnimatedScene scene) {
         // Create animation entities
-        Entity animation = CutsceneFactory.createBadEndAnimation(scene.getAtlasFilePath());
+        Entity animation = CutsceneFactory.createFullAnimation(scene.getAtlasFilePath(), animName);
         entities.add(animation);
         ServiceLocator.getEntityService().register(animation);
     }
