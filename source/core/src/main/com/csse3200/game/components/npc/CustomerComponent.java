@@ -17,6 +17,15 @@ public class CustomerComponent extends Component {
     private String type;
     private String name;
     private String preference;
+    private String orderNumber;
+
+    public void setOrderNumber(String orderNumber) {
+        this.orderNumber = orderNumber;
+    }
+
+    public String getOrderNumber() {
+        return orderNumber;
+    }
 
     public CustomerComponent(BaseCustomerConfig config) {
         this.type = config.type;

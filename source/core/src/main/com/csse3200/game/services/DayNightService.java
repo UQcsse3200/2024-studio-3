@@ -93,6 +93,11 @@ public class DayNightService {
      * end-of-day events or timer-related events.
      */
     public void update() {
+        if(gameTime.isPaused()){
+            logger.info("Paused at DayNightService");
+            return;
+        }
+
         long currentTime = gameTime.getTime(); // Get the current game time
 
         // Check if it has been 1 second
@@ -110,7 +115,7 @@ public class DayNightService {
         }
 
         if (this.timeRemaining == 0 && !endOfDayTriggered) {
-            endOfDayTriggered = true; 
+            endOfDayTriggered = true;
             gameTime.setTimeScale(0);
             this.timeRemaining = FIVE_MINUTES;
             docketServiceEventHandler.trigger("Dispose");
@@ -188,8 +193,3 @@ public class DayNightService {
     }
 
 }
-
-
-
-
-

@@ -2,8 +2,6 @@ package com.csse3200.game.components.cutscenes.scenes;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
-import com.csse3200.game.components.cutscenes.Cutscene;
-import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
