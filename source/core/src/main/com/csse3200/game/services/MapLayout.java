@@ -6,9 +6,9 @@ import com.csse3200.game.areas.GameArea;
 import com.csse3200.game.areas.map.BenchGenerator;
 import com.csse3200.game.areas.map.BenchLayout;
 import com.csse3200.game.entities.benches.Bench;
-import com.csse3200.game.events.EventHandler;
-import com.csse3200.game.entities.factories.StationFactory;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.entities.factories.StationFactory;
+import com.csse3200.game.events.EventHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,7 +21,9 @@ public class MapLayout extends GameArea{
     private static final String mapLevel1 = "images/map/map_test.txt";
     private int strToNum;
     private int strToNum2;
-    private ArrayList<Bench> benches = new ArrayList<>();
+    private ArrayList<Bench> benches = new ArrayList<Bench>();
+    private ArrayList<Entity> stations = new ArrayList<Entity>();
+
     private Bench bench;
     private static final Logger logger = LoggerFactory.getLogger(MapLayout.class);
 
@@ -42,11 +44,7 @@ public class MapLayout extends GameArea{
     }
 
     /**
-     * Xab -> spawns a horizontal bench from column `a` that is `b` long
-     * Yab -> spawns a vertical bench from column `a` that is `b` long
-     * ba  -> spawns a banana basket at the `a` column
-     * sa  -> spawns a strawberry basket at the `a` column
-     * the row of the object is determined by the row of the text in the file.
+     * Yxy ->
      * @param level
      */
     public void load(String level) {
@@ -71,24 +69,75 @@ public class MapLayout extends GameArea{
 
                     // Log the current square being processed
                     logger.info("Checking square at row " + row + ", column " + col + ": " + square);
-                    strToNum = Integer.valueOf(parts[col+1]);
-                    strToNum2 = Integer.valueOf(parts[col+2]);
+
                     // Spawn single bench row when 'X'
-                    switch (square) {
-                        case "X":
-                            benches.addAll(BenchGenerator.createBenchRow(strToNum + 4,
-                                    strToNum2 + 4, row-4));
-                            col += 3;
-                            logger.info("Spawning entity at row " + row + ", column " + col);
-                            break;
-                        case "Y":
-                            benches.addAll(BenchGenerator.createBenchColumn(strToNum + 4,
-                                    row-4, Integer.parseInt(parts[col+2])));
-                            col += 3;
-                            logger.info("Spawning entity at row " + row + ", column " + col);
-                        //case "b":
-                            //spawnBananaBasket(row, strToNum);
-                            //col += 2;
+                    if (square.equals("X")) {
+                        strToNum = Integer.valueOf(parts[col+1]);
+                        strToNum2 = Integer.valueOf(parts[col+2]);
+                        benches.addAll(BenchGenerator.createBenchRow(strToNum + 4,
+                                strToNum2 + 4, row-4));
+                        col += 3;
+                        logger.info("Spawning entity at row " + row + ", column " + col);
+                    }
+                    // Spawn bench collumn when 'Y'
+                    else if (square.equals("Y")) {
+                        strToNum = Integer.valueOf(parts[col+1]);
+                        strToNum2 = Integer.valueOf(parts[col+2]);
+                        benches.addAll(BenchGenerator.createBenchColumn(strToNum + 4,
+                                row-4, row + strToNum2 - 4));
+                        col += 3;
+                        logger.info("Spawning entity at row " + row + ", column " + col);
+                    }
+                    // Spawn a banana basket when 'b'
+                    else if (square.equals("b")) {
+                        strToNum = Integer.valueOf(parts[col+1]);
+                        Entity station = StationFactory.createBananaBasket();
+                        station.setPosition(strToNum+4, row-4);
+                        stations.add(station);
+                        col+=3;
+                    }
+
+                    // Spawn a strawberry basket when 's'
+                    else if (square.equals("s")) {
+                        strToNum = Integer.valueOf(parts[col+1]);
+                        Entity station = StationFactory.createStrawberryBasket();
+                        station.setPosition(strToNum+4, row-4);
+                        stations.add(station);
+                        col+=3;
+                    }
+                    /*
+                    // spawn a lettuce basket
+                    else if (square.equals("l")) {
+                        strToNum = Integer.valueOf(parts[col+1]);
+                        Entity station = StationFactory.createLettuceBasket();
+                        station.setPosition(strToNum+4, row-4);
+                        stations.add(station);
+                        col+=3;
+                    }
+                    */
+                    // spawn a tomato basket
+                    else if (square.equals("t")) {
+                        strToNum = Integer.valueOf(parts[col+1]);
+                        Entity station = StationFactory.createTomatoBasket();
+                        station.setPosition(strToNum+4, row-4);
+                        stations.add(station);
+                        col+=3;
+                    }
+                    // spawn a cucumber basket
+                    else if (square.equals("c")) {
+                        strToNum = Integer.valueOf(parts[col+1]);
+                        Entity station = StationFactory.createCucumberBasket();
+                        station.setPosition(strToNum+4, row-4);
+                        stations.add(station);
+                        col+=3;
+                    }
+                    //stove
+                    else if (square.equals("c")) {
+                        strToNum = Integer.valueOf(parts[col+1]);
+                        Entity station = StationFactory.createCucumberBasket();
+                        station.setPosition(strToNum+4, row-4);
+                        stations.add(station);
+                        col+=3;
                     }
                 }
                 row++;
@@ -109,11 +158,8 @@ public class MapLayout extends GameArea{
             spawnEntity(bench);
             bench.setPosition(bench.x, bench.y);
         }
-    }
-    private void spawnBananaBasket(int x, int y) {
-        Entity entity = StationFactory.createBananaBasket();
-        spawnEntity(entity);
-        entity.setPosition(x, y);
-
+        for (Entity station : stations) {
+            spawnEntity(station);
+        }
     }
 }

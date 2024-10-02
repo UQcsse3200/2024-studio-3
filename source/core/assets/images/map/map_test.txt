@@ -4,9 +4,9 @@ Hel
 =
 X08 Y06 Y23 Y97
 O
+Y53
+0
+c80
 O
-b5
-O
-O
-O
+b20 s40 l60 t80
 X08
