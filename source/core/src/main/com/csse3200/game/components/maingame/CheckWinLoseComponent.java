@@ -3,6 +3,7 @@ package com.csse3200.game.components.maingame;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.services.DayNightService;
 import com.csse3200.game.services.ServiceLocator;
 
 public class CheckWinLoseComponent extends Component {
@@ -38,7 +39,7 @@ public class CheckWinLoseComponent extends Component {
 
         if (hasLost(adjustedLossThreshold)) {
             return "LOSE";
-        } else if (hasWon(adjustedWinAmount)) {
+        } else if (currentDay == DayNightService.MAX_DAYS && hasWon(adjustedWinAmount)) {
             return "WIN";
         } else {
             return "GAME_IN_PROGRESS";
