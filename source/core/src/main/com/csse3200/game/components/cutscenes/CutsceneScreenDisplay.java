@@ -52,6 +52,10 @@ public class CutsceneScreenDisplay extends UIComponent {
         // Initialize the text display and add it to the stage, hidden initially
         setupTextDisplay();
 
+        if (skin == null) {
+            skin = new Skin(Gdx.files.internal("flat-earth/skin/flat-earth-ui.json"));
+        }
+
         // Positioning the table at the bottom-right of the screen
         table.bottom().right();
         table.setFillParent(true);
