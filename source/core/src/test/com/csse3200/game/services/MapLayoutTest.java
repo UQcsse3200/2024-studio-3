@@ -1,4 +1,4 @@
-/* package com.csse3200.game.services;
+package com.csse3200.game.services;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
@@ -9,6 +9,7 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.csse3200.game.areas.ForestGameArea;
 import com.csse3200.game.areas.map.BenchGenerator;
+import com.csse3200.game.areas.map.Map;
 import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
@@ -28,6 +29,8 @@ import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.BufferedReader;
 import java.io.StringReader;
@@ -49,7 +52,7 @@ class MapLayoutTest {
     private MapLayout mapLayoutSpy;
     @Mock
     private TextureAtlas atlas;
-
+    private static final Logger logger = LoggerFactory.getLogger(MapLayoutTest.class);
 
     @BeforeEach
     void setUp() {
@@ -69,49 +72,27 @@ class MapLayoutTest {
 
     @Test
     void shouldInitializeEventHandlerProperly() {
-        mapLayoutSpy = new MapLayout();
-
-        mapLayoutSpy.create();
-
-        ServiceLocator.registerMapLayout(mapLayoutSpy);
-        // Verify the event handler is initialized
 
 
-//       ServiceLocator.getResourceService().loadTextures(forestTextures);
-        assertNotNull(mapLayoutSpy.getEvents());
+        // Initialize MapLayout
+        MapLayout mapLayout = new MapLayout();
 
-        // Create a mock listener and add it to the event handler
-        EventListener1<String> mockListener = mock(EventListener1.class);
+        // Load the map level
+        int level = 1; // You can modify this if you have different levels
+        Map map = mapLayout.load(level);
 
-        // Trigger the event and verify listener is called
-        mapLayoutSpy.getEvents().trigger("load", "level1");
-        verify(mockListener).handle("level1");
+        // Log the results
+        logger.info("Map loaded with benches: " + map.getBenches().size() + " and stations: " + map.getStations().size());
+
+        // Print the details of benches and stations for verification (if needed)
+        for (Bench bench : map.getBenches()) {
+            logger.info("Bench position: " + bench.getPosition());
+        }
+
+        for (Entity station : map.getStations()) {
+            logger.info("Station position: " + station.getPosition());
+
+        }
     }
-
-    @Test
-    void testLoadWithBenchRow() throws Exception {
-        // Mock the file reader
-        String mockMapData = "X123\n";  // A sample line from the map file
-        BufferedReader mockReader = new BufferedReader(new StringReader(mockMapData));
-        MapLayout mapLayout = Mockito.spy(new MapLayout());
-
-        // Mock static methods
-        MockedStatic<BenchGenerator> mockedBenchGenerator = mockStatic(BenchGenerator.class);
-        mockedBenchGenerator.when(() -> BenchGenerator.createBenchRow(anyInt(), anyInt(), anyInt()))
-                .thenReturn(new ArrayList<Bench>());
-
-        // Mock logger if needed or track console output
-
-        // Call the load method
-        mapLayout.load("level1");
-
-        // Verify the file reading
-     //   verify(mapLayout, times(1)).spawnEntity(any(Bench.class));
-
-        // Clean up mocks
-        mockedBenchGenerator.close();
-    }
-
 }
 
-*/

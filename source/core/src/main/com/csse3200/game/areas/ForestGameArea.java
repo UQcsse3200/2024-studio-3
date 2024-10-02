@@ -248,21 +248,18 @@ public class ForestGameArea extends GameArea {
     displayUI();
     spawnTerrain();
     spawnWall();
-    if (this.level == 1) {
-
-      MapLayout mapLayout = new MapLayout();
-      Map result = mapLayout.load("level1");
-      for (Bench bench : result.getBenches()) {
-        spawnEntity(bench);
-        bench.setPosition(bench.x, bench.y);
-      }
-      for (Entity station : result.getStations()) {
-        spawnEntity(station);
+    MapLayout mapLayout = new MapLayout();
+    Map result = mapLayout.load(this.level);
+    for (Bench bench : result.getBenches()) {
+      spawnEntity(bench);
+      bench.setPosition(bench.x, bench.y);
+    }
+    for (Entity station : result.getStations()) {
+      spawnEntity(station);
         //station.setPosition(station.getPosition().x, station.getPosition().y);
-      }
+    }
 
       //ServiceLocator.getMapLayout().getEvents().trigger("load", "level1");
-    }
 
     new_border();
     //ticketDetails();

@@ -20,7 +20,8 @@ import java.util.Objects;
 public class MapLayout{
     private EventHandler mapEventHandler;
     //private static final String mapLevel1 = "images/map/map_test.txt";
-    private static final String mapLevel1 = "images/map/map_three.txt";
+    private static final String mapLevel1 = "images/map/map_one.txt";
+    private static final String mapLevel2 = "images/map/map_two.txt";
     private int strToNum;
     private int strToNum2;
     private ArrayList<Bench> benches = new ArrayList<Bench>();
@@ -43,9 +44,6 @@ public class MapLayout{
 
 
 
-
-
-
     public EventHandler getEvents() {
         return mapEventHandler;
     }
@@ -54,12 +52,18 @@ public class MapLayout{
      * Yxy ->
      * @param level
      */
-    public Map load(String level) {
+    public Map load(int level) {
 
-
+        String mapLevel = mapLevel1;
         BufferedReader reader = null;
+        if (level == 1) {
+            mapLevel = mapLevel1;
+        }
+        if (level == 2) {
+            mapLevel = mapLevel2;
+        }
         try {
-            reader = new BufferedReader(new FileReader(mapLevel1));
+            reader = new BufferedReader(new FileReader(mapLevel));
             String line;
             int row = 0;
 
@@ -220,13 +224,7 @@ public class MapLayout{
             }
         }
        return new Map(benches, stations);
-       // for (Bench bench : benches) {
-      //      spawnEntity(bench);
-      //      bench.setPosition(bench.x, bench.y);
-     //   }
-     //   for (Entity station : stations) {
-     //       spawnEntity(station);
-    //    }
+
     }
 
 }
