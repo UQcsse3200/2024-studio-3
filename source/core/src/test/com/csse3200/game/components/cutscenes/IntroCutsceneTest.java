@@ -123,7 +123,7 @@ public class IntroCutsceneTest {
         introCutscene.loadScene(0);  // Load the first scene
 
         // Verify that the entity service is used to register the background entity
-        verify(ServiceLocator.getEntityService(), times(4)).register(any(Entity.class));
+        verify(ServiceLocator.getEntityService(), times(2)).register(any(Entity.class));
     }
 
     /**

@@ -20,14 +20,13 @@ public class BadEndCutscene extends Cutscene {
                 "images/Cutscenes/cutscene_badEnd.atlas",
                 "bad_end", 20));
 
-        //animatedScenes.add(new AnimatedScene(
-        //        "images/stations/Servery_Animation/servery.atlas",
-        //        "servery_idle", 20));
+        animatedScenes.add(new AnimatedScene(
+                "images/stations/Servery_Animation/servery.atlas",
+                "servery_idle", 20));
     }
 
     @Override
     protected void loadAssets() {
-        // redundant doesn't do anything
 
         animations = new String[] {
                 "images/Cutscenes/cutscene_badEnd.atlas",

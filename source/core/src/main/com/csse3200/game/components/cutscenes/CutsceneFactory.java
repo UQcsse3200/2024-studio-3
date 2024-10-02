@@ -107,28 +107,28 @@ public class CutsceneFactory {
         AnimationRenderComponent animator =
                 new AnimationRenderComponent(
                         ServiceLocator.getResourceService().getAsset(animationAtlasPath, TextureAtlas.class)); // images/stations/Servery_Animation/servery.atlas
-        animator.addAnimation(animName, 0.1f, Animation.PlayMode.NORMAL);
+        animator.addAnimation(animName, 0.1f, Animation.PlayMode.LOOP);
         animation.addComponent(animator);
-
-
-        /**
-        animator.scaleEntity();
-
 
         animator.startAnimation(animName);
 
+
+         //animator.scaleEntity();
+
+         /**
         // Calculate the aspect ratio of the screen
         float aspectRatio = (float) Gdx.graphics.getWidth() / Gdx.graphics.getHeight();
         float screenToHeight = Gdx.graphics.getHeight() * 2.7f; // Adjust scaling factor if needed
         animation.setScale(screenToHeight * aspectRatio, screenToHeight);
 
-
         // Center the background entity on the screen
         float y_pos = -screenToHeight / 2;
         float x_pos = -(screenToHeight * aspectRatio) / 2;
-        animation.setPosition(new Vector2(0, 0)); // x_pos, y_pos
-
         */
+
+        //animation.setPosition(new Vector2(0, 0)); // x_pos, y_pos
+
+
 
 
         return animation;
