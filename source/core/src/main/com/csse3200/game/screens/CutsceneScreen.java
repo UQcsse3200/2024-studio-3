@@ -4,7 +4,6 @@ import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.csse3200.game.GdxGame;
-import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.components.cutscenes.CutsceneActions;
 import com.csse3200.game.components.cutscenes.CutsceneArea;
 import com.csse3200.game.components.cutscenes.CutsceneScreenDisplay;
@@ -35,6 +34,8 @@ public class CutsceneScreen extends ScreenAdapter {
     private static final Vector2 CAMERA_POSITION = new Vector2(7.5f, 6.0f);
 
     private final GdxGame game;
+
+    private int cutsceneVal;
     private final Renderer renderer;
 
     // Textures used for the cutscene screen
@@ -50,6 +51,7 @@ public class CutsceneScreen extends ScreenAdapter {
      */
     public CutsceneScreen(GdxGame game, int cutsceneVal) {
         this.game = game;
+        this.cutsceneVal = cutsceneVal;
 
         logger.debug("Initialising main game screen services");
         // Register essential services for cutscene operation
@@ -68,7 +70,6 @@ public class CutsceneScreen extends ScreenAdapter {
         createUI();  // Create and set up the user interface
 
         logger.debug("Initialising Cutscene game screen entities");
-        TerrainFactory terrainFactory = new TerrainFactory(renderer.getCamera());
         CutsceneArea cutsceneArea = new CutsceneArea(cutsceneVal);  // Initialize the cutscene area
         cutsceneArea.create();  // Create the cutscene area
     }
@@ -139,7 +140,7 @@ public class CutsceneScreen extends ScreenAdapter {
         logger.debug("Creating UI");
         Stage stage = ServiceLocator.getRenderService().getStage();  // Get the stage from the render service
         InputComponent inputComponent = ServiceLocator.getInputService().getInputFactory().createForTerminal();  // Create input component
-        cutsceneScreenDisplay = new CutsceneScreenDisplay(this.game);  // Initialize the cutscene screen display
+        cutsceneScreenDisplay = new CutsceneScreenDisplay();  // Initialize the cutscene screen display
 
         // Create and configure the UI entity with various components
         Entity ui = new Entity();
@@ -172,5 +173,14 @@ public class CutsceneScreen extends ScreenAdapter {
      */
     public GdxGame getGame() {
         return game;
+    }
+
+    /**
+     * Gets the cutsceneVal value associated with this screen.
+     *
+     * @return The cutsceneVal value
+     */
+    public int getVal() {
+        return cutsceneVal;
     }
 }

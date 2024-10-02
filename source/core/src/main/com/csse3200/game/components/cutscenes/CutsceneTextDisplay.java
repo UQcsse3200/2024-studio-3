@@ -8,14 +8,10 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Stack;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
-import com.csse3200.game.screens.CutsceneScreen;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
 import org.slf4j.Logger;
@@ -27,14 +23,10 @@ import org.slf4j.LoggerFactory;
  */
 public class CutsceneTextDisplay extends UIComponent {
     private static final Logger logger = LoggerFactory.getLogger(CutsceneTextDisplay.class);
-    private String text;  // Full text to be displayed
-    private StringBuilder currentText;  // Text that is currently displayed
 
     // UI components for displaying the text
-    private boolean visible;
     private Label label;
-    public Boolean labelSet = false;
-    private Table table;
+    private final Table table;
 
     /**
      * Default constructor that initializes without a specific cutscene.
@@ -42,8 +34,11 @@ public class CutsceneTextDisplay extends UIComponent {
     public CutsceneTextDisplay() {
         super();
         this.table = new Table();
-        this.visible = true;
-        this.currentText = new StringBuilder();
+    }
+
+    public CutsceneTextDisplay(Skin skin) {
+        super(skin);
+        this.table = new Table();
     }
 
     /**
@@ -56,12 +51,9 @@ public class CutsceneTextDisplay extends UIComponent {
 
         // Setup input listener to handle user input
         setupInputListener();
-        entity.getEvents().addListener("SetText", this::setText);  // Event listener to update text display
     }
 
     private void setupUI() {
-        // Initially hide the text display
-        setVisible(false);
         // Set up the table to fill the screen and align it to the bottom center
         table.setFillParent(true);
         table.center().bottom();
@@ -79,7 +71,7 @@ public class CutsceneTextDisplay extends UIComponent {
         // Set up the label for text display
         BitmapFont defaultFont = new BitmapFont();
         Label.LabelStyle labelStyle = new Label.LabelStyle(defaultFont, Color.BLACK);
-        label = new Label("", labelStyle);
+        label = new Label("Press Enter to continue", labelStyle);
         label.setFontScale(3.0f);
         label.setWrap(true);  // Enable text wrapping
         label.setAlignment(Align.top | Align.left);
@@ -92,27 +84,8 @@ public class CutsceneTextDisplay extends UIComponent {
 
         table.add(stack).padBottom(70).size(
                 (int) (Gdx.graphics.getWidth() * 0.5), (int) (Gdx.graphics.getHeight() * 0.2));
-
-        labelSet = true;
     }
 
-    /**
-     * Sets the text to be displayed during the cutscene.
-     * @param text The text to display.
-     */
-    public void setText(String text) {
-        setVisible(true);  // Make the text display visible
-        this.text = text;
-    }
-
-    /**
-     * Controls the visibility of the text display.
-     * @param value Whether the text display should be visible.
-     */
-    public void setVisible(boolean value) {
-        this.visible = value;
-        table.setVisible(value);  // Set the visibility of the table
-    }
 
     /**
      * Sets up the input listener to allow skipping text scrolling by pressing ENTER.

@@ -1,4 +1,5 @@
 package com.csse3200.game.services;
+import com.csse3200.game.entities.Entity;
 import com.csse3200.game.events.EventHandler;
 import com.csse3200.game.entities.Entity;
 
@@ -8,7 +9,6 @@ import com.csse3200.game.entities.Entity;
 public class PlayerService {
 	private final EventHandler playerEventHandler;
 	private Entity player;
-
 
 	/**
 	 * Creates new PlayerService instance
@@ -26,11 +26,19 @@ public class PlayerService {
 		return playerEventHandler;
 	}
 
-	public void setPlayer(Entity player) {
-		this.player = player;
-	}
+	/**
+   * Register the player entity.
+   * @param playerEntity The player entity to register.
+   */
+    public void registerPlayer(Entity playerEntity) {
+      this.player = playerEntity;
+    }
 
-	public Entity getPlayer() {
-		return player;
-	}
+    /**
+     * Get the player entity.
+     * @return the player entity.
+     */
+    public Entity getPlayer() {
+      return this.player;
+  }
 }

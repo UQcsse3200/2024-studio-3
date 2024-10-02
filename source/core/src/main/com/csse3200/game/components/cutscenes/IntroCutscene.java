@@ -1,6 +1,5 @@
 package com.csse3200.game.components.cutscenes;
 
-import com.badlogic.gdx.math.Vector;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.components.cutscenes.scenes.Scene;
 import com.csse3200.game.services.ResourceService;

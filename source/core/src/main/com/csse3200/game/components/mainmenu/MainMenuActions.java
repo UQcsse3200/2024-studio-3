@@ -40,20 +40,17 @@ public class MainMenuActions extends Component {
   /**
    * Swaps to the Main Game screen.
    */
-  private void onStart(String saveFile) {
+  private void onStart() {
     logger.info("Start game");
     Stage stage = ServiceLocator.getRenderService().getStage();
     Skin skin = new Skin(Gdx.files.internal("flat-earth/skin/flat-earth-ui.json"));
+    ServiceLocator.getMainMenuDisplay().stopBackgroundTasks();
+    new Confirmationpopup("Game Tuto Confirm", skin, stage, game);
+    LocalDateTime currentDateTime = LocalDateTime.now();
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy_HH-mm-ss");
+    String formattedDateTime = currentDateTime.format(formatter);
+    ServiceLocator.getSaveLoadService().setSaveFile(formattedDateTime + ".json");
     game.setScreen(GdxGame.ScreenType.MAIN_GAME);
-    if (saveFile.length() > 0) {
-      ServiceLocator.getSaveLoadService().setSaveFile(saveFile);
-    } else {
-      LocalDateTime currentDateTime = LocalDateTime.now();
-      DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy_HH-mm-ss");
-      String formattedDateTime = currentDateTime.format(formatter);
-      ServiceLocator.getSaveLoadService().setSaveFile(formattedDateTime + ".json");
-      new Confirmationpopup("Game Tuto Confirm", skin, stage, game);
-    }
   }
 
   /**

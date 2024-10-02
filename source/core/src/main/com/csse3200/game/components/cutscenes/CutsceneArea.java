@@ -45,7 +45,12 @@ public class CutsceneArea extends GameArea {
                 ServiceLocator.setCurrentCutscene(currentCutscene);  // Set the current cutscene in the service locator
                 break;
             case 1:
-                logger.debug("Loading badEnd cutscene");
+                logger.debug("Loading good end cutscene");
+                currentCutscene = new GoodEndCutscene();  // Initialize the good end cutscene
+                ServiceLocator.setCurrentCutscene(currentCutscene);  // Set the current cutscene in the service locator
+                break;
+            case 2:
+                logger.debug("Loading bad end cutscene");
                 currentCutscene = new BadEndCutscene();
                 ServiceLocator.setCurrentCutscene(currentCutscene);
                 break;

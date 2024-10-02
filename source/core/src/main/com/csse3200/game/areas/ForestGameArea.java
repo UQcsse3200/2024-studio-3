@@ -8,7 +8,7 @@ import com.csse3200.game.components.maingame.TextDisplay;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.entities.benches.Bench;
 import com.csse3200.game.entities.configs.PlayerConfig;
-import com.csse3200.game.screens.MoralDecisionDisplay;
+import com.csse3200.game.components.moral.MoralDecisionDisplay;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +25,6 @@ import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.areas.terrain.TerrainFactory.TerrainType;
-import com.csse3200.game.areas.map.BenchGenerator;
 import com.csse3200.game.areas.map.BenchLayout;
 import com.csse3200.game.components.gamearea.GameAreaDisplay;
 import com.csse3200.game.components.maingame.CheckWinLoseComponent;
@@ -35,7 +34,7 @@ import com.csse3200.game.components.npc.PersonalCustomerEnums;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.benches.Bench;
 import com.csse3200.game.entities.configs.PlayerConfig;
-import com.csse3200.game.screens.MoralDecisionDisplay;
+import com.csse3200.game.components.moral.MoralDayTwo;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.services.SaveLoadService;
@@ -156,6 +155,7 @@ public class ForestGameArea extends GameArea {
           "images/inventory_ui/null_image.png"
   };
   private static final String[] forestTextureAtlases = {
+          "images/Cutscenes/cutscene_badEnd.atlas",
     "images/terrain_iso_grass.atlas",
     "images/ghost.atlas",
     "images/ghostKing.atlas",
@@ -267,7 +267,7 @@ public class ForestGameArea extends GameArea {
 
     // Spawn the player
     player = spawnPlayer();
-    ServiceLocator.getPlayerService().setPlayer(player);
+    ServiceLocator.getPlayerService().registerPlayer(player);
     ServiceLocator.getSaveLoadService().combatStatsComponent = player.getComponent(CombatStatsComponent.class);
     ServiceLocator.getSaveLoadService().load();
 
@@ -275,6 +275,7 @@ public class ForestGameArea extends GameArea {
     ServiceLocator.getDayNightService().getEvents().addListener("endGame", this::checkEndOfGameState);
 
     createMoralScreen();
+    createMoralSystem();
     createEndDayScreen();
     playMusic();
   }
@@ -738,7 +739,7 @@ public class ForestGameArea extends GameArea {
   private void playMusic() {
     Music music = ServiceLocator.getResourceService().getAsset(backgroundMusic, Music.class);
     music.setLooping(true);
-    music.setVolume(0.02f);
+    music.setVolume(0.05f);
     music.play();
   }
 
@@ -841,9 +842,20 @@ public class ForestGameArea extends GameArea {
   private void createMoralScreen() {
     Entity moralScreen = new Entity();
     moralScreen
-            .addComponent(new MoralDecisionDisplay())
-            .addComponent(new MoralDecision());
+            //.addComponent(new MoralDecisionDisplay())
+            //.addComponent(new MoralDayOne())
+            .addComponent(new MoralDayTwo());
+            //.addComponent(new MoralDayThree())
+            //.addComponent(new MoralDayFour())
+//            .addComponent(new MoralDecision());
     ServiceLocator.getEntityService().registerMoral(moralScreen);
+  }
+
+  private void createMoralSystem() {
+    Entity moralSystem = new Entity();
+    moralSystem
+            .addComponent(new MoralDecision());
+    ServiceLocator.getEntityService().registerMoralSystem(moralSystem);
   }
 
   /**

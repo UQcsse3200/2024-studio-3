@@ -10,6 +10,10 @@ public class GameTime {
   private static Logger logger = LoggerFactory.getLogger(GameTime.class);
   private final long startTime;
   private float timeScale = 1f;
+  private boolean isPaused = false;
+  private long pausedAt;
+  private long resumeAt;
+  private long totalPauseTime;
 
   public GameTime() {
     startTime = TimeUtils.millis();
@@ -26,9 +30,39 @@ public class GameTime {
     this.timeScale = timeScale;
   }
 
+  /**
+   * Pause method for timer
+   */
+  public void pause() {
+    if(!isPaused) {
+      logger.info("Time Paused");
+      isPaused = true;
+      pausedAt = TimeUtils.millis();
+    }
+  }
+
+  /**
+   * Resume method for timer
+   */
+  public void resume() {
+    if(isPaused) {
+      logger.info("Time Resumed");
+      resumeAt = TimeUtils.millis();
+      totalPauseTime += (resumeAt - pausedAt);
+      isPaused = false;
+    }
+  }
+
   /** @return time passed since the last frame in seconds, scaled by time scale. */
   public float getDeltaTime() {
+    if(isPaused){
+      return 0;
+    }
     return Gdx.graphics.getDeltaTime() * timeScale;
+  }
+
+  public boolean isPaused(){
+    return isPaused;
   }
 
   /** @return time passed since the last frame in seconds, not affected by time scale. */
@@ -38,7 +72,10 @@ public class GameTime {
 
   /** @return time passed since the game started in milliseconds */
   public long getTime() {
-    return TimeUtils.timeSinceMillis(startTime);
+    if(isPaused){
+      return pausedAt - startTime - totalPauseTime;
+    }
+    return TimeUtils.timeSinceMillis(startTime) - totalPauseTime;
   }
 
   public long getTimeSince(long lastTime) {

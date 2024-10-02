@@ -20,13 +20,29 @@ public class BadEndCutscene extends Cutscene {
                 "images/Cutscenes/cutscene_badEnd.atlas",
                 "bad_end", 20));
 
-        animatedScenes.add(new AnimatedScene(
-                "images/stations/Servery_Animation/servery.atlas",
-                "servery_idle", 20)); // servery_idle
+        //animatedScenes.add(new AnimatedScene(
+        //        "images/stations/Servery_Animation/servery.atlas",
+        //        "servery_idle", 20)); // servery_idle
 
         animatedScenes.add(new AnimatedScene(
                 "images/Cutscenes/cutscene_badEnd.atlas",
                 "bad_end2", 20));
+
+        animatedScenes.add(new AnimatedScene(
+                "images/Cutscenes/cutscene_badEnd.atlas",
+                "bad_end3", 20));
+
+        animatedScenes.add(new AnimatedScene(
+                "images/Cutscenes/cutscene_badEnd.atlas",
+                "bad_end4", 20));
+
+        animatedScenes.add(new AnimatedScene(
+                "images/Cutscenes/cutscene_badEnd.atlas",
+                "bad_end5", 20));
+
+        animatedScenes.add(new AnimatedScene(
+                "images/Cutscenes/cutscene_badEnd.atlas",
+                "bad_end6", 20));
     }
 
     @Override

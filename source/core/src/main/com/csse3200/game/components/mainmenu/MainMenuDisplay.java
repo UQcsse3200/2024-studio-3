@@ -1,6 +1,7 @@
 package com.csse3200.game.components.mainmenu;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -13,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Timer;
+import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
 import org.slf4j.Logger;
@@ -45,9 +47,18 @@ public class MainMenuDisplay extends UIComponent {
 
   private Timer.Task animalMoveTask,clearstage;
 
+  private static final String backgroundMusic = "sounds/Main_Menu_BGM.mp3";
+
+  private static final String[] screenMusic = {backgroundMusic};
+
+  private Music myMusic;
+
   @Override
   public void create() {
-      ServiceLocator.registerMainMenuDisplay(this);
+
+    ServiceLocator.getResourceService().loadMusic(screenMusic);
+    ServiceLocator.getResourceService().loadAll();
+    ServiceLocator.registerMainMenuDisplay(this);
     super.create();
     animalMoveTask = new Timer.Task() {
       public void run() {
@@ -67,6 +78,7 @@ public class MainMenuDisplay extends UIComponent {
       }
     };
     Timer.schedule(clearstage,0,6);
+    playMusic();
   }
 
   public int randomGenerator(int min,int max) {
@@ -173,7 +185,7 @@ public class MainMenuDisplay extends UIComponent {
           public void changed(ChangeEvent changeEvent, Actor actor) {
             logger.debug("Start button clicked");
             animalMoveTask.cancel();
-            entity.getEvents().trigger("start", "begin.json");
+            entity.getEvents().trigger("start");
           }
         });
 
@@ -240,6 +252,17 @@ public class MainMenuDisplay extends UIComponent {
     stage.addActor(table);
   }
 
+  /**
+   * Plays the background music
+   */
+  private void playMusic() {
+    Music music = ServiceLocator.getResourceService().getAsset(backgroundMusic, Music.class);
+    this.myMusic = music;
+    music.setLooping(true);
+    music.setVolume(0.05f);
+    music.play();
+  }
+
   @Override
   public void draw(SpriteBatch batch) {
     // draw is handled by the stage
@@ -255,17 +278,23 @@ public class MainMenuDisplay extends UIComponent {
 
     }
     public void stopBackgroundTasks() {
-        if (animalMoveTask != null) {
-            animalMoveTask.cancel();
-        }
-        if (clearstage != null) {
-            clearstage.cancel();
-        }
+      ServiceLocator.getResourceService().getAsset(backgroundMusic, Music.class).stop();
+
+      ServiceLocator.getResourceService().unloadAssets(screenMusic);
+
+      if (animalMoveTask != null) {
+          animalMoveTask.cancel();
+      }
+      if (clearstage != null) {
+          clearstage.cancel();
+      }
     }
 
     @Override
   public void dispose() {
-    table.clear();
     super.dispose();
+    table.clear();
+    ServiceLocator.getResourceService().getAsset(backgroundMusic, Music.class).stop();
+    ServiceLocator.getResourceService().unloadAssets(screenMusic);
   }
 }
