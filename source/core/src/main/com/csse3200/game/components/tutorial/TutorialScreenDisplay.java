@@ -178,18 +178,18 @@ public class TutorialScreenDisplay extends UIComponent {
     @Override
     public void update() {
         switch (tutorialStep) {
-            case 1:
-                // Check if the player moved
-                if (onPlayerMoved()) {
-                    advanceTutorialStep();
-                }
-                break;
-            case 2:
-                // Check if the player interacted
-                if (onInteraction()) {
-                    advanceTutorialStep();
-                }
-                break;
+//            case 1:
+//                // Check if the player moved
+//                if (onPlayerMoved()) {
+//                    advanceTutorialStep();
+//                }
+//                break;
+//            case 2:
+//                // Check if the player interacted
+//                if (onInteraction()) {
+//                    advanceTutorialStep();
+//                }
+//                break;
             case 3:
 //                if (createOrderPressed) {
 //                    textDisplay.setText("Now use [ and ] keys to switch dockets.");
