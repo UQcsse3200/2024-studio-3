@@ -3,7 +3,6 @@ package com.csse3200.game.components.player;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector2;
-import com.csse3200.game.entities.Entity;
 import com.csse3200.game.input.InputComponent;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.utils.math.Vector2Utils;
@@ -15,12 +14,13 @@ import java.util.HashMap;
  * This input handler only uses keyboard input.
  */
 public class KeyboardPlayerInputComponent extends InputComponent {
-  private static final float ROOT2INV = 1f / (float) Math.sqrt(2f);
+  //private static final float ROOT2INV = 1f / (float) Math.sqrt(2f);
   private Vector2 walkDirection = Vector2.Zero.cpy();
-  private static final float WALK_SPEED = 1f;
+  public float walkSpeed = 1f;
   private static HashMap<Integer, Integer> keyFlags = new HashMap<>();
   private static final String WALKSTOP = "walkStop";
-  private Entity player;
+  //private Entity player;
+  private boolean isChopping = false;
 
   private boolean isInteracting = false;
 
@@ -38,18 +38,36 @@ public class KeyboardPlayerInputComponent extends InputComponent {
   public boolean keyDown(int keycode) {
     keyFlags.put(keycode, 1);
 
-    if (keycode == Keys.O) {
-      System.out.println("O clicked");
+    // Check if were chopping and we recieve a different key
+    // If so stop chopping
+    // This in effect freezes the player
+    if (isChopping && keycode != Keys.Q) {
+      // We know item exits and is choppable
+      entity.getEvents().trigger("interact", "stopChop");
+      isChopping = false;
+    }
 
+    if (keycode == Keys.O) {
       entity.getEvents().trigger("createOrder");
       return true;
     }
-
     
     if (keycode == Keys.E) {
       // Trigger an interaction attempt
-      entity.getEvents().trigger("interact");
+      entity.getEvents().trigger("interact", "default");
       return true;
+    } else if (keycode == Keys.J) {
+      // Trigger an attempt to combine existing items in a mixing station
+      entity.getEvents().trigger("interact", "combine");
+      return true;
+    } else if (keycode == Keys.K) {
+      // Trigger an attempt to rotate inventory of a station to update item display
+      entity.getEvents().trigger("interact", "rotate");
+      return true;
+    } else if (keycode == Keys.Q) {
+      // Attempt to trigger an interaction to chops
+      entity.getEvents().trigger("interact", "chop");
+      isChopping = true;
     }
 
     if (!isInteracting) {
@@ -77,12 +95,10 @@ public class KeyboardPlayerInputComponent extends InputComponent {
         case Keys.P:
           ServiceLocator.getEntityService().getEvents().trigger("toggleEndDayScreen");
           return true;
+          case Keys.L:
+              ServiceLocator.getEntityService().getEvents().trigger("leaveEarly");
+              return true;
       }
-    }
-
-    if (keycode == Keys.SPACE) {
-      entity.getEvents().trigger("attack");
-      return true;
     }
 
     return false;
@@ -99,6 +115,15 @@ public class KeyboardPlayerInputComponent extends InputComponent {
   @Override
   public boolean keyUp(int keycode) {
     keyFlags.put(keycode, 0);
+
+    // If the 'Q' key is release we want to stop chopping
+    // Also check if any other key but R is pressed too
+    if (keycode != Keys.R && (keycode == Keys.Q || isChopping)) {
+      // We know item exits and is choppable
+      entity.getEvents().trigger("interact", "stopChop");
+      isChopping = false;
+    }
+
     return switch (keycode) {
       case Keys.W, Keys.A, Keys.S, Keys.D -> {
         triggerWalkEvent();
@@ -108,10 +133,14 @@ public class KeyboardPlayerInputComponent extends InputComponent {
     };
   }
 
+  public void setWalkSpeed(float speed) {
+    walkSpeed = speed;
+  }
+
   private void triggerWalkEvent() {
 
     Vector2 lastDir = this.walkDirection.cpy();
-    this.walkDirection = keysToVector().scl(WALK_SPEED);
+    this.walkDirection = keysToVector().scl(walkSpeed);
     Directions dir = keysToDirection();
     if(dir == Directions.NONE)
     {
@@ -175,7 +204,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
       yCom /= length;
     }
 
-    return new Vector2(xCom, yCom).scl(WALK_SPEED);
+    return new Vector2(xCom, yCom).scl(walkSpeed);
   }
 
   private boolean isPressed(int keycode) {
@@ -209,18 +238,6 @@ public class KeyboardPlayerInputComponent extends InputComponent {
     // Meant to restrict movement on some stations, not a current feature and clashing
     // with existing system
     //entity.getEvents().addListener("startInteraction", this::startInteraction);
-  }
-
-  /**
-   * Called when the player is attempting to interact and there is also a station that can be interacted with
-   */
-  private void startInteraction() {
-    isInteracting = !isInteracting;
-  
-    if (isInteracting) {
-      walkDirection.set(Vector2.Zero); 
-      triggerWalkEvent();             
-    }
   }
 
   private void whenInteractionEnds() {

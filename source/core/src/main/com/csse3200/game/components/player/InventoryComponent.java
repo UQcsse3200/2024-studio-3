@@ -24,6 +24,7 @@ public class InventoryComponent extends Component {
   private final String sizeException = "Invalid size parameter. Must be an integer > 0.";
   private final String itemException = "Index in Inventory already occupied by an Item.";
   private final String nullException = "Index in Inventory does not contain an Item.";
+  private final String updateTrigger = "updateInventory";
 
   /**
    * Creates inventory component
@@ -70,7 +71,7 @@ public class InventoryComponent extends Component {
       }
       this.capacity = newCapacity;
       if (entity != null) {
-          entity.getEvents().trigger("updateInventory");
+          entity.getEvents().trigger(updateTrigger);
       }
 
   }
@@ -87,7 +88,7 @@ public class InventoryComponent extends Component {
     }
     this.selected = index;
     if (entity != null) {
-      entity.getEvents().trigger("updateInventory");
+      entity.getEvents().trigger(updateTrigger);
     }
   }
 
@@ -215,10 +216,30 @@ public class InventoryComponent extends Component {
       items.set(i, item);
       size++;
       if (entity != null) {
-        entity.getEvents().trigger("updateInventory");
+        entity.getEvents().trigger(updateTrigger);
       }
     }
+  }
 
+    /**
+     * Removes the item in last non-empty index of the inventory, specifically for meal station
+     *
+     */
+    public ItemComponent removeItem() {
+      // Start from the highest index (assuming size 4)
+      for (int i = items.size() - 1; i >= 0; i--) {
+        if (items.get(i) != null) {
+          ItemComponent removedItem = items.get(i);
+          items.set(i, null); // Remove the item
+          size--;
+          if (entity != null) {
+            entity.getEvents().trigger(updateTrigger);
+          }
+          return removedItem; // Return the removed item
+        }
+      }
+      // If no item was found, return null
+      return null;
   }
   
     /**
@@ -240,7 +261,7 @@ public class InventoryComponent extends Component {
       items.set(index, item);
       size++;
       if (entity != null) {
-        entity.getEvents().trigger("updateInventory");
+        entity.getEvents().trigger(updateTrigger);
       }
     }
 
@@ -267,7 +288,7 @@ public class InventoryComponent extends Component {
       size--;
 
       if (entity != null) {
-        entity.getEvents().trigger("updateInventory");
+        entity.getEvents().trigger(updateTrigger);
       }
       return item;
 
@@ -329,7 +350,7 @@ public class InventoryComponent extends Component {
       }
     }
     if (entity != null) {
-      entity.getEvents().trigger("updateInventory");
+      entity.getEvents().trigger(updateTrigger);
     }
     return currentItem;
   }

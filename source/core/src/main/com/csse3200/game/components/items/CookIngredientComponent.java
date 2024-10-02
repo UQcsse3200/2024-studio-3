@@ -1,9 +1,8 @@
 package com.csse3200.game.components.items;
 
-import com.badlogic.gdx.math.Vector2;
-import com.csse3200.game.areas.GameArea;
-import com.csse3200.game.components.Component;
-import com.csse3200.game.services.GameTime;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.csse3200.game.services.ServiceLocator;
 
 /**
@@ -11,112 +10,84 @@ import com.csse3200.game.services.ServiceLocator;
  * It manages the state of cooking, determines when the cooking is complete, and triggers
  * the appropriate actions based on the cooking status and the station's state.
  */
-public class CookIngredientComponent extends Component {
-    private IngredientComponent ingredient;
-    private final GameTime timesource;
-    private boolean isCooking;
-    private long cookEndTime;
+public class CookIngredientComponent extends ItemTimerComponent {
+    
+    private static final float ITEM_BURNING_TIME = 15;
+
+    // The ingredient componetn of the item being used
+    private IngredientComponent item;
+    private static final Logger logger = LoggerFactory.getLogger(ChopIngredientComponent.class);
 
     /**
-     * Constructor for CookIngredientComponent. Initializes the time source used for tracking
-     * the cooking duration.
+     * CookIngredientComponent constructor, takes no parameters as the length of
+     * time that the timer goes for must be set manually.
      */
     public CookIngredientComponent() {
-        timesource = ServiceLocator.getTimeSource();
+        super();
     }
 
-    /**
-     * Called when the component is created. This method retrieves the IngredientComponent
-     * and sets up listeners for starting and stopping the cooking process.
-     */
     @Override
     public void create() {
-        ingredient = entity.getComponent(IngredientComponent.class);
-        entity.getEvents().addListener("cookIngredient", this::cookIngredient);
-        entity.getEvents().addListener("stopCookingIngredient", this::stopCookingIngredient);
+        super.create();
+        // On creation add triggers for rage mode to the timer
+         ServiceLocator.getEntityService().getEvents().addListener("rageModeOn", this::rageModeOn);
+        ServiceLocator.getEntityService().getEvents().addListener("rageModeOff", this::rageModeOff);
+
+        // Add appriopriate event listeners
+        entity.getEvents().addListener("cookIngredient", this::startTimer);
+        entity.getEvents().addListener("stopCookingIngredient", this::stopTimer);
+
+        // Get the item so that it can be updated correctly and correct time gotten
+        item = entity.getComponent(IngredientComponent.class);
+        setLength(item.getCookTime() * 1000); // More logic can be added here when required
+
+        // Log the info
+        String s = String.format("The timer for item: %s, has been created", item.getItemName());
+        logger.info(s);
     }
 
-    /**
-     * This method is called every frame to update the ingredient state. It checks if the
-     * cooking process is complete or if the ingredient has been overcooked (burnt) based
-     * on the time elapsed since the cooking started.
-     */
     @Override
     public void update() {
-        if (isCooking) {
-            long current_time = timesource.getTime();
+        // Update the timing within the timer if running
+        if (!this.isRunning) {
+            return; // super.update() does same check but this needed for early return 
+        }
 
-            // If 15 seconds have passed since the item was cooked,
-            // the item gets burnt and flame is made
-            if (current_time >= cookEndTime + 15 * 1000L) {
-                ingredient.burnItem();
-                this.setFire();
-                stopCookingIngredient();
-            } else if (current_time >= cookEndTime) {
-                ingredient.cookItem();
-            }
+        // Update the elapsed time
+        super.update();
+
+        String s = String.format("The completion of %s is at %.2f percent", item.getItemName(), getCompletionPercent());
+        logger.info(s);
+
+        // Check if the timer is finished
+        if (isFinished()) {
+            updateItem();
         }
     }
 
     /**
-     * Creates a flame at the given stations position
+     * Update the item component to reflect its new state.
      */
-    void setFire() {
-        Vector2 pos = entity.getPosition();
-        GameArea.setStaticXY((int) pos.x, (int) pos.y);
-        entity.getEvents().trigger("StartFlame");
-    }
+    protected void updateItem() {
+        // Update item state
+        item.cookItem();
 
-    /**
-     * Starts the cooking process for the ingredient and calculates the time at which the
-     * ingredient will finish cooking. The cooking time is adjusted based on the station
-     * state and an oven multiplier if the station is an oven.
-     *
-     * @param stationState - The station state ("HOT", "WARM", "NORMAL")
-     * @param oven_multiplier - Oven cook times take longer, so we use a multiplier
-     *                        to multiply the cooking type if station is "OVEN".
-     */
-    void cookIngredient(String stationState, int oven_multiplier) {
-        isCooking = true;
-        cookEndTime = timesource.getTime();
-
-        // ingredient.getCookTime() should return value in seconds as
-        // we are converting to milliseconds in this method
-        switch (stationState) {
-            case "HOT" -> {
-                cookEndTime += (long) (ingredient.getCookTime() * 1000L * oven_multiplier * 0.25);
-            }
-            case "WARM" -> {
-                cookEndTime += (long) (ingredient.getCookTime() * 1000L * oven_multiplier * 0.5);
-            }
-            case "NORMAL" -> {
-                cookEndTime += ingredient.getCookTime() * 1000L * oven_multiplier;
-            }
+        // Check if the item should be burned
+        if (elapsed >= length + ITEM_BURNING_TIME * 1000) {
+            item.burnItem();
+            stopTimer(); // Only stop the timer if the item has been burned
         }
+
+        // Put the info to the console
+        String s = String.format("The state of item: %s, has been update to %s", item.getItemName(), item.getItemState());
+        logger.info(s);
     }
 
     /**
-     * Stops the cooking process. This method is called when cooking is complete or
-     * when the cooking process is manually stopped.
-     */
-
-    void stopCookingIngredient() {
-        isCooking = false;
-    }
-
-    /**
-     * Returns whether the ingredient is currently being cooked.
-     *
-     * @return true if the ingredient is cooking, false otherwise.
+     * Get if the item is currently cooking
+     * @return true if the item is cooking, false otherwise.
      */
     public boolean getIsCooking() {
-        return isCooking;
+        return isRunning;
     }
-
-/*
-    void setTimeSource(GameTime timesource) {
-        this.timesource = timesource;
-    }
-*/
 }
-

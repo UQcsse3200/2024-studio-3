@@ -8,6 +8,7 @@ import com.csse3200.game.services.ServiceLocator;
 
 /** Render a static texture. */
 public class TextureRenderComponent extends RenderComponent {
+  private static final int IMAGE_LAYER = 2;
   private Texture texture;
   private String texturePath;
 
@@ -59,6 +60,22 @@ public class TextureRenderComponent extends RenderComponent {
     entity.setScale(1f, (float) texture.getHeight() / texture.getWidth());
   }
 
+  /**
+   * Gets the width of the texture
+   * @return the width of the texture
+   */
+  public float getWidth() {
+    return texture.getWidth();
+  }
+
+  /**
+   * Gets the height of the texture
+   * @return the height of the texture
+   */
+  public float getHeight() {
+    return texture.getHeight();
+  }
+
   @Override
   protected void draw(SpriteBatch batch) {
     Vector2 position = entity.getPosition();
@@ -69,5 +86,10 @@ public class TextureRenderComponent extends RenderComponent {
   @Override
   public void setStage(Stage mock) {
 
+  }
+
+  @Override
+  public int getLayer() {
+    return IMAGE_LAYER;
   }
 }

@@ -8,8 +8,8 @@ import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.ai.tasks.AITaskComponent;
 import com.csse3200.game.areas.ForestGameArea;
 import com.csse3200.game.components.CombatStatsComponent;
-import com.csse3200.game.components.CustomerBehaviorComponent;
 import com.csse3200.game.components.npc.CustomerComponent;
+import com.csse3200.game.components.npc.CustomerManager;
 import com.csse3200.game.components.ordersystem.OrderManager;
 import com.csse3200.game.components.npc.GhostAnimationController;
 import com.csse3200.game.components.npc.SpecialNPCAnimationController;
@@ -40,6 +40,8 @@ public class NPCFactory {
         private static final NPCConfigs configs = FileLoader.readClass(NPCConfigs.class, "configs/NPCs.json");
 
         private static final Logger logger = LoggerFactory.getLogger(NPCFactory.class);
+        private static int customerCount = 0;
+        private static int orderID = 1;
 
         /**
          * Creates a ghost entity.
@@ -98,7 +100,9 @@ public class NPCFactory {
         }
 
         public static Entity createCustomerPersonal(String name, Vector2 targetPosition) {
-                Entity customer = createBaseCustomer(targetPosition);
+                Vector2 newTargetPosition = new Vector2(targetPosition.x, targetPosition.y + customerCount);
+
+                Entity customer = createBaseCustomer(newTargetPosition);
 
                 CustomerPersonalityConfig config = switch (name) {
                         case "Hank" -> configs.Hank;
@@ -108,9 +112,19 @@ public class NPCFactory {
                         case "Moonki" -> configs.Moonki;
                         default -> configs.Default;
                 };
+                // orderID is to link a specific customer to a specific order ticket
+                String orderNumber = String.valueOf(orderID);
+                logger.info("Order number: " + orderNumber);
+                CustomerComponent customerComponent = new CustomerComponent(config);
+                customerComponent.setOrderNumber(orderNumber);
+                customer.addComponent(customerComponent);
 
-                // Ensure CustomerComponent is added
-                customer.addComponent(new CustomerComponent(config));
+                CustomerManager.addCustomer(orderNumber, customer);
+
+                // gets the preference of the customer
+                String preference = customer.getComponent(CustomerComponent.class).getPreference();
+                // finding the correct imagePath to display the customer's meal image above them when spawning in
+                String imagePath = getMealImagePath(preference);
 
                 AnimationRenderComponent animator = new AnimationRenderComponent(
                                 ServiceLocator.getResourceService()
@@ -123,35 +137,42 @@ public class NPCFactory {
 
                 customer.getComponent(AnimationRenderComponent.class).scaleEntity();
 
-                // Set the recipe preference in CustomerComponent
-                CustomerComponent customerComponent = customer.getComponent(CustomerComponent.class);
-                if (customerComponent != null) {
-                        customerComponent.setPreference(config.preference); // Assuming this sets the preference
-                } else {
-                        logger.error("CustomerComponent is not added to the customer entity.");
-                }
-
-                // Set the countdown in the PathFollowTask
-                AITaskComponent aiComponent = customer.getComponent(AITaskComponent.class);
-                aiComponent.addTask(new PathFollowTask(targetPosition, config.countDown));
-
                 // Display the order for the customer
                 OrderManager.displayOrder(customer);
 
-                System.out.println("Created customer " + name + " with initial position: " + customer.getPosition());
+                logger.debug("Created customer " + name + " with initial position: " + customer.getPosition());
 
                 if (customer.getComponent(HoverBoxComponent.class) == null) {
-                        customer.addComponent(new HoverBoxComponent(new Texture("images/customer_faces/angry_face.png")));
-                        System.out.println("Added HoverBoxComponent to customer: " + name);
-                } else {
-                        System.out.println("HoverBoxComponent already exists for customer: " + name);
+                        customer.addComponent(new HoverBoxComponent(new Texture(imagePath)));
                 }
+                customerCount++;
+                orderID++;
 
                 return customer;
         }
 
+        private static String getMealImagePath(String preference) {
+                switch (preference) {
+                    case "acaiBowl":
+                        return "images/meals/acai_bowl.png";
+                    case "salad":
+                        return "images/meals/salad.png";
+                    case "fruitSalad":
+                        return "images/meals/fruit_salad.png";
+                    case "steakMeal":
+                        return "images/meals/steak_meal.png";
+                    case "bananaSplit":
+                        return "images/meals/banana_split.png";
+                    default:
+                        logger.error("No image found for preference: " + preference);
+                        return "images/meals/incorrect_meal.png"; // Provide a default image
+                }
+        }
+
         public static Entity createBasicCustomer(String name, Vector2 targetPosition) {
-                Entity customer = createBaseCustomer(targetPosition);
+                Vector2 newTargetPosition = new Vector2(targetPosition.x, targetPosition.y + customerCount);
+
+                Entity customer = createBaseCustomer(newTargetPosition);
 
                 BaseCustomerConfig config = switch (name) {
                         case "Basic Chicken" -> configs.Basic_Chicken;
@@ -174,33 +195,24 @@ public class NPCFactory {
 
                 customer.getComponent(AnimationRenderComponent.class).scaleEntity();
 
-                // Set the recipe preference in CustomerComponent
-                CustomerComponent customerComponent = customer.getComponent(CustomerComponent.class);
-                if (customerComponent != null) {
-                        customerComponent.setPreference(config.preference); // Assuming this sets the preference
-                } else {
-                        logger.error("CustomerComponent is not added to the customer entity.");
-                }
-
-                // Set the countdown in the PathFollowTask
-                AITaskComponent aiComponent = customer.getComponent(AITaskComponent.class);
-                aiComponent.addTask(new PathFollowTask(targetPosition, config.countDown));
-
                 // Display the order for the customer
                 OrderManager.displayOrder(customer);
+                customerCount++;
 
                 return customer;
         }
 
         public static Entity createBaseCustomer(Vector2 targetPosition) {
                 AITaskComponent aiComponent = new AITaskComponent();
+                aiComponent
+                        .addTask(new PathFollowTask(targetPosition, 30));
                 Entity npc = new Entity()
                                 .addComponent(new PhysicsComponent())
                                 .addComponent(new PhysicsMovementComponent())
                                 .addComponent(new ColliderComponent())
                                 .addComponent(new HitboxComponent().setLayer(PhysicsLayer.NPC))
                                 .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 1.5f))
-                                .addComponent(new CustomerBehaviorComponent())
+
                                 .addComponent(aiComponent);
                 PhysicsUtils.setScaledCollider(npc, 0.9f, 0.4f);
                 return npc;
@@ -243,6 +255,10 @@ public class NPCFactory {
 
                 PhysicsUtils.setScaledCollider(npc, 0.9f, 0.4f);
                 return npc;
+        }
+
+        public static void decreaseCustomerCount() {
+                customerCount --;
         }
 
         private NPCFactory() {

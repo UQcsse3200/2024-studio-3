@@ -28,6 +28,7 @@ public class MainMenuDisplay extends UIComponent {
   private static final float Z_INDEX = 2f;
   private Table table;
   private Table logo;
+
   private float scale_of_button = 1.5f;
 
   // Animation variables
@@ -133,19 +134,24 @@ public class MainMenuDisplay extends UIComponent {
    * */
   private void addActors() {
     logo = new Table();
+
+
     logo.setFillParent(true);
+
     table = new Table();
     table.setFillParent(true);
+
     Image title =
         new Image(
             ServiceLocator.getResourceService()
-                .getAsset("images/Beastly.png", Texture.class));
+                .getAsset("images/Logo.png", Texture.class));
 
     ImageTextButton startBtn = new ImageTextButton("Start", skin);
     ImageTextButton loadBtn = new ImageTextButton("Load", skin);
     ImageTextButton settingsBtn = new ImageTextButton("Settings", skin);
     ImageTextButton exitBtn = new ImageTextButton("Exit", skin);
-    ImageTextButton tutBtn = new ImageTextButton("Tutorial", skin);
+    //ImageTextButton tutBtn = new ImageTextButton("Tutorial", skin);
+    ImageTextButton cutsceneBtn = new ImageTextButton("Cutscene Temp", skin);
 
     startBtn.setTransform(true);
     startBtn.setScale(scale_of_button);
@@ -155,8 +161,11 @@ public class MainMenuDisplay extends UIComponent {
     settingsBtn.setScale(scale_of_button);
     exitBtn.setTransform(true);
     exitBtn.setScale(scale_of_button);
-      tutBtn.setTransform(true);
-      tutBtn.setScale(scale_of_button);
+//    tutBtn.setTransform(true);
+//    tutBtn.setScale(scale_of_button);
+
+    cutsceneBtn.setTransform((true));
+    cutsceneBtn.setScale(scale_of_button);
       // Triggers an event when the button is pressed
     startBtn.addListener(
         new ChangeListener() {
@@ -197,22 +206,33 @@ public class MainMenuDisplay extends UIComponent {
             entity.getEvents().trigger("exit");
           }
         });
-      tutBtn.addListener(
-              new ChangeListener() {
-                  @Override
-                  public void changed(ChangeEvent changeEvent, Actor actor) {
-                      logger.debug("tutorial button clicked");
-                      entity.getEvents().trigger("tutorial");
-                  }
-              });
+//      tutBtn.addListener(
+//              new ChangeListener() {
+//                  @Override
+//                  public void changed(ChangeEvent changeEvent, Actor actor) {
+//                      logger.debug("tutorial button clicked");
+//                      entity.getEvents().trigger("tutorial");
+//                  }
+//              });
+      cutsceneBtn.addListener(
+            new ChangeListener() {
+                @Override
+                public void changed(ChangeEvent changeEvent, Actor actor) {
+                    logger.debug("Cutscene button clicked");
+                    entity.getEvents().trigger("cutscene");
+                }
+            });
 
     // Add logo and buttons
     logo.add(title).pad(0,0,250,0);
+
     table.add(startBtn).pad(600, 0, 0, 0).height(60);
     table.add(loadBtn).pad(600, 95, 0, 0).height(60);
     table.add(settingsBtn).pad(600, 90, 0, 0).height(60);
     table.add(exitBtn).pad(600, 120, 0, 0).height(60);
-    table.add(tutBtn).pad(600, 80, 0, 0).height(60);
+//      table.add(tutBtn).pad(600, 80, 0, 0).height(60);
+      table.add(cutsceneBtn).pad(800, 0, 0, 0).height(60);
+
     table.center();
 
     // Render logo and buttons

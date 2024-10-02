@@ -1,6 +1,7 @@
 package com.csse3200.game.components.items;
 
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.services.GameTime;
 import com.csse3200.game.extensions.GameExtension;
 import com.csse3200.game.services.ServiceLocator;
@@ -25,6 +26,11 @@ public class ChopIngredientComponentTest {
      */
     @BeforeEach
     public void setUp() {
+        // Clear service locator before tests
+        ServiceLocator.clear();
+
+        ServiceLocator.registerEntityService(new EntityService());
+
         mockEntity = new Entity();
         mockIngredient = mock(IngredientComponent.class);
         mockTimesource = mock(GameTime.class);
@@ -33,7 +39,6 @@ public class ChopIngredientComponentTest {
         chopIngredientComponent = new ChopIngredientComponent();
 
         mockEntity.addComponent(mockIngredient).addComponent(chopIngredientComponent);
-        mockEntity.create();
     }
 
     /**
@@ -44,11 +49,12 @@ public class ChopIngredientComponentTest {
     @Test
     public void testChoppingStarts() {
         when(mockTimesource.getTime()).thenReturn(1000L); // Simulate game time
+        mockEntity.create();
 
         mockEntity.getEvents().trigger("chopIngredient");
 
         verify(mockTimesource).getTime();
-        verify(mockIngredient).getCookTime();
+        verify(mockIngredient).getChopTime();
         assertTrue(chopIngredientComponent.getIsChopping());
     }
 
@@ -60,7 +66,8 @@ public class ChopIngredientComponentTest {
     @Test
     public void testIngredientBecomesChopped() {
         when(mockTimesource.getTime()).thenReturn(1000L, 10000L); // Simulate passage of time
-        when(mockIngredient.getCookTime()).thenReturn(1);
+        when(mockIngredient.getChopTime()).thenReturn(1);
+        mockEntity.create();
 
         mockEntity.getEvents().trigger("chopIngredient");
 
@@ -77,13 +84,29 @@ public class ChopIngredientComponentTest {
     @Test
     public void testStopChopping() {
         when(mockTimesource.getTime()).thenReturn(1000L, 1000L);
-        when(mockIngredient.getCookTime()).thenReturn(10); // chopping process wouldn't finsish yet
+        when(mockIngredient.getChopTime()).thenReturn(10); // chopping process wouldn't finsish yet
+        mockEntity.create();
+
         mockEntity.getEvents().trigger("chopIngredient");
         assertTrue(chopIngredientComponent.getIsChopping());
         mockEntity.getEvents().trigger("stopChoppingIngredient");
         assertFalse(chopIngredientComponent.getIsChopping());
     }
 
+    @Test
+    public void testRageMode() {
+        when(mockTimesource.getTime()).thenReturn(1000L, 6000L);
+        when(mockIngredient.getChopTime()).thenReturn(10);
+        mockEntity.create();
+
+        ServiceLocator.getEntityService().getEvents().trigger("rageModeOn");
+
+        mockEntity.getEvents().trigger("chopIngredient");
+        
+        chopIngredientComponent.update(); // This should trigger chopping
+
+        // ingredient is chopped
+        verify(mockIngredient).chopItem();
+    }
+
 }
-
-

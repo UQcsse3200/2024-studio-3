@@ -79,8 +79,27 @@ public class StationItemHandlerComponent extends Component {
      * Handles any interaction with station, using current state of player and station
      * inventory to determine intended interaction
      * @param playerInventoryComponent reference to player inventory component
+     * @param inventoryDisplay reference to individual inventory display
+     * @param type the type of interaction attempt
      */
-    public void handleInteraction(InventoryComponent playerInventoryComponent, InventoryDisplay inventoryDisplay) {
+    public void handleInteraction(InventoryComponent playerInventoryComponent, InventoryDisplay inventoryDisplay, String type) {
+        if (type.equals("default")) {
+            this.handleInteractionDefault(playerInventoryComponent, inventoryDisplay);
+        } else if (type.equals("chop")) {
+            this.handleInteractionChop();
+        } else if (type.equals("stopChop")) {
+            this.handleInteractionStopChop();
+        } else {
+            // Do nothing, other options aren't relavent...
+        }
+    }
+
+    /**
+     * Function to handle the default interaction between a player and a station.
+     * @param playerInventoryComponent
+     * @param inventoryDisplay
+     */
+    private void handleInteractionDefault(InventoryComponent playerInventoryComponent, InventoryDisplay inventoryDisplay) {
         // Pre calcs
         boolean full = playerInventoryComponent.isFull() & this.inventoryComponent.isFull();
         boolean empty = playerInventoryComponent.isEmpty() & this.inventoryComponent.isEmpty();
@@ -106,6 +125,16 @@ public class StationItemHandlerComponent extends Component {
         }
     }
 
+    private void handleInteractionChop() {
+        // Attempt to start chopping the ingredient
+        entity.getEvents().trigger("Chop Ingredient");
+    }
+
+    private void handleInteractionStopChop() {
+        // Attempt too stop chopping the ingredient
+        entity.getEvents().trigger("Stop Chopping Ingredient");
+    }
+
     /**
      *
      * @return current Item being stored
@@ -125,8 +154,7 @@ public class StationItemHandlerComponent extends Component {
                 break;
             case "cutting board": // Fall through
             case "blender":
-                choppingStationRecieveItem();
-                break;
+                break; // Don't do anything since chopping is manual now :)
             default:
                 break;
         }
@@ -146,22 +174,6 @@ public class StationItemHandlerComponent extends Component {
 
         // We know item exists and is cookable
         entity.getEvents().trigger("Cook Ingredient");
-    }
-
-    /**
-     * Function to be called when a chopping station recieves the item
-     */
-    private void choppingStationRecieveItem() {
-        // First check the item is actually available and working
-        ItemComponent item = inventoryComponent.getItemFirst();
-
-        if (item.getEntity().getComponent(IngredientComponent.class) == null
-                || !item.getEntity().getComponent(IngredientComponent.class).getIsChoppable()) {
-            return; // Item doesn't exit or isn't choppable
-        }
-
-        // We know item exits and is choppable
-        entity.getEvents().trigger("Chop Ingredient");
     }
 
     /**

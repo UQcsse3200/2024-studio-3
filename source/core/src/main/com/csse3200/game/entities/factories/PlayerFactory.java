@@ -82,14 +82,15 @@ public class PlayerFactory {
             .addComponent(new PlayerStatsDisplay())
             .addComponent(new InteractionComponent(PhysicsLayer.INTERACTABLE))
             .addComponent(new CheckWinLoseComponent(55, 55))
-            .addComponent(new SensorComponent(PhysicsLayer.INTERACTABLE, 10f));
+            .addComponent(new SensorComponent(PhysicsLayer.INTERACTABLE, 3f));
 
-    player.scaleHeight(1.5f);
+    player.scaleHeight(1.25f);
     PhysicsUtils.setScaledCollider(player, 0.1f, 0.3f);
     player.getComponent(ColliderComponent.class).setDensity(1.5f);
 
     ServiceLocator.getPlayerService().getEvents().trigger("playerCreated", player);
 
+    ServiceLocator.getPlayerService().registerPlayer(player);
     animator.startAnimation("Character_StandUp");
     return player;
   }
