@@ -44,19 +44,16 @@ public class MapLayout{
 
 
     }
-
-
-
-
-
-
     public EventHandler getEvents() {
         return mapEventHandler;
     }
 
     /**
-     * Yxy ->
-     * @param level
+     * Yab -> spawn vertical bench starting at column `a` that is `b` cells long
+     * Xab -> spawn horizontal bench starting at column `a` that is `b` cells long
+     * []a  -> for any station, spawns a station based on [] at column `a`
+     * the row of the object depends on what line its on in the file.
+     * @param level - integer 1-5 corresponding to level
      */
     public Map load(int level) {
 
@@ -221,6 +218,14 @@ public class MapLayout{
                     else if (square.equals("S")) {
                         strToNum = Integer.valueOf(parts[col+1]);
                         Entity station = StationFactory.createSubmissionWindow();
+                        station.setPosition(strToNum+4, row-4);
+                        stations.add(station);
+                        col+=3;
+                    }
+                    // fire extinguisher F
+                    else if (square.equals("F")) {
+                        strToNum = Integer.valueOf(parts[col+1]);
+                        Entity station = StationFactory.createFireExtinguisher();
                         station.setPosition(strToNum+4, row-4);
                         stations.add(station);
                         col+=3;
