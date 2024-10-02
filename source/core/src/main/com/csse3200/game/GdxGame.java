@@ -94,7 +94,7 @@ public class GdxGame extends Game {
       case SETTINGS:
         return new SettingsScreen(this);
       case CUTSCENE:
-        return new CutsceneScreen(this, 0);
+        return new CutsceneScreen(this, 1);
       default:
         return null;
     }
