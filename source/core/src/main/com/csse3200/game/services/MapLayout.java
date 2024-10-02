@@ -5,6 +5,7 @@ import com.csse3200.game.areas.ForestGameArea;
 import com.csse3200.game.areas.GameArea;
 import com.csse3200.game.areas.map.BenchGenerator;
 import com.csse3200.game.areas.map.BenchLayout;
+import com.csse3200.game.areas.map.Map;
 import com.csse3200.game.entities.benches.Bench;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.factories.StationFactory;
@@ -16,16 +17,23 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class MapLayout extends GameArea{
+public class MapLayout{
     private EventHandler mapEventHandler;
-    private static final String mapLevel1 = "images/map/map_test.txt";
-    //private static final String mapLevel1 = "images/map/map_two.txt";
+    private static final String mapBase = "images/map/map_base.txt";
+    private static final String mapLevel1 = "images/map/map_three.txt";
+    private static final String mapLevel2 = "images/map/map_two.txt";
+    private static final String mapLevel3 = "images/map/map_three.txt";
+    private static final String mapLevel4 = "images/map/map_four.txt";
+    private static final String mapLevel5 = "images/map/map_five.txt";
     private int strToNum;
     private int strToNum2;
     private ArrayList<Bench> benches = new ArrayList<Bench>();
     private ArrayList<Entity> stations = new ArrayList<Entity>();
 
     private Bench bench;
+
+
+
     private static final Logger logger = LoggerFactory.getLogger(MapLayout.class);
 
 
@@ -33,12 +41,14 @@ public class MapLayout extends GameArea{
     public MapLayout() {
         mapEventHandler = new EventHandler();
         mapEventHandler.addListener("load", this::load);
+
+
     }
 
-    @Override
-    public void create() {
-        return;
-    }
+
+
+
+
 
     public EventHandler getEvents() {
         return mapEventHandler;
@@ -48,10 +58,28 @@ public class MapLayout extends GameArea{
      * Yxy ->
      * @param level
      */
-    public void load(String level) {
+    public Map load(int level) {
+
+        String mapLevel = mapBase;
         BufferedReader reader = null;
+        if (level == 1) {
+            mapLevel = mapLevel1;
+        }
+        if (level == 2) {
+            mapLevel = mapLevel2;
+        }
+        if (level == 3) {
+            mapLevel = mapLevel3;
+        }
+        if (level == 4) {
+            mapLevel = mapLevel4;
+        }
+        if (level == 5) {
+            mapLevel = mapLevel5;
+        }
+
         try {
-            reader = new BufferedReader(new FileReader(mapLevel1));
+            reader = new BufferedReader(new FileReader(mapLevel));
             String line;
             int row = 0;
 
@@ -76,7 +104,7 @@ public class MapLayout extends GameArea{
                         strToNum = Integer.valueOf(parts[col+1]);
                         strToNum2 = Integer.valueOf(parts[col+2]);
                         benches.addAll(BenchGenerator.createBenchRow(strToNum + 4,
-                                strToNum + strToNum2 + 3, row-4));
+                                strToNum + strToNum2 + 4, row-4));
                         col += 3;
                         logger.info("Spawning entity at row " + row + ", column " + col);
                     }
@@ -85,7 +113,7 @@ public class MapLayout extends GameArea{
                         strToNum = Integer.valueOf(parts[col+1]);
                         strToNum2 = Integer.valueOf(parts[col+2]);
                         benches.addAll(BenchGenerator.createBenchColumn(strToNum + 4,
-                                row-4, row + strToNum2 - 5));
+                                row-4, row + strToNum2 - 4));
                         col += 3;
                         logger.info("Spawning entity at row " + row + ", column " + col);
                     }
@@ -211,13 +239,8 @@ public class MapLayout extends GameArea{
                 logger.warn("Failed to close the reader: " + ex.getMessage());
             }
         }
+       return new Map(benches, stations);
 
-        for (Bench bench : benches) {
-            spawnEntity(bench);
-            bench.setPosition(bench.x, bench.y);
-        }
-        for (Entity station : stations) {
-            spawnEntity(station);
-        }
     }
+
 }

@@ -3,6 +3,7 @@ package com.csse3200.game.areas;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import com.csse3200.game.areas.map.Map;
 import com.csse3200.game.services.MapLayout;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -247,9 +248,18 @@ public class ForestGameArea extends GameArea {
     displayUI();
     spawnTerrain();
     spawnWall();
-    if (this.level == 1) {
-      ServiceLocator.getMapLayout().getEvents().trigger("load","level1");
+    MapLayout mapLayout = new MapLayout();
+    Map result = mapLayout.load(this.level);
+    for (Bench bench : result.getBenches()) {
+      spawnEntity(bench);
+      bench.setPosition(bench.x, bench.y);
     }
+    for (Entity station : result.getStations()) {
+      spawnEntity(station);
+        //station.setPosition(station.getPosition().x, station.getPosition().y);
+    }
+
+      //ServiceLocator.getMapLayout().getEvents().trigger("load", "level1");
 
     new_border();
     //ticketDetails();
