@@ -83,7 +83,7 @@ public class TooltipsDisplay extends UIComponent {
         Vector3 screenPos = ServiceLocator.getRenderService().getStage().getViewport().getCamera().project(worldPos);
 
         // Set the tooltip position above the interactable object based on viewport height
-        table.setPosition(screenPos.x*180, screenPos.y*175 + (viewportHeight * 0.05f));  // Adjust Y position relative to object and screen size
+        table.setPosition(screenPos.x*190, screenPos.y*190 + (viewportHeight * 0.05f));  // Adjust Y position relative to object and screen size
 
         table.setVisible(true);
     }

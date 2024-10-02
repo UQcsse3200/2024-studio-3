@@ -125,14 +125,7 @@ public class SensorComponent extends Component {
             closestFixture = null;
             closestDistance = -1f;
         }
-        if (previousClosestFixture != closestFixture) {
-            if (previousClosestFixture != null) {
-                removeOutlineFromFixture(previousClosestFixture);
-            }
-            if (closestFixture != null) {
-                addOutlineToFixture(closestFixture);
-            }
-        }
+
 
     }
 
@@ -161,29 +154,5 @@ public class SensorComponent extends Component {
     public boolean isWithinDistance(Fixture fixture, float distance) {
         return getFixtureDistance(fixture) <= distance;
     }
-    /**
-     * Adds outline effect to the given fixture's entity.
-     * @param fixture The fixture whose entity will be outlined
-     */
-    private void addOutlineToFixture(Fixture fixture) {
-        BodyUserData userData = (BodyUserData) fixture.getBody().getUserData();
-        if (userData != null && userData.entity != null) {
-            Entity entity = userData.entity;
-            OutlineComponent outline = entity.getComponent(OutlineComponent.class);
-            if (outline != null) outline.setOutlined(true);
-        }
-    }
 
-    /**
-     * Removes outline effect from the given fixture's entity.
-     * @param fixture The fixture whose entity will no longer be outlined
-     */
-    private void removeOutlineFromFixture(Fixture fixture) {
-        BodyUserData userData = (BodyUserData) fixture.getBody().getUserData();
-        if (userData != null && userData.entity != null) {
-            Entity entity = userData.entity;
-            OutlineComponent outline = entity.getComponent(OutlineComponent.class);
-            if (outline != null) outline.setOutlined(false);
-        }
-    }
 }
