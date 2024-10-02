@@ -1,14 +1,9 @@
 package com.csse3200.game.components.station;
 
 import com.csse3200.game.components.Component;
-import com.csse3200.game.components.ScoreSystem.ScoreSystem;
 import com.csse3200.game.components.items.ItemComponent;
-import com.csse3200.game.components.ordersystem.OrderActions;
-import com.csse3200.game.components.ordersystem.TicketDetails;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.components.player.InventoryDisplay;
-import com.csse3200.game.rendering.AnimationRenderComponent;
-import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -42,6 +37,10 @@ public class StationBinComponent extends Component {
      * @param type the type of interaction attempt
      */
     public void handleInteraction(InventoryComponent playerInventoryComponent, InventoryDisplay inventoryDisplay, String type) {
+        if (!type.equals("default")) {
+            return; // Do nothing if not the default interaction
+        }
+
         if (playerInventoryComponent.isFull()) {
             ItemComponent item = playerInventoryComponent.getItemFirst();
             playerInventoryComponent.removeAt(0);
