@@ -139,7 +139,8 @@ public class PauseMenuDisplay extends UIComponent {
         loadBtn.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                ServiceLocator.getSaveLoadService().load("saveFile.json");
+                ServiceLocator.getSaveLoadService().setSaveFile("saveFile.json");
+                ServiceLocator.getSaveLoadService().load();
             };
         });
 

@@ -5,7 +5,7 @@ import com.csse3200.game.components.npc.PersonalCustomerEnums;
 import com.badlogic.gdx.utils.Null;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.components.maingame.TextDisplay;
-
+import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.entities.benches.Bench;
 import com.csse3200.game.entities.configs.PlayerConfig;
 import com.csse3200.game.screens.MoralDecisionDisplay;
@@ -268,6 +268,8 @@ public class ForestGameArea extends GameArea {
     // Spawn the player
     player = spawnPlayer();
     ServiceLocator.getPlayerService().setPlayer(player);
+    ServiceLocator.getSaveLoadService().combatStatsComponent = player.getComponent(CombatStatsComponent.class);
+    ServiceLocator.getSaveLoadService().load();
 
     // Check and trigger win/loss state
     ServiceLocator.getDayNightService().getEvents().addListener("endGame", this::checkEndOfDayGameState);

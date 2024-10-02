@@ -10,19 +10,24 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.util.HashMap;
+import com.csse3200.game.events.EventHandler;
 
 public class SaveLoadService {
     private static final Logger logger = LoggerFactory.getLogger(SaveLoadService.class);
+    private final EventHandler eventHandler;
     private static final String ROOT_DIR = "saves";
     private String saveFile = "saveFile.json";
-    private CombatStatsComponent combatStatsComponent;
+    public boolean created = false;
+    public CombatStatsComponent combatStatsComponent;
 
     public SaveLoadService() {
+        this.eventHandler = new EventHandler();
         ServiceLocator.getPlayerService().getEvents().addListener("playerCreated", (Entity player) -> {
+            logger.warn("HELLO");
             this.combatStatsComponent = player.getComponent(CombatStatsComponent.class);
+            this.created = true;
+            this.load();
         });
-        logger.warn("HERE");
-        ServiceLocator.getEntityService().getEvents().addListener("loadGame", this::load);
     }
 
     /**
@@ -42,13 +47,13 @@ public class SaveLoadService {
      * Loads a gamestate given the file for said gamestate
      * @param file - the string which is the name of the file
      */
-    public void load(String file) {
-        logger.warn("HERE2");
-        GameState state = FileLoader.readClass(GameState.class, ROOT_DIR + File.separator + file, Location.LOCAL);
+    public void load() {
+        GameState state = FileLoader.readClass(GameState.class, ROOT_DIR + File.separator + saveFile, Location.LOCAL);
         UpdateStats(state);
     }
 
     public void UpdateStats(GameState state) {
+        logger.warn("CRAZY");
         this.combatStatsComponent.setGold(state.getMoney());
         ServiceLocator.getDayNightService().setDay(state.getDay());
         logger.warn(ServiceLocator.getPlayerService().getPlayer().getPosition().toString());
@@ -59,6 +64,10 @@ public class SaveLoadService {
 
     public String getSaveFile() {
         return saveFile;
+    }
+
+    public EventHandler getEvents() {
+        return eventHandler;
     }
 
     public void setSaveFile(String filename) {
