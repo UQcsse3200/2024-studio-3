@@ -172,8 +172,25 @@ public class MainGameScreen extends ScreenAdapter {
 			ServiceLocator.getDayNightService().update();
 			ServiceLocator.getEntityService().update();
 		}
+
+		if ( isPaused){
+			renderPauseMenu();
+			return;
+		}
+
 		renderer.render();
 		Gdx.gl.glClearColor(0f/255f, 0f/255f, 0f/255f, 1);
+
+	}
+
+	/**
+	 * Return freeze screen
+	 */
+
+	private void renderPauseMenu() {
+		Stage stage = ServiceLocator.getRenderService().getStage();
+		stage.act();
+		stage.draw();
 	}
 
 	/**
