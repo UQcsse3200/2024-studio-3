@@ -274,10 +274,6 @@ public abstract class Cutscene extends Component {
         Entity animation = CutsceneFactory.createFullAnimation(scene.getAtlasFilePath(), animName);
         entities.add(animation);
         ServiceLocator.getEntityService().register(animation);
-
-        System.out.println("===========================");
-        System.out.println("===========================");
-        System.out.println("===========================");
     }
 
     /**
