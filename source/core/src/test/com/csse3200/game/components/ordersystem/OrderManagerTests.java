@@ -115,7 +115,6 @@ class OrderManagerTest {
 
         // Set up expected behavior for CustomerComponent
         when(customerComponent.getPreference()).thenReturn("bananaSplit");
-        when(OrderManager.getRecipe("BananaSplit")).thenReturn(recipe);
         when(entityService.getEvents()).thenReturn(eventHandler);
 
         OrderManager.displayOrder(customer);
