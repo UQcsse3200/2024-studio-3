@@ -1,9 +1,7 @@
 package com.csse3200.game.ui.terminal.commands;
 
-import com.csse3200.game.areas.ForestGameArea;
 import com.csse3200.game.components.items.IngredientComponent;
 import com.csse3200.game.components.items.ItemComponent;
-import com.csse3200.game.components.items.ItemType;
 import com.csse3200.game.components.items.MealComponent;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.entities.factories.ItemFactory;
@@ -11,8 +9,6 @@ import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.csse3200.game.entities.Entity;
-
-
 import java.util.ArrayList;
 
 
