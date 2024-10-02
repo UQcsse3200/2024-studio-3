@@ -3,6 +3,7 @@ package com.csse3200.game.services;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.components.cutscenes.Cutscene;
+import com.csse3200.game.components.cutscenes.CutsceneTextDisplay;
 import com.csse3200.game.screens.CutsceneScreen;
 import com.csse3200.game.components.mainmenu.MainMenuDisplay;
 import org.slf4j.Logger;
@@ -40,6 +41,8 @@ public class ServiceLocator {
   private static Cutscene currentCutscene;
   private static MainMenuDisplay mainMenuDisplay;
   private static GdxGame gameInstance;
+  private static CutsceneTextDisplay cutsceneTextDisplay;
+
 
   private static ResourceService resourceService;
 
@@ -298,7 +301,23 @@ public class ServiceLocator {
   }
 
 
+  /**
+   * Gets the current CutsceneTextDisplay instance.
+   *
+   * @return the CutsceneTextDisplay instance, or null if not initialized.
+   */
+  public static CutsceneTextDisplay getCutsceneTextDisplay() {
+    return cutsceneTextDisplay;
+  }
 
+  /**
+   * Sets the CutsceneTextDisplay instance.
+   *
+   * @param display The CutsceneTextDisplay instance to set.
+   */
+  public static void setCutsceneTextDisplay(CutsceneTextDisplay display) {
+    cutsceneTextDisplay = display;
+  }
 }
 
 

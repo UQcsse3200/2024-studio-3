@@ -1,114 +1,3 @@
-//package com.csse3200.game.components.cutscenes;
-//
-//import com.badlogic.gdx.utils.Array;
-//import com.csse3200.game.components.cutscenes.scenes.Scene;
-//import com.csse3200.game.services.ResourceService;
-//import com.csse3200.game.services.ServiceLocator;
-//
-///**
-// * Specific cutscene class handling the backstory of the game.
-// */
-//public class BackstoryCutscene extends Cutscene {
-//    /**
-//     * Constructor for BackstoryCutscene.
-//     */
-//    public BackstoryCutscene() {
-//        super();
-//    }
-//
-//    /**
-//     * Sets up the scenes for the backstory cutscene, including background images,
-//     * animations, and the corresponding text for each scene.
-//     */
-//    @Override
-//    protected void setupScenes() {
-//        // Add cutscene text
-//        cutsceneText.add("In the year 2045, the world changed...");
-//        cutsceneText.add("Humans and animals were forced to coexist in a new order.");
-//        cutsceneText.add("Our hero, a chef, is one of the last remaining humans...");
-//
-//        // Add scenes with background images, text, and duration
-//        scenes.add(new Scene(
-//                "images/Cutscenes/Brooklyn_Bistro_Background.png",
-//                null,  // No animations for this scene
-//                new Array<>(new String[]{"In the year 2045, the world changed..."}),
-//                5.0f
-//        ));
-//        scenes.add(new Scene(
-//                "images/Cutscenes/Kitchen_Background.png",
-//                null,  // No animations for this scene
-//                new Array<>(new String[]{"Humans and animals were forced to coexist in a new order."}),
-//                4.0f
-//        ));
-//        scenes.add(new Scene(
-//                "images/Cutscenes/Food_Critic_Background.png",
-//                null,  // No animations for this scene
-//                new Array<>(new String[]{"Humans and animals were forced to coexist in a new order."}),
-//                4.0f
-//        ));
-//        scenes.add(new Scene(
-//                "images/Cutscenes/Food_Critic_Background.png",
-//                null,  // No animations for this scene
-//                new Array<>(new String[]{"Humans and animals were forced to coexist in a new order."}),
-//                4.0f
-//        ));
-//        scenes.add(new Scene(
-//                "images/Cutscenes/Kitchen_Background.png",
-//                null,  // No animations for this scene
-//                new Array<>(new String[]{"Humans and animals were forced to coexist in a new order."}),
-//                4.0f
-//        ));
-//        scenes.add(new Scene(
-//                "images/Cutscenes/Farm_Background.png",
-//                null,  // No animations for this scene
-//                new Array<>(new String[]{"Our hero, a chef, is one of the last remaining humans..."}),
-//                3.0f
-//        ));
-//    }
-//
-//    /**
-//     * Loads the assets needed for the backstory cutscene, including textures for backgrounds.
-//     */
-////    @Override
-////    protected void loadAssets() {
-////        // Load the background images for the cutscene
-////        textures = new String[] {
-////                "images/Cutscenes/scene1_background.png",
-////                "images/Cutscenes/scene2_background.png",
-////                "images/Cutscenes/scene3_background.png"
-////        };
-////
-////        // Get the resource service to load assets
-////        ResourceService resourceService = ServiceLocator.getResourceService();
-////        resourceService.loadTextures(textures);
-////        resourceService.loadAll();  // Ensure all assets are loaded
-////    }
-//    @Override
-//    protected void loadAssets() {
-//        // Load assets for the backstory cutscene
-//        for (Scene scene : scenes) {
-//            ServiceLocator.getResourceService().loadTextures(new String[]{scene.getBackgroundImagePath()});
-//        }
-//    }
-//
-//    /**
-//     * Handles specific entity creation logic for the backstory cutscene.
-//     * Currently, there is no specific logic for creating entities.
-//     */
-//    @Override
-//    public void createEntities() {
-//        // Any specific entity creation logic for the backstory cutscene
-//    }
-//
-//    /**
-//     * Returns the cutscene text that will be displayed during the cutscene.
-//     *
-//     * @return Array<String> of cutscene text.
-//     */
-//    public Array<String> getCutsceneText() {
-//        return cutsceneText;
-//    }
-//}
 package com.csse3200.game.components.cutscenes;
 
 import com.badlogic.gdx.utils.Array;
@@ -149,7 +38,31 @@ public class BackstoryCutscene extends Cutscene {
         scene3Text.add("You built a reputation for your talent & expertise...");
 
         Array<String> scene4Text = new Array<>();
-        scene3Text.add("Then, the fall happened...");
+        scene4Text.add("Then, the fall happened...");
+
+        Array<String> scene5Text = new Array<>();
+        scene5Text.add("It started small. Animals becoming more aware, more intelligent...");
+
+        Array<String> scene6Text = new Array<>();
+        scene6Text.add("Farms were overrun, livestock freed themselves...");
+
+        Array<String> scene7Text = new Array<>();
+        scene7Text.add("The uprising spread quickly, and society quickly \n" +
+                "crumbled under the weight of this unexpected revolt...");
+
+        Array<String> scene8Text = new Array<>();
+        scene8Text.add("You managed to survive the chaos but you lost everything - \n" +
+                "your reputation, your restaurant, the life you built...");
+
+        Array<String> scene9Text = new Array<>();
+        scene9Text.add("You strike a deal with the local mafia, who wiped out most of the humans...");
+
+        Array<String> scene10Text = new Array<>();
+        scene10Text.add("They don't believe a human can run a restaurant in this world...");
+
+        Array<String> scene11Text = new Array<>();
+        scene11Text.add("You have five days to prove yourself, \n" +
+                "and if you don't, you might suffer a similar fate...");
 
         // Add scenes with background images, text, and duration
         Scene scene1 = new Scene("images/Cutscenes/Brooklyn_Bistro_Background.png");
@@ -165,13 +78,48 @@ public class BackstoryCutscene extends Cutscene {
         scene3.setDuration(3.0f);
 
         Scene scene4 = new Scene("images/Cutscenes/Food_Critic_Background.png");
-        scene4.setSceneText(scene2Text);
+        scene4.setSceneText(scene4Text);
         scene4.setDuration(3.0f);
+
+        Scene scene5 = new Scene("images/Cutscenes/Animals_in_Kitchen_Background.png");
+        scene5.setSceneText(scene5Text);
+        scene5.setDuration(3.0f);
+
+        Scene scene6 = new Scene("images/Cutscenes/Farm_Background.png");
+        scene6.setSceneText(scene6Text);
+        scene6.setDuration(3.0f);
+
+        Scene scene7 = new Scene("images/Cutscenes/graveyard_mafia.png");
+        scene7.setSceneText(scene7Text);
+        scene7.setDuration(3.0f);
+
+        Scene scene8 = new Scene("images/Cutscenes/deserted_city_opt1.png");
+        scene8.setSceneText(scene8Text);
+        scene8.setDuration(3.0f);
+
+        Scene scene9 = new Scene("images/Cutscenes/graveyard_mafia_chef.png");
+        scene9.setSceneText(scene9Text);
+        scene9.setDuration(3.0f);
+
+        Scene scene10 = new Scene("images/Cutscenes/new_beastly_bistro_pt2.png");
+        scene10.setSceneText(scene10Text);
+        scene10.setDuration(3.0f);
+
+        Scene scene11 = new Scene("images/Cutscenes/new_beastly_bistro.png");
+        scene11.setSceneText(scene11Text);
+        scene11.setDuration(3.0f);
 
         scenes.add(scene1);
         scenes.add(scene2);
         scenes.add(scene3);
         scenes.add(scene4);
+        scenes.add(scene5);
+        scenes.add(scene6);
+        scenes.add(scene7);
+        scenes.add(scene8);
+        scenes.add(scene9);
+        scenes.add(scene10);
+        scenes.add(scene11);
     }
 
     /**
@@ -195,3 +143,4 @@ public class BackstoryCutscene extends Cutscene {
         // No specific entity creation logic for the backstory cutscene at this time
     }
 }
+
