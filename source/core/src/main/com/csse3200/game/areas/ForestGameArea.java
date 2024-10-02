@@ -258,6 +258,7 @@ public class ForestGameArea extends GameArea {
     ServiceLocator.getDayNightService().getEvents().addListener("endGame", this::checkEndOfDayGameState);
 
     createMoralScreen();
+    createMoralSystem();
     createEndDayScreen();
     playMusic();
   }
@@ -832,11 +833,18 @@ public class ForestGameArea extends GameArea {
     moralScreen
             //.addComponent(new MoralDecisionDisplay())
             //.addComponent(new MoralDayOne())
-            .addComponent(new MoralDayTwo())
+            .addComponent(new MoralDayTwo());
             //.addComponent(new MoralDayThree())
             //.addComponent(new MoralDayFour())
-            .addComponent(new MoralDecision());
+//            .addComponent(new MoralDecision());
     ServiceLocator.getEntityService().registerMoral(moralScreen);
+  }
+
+  private void createMoralSystem() {
+    Entity moralSystem = new Entity();
+    moralSystem
+            .addComponent(new MoralDecision());
+    ServiceLocator.getEntityService().registerMoralSystem(moralSystem);
   }
 
   /**
