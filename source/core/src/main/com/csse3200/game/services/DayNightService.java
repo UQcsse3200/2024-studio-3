@@ -109,8 +109,8 @@ public class DayNightService {
     private void startNewDay() {
 
         // Checking if the game should end (i.e. it's the 5th day)
-        if (day > MAX_DAYS) { // should this be MAX_DAYS - 1?
-            logger.info("Game has ended after 5 days!");
+        if (day > MAX_DAYS) {
+            logger.info("Game is ending after days!");
             ServiceLocator.getDayNightService().getEvents().trigger("endGame");
             return;
 
