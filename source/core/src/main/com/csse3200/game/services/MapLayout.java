@@ -18,8 +18,8 @@ import java.util.Objects;
 
 public class MapLayout extends GameArea{
     private EventHandler mapEventHandler;
-    //private static final String mapLevel1 = "images/map/map_test.txt";
-    private static final String mapLevel1 = "images/map/map_two.txt";
+    private static final String mapLevel1 = "images/map/map_test.txt";
+    //private static final String mapLevel1 = "images/map/map_two.txt";
     private int strToNum;
     private int strToNum2;
     private ArrayList<Bench> benches = new ArrayList<Bench>();
@@ -107,13 +107,15 @@ public class MapLayout extends GameArea{
                         col+=3;
                     }
                     // spawn a lettuce basket
-                    else if (square.equals("l")) {
+                    else if (square.equals("u")) {
                         strToNum = Integer.valueOf(parts[col+1]);
                         Entity station = StationFactory.createLettuceBasket();
                         station.setPosition(strToNum+4, row-4);
                         stations.add(station);
                         col+=3;
                     }
+
+
                     // spawn a tomato basket
                     else if (square.equals("t")) {
                         strToNum = Integer.valueOf(parts[col+1]);
@@ -130,6 +132,15 @@ public class MapLayout extends GameArea{
                         stations.add(station);
                         col+=3;
                     }
+                    // spawn a acai basket
+                    else if (square.equals("a")) {
+                        strToNum = Integer.valueOf(parts[col+1]);
+                        Entity station = StationFactory.createAcaiBasket();
+                        station.setPosition(strToNum+4, row-4);
+                        stations.add(station);
+                        col+=3;
+                    }
+
                     //stove E
                     else if (square.equals("E")) {
                         strToNum = Integer.valueOf(parts[col+1]);
