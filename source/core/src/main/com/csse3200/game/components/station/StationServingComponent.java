@@ -10,6 +10,7 @@ import com.csse3200.game.components.ordersystem.Recipe;
 import com.csse3200.game.components.ordersystem.TicketDetails;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.components.player.InventoryDisplay;
+import com.csse3200.game.components.player.PlayerStatsDisplay;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.csse3200.game.physics.components.InteractionComponent;
@@ -122,6 +123,7 @@ public class StationServingComponent extends Component {
             // Call to team 1's function with the big ticket info
             //TBD(item, bigTicketInfo[0], bigTicketInfo[1], bigTicketInfo[2]);
             // remove ticket
+            logger.info("Submitting meal and removing docket");
             ServiceLocator.getDocketService().getEvents().trigger("removeOrder", -1); // removes the order from the orderaction list
             ServiceLocator.getDocketService().getEvents().trigger("removeBigTicket"); // removes the order from the display list
 
@@ -205,6 +207,7 @@ public class StationServingComponent extends Component {
                     }
                     hoverBox.setTexture(new Texture(faceImagePath));
                     ServiceLocator.getLevelService().setCurrGold(gold);
+                    updateGoldUI(gold);
                 }
             }
 
@@ -214,6 +217,15 @@ public class StationServingComponent extends Component {
         logger.warn("No current order to score the meal for.");
         }
         return scoreDescription;
+    }
+
+        private void updateGoldUI(int gold) {
+        PlayerStatsDisplay playerStatsDisplay = PlayerStatsDisplay.getInstance();
+        if (playerStatsDisplay != null) {
+            playerStatsDisplay.updatePlayerGoldUI(gold);
+        } else {
+            logger.error("PlayerStatsDisplay instance is null");
+        }
     }
 
 }
