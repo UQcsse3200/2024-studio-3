@@ -76,7 +76,7 @@ public class MapLayout extends GameArea{
                         strToNum = Integer.valueOf(parts[col+1]);
                         strToNum2 = Integer.valueOf(parts[col+2]);
                         benches.addAll(BenchGenerator.createBenchRow(strToNum + 4,
-                                strToNum + strToNum2 + 4, row-4));
+                                strToNum + strToNum2 + 3, row-4));
                         col += 3;
                         logger.info("Spawning entity at row " + row + ", column " + col);
                     }
@@ -85,7 +85,7 @@ public class MapLayout extends GameArea{
                         strToNum = Integer.valueOf(parts[col+1]);
                         strToNum2 = Integer.valueOf(parts[col+2]);
                         benches.addAll(BenchGenerator.createBenchColumn(strToNum + 4,
-                                row-4, row + strToNum2 - 4));
+                                row-4, row + strToNum2 - 5));
                         col += 3;
                         logger.info("Spawning entity at row " + row + ", column " + col);
                     }
