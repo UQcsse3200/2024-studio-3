@@ -27,8 +27,8 @@ public class LoseCutscene extends Cutscene {
     @Override
     protected void setupScenes() {
         // Add text to be displayed during the cutscene
-        cutsceneText.add("Its quite a shame...");
-        cutsceneText.add("That I didn't kill him earlier.");
+        cutsceneText.add("\"Its quite a shame...\"");
+        cutsceneText.add("\"That I didn't kill him earlier.\"");
 
 
         // Add scenes with background images, animations, text, and duration
@@ -82,4 +82,5 @@ public class LoseCutscene extends Cutscene {
         // Any specific entity creation logic for the intro cutscene
     }
 }
+
 

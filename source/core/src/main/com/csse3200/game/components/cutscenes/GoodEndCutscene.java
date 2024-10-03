@@ -27,53 +27,54 @@ public class GoodEndCutscene extends Cutscene {
     @Override
     protected void setupScenes() {
         // Add text to be displayed during the cutscene
-        cutsceneText.add("First bit of text");
-        cutsceneText.add("Second bit of text");
-        cutsceneText.add("Third bit of text");
+        Array<String> scene1Text = new Array<>();
+        scene1Text.add("\"Get out here\"");
+
+        Array<String> scene2Text = new Array<>();
+        scene2Text.add("\"I gotta admit... I'm kinda impressed\"");
+
+        Array<String> scene3Text = new Array<>();
+        scene3Text.add("\"Maybe you humans aren't so bad \n" +
+                "after all...\"");
+
+        Array<String> scene4Text = new Array<>();
+        scene4Text.add("\"I'll let you take care of this place \n" +
+                "in peace. Keep it tidy ya?\"");
+
+        Array<String> scene5Text = new Array<>();
+        scene5Text.add("\"I'll see you around...\"");
 
         // Add scenes with background images, animations, text, and duration
 
         Scene scene1 = new Scene("images/Cutscenes/good_end_0.png");
-        //scene1.setImages(
-           //     new String[]{"images/meals/acai_bowl.png"},
-            //    new Vector2[] {new Vector2(4, 2)}
-        //);
-
-        scene1.setSceneText(cutsceneText);
+        scene1.setSceneText(scene1Text);
         scene1.setDuration(3.0f);
 
         scenes.add(scene1);
 
         Scene scene2 = new Scene("images/Cutscenes/good_end_1.png");
-        //scene2.setImages(
-            //    new String[]{"images/meals/acai_bowl.png"},
-            //    new Vector2[] {new Vector2(2, 2)}
-        //);
-        scene2.setSceneText(cutsceneText);
+        scene2.setSceneText(scene2Text);
         scene2.setDuration(3.0f);
 
         scenes.add(scene2);
 
         Scene scene3 = new Scene("images/Cutscenes/good_end_2.png");
-        //scene3.setImages(
-             //   new String[]{"images/meals/acai_bowl.png"},
-              //  new Vector2[] {new Vector2(2, 2)}
-        //);
-        scene3.setSceneText(cutsceneText);
+        scene3.setSceneText(scene3Text);
         scene3.setDuration(3.0f);
 
         scenes.add(scene3);
 
-        Scene scene4 = new Scene("images/Cutscenes/good_end_3.png");
-        //scene4.setImages(
-              //  new String[]{"images/meals/acai_bowl.png"},
-              //  new Vector2[] {new Vector2(2, 2)}
-        //);
-        scene4.setSceneText(cutsceneText);
+        Scene scene4 = new Scene("images/Cutscenes/good_end_2.png");
+        scene4.setSceneText(scene4Text);
         scene4.setDuration(3.0f);
 
         scenes.add(scene4);
 
+        Scene scene5 = new Scene("images/Cutscenes/good_end_3.png");
+        scene5.setSceneText(scene5Text);
+        scene5.setDuration(3.0f);
+
+        scenes.add(scene5);
     }
 
     /**
