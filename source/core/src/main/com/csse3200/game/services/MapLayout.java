@@ -32,7 +32,7 @@ public class MapLayout{
 
     private Bench bench;
 
-
+    private final String[] validStations = {"b", "s", "u", "t", "c", "a", "E", "O", "B", "C", "G", "N", "S", "F"};
 
     private static final Logger logger = LoggerFactory.getLogger(MapLayout.class);
 
@@ -41,8 +41,6 @@ public class MapLayout{
     public MapLayout() {
         mapEventHandler = new EventHandler();
         mapEventHandler.addListener("load", this::load);
-
-
     }
     public EventHandler getEvents() {
         return mapEventHandler;
@@ -100,8 +98,7 @@ public class MapLayout{
                     if (square.equals("X")) {
                         strToNum = Integer.valueOf(parts[col+1]);
                         strToNum2 = Integer.valueOf(parts[col+2]);
-                        benches.addAll(BenchGenerator.createBenchRow(strToNum + 4,
-                                strToNum + strToNum2 + 4, row-4));
+                        benches.addAll(readBench("X", strToNum, strToNum2, row));
                         col += 3;
                         logger.info("Spawning entity at row " + row + ", column " + col);
                     }
@@ -109,125 +106,14 @@ public class MapLayout{
                     else if (square.equals("Y")) {
                         strToNum = Integer.valueOf(parts[col+1]);
                         strToNum2 = Integer.valueOf(parts[col+2]);
-                        benches.addAll(BenchGenerator.createBenchColumn(strToNum + 4,
-                                row-4, row + strToNum2 - 4));
+                        benches.addAll(readBench("Y", strToNum, strToNum2, row));
                         col += 3;
                         logger.info("Spawning entity at row " + row + ", column " + col);
                     }
-                    // Spawn a banana basket when 'b'
-                    else if (square.equals("b")) {
+                    // Spawn a station
+                    else if (validateStation(square)) {
                         strToNum = Integer.valueOf(parts[col+1]);
-                        Entity station = StationFactory.createBananaBasket();
-                        station.setPosition(strToNum+4, row-4);
-                        stations.add(station);
-                        col+=3;
-                    }
-
-                    // Spawn a strawberry basket when 's'
-                    else if (square.equals("s")) {
-                        strToNum = Integer.valueOf(parts[col+1]);
-                        Entity station = StationFactory.createStrawberryBasket();
-                        station.setPosition(strToNum+4, row-4);
-                        stations.add(station);
-                        col+=3;
-                    }
-                    // spawn a lettuce basket
-                    else if (square.equals("u")) {
-                        strToNum = Integer.valueOf(parts[col+1]);
-                        Entity station = StationFactory.createLettuceBasket();
-                        station.setPosition(strToNum+4, row-4);
-                        stations.add(station);
-                        col+=3;
-                    }
-
-
-                    // spawn a tomato basket
-                    else if (square.equals("t")) {
-                        strToNum = Integer.valueOf(parts[col+1]);
-                        Entity station = StationFactory.createTomatoBasket();
-                        station.setPosition(strToNum+4, row-4);
-                        stations.add(station);
-                        col+=3;
-                    }
-                    // spawn a cucumber basket
-                    else if (square.equals("c")) {
-                        strToNum = Integer.valueOf(parts[col+1]);
-                        Entity station = StationFactory.createCucumberBasket();
-                        station.setPosition(strToNum+4, row-4);
-                        stations.add(station);
-                        col+=3;
-                    }
-                    // spawn a acai basket
-                    else if (square.equals("a")) {
-                        strToNum = Integer.valueOf(parts[col+1]);
-                        Entity station = StationFactory.createAcaiBasket();
-                        station.setPosition(strToNum+4, row-4);
-                        stations.add(station);
-                        col+=3;
-                    }
-
-                    //stove E
-                    else if (square.equals("E")) {
-                        strToNum = Integer.valueOf(parts[col+1]);
-                        Entity station = StationFactory.createStove();
-                        station.setPosition(strToNum+4, row-4);
-                        stations.add(station);
-                        col+=3;
-                    }
-                    //Oven O
-                    else if (square.equals("O")) {
-                        strToNum = Integer.valueOf(parts[col+1]);
-                        Entity station = StationFactory.createOven();
-                        station.setPosition(strToNum+4, row-4);
-                        stations.add(station);
-                        col+=3;
-                    }
-                    //beef fridge B
-                    else if (square.equals("B")) {
-                        strToNum = Integer.valueOf(parts[col+1]);
-                        Entity station = StationFactory.createBeefFridge();
-                        station.setPosition(strToNum+4, row-4);
-                        stations.add(station);
-                        col+=3;
-                    }
-                    //chocolate fridge C
-                    else if (square.equals("C")) {
-                        strToNum = Integer.valueOf(parts[col+1]);
-                        Entity station = StationFactory.createChocolateFridge();
-                        station.setPosition(strToNum+4, row-4);
-                        stations.add(station);
-                        col+=3;
-                    }
-                    // cutting board G
-                    else if (square.equals("G")) {
-                        strToNum = Integer.valueOf(parts[col+1]);
-                        Entity station = StationFactory.createCuttingBoard();
-                        station.setPosition(strToNum+4, row-4);
-                        stations.add(station);
-                        col+=3;
-                    }
-                    // bin N
-                    else if (square.equals("N")) {
-                        strToNum = Integer.valueOf(parts[col+1]);
-                        Entity station = StationFactory.createBin();
-                        station.setPosition(strToNum+4, row-4);
-                        stations.add(station);
-                        col+=3;
-                    }
-                    // servery/submission S
-                    else if (square.equals("S")) {
-                        strToNum = Integer.valueOf(parts[col+1]);
-                        Entity station = StationFactory.createSubmissionWindow();
-                        station.setPosition(strToNum+4, row-4);
-                        stations.add(station);
-                        col+=3;
-                    }
-                    // fire extinguisher F
-                    else if (square.equals("F")) {
-                        strToNum = Integer.valueOf(parts[col+1]);
-                        Entity station = StationFactory.createFireExtinguisher();
-                        station.setPosition(strToNum+4, row-4);
-                        stations.add(station);
+                        stations.add(readStation(square, strToNum, row));
                         col+=3;
                     }
                 }
@@ -247,5 +133,75 @@ public class MapLayout{
        return new Map(benches, stations);
 
     }
+    private ArrayList<Bench> readBench(String type, int startCol, int size, int row) {
+        switch (type) {
+            case "X":
+                return BenchGenerator.createBenchRow(startCol + 4, startCol + size + 4, row-4);
+            case "Y":
+                return BenchGenerator.createBenchColumn(startCol + 4, row-4, row + size - 4);
+            default:
+                return new ArrayList<Bench>();
+        }
+    }
+    private Entity readStation(String type, int col, int row) {
+        Entity station;
+        switch (type) {
+            case "b":
+                station = StationFactory.createBananaBasket();
+                break;
+            case "s":
+                station = StationFactory.createStrawberryBasket();
+                break;
+            case "u":
+                station = StationFactory.createLettuceBasket();
+                break;
+            case "t":
+                station = StationFactory.createTomatoBasket();
+                break;
+            case "c":
+                station = StationFactory.createCucumberBasket();
+                break;
+            case "a":
+                station = StationFactory.createAcaiBasket();
+                break;
+            case "E":
+                station = StationFactory.createStove();
+                break;
+            case "O":
+                station = StationFactory.createOven();
+                break;
+            case "B":
+                station = StationFactory.createBeefFridge();
+                break;
+            case "C":
+                station = StationFactory.createChocolateFridge();
+                break;
+            case "G":
+                station = StationFactory.createCuttingBoard();
+                break;
+            case "N":
+                station = StationFactory.createBin();
+                break;
+            case "S":
+                station = StationFactory.createSubmissionWindow();
+                break;
+            case "F":
+                station = StationFactory.createFireExtinguisher();
+                break;
+            default:
+                station = StationFactory.createBananaBasket();
+                break;
+        }
+        station.setPosition(col+4, row-4);
+        return station;
+    }
 
+    private boolean validateStation(String str) {
+        for (String station : validStations) {
+            if (str.equals(station)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
