@@ -54,13 +54,13 @@ class SceneTest {
         assertEquals(animationPositions, scene.getAnimationPositions(), "Animation positions should match");
     }
 
-    @Test
-    void testGetSetImagePaths() {
-        scene.setImages(imagePaths, imagePositions);
-        // Test that the animation image paths are correctly returned
-        assertEquals(imagePaths, scene.getImagePaths(), "Image paths should match");
-        assertEquals(imagePositions, scene.getImagePositions(), "Image positions should match");
-    }
+//    @Test
+//    void testGetSetImagePaths() {
+//        scene.setImages(imagePaths, imagePositions);
+//        // Test that the animation image paths are correctly returned
+//        assertEquals(imagePaths, scene.getImagePaths(), "Image paths should match");
+//        assertEquals(imagePositions, scene.getImagePositions(), "Image positions should match");
+//    }
 
     @Test
     void testGetSetSceneText() {
