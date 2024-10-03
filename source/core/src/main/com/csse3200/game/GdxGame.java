@@ -10,13 +10,14 @@ import com.csse3200.game.files.UserSettings;
 import com.csse3200.game.screens.MainGameScreen;
 import com.csse3200.game.screens.MainMenuScreen;
 import com.csse3200.game.screens.SettingsScreen;
+import com.csse3200.game.screens.LoadGameScreen;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import com.csse3200.game.services.*;
 
 import static com.badlogic.gdx.Gdx.app;
-import com.csse3200.game.screens.LoadGameScreen;
 /**
  * Entry point of the non-platform-specific game logic. Controls which screen is currently running.
  * The current screen triggers transitions to other screens. This works similarly to a finite state
@@ -61,10 +62,13 @@ public class GdxGame extends Game {
     Screen currentScreen = getScreen();
 
     previousScreen = currentScreen;  // Save the current screen before changing
-
+    SaveLoadService system = ServiceLocator.getSaveLoadService();
     if (currentScreen != null) {
       currentScreen.dispose();
     }
+    ServiceLocator.registerSaveLoadService(system); // I know this is probably bad practice but i need it to work
+
+    logger.warn("Is AWDAdwKA null? " + (ServiceLocator.getSaveLoadService() == null));
 
     setScreen(newScreen(screenType));
   }

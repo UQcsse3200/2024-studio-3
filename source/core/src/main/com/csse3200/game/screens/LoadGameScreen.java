@@ -32,6 +32,7 @@ public class LoadGameScreen extends ScreenAdapter {
         ServiceLocator.registerResourceService(new ResourceService());
         ServiceLocator.registerEntityService(new EntityService());
         ServiceLocator.registerRenderService(new RenderService());
+        logger.warn("Is SaveService null? " + (ServiceLocator.getSaveLoadService() == null));
 
         renderer = RenderFactory.createRenderer();
         createUI();
