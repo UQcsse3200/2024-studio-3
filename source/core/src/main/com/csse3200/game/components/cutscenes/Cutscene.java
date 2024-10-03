@@ -96,8 +96,12 @@ public abstract class Cutscene extends Component {
             loadScene(currentSceneIndex);
         } else {
             logger.info("Cutscene finished. Triggering next event.");
-            ServiceLocator.getCutsceneScreen().getCutsceneScreenDisplay().getEntity().getEvents().trigger("cutsceneEnded");
+            endCutscene();
         }
+    }
+
+    protected void endCutscene() {
+        ServiceLocator.getCutsceneScreen().getCutsceneScreenDisplay().getEntity().getEvents().trigger("cutsceneEnded");
     }
 
     /**
@@ -237,15 +241,6 @@ public abstract class Cutscene extends Component {
     protected void unloadAssets() {
         ResourceService resourceService = ServiceLocator.getResourceService();
         resourceService.unloadAssets(textures);
-    }
-
-    /**
-     * Checks if the cutscene has been completed. Currently not implemented.
-     * @return boolean indicating if the cutscene is completed
-     */
-    public boolean isCompleted() {
-        logger.error("Not implemented: isCompleted()");
-        return true;
     }
 
     /**

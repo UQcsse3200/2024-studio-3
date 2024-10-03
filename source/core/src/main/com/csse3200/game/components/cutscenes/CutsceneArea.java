@@ -3,7 +3,6 @@ package com.csse3200.game.components.cutscenes;
 import com.csse3200.game.areas.ForestGameArea;
 import com.csse3200.game.areas.GameArea;
 import com.csse3200.game.entities.Entity;
-import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,13 +12,11 @@ import org.slf4j.LoggerFactory;
  * and disposal of cutscenes, and ensures that transitions occur once cutscenes are completed.
  */
 public class CutsceneArea extends GameArea {
-    private static final Logger logger = LoggerFactory.getLogger(ForestGameArea.class);
-
-    // The current cutscene being played in the area
-    private Cutscene currentCutscene;
+    private static final Logger logger = LoggerFactory.getLogger(CutsceneArea.class);
 
     // Index representing which cutscene to load (could be part of an enum in the future)
-    private int cutsceneValue;
+    private final int cutsceneValue;
+    private Cutscene currentCutscene;
 
     /**
      * Constructor for the CutsceneArea. It registers the game area as well as sets the value for the cutscene to
@@ -38,6 +35,7 @@ public class CutsceneArea extends GameArea {
      */
     @Override
     public void create() {
+        // The current cutscene being played in the area
         switch (cutsceneValue) {
             case 0:
                 logger.debug("Loading backstory cutscene");
@@ -64,24 +62,18 @@ public class CutsceneArea extends GameArea {
     }
 
     /**
-     * Updates the cutscene area each frame. Transitions the game once the cutscene is completed.
-     *
-     * @param delta Time since the last frame in seconds
+     * Returns the cutscene value of the cutscene area
+     * @return The cutscene value
      */
-    public void update(float delta) {
-        // Check if the cutscene has completed
-        if (cutsceneCompleted()) {
-            logger.debug("Cutscene is done");  // Log that the cutscene is completed
-            // Additional logic to trigger the transition to the next gameplay area could be added here
-        }
+    public int getCutsceneValue() {
+        return cutsceneValue;
     }
 
     /**
-     * Checks if the current cutscene has been completed.
-     *
-     * @return true if the cutscene is completed, false otherwise.
+     * Returns the current cutscene in the cutscene area
+     * @return The current cutscene
      */
-    private boolean cutsceneCompleted() {
-        return currentCutscene != null && currentCutscene.isCompleted();
+    public Cutscene getCurrentCutscene() {
+        return currentCutscene;
     }
 }

@@ -63,15 +63,8 @@ public class IntroCutsceneTest {
 
         // Initialize the cutscene with it not calling the service locator and instead just triggering own event
         introCutscene = new IntroCutscene() {
-            protected void nextCutscene() {
-                disposeEntities();
-
-                currentSceneIndex++;
-                if (currentSceneIndex < scenes.size()) {
-                    loadScene(currentSceneIndex);
-                } else {
-                    entity.getEvents().trigger("cutsceneEnded");
-                }
+            protected void endCutscene() {
+                //Do Nothing
             }
         };
 
@@ -189,11 +182,11 @@ public class IntroCutsceneTest {
     }
 
     @Test
-        public void testSetTextForScene() {
-            introCutscene.setupScenes();
-            introCutscene.loadScene(0);
-            assert introCutscene.currentText.equals("Hello This is an Example Text");
+    public void testSetTextForScene() {
+        introCutscene.setupScenes();
+        introCutscene.loadScene(0);
+        assert introCutscene.currentText.equals("Hello This is an Example Text");
 
-            assert introCutscene.textIndex == 1;
+        assert introCutscene.textIndex == 1;
     }
 }
