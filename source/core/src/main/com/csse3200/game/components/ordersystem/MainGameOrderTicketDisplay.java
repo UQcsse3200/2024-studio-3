@@ -184,6 +184,7 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         float xVal = cntXval(250f, tableArrayList.size());
         float yVal = viewportHeight * viewPortHeightMultiplier;
         table.setPosition(xVal, yVal);
+        table.padTop(25f);
         Docket background = new Docket(getTimer());
         backgroundArrayList.add(background);
         table.setBackground(background.getImage().getDrawable());
@@ -221,7 +222,7 @@ public class MainGameOrderTicketDisplay extends UIComponent {
      * @return the x-position for the order ticket.
      */
     private float cntXval(float startPoint, int instanceCnt) {
-        return startPoint + (instanceCnt - 1) * ((viewportWidth * DISTANCE_MULTIPLIER) + viewportWidth * 3f / 32f);
+        return startPoint + 100 + (instanceCnt - 1) * ((viewportWidth * DISTANCE_MULTIPLIER) + viewportWidth * 3f / 32f);
     }
 
     /**
