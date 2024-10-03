@@ -1,5 +1,6 @@
 package com.csse3200.game.services;
 
+import com.csse3200.game.GdxGame;
 import com.csse3200.game.components.cutscenes.Cutscene;
 import com.csse3200.game.screens.CutsceneScreen;
 import com.csse3200.game.components.mainmenu.MainMenuDisplay;
@@ -33,19 +34,26 @@ public class ServiceLocator {
   private static InputService inputService;
   private static PlayerService playerService;
   private static GameArea gameArea;
+  private static GdxGame game;
   private static MainGameScreen gameScreen;
   private static CutsceneScreen cutsceneScreen;
   private static Cutscene currentCutscene;
   private static MainMenuDisplay mainMenuDisplay;
+
   private static ResourceService resourceService;
+
   private static TicketDetails ticketDetails;
   private static SaveLoadService saveLoadService;
   private static DocketService docketService;
   private static LevelService levelService;
+
   private static DayNightService dayNightService;
   private static OrderActions orderActions; //new
+
   // New services (e.g. CustomerMovementService, DialogueService)
   private static CustomerMovementService customerMovementService;
+
+  private static RandomComboService randomComboService;
 
   public static EntityService getEntityService() {
     return entityService;
@@ -90,6 +98,7 @@ public class ServiceLocator {
   }
 
 
+
   public static OrderActions getOrderActions() {
     return orderActions;
 
@@ -118,6 +127,10 @@ public class ServiceLocator {
   // New getters for additional services
   public static CustomerMovementService getCustomerMovementService() {
     return customerMovementService;
+  }
+
+  public static RandomComboService getRandomComboService(){
+    return randomComboService;
   }
 
   public static void setCurrentCutscene(Cutscene cutscene) {
@@ -190,6 +203,14 @@ public class ServiceLocator {
     orderActions = source;
   }
 
+  public static void registerGame(GdxGame new_game) {
+    logger.debug("Registering GdxGame");
+    game = new_game;
+  }
+
+  public static GdxGame getGame() {
+    return game;
+  }
 
   public static void registerLevelService(LevelService source) {
     if (levelService == null) {
@@ -214,6 +235,7 @@ public class ServiceLocator {
     }
 
   }
+
 
   public static void registerMainMenuDisplay(MainMenuDisplay display) {
     mainMenuDisplay = display;
@@ -253,6 +275,9 @@ public class ServiceLocator {
     saveLoadService = service;
   }
 
+  public static void registerRandomComboService(RandomComboService service){
+    randomComboService = service;
+  }
 
   // Clear all services
   public static void clear() {
@@ -270,6 +295,7 @@ public class ServiceLocator {
     customerMovementService = null;
     dayNightService = null;
     saveLoadService = null;
+    randomComboService = null;
   }
 
   private ServiceLocator() {

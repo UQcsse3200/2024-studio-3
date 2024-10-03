@@ -49,6 +49,14 @@ public class MoralDayOne extends UIComponent {
         isVisible = false;
     }
 
+    public MoralDayOne(Stage stage) {
+        super();
+        this.stage = stage;
+        this.game = ServiceLocator.getGameScreen();
+        isVisible = false;
+        create();
+    }
+
 
     /**
      * Creates the moral decision screen.
@@ -190,7 +198,7 @@ public class MoralDayOne extends UIComponent {
     /**
      * Toggles the visibility of the moral decision screen.
      */
-    private void toggleVisibility(int day) {
+    public void toggleVisibility(int day) {
         logger.debug(" Day - {}", day);
 //        this.update();
         if (isVisible) {
@@ -243,5 +251,6 @@ public class MoralDayOne extends UIComponent {
 
     @Override
     public void setStage(Stage stage) {
+        this.stage = stage;
     }
 }

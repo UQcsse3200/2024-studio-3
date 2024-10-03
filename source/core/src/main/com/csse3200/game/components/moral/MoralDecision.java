@@ -1,6 +1,10 @@
 package com.csse3200.game.components.moral;
 
+import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.Component;
+import com.csse3200.game.components.maingame.CheckWinLoseComponent;
+import com.csse3200.game.components.upgrades.SpeedBootsUpgrade;
+import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.csse3200.game.services.*;
@@ -13,10 +17,16 @@ import java.util.List;
  */
 public class MoralDecision extends Component {
 
+    static final int MORALGOLD_D1 = 40;
+    static final int MORALGOLD_D2 = 30;
+    static final int MORALGOLD_D4 = -20;
+
+
+
     private static final Logger logger = LoggerFactory.getLogger(MoralDecision.class);
 
     private final List<Decision> ListOfDecisions = new ArrayList<>();
-//    private Integer currentMorality = 0;
+    private Boolean currentMorality = true;
 
     /**
      * Adds a new Question, assuming it is good and worth 10 points.
@@ -77,6 +87,24 @@ public class MoralDecision extends Component {
     }
 
     /**
+     * Returns the current morality score.
+     *
+     * @return the current morality score
+     */
+    public Boolean getCurrentMorality() {
+        return currentMorality;
+    }
+
+    /**
+     * Sets the current morality score.
+     *
+     * @param currentMorality the new morality score
+     */
+    public void setCurrentMorality(Boolean currentMorality) {
+        this.currentMorality = currentMorality;
+    }
+
+    /**
      * Sets the decision result at the specified index and updates the morality score.
      *
      * @param index the index of the decision
@@ -86,6 +114,21 @@ public class MoralDecision extends Component {
     public boolean setDecision(int index, boolean decision) {
         logger.debug("Setting decision for index: {} to {}", index, decision);
         ListOfDecisions.get(index).setDecision(decision);
+
+        if (!decision){
+            setCurrentMorality(false);
+            switch (index){
+                case 0 -> ServiceLocator.getPlayerService().getPlayer().getComponent(CombatStatsComponent.class).addGold(MORALGOLD_D1);
+                case 1 -> ServiceLocator.getPlayerService().getPlayer().getComponent(CombatStatsComponent.class).addGold(MORALGOLD_D2);
+                case 2 -> ServiceLocator.getPlayerService().getPlayer().getComponent(SpeedBootsUpgrade.class).activate();
+                case 3 -> ServiceLocator.getPlayerService().getPlayer().getComponent(CheckWinLoseComponent.class).decreaseLoseThreshold();
+                default -> logger.error("moral decision with unknown index");
+            }
+        } else {
+            if (index == 0) {setCurrentMorality(true);}
+            if (index == 3) {ServiceLocator.getPlayerService().getPlayer().getComponent(CombatStatsComponent.class).addGold(MORALGOLD_D4);}
+
+        }
         return true;
     }
 
@@ -113,6 +156,7 @@ public class MoralDecision extends Component {
      */
     public void clearDecisions() {
         ListOfDecisions.clear();
+        currentMorality = true;
     }
 
     /**

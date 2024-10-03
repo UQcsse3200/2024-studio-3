@@ -15,9 +15,10 @@ import java.util.Random;
  */
 public class DayNightService {
     private static final Logger logger = LoggerFactory.getLogger(DayNightService.class);
+    public  long FIVE_MINUTES = 5L * 60 * 1000; // 5 minutes in milliseconds
     public static final int MAX_DAYS = 5; // Maximum number of days
     public  long FIVE_MINUTES = 5 * 60 * 1000; // 5 minutes in milliseconds
-    public long lastCheckTime;
+    public  long SEVENTY_FIVE_PERCENT = (long) (FIVE_MINUTES * 0.75);
     public long lastSecondCheck;
     public long lastUpgradeCheck;
     public long lastEndOfDayCheck;
@@ -54,14 +55,6 @@ public class DayNightService {
         day = 0;
     }
 
-    /**
-     * Constructs a new DayNightService with provided event handlers for day events and
-     * docket services.
-     *
-     * @param enddayEventHandler Event handler for managing day transitions
-     * @param docketServiceEventHandler Event handler for handling daily events, such as
-     *                                  meal bonuses and upgrades
-     */
     public DayNightService(EventHandler enddayEventHandler, EventHandler docketServiceEventHandler) {
         gameTime = ServiceLocator.getTimeSource();
         this.enddayEventHandler = enddayEventHandler;
@@ -71,6 +64,7 @@ public class DayNightService {
         this.lastEndOfDayCheck = gameTime.getTime();
         this.timeRemaining = FIVE_MINUTES;
         this.random = new Random();
+        randomChoice = random.nextInt((int) SEVENTY_FIVE_PERCENT);
         day = 1;
         randomChoice = random.nextInt(10) * 1000;
 
@@ -84,6 +78,8 @@ public class DayNightService {
     public void create() {
         // ***Working version of Day cycle used "decisionDone"***
         enddayEventHandler.addListener("decisionDone", this::startNewDay);
+        // enddayEventHandler.addListener("animationDone", this::startNewDay);
+
         enddayEventHandler.addListener("callpastsecond", this::updatepastSecond);
 
         // Listen for high-quality meal events
@@ -141,6 +137,7 @@ public class DayNightService {
             pastUpgrade = true;
             enddayEventHandler.trigger("upgrade");
             randomChoice = random.nextInt(10) * 1000;
+            // lastCheckTime3 = currentTime;
         }
 
         if (this.timeRemaining == 0 && !endOfDayTriggered) {
@@ -249,3 +246,8 @@ public class DayNightService {
         return highQualityMeals;
     }
 }
+
+
+
+
+
