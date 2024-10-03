@@ -330,6 +330,11 @@ public class EventHandler {
     logger.debug("Triggering event {}", eventName);
   }
 
+  public boolean hasListeners(String eventName) {
+    Array<EventListener> eventListeners = listeners.getOrDefault(eventName, null);
+    return eventListeners != null && eventListeners.size > 0;
+  }
+
   public Integer getScheduledEventsSize() {
     return scheduledEvents.size();
   }

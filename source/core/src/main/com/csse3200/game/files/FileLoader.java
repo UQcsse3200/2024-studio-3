@@ -17,6 +17,24 @@ public class FileLoader {
   static final Json json = new Json();
 
   /**
+   * Get all files in a given directory.
+   *
+   * @param directoryPath the path to the directory
+   * @param location the location type
+   * @return an array of FileHandle objects which are the files in the directory
+   */
+  public static FileHandle[] getFiles(String directoryPath, Location location) {
+    FileHandle directory = getFileHandle(directoryPath, location);
+
+    if (directory == null || !directory.isDirectory()) {
+      logger.error("Invalid directory: " + directoryPath);
+      return new FileHandle[0];
+    }
+
+    return directory.list();
+  }
+
+  /**
    * Read generic Java classes from a JSON file. Properties in the JSON file will override class
    * defaults.
    *

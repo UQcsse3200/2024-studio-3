@@ -43,9 +43,7 @@ public class ServiceLocator {
   private static ResourceService resourceService;
 
   private static TicketDetails ticketDetails;
-  //Me new stuff :)
-
-
+  private static SaveLoadService saveLoadService;
   private static DocketService docketService;
   private static LevelService levelService;
 
@@ -54,6 +52,8 @@ public class ServiceLocator {
 
   // New services (e.g. CustomerMovementService, DialogueService)
   private static CustomerMovementService customerMovementService;
+
+  private static RandomComboService randomComboService;
 
   public static EntityService getEntityService() {
     return entityService;
@@ -87,6 +87,7 @@ public class ServiceLocator {
     return docketService;
   }
 
+  public static SaveLoadService getSaveLoadService() {return saveLoadService;}
 
   public static TicketDetails getTicketDetails() {
     return ticketDetails;
@@ -95,6 +96,7 @@ public class ServiceLocator {
   public static DayNightService getDayNightService() { //new
     return dayNightService;
   }
+
 
 
   public static OrderActions getOrderActions() {
@@ -125,6 +127,10 @@ public class ServiceLocator {
   // New getters for additional services
   public static CustomerMovementService getCustomerMovementService() {
     return customerMovementService;
+  }
+
+  public static RandomComboService getRandomComboService(){
+    return randomComboService;
   }
 
   public static void setCurrentCutscene(Cutscene cutscene) {
@@ -262,6 +268,16 @@ public class ServiceLocator {
     customerMovementService = service;
   }
 
+  public static void registerSaveLoadService(SaveLoadService service) {
+    if (saveLoadService != null) {
+      logger.warn("SaveLoadService is being overwritten!");
+    }
+    saveLoadService = service;
+  }
+
+  public static void registerRandomComboService(RandomComboService service){
+    randomComboService = service;
+  }
 
   // Clear all services
   public static void clear() {
@@ -278,6 +294,8 @@ public class ServiceLocator {
     gameScreen = null;
     customerMovementService = null;
     dayNightService = null;
+    saveLoadService = null;
+    randomComboService = null;
   }
 
   private ServiceLocator() {

@@ -8,7 +8,11 @@ import com.csse3200.game.components.Component;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.services.ServiceLocator;
 
-public class LoanUpgrade extends Component {
+/**
+ * Manages the Loan Upgrade component, allowing players to take a loan
+ * to receive additional gold under certain conditions.
+ */
+public class LoanUpgrade extends Component implements Upgrade {
     private CombatStatsComponent combatStatsComponent;
 
     public LoanUpgrade(){
@@ -16,18 +20,29 @@ public class LoanUpgrade extends Component {
         ServiceLocator.getPlayerService().getEvents().addListener("playerCreated", (Entity player) -> {
             this.combatStatsComponent = player.getComponent(CombatStatsComponent.class);
         });
+        ServiceLocator.getRandomComboService().getEvents().addListener("Loan", this::activate); 
     }
+
+    /**
+     * Activates the loan upgrade, providing the player with additional gold if they have 
+     * at least 20 gold
+     */
+    public void activate() { 
+        if(combatStatsComponent.getGold() >= 20){
+            combatStatsComponent.addGold(100); 
+        }
+        else{
+        ServiceLocator.getRandomComboService().getEvents().trigger("notenoughmoney"); 
+        }
+    }
+
+    public void deactivate() {}
 
     @Override
     public void update() {
         // Check if the 'L' key is pressed in each frame
         if (Gdx.input.isKeyJustPressed(Input.Keys.L)) {
-            Loaner();  // Add 100 gold when 'L' is pressed
+            activate();  // Add 100 gold when 'L' is pressed
         }
     }
-
-    public void Loaner(){
-        combatStatsComponent.addGold(100);
-    }
-
 }

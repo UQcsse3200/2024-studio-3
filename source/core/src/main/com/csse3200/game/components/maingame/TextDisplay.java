@@ -2,24 +2,18 @@ package com.csse3200.game.components.maingame;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Stack;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.csse3200.game.GdxGame;
 import com.csse3200.game.screens.MainGameScreen;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
@@ -34,8 +28,8 @@ import com.badlogic.gdx.utils.Align;
 public class TextDisplay extends UIComponent {
     //String building variables
     private List<String> text;
-    private int current_part = 0;
-    private int text_length = 0;
+    private int currentPart = 0;
+    private int textLength = 0;
     private StringBuilder currentText;
     private int textLimit = 60;
     private int charIndex = 0;
@@ -44,10 +38,8 @@ public class TextDisplay extends UIComponent {
 
     // Displaying variables
     private boolean visible;
-    private Stack layout;
     private Label label;
     private Table table;
-    private Image displayBox;
     private final MainGameScreen game;
     public TextDisplay() {
         super();
@@ -124,8 +116,6 @@ public class TextDisplay extends UIComponent {
         table.add(stack).padBottom(70).padLeft(0).size((int)(Gdx.graphics.getWidth() * 0.5), (int)(Gdx.graphics.getHeight() * 0.2));
         setupInputListener();
         entity.getEvents().addListener("SetText", this::setText);
-
-        //setText("The shimmering moonlight cast a silvery glow over the tranquil ocean waves, gently lapping against the sandy shore as a soft breeze carried the scent of saltwater and seaweed through the air, while distant stars twinkled faintly in the vast, dark sky above, their light barely penetrating the velvety blackness that enveloped the world in a quiet, peaceful embrace, where the occasional call");
     }
 
     /***
@@ -134,12 +124,12 @@ public class TextDisplay extends UIComponent {
      */
     public void setText(String text) {
         setVisible(true);
-        current_part = 0;
-        List<String> new_text = new ArrayList<>();
-        text_length = text.length();
+        currentPart = 0;
+        List<String> newText = new ArrayList<>();
+        textLength = text.length();
         String temp = "";
         String current = "";
-        for (int i = 0; i < text_length; i++) {
+        for (int i = 0; i < textLength; i++) {
             // if word formed in temp
             if (text.charAt(i) == ' ') {
                 temp += current;
@@ -148,15 +138,15 @@ public class TextDisplay extends UIComponent {
 
             if (i != 0 && i % textLimit == 0) {
                 temp += " (enter to continue)";
-                new_text.add(temp);
+                newText.add(temp);
                 temp = "";
             }
             current += text.charAt(i);
         }
         temp += current + " (enter to continue)";
-        new_text.add(temp);
-        System.out.println(new_text);
-        this.text = new_text;
+        newText.add(temp);
+        System.out.println(newText);
+        this.text = newText;
     }
 
     /***
@@ -188,11 +178,11 @@ public class TextDisplay extends UIComponent {
     @Override
     public void update() {
         long time = ServiceLocator.getTimeSource().getTime();
-        if (this.text != null && current_part < TextDisplay.this.text.size() && charIndex < this.text.get(current_part).length()) {
+        if (this.text != null && currentPart < TextDisplay.this.text.size() && charIndex < this.text.get(currentPart).length()) {
             if (time - lastUpdate >= delay) {
                 lastUpdate = time;
                 // Add a character and set the label to new text
-                this.currentText.append(text.get(current_part).charAt(charIndex));
+                this.currentText.append(text.get(currentPart).charAt(charIndex));
                 label.setText(currentText.toString());
                 charIndex++;
             }
@@ -208,12 +198,12 @@ public class TextDisplay extends UIComponent {
             @Override
             public boolean keyDown(InputEvent event, int keycode) {
                 if (keycode == com.badlogic.gdx.Input.Keys.ENTER) {
-                    current_part++;
+                    currentPart++;
                     charIndex = 0;
                     lastUpdate = 0;
                     TextDisplay.this.currentText = new StringBuilder();
                     // if no more text remaining
-                    if (current_part == TextDisplay.this.text.size()) {
+                    if (currentPart == TextDisplay.this.text.size()) {
                         setVisible(false);
                     }
                     return true;

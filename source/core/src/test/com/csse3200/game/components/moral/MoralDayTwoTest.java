@@ -106,7 +106,7 @@ public class MoralDayTwoTest {
 
         ServiceLocator.registerEntityService(new EntityService());
         // Initialize MoralDecisionDisplay with the mocked game
-        MoralDecisionDisplay testDisplay = mock(MoralDecisionDisplay.class);
+        MoralDayTwo testDisplay = mock(MoralDayTwo.class);
         entity = mock(Entity.class);
         entity.addComponent(testDisplay);
         //moralDecisionDisplay.setStage(mockStage); // Set the mocked stage

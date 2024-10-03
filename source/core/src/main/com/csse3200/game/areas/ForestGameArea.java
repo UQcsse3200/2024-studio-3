@@ -1,5 +1,16 @@
 package com.csse3200.game.areas;
-
+import com.csse3200.game.components.maingame.CheckWinLoseComponent;
+import com.csse3200.game.components.moral.Decision;
+import com.csse3200.game.components.npc.PersonalCustomerEnums;
+import com.badlogic.gdx.utils.Null;
+import com.csse3200.game.GdxGame;
+import com.csse3200.game.components.maingame.TextDisplay;
+import com.csse3200.game.components.CombatStatsComponent;
+import com.csse3200.game.entities.benches.Bench;
+import com.csse3200.game.entities.configs.PlayerConfig;
+import com.csse3200.game.components.moral.MoralDecisionDisplay;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -23,16 +34,22 @@ import com.csse3200.game.components.maingame.CheckWinLoseComponent;
 import com.csse3200.game.components.maingame.EndDayDisplay;
 import com.csse3200.game.components.moral.MoralDecision;
 import com.csse3200.game.components.npc.PersonalCustomerEnums;
+import com.csse3200.game.components.player.TouchPlayerInputComponent;
+import com.csse3200.game.components.upgrades.UpgradesDisplay;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.benches.Bench;
 import com.csse3200.game.entities.configs.PlayerConfig;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.utils.math.GridPoint2Utils;
-
-
-
-
+import com.csse3200.game.entities.factories.NPCFactory;
+import com.csse3200.game.components.maingame.TextDisplay;
+import com.csse3200.game.entities.factories.ObstacleFactory;
+import com.csse3200.game.entities.EntityService;
+import com.csse3200.game.entities.factories.PlayerFactory;
+import com.csse3200.game.entities.factories.StationFactory;
+import com.csse3200.game.entities.factories.ItemFactory;
+import com.csse3200.game.entities.factories.PlateFactory;
 
 /** Forest area for the demo game with trees, a player, and some enemies. */
 public class ForestGameArea extends GameArea {
@@ -44,6 +61,7 @@ public class ForestGameArea extends GameArea {
   private static final float WALL_WIDTH = 0.1f;
   private static final String[] forestTextures = {
     "images/special_NPCs/boss.png",
+    "images/special_NPCs/penguin2.png",
     "images/meals/acai_bowl.png",
     "images/meals/banana_split.png",
     "images/meals/salad.png",
@@ -138,9 +156,10 @@ public class ForestGameArea extends GameArea {
           "images/platecomponent/stackedplates/4plates.png",
           "images/platecomponent/stackedplates/5plates.png",
           "images/inventory_ui/slot.png",
-          "images/inventory_ui/null_image.png"
+          "images/inventory_ui/null_image.png",
   };
   private static final String[] forestTextureAtlases = {
+          "images/Cutscenes/cutscene_badEnd.atlas",
     "images/terrain_iso_grass.atlas",
     "images/ghost.atlas",
     "images/ghostKing.atlas",
@@ -189,8 +208,8 @@ public class ForestGameArea extends GameArea {
     "images/player/playerPlate.atlas",
     "images/player/playerDirtyPlate.atlas",
           "images/player/playerFireExtinguisher.atlas",
-          "images/special_NPCs/boss.atlas", "images/stations/Servery_Animation/servery.atlas"
-
+          "images/special_NPCs/boss.atlas", "images/stations/Servery_Animation/servery.atlas",
+          "images/special_NPCs/penguin.atlas",
   };
   private static final String[] forestSounds = {"sounds/Impact4.ogg"};
   private static final String backgroundMusic = "sounds/BB_BGM.mp3";
@@ -198,6 +217,7 @@ public class ForestGameArea extends GameArea {
   private static Entity customerSpawnController;
 
   private final TerrainFactory terrainFactory;
+  private final UpgradesDisplay upgradesDisplay;
 
   private Entity player;
   private CheckWinLoseComponent winLoseComponent;  // Reference to CheckWinLoseComponent
@@ -222,9 +242,10 @@ public class ForestGameArea extends GameArea {
    * @param terrainFactory TerrainFactory used to create the terrain for the GameArea.
    * @requires terrainFactory != null
    */
-  public ForestGameArea(TerrainFactory terrainFactory) {
+  public ForestGameArea(TerrainFactory terrainFactory, UpgradesDisplay upgradesDisplay) {
     super();
     this.terrainFactory = terrainFactory;
+    this.upgradesDisplay = upgradesDisplay;
     //this.textDisplay = textDisplay;
 
     ServiceLocator.registerGameArea(this);
@@ -246,37 +267,72 @@ public class ForestGameArea extends GameArea {
 //    spawnStrawberry("chopped");
 //    spawnLettuce("chopped");
     customerSpawnController = spawnCustomerController();
-
+    createMoralScreen();
+    createMoralSystem();
     //spawnplates
       spawnStackPlate(5); //testplate spawn
       //spawnPlatewithMeal();
+      player = spawnPlayer();
+      ServiceLocator.getPlayerService().registerPlayer(player);
+      //ServiceLocator.getSaveLoadService().setCombatStatsComponent(player.getComponent(CombatStatsComponent.class));
+      ServiceLocator.getSaveLoadService().load();
+      ServiceLocator.getDayNightService().getEvents().addListener("upgrade", () -> {
+          spawnPenguin(upgradesDisplay);});
 
-    // Spawn the player
-    player = spawnPlayer();
+    // Check and trigger win/loss state
+    ServiceLocator.getDayNightService().getEvents().addListener("endGame", this::checkEndOfGameState);
 
-    // Check and trigger win/lose state
-    ServiceLocator.getDayNightService().getEvents().addListener("endGame", this::checkEndOfDayGameState);
-
-    createMoralScreen();
-    createMoralSystem();
     createEndDayScreen();
     playMusic();
   }
 
-  /***
-   * Checks using the checkWinLoseComponent if to call a cutscene and which one to call
+  /**
+   * Checks the player's game state using the CheckWinLoseComponent and determines whether
+   * to trigger a win or loss cutscene. If the player has won, it further checks the moral
+   * decisions to determine whether to trigger the "good" or "bad" ending.
+   *
+   * The function performs the following:
+   * 1. If the player has lost (gameState is "LOSE"), it triggers the "loseEnd" event and
+   *    displays a losing message to the player.
+   * 2. If the player has won (gameState is "WIN"), it checks the player's moral decisions
+   *    using the MoralDecision component:
+   *    - If the player made any bad decisions, it triggers the "badEnd" event and displays
+   *      a corresponding message.
+   *    - If no bad decisions are found, it triggers the "goodEnd" event and displays a positive
+   *      message.
    */
-  private void checkEndOfDayGameState() {
+  private void checkEndOfGameState() {
     String gameState = player.getComponent(CheckWinLoseComponent.class).checkGameState();
 
     if ("LOSE".equals(gameState)) {
       createTextBox("You *oink* two-legged moron! You're ruining my " +
               "business' *oink* reputation! Get out!");
-      triggerFiredEnd();  // Trigger the fired (bad) ending
-    } else if ("WIN".equals(gameState)) {
-      createTextBox("You *oink* amazing critter! You're a master! " +
-              "Enjoy a 40c raise for your efforts!");
-      triggerRaiseEnd();  // Trigger the raise (good) ending
+      ServiceLocator.getEntityService().getEvents().trigger("loseEnd");
+    }
+
+    else if ("WIN".equals(gameState)) {
+      List<Decision> decisionList = ServiceLocator.getEntityService()
+              .getMoralSystem()
+              .getComponent(MoralDecision.class)
+              .getListOfDecisions();
+
+      boolean hasBadDecisions = false;
+      for (Decision decision : decisionList) {
+        if (!decision.isGood()) {
+          hasBadDecisions = true;
+          break;
+        }
+      }
+
+      if (hasBadDecisions) {
+        createTextBox("You *oink* amazing critter! You're a master! " +
+                "Enjoy a 40c raise for your efforts!");
+        ServiceLocator.getEntityService().getEvents().trigger("badEnd");
+      } else {
+        createTextBox("You *oink* amazing critter! You're a master! " +
+                "Enjoy a 40c raise for your efforts!");
+        ServiceLocator.getEntityService().getEvents().trigger("goodEnd");
+      }
     }
   }
 
@@ -771,6 +827,21 @@ public class ForestGameArea extends GameArea {
     Entity boss = NPCFactory.createBoss(targetPos);
     spawnEntityAt(boss, position, false, false);
   }
+
+  // Spawn Upgrade NPC
+  private void spawnPenguin(UpgradesDisplay upgradesDisplay){
+    GridPoint2 position = new GridPoint2(1, 3);
+
+    Vector2 targetPos = new Vector2(1, 0);
+    // Create the penguin entity
+    Entity penguin = NPCFactory.createUpgradeNPC(targetPos, upgradesDisplay);
+
+
+    // Spawn the penguin at the desired position
+    spawnEntityAt(penguin, position, false, false);
+
+}
+
 
   /**
    * Triggers the Fired cutscene

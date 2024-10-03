@@ -1,0 +1,40 @@
+penguin2.png
+size: 300, 174
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+walk
+  rotate: false
+  xy: 0, 0
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: 0
+walk
+  rotate: false
+  xy: 70, 0
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: 1
+walk
+  rotate: false
+  xy: 140, 0
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: 2
+walk
+  rotate: false
+  xy: 210, 0
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: 3
+turn
+  rotate: false
+  xy: 140, 90
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: 0
