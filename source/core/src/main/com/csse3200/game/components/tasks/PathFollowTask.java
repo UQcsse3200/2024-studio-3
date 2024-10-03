@@ -108,7 +108,7 @@ public class PathFollowTask extends DefaultTask implements PriorityTask {
         if (currentTask != null) {
             if (currentTask.getStatus() != Status.ACTIVE) {
                 if (currentTarget.epsilonEquals(targetPos)) {
-                    owner.getEntity().getEvents().trigger("reachDestination");
+                    // owner.getEntity().getEvents().trigger("reachDestination");
                     currentTask.stop();
                     // Check if the entity reached the predefined position
                     if (targetPos.epsilonEquals(predefinedTargetPos, 0.1f)) {
