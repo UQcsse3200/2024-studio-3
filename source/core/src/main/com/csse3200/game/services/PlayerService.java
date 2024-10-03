@@ -1,6 +1,7 @@
 package com.csse3200.game.services;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.events.EventHandler;
+import com.csse3200.game.entities.Entity;
 
 /**
  * Player trigger events

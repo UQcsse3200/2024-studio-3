@@ -1,6 +1,8 @@
 package com.csse3200.game.screens;
 
+
 import com.badlogic.gdx.Gdx;
+import com.csse3200.game.services.SaveLoadService;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -37,7 +39,6 @@ import com.csse3200.game.ui.terminal.Terminal;
 import com.csse3200.game.ui.terminal.TerminalDisplay;
 import com.csse3200.game.components.maingame.EndDayDisplay;
 import com.csse3200.game.components.maingame.MainGameExitDisplay;
-import com.csse3200.game.components.maingame.TextDisplay;
 import com.csse3200.game.components.gamearea.PerformanceDisplay;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -70,6 +71,7 @@ public class MainGameScreen extends ScreenAdapter {
 			"images/white_background.png",
 			"images/Upgrade_display.png",
 			"images/pause_menu2.png",
+			"images/textbox.png",
 			//background daylight cycle assets
 			"images/background_images/1.0.png",
 			"images/background_images/1.5.png",
@@ -133,7 +135,6 @@ public class MainGameScreen extends ScreenAdapter {
 		physicsEngine = physicsService.getPhysics();
 
 		ServiceLocator.registerInputService(new InputService());
-		ServiceLocator.registerPlayerService(new PlayerService());
 		ServiceLocator.registerResourceService(new ResourceService());
 
 		ServiceLocator.registerEntityService(new EntityService());
@@ -143,6 +144,9 @@ public class MainGameScreen extends ScreenAdapter {
 		ServiceLocator.registerRandomComboService(new RandomComboService());
 		ServiceLocator.registerLevelService(new LevelService());
 		ServiceLocator.registerMapLayout(new MapLayout());
+		ServiceLocator.registerPlayerService(new PlayerService());
+		logger.warn("Is SaveService null? " + (ServiceLocator.getSaveLoadService() == null));
+		//ServiceLocator.registerSaveLoadService(new SaveLoadService());
 		ServiceLocator.registerGameScreen(this);
 
 		ServiceLocator.registerTicketDetails(new TicketDetails());
@@ -182,29 +186,8 @@ public class MainGameScreen extends ScreenAdapter {
 			ServiceLocator.getDayNightService().update();
 			ServiceLocator.getEntityService().update();
 		}
-
-		if ( isPaused){
-			renderPauseMenu();
-			return;
-		}
-
 		renderer.render();
 		Gdx.gl.glClearColor(0f/255f, 0f/255f, 0f/255f, 1);
-	}
-
-	/**
-	 * Resize the screen and docket
-	 * @param width width of screen
-	 * @param height height of screen
-	 */
-	/**
-	 * Return freeze screen
-	 */
-
-	private void renderPauseMenu() {
-		Stage stage = ServiceLocator.getRenderService().getStage();
-		stage.act();
-		stage.draw();
 	}
 
 	/**
@@ -328,12 +311,12 @@ public class MainGameScreen extends ScreenAdapter {
 		  	.addComponent(docketLineDisplay)
 			.addComponent(new PerformanceDisplay())
 			.addComponent(new MainGameActions(this.game, UIFactory.createDocketUI()))
-			.addComponent(new MainGameExitDisplay())
+			//.addComponent(new MainGameExitDisplay())
 			.addComponent(new Terminal())
 			.addComponent(inputComponent)
 			.addComponent(new TerminalDisplay())
 			.addComponent(new OrderActions(this.game))
-			.addComponent(new MainGameOrderBtnDisplay())
+			//.addComponent(new MainGameOrderBtnDisplay())
 			.addComponent(new PauseMenuActions(this.game))
 			.addComponent(new PauseMenuDisplay(this))
 			.addComponent(new RageUpgrade())
@@ -345,8 +328,6 @@ public class MainGameScreen extends ScreenAdapter {
 				.addComponent(new PauseMenuDisplay(this))
 						.addComponent(new UpgradesDisplay(this))
 								.addComponent(new RecipeCardDisplay(this));
-
-
 
 		//temporary moral display
 //			.addComponent(new MoralDisplayTemp(this));

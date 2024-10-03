@@ -50,8 +50,9 @@ public class PlayerStatsDisplay extends UIComponent {
     entity.getEvents().addListener("updateGold", this::updatePlayerGoldUI);
     ServiceLocator.getDayNightService().getEvents().addListener("newday", () -> {
             updateDay();});
-    ServiceLocator.getDayNightService().getEvents().addListener("Second", () -> {
-      updateTime();});
+    ServiceLocator.getDayNightService().getEvents().addListener("Second", (Long time) -> {
+      updateTime(time);
+    });
   }
 
   public static PlayerStatsDisplay getInstance() {
@@ -130,16 +131,11 @@ public class PlayerStatsDisplay extends UIComponent {
    * Updates the remaining time for the current day on the UI. Decreases the timer by one second
    * and updates the displayed time.
    */
-  public static void updateTime() {
-    // timer;
-    timer -= 1000;
-    System.out.println(timer);
-    CharSequence TimerText = String.format("%s", convertDigital(timer));
+
+  public static void updateTime(long time) {
+    CharSequence TimerText = String.format("Time Left: \n   %s", convertDigital(time));
     timerLabel.setText(TimerText);
     ServiceLocator.getDayNightService().getEvents().trigger("callpastsecond");
-
-
-
   }
 
 
