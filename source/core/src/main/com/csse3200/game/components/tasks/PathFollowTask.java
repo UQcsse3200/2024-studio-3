@@ -23,6 +23,10 @@ public class PathFollowTask extends DefaultTask implements PriorityTask {
     private static final float WAIT_TIME = 15f;
     private float elapsedTime = 0f;
     boolean hasMovedToPredefined = false;
+    private float elapsedTime2 = 0f;
+    private float upgradeDuration = 5f;
+    private float upgradeStart = 3f;
+    private boolean hoverboxcheck = false;
 
     /**
      * Task to make an entity follow a path to a target position.
@@ -50,6 +54,7 @@ public class PathFollowTask extends DefaultTask implements PriorityTask {
     public void start() {
         super.start();
         this.elapsedTime = 0f;
+        this.elapsedTime2 = 0f;
         this.hasMovedToPredefined = false;
 
         Vector2 startPos = owner.getEntity().getPosition();
@@ -81,16 +86,29 @@ public class PathFollowTask extends DefaultTask implements PriorityTask {
     @Override
     public void update() {
         elapsedTime += getDeltaTime();
+        elapsedTime2 += getDeltaTime();
 
         // Check if it's time to move to the predefined position
         if (!hasMovedToPredefined && elapsedTime >= WAIT_TIME) {
             triggerMoveToPredefinedPosition();
             hasMovedToPredefined = true;
         }
+        if(!hoverboxcheck && elapsedTime2 >= upgradeStart){
+            owner.getEntity().getEvents().trigger("ready");
+            elapsedTime2 = 0;
+            hoverboxcheck = true;
+
+        }
+        if(hoverboxcheck && elapsedTime2 >= upgradeStart){
+            owner.getEntity().getEvents().trigger("unready");
+            hoverboxcheck = false;
+        }
+
 
         if (currentTask != null) {
             if (currentTask.getStatus() != Status.ACTIVE) {
                 if (currentTarget.epsilonEquals(targetPos)) {
+                    owner.getEntity().getEvents().trigger("reachDestination");
                     currentTask.stop();
                     // Check if the entity reached the predefined position
                     if (targetPos.epsilonEquals(predefinedTargetPos, 0.1f)) {
@@ -129,6 +147,7 @@ public class PathFollowTask extends DefaultTask implements PriorityTask {
         currentTask.start();
     }
 
+
     /**
      * Trigger the move to the predefined position
      */
@@ -142,6 +161,7 @@ public class PathFollowTask extends DefaultTask implements PriorityTask {
         startMoving();
         NPCFactory.decreaseCustomerCount();
     }
+
 
     /**
      * Remove the customer entity from the game
