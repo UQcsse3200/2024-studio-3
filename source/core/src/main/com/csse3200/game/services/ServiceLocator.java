@@ -38,6 +38,7 @@ public class ServiceLocator {
   private static MainGameScreen gameScreen;
   private static CutsceneScreen cutsceneScreen;
   private static Cutscene currentCutscene;
+  private static MapLayout map;
   private static MainMenuDisplay mainMenuDisplay;
 
   private static ResourceService resourceService;
@@ -118,6 +119,10 @@ public class ServiceLocator {
 
   public static CutsceneScreen getCutsceneScreen() {
     return cutsceneScreen;
+  }
+
+  public static MapLayout getMapLayout() {
+    return map;
   }
 
   public static Cutscene getCurrentCutscene() {
@@ -305,6 +310,11 @@ public class ServiceLocator {
 
   public static MainMenuDisplay getMainMenuDisplay() {
     return ServiceLocator.mainMenuDisplay;
+  }
+
+  public static void registerMapLayout(MapLayout mapLayout) {
+    logger.debug("Registering map layout {}", mapLayout);
+    map = mapLayout;
   }
 }
 
