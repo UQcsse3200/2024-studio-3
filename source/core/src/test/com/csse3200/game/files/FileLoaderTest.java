@@ -5,6 +5,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import com.badlogic.gdx.files.FileHandle;
+import com.csse3200.game.files.FileLoader.Location;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -28,6 +30,12 @@ class FileLoaderTest {
         assertNotNull(test);
         assertEquals(1, test.stat1);
         assertEquals(2, test.stat2);
+    }
+
+    @Test
+    void loadDirectory() {
+        FileHandle[] files = FileLoader.getFiles("test/files/", Location.LOCAL);
+        assertEquals(10, files.length);
     }
 
     @Test

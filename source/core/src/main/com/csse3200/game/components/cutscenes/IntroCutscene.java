@@ -1,7 +1,6 @@
 package com.csse3200.game.components.cutscenes;
 
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.utils.Array;
 import com.csse3200.game.components.cutscenes.scenes.Scene;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
@@ -26,18 +25,16 @@ public class IntroCutscene extends Cutscene {
     @Override
     protected void setupScenes() {
         // Add text to be displayed during the cutscene
-        cutsceneText.add("Hello This is an Example Text");
-        cutsceneText.add("Wow, we can move forward, I wonder what else this can do :)");
-        cutsceneText.add("This is a quick check to see if truncation is working correctly or whether it does not " +
-                "show what it is meant to show or not.");
+        cutsceneText.add("First bit of text");
+        cutsceneText.add("Second bit of text");
+        cutsceneText.add("Third bit of text");
 
         // Add scenes with background images, animations, text, and duration
 
         Scene scene1 = new Scene("images/Cutscenes/Beastly_Bistro_Background.png");
         scene1.setImages(
                 new String[]{"images/meals/acai_bowl.png"},
-                new Vector2[] {new Vector2(4, 2)},
-                new float[] {1.0f}
+                new Vector2[] {new Vector2(4, 2)}
         );
 
         scene1.setSceneText(cutsceneText);
@@ -48,14 +45,9 @@ public class IntroCutscene extends Cutscene {
         Scene scene2 = new Scene("images/Cutscenes/Graveyard_Scene.png");
         scene2.setImages(
                 new String[]{"images/meals/acai_bowl.png"},
-                new Vector2[] {new Vector2(2, 2)},
-                new float[] {4.0f}
+                new Vector2[] {new Vector2(2, 2)}
         );
-        Array<String> scene2Text = new Array<>();
-        scene2Text.add("This is the second scene");
-        scene2Text.add("We made it");
-        scene2Text.add("LETS GO!!!!");
-        scene2.setSceneText(scene2Text);
+        scene2.setSceneText(cutsceneText);
         scene2.setDuration(3.0f);
 
         scenes.add(scene2);

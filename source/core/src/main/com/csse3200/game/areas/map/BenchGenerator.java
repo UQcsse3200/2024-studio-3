@@ -32,7 +32,7 @@ public class BenchGenerator {
         ArrayList<Bench> arr = new ArrayList<Bench>();
         // add the bottom part of the bench
         arr.add(new Bench("bottom_shadow", x, startY));
-        if (endY - startY > 1){ // the bench has 2 or more segments
+        if (endY - startY > 0){ // the bench has 2 or more segments
             // add the middle parts of the bench
             for (int i = startY+1; i < endY; i++) {
                 arr.add(new Bench("vertical", x, i));
@@ -47,7 +47,7 @@ public class BenchGenerator {
         ArrayList<Bench> arr = new ArrayList<Bench>();
         // add the left part of the bench
         arr.add(new Bench("left_corner_shadow", startX, y));
-        if (endX - startX > 1){ // the bench has 2 or more segments
+        if (endX - startX > 0){ // the bench has 2 or more segments
             // add the middle parts of the bench
             for (int i = startX+1; i < endX; i++) {
                 arr.add(new Bench("top_shadows", i, y));

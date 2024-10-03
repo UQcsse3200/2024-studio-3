@@ -20,6 +20,7 @@ public class MainMenuBackground extends UIComponent{
 
         private float screenWidth = Gdx.graphics.getWidth();
         private float screenHeight = Gdx.graphics.getHeight();
+        private String image;
 
         public MainMenuBackground() {
             super();
@@ -37,11 +38,12 @@ public class MainMenuBackground extends UIComponent{
             setupBackground();
         }
 
-        private void setupBackground() {
+        public void setupBackground() {
             Texture texture = ServiceLocator.getResourceService().getAsset("images/Cutscenes/bg.png",
                     Texture.class);
             Image image = new Image(texture);
             image.setFillParent(true);
+            setImage("images/Cutscenes/bg.png");
             table.add(image);
         }
 
@@ -52,5 +54,23 @@ public class MainMenuBackground extends UIComponent{
         @Override
         public void setStage(Stage mock) {
         }
-    }
+
+        public void setTable(Table table) {
+            this.table = table;
+        }
+
+        public void setImage(String image){
+            this.image = image;
+        }
+
+        public String getImage(){
+            return this.image;
+        }
+
+        public String getImage(Table table){
+            return table.getChildren().get(0).toString();
+        }
+
+
+}
 

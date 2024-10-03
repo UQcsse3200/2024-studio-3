@@ -1,8 +1,6 @@
 package com.csse3200.game.ui.terminal;
 
 import com.csse3200.game.components.Component;
-import com.csse3200.game.ui.terminal.commands.*;
-
 import com.csse3200.game.ui.terminal.commands.Command;
 import com.csse3200.game.ui.terminal.commands.DebugCommand;
 import com.csse3200.game.ui.terminal.commands.MoralCommands;
@@ -34,7 +32,6 @@ public class Terminal extends Component {
     this.commands = commands;
     addCommand("question", new MoralCommands());
     addCommand("debug", new DebugCommand());
-    addCommand("cutscene", new CutsceneCommand());
     addCommand("spawn",new SpawnRecipeCommands());
   }
 

@@ -17,7 +17,7 @@ public class PathFollowTask extends DefaultTask implements PriorityTask {
     private Vector2 currentTarget;
     private MovementTask movementTask;
     private Task currentTask;
-    private final int customer_id;
+    private final int Customer_id;
 
     private Vector2 predefinedTargetPos = new Vector2(1, 0);
     private static final float WAIT_TIME = 15f;
@@ -35,7 +35,7 @@ public class PathFollowTask extends DefaultTask implements PriorityTask {
      */
     public PathFollowTask(Vector2 targetPos, int customer_id) {
         this.targetPos = targetPos;
-        this.customer_id = customer_id;
+        this.Customer_id = customer_id;
     }
 
     /**
