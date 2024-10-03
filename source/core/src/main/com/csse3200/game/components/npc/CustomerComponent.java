@@ -19,14 +19,26 @@ public class CustomerComponent extends Component {
     private String preference;
     private String orderNumber;
 
+    /**
+     *  Set the order number for the customer
+     * @param orderNumber the order number
+     */
     public void setOrderNumber(String orderNumber) {
         this.orderNumber = orderNumber;
     }
 
+    /**
+     * Get the order number for the customer
+     * @return the order number
+     */
     public String getOrderNumber() {
         return orderNumber;
     }
 
+    /**
+     * Constructor for the CustomerComponent
+     * @param config the configuration for the customer
+     */
     public CustomerComponent(BaseCustomerConfig config) {
         this.type = config.type;
         this.patience = config.patience;
@@ -35,6 +47,10 @@ public class CustomerComponent extends Component {
         this.Customer_id = config.Customer_id;
     }
 
+    /**
+     * Constructor for the CustomerComponent
+     * @param config the configuration for the customer
+     */
     public CustomerComponent(CustomerPersonalityConfig config) {
         this.name = config.name;
         this.type = config.type;
@@ -45,6 +61,10 @@ public class CustomerComponent extends Component {
         this.Customer_id = config.Customer_id;
     }
 
+    /**
+     * Set the reputation of the customer
+     * @param reputation the reputation of the customer
+     */
     public void setReputation(int reputation) {
         if (this.reputation < 0) {
             logger.error("Reputation cannot be set for general customers");
@@ -55,53 +75,106 @@ public class CustomerComponent extends Component {
         }
     }
 
+    /**
+     * Get the reputation of the customer
+     * @return the reputation of the customer
+     */
     public int getReputation() {
         return this.reputation;
     }
 
+    /**
+     * Set the patience of the customer
+     * @param patience the patience of the customer
+     */
     public void setPatience(int patience) {
         this.patience = patience;
     }
 
+    /**
+     * Get the patience of the customer
+     * @return the patience of the customer
+     */
     public int getPatience() {
         return this.patience;
     }
 
+    /**
+     *  Set the spawn timer for the customer
+     * @param spawnTimer the spawn timer
+     */
     public void setSpawnTimer(int spawnTimer) {
         this.spawnTimer = spawnTimer;
     }
 
+    /**
+     * Get the spawn timer for the customer
+     * @return the spawn timer
+     */
     public int getSpawnTimer() {
         return this.spawnTimer;
     }
 
+    /**
+     * Set the countdown for the customer
+     * @param countDown the countdown
+     */
     public void setCountDown(int countDown) {
         this.countDown = countDown;
     }
 
+    /**
+     * Get the countdown for the customer
+     * @return the countdown
+     */
     public int getCountDown() {
         return this.countDown;
     }
 
+    /**
+     * Set the name of the customer
+     * @param name the name of the customer
+     */
     public void setName(String name) {
         this.name = name;
     }
 
+    /**
+     * Get the name of the customer
+     * @return the name of the customer
+     */
     public String getName() {
         return this.name;
     }
 
+    /**
+     * Set the preference of the customer
+     * @param preference the preference of the customer
+     */
     public void setPreference(String preference) {
         this.preference = preference;
     }
 
+    /**
+     * Get the preference of the customer
+     * @return the preference of the customer
+     */
     public String getPreference() {
         return this.preference;
     }
 
+    /**
+     * Get the customer id
+     * @return the customer id
+     */
     public int getCustomer_id() {
         return this.Customer_id;
     }
+
+    /**
+     * Get the type of the customer
+     * @return the type of the customer
+     */
     public String getType() {
         return this.type;
     }

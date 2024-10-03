@@ -23,7 +23,7 @@ public class PauseMenuDisplay extends UIComponent {
     private final MainGameScreen game;
     private Table table;
     private static final Logger logger = LoggerFactory.getLogger(PauseMenuDisplay.class);
-    private static final String[] pauseMenuTexture = {"images/pause_menu2.png"};
+    private static final String[] pauseMenuTexture = {"images/pause_menu.png"};
     private static final String[] koalaTexture = {"images/koala5.png"};
     private static final String[] koalaTexture2 = {"images/koala4.png"};
 
@@ -242,6 +242,8 @@ public class PauseMenuDisplay extends UIComponent {
         table.setVisible(true);
         logger.info("PAUSE GAME");
         game.pause();
+
+        table.toFront();
     }
 
     /**

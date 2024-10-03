@@ -35,6 +35,9 @@ public class MoralTextDisplay extends UIComponent {
     private Image displayBox;
     private final MoralDayOne game;
 
+    /**
+     * Constructor for the MoralTextDisplay class.
+     */
     public MoralTextDisplay() {
         super();
         this.game = null;
@@ -43,6 +46,10 @@ public class MoralTextDisplay extends UIComponent {
         this.currentText = new StringBuilder();
     }
 
+    /**
+     * Constructor for the MoralTextDisplay class.
+     * @param game the MoralDayOne object
+     */
     public MoralTextDisplay(MoralDayOne game) {
         this.game = game;
         this.table = new Table();
@@ -50,6 +57,9 @@ public class MoralTextDisplay extends UIComponent {
         this.currentText = new StringBuilder();
     }
 
+    /**
+     * Creates the moral text display.
+     */
     @Override
     public void create() {
         super.create();
@@ -90,6 +100,10 @@ public class MoralTextDisplay extends UIComponent {
         entity.getEvents().addListener("SetText", this::setText);
     }
 
+    /**
+     *  Sets the text to be displayed.
+     * @param text the text to display
+     */
     public void setText(String text) {
         setVisible(true);
         this.text = text;
@@ -97,15 +111,26 @@ public class MoralTextDisplay extends UIComponent {
         this.charIndex = 0;  // Start typing from the beginning
     }
 
+    /**
+     * Sets the visibility of the text display.
+     * @param value the visibility value
+     */
     public void setVisible(boolean value) {
         this.visible = value;
         table.setVisible(value);
     }
 
+    /**
+     * Returns the visibility of the text display.
+     * @return the visibility of the text display
+     */
     public boolean getVisible() {
         return this.visible;
     }
 
+    /**
+     * Renders the text display to show updates.
+     */
     @Override
     public void update() {
         long time = ServiceLocator.getTimeSource().getTime();
@@ -119,6 +144,10 @@ public class MoralTextDisplay extends UIComponent {
         }
     }
 
+    /**
+     * Sets up the input listener for the text display.
+     * Will be changed later
+     */
     private void setupInputListener() {
         stage.addListener(new InputListener() {
             @Override
@@ -144,6 +173,10 @@ public class MoralTextDisplay extends UIComponent {
         this.stage = stage;
     }
 
+    /**
+     * Returns the table of the text display.
+     * @return the table of the text display
+     */
     public Table getTable() {
         return table;
     }
