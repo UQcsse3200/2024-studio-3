@@ -56,8 +56,10 @@ public class MainGameScreen extends ScreenAdapter {
 	private static final Logger logger = LoggerFactory.getLogger(MainGameScreen.class);
 	private static final String[] mainGameTextures = {
 			"images/heart.png",
+			"images/textbox.png",
 			// order system assets
 			"images/ordersystem/docket_background.png",
+			"images/ordersystem/pin_line2.png",
 			"images/ordersystem/pin_line.png",
 			"images/endday.png",
 			"images/bird.png",
@@ -141,6 +143,7 @@ public class MainGameScreen extends ScreenAdapter {
 		ServiceLocator.registerDayNightService(new DayNightService());
 		ServiceLocator.registerRandomComboService(new RandomComboService());
 		ServiceLocator.registerLevelService(new LevelService());
+		ServiceLocator.registerMapLayout(new MapLayout());
 		ServiceLocator.registerPlayerService(new PlayerService());
 		logger.warn("Is SaveService null? " + (ServiceLocator.getSaveLoadService() == null));
 		//ServiceLocator.registerSaveLoadService(new SaveLoadService());
@@ -157,14 +160,19 @@ public class MainGameScreen extends ScreenAdapter {
 
 		logger.debug("Initialising main game screen entities");
 		TerrainFactory terrainFactory = new TerrainFactory(renderer.getCamera());
+
+		int currLevel = ServiceLocator.getLevelService().getCurrLevel();
 		UpgradesDisplay upgradesDisplay = new UpgradesDisplay(this);
-		ForestGameArea forestGameArea = new ForestGameArea(terrainFactory, upgradesDisplay);
+		ForestGameArea forestGameArea = new ForestGameArea(terrainFactory, currLevel, upgradesDisplay);
 		forestGameArea.create();
+
 		Entity spawnControllerEntity = LevelFactory.createSpawnControllerEntity();
 		ServiceLocator.getEntityService().register(spawnControllerEntity);
-		int currLevel = ServiceLocator.getLevelService().getCurrLevel();
+
+
 		ServiceLocator.getLevelService().getEvents().trigger("setGameArea", forestGameArea);
 		ServiceLocator.getLevelService().getEvents().trigger("startLevel", currLevel);
+		//ServiceLocator.getLevelService().getEvents().trigger("mapLevel", currLevel);
 	}
 
 	/**

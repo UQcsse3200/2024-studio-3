@@ -35,7 +35,7 @@ class FileLoaderTest {
     @Test
     void loadDirectory() {
         FileHandle[] files = FileLoader.getFiles("test/files/", Location.LOCAL);
-        assertEquals(9, files.length);
+        assertEquals(10, files.length);
     }
 
     @Test
