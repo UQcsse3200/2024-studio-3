@@ -19,8 +19,7 @@ public class SaveLoadService {
     private static final Logger logger = LoggerFactory.getLogger(SaveLoadService.class);
     private final EventHandler eventHandler;
     private static final String ROOT_DIR = "saves";
-    private String saveFile = "begin.json";
-    public CombatStatsComponent combatStatsComponent;
+    private String saveFile = "";
 
     public SaveLoadService() {
         this.eventHandler = new EventHandler();
@@ -39,6 +38,9 @@ public class SaveLoadService {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy_HH-mm-ss");
         String formattedDateTime = currentDateTime.format(formatter);
         state.setModTime(formattedDateTime);
+        if (saveFile == "") {
+            setSaveFile(formattedDateTime + ".json");
+        }
         FileLoader.writeClass(state, (ROOT_DIR + File.separator + saveFile), Location.LOCAL);
         ServiceLocator.getEntityService().getEvents().trigger("togglePause");
     }
@@ -51,7 +53,8 @@ public class SaveLoadService {
         GameState state = FileLoader.readClass(GameState.class, ROOT_DIR + File.separator + saveFile, Location.LOCAL);
 
         if (state != null) { // if the file exists
-            this.combatStatsComponent.setGold(state.getMoney());
+            Entity player = ServiceLocator.getPlayerService().getPlayer();
+            player.getComponent(CombatStatsComponent.class).setGold(state.getMoney());
             ServiceLocator.getDayNightService().setDay(state.getDay());
             MoralDecision system = ServiceLocator.getEntityService().getMoralSystem().getComponent(MoralDecision.class);
             for (Decision decision: system.getListOfDecisions()) {

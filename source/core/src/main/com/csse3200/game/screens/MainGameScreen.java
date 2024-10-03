@@ -132,8 +132,6 @@ public class MainGameScreen extends ScreenAdapter {
 		physicsEngine = physicsService.getPhysics();
 
 		ServiceLocator.registerInputService(new InputService());
-		ServiceLocator.registerPlayerService(new PlayerService());
-		ServiceLocator.registerSaveLoadService(new SaveLoadService());
 		ServiceLocator.registerResourceService(new ResourceService());
 
 		ServiceLocator.registerEntityService(new EntityService());
@@ -141,6 +139,9 @@ public class MainGameScreen extends ScreenAdapter {
 		ServiceLocator.registerDocketService(new DocketService());
 		ServiceLocator.registerDayNightService(new DayNightService());
 		ServiceLocator.registerLevelService(new LevelService());
+		ServiceLocator.registerPlayerService(new PlayerService());
+		logger.warn("Is SaveService null? " + (ServiceLocator.getSaveLoadService() == null));
+		//ServiceLocator.registerSaveLoadService(new SaveLoadService());
 		ServiceLocator.registerGameScreen(this);
 
 		ServiceLocator.registerTicketDetails(new TicketDetails());

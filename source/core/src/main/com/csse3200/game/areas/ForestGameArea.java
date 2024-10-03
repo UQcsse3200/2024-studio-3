@@ -272,7 +272,7 @@ public class ForestGameArea extends GameArea {
     logger.warn("HERHEHEHAEHDAHEQ");
     player = spawnPlayer();
     ServiceLocator.getPlayerService().registerPlayer(player);
-    ServiceLocator.getSaveLoadService().combatStatsComponent = player.getComponent(CombatStatsComponent.class);
+    //ServiceLocator.getSaveLoadService().setCombatStatsComponent(player.getComponent(CombatStatsComponent.class));
     ServiceLocator.getSaveLoadService().load();
 
     // Check and trigger win/loss state
