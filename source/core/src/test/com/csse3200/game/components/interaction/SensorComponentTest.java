@@ -2,6 +2,7 @@ package com.csse3200.game.components;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Fixture;
+import com.csse3200.game.components.SensorComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.extensions.GameExtension;
 import com.csse3200.game.physics.PhysicsService;
@@ -204,4 +205,70 @@ class SensorComponentTest {
         target.create();
         return target;
     }
+
+    @Test
+    void detectMultipleFixtures() {
+        Entity entity = createEntity(0, 0);
+        Entity target1 = createTarget(0.5f, 0.5f);
+        Entity target2 = createTarget(0.7f, 0.7f);
+
+        Fixture entityFixture = entity.getComponent(InteractionComponent.class).getFixture();
+        Fixture target1Fixture = target1.getComponent(InteractionComponent.class).getFixture();
+        Fixture target2Fixture = target2.getComponent(InteractionComponent.class).getFixture();
+
+        sensorComponent.onCollisionStart(entityFixture, target1Fixture);
+        sensorComponent.onCollisionStart(entityFixture, target2Fixture);
+
+        assertEquals(2, sensorComponent.getNumFixtures(), "Two fixtures should be detected");
+    }
+
+    @Test
+    void removeAllTargetsAfterCollisionsEnded() {
+        Entity entity = createEntity(0, 0);
+        Entity target1 = createTarget(0.5f, 0.5f);
+        Entity target2 = createTarget(0.7f, 0.7f);
+
+        Fixture entityFixture = entity.getComponent(InteractionComponent.class).getFixture();
+        Fixture target1Fixture = target1.getComponent(InteractionComponent.class).getFixture();
+        Fixture target2Fixture = target2.getComponent(InteractionComponent.class).getFixture();
+
+        sensorComponent.onCollisionStart(entityFixture, target1Fixture);
+        sensorComponent.onCollisionStart(entityFixture, target2Fixture);
+
+        assertEquals(2, sensorComponent.getNumFixtures(), "There should be two fixtures detected");
+
+        sensorComponent.onCollisionEnd(entityFixture, target1Fixture);
+        sensorComponent.onCollisionEnd(entityFixture, target2Fixture);
+
+        assertEquals(0, sensorComponent.getNumFixtures(), "All fixtures should be removed after collision ends");
+    }
+
+    @Test
+    void ignoreTargetOutsideLayer() {
+        Entity entity = createEntity(0, 0);
+        Entity badTarget = createBadTarget(0.5f, 0.5f);
+
+        Fixture entityFixture = entity.getComponent(InteractionComponent.class).getFixture();
+        Fixture badTargetFixture = badTarget.getComponent(InteractionComponent.class).getFixture();
+
+        sensorComponent.onCollisionStart(entityFixture, badTargetFixture);
+
+        assertEquals(0, sensorComponent.getNumFixtures(), "No fixture should be added for target outside the interaction layer");
+    }
+
+    @Test
+    void shouldIgnoreRemovedFixtureAfterCollisionEnd() {
+        Entity entity = createEntity(0, 0);
+        Entity target = createTarget(0.5f, 0.5f);
+
+        Fixture entityFixture = entity.getComponent(InteractionComponent.class).getFixture();
+        Fixture targetFixture = target.getComponent(InteractionComponent.class).getFixture();
+
+        sensorComponent.onCollisionStart(entityFixture, targetFixture);
+        sensorComponent.onCollisionEnd(entityFixture, targetFixture);
+
+        // Ensure the target is removed from the sensor's list
+        assertEquals(0, sensorComponent.getNumFixtures(), "The fixture should be removed after the collision ends");
+    }
+
 }

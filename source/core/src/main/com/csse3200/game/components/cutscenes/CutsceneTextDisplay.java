@@ -116,6 +116,11 @@ public class CutsceneTextDisplay extends UIComponent {
         // No custom drawing required, handled by the stage.
     }
 
+    // Method to set text directly
+    public void setText(String text) {
+        label.setText(text);
+    }
+
     /**
      * Sets the stage for this UI component.
      * @param stage The stage to assign.

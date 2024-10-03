@@ -18,6 +18,9 @@ import org.junit.Test;
 
 import java.util.*;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
 
 public class IntroCutsceneTest {
@@ -160,10 +163,37 @@ public class IntroCutsceneTest {
     public void testDisposeUnloadsAssets() {
         introCutscene.dispose();
 
-        // Verify that assets are unloaded
         verify(resourceService, times(1)).unloadAssets(new String[]{
                 "images/Cutscenes/Beastly_Bistro_Background.png",
                 "images/Cutscenes/Graveyard_Scene.png"
         });
+    }
+    
+    @Test
+    public void testNoTransitionWhenNoScenesRemain() {
+        introCutscene.setupScenes();
+        introCutscene.currentSceneIndex = introCutscene.scenes.size() - 1;
+    
+        introCutscene.nextCutscene();
+    
+        assert introCutscene.currentSceneIndex == introCutscene.scenes.size();  
+        verify(entity.getEvents(), times(1)).trigger("cutsceneEnded");  // Ensure the event is triggered
+    }
+    @Test
+    public void testStartCreatesEntities() {
+        introCutscene.setupScenes();
+    
+        introCutscene.start();
+    
+        verify(ServiceLocator.getEntityService(), times(introCutscene.entities.size())).register(any(Entity.class));
+    }
+
+    @Test
+        public void testSetTextForScene() {
+            introCutscene.setupScenes();
+            introCutscene.loadScene(0);
+            assert introCutscene.currentText.equals("Hello This is an Example Text");
+
+            assert introCutscene.textIndex == 1;
     }
 }

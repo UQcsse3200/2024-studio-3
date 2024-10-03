@@ -44,7 +44,7 @@ public class ScoreSystem extends Component {
     /**
      * Testing the score system by comparing lists and printing result to the
      * console.
-     */
+     
     public static void main(String[] args) {
         List<List<String>> playerLists = Arrays.asList(
                 Arrays.asList("A", "B", "C"),
@@ -66,4 +66,5 @@ public class ScoreSystem extends Component {
             System.out.printf("Case %d: Score = %d%%, Description = %s%n", i + 1, score, description);
         }
     }
+        */
 }

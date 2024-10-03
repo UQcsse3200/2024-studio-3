@@ -3,6 +3,8 @@ package com.csse3200.game;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.csse3200.game.components.cutscenes.BackstoryCutscene;
+import com.csse3200.game.components.cutscenes.Cutscene;
 import com.csse3200.game.screens.CutsceneScreen;
 import com.csse3200.game.files.UserSettings;
 import com.csse3200.game.screens.MainGameScreen;
@@ -10,6 +12,7 @@ import com.csse3200.game.screens.MainMenuScreen;
 import com.csse3200.game.screens.SettingsScreen;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,6 +28,7 @@ public class GdxGame extends Game {
   private Screen previousScreen;
   private Texture backgroundTexture;
   private SpriteBatch batch;
+  private Cutscene currentCutscene;
 
 
   @Override
@@ -38,6 +42,8 @@ public class GdxGame extends Game {
     Gdx.gl.glClearColor(234f/255f, 221/255f, 202/255f, 1);
 
     setScreen(ScreenType.MAIN_MENU);
+    ServiceLocator.registerGame(this);
+
   }
 
   /**
@@ -64,6 +70,19 @@ public class GdxGame extends Game {
     }
 
     setScreen(newScreen(screenType));
+  }
+
+  public void setScreen(ScreenType screenType, int currentScene) {
+    logger.info("Setting game screen to a cutscene of");
+    Screen currentScreen = getScreen();
+
+    previousScreen = currentScreen;  // Save the current screen before changing
+
+    if (currentScreen != null) {
+      currentScreen.dispose();
+    }
+
+    setScreen(newScreen(screenType, currentScene));
   }
 
   /**
@@ -94,11 +113,37 @@ public class GdxGame extends Game {
       case SETTINGS:
         return new SettingsScreen(this);
       case CUTSCENE:
-        return new CutsceneScreen(this, 0);
+        return new CutsceneScreen(this, 1);
       default:
         return null;
     }
   }
+
+  private Screen newScreen(ScreenType screenType, int sceneVal) {
+    switch (screenType) {
+      case CUTSCENE:
+        return new CutsceneScreen(this, sceneVal);
+      default:
+        return null;
+    }
+  }
+
+  /**
+   * Set the current cutscene being displayed.
+   * @param cutscene The active cutscene.
+   */
+  public void setCurrentCutscene(Cutscene cutscene) {
+    this.currentCutscene = cutscene;
+  }
+
+  /**
+   * Get the current cutscene being displayed.
+   * @return The active cutscene.
+   */
+  public Cutscene getCurrentCutscene() {
+    return currentCutscene;
+  }
+
 
   public enum ScreenType {
     MAIN_MENU, MAIN_GAME, SETTINGS, CUTSCENE

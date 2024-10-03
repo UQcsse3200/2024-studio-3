@@ -13,31 +13,48 @@ import org.slf4j.LoggerFactory;
 public class PathFollowTask extends DefaultTask implements PriorityTask {
     private static final Logger logger = LoggerFactory.getLogger(PathFollowTask.class);
 
-    private Vector2 targetPos;
+    Vector2 targetPos;
     private Vector2 currentTarget;
     private MovementTask movementTask;
     private Task currentTask;
     private final int Customer_id;
 
-    private Vector2 predefinedTargetPos = new Vector2(-1f, 1f);
+    private Vector2 predefinedTargetPos = new Vector2(1, 0);
     private static final float WAIT_TIME = 15f;
     private float elapsedTime = 0f;
-    private boolean hasMovedToPredefined = false;
+    boolean hasMovedToPredefined = false;
+    private float elapsedTime2 = 0f;
+    private float upgradeDuration = 5f;
+    private float upgradeStart = 3f;
+    private boolean hoverboxcheck = false;
 
-    public PathFollowTask(Vector2 targetPos, int Customer_id) {
+    /**
+     * Task to make an entity follow a path to a target position.
+     * @param targetPos The target position to move to
+     * @param customer_id The id of the customer
+     */
+    public PathFollowTask(Vector2 targetPos, int customer_id) {
         this.targetPos = targetPos;
-        this.Customer_id = Customer_id;
+        this.Customer_id = customer_id;
     }
 
+    /**
+     * Get the priority of the task
+     * @return The priority of the task
+     */
     @Override
     public int getPriority() {
         return 1;
     }
 
+    /**
+     * Start the task
+     */
     @Override
     public void start() {
         super.start();
         this.elapsedTime = 0f;
+        this.elapsedTime2 = 0f;
         this.hasMovedToPredefined = false;
 
         Vector2 startPos = owner.getEntity().getPosition();
@@ -53,25 +70,45 @@ public class PathFollowTask extends DefaultTask implements PriorityTask {
         ServiceLocator.getEntityService().getEvents().addListener("leaveEarly", this::triggerMoveToPredefinedPosition);
     }
 
+    /**
+     * Create the Task
+     * @param taskRunner Task runner to attach to
+     */
     @Override
     public void create(TaskRunner taskRunner) {
         super.create(taskRunner);
         this.owner = taskRunner;
     }
 
+    /**
+     * Update the task
+     */
     @Override
     public void update() {
         elapsedTime += getDeltaTime();
+        elapsedTime2 += getDeltaTime();
 
         // Check if it's time to move to the predefined position
         if (!hasMovedToPredefined && elapsedTime >= WAIT_TIME) {
             triggerMoveToPredefinedPosition();
             hasMovedToPredefined = true;
         }
+        if(!hoverboxcheck && elapsedTime2 >= upgradeStart){
+            owner.getEntity().getEvents().trigger("ready");
+            elapsedTime2 = 0;
+            hoverboxcheck = true;
+
+        }
+        if(hoverboxcheck && elapsedTime2 >= upgradeStart){
+            owner.getEntity().getEvents().trigger("unready");
+            hoverboxcheck = false;
+        }
+
 
         if (currentTask != null) {
             if (currentTask.getStatus() != Status.ACTIVE) {
                 if (currentTarget.epsilonEquals(targetPos)) {
+                    owner.getEntity().getEvents().trigger("reachDestination");
                     currentTask.stop();
                     // Check if the entity reached the predefined position
                     if (targetPos.epsilonEquals(predefinedTargetPos, 0.1f)) {
@@ -86,6 +123,10 @@ public class PathFollowTask extends DefaultTask implements PriorityTask {
             currentTask.update();
         }
     }
+
+    /**
+     * Start Moving the character on screen
+     */
     private void startMoving() {
         if (movementTask == null) {
             return;
@@ -94,6 +135,10 @@ public class PathFollowTask extends DefaultTask implements PriorityTask {
         swapTask(movementTask);
     }
 
+    /**
+     * Swap the current task with a new task
+     * @param newTask The new task to swap to
+     */
     private void swapTask(Task newTask) {
         if (currentTask != null) {
             currentTask.stop();
@@ -102,6 +147,10 @@ public class PathFollowTask extends DefaultTask implements PriorityTask {
         currentTask.start();
     }
 
+
+    /**
+     * Trigger the move to the predefined position
+     */
     public void triggerMoveToPredefinedPosition() {
         if (currentTask != null && currentTask.getStatus() == Status.ACTIVE) {
             currentTask.stop();
@@ -113,11 +162,16 @@ public class PathFollowTask extends DefaultTask implements PriorityTask {
         NPCFactory.decreaseCustomerCount();
     }
 
+
+    /**
+     * Remove the customer entity from the game
+     */
     private void removeCustomerEntity() {
         logger.info("Customer reached predefined position and will be removed.");
         ServiceLocator.getEntityService().unregister(owner.getEntity());
         owner.getEntity().dispose(); // Dispose of the entity
     }
+
     private float getDeltaTime() {
         return 1 / 60f;
     }
