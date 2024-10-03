@@ -309,11 +309,13 @@ public class ForestGameArea extends GameArea {
         }
       }
 
-      createTextBox("You *oink* amazing critter! You're a master! " +
-              "Enjoy a 40c raise for your efforts!");
       if (hasBadDecisions) {
+        createTextBox("You *oink* amazing critter! You're a master! " +
+                "Enjoy a 40c raise for your efforts!");
         ServiceLocator.getEntityService().getEvents().trigger("badEnd");
       } else {
+        createTextBox("You *oink* amazing critter! You're a master! " +
+                "Enjoy a 40c raise for your efforts!");
         ServiceLocator.getEntityService().getEvents().trigger("goodEnd");
       }
     }
