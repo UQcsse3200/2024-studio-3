@@ -58,10 +58,11 @@ public class MainGameScreen extends ScreenAdapter {
 			// order system assets
 			"images/ordersystem/docket_background.png",
 			"images/ordersystem/pin_line.png",
+			"images/endday.png",
 			"images/bird.png",
 			"images/point.png",
 			"images/coin.png",
-			"images/textbox.png",
+			"images/finish.png",
 			"images/red_overlay.jpg",
 			"images/red_fill.png",
 			"images/white_background.png",
@@ -325,6 +326,8 @@ public class MainGameScreen extends ScreenAdapter {
 			.addComponent(new TerminalDisplay())
 			.addComponent(new OrderActions(this.game))
 			.addComponent(new MainGameOrderBtnDisplay())
+			.addComponent(new PauseMenuActions(this.game))
+			.addComponent(new PauseMenuDisplay(this))
 			.addComponent(new RageUpgrade())
 			.addComponent(new LoanUpgrade())
 				.addComponent(new SpeedBootsUpgrade())

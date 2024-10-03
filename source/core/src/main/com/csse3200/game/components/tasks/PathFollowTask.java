@@ -19,7 +19,7 @@ public class PathFollowTask extends DefaultTask implements PriorityTask {
     private Task currentTask;
     private final int Customer_id;
 
-    private Vector2 predefinedTargetPos = new Vector2(-1f, 1f);
+    private Vector2 predefinedTargetPos = new Vector2(1, 0);
     private static final float WAIT_TIME = 15f;
     private float elapsedTime = 0f;
     private float elapsedTime2 = 0f;
