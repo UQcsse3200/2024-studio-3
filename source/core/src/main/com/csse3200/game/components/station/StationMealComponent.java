@@ -2,7 +2,6 @@ package com.csse3200.game.components.station;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 import com.csse3200.game.components.Component;
@@ -77,21 +76,34 @@ public class StationMealComponent extends Component {
      * @param type the type of interaction attempt
      */
     public void handleInteraction(InventoryComponent playerInventoryComponent, InventoryDisplay inventoryDisplay, String type) {
-        // Pre calcs
-        System.out.printf("BEFORE STATION ITEMS: %s\n", this.inventoryComponent.getItemNames());
-        System.out.printf("BEFORE PLAYER ITEMS: %s\n", playerInventoryComponent.getItemNames());
+        // Log info to console
+        logger.info("BEFORE STATION ITEMS {}\nBEFORE PLAYER ITEMS {}", 
+                this.inventoryComponent.getItemNames(), 
+                playerInventoryComponent.getItemNames());
+
+        // Check if interaction was a chopping attempt
+        if (type.equals("chop") || type.equals("stopChop")) {
+            return; // Do nothing exit func
+        }
+
+        // Don't do anything if 'chop' is sent
+        if (type.equals("receive")) {
+        }
 
         // Check if interaction was a combine attempt
-        if (Objects.equals(type, "combine")) {
+        if (type.equals("combine")) {
             this.processMeal();
+
+            // Log info to console
             logger.info("Combination attempt made");
-            System.out.printf("AFTER STATION ITEMS: %s\n", this.inventoryComponent.getItemNames());
-            System.out.printf("AFTER PLAYER ITEMS: %s\n", playerInventoryComponent.getItemNames());
+            logger.info("AFTER STATION ITEMS {}\nAFTER PLAYER ITEMS {}",
+                    this.inventoryComponent.getItemNames(), 
+                    playerInventoryComponent.getItemNames());
             return;
         }
 
         // Check if player is trying to rotate position of items for selection
-        if (Objects.equals(type, "rotate")) {
+        if (type.equals("rotate")) {
             if (this.inventoryComponent.isEmpty() || this.inventoryComponent.getSize() == 1) {
                 // Don't allow rotate
                 logger.info("Rotate attempt made, nothing to rotate");
@@ -102,6 +114,7 @@ public class StationMealComponent extends Component {
             return;
         }
 
+        // Pre calcs
         boolean empty = playerInventoryComponent.isEmpty() & this.inventoryComponent.isEmpty();
         boolean full = playerInventoryComponent.isFull() & this.inventoryComponent.isFull();
 
@@ -123,8 +136,11 @@ public class StationMealComponent extends Component {
             // Player wants meal from station, if possible results in meal in player inventory
             this.stationGiveItem(playerInventoryComponent, inventoryDisplay);
         }
-        System.out.printf("AFTER STATION ITEMS: %s\n", this.inventoryComponent.getItemNames());
-        System.out.printf("AFTER PLAYER ITEMS: %s\n", playerInventoryComponent.getItemNames());
+
+        // Log info to console
+        logger.info("AFTER STATION ITEMS {}\nAFTER PLAYER ITEMS {}",
+                this.inventoryComponent.getItemNames(), 
+                playerInventoryComponent.getItemNames());
     }
 
     /**
@@ -148,9 +164,6 @@ public class StationMealComponent extends Component {
         if (!this.inventoryComponent.isFull()) {
             this.inventoryComponent.addItem(item);
             playerInventoryComponent.removeAt(0);
-            
-            // process a meal from the station inventory if possible, this is now only on a combination attempt
-            //this.processMeal();
         }
     }
 
@@ -163,24 +176,6 @@ public class StationMealComponent extends Component {
     public void stationGiveItem(InventoryComponent playerInventoryComponent, InventoryDisplay inventoryDisplay) {
         ItemComponent item = this.inventoryComponent.removeItem();
         playerInventoryComponent.addItemAt(item,0);
-    }
-
-    /**
-     * Checks if there is a meal component in the station inventoru, and returns the
-     * index if present.
-     * 
-     * @return - the index of the meal component in the inventory, if it exists.
-     */
-    private int mealExists() {
-        for (int index = 0; index < this.inventoryComponent.getCapacity(); index++) {
-            // check if any item in the station inventory is a meal type
-            ItemComponent item = this.inventoryComponent.getItemAt(index);
-            if (item != null && item instanceof MealComponent) {
-                return index;
-            }
-        }
-
-        return -1;
     }
 
     /**
@@ -209,7 +204,7 @@ public class StationMealComponent extends Component {
             MealComponent meal = mealEntity.getComponent(MealComponent.class);
             // MealComponent meal = new MealComponent(recipe, ItemType.MEAL, 0, ingredients, 0);
             this.inventoryComponent.addItemAt(meal, 0);
-        } 
+        }
     }
 
     /**
@@ -217,7 +212,7 @@ public class StationMealComponent extends Component {
      */
     private void rotateInventory() {
         ItemComponent last = this.inventoryComponent.removeItem();
-        for (int index = this.inventoryComponent.getCapacity() - 1; index >= 0; index--) {
+        for (int index = this.inventoryComponent.getSize() - 1; index >= 0; index--) {
             if (this.inventoryComponent.getItemAt(index) != null) {
                 ItemComponent holder = this.inventoryComponent.removeAt(index);
                 this.inventoryComponent.addItemAt(last, index);

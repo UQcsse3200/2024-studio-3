@@ -14,7 +14,6 @@ import org.slf4j.LoggerFactory;
  */
 public class OrderActions extends InputComponent {
     private static final Logger logger = LoggerFactory.getLogger(OrderActions.class);
-    private GdxGame game;
     private static final int SHIFT_LEFT_KEY = Input.Keys.LEFT_BRACKET; // Key for shifting left
     private static final int SHIFT_RIGHT_KEY = Input.Keys.RIGHT_BRACKET; // Key for shifting right
 
@@ -30,7 +29,6 @@ public class OrderActions extends InputComponent {
      */
     public OrderActions(GdxGame game) {
         super(5);
-        this.game = game;
     }
 
     /**
@@ -43,7 +41,6 @@ public class OrderActions extends InputComponent {
         ServiceLocator.getDocketService().getEvents().addListener("removeOrder", this::onRemoveOrder);
         ServiceLocator.getDocketService().getEvents().addListener(
                 "reorderDockets", MainGameOrderTicketDisplay::reorderDockets);
-        entity.getEvents().addListener("changeColour", this::onChangeColour);
     }
 
     /**
@@ -64,7 +61,6 @@ public class OrderActions extends InputComponent {
             return true;
         }
 
-//        logger.info("pls work");
         return false;
     }
 
@@ -78,6 +74,7 @@ public class OrderActions extends InputComponent {
     public boolean keyUp(int keycode) {
         return false;
     }
+
     /**
      * Handles key typed events. Currently does nothing. - Tia
      *
@@ -96,17 +93,6 @@ public class OrderActions extends InputComponent {
      */
     private void onRemoveOrder(int index) {
         logger.info("Remove order");
-//        logger.info("Remove order");
         ServiceLocator.getDocketService().getEvents().trigger("reorderDockets", index);
     }
-
-    /**
-     * Changes order colour based on recipe timer
-     */
-    private void onChangeColour() {
-//        logger.info("Move order");
-        // do something
-    }
-
-
 }

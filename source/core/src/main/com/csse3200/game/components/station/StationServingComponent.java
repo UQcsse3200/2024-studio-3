@@ -1,18 +1,26 @@
 package com.csse3200.game.components.station;
 
 import com.csse3200.game.components.Component;
+import com.csse3200.game.components.ScoreSystem.HoverBoxComponent;
 import com.csse3200.game.components.ScoreSystem.ScoreSystem;
 import com.csse3200.game.components.items.ItemComponent;
 import com.csse3200.game.components.ordersystem.OrderActions;
+import com.csse3200.game.components.ordersystem.OrderManager;
+import com.csse3200.game.components.ordersystem.Recipe;
 import com.csse3200.game.components.ordersystem.TicketDetails;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.components.player.InventoryDisplay;
+import com.csse3200.game.components.player.PlayerStatsDisplay;
+import com.csse3200.game.entities.Entity;
 import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.csse3200.game.physics.components.InteractionComponent;
 import com.csse3200.game.services.ServiceLocator;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.ui.List;
 import com.csse3200.game.components.items.IngredientComponent;
 import com.csse3200.game.components.items.MealComponent;
+import com.csse3200.game.components.npc.CustomerComponent;
+import com.csse3200.game.components.npc.CustomerManager;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -67,6 +75,29 @@ public class StationServingComponent extends Component {
     public void handleInteraction(InventoryComponent playerInventoryComponent, InventoryDisplay inventoryDisplay, String type) {
         if (playerInventoryComponent.isFull()) {
             ItemComponent item = playerInventoryComponent.getItemFirst();
+            String itemName = item.getItemName();
+            String playerMeal;
+            switch (itemName) {
+                case "acai bowl":
+                    playerMeal = "acaiBowl";
+                    break;
+                case "salad":
+                    playerMeal = "salad";
+                    break;
+                case "fruit salad":
+                    playerMeal = "fruitSalad";
+                    break;
+                case "steak meal":
+                    playerMeal = "steakMeal";
+                    break;
+                case "banana split":
+                    playerMeal = "bananaSplit";
+                    break;
+                default:
+                    logger.error("No recipe found for this item: " + itemName);
+                    return; // Exit the method
+            }
+            scoreMeal(playerMeal);
             playerInventoryComponent.removeAt(0);
             inventoryDisplay.update();
             submitMeal(item);
@@ -80,18 +111,19 @@ public class StationServingComponent extends Component {
     public void submitMeal(ItemComponent item) {
 
         //ServiceLocator.getLevelService.getCurrGold() + 2;
-        ServiceLocator.getLevelService().setCurrGold(ServiceLocator.getLevelService().getCurrGold() + 2);
+        // ServiceLocator.getLevelService().setCurrGold(ServiceLocator.getLevelService().getCurrGold() + 10);
 
         String[] bigTicketInfo = bigTicket.getCurrentBigTicketInfo();
 
         if (bigTicketInfo[0] != null) {
-            logger.info(bigTicketInfo[0]); // order number ("5")
-            logger.info(bigTicketInfo[1]); // meal ("tomato soup")
-            logger.info(bigTicketInfo[2]); // time left ("32")
+            // logger.info(bigTicketInfo[0]); // order number ("5")
+            // logger.info(bigTicketInfo[1]); // meal ("tomato soup")
+            // logger.info(bigTicketInfo[2]); // time left ("32")
 
             // Call to team 1's function with the big ticket info
             //TBD(item, bigTicketInfo[0], bigTicketInfo[1], bigTicketInfo[2]);
             // remove ticket
+            logger.info("Submitting meal and removing docket");
             ServiceLocator.getDocketService().getEvents().trigger("removeOrder", -1); // removes the order from the orderaction list
             ServiceLocator.getDocketService().getEvents().trigger("removeBigTicket"); // removes the order from the display list
 
@@ -105,34 +137,106 @@ public class StationServingComponent extends Component {
 
     }
 
-    /*
-    * private void scoreMeal(ItemComponent item) {
-    * String[] bigTicketInfo = orderActions.getCurrentBigTicketInfo();
-    * if (bigTicketInfo != null && bigTicketInfo.length >= 2) {
-    * String orderNumber = bigTicketInfo[0];
-    * String orderedMeal = bigTicketInfo[1];
-    *
-    * // Get the list of ingredient names from the MealComponent
-    * List<String> playerIngredients = item.getIngredients() // convert to
-    * List<String>
-    *
-    * List<String> orderIngredients = orderedMeal.getIngredients() // replace with
-    * actual code
-    *
-    * int score = ScoreSystem.compareLists(playerIngredients, orderIngredients);
-    * String scoreDescription = ScoreSystem.getScoreDescription(score);
-    *
-    * logger.info("Order number: " + orderNumber);
-    * logger.info("Score: " + score + "%");
-    * logger.info("Description: " + scoreDescription);
-    *
-    * } else {
-    * logger.warn("No current order to score the meal for.");
-    * }
-    *
-    * return score;
-    * }
-    * }
-    */
+    /**
+     * Function that is called to score the meal.
+     * Updates the HoverBoxComponent to display customer satisfaction by face types.
+     * Increments the gold and updates the gold in the UI according to customer satisfaction and actual ordered meal price.
+     * @param playerMeal - the meal that the player is currently submitting to the customer.
+     */
+    private String scoreMeal(String playerMeal) {
+        String[] bigTicketInfo = bigTicket.getCurrentBigTicketInfo();
+        String scoreDescription = null;
+        if (bigTicketInfo != null && bigTicketInfo.length >= 2) {
+            String orderNumber = bigTicketInfo[0];
+            String orderedMeal = bigTicketInfo[1];
+            logger.info("Ordered meal: " + orderedMeal);
+            // get order ticket ingredients
+            Recipe orderRecipe = OrderManager.getRecipe(orderedMeal);
+            java.util.List<String> orderIngredients = orderRecipe.getIngredients();
+            logger.info("Order ingredients: " + orderIngredients);
+
+            int orderedMealPrice = switch (orderedMeal) {
+                case "acaiBowl" -> 20;
+                case "salad" -> 25;
+                case "fruitSalad" -> 20;
+                case "steakMeal" -> 40;
+                case "bananaSplit" -> 25;
+                default -> 10;
+            };
+
+            logger.info("Player meal: " + playerMeal);
+            Recipe playerRecipe = OrderManager.getRecipe(playerMeal);
+            // null because chocolate isn't a meal. so getRecipe returns a null error
+            java.util.List<String> playerIngredients = playerRecipe.getIngredients();
+            logger.info("Player ingredients: " + playerIngredients);
+
+            int score = ScoreSystem.compareLists(playerIngredients, orderIngredients);
+            scoreDescription = ScoreSystem.getScoreDescription(score);
+            // Before scoreMeal, hoverbox display the order
+            // After scoreMeal is complete, replace the order with face
+            // Increment gold according to score
+            logger.info("Order number: " + orderNumber);
+            logger.info("Score: " + score + "%");
+            logger.info("Description: " + scoreDescription);
+
+            Entity customer = CustomerManager.getCustomerByOrder(orderNumber);
+            if (customer != null) {
+                HoverBoxComponent hoverBox = customer.getComponent(HoverBoxComponent.class);
+                if (hoverBox != null) {
+                    String faceImagePath;
+                    int gold = ServiceLocator.getLevelService().getCurrGold();
+                    logger.info ("Gold amount: " + gold);
+                    gold += orderedMealPrice;
+                    switch (scoreDescription) {
+                        case "Grin Face":
+                            faceImagePath = "images/customer_faces/grin_face.png";
+                            gold += 10;
+                            break;
+                        case "Smile Face":
+                            faceImagePath = "images/customer_faces/smile_face.png";
+                            gold += 5;
+                            break;
+                        case "Neutral Face":
+                            faceImagePath = "images/customer_faces/neutral_face.png";
+                            break;
+                        case "Frown Face":
+                            faceImagePath = "images/customer_faces/frown_face.png";
+                            gold -= 5;
+                            break;
+                        case "Angry Face":
+                            faceImagePath = "images/customer_faces/angry_face.png";
+                            gold -= 10;
+                            break;
+                        default:
+                            logger.error("No image found for preference: " + scoreDescription);
+                            faceImagePath = "images/customer_faces/angry_face.png"; // Provide a default image
+                    }
+                    hoverBox.setTexture(new Texture(faceImagePath));
+                    ServiceLocator.getLevelService().setCurrGold(gold);
+                    updateGoldUI(gold);
+                }
+            }
+
+            // Remove customer from mapping after serving
+            CustomerManager.removeCustomerByOrder(orderNumber);
+        } else {
+        logger.warn("No current order to score the meal for.");
+        }
+        return scoreDescription;
+    }
+
+        /**
+         * Function that is called to player gold UI.
+         * Calls another method from PlayerStatsDisplay.java to update the gold.
+         * @param gold - the amount of gold the player currently have after serving the customer.
+         */
+        private void updateGoldUI(int gold) {
+        PlayerStatsDisplay playerStatsDisplay = PlayerStatsDisplay.getInstance();
+        if (playerStatsDisplay != null) {
+            playerStatsDisplay.updatePlayerGoldUI(gold);
+        } else {
+            logger.error("PlayerStatsDisplay instance is null");
+        }
+    }
 
 }

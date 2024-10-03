@@ -3,6 +3,8 @@ package com.csse3200.game.components.items;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.csse3200.game.services.ServiceLocator;
+
 /**
  * The CookIngredientComponent handles the cooking process for an ingredient in the game.
  * It manages the state of cooking, determines when the cooking is complete, and triggers
@@ -26,6 +28,11 @@ public class CookIngredientComponent extends ItemTimerComponent {
 
     @Override
     public void create() {
+        super.create();
+        // On creation add triggers for rage mode to the timer
+         ServiceLocator.getEntityService().getEvents().addListener("rageModeOn", this::rageModeOn);
+        ServiceLocator.getEntityService().getEvents().addListener("rageModeOff", this::rageModeOff);
+
         // Add appriopriate event listeners
         entity.getEvents().addListener("cookIngredient", this::startTimer);
         entity.getEvents().addListener("stopCookingIngredient", this::stopTimer);
@@ -49,7 +56,7 @@ public class CookIngredientComponent extends ItemTimerComponent {
         // Update the elapsed time
         super.update();
 
-        String s = String.format("The elapsed time of item: %s, has been updated to %d ms, completion is at %.2f percent", item.getItemName(), this.elapsed, getCompletionPercent());
+        String s = String.format("The completion of %s is at %.2f percent", item.getItemName(), getCompletionPercent());
         logger.info(s);
 
         // Check if the timer is finished

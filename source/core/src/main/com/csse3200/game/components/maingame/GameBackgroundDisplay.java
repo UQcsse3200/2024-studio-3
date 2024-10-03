@@ -83,6 +83,7 @@ public class GameBackgroundDisplay extends UIComponent {
     @Override
     public void create() {
         super.create();
+        Gdx.gl.glClearColor(0f/255f, 0f/255f, 0f/255f, 1);
         table = new Table();
         table.setFillParent(true);
         table.setVisible(true);
