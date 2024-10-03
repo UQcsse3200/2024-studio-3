@@ -98,10 +98,10 @@ public class NPCFactory {
                         .addComponent(new SpecialNPCAnimationController())
                         .addComponent(aiComponent);
                 
-                penguin.getEvents().addListener("reachDestination", () -> {
-                        logger.info("Penguin has reached its destination and will be disposed of.");
-                        penguin.dispose();  // Dispose of the penguin entity
-                        });
+                // penguin.getEvents().addListener("reachDestination", () -> {
+                //         logger.info("Penguin has reached its destination and will be disposed of.");
+                //         penguin.dispose();  // Dispose of the penguin entity
+                //         });
 
                 final boolean[] isHoverBox = {false};
                 HoverBoxComponent hoverBox = new HoverBoxComponent(new Texture("images/special_NPCs/upgrade_sign.png"));
@@ -135,6 +135,7 @@ public class NPCFactory {
                             }     
                 });
                 ServiceLocator.getRandomComboService().getEvents().addListener("response", () ->{
+                        System.out.println("getting disposed of penguin");
                         penguin.dispose();
                 });
 
