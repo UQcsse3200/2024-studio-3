@@ -12,17 +12,14 @@ import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.components.maingame.*;
 import com.csse3200.game.components.levels.LevelComponent;
 import com.csse3200.game.components.maingame.MainGameActions;
+import com.csse3200.game.components.upgrades.*;
 import com.csse3200.game.components.mainmenu.MainMenuBackground;
 import com.csse3200.game.components.tasks.PathFollowTask;
-import com.csse3200.game.components.upgrades.LoanUpgrade;
-import com.csse3200.game.components.upgrades.RageUpgrade;
-import com.csse3200.game.components.upgrades.RandomCombination;
 import com.csse3200.game.components.ordersystem.*;
 import com.csse3200.game.components.moral.MoralDecision;
 import com.csse3200.game.components.ordersystem.MainGameOrderBtnDisplay;
 import com.csse3200.game.components.ordersystem.OrderActions;
 import com.csse3200.game.components.ordersystem.TicketDetails;
-import com.csse3200.game.components.upgrades.SpeedBootsUpgrade;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.entities.factories.LevelFactory;
@@ -58,16 +55,21 @@ public class MainGameScreen extends ScreenAdapter {
 	private static final Logger logger = LoggerFactory.getLogger(MainGameScreen.class);
 	private static final String[] mainGameTextures = {
 			"images/heart.png",
+			"images/textbox.png",
 			// order system assets
 			"images/ordersystem/docket_background.png",
 			"images/ordersystem/pin_line2.png",
+			"images/ordersystem/pin_line.png",
+			"images/endday.png",
 			"images/bird.png",
 			"images/point.png",
 			"images/coin.png",
-			"images/textbox.png",
+			"images/finish.png",
 			"images/red_overlay.jpg",
 			"images/red_fill.png",
 			"images/white_background.png",
+			"images/Upgrade_display.png",
+			"images/pause_menu2.png",
 			//background daylight cycle assets
 			"images/background_images/1.0.png",
 			"images/background_images/1.5.png",
@@ -138,6 +140,7 @@ public class MainGameScreen extends ScreenAdapter {
 		ServiceLocator.registerRenderService(new RenderService());
 		ServiceLocator.registerDocketService(new DocketService());
 		ServiceLocator.registerDayNightService(new DayNightService());
+		ServiceLocator.registerRandomComboService(new RandomComboService());
 		ServiceLocator.registerLevelService(new LevelService());
 		ServiceLocator.registerMapLayout(new MapLayout());
 		ServiceLocator.registerGameScreen(this);
@@ -153,9 +156,10 @@ public class MainGameScreen extends ScreenAdapter {
 
 		logger.debug("Initialising main game screen entities");
 		TerrainFactory terrainFactory = new TerrainFactory(renderer.getCamera());
-		int currLevel = ServiceLocator.getLevelService().getCurrLevel();
-		ForestGameArea forestGameArea = new ForestGameArea(terrainFactory, currLevel);
 
+		int currLevel = ServiceLocator.getLevelService().getCurrLevel();
+		UpgradesDisplay upgradesDisplay = new UpgradesDisplay(this);
+		ForestGameArea forestGameArea = new ForestGameArea(terrainFactory, currLevel, upgradesDisplay);
 		forestGameArea.create();
 
 		Entity spawnControllerEntity = LevelFactory.createSpawnControllerEntity();
@@ -334,8 +338,13 @@ public class MainGameScreen extends ScreenAdapter {
 			.addComponent(new PauseMenuDisplay(this))
 			.addComponent(new RageUpgrade())
 			.addComponent(new LoanUpgrade())
-			.addComponent(new RandomCombination())
-			.addComponent(new SpeedBootsUpgrade());
+				.addComponent(new SpeedBootsUpgrade())
+				.addComponent(new ExtortionUpgrade())
+				.addComponent(new DancePartyUpgrade())
+				.addComponent(new PauseMenuActions(this.game))
+				.addComponent(new PauseMenuDisplay(this))
+						.addComponent(new UpgradesDisplay(this))
+								.addComponent(new RecipeCardDisplay(this));
 
 
 

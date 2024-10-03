@@ -56,6 +56,8 @@ public class ServiceLocator {
   // New services (e.g. CustomerMovementService, DialogueService)
   private static CustomerMovementService customerMovementService;
 
+  private static RandomComboService randomComboService;
+
   public static EntityService getEntityService() {
     return entityService;
   }
@@ -98,6 +100,7 @@ public class ServiceLocator {
   }
 
 
+
   public static OrderActions getOrderActions() {
     return orderActions;
 
@@ -130,6 +133,10 @@ public class ServiceLocator {
   // New getters for additional services
   public static CustomerMovementService getCustomerMovementService() {
     return customerMovementService;
+  }
+
+  public static RandomComboService getRandomComboService(){
+    return randomComboService; 
   }
 
   public static void setCurrentCutscene(Cutscene cutscene) {
@@ -267,6 +274,9 @@ public class ServiceLocator {
     customerMovementService = service;
   }
 
+  public static void registerRandomComboService(RandomComboService service){
+    randomComboService = service; 
+  }
 
   // Clear all services
   public static void clear() {
@@ -283,6 +293,7 @@ public class ServiceLocator {
     gameScreen = null;
     customerMovementService = null;
     dayNightService = null;
+    randomComboService = null; 
   }
 
   private ServiceLocator() {
