@@ -72,6 +72,8 @@ public abstract class Cutscene extends Component {
         this.gameTime = ServiceLocator.getTimeSource();
         loadAssets();
         setupScenes();
+
+
     }
 
     /**
