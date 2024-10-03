@@ -17,7 +17,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class MapLayout{
+public class MapLayout {
     private EventHandler mapEventHandler;
     private static final String mapBase = "images/map/map_base.txt";
     private static final String mapLevel1 = "images/map/map_one.txt";
@@ -37,11 +37,11 @@ public class MapLayout{
     private static final Logger logger = LoggerFactory.getLogger(MapLayout.class);
 
 
-
     public MapLayout() {
         mapEventHandler = new EventHandler();
         mapEventHandler.addListener("load", this::load);
     }
+
     public EventHandler getEvents() {
         return mapEventHandler;
     }
@@ -51,6 +51,7 @@ public class MapLayout{
      * Xab -> spawn horizontal bench starting at column `a` that is `b` cells long
      * []a  -> for any station, spawns a station based on [] at column `a`
      * the row of the object depends on what line its on in the file.
+     *
      * @param level - integer 1-5 corresponding to level
      */
     public Map load(int level) {
@@ -96,25 +97,25 @@ public class MapLayout{
 
                     // Spawn single bench row when 'X'
                     if (square.equals("X")) {
-                        strToNum = Integer.valueOf(parts[col+1]);
-                        strToNum2 = Integer.valueOf(parts[col+2]);
+                        strToNum = Integer.valueOf(parts[col + 1]);
+                        strToNum2 = Integer.valueOf(parts[col + 2]);
                         benches.addAll(readBench("X", strToNum, strToNum2, row));
                         col += 3;
                         logger.info("Spawning entity at row " + row + ", column " + col);
                     }
                     // Spawn bench column when 'Y'
                     else if (square.equals("Y")) {
-                        strToNum = Integer.valueOf(parts[col+1]);
-                        strToNum2 = Integer.valueOf(parts[col+2]);
+                        strToNum = Integer.valueOf(parts[col + 1]);
+                        strToNum2 = Integer.valueOf(parts[col + 2]);
                         benches.addAll(readBench("Y", strToNum, strToNum2, row));
                         col += 3;
                         logger.info("Spawning entity at row " + row + ", column " + col);
                     }
                     // Spawn a station
                     else if (validateStation(square)) {
-                        strToNum = Integer.valueOf(parts[col+1]);
+                        strToNum = Integer.valueOf(parts[col + 1]);
                         stations.add(readStation(square, strToNum, row));
-                        col+=3;
+                        col += 3;
                     }
                 }
                 row++;
@@ -130,20 +131,22 @@ public class MapLayout{
                 logger.warn("Failed to close the reader: " + ex.getMessage());
             }
         }
-       return new Map(benches, stations);
+        return new Map(benches, stations);
 
     }
-    private ArrayList<Bench> readBench(String type, int startCol, int size, int row) {
+
+    public ArrayList<Bench> readBench(String type, int startCol, int size, int row) {
         switch (type) {
             case "X":
-                return BenchGenerator.createBenchRow(startCol + 4, startCol + size + 4, row-4);
+                return BenchGenerator.createBenchRow(startCol + 4, startCol + size + 4, row - 4);
             case "Y":
-                return BenchGenerator.createBenchColumn(startCol + 4, row-4, row + size - 4);
+                return BenchGenerator.createBenchColumn(startCol + 4, row - 4, row + size - 4);
             default:
                 return new ArrayList<Bench>();
         }
     }
-    private Entity readStation(String type, int col, int row) {
+
+    public Entity readStation(String type, int col, int row) {
         Entity station;
         switch (type) {
             case "b":
@@ -189,14 +192,14 @@ public class MapLayout{
                 station = StationFactory.createFireExtinguisher();
                 break;
             default:
-                station = StationFactory.createBananaBasket();
+                station = new Entity();
                 break;
         }
-        station.setPosition(col+4, row-4);
+        station.setPosition(col + 4, row - 4);
         return station;
     }
 
-    private boolean validateStation(String str) {
+    public boolean validateStation(String str) {
         for (String station : validStations) {
             if (str.equals(station)) {
                 return true;
