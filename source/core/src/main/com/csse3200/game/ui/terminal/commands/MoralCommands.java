@@ -26,7 +26,8 @@ public class MoralCommands implements Command{
 
         String question = String.join(" ", args);
         Entity moralScreen = ServiceLocator.getEntityService().getMoralScreen();
-        moralScreen.getComponent(MoralDecision.class).addQuestion(question);
+        Entity moralSystem = ServiceLocator.getEntityService().getMoralSystem();
+        moralSystem.getComponent(MoralDecision.class).addQuestion(question);
 
         logger.debug("Added question: {}", question);
         return true;
