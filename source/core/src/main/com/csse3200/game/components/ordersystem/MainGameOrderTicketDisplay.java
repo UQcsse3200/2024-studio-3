@@ -43,6 +43,7 @@ public class MainGameOrderTicketDisplay extends UIComponent {
     private static final float viewPortHeightMultiplier = 7f / 9f;
 //    private final float viewportHeight;
     private final float viewportWidth;
+    private final float viewportHeight;
     private static final int distance = 20;
     private static ArrayList<Table> tableArrayList;
     private static ArrayList<Long> startTimeArrayList;
@@ -530,6 +531,7 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         for (int i = 0; i < children.size; i++) {
             Actor actor = children.get(i);
             if (actor instanceof Label label) {
+                String text = label.getText().toString();
                 if (i == 0) {
                     orderNum = text.replace("Order ", "");
                 } else if (text.startsWith("Timer:")) {

@@ -6,6 +6,7 @@ import java.util.concurrent.Executors;
 import com.csse3200.game.areas.map.Map;
 import com.csse3200.game.services.MapLayout;
 import com.csse3200.game.entities.factories.*;
+import com.csse3200.game.components.moral.MoralDayTwo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,7 +31,7 @@ import com.csse3200.game.entities.factories.ObstacleFactory;
 import com.csse3200.game.entities.factories.PlateFactory;
 import com.csse3200.game.entities.factories.PlayerFactory;
 import com.csse3200.game.entities.factories.StationFactory;
-import com.csse3200.game.screens.MoralDecisionDisplay;
+import com.csse3200.game.components.moral.MoralDecisionDisplay;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.utils.math.GridPoint2Utils;
