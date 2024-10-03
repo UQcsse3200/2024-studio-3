@@ -34,7 +34,8 @@ public class IntroCutscene extends Cutscene {
         Scene scene1 = new Scene("images/Cutscenes/Beastly_Bistro_Background.png");
         scene1.setImages(
                 new String[]{"images/meals/acai_bowl.png"},
-                new Vector2[] {new Vector2(4, 2)}
+                new Vector2[] {new Vector2(4, 2)},
+                new float[] {1.0f}
         );
 
         scene1.setSceneText(cutsceneText);
@@ -45,7 +46,8 @@ public class IntroCutscene extends Cutscene {
         Scene scene2 = new Scene("images/Cutscenes/Graveyard_Scene.png");
         scene2.setImages(
                 new String[]{"images/meals/acai_bowl.png"},
-                new Vector2[] {new Vector2(2, 2)}
+                new Vector2[] {new Vector2(2, 2)},
+                new float[] {4.0f}
         );
         scene2.setSceneText(cutsceneText);
         scene2.setDuration(3.0f);
