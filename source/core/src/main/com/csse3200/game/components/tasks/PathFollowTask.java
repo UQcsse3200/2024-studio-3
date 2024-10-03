@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 public class PathFollowTask extends DefaultTask implements PriorityTask {
     private static final Logger logger = LoggerFactory.getLogger(PathFollowTask.class);
 
-    private Vector2 targetPos;
+    Vector2 targetPos;
     private Vector2 currentTarget;
     private MovementTask movementTask;
     private Task currentTask;
@@ -22,7 +22,7 @@ public class PathFollowTask extends DefaultTask implements PriorityTask {
     private Vector2 predefinedTargetPos = new Vector2(-1f, 1f);
     private static final float WAIT_TIME = 15f;
     private float elapsedTime = 0f;
-    private boolean hasMovedToPredefined = false;
+    boolean hasMovedToPredefined = false;
 
     public PathFollowTask(Vector2 targetPos, int Customer_id) {
         this.targetPos = targetPos;
