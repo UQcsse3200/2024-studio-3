@@ -26,7 +26,6 @@ import com.csse3200.game.components.npc.PersonalCustomerEnums;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.benches.Bench;
 import com.csse3200.game.entities.configs.PlayerConfig;
-import com.csse3200.game.components.moral.MoralDayTwo;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.utils.math.GridPoint2Utils;
@@ -833,10 +832,10 @@ public class ForestGameArea extends GameArea {
     Entity moralScreen = new Entity();
     moralScreen
             //.addComponent(new MoralDecisionDisplay())
-            //.addComponent(new MoralDayOne())
-            .addComponent(new MoralDayTwo());
-            //.addComponent(new MoralDayThree())
-            //.addComponent(new MoralDayFour())
+            //.addComponent(new MoralDayOne());
+            //.addComponent(new MoralDayTwo());
+            //addComponent(new MoralDayThree());
+            .addComponent(new MoralDayFour());
 //            .addComponent(new MoralDecision());
 
     ServiceLocator.getEntityService().registerMoral(moralScreen);
