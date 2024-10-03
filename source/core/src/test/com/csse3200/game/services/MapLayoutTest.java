@@ -11,6 +11,7 @@ import com.csse3200.game.areas.ForestGameArea;
 import com.csse3200.game.areas.map.BenchGenerator;
 import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.areas.map.Map;
 import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.entities.benches.Bench;
 import com.csse3200.game.events.EventHandler;
@@ -62,20 +63,22 @@ class MapLayoutTest {
 
         mocks = MockitoAnnotations.openMocks(this);
 
-        RenderService renderService = mock(RenderService.class);
-        EntityService entityService = mock(EntityService.class);
-        ResourceService resourceService = mock(ResourceService.class);
-        Stage stage = mock(Stage.class);
+        //RenderService renderService = mock(RenderService.class);
+        //EntityService entityService = mock(EntityService.class);
+        //ResourceService resourceService = mock(ResourceService.class);
+        //PhysicsService physicsService = mock(PhysicsService.class);
+        //Stage stage = mock(Stage.class);
 
-        ServiceLocator.registerResourceService(resourceService);
-        ServiceLocator.registerEntityService(entityService);
-        ServiceLocator.registerRenderService(renderService);
+        //ServiceLocator.registerResourceService(resourceService);
+        //ServiceLocator.registerEntityService(entityService);
+        //ServiceLocator.registerRenderService(renderService);
         //ServiceLocator.registerPhysicsService(physicsService);
 
         factory = mock(TerrainFactory.class);
 
         mapLayoutSpy = spy(new MapLayout());
         ServiceLocator.registerMapLayout(mapLayoutSpy);
+
     }
 
     @AfterEach
@@ -86,25 +89,6 @@ class MapLayoutTest {
 
     @Test
     void shouldInitializeEventHandlerProperly() {
-
-//      SARAH'S BIT ____
-//        mapLayoutSpy = new MapLayout();
-//
-//        mapLayoutSpy.create();
-//
-//        ServiceLocator.registerMapLayout(mapLayoutSpy);
-//        // Verify the event handler is initialized
-//
-//
-////       ServiceLocator.getResourceService().loadTextures(forestTextures);
-//        assertNotNull(mapLayoutSpy.getEvents());
-//
-//        // Create a mock listener and add it to the event handler
-//        EventListener1<String> mockListener = mock(EventListener1.class);
-//
-//        // Trigger the event and verify listener is called
-//        mapLayoutSpy.getEvents().trigger("load", "level1");
-//        verify(mockListener).handle("level1");
 
         //event handler has been initalised
         assertNotNull(mapLayoutSpy.getEvents());
@@ -117,41 +101,18 @@ class MapLayoutTest {
     }
 
     @Test
-    void testLoadWithBenchRow() throws Exception {
-//        SARAH's BIT ___
-//        Mock the file reader
-//        String mockMapData = "X123\n";  // A sample line from the map file
-//        BufferedReader mockReader = new BufferedReader(new StringReader(mockMapData));
-//        MapLayout mapLayout = Mockito.spy(new MapLayout());
-//
-//        // Mock static methods
-//        MockedStatic<BenchGenerator> mockedBenchGenerator = mockStatic(BenchGenerator.class);
-//        mockedBenchGenerator.when(() -> BenchGenerator.createBenchRow(anyInt(), anyInt(), anyInt()))
-//                .thenReturn(new ArrayList<Bench>());
-//
-//        // Mock logger if needed or track console output
-//
-//        // Call the load method
-//        mapLayout.load("level1");
-//
-//        // Verify the file reading
-//     //   verify(mapLayout, times(1)).spawnEntity(any(Bench.class));
-//
-//        // Clean up mocks
-//        mockedBenchGenerator.close();
+    void testLoad() {
 
-        //Test file with a single bench
-//        String testFile = "com/csse3200/game/services/MapLayoutTestTextFile.txt";
-//        ArrayList<Bench> benches = mock(ArrayList.class);
-//
-//        //when(BenchGenerator.createBenchRow(anyInt(), anyInt(), anyInt())).do(this.incrementer());
-//
-//        MockedStatic mockedStatic = mockStatic(BenchGenerator.class);
-//        mockedStatic.when(() -> BenchGenerator.createBenchRow(anyInt(), anyInt(), anyInt())).thenReturn(benches);
-//
-//        mapLayoutSpy.load(testFile);
-//
-//        mockedStatic.verify(() -> BenchGenerator.createBenchRow(anyInt(), anyInt(), anyInt()));
-        assertTrue(true);
+        when(mapLayoutSpy.readBench(anyString(), anyInt(), anyInt(), anyInt()))
+                .thenReturn(new ArrayList<Bench>());
+        when(mapLayoutSpy.readStation(anyString(), anyInt(), anyInt()))
+                .thenReturn(mock(Entity.class));
+
+        Map map = mapLayoutSpy.load(1);
+
+        verify(mapLayoutSpy).readBench("X", 0, 8, 4);
+        verify(mapLayoutSpy).readBench("Y", 0, 7, 4);
+        verify(mapLayoutSpy).readStation("S", 0, 5);
+        verify(mapLayoutSpy).readStation("N", 6, 8);
     }
 }
