@@ -17,6 +17,7 @@ public class Scene {
 
     private String[] imagePaths;
     private Vector2[] imagePositions;
+    private float[] imageScales;
 
     private Array<String> sceneText;  // Text dialogue for the scene
     private float duration;  // Duration the scene will be displayed
@@ -83,16 +84,26 @@ public class Scene {
      *
      * @return Array of Vector2 positions for the images.
      */
+
+    /**
+     * Gets the image scales for the scene.
+     *
+     * @return Array of Vector2 positions for the images.
+     */
+    public float[] getImageScales() {
+        return imageScales;
+    }
     public Vector2[] getImagePositions() {
         return imagePositions;
     }
 
-    public void setImages(String[] imagePaths, Vector2[] imagePositions) {
+    public void setImages(String[] imagePaths, Vector2[] imagePositions, float[] imageScales) {
         if (imagePaths.length != imagePositions.length) {
             logger.error("Image paths size does not match the position size");
         }
         this.imagePaths = imagePaths;
         this.imagePositions = imagePositions;
+        this.imageScales = imageScales;
     }
 
     /**
