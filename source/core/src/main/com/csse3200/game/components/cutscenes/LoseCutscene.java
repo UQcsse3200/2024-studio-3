@@ -10,13 +10,13 @@ import com.csse3200.game.services.ServiceLocator;
  * The IntroCutscene class represents a specific cutscene that plays at the start of the game.
  * It defines the scenes, assets, and entities used during the intro cutscene.
  */
-public class GoodEndCutscene extends Cutscene {
+public class LoseCutscene extends Cutscene {
 
 
     /**
      * Constructor for the GoodEndCutscene class.
      */
-    public GoodEndCutscene() {
+    public LoseCutscene() {
         super();
     }
 
@@ -27,16 +27,16 @@ public class GoodEndCutscene extends Cutscene {
     @Override
     protected void setupScenes() {
         // Add text to be displayed during the cutscene
-        cutsceneText.add("First bit of text");
-        cutsceneText.add("Second bit of text");
-        cutsceneText.add("Third bit of text");
+        cutsceneText.add("Its quite a shame...");
+        cutsceneText.add("That I didn't kill him earlier.");
+
 
         // Add scenes with background images, animations, text, and duration
 
-        Scene scene1 = new Scene("images/Cutscenes/good_end_0.png");
+        Scene scene1 = new Scene("images/Cutscenes/Graveyard_Scene.png");
         //scene1.setImages(
-           //     new String[]{"images/meals/acai_bowl.png"},
-            //    new Vector2[] {new Vector2(4, 2)}
+        //     new String[]{"images/meals/acai_bowl.png"},
+        //    new Vector2[] {new Vector2(4, 2)}
         //);
 
         scene1.setSceneText(cutsceneText);
@@ -44,35 +44,6 @@ public class GoodEndCutscene extends Cutscene {
 
         scenes.add(scene1);
 
-        Scene scene2 = new Scene("images/Cutscenes/good_end_1.png");
-        //scene2.setImages(
-            //    new String[]{"images/meals/acai_bowl.png"},
-            //    new Vector2[] {new Vector2(2, 2)}
-        //);
-        scene2.setSceneText(cutsceneText);
-        scene2.setDuration(3.0f);
-
-        scenes.add(scene2);
-
-        Scene scene3 = new Scene("images/Cutscenes/good_end_2.png");
-        //scene3.setImages(
-             //   new String[]{"images/meals/acai_bowl.png"},
-              //  new Vector2[] {new Vector2(2, 2)}
-        //);
-        scene3.setSceneText(cutsceneText);
-        scene3.setDuration(3.0f);
-
-        scenes.add(scene3);
-
-        Scene scene4 = new Scene("images/Cutscenes/good_end_3.png");
-        //scene4.setImages(
-              //  new String[]{"images/meals/acai_bowl.png"},
-              //  new Vector2[] {new Vector2(2, 2)}
-        //);
-        scene4.setSceneText(cutsceneText);
-        scene4.setDuration(3.0f);
-
-        scenes.add(scene4);
 
     }
 
@@ -86,11 +57,7 @@ public class GoodEndCutscene extends Cutscene {
         // Load the background images for the cutscene
         textures = new String[] {
                 "images/Cutscenes/Beastly_Bistro_Background.png",
-                "images/Cutscenes/Graveyard_Scene.png",
-                "images/Cutscenes/good_end_0.png",
-                "images/Cutscenes/good_end_1.png",
-                "images/Cutscenes/good_end_2.png",
-                "images/Cutscenes/good_end_3.png"
+                "images/Cutscenes/Graveyard_Scene.png"
         };
 
         // Load the animation images for the cutscene
@@ -115,3 +82,4 @@ public class GoodEndCutscene extends Cutscene {
         // Any specific entity creation logic for the intro cutscene
     }
 }
+

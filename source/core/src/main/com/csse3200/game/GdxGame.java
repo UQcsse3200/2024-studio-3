@@ -3,6 +3,8 @@ package com.csse3200.game;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.csse3200.game.components.cutscenes.BackstoryCutscene;
+import com.csse3200.game.components.cutscenes.Cutscene;
 import com.csse3200.game.screens.CutsceneScreen;
 import com.csse3200.game.files.UserSettings;
 import com.csse3200.game.screens.MainGameScreen;
@@ -26,6 +28,7 @@ public class GdxGame extends Game {
   private Screen previousScreen;
   private Texture backgroundTexture;
   private SpriteBatch batch;
+  private Cutscene currentCutscene;
 
 
   @Override
@@ -105,13 +108,32 @@ public class GdxGame extends Game {
         return new CutsceneScreen(this, 1);
       case BAD_END:
         return new CutsceneScreen(this, 2);
+      case LOSE_END:
+        return new CutsceneScreen(this, 3);
       default:
         return null;
     }
   }
 
+  /**
+   * Set the current cutscene being displayed.
+   * @param cutscene The active cutscene.
+   */
+  public void setCurrentCutscene(Cutscene cutscene) {
+    this.currentCutscene = cutscene;
+  }
+
+  /**
+   * Get the current cutscene being displayed.
+   * @return The active cutscene.
+   */
+  public Cutscene getCurrentCutscene() {
+    return currentCutscene;
+  }
+
+
   public enum ScreenType {
-    MAIN_MENU, MAIN_GAME, SETTINGS, LOAD_GAME, CUTSCENE, GOOD_END, BAD_END
+    MAIN_MENU, MAIN_GAME, SETTINGS, LOAD_GAME, CUTSCENE, GOOD_END, BAD_END, LOSE_END
   }
 
   /**

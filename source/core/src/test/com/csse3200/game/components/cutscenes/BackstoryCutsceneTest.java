@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Graphics;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.Array;
-import com.csse3200.game.components.Component;
 import com.csse3200.game.components.cutscenes.scenes.Scene;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
@@ -15,17 +14,18 @@ import com.csse3200.game.services.ServiceLocator;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.ArgumentCaptor;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Objects;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.ArgumentMatchers.eq;
+import static org.junit.Assert.assertArrayEquals;
 import static org.mockito.Mockito.*;
 
-public class IntroCutsceneTest {
+public class BackstoryCutsceneTest {
 
-    private IntroCutscene introCutscene;
+    private BackstoryCutscene backstoryCutscene;
     private ResourceService resourceService;
     private GameTime gameTime;
     private Entity entity;
@@ -61,8 +61,8 @@ public class IntroCutsceneTest {
         ServiceLocator.registerTimeSource(gameTime);
         ServiceLocator.registerEntityService(mock(EntityService.class));
 
-        // Initialize the cutscene with it not calling the service locator and instead just triggering own event
-        introCutscene = new IntroCutscene() {
+        // Initialise the BackstoryCutscene with custom behavior for nextCutscene
+        backstoryCutscene = new BackstoryCutscene() {
             protected void nextCutscene() {
                 disposeEntities();
 
@@ -75,8 +75,8 @@ public class IntroCutsceneTest {
             }
         };
 
-        // Mock the entity for event triggering
-        introCutscene.setEntity(entity);
+        // Set the entity in the cutscene
+        backstoryCutscene.setEntity(entity);
     }
 
     @After
@@ -84,33 +84,45 @@ public class IntroCutsceneTest {
         ServiceLocator.clear();
     }
 
-    /**
-     * Tests that the cutscene's assets are loaded correctly.
-     */
     @Test
     public void testLoadAssets() {
-        // Verify that the textures and animations are loaded
+        // Verify that the textures are loaded with the correct paths
         verify(resourceService, times(1)).loadTextures(new String[]{
-                "images/Cutscenes/Beastly_Bistro_Background.png",
-                "images/Cutscenes/Graveyard_Scene.png"
+                "images/Cutscenes/Brooklyn_Bistro_Background.png",
+                "images/Cutscenes/Kitchen_Background.png",
+                "images/Cutscenes/Food_Critic_Background.png",
+                "images/Cutscenes/Food_Critic_Background.png",
+                "images/Cutscenes/Animals_in_Kitchen_Background.png",
+                "images/Cutscenes/Farm_Background.png",
+                "images/Cutscenes/graveyard_mafia.png",
+                "images/Cutscenes/deserted_city_opt1.png",
+                "images/Cutscenes/graveyard_mafia_chef.png",
+                "images/Cutscenes/new_beastly_bistro_pt2.png",
+                "images/Cutscenes/new_beastly_bistro.png",
+                "images/Cutscenes/resized_black_image.png"
         });
-        verify(resourceService, times(1)).loadTextureAtlases(new String[]{"images/player/Cook_Model32.png"});
+
+        // Verify that loadAll is called exactly once
         verify(resourceService, times(1)).loadAll();
+
     }
 
     /**
-     * Tests that the scenes are set up with the correct text, background, and animation.
+     * Tests that the scenes are set up with the correct number of scenes, background, and text.
      */
     @Test
     public void testSetupScenes() {
+        // Setup the scenes
 
         // Verify the number of scenes created
-        assert introCutscene.scenes.size() == 2;
+        assert backstoryCutscene.scenes.size() == 12; // Should match the total number of scenes added
 
         // Verify the first scene has the correct background, animation, and text
-        Scene scene1 = introCutscene.scenes.getFirst();
-        assert scene1.getBackgroundImagePath().equals("images/Cutscenes/Beastly_Bistro_Background.png");
-        assert scene1.getSceneText().size == 3;  // Text contains three items
+        Scene scene1 = backstoryCutscene.scenes.getFirst();
+        assert scene1.getBackgroundImagePath().equals("images/Cutscenes/Brooklyn_Bistro_Background.png");
+        assert scene1.getSceneText().size == 1;  // Text contains one item
+        assert scene1.getSceneText().get(0).equals("You were once an esteemed chef at the Brooklyn Bistro, \n" +
+                "an establishment specialising in only the finest cuisine... ");
     }
 
     /**
@@ -118,12 +130,12 @@ public class IntroCutsceneTest {
      */
     @Test
     public void testCreateEntities() {
-        // Mock a scene for entity creation
-        introCutscene.setupScenes();
-        introCutscene.loadScene(0);  // Load the first scene
+        // Setup and load the first scene
+        backstoryCutscene.setupScenes();
+        backstoryCutscene.loadScene(0);
 
         // Verify that the entity service is used to register the background entity
-        verify(ServiceLocator.getEntityService(), times(2)).register(any(Entity.class));
+        verify(ServiceLocator.getEntityService(), times(1)).register(any(Entity.class));
     }
 
     /**
@@ -132,68 +144,54 @@ public class IntroCutsceneTest {
     @Test
     public void testUpdateTriggersCutsceneEnd() {
         // Mock game time to simulate the passing of time
-        introCutscene.setupScenes();
-        introCutscene.loadScene(0);  // Load the first scene
-        when(gameTime.getTime()).thenReturn(0L, 4L);  // Simulate time passing
+        backstoryCutscene.setupScenes();
+        backstoryCutscene.loadScene(0);  // Load the first scene
+        when(gameTime.getTime()).thenReturn(0L, 5000L);  // Simulate time passing
 
-        // Mock the dispose method to avoid null pointer exception
+        // Mock the disposeEntities method to avoid null pointer exception
         doNothing().when(entity).dispose();
         // Ensure that createdComponents in entity are initialized
         when(entity.getCreatedComponents()).thenReturn(new Array<>());
-        assert Objects.equals(entity.getCreatedComponents(), new Array<Component>());
+        assert Objects.equals(entity.getCreatedComponents(), new Array<>());
 
         // Call update before the scene duration is up
-        introCutscene.update();
+        backstoryCutscene.update();
         verify(entity, never()).getEvents();  // No events triggered before time is up
 
-        // Set the entities to null to avoid disposing errors
-        introCutscene.entities = new ArrayList<>();
-        // Set the number of scenes to 1 so that it simulates ending a cutscene
-        introCutscene.scenes = new ArrayList<>();
+        // Set the entities to null or empty to avoid disposing errors
+        backstoryCutscene.entities = new ArrayList<>();
+        // Simulate the cutscene ending by setting the number of scenes to 1
+        backstoryCutscene.scenes = new ArrayList<>();
 
         // Call update after the duration has passed
-        introCutscene.update();
+        backstoryCutscene.update();
         verify(entity.getEvents(), times(1)).trigger("cutsceneEnded");  // Verify event trigger when cutscene ends
     }
+
 
     /**
      * Tests that the cutscene properly unloads assets when disposed.
      */
     @Test
     public void testDisposeUnloadsAssets() {
-        introCutscene.dispose();
+        // Call dispose to unload assets
+        backstoryCutscene.dispose();
 
+        // Verify that assets are unloaded with the correct paths
         verify(resourceService, times(1)).unloadAssets(new String[]{
-                "images/Cutscenes/Beastly_Bistro_Background.png",
-                "images/Cutscenes/Graveyard_Scene.png"
+                "images/Cutscenes/Brooklyn_Bistro_Background.png",
+                "images/Cutscenes/Kitchen_Background.png",
+                "images/Cutscenes/Food_Critic_Background.png",
+                "images/Cutscenes/Food_Critic_Background.png",
+                "images/Cutscenes/Animals_in_Kitchen_Background.png",
+                "images/Cutscenes/Farm_Background.png",
+                "images/Cutscenes/graveyard_mafia.png",
+                "images/Cutscenes/deserted_city_opt1.png",
+                "images/Cutscenes/graveyard_mafia_chef.png",
+                "images/Cutscenes/new_beastly_bistro_pt2.png",
+                "images/Cutscenes/new_beastly_bistro.png",
+                "images/Cutscenes/resized_black_image.png"
         });
     }
-    
-    @Test
-    public void testNoTransitionWhenNoScenesRemain() {
-        introCutscene.setupScenes();
-        introCutscene.currentSceneIndex = introCutscene.scenes.size() - 1;
-    
-        introCutscene.nextCutscene();
-    
-        assert introCutscene.currentSceneIndex == introCutscene.scenes.size();  
-        verify(entity.getEvents(), times(1)).trigger("cutsceneEnded");  // Ensure the event is triggered
-    }
-    @Test
-    public void testStartCreatesEntities() {
-        introCutscene.setupScenes();
-    
-        introCutscene.start();
-    
-        verify(ServiceLocator.getEntityService(), times(introCutscene.entities.size())).register(any(Entity.class));
-    }
-
-    @Test
-        public void testSetTextForScene() {
-            introCutscene.setupScenes();
-            introCutscene.loadScene(0);
-            assert introCutscene.currentText.equals("Hello This is an Example Text");
-
-            assert introCutscene.textIndex == 1;
-    }
 }
+

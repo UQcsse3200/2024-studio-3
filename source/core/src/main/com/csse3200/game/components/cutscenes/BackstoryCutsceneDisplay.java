@@ -13,27 +13,26 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * The CutsceneScreenDisplay class manages the user interface for displaying cutscenes,
- * including text display, buttons to advance or exit the cutscene, and handling user input.
+ * The BackstoryCutsceneDisplay class manages the user interface for displaying the backstory cutscene.
+ * The text display is smaller and placed higher on the screen compared to the base CutsceneScreenDisplay.
  */
-public class CutsceneScreenDisplay extends UIComponent {
-    private static final Logger logger = LoggerFactory.getLogger(CutsceneScreenDisplay.class);
+public class BackstoryCutsceneDisplay extends UIComponent {
+    private static final Logger logger = LoggerFactory.getLogger(BackstoryCutsceneDisplay.class);
     private Table table;
     private CutsceneTextDisplay textDisplay;
     private Skin skin = null;
-    private boolean IsEnabled = true;
 
-    public CutsceneScreenDisplay(Skin skin) {
+    public BackstoryCutsceneDisplay(Skin skin) {
         super(skin);
         this.skin = skin;
     }
 
-    public CutsceneScreenDisplay() {
+    public BackstoryCutsceneDisplay() {
         super();
     }
 
     /**
-     * Initializes the cutscene UI, sets up buttons and listeners, and starts the cutscene text display.
+     * Initializes the backstory cutscene UI, sets up buttons and listeners, and starts the cutscene text display.
      */
     @Override
     public void create() {
@@ -47,7 +46,7 @@ public class CutsceneScreenDisplay extends UIComponent {
     }
 
     /**
-     * Sets up the cutscene UI components.
+     * Sets up the cutscene UI components with a smaller text display that appears higher on the screen.
      */
     private void setupUI() {
         // Initialize the text display and add it to the stage, hidden initially
@@ -57,8 +56,8 @@ public class CutsceneScreenDisplay extends UIComponent {
             skin = new Skin(Gdx.files.internal("flat-earth/skin/flat-earth-ui.json"));
         }
 
-        // Positioning the table at the bottom-right of the screen
-        table.bottom().right();
+        // Positioning the table for the cutscene
+        table.top().top();  // Move it to the top-center of the screen (modify if necessary)
         table.setFillParent(true);
 
         // Create "Next Scene" button with its functionality
@@ -72,30 +71,34 @@ public class CutsceneScreenDisplay extends UIComponent {
         });
         table.add(nextSceneBtn).padTop(10f).padRight(10f);
 
-        // Create "Exit" button to transition back to the main menu
-        TextButton ExitButton = new TextButton("Exit", skin);
-        ExitButton.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent changeEvent, Actor actor) {
-                logger.debug("Main Menu button clicked");
-                entity.getEvents().trigger("exitCutscene");  // Trigger cutscene exit
-            }
-        });
-
-        // Positioning the table for the "Exit" button at the top-right
-        Table topRightTable = new Table();
-        topRightTable.setFillParent(true);
-        topRightTable.top().right();
-        topRightTable.add(ExitButton).padTop(20f).padRight(20f);
-        stage.addActor(topRightTable);
+        // Add the table to the stage
         stage.addActor(table);
     }
 
     /**
-     * Sets up the text display for the screen
+     * Sets up the text display for the screen, adjusting its size and position.
      */
+//    public void setupTextDisplay() {
+//        textDisplay = new CutsceneTextDisplay(this.skin);
+//
+//        // Customize text display size and position
+//        textDisplay.getTable().setScale(0.8f); // Make the text display smaller
+//        textDisplay.getTable().top().center(); // Position it higher up
+//
+//        // Add the customized text display to the stage
+//        stage.addActor(textDisplay.getTable());
+//    }
     public void setupTextDisplay() {
         textDisplay = new CutsceneTextDisplay(this.skin);
+
+        // Customize text display size and position
+        textDisplay.getTable().setScale(0.2f); // Make the text display smaller
+
+        // Position the text display higher above the sprite's head
+        textDisplay.getTable().top().left(); // Align the text box at the top of the screen, left aligned
+        textDisplay.getTable().padTop(200f); // Adjust this padding to position it above the sprite’s head
+
+        // Add the customized text display to the stage
         stage.addActor(textDisplay.getTable());
     }
 
@@ -122,12 +125,13 @@ public class CutsceneScreenDisplay extends UIComponent {
         // Drawing is handled by the stage, so no implementation needed here
     }
 
-
     /**
      * Gets the stage component for the cutscene display.
      * @return The Stage component for the cutscene.
      */
-    public Stage getStage() { return stage; }
+    public Stage getStage() {
+        return stage;
+    }
 
     /**
      * Sets the stage for the cutscene display.
@@ -158,16 +162,15 @@ public class CutsceneScreenDisplay extends UIComponent {
      * Gets the cutscene text display component for the cutscene.
      * @return A CutsceneTextDisplay component for the cutscene.
      */
-    public CutsceneTextDisplay getTextDisplay() { return textDisplay; }
+    public CutsceneTextDisplay getTextDisplay() {
+        return textDisplay;
+    }
 
     /**
      * Sets the Cutscene Text Display Component for the cutscene.
      * @param textDisplay the CutsceneTextDisplay to be set.
      */
-    public void setTextDisplay(CutsceneTextDisplay textDisplay) { this.textDisplay = textDisplay; }
-
-    /**
-     * Function that enables or disables the text box.
-     */
-
+    public void setTextDisplay(CutsceneTextDisplay textDisplay) {
+        this.textDisplay = textDisplay;
+    }
 }

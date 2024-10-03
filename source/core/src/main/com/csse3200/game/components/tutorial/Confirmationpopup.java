@@ -5,6 +5,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.csse3200.game.GdxGame;
+import com.csse3200.game.components.cutscenes.BackstoryCutscene;
+import com.csse3200.game.screens.CutsceneScreen;
 import com.csse3200.game.screens.TutorialScreen;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
@@ -37,9 +39,15 @@ public class Confirmationpopup extends Dialog {
         boolean isTrue = (boolean) object;
         if (isTrue) {
             game.setScreen(new TutorialScreen(game));
-        }else{
-            game.setScreen(GdxGame.ScreenType.MAIN_GAME);
+        } else {
+//            game.setScreen(GdxGame.ScreenType.MAIN_GAME);
+            // User chose "No", transition to BackstoryCutscene
+            BackstoryCutscene backstoryCutscene = new BackstoryCutscene();
+            game.setCurrentCutscene(backstoryCutscene); // Set the backstory cutscene as current
+            game.setScreen(new CutsceneScreen(game, 0)); // Start the cutscene screen with index 0
+
         }
+
     }
 
 }

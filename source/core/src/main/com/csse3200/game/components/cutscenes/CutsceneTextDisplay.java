@@ -27,6 +27,7 @@ public class CutsceneTextDisplay extends UIComponent {
     // UI components for displaying the text
     private Label label;
     private final Table table;
+    private boolean visible = true;
 
     /**
      * Default constructor that initializes without a specific cutscene.
@@ -54,6 +55,7 @@ public class CutsceneTextDisplay extends UIComponent {
     }
 
     private void setupUI() {
+
         // Set up the table to fill the screen and align it to the bottom center
         table.setFillParent(true);
         table.center().bottom();
@@ -116,6 +118,11 @@ public class CutsceneTextDisplay extends UIComponent {
         // No custom drawing required, handled by the stage.
     }
 
+    // Method to set text directly
+    public void setText(String text) {
+        label.setText(text);
+    }
+
     /**
      * Sets the stage for this UI component.
      * @param stage The stage to assign.
@@ -131,5 +138,10 @@ public class CutsceneTextDisplay extends UIComponent {
      */
     public Table getTable() {
         return table;
+    }
+
+    public void disable() {
+        visible = false;
+        table.setVisible(false);
     }
 }

@@ -40,8 +40,8 @@ public class CutsceneArea extends GameArea {
     public void create() {
         switch (cutsceneValue) {
             case 0:
-                logger.debug("Loading intro cutscene");
-                currentCutscene = new IntroCutscene();  // Initialize the intro cutscene
+                logger.debug("Loading backstory cutscene");
+                currentCutscene = new BackstoryCutscene();  // Initialize the intro cutscene
                 ServiceLocator.setCurrentCutscene(currentCutscene);  // Set the current cutscene in the service locator
                 break;
             case 1:
@@ -52,6 +52,12 @@ public class CutsceneArea extends GameArea {
             case 2:
                 logger.debug("Loading bad end cutscene");
                 currentCutscene = new BadEndCutscene();
+                ServiceLocator.setCurrentCutscene(currentCutscene);
+
+                break;
+            case 3:
+                logger.debug("Loading lose end cutscene");
+                currentCutscene = new LoseCutscene();
                 ServiceLocator.setCurrentCutscene(currentCutscene);
                 break;
             default:
