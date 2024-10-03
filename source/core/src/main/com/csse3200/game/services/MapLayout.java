@@ -133,7 +133,7 @@ public class MapLayout{
        return new Map(benches, stations);
 
     }
-    private ArrayList<Bench> readBench(String type, int startCol, int size, int row) {
+    public ArrayList<Bench> readBench(String type, int startCol, int size, int row) {
         switch (type) {
             case "X":
                 return BenchGenerator.createBenchRow(startCol + 4, startCol + size + 4, row-4);
@@ -143,7 +143,7 @@ public class MapLayout{
                 return new ArrayList<Bench>();
         }
     }
-    private Entity readStation(String type, int col, int row) {
+    public Entity readStation(String type, int col, int row) {
         Entity station;
         switch (type) {
             case "b":
@@ -189,14 +189,14 @@ public class MapLayout{
                 station = StationFactory.createFireExtinguisher();
                 break;
             default:
-                station = StationFactory.createBananaBasket();
+                station = new Entity();
                 break;
         }
         station.setPosition(col+4, row-4);
         return station;
     }
 
-    private boolean validateStation(String str) {
+    public boolean validateStation(String str) {
         for (String station : validStations) {
             if (str.equals(station)) {
                 return true;
