@@ -290,6 +290,8 @@ public class ForestGameArea extends GameArea {
     String gameState = player.getComponent(CheckWinLoseComponent.class).checkGameState();
 
     if ("LOSE".equals(gameState)) {
+      createTextBox("You *oink* two-legged moron! You're ruining my " +
+              "business' *oink* reputation! Get out!");
       ServiceLocator.getEntityService().getEvents().trigger("loseEnd");
     }
 
@@ -308,8 +310,12 @@ public class ForestGameArea extends GameArea {
       }
 
       if (hasBadDecisions) {
+        createTextBox("You *oink* amazing critter! You're a master! " +
+                "Enjoy a 40c raise for your efforts!");
         ServiceLocator.getEntityService().getEvents().trigger("badEnd");
       } else {
+        createTextBox("You *oink* amazing critter! You're a master! " +
+                "Enjoy a 40c raise for your efforts!");
         ServiceLocator.getEntityService().getEvents().trigger("goodEnd");
       }
     }
