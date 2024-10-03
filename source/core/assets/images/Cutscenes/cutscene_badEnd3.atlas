@@ -1,0 +1,26 @@
+badEnd3.png
+size: 480, 160
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+bad_end3
+  rotate: false
+  xy: 0, 0
+  size: 160, 160
+  orig: 160, 160
+  offset: 0, 0
+  index: 0
+bad_end3
+  rotate: false
+  xy: 160, 0
+  size: 160, 160
+  orig: 160, 160
+  offset: 0, 0
+  index: 1
+bad_end3
+  rotate: false
+  xy: 320, 0
+  size: 160, 160
+  orig: 160, 160
+  offset: 0, 0
+  index: 2

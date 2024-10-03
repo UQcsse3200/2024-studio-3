@@ -2,6 +2,7 @@ package com.csse3200.game.components.station;
 
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.csse3200.game.components.Component;
+import com.csse3200.game.components.cutscenes.IntroCutscene;
 import com.csse3200.game.components.items.ItemComponent;
 import com.csse3200.game.components.items.ItemType;
 import com.csse3200.game.components.player.InventoryComponent;

@@ -65,7 +65,7 @@ public class BackstoryCutsceneDisplay extends UIComponent {
         nextSceneBtn.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent changeEvent, Actor actor) {
-                logger.info("Next Scene button clicked");
+                logger.info("Next Scene button clicked.");
                 entity.getEvents().trigger("nextCutscene");  // Trigger next cutscene
             }
         });

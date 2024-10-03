@@ -21,6 +21,7 @@ public class CutsceneScreenDisplay extends UIComponent {
     private Table table;
     private CutsceneTextDisplay textDisplay;
     private Skin skin = null;
+    private boolean IsEnabled = true;
 
     public CutsceneScreenDisplay(Skin skin) {
         super(skin);
@@ -164,4 +165,9 @@ public class CutsceneScreenDisplay extends UIComponent {
      * @param textDisplay the CutsceneTextDisplay to be set.
      */
     public void setTextDisplay(CutsceneTextDisplay textDisplay) { this.textDisplay = textDisplay; }
+
+    /**
+     * Function that enables or disables the text box.
+     */
+
 }

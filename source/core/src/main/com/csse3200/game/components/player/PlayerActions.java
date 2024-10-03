@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.csse3200.game.components.Component;
+import com.csse3200.game.components.upgrades.RageUpgrade;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.physics.BodyUserData;
 import com.csse3200.game.components.items.PlateComponent;
@@ -14,6 +15,8 @@ import com.csse3200.game.components.TooltipsDisplay;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.components.SensorComponent;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Action component for interacting with the player. Player events should be initialised in create()
@@ -21,7 +24,8 @@ import com.csse3200.game.components.SensorComponent;
  */
 public class PlayerActions extends Component {
   private static final Vector2 MAX_SPEED = new Vector2(3f, 3f); // Metres per second
-
+  private static final float MIN_X_POSITION = 3.52f; // Minimum X position - where the separation border is at
+  private static final float MAX_X_POSITION = 15.1f; // Maximum X position - where the right border is at
   private PhysicsComponent physicsComponent;
   private Vector2 walkDirection = Vector2.Zero.cpy();
   private boolean moving = false;
@@ -43,8 +47,22 @@ public class PlayerActions extends Component {
 
   @Override
   public void update() {
+    Body body = physicsComponent.getBody();
+    Vector2 position = body.getPosition();
+
     if (moving) {
-      updateSpeed();
+      // Stop if it's at min x position or max x position
+      if (position.x < MIN_X_POSITION) {
+        position.x = MIN_X_POSITION;
+        body.setTransform(MIN_X_POSITION, position.y, body.getAngle());
+        stopWalking();
+      } else if (position.x > MAX_X_POSITION) {
+        position.x = MAX_X_POSITION;
+        body.setTransform(MAX_X_POSITION, position.y, body.getAngle());
+        stopWalking();
+      } else {
+        updateSpeed();
+      }
     }
     updateInteraction();
   }
@@ -79,6 +97,12 @@ public class PlayerActions extends Component {
     Vector2 velocity = body.getLinearVelocity();
     Vector2 desiredVelocity = walkDirection.cpy().scl(MAX_SPEED);
     // impulse = (desiredVel - currentVel) * mass
+
+    if (body.getPosition().x < MIN_X_POSITION || body.getPosition().x > MAX_X_POSITION) {
+      // Do not apply any movement if out of bounds
+      return;
+    }
+
     Vector2 impulse = desiredVelocity.sub(velocity).scl(body.getMass());
     body.applyLinearImpulse(impulse, body.getWorldCenter(), true);
   }

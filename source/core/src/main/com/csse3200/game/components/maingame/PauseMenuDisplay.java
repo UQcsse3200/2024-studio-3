@@ -23,7 +23,7 @@ public class PauseMenuDisplay extends UIComponent {
     private final MainGameScreen game;
     private Table table;
     private static final Logger logger = LoggerFactory.getLogger(PauseMenuDisplay.class);
-    private static final String[] pauseMenuTexture = {"images/pause_menu2.png"};
+    private static final String[] pauseMenuTexture = {"images/pause_menu.png"};
     private static final String[] koalaTexture = {"images/koala5.png"};
     private static final String[] koalaTexture2 = {"images/koala4.png"};
 
@@ -31,6 +31,7 @@ public class PauseMenuDisplay extends UIComponent {
         super();
         this.game = game;
         isVisible = false;
+        ServiceLocator.getEntityService().getEvents().addListener("togglePause", this::toggleVisibility);
     }
 
     /**
@@ -114,6 +115,8 @@ public class PauseMenuDisplay extends UIComponent {
         Table buttonTable = new Table();
 
         TextButton resumeBtn = new TextButton("Resume", skin);
+        TextButton saveBtn = new TextButton("Save", skin);
+        TextButton loadBtn = new TextButton("Load", skin);
         TextButton restartBtn = new TextButton("Restart", skin);
         TextButton settingsBtn = new TextButton("Settings", skin);
         TextButton exitBtn = new TextButton("Main Menu", skin);
@@ -124,6 +127,21 @@ public class PauseMenuDisplay extends UIComponent {
             public void clicked(InputEvent event, float x, float y) {
                 toggleVisibility();
             }
+        });
+
+        saveBtn.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                ServiceLocator.getSaveLoadService().save();
+            };
+        });
+
+        loadBtn.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                ServiceLocator.getSaveLoadService().setSaveFile("saveFile.json");
+                ServiceLocator.getSaveLoadService().load();
+            };
         });
 
         restartBtn.addListener(new ChangeListener() {
@@ -158,15 +176,19 @@ public class PauseMenuDisplay extends UIComponent {
             }
         });
 
-        buttonTable.add(resumeBtn).minWidth(250).minHeight(53).padTop(20);
+        buttonTable.add(resumeBtn).minWidth(250).minHeight(53).padTop(10);
         buttonTable.row();
-        buttonTable.add(restartBtn).minWidth(250).minHeight(53).padTop(20);
+        buttonTable.add(saveBtn).minWidth(250).minHeight(53).padTop(10);
         buttonTable.row();
-        buttonTable.add(settingsBtn).minWidth(250).minHeight(53).padTop(20);
+        buttonTable.add(loadBtn).minWidth(250).minHeight(53).padTop(10);
         buttonTable.row();
-        buttonTable.add(exitBtn).minWidth(250).minHeight(53).padTop(20);
+        buttonTable.add(restartBtn).minWidth(250).minHeight(53).padTop(10);
         buttonTable.row();
-        buttonTable.add(quitBtn).minWidth(250).minHeight(53).padTop(20);
+        buttonTable.add(settingsBtn).minWidth(250).minHeight(53).padTop(10);
+        buttonTable.row();
+        buttonTable.add(exitBtn).minWidth(250).minHeight(53).padTop(10);
+        buttonTable.row();
+        buttonTable.add(quitBtn).minWidth(250).minHeight(53).padTop(10);
 
         return buttonTable;
     }
@@ -242,6 +264,8 @@ public class PauseMenuDisplay extends UIComponent {
         table.setVisible(true);
         logger.info("PAUSE GAME");
         game.pause();
+
+        table.toFront();
     }
 
     /**

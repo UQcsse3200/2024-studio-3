@@ -44,19 +44,37 @@ public class CutsceneArea extends GameArea {
                 currentCutscene = new BackstoryCutscene();  // Initialize the intro cutscene
                 ServiceLocator.setCurrentCutscene(currentCutscene);  // Set the current cutscene in the service locator
                 break;
-            case 1:
-                logger.debug("Loading Day 2 cutscene");
-                currentCutscene = new Day2Cutscene();  // Initialize the intro cutscene
-                ServiceLocator.setCurrentCutscene(currentCutscene);  // Set the current cutscene in the service locator
-                break;
+//            case 1:
+//                logger.debug("Loading Day 2 cutscene");
+//                currentCutscene = new Day2Cutscene();  // Initialize the intro cutscene
+//                ServiceLocator.setCurrentCutscene(currentCutscene);  // Set the current cutscene in the service locator
+//                break;
             case 2:
                 logger.debug("Loading Day 3 cutscene");
                 currentCutscene = new Day3Cutscene();
                 ServiceLocator.setCurrentCutscene(currentCutscene);
+                break;
             case 3:
                 logger.debug("Loading Day 3 cutscene");
                 currentCutscene = new Day3Cutscene();
                 ServiceLocator.setCurrentCutscene(currentCutscene);
+                break;
+            case 4:
+                logger.debug("Loading good end cutscene");
+                currentCutscene = new GoodEndCutscene();  // Initialize the good end cutscene
+                ServiceLocator.setCurrentCutscene(currentCutscene);  // Set the current cutscene in the service locator
+                break;
+            case 5:
+                logger.debug("Loading bad end cutscene");
+                currentCutscene = new BadEndCutscene();
+                ServiceLocator.setCurrentCutscene(currentCutscene);
+
+                break;
+            case 6:
+                logger.debug("Loading lose end cutscene");
+                currentCutscene = new LoseCutscene();
+                ServiceLocator.setCurrentCutscene(currentCutscene);
+                break;
             default:
                 logger.error("Invalid cutscene value: {}", cutsceneValue);  // Log an error if the cutscene value is invalid
                 return;
@@ -66,6 +84,8 @@ public class CutsceneArea extends GameArea {
         Entity cutsceneEntity = new Entity();
         cutsceneEntity.addComponent(currentCutscene);
         ServiceLocator.getEntityService().register(cutsceneEntity);
+
+
 
         // Start the cutscene
         currentCutscene.start();
