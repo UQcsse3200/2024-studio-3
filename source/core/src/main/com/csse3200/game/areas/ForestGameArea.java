@@ -263,11 +263,11 @@ public class ForestGameArea extends GameArea {
 
     new_border();
     //ticketDetails();
-    //spawnStations();
+    spawnStations();
     customerSpawnController = spawnCustomerController();
 
     //spawnplates
-      //spawnStackPlate(5); //testplate spawn
+      spawnStackPlate(5); //testplate spawn
 
     // Spawn the player
     player = spawnPlayer();
