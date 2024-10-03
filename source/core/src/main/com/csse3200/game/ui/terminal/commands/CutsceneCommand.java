@@ -11,22 +11,22 @@ public class CutsceneCommand implements Command {
     private static final Logger logger = LoggerFactory.getLogger(CutsceneCommand.class);
 
     /**
-     * Toggles debug mode on or off if the corresponding argument is received.
+     * Toggles cutscene mode on or off if the corresponding argument is received.
      * @param args command arguments
      */
     public boolean action(ArrayList<String> args) {
         if (!isValid(args)) {
-            logger.debug("Invalid arguments received for 'debug' command: {}", args);
+            logger.debug("Invalid arguments received for 'cutscene' command: {}", args);
             return false;
         }
 
         String arg = args.get(0);
         switch (arg) {
-            case "Day2":
+            case "day2", "Day2":
                 ServiceLocator.getGame().setScreen(GdxGame.ScreenType.CUTSCENE, 1);
                 return true;
             default:
-                logger.debug("Unrecognised argument received for 'debug' command: {}", args);
+                logger.debug("Unrecognised argument received for 'cutscene' command: {}", args);
                 return false;
         }
     }
