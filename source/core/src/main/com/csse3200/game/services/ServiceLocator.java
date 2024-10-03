@@ -38,14 +38,13 @@ public class ServiceLocator {
   private static MainGameScreen gameScreen;
   private static CutsceneScreen cutsceneScreen;
   private static Cutscene currentCutscene;
+  private static MapLayout map;
   private static MainMenuDisplay mainMenuDisplay;
 
   private static ResourceService resourceService;
 
   private static TicketDetails ticketDetails;
-  //Me new stuff :)
-
-
+  private static SaveLoadService saveLoadService;
   private static DocketService docketService;
   private static LevelService levelService;
 
@@ -89,6 +88,7 @@ public class ServiceLocator {
     return docketService;
   }
 
+  public static SaveLoadService getSaveLoadService() {return saveLoadService;}
 
   public static TicketDetails getTicketDetails() {
     return ticketDetails;
@@ -121,6 +121,10 @@ public class ServiceLocator {
     return cutsceneScreen;
   }
 
+  public static MapLayout getMapLayout() {
+    return map;
+  }
+
   public static Cutscene getCurrentCutscene() {
     return currentCutscene;
   }
@@ -131,7 +135,7 @@ public class ServiceLocator {
   }
 
   public static RandomComboService getRandomComboService(){
-    return randomComboService; 
+    return randomComboService;
   }
 
   public static void setCurrentCutscene(Cutscene cutscene) {
@@ -269,8 +273,15 @@ public class ServiceLocator {
     customerMovementService = service;
   }
 
+  public static void registerSaveLoadService(SaveLoadService service) {
+    if (saveLoadService != null) {
+      logger.warn("SaveLoadService is being overwritten!");
+    }
+    saveLoadService = service;
+  }
+
   public static void registerRandomComboService(RandomComboService service){
-    randomComboService = service; 
+    randomComboService = service;
   }
 
   // Clear all services
@@ -288,7 +299,8 @@ public class ServiceLocator {
     gameScreen = null;
     customerMovementService = null;
     dayNightService = null;
-    randomComboService = null; 
+    saveLoadService = null;
+    randomComboService = null;
   }
 
   private ServiceLocator() {
@@ -298,6 +310,11 @@ public class ServiceLocator {
 
   public static MainMenuDisplay getMainMenuDisplay() {
     return ServiceLocator.mainMenuDisplay;
+  }
+
+  public static void registerMapLayout(MapLayout mapLayout) {
+    logger.debug("Registering map layout {}", mapLayout);
+    map = mapLayout;
   }
 }
 

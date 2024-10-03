@@ -10,7 +10,9 @@ import com.csse3200.game.components.upgrades.UpgradesDisplay;
 
 public class GoodEnd extends ForestGameArea {
     private TerrainFactory terrainFactory;
-    private UpgradesDisplay upgradesDisplay; 
+    private UpgradesDisplay upgradesDisplay;
+    private int level;
+
 
     /**
      * Initialise this ForestGameArea to use the provided TerrainFactory.
@@ -18,9 +20,10 @@ public class GoodEnd extends ForestGameArea {
      * @param terrainFactory TerrainFactory used to create the terrain for the GameArea.
      * @requires terrainFactory != null
      */
-    public GoodEnd(TerrainFactory terrainFactory, UpgradesDisplay upgradesDisplay) {
-        super(terrainFactory, upgradesDisplay);
+    public GoodEnd(TerrainFactory terrainFactory, int level, UpgradesDisplay upgradesDisplay) {
+        super(terrainFactory,level, upgradesDisplay);
         this.terrainFactory = terrainFactory;
+        this.level = level;
         this.upgradesDisplay = upgradesDisplay; 
 
     }

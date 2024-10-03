@@ -16,7 +16,6 @@ class SceneTest {
     private Vector2[] animationPositions;
     private String[] imagePaths;
     private Vector2[] imagePositions;
-    private float[] imageScales;
 
     private Array<String> sceneText;
     private float duration;
@@ -28,7 +27,6 @@ class SceneTest {
         animationPositions = new Vector2[]{new Vector2(1, 1), new Vector2(1, 2)};
         imagePaths = new String[]{"img1.png", "img2.png"};
         imagePositions = new Vector2[]{new Vector2(1, 1), new Vector2(1, 2)};
-        imageScales = new float[] {1.0f};
         sceneText = new Array<>();
         sceneText.add("Line 1");
         sceneText.add("Line 2");
@@ -58,11 +56,10 @@ class SceneTest {
 
     @Test
     void testGetSetImagePaths() {
-        scene.setImages(imagePaths, imagePositions, imageScales);
+        scene.setImages(imagePaths, imagePositions);
         // Test that the animation image paths are correctly returned
         assertEquals(imagePaths, scene.getImagePaths(), "Image paths should match");
         assertEquals(imagePositions, scene.getImagePositions(), "Image positions should match");
-        assertEquals(imageScales, scene.getImageScales(), "Image scales should match");
     }
 
     @Test

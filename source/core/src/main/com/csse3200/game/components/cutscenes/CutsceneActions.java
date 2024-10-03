@@ -42,12 +42,16 @@ public class CutsceneActions extends Component {
     }
 
     /**
-     * Ends the current cutscene and transitions to the next level or cutscene in the game.
+     * Ends the current cutscene and transitions to the next level, cutscene in the game or main menu.
      */
     private void cutsceneEnded() {
-        logger.debug("Transitioning to next cutscene or game level.");
+        logger.debug("Transitioning to next cutscene, game level or main menu.");
         // Logic for determining what the next screen should be (either next level or cutscene).
-        game.setScreen(GdxGame.ScreenType.MAIN_GAME);
+        if (ServiceLocator.getCutsceneScreen().getVal() == 0) {
+            game.setScreen(GdxGame.ScreenType.MAIN_GAME);
+        } else {
+            game.setScreen(GdxGame.ScreenType.MAIN_MENU);
+        }
     }
 
     /**
