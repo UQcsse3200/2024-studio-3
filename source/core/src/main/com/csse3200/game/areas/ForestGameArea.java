@@ -283,8 +283,20 @@ public class ForestGameArea extends GameArea {
     playMusic();
   }
 
-  /***
-   * Checks using the checkWinLoseComponent if to call a cutscene and which one to call
+  /**
+   * Checks the player's game state using the CheckWinLoseComponent and determines whether
+   * to trigger a win or loss cutscene. If the player has won, it further checks the moral
+   * decisions to determine whether to trigger the "good" or "bad" ending.
+   *
+   * The function performs the following:
+   * 1. If the player has lost (gameState is "LOSE"), it triggers the "loseEnd" event and
+   *    displays a losing message to the player.
+   * 2. If the player has won (gameState is "WIN"), it checks the player's moral decisions
+   *    using the MoralDecision component:
+   *    - If the player made any bad decisions, it triggers the "badEnd" event and displays
+   *      a corresponding message.
+   *    - If no bad decisions are found, it triggers the "goodEnd" event and displays a positive
+   *      message.
    */
   private void checkEndOfGameState() {
     String gameState = player.getComponent(CheckWinLoseComponent.class).checkGameState();

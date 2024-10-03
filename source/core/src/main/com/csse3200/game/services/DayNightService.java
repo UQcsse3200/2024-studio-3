@@ -9,10 +9,9 @@ import java.util.Random;
 
 
 /**
- * The DayNightService class handles the day-night cycle within the game. It keeps track
- * of game time and triggers events when certain time thresholds, such as the end of a day,
- * are reached. It utilizes an event handler to manage day transitions and in-game events
- * triggered by time changes.
+ * The DayNightService class manages the day-night cycle within the game. It tracks game time,
+ * handles day transitions, and triggers events at specific intervals, such as the end of a day
+ * or when a meal of high quality is made. It also manages bonuses given to the player for high-quality meals.
  */
 public class DayNightService {
     private static final Logger logger = LoggerFactory.getLogger(DayNightService.class);
@@ -33,22 +32,36 @@ public class DayNightService {
     private int randomChoice;
     private int day;
     private int highQualityMeals = 0;
-    
+
 
     /**
-     * Constructs a new DayNightService. Initializes the game time and event handler,
-     * and sets up the day-night cycle tracking.
+     * Constructs a new DayNightService. Initializes the game time and event handlers.
+     * This constructor sets the first day of the game and sets up event tracking.
      */
     public DayNightService() {
         this(new EventHandler());
         day = 0;
     }
 
+    /**
+     * Constructs a new DayNightService with a provided event handler.
+     * This constructor is typically used for testing or more controlled event management.
+     *
+     * @param enddayEventHandler Event handler to manage the end-of-day events
+     */
     public DayNightService(EventHandler enddayEventHandler) {
         this(enddayEventHandler, ServiceLocator.getDocketService().getEvents());
         day = 0;
     }
 
+    /**
+     * Constructs a new DayNightService with provided event handlers for day events and
+     * docket services.
+     *
+     * @param enddayEventHandler Event handler for managing day transitions
+     * @param docketServiceEventHandler Event handler for handling daily events, such as
+     *                                  meal bonuses and upgrades
+     */
     public DayNightService(EventHandler enddayEventHandler, EventHandler docketServiceEventHandler) {
         gameTime = ServiceLocator.getTimeSource();
         this.enddayEventHandler = enddayEventHandler;
@@ -64,6 +77,10 @@ public class DayNightService {
         create();
     }
 
+    /**
+     * Sets up listeners for end-of-day events and high-quality meal events.
+     * This method initializes listeners for in-game decisions and meal-related events.
+     */
     public void create() {
         // ***Working version of Day cycle used "decisionDone"***
         enddayEventHandler.addListener("decisionDone", this::startNewDay);
@@ -73,24 +90,36 @@ public class DayNightService {
         ServiceLocator.getEntityService().getEvents().addListener("mealHighQuality", this::incrementHighQualityMealCount);
     }
 
+    /**
+     * Increments the count of high-quality meals served. This method is triggered
+     * when a "mealHighQuality" event occurs.
+     */
     public void incrementHighQualityMealCount() {
         highQualityMeals += 1;
         logger.info("High-quality meal served! Total: " + highQualityMeals);
     }
 
+    /**
+     * Applies the end-of-day bonus based on the number of high-quality meals served.
+     * The bonus is added to the player's gold before win/loss conditions are evaluated.
+     */
     private void applyEndOfDayBonus() {
         int bonusGold = highQualityMeals * 1;
         ServiceLocator.getPlayerService().getPlayer().getComponent(CombatStatsComponent.class).addGold(bonusGold);
         logger.info("Bonus gold added: " + bonusGold);
     }
 
+    /**
+     * Resets the count of high-quality meals. This is typically called at the start of
+     * a new day after applying bonuses.
+     */
     private void resetHighQualityMealCount() {
         highQualityMeals = 0;
     }
 
     /**
-     * Updates the game state by checking if enough time has passed to trigger
-     * end-of-day events or timer-related events.
+     * Updates the game state, tracking elapsed time and checking whether it is time
+     * to trigger end-of-day events or other timed events such as upgrades.
      */
     public void update() {
         if(gameTime.isPaused()){
@@ -124,12 +153,8 @@ public class DayNightService {
     }
 
     /**
-     * Starts a new day, resuming the game time and resetting relevant counters and orders.
-     * This method is triggered after the end-of-day sequence has completed.
-     *
-     * Our working version was with the "decisionDone" listener, however, we limited our
-     * Day cycle to end for just one day on request of Team 6 and hence commented out our last check
-     * time updates
+     * Starts a new day, resetting the time and relevant counters such as high-quality meals.
+     * This method is triggered after the end-of-day events are processed.
      */
     private void startNewDay() {
 
@@ -176,22 +201,50 @@ public class DayNightService {
         gameTime.setTimeScale(1); // Resume game time
     }
 
+    /**
+     * Gets the current day in the game.
+     *
+     * @return the current day number
+     */
     public int getDay() { return day;}
 
+    /**
+     * Sets the current day in the game.
+     *
+     * @param day the day to set as the current day
+     */
     public void setDay(int day) { this.day = day;}
 
+    /**
+     * Gets the event handler for the end-of-day events.
+     *
+     * @return the event handler for end-of-day events
+     */
     public EventHandler getEvents() {
         return enddayEventHandler;
       }
 
+    /**
+     * Checks if the end-of-day event has been triggered.
+     *
+     * @return true if the end-of-day event was triggered, false otherwise
+     */
     public boolean getEndOfDayTriggered() {
         return endOfDayTriggered;
     }
 
+    /**
+     * Updates the state after a second passes, resetting the flag for tracking time.
+     */
     public void updatepastSecond() {
         pastSecond = false;
     }
 
+    /**
+     * Gets the number of high-quality meals served during the day.
+     *
+     * @return the number of high-quality meals
+     */
     public int getHighQualityMeals() {
         return highQualityMeals;
     }
