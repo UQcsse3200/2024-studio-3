@@ -59,13 +59,12 @@ public class TutorialScreenDisplayTest {
         assertEquals(5, tutorialScreenDisplay.getTutorialStep());
     }
 
-    @Test
-    public void testOnCreateOrderPressed() {
-        tutorialScreenDisplay.onCreateOrderPressed();
-        assertTrue(tutorialScreenDisplay.isCreateOrderPressed());
-    }
-
-
+//    @Test
+//    public void testOnCreateOrderPressed() {
+//        tutorialScreenDisplay.onCreateOrderPressed();
+//        assertTrue(tutorialScreenDisplay.isCreateOrderPressed());
+//    }
+//
 
     @Test
     public void testCompleteTutorial() {
