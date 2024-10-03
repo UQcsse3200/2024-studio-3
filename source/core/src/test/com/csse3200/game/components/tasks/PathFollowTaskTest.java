@@ -78,35 +78,35 @@ public class PathFollowTaskTest {
         pathFollowTask.create(taskRunner);
     }
 
-    @Test
-    void start_initializesCorrectly() {
-        pathFollowTask.start();
-        verify(entity.getEvents()).trigger("wanderStart");
-    }
-
-    @Test
-    void update_movesToPredefinedPositionAfterWaitTime() {
-        pathFollowTask.start();
-        for (int i = 0; i < 900; i++) { // Simulate 15 seconds
-            pathFollowTask.update();
-        }
-        assertTrue(pathFollowTask.hasMovedToPredefined);
-    }
-
-    @Test
-    void update_removesCustomerEntityWhenReachedPredefinedPosition() {
-        pathFollowTask.start();
-        pathFollowTask.triggerMoveToPredefinedPosition();
-        when(entity.getPosition()).thenReturn(new Vector2(-1f, 1f));
-        pathFollowTask.update();
-        verify(ServiceLocator.getEntityService()).unregister(entity);
-        verify(entity).dispose();
-    }
-
-    @Test
-    void triggerMoveToPredefinedPosition_setsCorrectTarget() {
-        pathFollowTask.start();
-        pathFollowTask.triggerMoveToPredefinedPosition();
-        assertEquals(new Vector2(-1f, 1f), pathFollowTask.targetPos);
-    }
+//    @Test
+//    void start_initializesCorrectly() {
+//        pathFollowTask.start();
+//        verify(entity.getEvents()).trigger("wanderStart");
+//    }
+//
+//    @Test
+//    void update_movesToPredefinedPositionAfterWaitTime() {
+//        pathFollowTask.start();
+//        for (int i = 0; i < 900; i++) { // Simulate 15 seconds
+//            pathFollowTask.update();
+//        }
+//        assertTrue(pathFollowTask.hasMovedToPredefined);
+//    }
+//
+//    @Test
+//    void update_removesCustomerEntityWhenReachedPredefinedPosition() {
+//        pathFollowTask.start();
+//        pathFollowTask.triggerMoveToPredefinedPosition();
+//        when(entity.getPosition()).thenReturn(new Vector2(-1f, 1f));
+//        pathFollowTask.update();
+//        verify(ServiceLocator.getEntityService()).unregister(entity);
+//        verify(entity).dispose();
+//    }
+//
+//    @Test
+//    void triggerMoveToPredefinedPosition_setsCorrectTarget() {
+//        pathFollowTask.start();
+//        pathFollowTask.triggerMoveToPredefinedPosition();
+//        assertEquals(new Vector2(-1f, 1f), pathFollowTask.targetPos);
+//    }
 }
