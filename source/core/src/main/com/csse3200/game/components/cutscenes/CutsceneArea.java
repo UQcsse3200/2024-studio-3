@@ -49,6 +49,14 @@ public class CutsceneArea extends GameArea {
                 currentCutscene = new Day2Cutscene();  // Initialize the intro cutscene
                 ServiceLocator.setCurrentCutscene(currentCutscene);  // Set the current cutscene in the service locator
                 break;
+            case 2:
+                logger.debug("Loading Day 3 cutscene");
+                currentCutscene = new Day3Cutscene();
+                ServiceLocator.setCurrentCutscene(currentCutscene);
+            case 3:
+                logger.debug("Loading Day 3 cutscene");
+                currentCutscene = new Day3Cutscene();
+                ServiceLocator.setCurrentCutscene(currentCutscene);
             default:
                 logger.error("Invalid cutscene value: {}", cutsceneValue);  // Log an error if the cutscene value is invalid
                 return;
