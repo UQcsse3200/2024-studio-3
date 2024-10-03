@@ -38,7 +38,6 @@ public class PlayerStatsDisplay extends UIComponent {
   private static Label timerLabel;
   public static long timer;
   private static String digitaltime;
-  private float width_of_screen=Gdx.graphics.getWidth(),height_of_screen=Gdx.graphics.getHeight();
 
 
   /**
@@ -68,10 +67,7 @@ public class PlayerStatsDisplay extends UIComponent {
     table = new Table();
     table.top().left();
     table.setFillParent(true);
-//    table.setSize(200f,150f);
     table.padTop(45f).padLeft(5f);
-//    table.setPosition(5,height_of_screen - (table.getHeight()*2));
-
 
     goldTable = new Table();
     goldTable.bottom().left();
@@ -79,13 +75,10 @@ public class PlayerStatsDisplay extends UIComponent {
     goldTable.padBottom(45f).padLeft(100f);
 
     timerTable = new Table();
-//    timerTable.bottom().right();
-    timerTable.setSize(200f,150f);
-    timerTable.setPosition(width_of_screen - timerTable.getWidth(), 100f);
+    timerTable.bottom().right();
+    timerTable.setFillParent(true);
+    timerTable.padBottom(45f).padRight(50f);
 
-    Texture texture = new Texture(Gdx.files.internal("images/component_background.png"));
-    TextureRegionDrawable drawable = new TextureRegionDrawable(new TextureRegion(texture));
-    timerTable.setBackground(drawable);
 
     // Heart image
     float heartSideLength = 30f;
@@ -128,6 +121,16 @@ public class PlayerStatsDisplay extends UIComponent {
     stage.addActor(table);
     table.row();
 
+
+    Table table3 = new Table();
+    table3.bottom().right();
+    table3.setFillParent(true);
+    table3.padBottom(35f);
+
+    Image sample = new Image(ServiceLocator.getResourceService().getAsset("images/component_background.png", Texture.class));
+    table3.add(sample).size(200,150).row();
+    stage.addActor(table3);
+
     //Timer image
     timerImage = new Image(ServiceLocator.getResourceService().getAsset("images/hourglass.png", Texture.class));
 
@@ -136,8 +139,8 @@ public class PlayerStatsDisplay extends UIComponent {
     timerLabel = new Label(TimerText, skin, "large");
     timerLabel.setFontScale(0.65f);
 
-    timerTable.add(timerImage).size(heartSideLength);
-    timerTable.add(timerLabel).padRight(0.5f).padBottom(20f);
+    timerTable.add(timerImage).size(heartSideLength).padBottom(32f);
+    timerTable.add(timerLabel).padRight(0.5f).padBottom(50f);
 
     stage.addActor(timerTable);
   }
