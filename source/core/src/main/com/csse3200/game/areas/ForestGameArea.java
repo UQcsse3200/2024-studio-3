@@ -1,6 +1,7 @@
 package com.csse3200.game.areas;
 
 import com.csse3200.game.components.maingame.CheckWinLoseComponent;
+import com.csse3200.game.components.moral.Decision;
 import com.csse3200.game.components.npc.PersonalCustomerEnums;
 import com.badlogic.gdx.utils.Null;
 import com.csse3200.game.GdxGame;
@@ -288,14 +289,29 @@ public class ForestGameArea extends GameArea {
   private void checkEndOfGameState() {
     String gameState = player.getComponent(CheckWinLoseComponent.class).checkGameState();
 
-    if ("LOSE".equals(gameState) || "GAME_IN_PROGRESS".equals(gameState)) {
-      createTextBox("You *oink* two-legged moron! You're ruining my " +
-              "business' *oink* reputation! Get out!");
-      triggerFiredEnd();  // Trigger the fired (bad) ending
-    } else if ("WIN".equals(gameState)) {
-      createTextBox("You *oink* amazing critter! You're a master! " +
-              "Enjoy a 40c raise for your efforts!");
-      triggerRaiseEnd();  // Trigger the raise (good) ending
+    if ("LOSE".equals(gameState)) {
+      ServiceLocator.getEntityService().getEvents().trigger("loseEnd");
+    }
+
+    else if ("WIN".equals(gameState)) {
+      List<Decision> decisionList = ServiceLocator.getEntityService()
+              .getMoralSystem()
+              .getComponent(MoralDecision.class)
+              .getListOfDecisions();
+
+      boolean hasBadDecisions = false;
+      for (Decision decision : decisionList) {
+        if (!decision.isGood()) {
+          hasBadDecisions = true;
+          break;
+        }
+      }
+
+      if (hasBadDecisions) {
+        ServiceLocator.getEntityService().getEvents().trigger("badEnd");
+      } else {
+        ServiceLocator.getEntityService().getEvents().trigger("goodEnd");
+      }
     }
   }
 
