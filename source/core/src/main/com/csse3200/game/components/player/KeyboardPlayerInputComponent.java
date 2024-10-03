@@ -91,6 +91,12 @@ public class KeyboardPlayerInputComponent extends InputComponent {
         case Keys.G:
           ServiceLocator.getEntityService().getEvents().trigger("goodEnd");
           return true;
+        case Keys.X:
+          ServiceLocator.getEntityService().getEvents().trigger("badEnd");
+          return true;
+        case Keys.Z:
+          ServiceLocator.getEntityService().getEvents().trigger("loseEnd");
+          return true;
         case Keys.M:
           int day = 0;
           ServiceLocator.getEntityService().getMoralScreen().getEvents().trigger("triggerMoralScreen",day);

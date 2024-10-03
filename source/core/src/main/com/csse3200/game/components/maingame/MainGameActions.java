@@ -50,6 +50,35 @@ public class MainGameActions extends Component {
         ServiceLocator.getEntityService().getEvents().addListener("createSteakDocket", this::onCreateSteak);
         ServiceLocator.getEntityService().getEvents().addListener("createFruitSaladDocket", this::onCreateFruitSalad);
         ServiceLocator.getEntityService().getEvents().addListener("goodEnd", this::onGoodEnd);
+        ServiceLocator.getEntityService().getEvents().addListener("badEnd", this::onBadEnd);
+        ServiceLocator.getEntityService().getEvents().addListener("loseEnd", this::onLoseEnd);
+
+    }
+
+    /**
+     * Starts bad ending cutscene
+     */
+    public void onLoseEnd(){
+        logger.info("Starting lose cutscene");
+
+        // Stop any background tasks
+        // ServiceLocator.getMainMenuDisplay().stopBackgroundTasks();
+
+        // Now we can transition to the cutscene
+        game.setScreen(GdxGame.ScreenType.LOSE_END);
+    }
+
+    /**
+     * Starts bad ending cutscene
+     */
+    public void onBadEnd(){
+        logger.info("Starting good cutscene");
+
+        // Stop any background tasks
+        // ServiceLocator.getMainMenuDisplay().stopBackgroundTasks();
+
+        // Now we can transition to the cutscene
+        game.setScreen(GdxGame.ScreenType.BAD_END);
     }
 
     /**
