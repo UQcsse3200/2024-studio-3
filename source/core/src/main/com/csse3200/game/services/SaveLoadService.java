@@ -47,7 +47,6 @@ public class SaveLoadService {
 
     /**
      * Loads a gamestate given the file for said gamestate
-     * @param file - the string which is the name of the file
      */
     public void load() {
         GameState state = FileLoader.readClass(GameState.class, ROOT_DIR + File.separator + saveFile, Location.LOCAL);

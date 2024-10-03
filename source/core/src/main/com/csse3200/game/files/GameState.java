@@ -60,7 +60,7 @@ import java.util.List;
     /**
      * Sets the modification time of the game state.
      *
-     * @param modDay integer representing the last modification day.
+     * @param modTime integer representing the last modification day.
      */
     public void setModTime(String modTime) {
         this.ModTime = modTime;
