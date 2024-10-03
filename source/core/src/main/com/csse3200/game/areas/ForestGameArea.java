@@ -14,6 +14,10 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import com.csse3200.game.components.moral.MoralDayOne;
+import com.csse3200.game.components.moral.MoralDayTwo;
+import com.csse3200.game.components.moral.MoralDayThree;
+import com.csse3200.game.components.moral.MoralDayFour;
 import com.csse3200.game.areas.map.Map;
 import com.csse3200.game.services.MapLayout;
 import com.csse3200.game.entities.factories.*;
@@ -38,6 +42,7 @@ import com.csse3200.game.components.upgrades.UpgradesDisplay;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.benches.Bench;
 import com.csse3200.game.entities.configs.PlayerConfig;
+
 import com.csse3200.game.entities.factories.ItemFactory;
 import com.csse3200.game.entities.factories.NPCFactory;
 import com.csse3200.game.entities.factories.ObstacleFactory;
@@ -45,6 +50,7 @@ import com.csse3200.game.entities.factories.PlateFactory;
 import com.csse3200.game.entities.factories.PlayerFactory;
 import com.csse3200.game.entities.factories.StationFactory;
 import com.csse3200.game.components.moral.MoralDecisionDisplay;
+
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.utils.math.GridPoint2Utils;
@@ -842,11 +848,12 @@ public class ForestGameArea extends GameArea {
     Entity moralScreen = new Entity();
     moralScreen
             //.addComponent(new MoralDecisionDisplay())
-            //.addComponent(new MoralDayOne())
-            .addComponent(new MoralDayTwo());
-            //.addComponent(new MoralDayThree())
-            //.addComponent(new MoralDayFour())
+            //.addComponent(new MoralDayOne());
+            //.addComponent(new MoralDayTwo());
+            //addComponent(new MoralDayThree());
+            .addComponent(new MoralDayFour());
 //            .addComponent(new MoralDecision());
+
     ServiceLocator.getEntityService().registerMoral(moralScreen);
   }
 

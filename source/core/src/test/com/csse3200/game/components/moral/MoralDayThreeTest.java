@@ -16,10 +16,10 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.mockito.Mockito.mock;
 
 @ExtendWith(MockitoExtension.class)
-public class MoralDayOneTest {
+public class MoralDayThreeTest {
 
     @Mock
-    private MoralDayOne moralDayOne;
+    private MoralDayThree moralDayThree;
 
     @Mock
     private Entity entity;
@@ -43,7 +43,7 @@ public class MoralDayOneTest {
 
         ServiceLocator.registerEntityService(new EntityService());
         // Initialize MoralDecisionDisplay with the mocked game
-        MoralDayOne testDisplay = mock(MoralDayOne.class);
+        MoralDayThree testDisplay = mock(MoralDayThree.class);
         entity = mock(Entity.class);
         entity.addComponent(testDisplay);
         //moralDecisionDisplay.setStage(mockStage); // Set the mocked stage
@@ -54,9 +54,10 @@ public class MoralDayOneTest {
     @Test
     void testToggleVisibility_Hide() {
         // Initially, the display should not be visible
-        assertFalse(moralDayOne.getVisible(), "Initially, the display should not be visible.");
+        assertFalse(moralDayThree.getVisible(), "Initially, the display should not be visible.");
 
 
     }
 
 }
+
