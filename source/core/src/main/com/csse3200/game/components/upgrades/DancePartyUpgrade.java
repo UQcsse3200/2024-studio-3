@@ -62,7 +62,7 @@ public class DancePartyUpgrade extends Component implements Upgrade {
         ServiceLocator.getDocketService().getEvents().trigger("UnDancing"); 
     }
 
-    
+
     public void dancePartyCost() {
         combatStatsComponent.addGold(-20);
     }
@@ -70,7 +70,7 @@ public class DancePartyUpgrade extends Component implements Upgrade {
     @Override
     public void update() {
         // Check if the 'L' key is pressed in each frame
-        if (Gdx.input.isKeyJustPressed(Input.Keys.L)) {
+        if (Gdx.input.isKeyJustPressed(Input.Keys.Z)) {
             if(isActive){
                 deactivate();
             }

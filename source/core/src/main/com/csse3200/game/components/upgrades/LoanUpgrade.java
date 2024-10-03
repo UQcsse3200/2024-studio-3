@@ -38,11 +38,11 @@ public class LoanUpgrade extends Component implements Upgrade {
 
     public void deactivate() {}
 
-    // @Override
-    // public void update() {
-    //     // Check if the 'L' key is pressed in each frame
-    //     if (Gdx.input.isKeyJustPressed(Input.Keys.L)) {
-    //         activate();  // Add 100 gold when 'L' is pressed
-    //     }
-    // }
+    @Override
+    public void update() {
+        // Check if the 'L' key is pressed in each frame
+        if (Gdx.input.isKeyJustPressed(Input.Keys.L)) {
+            activate();  // Add 100 gold when 'L' is pressed
+        }
+    }
 }
