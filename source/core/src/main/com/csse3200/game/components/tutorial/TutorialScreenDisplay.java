@@ -154,7 +154,7 @@ public class TutorialScreenDisplay extends UIComponent {
         textDisplay.setVisible(true);
 
         // Combine both instructions into one
-        createTextBox("click create order and then Press [ and ] keys to switch dockets.");
+        createTextBox(" Press [ and ] keys to switch dockets.");
 
         // Check if both the order button is pressed and the dockets are shifted
         if ((Gdx.input.isKeyJustPressed(Input.Keys.LEFT_BRACKET) || Gdx.input.isKeyJustPressed(Input.Keys.RIGHT_BRACKET))) {
