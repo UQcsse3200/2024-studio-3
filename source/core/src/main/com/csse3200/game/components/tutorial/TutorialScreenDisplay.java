@@ -272,4 +272,11 @@ public class TutorialScreenDisplay extends UIComponent {
         }
         this.stage = stage;
     }
+
+    public int getTutorialStep() {
+        return 0;
+    }
+
+    public void setTutorialStep(int i) {
+    }
 }
