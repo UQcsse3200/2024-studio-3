@@ -141,8 +141,9 @@ loadScripts(document, 'script');</script>
 <div class="block">Adds a new Question, assuming it is good and worth 10 points.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#addQuestion(java.lang.String,boolean)" class="member-name-link">addQuestion</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;question,
- boolean&nbsp;isGood)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#addQuestion(java.lang.String,boolean,int)" class="member-name-link">addQuestion</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;question,
+ boolean&nbsp;isGood,
+ int&nbsp;effectMoney)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Adds a new Question with the specified question, goodness, and decision points.</div>
 </div>
@@ -167,7 +168,7 @@ loadScripts(document, 'script');</script>
 <div class="block">Returns the result of the decision with the specified question.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getDecisionStatement(int)" class="member-name-link">getDecisionStatement</a><wbr>(int&nbsp;index)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getDecisionQuestion(int)" class="member-name-link">getDecisionQuestion</a><wbr>(int&nbsp;index)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Returns the statement of the decision at the specified index.</div>
 </div>
@@ -250,15 +251,17 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="addQuestion(java.lang.String,boolean)">
+<section class="detail" id="addQuestion(java.lang.String,boolean,int)">
 <h3>addQuestion</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">addQuestion</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;question,
- boolean&nbsp;isGood)</span></div>
+ boolean&nbsp;isGood,
+ int&nbsp;effectMoney)</span></div>
 <div class="block">Adds a new Question with the specified question, goodness, and decision points.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>question</code> - the question or statement of the decision</dd>
-<dd><code>isGood</code> - whether the decision is good</dd>
+<dd><code>isGood</code> - whether the effect is positive or negative</dd>
+<dd><code>effectMoney</code> - Money to be added or subtracted. Add/sub controlled by isGood</dd>
 <dt>Returns:</dt>
 <dd>true if the decision was added successfully</dd>
 </dl>
@@ -350,9 +353,9 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="getDecisionStatement(int)">
-<h3>getDecisionStatement</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getDecisionStatement</span><wbr><span class="parameters">(int&nbsp;index)</span></div>
+<section class="detail" id="getDecisionQuestion(int)">
+<h3>getDecisionQuestion</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getDecisionQuestion</span><wbr><span class="parameters">(int&nbsp;index)</span></div>
 <div class="block">Returns the statement of the decision at the specified index.</div>
 <dl class="notes">
 <dt>Parameters:</dt>

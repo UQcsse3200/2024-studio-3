@@ -92,7 +92,7 @@ loadScripts(document, 'script');</script>
 <section class="class-description" id="class-description">
 <dl class="notes">
 <dt>Direct Known Subclasses:</dt>
-<dd><code><a href="BackstoryCutscene.html" title="class in com.csse3200.game.components.cutscenes">BackstoryCutscene</a></code>, <code><a href="Day2Cutscene.html" title="class in com.csse3200.game.components.cutscenes">Day2Cutscene</a></code>, <code><a href="IntroCutscene.html" title="class in com.csse3200.game.components.cutscenes">IntroCutscene</a></code></dd>
+<dd><code><a href="BackstoryCutscene.html" title="class in com.csse3200.game.components.cutscenes">BackstoryCutscene</a></code>, <code><a href="BadEndCutscene.html" title="class in com.csse3200.game.components.cutscenes">BadEndCutscene</a></code>, <code><a href="GoodEndCutscene.html" title="class in com.csse3200.game.components.cutscenes">GoodEndCutscene</a></code>, <code><a href="IntroCutscene.html" title="class in com.csse3200.game.components.cutscenes">IntroCutscene</a></code>, <code><a href="LoseCutscene.html" title="class in com.csse3200.game.components.cutscenes">LoseCutscene</a></code></dd>
 </dl>
 <hr>
 <div class="type-signature"><span class="modifiers">public abstract class </span><span class="element-name type-name-label">Cutscene</span>
@@ -111,29 +111,41 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Field</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><code>protected <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>[]</code></div>
-<div class="col-second even-row-color"><code><a href="#animations" class="member-name-link">animations</a></code></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code><a href="scenes/Scene.html" title="class in com.csse3200.game.components.cutscenes.scenes">Scene</a></code></div>
-<div class="col-second odd-row-color"><code><a href="#currentScene" class="member-name-link">currentScene</a></code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code>protected int</code></div>
-<div class="col-second even-row-color"><code><a href="#currentSceneIndex" class="member-name-link">currentSceneIndex</a></code></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second odd-row-color"><code><a href="#currentText" class="member-name-link">currentText</a></code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code>protected com.badlogic.gdx.utils.Array<wbr>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</code></div>
-<div class="col-second even-row-color"><code><a href="#cutsceneText" class="member-name-link">cutsceneText</a></code></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>protected <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a><wbr>&lt;<a href="../../entities/Entity.html" title="class in com.csse3200.game.entities">Entity</a>&gt;</code></div>
-<div class="col-second odd-row-color"><code><a href="#entities" class="member-name-link">entities</a></code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code>protected <a href="../../services/GameTime.html" title="class in com.csse3200.game.services">GameTime</a></code></div>
-<div class="col-second even-row-color"><code><a href="#gameTime" class="member-name-link">gameTime</a></code></div>
+<div class="col-first even-row-color"><code>protected <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a><wbr>&lt;<a href="scenes/AnimatedScene.html" title="class in com.csse3200.game.components.cutscenes.scenes">AnimatedScene</a>&gt;</code></div>
+<div class="col-second even-row-color"><code><a href="#animatedScenes" class="member-name-link">animatedScenes</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>protected <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>[]</code></div>
-<div class="col-second odd-row-color"><code><a href="#images" class="member-name-link">images</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#animations" class="member-name-link">animations</a></code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>protected <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color"><code><a href="#animName" class="member-name-link">animName</a></code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>protected <a href="scenes/AnimatedScene.html" title="class in com.csse3200.game.components.cutscenes.scenes">AnimatedScene</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#currentAnimatedScene" class="member-name-link">currentAnimatedScene</a></code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code><a href="scenes/Scene.html" title="class in com.csse3200.game.components.cutscenes.scenes">Scene</a></code></div>
+<div class="col-second even-row-color"><code><a href="#currentScene" class="member-name-link">currentScene</a></code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>protected int</code></div>
+<div class="col-second odd-row-color"><code><a href="#currentSceneIndex" class="member-name-link">currentSceneIndex</a></code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color"><code><a href="#currentText" class="member-name-link">currentText</a></code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>protected com.badlogic.gdx.utils.Array<wbr>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</code></div>
+<div class="col-second odd-row-color"><code><a href="#cutsceneText" class="member-name-link">cutsceneText</a></code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>protected <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a><wbr>&lt;<a href="../../entities/Entity.html" title="class in com.csse3200.game.entities">Entity</a>&gt;</code></div>
+<div class="col-second even-row-color"><code><a href="#entities" class="member-name-link">entities</a></code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>protected <a href="../../services/GameTime.html" title="class in com.csse3200.game.services">GameTime</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#gameTime" class="member-name-link">gameTime</a></code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>protected <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>[]</code></div>
+<div class="col-second even-row-color"><code><a href="#images" class="member-name-link">images</a></code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>boolean</code></div>
+<div class="col-second odd-row-color"><code><a href="#IsAnimatedScenes" class="member-name-link">IsAnimatedScenes</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>protected <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a><wbr>&lt;<a href="scenes/Scene.html" title="class in com.csse3200.game.components.cutscenes.scenes">Scene</a>&gt;</code></div>
 <div class="col-second even-row-color"><code><a href="#scenes" class="member-name-link">scenes</a></code></div>
@@ -190,29 +202,39 @@ loadScripts(document, 'script');</script>
 <div class="block">Abstract method to create entities for the cutscene.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#createEntitiesForScene(com.csse3200.game.components.cutscenes.scenes.Scene)" class="member-name-link">createEntitiesForScene</a><wbr>(<a href="scenes/Scene.html" title="class in com.csse3200.game.components.cutscenes.scenes">Scene</a>&nbsp;scene)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#createEntitiesForScene(com.csse3200.game.components.cutscenes.scenes.AnimatedScene)" class="member-name-link">createEntitiesForScene</a><wbr>(<a href="scenes/AnimatedScene.html" title="class in com.csse3200.game.components.cutscenes.scenes">AnimatedScene</a>&nbsp;scene)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Creates entities for the given scene, such as background and animation entities.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#dispose()" class="member-name-link">dispose</a>()</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#createEntitiesForScene(com.csse3200.game.components.cutscenes.scenes.Scene)" class="member-name-link">createEntitiesForScene</a><wbr>(<a href="scenes/Scene.html" title="class in com.csse3200.game.components.cutscenes.scenes">Scene</a>&nbsp;scene)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Creates entities for the given scene, such as background and animation entities.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#dispose()" class="member-name-link">dispose</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Disposes of the cutscene by unloading assets and disposing of entities.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#disposeEntities()" class="member-name-link">disposeEntities</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#disposeEntities()" class="member-name-link">disposeEntities</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Disposes of all entities in the current scene.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isCompleted()" class="member-name-link">isCompleted</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isCompleted()" class="member-name-link">isCompleted</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Checks if the cutscene has been completed.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>protected abstract void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#loadAssets()" class="member-name-link">loadAssets</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>protected abstract void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#loadAssets()" class="member-name-link">loadAssets</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Abstract method to load the assets required for the cutscene.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#loadAssetsForScene(com.csse3200.game.components.cutscenes.scenes.AnimatedScene)" class="member-name-link">loadAssetsForScene</a><wbr>(<a href="scenes/AnimatedScene.html" title="class in com.csse3200.game.components.cutscenes.scenes">AnimatedScene</a>&nbsp;scene)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Loads the assets needed for a specific scene, including textures and animations.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#loadAssetsForScene(com.csse3200.game.components.cutscenes.scenes.Scene)" class="member-name-link">loadAssetsForScene</a><wbr>(<a href="scenes/Scene.html" title="class in com.csse3200.game.components.cutscenes.scenes">Scene</a>&nbsp;scene)</code></div>
@@ -279,6 +301,12 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
+<section class="detail" id="animatedScenes">
+<h3>animatedScenes</h3>
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="scenes/AnimatedScene.html" title="class in com.csse3200.game.components.cutscenes.scenes">AnimatedScene</a>&gt;</span>&nbsp;<span class="element-name">animatedScenes</span></div>
+</section>
+</li>
+<li>
 <section class="detail" id="entities">
 <h3>entities</h3>
 <div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../../entities/Entity.html" title="class in com.csse3200.game.entities">Entity</a>&gt;</span>&nbsp;<span class="element-name">entities</span></div>
@@ -312,6 +340,24 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="currentText">
 <h3>currentText</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">currentText</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="currentAnimatedScene">
+<h3>currentAnimatedScene</h3>
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type"><a href="scenes/AnimatedScene.html" title="class in com.csse3200.game.components.cutscenes.scenes">AnimatedScene</a></span>&nbsp;<span class="element-name">currentAnimatedScene</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="animName">
+<h3>animName</h3>
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">animName</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="IsAnimatedScenes">
+<h3>IsAnimatedScenes</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">IsAnimatedScenes</span></div>
 </section>
 </li>
 <li>
@@ -419,6 +465,17 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
+<section class="detail" id="loadAssetsForScene(com.csse3200.game.components.cutscenes.scenes.AnimatedScene)">
+<h3>loadAssetsForScene</h3>
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">loadAssetsForScene</span><wbr><span class="parameters">(<a href="scenes/AnimatedScene.html" title="class in com.csse3200.game.components.cutscenes.scenes">AnimatedScene</a>&nbsp;scene)</span></div>
+<div class="block">Loads the assets needed for a specific scene, including textures and animations.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>scene</code> - The scene for which to load assets</dd>
+</dl>
+</section>
+</li>
+<li>
 <section class="detail" id="createEntitiesForScene(com.csse3200.game.components.cutscenes.scenes.Scene)">
 <h3>createEntitiesForScene</h3>
 <div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">createEntitiesForScene</span><wbr><span class="parameters">(<a href="scenes/Scene.html" title="class in com.csse3200.game.components.cutscenes.scenes">Scene</a>&nbsp;scene)</span></div>
@@ -433,6 +490,17 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="setTextForScene(com.csse3200.game.components.cutscenes.scenes.Scene)">
 <h3>setTextForScene</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setTextForScene</span><wbr><span class="parameters">(<a href="scenes/Scene.html" title="class in com.csse3200.game.components.cutscenes.scenes">Scene</a>&nbsp;scene)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="createEntitiesForScene(com.csse3200.game.components.cutscenes.scenes.AnimatedScene)">
+<h3>createEntitiesForScene</h3>
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">createEntitiesForScene</span><wbr><span class="parameters">(<a href="scenes/AnimatedScene.html" title="class in com.csse3200.game.components.cutscenes.scenes">AnimatedScene</a>&nbsp;scene)</span></div>
+<div class="block">Creates entities for the given scene, such as background and animation entities.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>scene</code> - The scene for which to create entities</dd>
+</dl>
 </section>
 </li>
 <li>

@@ -93,6 +93,10 @@ loadScripts(document, 'script');</script>
 <hr>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">CheckWinLoseComponent</span>
 <span class="extends-implements">extends <a href="../Component.html" title="class in com.csse3200.game.components">Component</a></span></div>
+<div class="block">The CheckWinLoseComponent is responsible for determining if a player has won or lost the game.
+ It evaluates the player's current gold and compares it against win and loss thresholds that adjust
+ dynamically based on the current day of the game. This component is attached to the player entity
+ and listens for changes in the player's stats (e.g., gold) and day progression.</div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -113,9 +117,11 @@ loadScripts(document, 'script');</script>
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Constructor</div>
 <div class="table-header col-last">Description</div>
-<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(int,int)" class="member-name-link">CheckWinLoseComponent</a><wbr>(int&nbsp;winAmount,
- int&nbsp;loseThreshold)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(int,int)" class="member-name-link">CheckWinLoseComponent</a><wbr>(int&nbsp;baseWinAmount,
+ int&nbsp;baseLossThreshold)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Constructs a new CheckWinLoseComponent with specified win and loss thresholds.</div>
+</div>
 </div>
 </section>
 </li>
@@ -133,20 +139,30 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#checkGameState()" class="member-name-link">checkGameState</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Public method to check the game state and return "WIN", "LOSE", or "GAME_IN_PROGRESS".</div>
+<div class="block">Checks the current game state and returns one of the following values:
+ - "WIN" if the player has enough gold to win after the final day
+ - "LOSE" if the player's gold is below the loss threshold
+ - "GAME_IN_PROGRESS" if the game is ongoing and no win/loss conditions have been met</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#decreaseLoseThreshold()" class="member-name-link">decreaseLoseThreshold</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#hasLost()" class="member-name-link">hasLost</a>()</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getAdjustedLossThreshold(int)" class="member-name-link">getAdjustedLossThreshold</a><wbr>(int&nbsp;currentDay)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Calculates the adjusted loss threshold based on the current day.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getAdjustedWinAmount(int)" class="member-name-link">getAdjustedWinAmount</a><wbr>(int&nbsp;currentDay)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Returns true if the player has lost (gold less than loseThreshold).</div>
+<div class="block">Calculates the adjusted win amount based on the current day.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#hasWon()" class="member-name-link">hasWon</a>()</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#hasLost(int)" class="member-name-link">hasLost</a><wbr>(int&nbsp;adjustedLossThreshold)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Returns true if the player has won (gold &gt;= winAmount).</div>
+<div class="block">Determines if the player has lost the game.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#hasWon(int)" class="member-name-link">hasWon</a><wbr>(int&nbsp;adjustedWinAmount)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Determines if the player has won the game.</div>
 </div>
 </div>
 </div>
@@ -171,8 +187,15 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="&lt;init&gt;(int,int)">
 <h3>CheckWinLoseComponent</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">CheckWinLoseComponent</span><wbr><span class="parameters">(int&nbsp;winAmount,
- int&nbsp;loseThreshold)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">CheckWinLoseComponent</span><wbr><span class="parameters">(int&nbsp;baseWinAmount,
+ int&nbsp;baseLossThreshold)</span></div>
+<div class="block">Constructs a new CheckWinLoseComponent with specified win and loss thresholds.
+ The component listens for the player creation event to retrieve the player's combat stats.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>baseWinAmount</code> - The base amount of gold required to win on Day 1</dd>
+<dd><code>baseLossThreshold</code> - The base amount of gold below which the player loses on Day 1</dd>
+</dl>
 </section>
 </li>
 </ul>
@@ -187,27 +210,70 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="checkGameState()">
 <h3>checkGameState</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">checkGameState</span>()</div>
-<div class="block">Public method to check the game state and return "WIN", "LOSE", or "GAME_IN_PROGRESS".</div>
+<div class="block">Checks the current game state and returns one of the following values:
+ - "WIN" if the player has enough gold to win after the final day
+ - "LOSE" if the player's gold is below the loss threshold
+ - "GAME_IN_PROGRESS" if the game is ongoing and no win/loss conditions have been met</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>a string representing the current game state ("WIN", "LOSE", or "GAME_IN_PROGRESS")</dd>
+</dl>
 </section>
 </li>
 <li>
-<section class="detail" id="hasLost()">
+<section class="detail" id="getAdjustedWinAmount(int)">
+<h3>getAdjustedWinAmount</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">getAdjustedWinAmount</span><wbr><span class="parameters">(int&nbsp;currentDay)</span></div>
+<div class="block">Calculates the adjusted win amount based on the current day.
+ The win amount increases as the game progresses, making it harder to win on later days.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>currentDay</code> - The current day of the game</dd>
+<dt>Returns:</dt>
+<dd>the adjusted win amount for the current day</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getAdjustedLossThreshold(int)">
+<h3>getAdjustedLossThreshold</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">getAdjustedLossThreshold</span><wbr><span class="parameters">(int&nbsp;currentDay)</span></div>
+<div class="block">Calculates the adjusted loss threshold based on the current day.
+ The loss threshold increases as the game progresses, giving the player more room to lose on later days.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>currentDay</code> - The current day of the game</dd>
+<dt>Returns:</dt>
+<dd>the adjusted loss threshold for the current day</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="hasLost(int)">
 <h3>hasLost</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">hasLost</span>()</div>
-<div class="block">Returns true if the player has lost (gold less than loseThreshold).</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">hasLost</span><wbr><span class="parameters">(int&nbsp;adjustedLossThreshold)</span></div>
+<div class="block">Determines if the player has lost the game.
+ The player loses if their gold falls below the adjusted loss threshold for the current day.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>adjustedLossThreshold</code> - The loss threshold for the current day</dd>
+<dt>Returns:</dt>
+<dd>true if the player has less gold than the loss threshold, false otherwise</dd>
+</dl>
 </section>
 </li>
 <li>
-<section class="detail" id="hasWon()">
+<section class="detail" id="hasWon(int)">
 <h3>hasWon</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">hasWon</span>()</div>
-<div class="block">Returns true if the player has won (gold &gt;= winAmount).</div>
-</section>
-</li>
-<li>
-<section class="detail" id="decreaseLoseThreshold()">
-<h3>decreaseLoseThreshold</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">decreaseLoseThreshold</span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">hasWon</span><wbr><span class="parameters">(int&nbsp;adjustedWinAmount)</span></div>
+<div class="block">Determines if the player has won the game.
+ The player wins if their gold equals or exceeds the adjusted win amount for the current day.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>adjustedWinAmount</code> - The win threshold for the current day</dd>
+<dt>Returns:</dt>
+<dd>true if the player has equal or more gold than the win threshold, false otherwise</dd>
+</dl>
 </section>
 </li>
 </ul>
