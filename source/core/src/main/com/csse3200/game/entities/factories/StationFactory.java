@@ -43,7 +43,8 @@ public class StationFactory {
         .addComponent(new StationCookingComponent())
         .addComponent(new StationItemHandlerComponent("oven"))
         .addComponent(new InventoryComponent(1))
-        .addComponent(new InventoryDisplayHoverComponent());
+        .addComponent(new InventoryDisplayHoverComponent())
+        .addComponent(new StationProgressDisplay());
 
 
     //set scale
@@ -106,7 +107,8 @@ public class StationFactory {
         .addComponent(new InventoryComponent(1))
         .addComponent(new InventoryDisplayHoverComponent())
         .addComponent(new StationCookingComponent())  
-        .addComponent(new StationItemHandlerComponent("stove"));
+        .addComponent(new StationItemHandlerComponent("stove"))
+        .addComponent(new StationProgressDisplay());
 
     stove.getComponent(InteractionComponent.class).setAsBox(stove.getScale());
     stove.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);

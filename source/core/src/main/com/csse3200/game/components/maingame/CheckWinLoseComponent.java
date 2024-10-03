@@ -51,4 +51,6 @@ public class CheckWinLoseComponent extends Component {
     public boolean hasWon() {
         return combatStatsComponent != null && combatStatsComponent.getGold() >= winAmount;
     }
+
+    public void decreaseLoseThreshold(){loseThreshold = loseThreshold - 10;}
 }

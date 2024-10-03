@@ -6,11 +6,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.graphics.glutils.PixmapTextureData;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
@@ -29,15 +26,15 @@ public class PlayerStatsDisplay extends UIComponent {
   Skin newFont;
   //private ImageTextButton goldText;
   private Image timerImage;
-  private Image heartImage;
   private Image goldImage;
-  private Label healthLabel;
   private Label goldLabel;
   private static Label dayLabel;
   private static int currentday;
   private static Label timerLabel;
   public static long timer;
   private static String digitaltime;
+  private static PlayerStatsDisplay instance;
+
 
 
   /**
@@ -46,17 +43,19 @@ public class PlayerStatsDisplay extends UIComponent {
   @Override
   public void create() {
     super.create();
+    instance = this;
     addActors();
     timer =  ServiceLocator.getDayNightService().FIVE_MINUTES;
-  
 
-
-    entity.getEvents().addListener("updateHealth", this::updatePlayerHealthUI);
     entity.getEvents().addListener("updateGold", this::updatePlayerGoldUI);
     ServiceLocator.getDayNightService().getEvents().addListener("newday", () -> {
             updateDay();});
     ServiceLocator.getDayNightService().getEvents().addListener("Second", () -> {
       updateTime();});
+  }
+
+  public static PlayerStatsDisplay getInstance() {
+    return instance;
   }
 
   /**
@@ -72,37 +71,13 @@ public class PlayerStatsDisplay extends UIComponent {
     goldTable = new Table();
     goldTable.bottom().left();
     goldTable.setFillParent(true);
-    goldTable.padBottom(45f).padLeft(100f);
+    goldTable.padBottom(45f).padLeft(50f);
 
     timerTable = new Table();
+    timerTable.left().pad(10f);
     timerTable.bottom().right();
     timerTable.setFillParent(true);
-    timerTable.padBottom(45f).padRight(50f);
-
-
-    // Heart image
-    float heartSideLength = 30f;
-    heartImage = new Image(ServiceLocator.getResourceService().getAsset("images/heart.png", Texture.class));
-
-    // Health text
-//    int health = entity.getComponent(CombatStatsComponent.class).getHealth();
-//    CharSequence healthText = String.format("Health: %d", health);
-//    healthLabel = new Label(healthText, skin, "large");
-//    healthLabel.setScale(0.65f);
-//
-//    table.add(heartImage).size(heartSideLength).padTop(20).padLeft(20);
-//    table.add(healthLabel);
-//    table.row();
-
-     goldImage = new Image(ServiceLocator.getResourceService().getAsset("images/money.png", Texture.class));
-     int gold = entity.getComponent(CombatStatsComponent.class).getGold();
-     CharSequence goldText = String.format("%d", gold);
-     goldLabel = new Label(goldText, skin);
-
-     goldTable.add(goldImage).size(heartSideLength).pad(5);
-     goldTable.add(goldLabel);
-     stage.addActor(goldTable);
-     goldTable.row();
+    timerTable.padBottom(45f).padRight(55f);
 
     Table table2 = new Table();
     table2.top().left();
@@ -110,16 +85,29 @@ public class PlayerStatsDisplay extends UIComponent {
     table2.padTop(45f);
 
     Image sample_image= new Image(ServiceLocator.getResourceService().getAsset("images/component_background_2.png", Texture.class));
-    table2.add(sample_image).size(150,100).row();
+    table2.add(sample_image).size(200,150).row();
     stage.addActor(table2);
 
     //Label for the Current Day
     CharSequence dayText = String.format("Day: %d", currentday); // Start with Day 1
     dayLabel = new Label(dayText, skin, "large");
+//    table.add(dayLabel).left();
     dayLabel.setFontScale(0.65f);
-    table.add(dayLabel).padLeft(45).padTop(38);
-    stage.addActor(table);
+    table.add(dayLabel).padLeft(20).padTop(38);
     table.row();
+
+    //Label for Current Gold
+    goldImage = new Image(ServiceLocator.getResourceService().getAsset("images/money.png", Texture.class));
+    int gold = entity.getComponent(CombatStatsComponent.class).getGold();
+    CharSequence goldText = String.format("Cash: %d", gold);
+    goldLabel = new Label(goldText, skin, "large");
+    goldLabel.setFontScale(0.65f);
+    goldTable.add(goldLabel).left();
+    goldTable.add(goldImage).size(20f).padLeft(5f);
+    table.add(goldTable);
+    stage.addActor(table);
+
+
 
 
     Table table3 = new Table();
@@ -135,11 +123,11 @@ public class PlayerStatsDisplay extends UIComponent {
     timerImage = new Image(ServiceLocator.getResourceService().getAsset("images/hourglass.png", Texture.class));
 
     // Timer label for the remaining time in the day
-    CharSequence TimerText = String.format("\n   %s", convertDigital(timer));
+    CharSequence TimerText = String.format("%s", convertDigital(timer));
     timerLabel = new Label(TimerText, skin, "large");
     timerLabel.setFontScale(0.65f);
 
-    timerTable.add(timerImage).size(heartSideLength).padBottom(32f);
+    timerTable.add(timerImage).size(30f).padBottom(50f);
     timerTable.add(timerLabel).padRight(0.5f).padBottom(50f);
 
     stage.addActor(timerTable);
@@ -151,20 +139,11 @@ public class PlayerStatsDisplay extends UIComponent {
   }
 
   /**
-   * Updates the player's health on the ui.
-   * @param health player health
-   */
-  public void updatePlayerHealthUI(int health) {
-    CharSequence text = String.format("Health: %d", health);
-    healthLabel.setText(text);
-  }
-
-  /**
    * Updates the player's gold on the ui.
    * @param gold player gold
    */
   public void updatePlayerGoldUI(int gold) {
-    CharSequence text = String.format("%d", gold);
+    CharSequence text = String.format("Cash: %d", gold);
     goldLabel.setText(text);
   }
 
@@ -185,7 +164,7 @@ public class PlayerStatsDisplay extends UIComponent {
     // timer;
     timer -= 1000;
     System.out.println(timer);
-    CharSequence TimerText = String.format("\n   %s", convertDigital(timer));
+    CharSequence TimerText = String.format("%s", convertDigital(timer));
     timerLabel.setText(TimerText);
     ServiceLocator.getDayNightService().getEvents().trigger("callpastsecond");
 
@@ -197,12 +176,11 @@ public class PlayerStatsDisplay extends UIComponent {
   @Override
   public void dispose() {
     super.dispose();
-    heartImage.remove();
-    healthLabel.remove();
     goldImage.remove();
     goldLabel.remove();
     dayLabel.remove();
     timerLabel.remove();
+    timerImage.remove();
   }
 
   @Override

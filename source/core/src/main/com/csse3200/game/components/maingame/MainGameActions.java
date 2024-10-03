@@ -4,8 +4,8 @@ import com.csse3200.game.GdxGame;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.npc.CustomerComponent;
 import com.csse3200.game.components.ordersystem.MainGameOrderTicketDisplay;
+import com.csse3200.game.components.ordersystem.RecipeNameEnums;
 import com.csse3200.game.entities.Entity;
-import com.csse3200.game.entities.factories.UIFactory;
 import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,38 +14,95 @@ import java.util.List;
 import java.util.Random;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+/**
+ * Actions on the main game
+ */
 public class MainGameActions extends Component {
     private static final Logger logger = LoggerFactory.getLogger(MainGameActions.class);
-    private static final int ORDER_LIMIT = 8; // Maximum number of orders allowed
+    private static final int ORDER_LIMIT = 8;
     private static final String[] RECIPE_NAMES = {"acaiBowl", "salad", "fruitSalad", "steakMeal", "bananaSplit"};
-    private GdxGame game;
-    private Entity ui = UIFactory.createDocketUI();
-    private final MainGameOrderTicketDisplay docketDisplayer = ui.getComponent(MainGameOrderTicketDisplay.class);
+    private final GdxGame game;
+    private static final List<String> currentlySpawningAnimals = new CopyOnWriteArrayList<>();
+    private final Entity ui;
+    private final MainGameOrderTicketDisplay docketDisplayer;
 
-    // List to keep track of currently spawning animals
-    private static List<String> currentlySpawningAnimals = new CopyOnWriteArrayList<>();
-
-    public MainGameActions(GdxGame game) {
+    /**
+     * MainGameActions constructor
+     * @param game the GDXGame
+     * @param docketUI the docket ui
+     */
+    public MainGameActions(GdxGame game, Entity docketUI) {
         this.game = game;
+        this.ui = docketUI;
+        this.docketDisplayer = docketUI.getComponent(MainGameOrderTicketDisplay.class);
     }
 
+    /**
+     * Create actions
+     */
     @Override
     public void create() {
         entity.getEvents().addListener("exit", this::onExit);
-        entity.getEvents().addListener("createOrder", this::onCreateOrder);
-        entity.getEvents().addListener("orderDone", this::onOrderDone);
+        ServiceLocator.getEntityService().getEvents().addListener("createOrder", this::onCreateOrder);
+        ServiceLocator.getEntityService().getEvents().addListener("createAcaiDocket", this::onCreateAcai);
+        ServiceLocator.getEntityService().getEvents().addListener("createBananaDocket", this::onCreateBanana);
+        ServiceLocator.getEntityService().getEvents().addListener("createSaladDocket", this::onCreateSalad);
+        ServiceLocator.getEntityService().getEvents().addListener("createSteakDocket", this::onCreateSteak);
+        ServiceLocator.getEntityService().getEvents().addListener("createFruitSaladDocket", this::onCreateFruitSalad);
     }
 
+    /**
+     * Exit main game screen
+     */
     private void onExit() {
         logger.info("Exiting main game screen");
         game.setScreen(GdxGame.ScreenType.MAIN_MENU);
     }
 
-    private void onCreateOrder() {
-        int orderCount = MainGameOrderTicketDisplay.getTableArrayList().size();
 
+    /**
+     * Creates Açai Bowl Docket
+     */
+    public void onCreateAcai() {
+        onCreateOrder(RecipeNameEnums.ACAI_BOWL.getRecipeName());
+    }
+
+    /**
+     * Creates Banana Split Docket
+     */
+    public void onCreateBanana() {
+        onCreateOrder(RecipeNameEnums.BANANA_SPLIT.getRecipeName());
+    }
+
+    /**
+     * Creates Salad Docket
+     */
+    public void onCreateSalad() {
+        onCreateOrder(RecipeNameEnums.SALAD.getRecipeName());
+    }
+
+    /**
+     * Creates Steak Docket
+     */
+    public void onCreateSteak() {
+        onCreateOrder(RecipeNameEnums.STEAK_MEAL.getRecipeName());
+    }
+
+    /**
+     * Creates Fruit Salad Docket
+     */
+    public void onCreateFruitSalad() {
+        onCreateOrder(RecipeNameEnums.FRUIT_SALAD.getRecipeName());
+    }
+
+    /**
+     * Create a docket for a recipe
+     * @param preferredRecipe the name of the recipe to create a docket for
+     */
+    public void onCreateOrder(String preferredRecipe) {
+        int orderCount = MainGameOrderTicketDisplay.getTableArrayList().size();
         if (orderCount < ORDER_LIMIT) {
-            String preferredRecipe = getPreferredRecipeFromSpawningAnimals();
+//            String preferredRecipe = getPreferredRecipeFromSpawningAnimals();
             if (preferredRecipe == null || preferredRecipe.isEmpty()) {
                 logger.warn("No recipe preference set. Falling back to random recipe.");
                 preferredRecipe = RECIPE_NAMES[new Random().nextInt(RECIPE_NAMES.length)];
@@ -81,15 +138,6 @@ public class MainGameActions extends Component {
 
         logger.warn("Entity with name '{}' not found", animalName);
         return null;
-    }
-
-    private void onOrderDone() {
-        if (ui != null) {
-            ServiceLocator.getEntityService().unregister(ui);
-            ui.dispose();
-            ui = null;
-            logger.info("Order entity disposed");
-        }
     }
 
     public static void addSpawningAnimal(String animalName) {

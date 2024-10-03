@@ -9,6 +9,8 @@ import com.csse3200.game.GdxGame;
 import com.csse3200.game.components.ordersystem.MainGameOrderBtnDisplay;
 import com.csse3200.game.components.player.PlayerActions;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.rendering.RenderService;
+import com.csse3200.game.services.PlayerService;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
 import com.csse3200.game.components.ordersystem.MainGameOrderTicketDisplay;
@@ -39,9 +41,10 @@ public class TutorialScreenDisplay extends UIComponent {
     private boolean dPressedLastFrame = false;
 
     public TutorialScreenDisplay(GdxGame game) {
+
         this.game = game;
-        this.orderTicketDisplay = new MainGameOrderTicketDisplay();
-        this.orderBtnDisplay = new MainGameOrderBtnDisplay();
+//        this.orderTicketDisplay = new MainGameOrderTicketDisplay(ServiceLocator.getRenderService(), ServiceLocator.getPlayerService());
+//        this.orderBtnDisplay = new MainGameOrderBtnDisplay();
     }
 
     @Override
