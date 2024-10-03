@@ -47,13 +47,11 @@ public class DayNightService {
         this.docketServiceEventHandler = docketServiceEventHandler;
 
         this.lastCheckTime = gameTime.getTime();
-        System.out.println(lastCheckTime+"asdfghjkjhgfdsasdfghjhgfdsasdfghjhgfdsdfghjhgfs");
         this.lastCheckTime2 = gameTime.getTime();
         this.lastCheckTime3 = gameTime.getTime();
         this.random = new Random();
         // randomChoice = random.nextInt(3) * 1000;
         randomChoice = random.nextInt((int) SEVENTY_FIVE_PERCENT); 
-        System.out.println(randomChoice + "/////////////////////////////////////////////////");
         
 
         create();

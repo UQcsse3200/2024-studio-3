@@ -75,7 +75,12 @@ public class NPCFactory {
         }
 
 
-
+        /**
+         * Utility class for creating upgrade NPCs within the game.
+         * This method initializes a penguin entity with various components and behaviors
+         * to serve as an upgrade vendor. The penguin can be interacted with by the player
+         * to display available upgrades.
+         */
        public static Entity createUpgradeNPC(Vector2 firstPosition, UpgradesDisplay upgradesDisplay) {
 
                 Entity penguin = createStandard(firstPosition);
@@ -98,8 +103,6 @@ public class NPCFactory {
                         penguin.dispose();  // Dispose of the penguin entity
                         });
 
-                // if (penguin.getComponent(HoverBoxComponent.class) == null) {
-                        // penguin.addComponent(new HoverBoxComponent(new Texture("images/special_NPCs/upgrade_sign.png")));
                 final boolean[] isHoverBox = {false};
                 HoverBoxComponent hoverBox = new HoverBoxComponent(new Texture("images/special_NPCs/upgrade_sign.png"));
                 hoverBox.setEnabled(false);  // Disable hover box visibility initially

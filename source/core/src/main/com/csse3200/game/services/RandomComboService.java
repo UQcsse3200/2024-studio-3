@@ -12,6 +12,14 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.util.List;
 
+/**
+ * The RandomComboService class is responsible for managing and activating random upgrades
+ * within the game. It selects a random upgrade from a predefined set of upgrades and triggers
+ * corresponding events when an upgrade is activated. 
+ * Upgrades managed by this service include "Extortion", "Loan", and "Speed"..
+ * This service utilizes the EventHandler to communicate with other game components,
+ */
+
 public class RandomComboService extends Component {
     private static final Logger logger = LoggerFactory.getLogger(RandomComboService.class);
     // private List<Upgrade> upgrades;
@@ -30,7 +38,10 @@ public class RandomComboService extends Component {
         randomChoice = random.nextInt(total_upgrades); 
     }
 
-    // Use to get associate image in UpgradesDisplay UI
+    /**
+     * Retrieves the name of the currently selected upgrade based on the random choice index.
+     * @return A String representing the name of the selected upgrade ("Extortion", "Loan", or "Speed").
+     */
     public String getSelectedUpgrade() {
         String upgrade;
         switch (randomChoice) {
@@ -51,7 +62,11 @@ public class RandomComboService extends Component {
         return upgrade;
     }
 
-    // Function call when YES button is pressed
+    /**
+     * Activates the currently selected upgrade by triggering its corresponding event.
+     * This method should be called when the player confirms the activation of the upgrade,
+     * by pressing the "YES" button in the game's UI.
+     */
     public void activateUpgrade() {
         eventHandler.trigger(getSelectedUpgrade()); 
         
