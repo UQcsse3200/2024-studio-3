@@ -19,7 +19,11 @@ import com.csse3200.game.ui.UIComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
+/**
+ * Manages the Rage Upgrade UI component, handling activation, deactivation,
+ * visual updates, and related sound effects.
+ * When in rage mode, stations operate twice as fast
+ */
 public class RageUpgrade extends UIComponent implements Upgrade {
     private static final Logger logger = LoggerFactory.getLogger(RageUpgrade.class);
     private final GameTime timesource;
@@ -126,6 +130,10 @@ public class RageUpgrade extends UIComponent implements Upgrade {
     public void activate() {
         // entity.getEvents().trigger("rageModeOn");
     }
+    /**
+     * Activates Rage mode by triggering the event, playing activation sound,
+     * displaying the overlay, and initializing the rage timer.
+     */
     public void activateRageMode() {
         ServiceLocator.getEntityService().getEvents().trigger("rageModeOn");
         rageSoundId = rageSound.play();
@@ -140,6 +148,11 @@ public class RageUpgrade extends UIComponent implements Upgrade {
     public void deactivate() {
             // entity.getEvents().trigger("rageModeOff");
         }
+    
+    /**
+     * Deactivates Rage mode by triggering related events, playing power down sound,
+     * hiding the overlay, and initiating the rage meter refill process.
+     */
     public void deactivateRageMode() {
         ServiceLocator.getEntityService().getEvents().trigger("rageModeOff");
         powerDownId = powerDownSound.play();
@@ -156,6 +169,10 @@ public class RageUpgrade extends UIComponent implements Upgrade {
         logger.info("rage fill time remaining : " + rageFillTimeRemaining);
     }
 
+    /**
+     * Updates the RageUpgrade component each frame, managing the rage timer
+     * and the refill process based on the current state.
+     */
     @Override
     public void update() {
         if (isRageActive) {

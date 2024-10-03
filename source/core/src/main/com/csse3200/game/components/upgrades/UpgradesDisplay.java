@@ -122,16 +122,16 @@ public class UpgradesDisplay extends UIComponent {
         upgradesTable.setVisible(false);
 
 
-        stage.addListener(new InputListener() {
-            @Override
-            public boolean keyDown(InputEvent event, int keycode) {
-                if (keycode == Input.Keys.U) {
-                    toggleVisibility();
-                    return true;
-                }
-                return false;
-            }
-        });
+        // stage.addListener(new InputListener() {
+        //     @Override
+        //     public boolean keyDown(InputEvent event, int keycode) {
+        //         if (keycode == Input.Keys.U) {
+        //             toggleVisibility();
+        //             return true;
+        //         }
+        //         return false;
+        //     }
+        // });
         ServiceLocator.getRandomComboService().getEvents().addListener("notenoughmoney", this::displayNotEnoughGoldUI);
     }
 

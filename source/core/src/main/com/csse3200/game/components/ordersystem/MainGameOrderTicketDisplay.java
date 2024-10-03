@@ -15,6 +15,7 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.SnapshotArray;
 import com.badlogic.gdx.utils.TimeUtils;
+import com.badlogic.gdx.utils.Timer;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.entities.Entity;
@@ -117,6 +118,13 @@ public class MainGameOrderTicketDisplay extends UIComponent {
     }
 
     /**
+     * Pauses all order ticket times for the specified duration in milliseconds.
+     *
+     * @param durationMillis duration to pause in milliseconds
+     */
+    
+
+    /**
      * Initialises the display and sets up event listeners for creating and shifting orders.
      */
     @Override
@@ -126,6 +134,10 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         ServiceLocator.getDocketService().getEvents().addListener("shiftDocketsLeft", this::shiftDocketsLeft);
         ServiceLocator.getDocketService().getEvents().addListener("shiftDocketsRight", this::shiftDocketsRight);
         ServiceLocator.getDocketService().getEvents().addListener("removeBigTicket", this::removeBigTicket);
+
+        //From Team 2, these listeners are for our dance party upgrade to pause and unpause docket times
+        ServiceLocator.getDocketService().getEvents().addListener("Dancing", ()->{setPaused(true);});
+        ServiceLocator.getDocketService().getEvents().addListener("UnDancing", ()->{setPaused(false);});
 
         //From team 2, I used your dispose method here when listening for a new day, so current dockets get removed
         //when the end of day occurs

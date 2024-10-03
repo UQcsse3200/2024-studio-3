@@ -15,8 +15,6 @@ import com.csse3200.game.components.maingame.MainGameActions;
 import com.csse3200.game.components.upgrades.*;
 import com.csse3200.game.components.mainmenu.MainMenuBackground;
 import com.csse3200.game.components.tasks.PathFollowTask;
-import com.csse3200.game.components.upgrades.LoanUpgrade;
-import com.csse3200.game.components.upgrades.RageUpgrade;
 import com.csse3200.game.components.ordersystem.*;
 import com.csse3200.game.components.moral.MoralDecision;
 import com.csse3200.game.components.ordersystem.MainGameOrderBtnDisplay;
@@ -331,6 +329,7 @@ public class MainGameScreen extends ScreenAdapter {
 			.addComponent(new LoanUpgrade())
 				.addComponent(new SpeedBootsUpgrade())
 				.addComponent(new ExtortionUpgrade())
+				.addComponent(new DancePartyUpgrade())
 				.addComponent(new PauseMenuActions(this.game))
 				.addComponent(new PauseMenuDisplay(this))
 						.addComponent(new UpgradesDisplay(this))

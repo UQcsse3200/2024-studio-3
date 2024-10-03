@@ -21,6 +21,11 @@ import com.csse3200.game.ui.UIComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * Manages the Speed Boots Upgrade UI component, handling activation, deactivation,
+ * visual updates, and related sound effects.
+ * when activated, makes player move twice as fast
+ */
 public class SpeedBootsUpgrade extends UIComponent implements Upgrade {
     private static final Logger logger = LoggerFactory.getLogger(RageUpgrade.class);
     private static final long BOOST_DURATION = 30000; // 30 sec
@@ -64,13 +69,14 @@ public class SpeedBootsUpgrade extends UIComponent implements Upgrade {
         layout = new Table();
         layout.setFillParent(true);
         layout.setVisible(isVisible);
-        setupInputListener();
+        // setupInputListener();
         ServiceLocator.getRandomComboService().getEvents().addListener("Speed", this::activate); 
  
     }
 
     /**
-     * Activate the speed boot and decrement the cost.
+     * Activates the speed boost if conditions are met (e.g., sufficient gold).
+     * Deducts the cost, updates player speed, and displays the UI.
      */
     public void activate() {
         // Change back to 20 after testing
@@ -89,7 +95,8 @@ public class SpeedBootsUpgrade extends UIComponent implements Upgrade {
     }
 
     /**
-     * Deactivate the speed boot once it reaches the time limit.
+     * Deactivates the speed boost, resetting player speed and hiding the UI.
+     * Cleans up UI elements and resets relevant flags.
      */
     public void deactivate() {
         keyboardPlayerInputComponent.setWalkSpeed(NORMAL_SPEED);
@@ -105,6 +112,10 @@ public class SpeedBootsUpgrade extends UIComponent implements Upgrade {
         }
     }
 
+    /**
+     * Updates the SpeedBootsUpgrade component each frame, managing the countdown timer
+     * and handling deactivation when the boost duration expires.
+     */
     @Override
     public void update() {
         if (isActivate) {
@@ -129,7 +140,8 @@ public class SpeedBootsUpgrade extends UIComponent implements Upgrade {
     }
 
     /**
-     * Set up the meter and the text to display the time when speed boot is activate
+     * Sets up the speed meter UI component, including its styling and positioning.
+     * Also initializes the accompanying label.
      */
     private void setupSpeedMeter() {
         Texture whiteBgTexture = ServiceLocator
@@ -169,20 +181,20 @@ public class SpeedBootsUpgrade extends UIComponent implements Upgrade {
     /**
      * Activate the speed boot if B is pressed
      */
-    private void setupInputListener() {
-        stage.addListener(new InputListener() {
-            @Override
-            public boolean keyDown(InputEvent event, int keycode) {
-                if (keycode == com.badlogic.gdx.Input.Keys.B) {
-                    if (!isActivate && boostStartTime == -1 && combatStatsComponent.getGold() >= 20){
-                        activate();
-                    }
-                    return true;
-                }
-                return false;
-            }
-        });
-    }
+    // private void setupInputListener() {
+    //     stage.addListener(new InputListener() {
+    //         @Override
+    //         public boolean keyDown(InputEvent event, int keycode) {
+    //             if (keycode == com.badlogic.gdx.Input.Keys.B) {
+    //                 if (!isActivate && boostStartTime == -1 && combatStatsComponent.getGold() >= 20){
+    //                     activate();
+    //                 }
+    //                 return true;
+    //             }
+    //             return false;
+    //         }
+    //     });
+    // }
 
     /**
      * Decrement cost when speed boot is activate.

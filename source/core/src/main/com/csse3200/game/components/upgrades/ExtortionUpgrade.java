@@ -13,6 +13,10 @@ import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * Manages the Extortion Upgrade component, allowing players to receive extra
+ * gold per customer
+ */
 public class ExtortionUpgrade extends Component implements Upgrade {
     //private static final Logger logger = LoggerFactory.getLogger(ExtortionUpgrade.class);
     private boolean isActive;
@@ -70,3 +74,4 @@ public class ExtortionUpgrade extends Component implements Upgrade {
     }
 
 }
+
