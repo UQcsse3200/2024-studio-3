@@ -19,6 +19,8 @@ import com.csse3200.game.components.maingame.CheckWinLoseComponent;
 import com.csse3200.game.components.maingame.EndDayDisplay;
 import com.csse3200.game.components.moral.MoralDecision;
 import com.csse3200.game.components.npc.PersonalCustomerEnums;
+import com.csse3200.game.components.player.TouchPlayerInputComponent;
+import com.csse3200.game.components.upgrades.UpgradesDisplay;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.benches.Bench;
 import com.csse3200.game.entities.configs.PlayerConfig;
@@ -41,6 +43,7 @@ public class ForestGameArea extends GameArea {
   private static final float WALL_WIDTH = 0.1f;
   private static final String[] forestTextures = {
     "images/special_NPCs/boss.png",
+    "images/special_NPCs/penguin2.png",
     "images/meals/acai_bowl.png",
     "images/meals/banana_split.png",
     "images/meals/salad.png",
@@ -135,7 +138,7 @@ public class ForestGameArea extends GameArea {
           "images/platecomponent/stackedplates/4plates.png",
           "images/platecomponent/stackedplates/5plates.png",
           "images/inventory_ui/slot.png",
-          "images/inventory_ui/null_image.png"
+          "images/inventory_ui/null_image.png",
   };
   private static final String[] forestTextureAtlases = {
     "images/terrain_iso_grass.atlas",
@@ -186,8 +189,8 @@ public class ForestGameArea extends GameArea {
     "images/player/playerPlate.atlas",
     "images/player/playerDirtyPlate.atlas",
           "images/player/playerFireExtinguisher.atlas",
-          "images/special_NPCs/boss.atlas", "images/stations/Servery_Animation/servery.atlas"
-
+          "images/special_NPCs/boss.atlas", "images/stations/Servery_Animation/servery.atlas",
+          "images/special_NPCs/penguin.atlas",
   };
   private static final String[] forestSounds = {"sounds/Impact4.ogg"};
   private static final String backgroundMusic = "sounds/BB_BGM.mp3";
@@ -195,6 +198,7 @@ public class ForestGameArea extends GameArea {
   private static Entity customerSpawnController;
 
   private final TerrainFactory terrainFactory;
+  private final UpgradesDisplay upgradesDisplay; 
 
   private Entity player;
   private CheckWinLoseComponent winLoseComponent;  // Reference to CheckWinLoseComponent
@@ -219,9 +223,10 @@ public class ForestGameArea extends GameArea {
    * @param terrainFactory TerrainFactory used to create the terrain for the GameArea.
    * @requires terrainFactory != null
    */
-  public ForestGameArea(TerrainFactory terrainFactory) {
+  public ForestGameArea(TerrainFactory terrainFactory, UpgradesDisplay upgradesDisplay) {
     super();
     this.terrainFactory = terrainFactory;
+    this.upgradesDisplay = upgradesDisplay; 
     //this.textDisplay = textDisplay;
 
     ServiceLocator.registerGameArea(this);
@@ -250,6 +255,10 @@ public class ForestGameArea extends GameArea {
 
     // Spawn the player
     player = spawnPlayer();
+    ServiceLocator.getDayNightService().getEvents().addListener("upgrade", () -> {
+      spawnPenguin(upgradesDisplay);});
+      
+    
 
     // Check and trigger win/lose state
     ServiceLocator.getDayNightService().getEvents().addListener("endGame", this::checkEndOfDayGameState);
@@ -768,6 +777,21 @@ public class ForestGameArea extends GameArea {
     Entity boss = NPCFactory.createBoss(targetPos);
     spawnEntityAt(boss, position, false, false);
   }
+
+  // Spawn Upgrade NPC
+  private void spawnPenguin(UpgradesDisplay upgradesDisplay){
+    GridPoint2 position = new GridPoint2(1, 3);
+    
+    Vector2 targetPos = new Vector2(1, 0);
+    // Create the penguin entity
+    Entity penguin = NPCFactory.createUpgradeNPC(targetPos, upgradesDisplay);
+
+
+    // Spawn the penguin at the desired position
+    spawnEntityAt(penguin, position, false, false);
+
+}
+
 
   /**
    * Triggers the Fired cutscene

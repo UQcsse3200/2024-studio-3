@@ -12,17 +12,14 @@ import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.components.maingame.*;
 import com.csse3200.game.components.levels.LevelComponent;
 import com.csse3200.game.components.maingame.MainGameActions;
+import com.csse3200.game.components.upgrades.*;
 import com.csse3200.game.components.mainmenu.MainMenuBackground;
 import com.csse3200.game.components.tasks.PathFollowTask;
-import com.csse3200.game.components.upgrades.LoanUpgrade;
-import com.csse3200.game.components.upgrades.RageUpgrade;
-import com.csse3200.game.components.upgrades.RandomCombination;
 import com.csse3200.game.components.ordersystem.*;
 import com.csse3200.game.components.moral.MoralDecision;
 import com.csse3200.game.components.ordersystem.MainGameOrderBtnDisplay;
 import com.csse3200.game.components.ordersystem.OrderActions;
 import com.csse3200.game.components.ordersystem.TicketDetails;
-import com.csse3200.game.components.upgrades.SpeedBootsUpgrade;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.entities.factories.LevelFactory;
@@ -69,6 +66,8 @@ public class MainGameScreen extends ScreenAdapter {
 			"images/red_overlay.jpg",
 			"images/red_fill.png",
 			"images/white_background.png",
+			"images/Upgrade_display.png",
+			"images/pause_menu2.png",
 			//background daylight cycle assets
 			"images/background_images/1.0.png",
 			"images/background_images/1.5.png",
@@ -139,6 +138,7 @@ public class MainGameScreen extends ScreenAdapter {
 		ServiceLocator.registerRenderService(new RenderService());
 		ServiceLocator.registerDocketService(new DocketService());
 		ServiceLocator.registerDayNightService(new DayNightService());
+		ServiceLocator.registerRandomComboService(new RandomComboService());
 		ServiceLocator.registerLevelService(new LevelService());
 		ServiceLocator.registerGameScreen(this);
 
@@ -153,7 +153,8 @@ public class MainGameScreen extends ScreenAdapter {
 
 		logger.debug("Initialising main game screen entities");
 		TerrainFactory terrainFactory = new TerrainFactory(renderer.getCamera());
-		ForestGameArea forestGameArea = new ForestGameArea(terrainFactory);
+		UpgradesDisplay upgradesDisplay = new UpgradesDisplay(this);
+		ForestGameArea forestGameArea = new ForestGameArea(terrainFactory, upgradesDisplay);
 		forestGameArea.create();
 		Entity spawnControllerEntity = LevelFactory.createSpawnControllerEntity();
 		ServiceLocator.getEntityService().register(spawnControllerEntity);
@@ -324,12 +325,18 @@ public class MainGameScreen extends ScreenAdapter {
 			.addComponent(inputComponent)
 			.addComponent(new TerminalDisplay())
 			.addComponent(new OrderActions(this.game))
+			.addComponent(new MainGameOrderBtnDisplay())
 			.addComponent(new PauseMenuActions(this.game))
 			.addComponent(new PauseMenuDisplay(this))
 			.addComponent(new RageUpgrade())
 			.addComponent(new LoanUpgrade())
-			.addComponent(new RandomCombination())
-			.addComponent(new SpeedBootsUpgrade());
+				.addComponent(new SpeedBootsUpgrade())
+				.addComponent(new ExtortionUpgrade())
+				.addComponent(new DancePartyUpgrade())
+				.addComponent(new PauseMenuActions(this.game))
+				.addComponent(new PauseMenuDisplay(this))
+						.addComponent(new UpgradesDisplay(this))
+								.addComponent(new RecipeCardDisplay(this));
 
 
 
