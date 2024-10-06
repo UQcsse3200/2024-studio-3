@@ -1,6 +1,7 @@
 package com.csse3200.game.components.cutscenes;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -19,7 +20,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * CutsceneTextDisplay handles displaying scrolling text during a cutscene. The text is displayed
- * one character at a time, and pressing ENTER will skip the scrolling and display the full text immediately.
+ * one character at a time, and pressing Shift will skip the scrolling and display the full text immediately.
  */
 public class CutsceneTextDisplay extends UIComponent {
     private static final Logger logger = LoggerFactory.getLogger(CutsceneTextDisplay.class);
@@ -73,7 +74,7 @@ public class CutsceneTextDisplay extends UIComponent {
         // Set up the label for text display
         BitmapFont defaultFont = new BitmapFont();
         Label.LabelStyle labelStyle = new Label.LabelStyle(defaultFont, Color.BLACK);
-        label = new Label("Press Enter to continue", labelStyle);
+        label = new Label("Press 'Shift' to continue", labelStyle);
         label.setFontScale(3.0f);
         label.setWrap(true);  // Enable text wrapping
         label.setAlignment(Align.top | Align.left);
@@ -90,14 +91,16 @@ public class CutsceneTextDisplay extends UIComponent {
 
 
     /**
-     * Sets up the input listener to allow skipping text scrolling by pressing ENTER.
+     * Sets up the input listener to allow skipping text scrolling by pressing ENTER or shift.
      */
     private void setupInputListener() {
         stage.addListener(new InputListener() {
             @Override
             public boolean keyDown(InputEvent event, int keycode) {
-                // If ENTER is pressed, skip to displaying the full text
-                if (keycode == com.badlogic.gdx.Input.Keys.ENTER) {
+                // If Shift is pressed, skip to displaying the full text
+                if (keycode == Input.Keys.ENTER
+                    || keycode == Input.Keys.SHIFT_LEFT
+                    || keycode == Input.Keys.SHIFT_RIGHT) {
                     logger.info("Space bar pressed. Moving to next piece of text");
                     Cutscene currentCutscene = ServiceLocator.getCurrentCutscene();
                     currentCutscene.setTextForScene(currentCutscene.currentScene);

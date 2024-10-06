@@ -202,7 +202,9 @@ public class TutorialScreenDisplay extends UIComponent {
                 }
                 break;
             case 4:
-                if (Gdx.input.isKeyJustPressed(Input.Keys.SHIFT_RIGHT) || Gdx.input.isKeyJustPressed(Input.Keys.SHIFT_LEFT)) {
+                if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)
+                    || Gdx.input.isKeyJustPressed(Input.Keys.SHIFT_RIGHT)
+                    || Gdx.input.isKeyJustPressed(Input.Keys.SHIFT_LEFT)) {
                     startGame();
                 }
                 break;
