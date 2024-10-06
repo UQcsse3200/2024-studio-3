@@ -9,6 +9,7 @@ import com.csse3200.game.GdxGame;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.events.EventHandler;
+import com.csse3200.game.events.listeners.EventListener0;
 import com.csse3200.game.extensions.GameExtension;
 import com.csse3200.game.rendering.RenderService;
 import com.csse3200.game.services.DocketService;
@@ -24,8 +25,6 @@ import org.mockito.Mock;
 import org.mockito.MockedStatic;
 import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 
 import static org.mockito.Mockito.*;
@@ -51,6 +50,8 @@ class MainGameActionsTest {
 	@Mock
 	PlayerService playerService;
 	@Mock
+	EventHandler eventHandler;
+	@Mock
 	EventHandler eventHandler2;
 	@Mock
 	ResourceService resourceService;
@@ -59,6 +60,7 @@ class MainGameActionsTest {
 	@Mock Table table;
 	@Mock Entity entity;
 	MainGameOrderTicketDisplay orderTicketDisplay;
+	@Mock
 	GdxGame mockGame;
 	private MainGameActions mainGameActions;
 	MockedStatic<MainGameOrderTicketDisplay> mockedStatic;
@@ -101,6 +103,15 @@ class MainGameActionsTest {
 	}
 
 	/**
+	 * Test should change game screen
+	 */
+	@Test
+	public void testOnExit() {
+		mainGameActions.onExit();
+		verify(mockGame, times(1)).setScreen(GdxGame.ScreenType.MAIN_MENU);
+	}
+
+	/**
 	 * Test should create order when table is below the limit
 	 */
 	@Test
@@ -123,6 +134,16 @@ class MainGameActionsTest {
 		mainGameActions.onCreateOrder(null);
 		verify(orderTicketDisplay, never()).setRecipe(anyString());
 		verify(orderTicketDisplay, never()).addActors();
+	}
+
+	/**
+	 * Test should create order when preferredRecipe is empty
+	 */
+	@Test
+	public void testOnCreateOrderEmptyRecipe() {
+		mainGameActions.onCreateOrder("");
+		verify(orderTicketDisplay, times(1)).setRecipe(anyString());
+		verify(orderTicketDisplay, times(1)).addActors();
 	}
 
 	/**
