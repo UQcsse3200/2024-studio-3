@@ -2,26 +2,18 @@ package com.csse3200.game.screens;
 
 
 import com.badlogic.gdx.Gdx;
-import com.csse3200.game.services.SaveLoadService;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.ai.tasks.AITaskComponent;
-import com.csse3200.game.ai.tasks.Task;
 import com.csse3200.game.areas.ForestGameArea;
 import com.csse3200.game.areas.terrain.TerrainFactory;
+import com.csse3200.game.components.gamearea.PerformanceDisplay;
 import com.csse3200.game.components.maingame.*;
-import com.csse3200.game.components.levels.LevelComponent;
-import com.csse3200.game.components.maingame.MainGameActions;
-import com.csse3200.game.components.upgrades.*;
-import com.csse3200.game.components.mainmenu.MainMenuBackground;
-import com.csse3200.game.components.tasks.PathFollowTask;
 import com.csse3200.game.components.ordersystem.*;
-import com.csse3200.game.components.moral.MoralDecision;
-import com.csse3200.game.components.ordersystem.MainGameOrderBtnDisplay;
-import com.csse3200.game.components.ordersystem.OrderActions;
-import com.csse3200.game.components.ordersystem.TicketDetails;
+import com.csse3200.game.components.tutorial.KeybindsButtonDisplay;
+import com.csse3200.game.components.upgrades.*;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.entities.factories.LevelFactory;
@@ -37,15 +29,8 @@ import com.csse3200.game.rendering.Renderer;
 import com.csse3200.game.services.*;
 import com.csse3200.game.ui.terminal.Terminal;
 import com.csse3200.game.ui.terminal.TerminalDisplay;
-import com.csse3200.game.components.maingame.EndDayDisplay;
-import com.csse3200.game.components.maingame.MainGameExitDisplay;
-import com.csse3200.game.components.gamearea.PerformanceDisplay;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import com.csse3200.game.components.ordersystem.DocketLineDisplay;
-import com.csse3200.game.services.GameTime;
-import com.csse3200.game.components.player.InventoryDisplay;
-import java.util.Arrays;
 
 /**
  * The game screen containing the main game.
@@ -318,12 +303,13 @@ public class MainGameScreen extends ScreenAdapter {
 		  	.addComponent(docketLineDisplay)
 			.addComponent(new PerformanceDisplay())
 			.addComponent(new MainGameActions(this.game, UIFactory.createDocketUI()))
-			.addComponent(new MainGameExitDisplay())
+			//.addComponent(new MainGameExitDisplay())
 			.addComponent(new Terminal())
 			.addComponent(inputComponent)
 			.addComponent(new TerminalDisplay())
 			.addComponent(new OrderActions(this.game))
-			.addComponent(new MainGameOrderBtnDisplay())
+			//.addComponent(new MainGameOrderBtnDisplay())
+			.addComponent(new KeybindsButtonDisplay())
 			.addComponent(new PauseMenuActions(this.game))
 			.addComponent(new PauseMenuDisplay(this))
 			.addComponent(new RageUpgrade())

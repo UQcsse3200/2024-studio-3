@@ -84,7 +84,7 @@ public class PlayerStatsDisplay extends UIComponent {
     //Label for Current Gold
     goldImage = new Image(ServiceLocator.getResourceService().getAsset("images/money.png", Texture.class));
     int gold = entity.getComponent(CombatStatsComponent.class).getGold();
-    CharSequence goldText = String.format("Cash: %d", gold);
+    CharSequence goldText = String.format("Gold: %d", gold);
     goldLabel = new Label(goldText, skin, "large");
 
     goldTable.add(goldLabel).left();
