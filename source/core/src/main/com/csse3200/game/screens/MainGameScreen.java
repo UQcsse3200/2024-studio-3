@@ -303,12 +303,10 @@ public class MainGameScreen extends ScreenAdapter {
 		InputComponent inputComponent =
 				ServiceLocator.getInputService().getInputFactory().createForTerminal();
 
-		docketLineDisplay = new DocketLineDisplay();
-
 		Entity ui = new Entity();
 		ui.addComponent(new GameBackgroundDisplay())
 			.addComponent(new InputDecorator(stage, 10))
-		  	.addComponent(docketLineDisplay)
+		  	.addComponent(docketLineDisplay = new DocketLineDisplay())
 			.addComponent(new PerformanceDisplay())
 			.addComponent(new MainGameActions(this.game, UIFactory.createDocketUI()))
 			//.addComponent(new MainGameExitDisplay())

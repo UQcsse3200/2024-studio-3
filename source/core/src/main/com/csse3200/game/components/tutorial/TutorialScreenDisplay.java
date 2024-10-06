@@ -168,7 +168,7 @@ public class TutorialScreenDisplay extends UIComponent {
     private void completeTutorial() {
         if (textDisplay != null) {
             textDisplay.setVisible(true);
-            createTextBox("Tutorial Complete! Press ENTER to continue.");
+            createTextBox("Tutorial Complete! Press Shift to continue.");
         } else {
             logger.error("textDisplay is null during completeTutorial.");
         }
@@ -202,7 +202,7 @@ public class TutorialScreenDisplay extends UIComponent {
                 }
                 break;
             case 4:
-                if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
+                if (Gdx.input.isKeyJustPressed(Input.Keys.SHIFT_RIGHT) || Gdx.input.isKeyJustPressed(Input.Keys.SHIFT_LEFT)) {
                     startGame();
                 }
                 break;
