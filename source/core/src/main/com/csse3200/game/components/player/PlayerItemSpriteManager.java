@@ -9,7 +9,6 @@ import com.csse3200.game.components.items.ItemComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
 /**
  * A class that handles updating the player sprite to display what the
  * player is currently holding in their hand.
@@ -23,8 +22,7 @@ public class PlayerItemSpriteManager extends Component {
      * Updates the player sprite to match what is currently being held in
      * the player's InventoryComponent
      */
-    //@Override
-    public void updateInventory() {
+    public void onUpdateInventory() {
         updatePlayerSprite(entity.getComponent(InventoryComponent.class).getItemFirst());
     }
 
@@ -34,7 +32,7 @@ public class PlayerItemSpriteManager extends Component {
     @Override
     public void create() {
         // listener for when the player's InventoryComponent is updated
-        entity.getEvents().addListener("updateInventory", this::updateInventory);
+        entity.getEvents().addListener("updateInventory", this::onUpdateInventory);
         LOGGER.info("PlayerItemSpriteManager created");
     }
 
@@ -43,7 +41,7 @@ public class PlayerItemSpriteManager extends Component {
      * @param item The item to show the player sprite holding.
      */
     private void updatePlayerSprite(ItemComponent item) {
-        if (item == null) { // All items should have this?????
+        if (item == null) { // Player inventory empty
             //Updates player sprite to default
             entity.getEvents().trigger("updateAnimationEmptyInventory");
             LOGGER.info("PlayerItemSpriteManager animation updated");
