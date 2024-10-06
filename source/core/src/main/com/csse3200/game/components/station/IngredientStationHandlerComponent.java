@@ -78,7 +78,6 @@ public class IngredientStationHandlerComponent extends Component {
      @param playerInventoryComponent reference to player inventory
      */
     public void stationGiveItem(InventoryComponent playerInventoryComponent, InventoryDisplay inventoryDisplay) {
-        // entity.getEvents().trigger("showTooltip", "You took something from the station!");
         ItemComponent item = this.inventoryComponent.getItemFirst();
         playerInventoryComponent.addItemAt(item,0);
         inventoryDisplay.update();
@@ -87,10 +86,8 @@ public class IngredientStationHandlerComponent extends Component {
         // Create Entity and give an Item Component
         IngredientComponent itemComponent = getIngredient(this.ingredient);
 
-        ///this.inventoryComponent.addItemAt(new ItemComponent("Apples", ItemType.APPLE, 1), 0);
+        // this.inventoryComponent.addItemAt(new ItemComponent("Apples", ItemType.APPLE, 1), 0);
         this.inventoryComponent.addItemAt(itemComponent, 0);
-
-        //entity.getEvents().trigger("interactionEnd");
     }
 
     /**
