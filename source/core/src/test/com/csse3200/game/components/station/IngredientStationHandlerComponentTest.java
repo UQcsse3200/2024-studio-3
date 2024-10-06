@@ -74,6 +74,11 @@ public class IngredientStationHandlerComponentTest {
     }
 
     @Test
+    public void testStationReturnsCorrectType() {
+        assertTrue(handler.getType().equals("oven"));
+    }
+
+    @Test
     public void testStationGivesItemToPlayer() {
         // Simulate player interaction with the station
         handler.handleInteraction(playerInventory, playerInventoryDisplay, "default");
