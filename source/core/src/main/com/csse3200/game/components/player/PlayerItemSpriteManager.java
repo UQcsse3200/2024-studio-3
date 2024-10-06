@@ -23,8 +23,8 @@ public class PlayerItemSpriteManager extends Component {
      * Updates the player sprite to match what is currently being held in
      * the player's InventoryComponent
      */
-    @Override
-    public void update() {
+    //@Override
+    public void updateInventory() {
         updatePlayerSprite(entity.getComponent(InventoryComponent.class).getItemFirst());
     }
 
@@ -34,7 +34,7 @@ public class PlayerItemSpriteManager extends Component {
     @Override
     public void create() {
         // listener for when the player's InventoryComponent is updated
-        entity.getEvents().addListener("updateInventory", this::update);
+        entity.getEvents().addListener("updateInventory", this::updateInventory);
         LOGGER.info("PlayerItemSpriteManager created");
     }
 
