@@ -197,12 +197,19 @@ public class MainGameScreen extends ScreenAdapter {
 	 */
 	@Override
 	public void resize(int width, int height) {
+		logger.warn("HERE");
+		if (width == 0) {
+			width = 1;
+		}
+		if (height == 0) {
+			height = 1;
+		}
 		renderer.resize(width, height);
 		docketLineDisplay.resize();
 		if (orderTicketDisplay != null) {
 			orderTicketDisplay.updateDocketSizes();
 		}
-		logger.trace("Resized renderer: ({} x {})", width, height);
+		logger.warn("Resized renderer: ({} x {})", width, height);
 	}
 
 	/**
