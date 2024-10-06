@@ -2,6 +2,7 @@ package com.csse3200.game.components.station;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -139,6 +140,24 @@ public class StationChoppingComponentTest {
         verify(mockIngredientComponent).chopItem();
         boolean isStillChopping = mockChopIngredientComponent.getIsChopping();
         assertFalse(isStillChopping);
+    }
+
+    @Test
+    public void TestStationDuringNoIngredient() {
+        // Change mock item handler to return null
+        when(mockItemHandler.peek()).thenReturn(null);
+
+        // Need to call create on station here
+        mockStation.create();
+
+        // Make sure the handler returns null (no item)
+        assertNull(mockItemHandler.peek());
+
+        // Attempt to start cooking the ingredient
+        mockStation.getEvents().trigger("Cook Ingredient");
+
+        // Now assert that the ingredient isn't cooking
+        assertFalse(mockChopIngredientComponent.getIsChopping());
     }
     
 }
