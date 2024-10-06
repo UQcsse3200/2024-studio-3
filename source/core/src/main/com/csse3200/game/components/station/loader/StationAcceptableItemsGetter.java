@@ -25,6 +25,11 @@ public class StationAcceptableItemsGetter {
     private static FileHandle handle = new FileHandle(filePath);
     private static StationAcceptableItemsConfig configs = json.fromJson(StationAcceptableItemsConfig.class, handle);
 
+    // Shouldn't be able to construct this class
+    private StationAcceptableItemsGetter() {
+        throw new IllegalStateException("Unable to instantiate StationAcceptableItemGetter");
+    }
+
     /**
      * Function to read the acceptable items file and calculate acceptable items
      * using that
@@ -39,5 +44,5 @@ public class StationAcceptableItemsGetter {
             case "fridge" -> configs.getFridgeConfig();
             default -> null;
         };
-    }
+    } 
 }
