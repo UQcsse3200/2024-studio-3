@@ -60,6 +60,17 @@ public class BackstoryCutsceneDisplay extends UIComponent {
         table.top().top();  // Move it to the top-center of the screen (modify if necessary)
         table.setFillParent(true);
 
+        // Create "Skip" button with its functionality
+        TextButton skipBtn = new TextButton("Skip Backstory", skin);
+        skipBtn.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent changeEvent, Actor actor) {
+                logger.info("Backstory skipped.");
+                entity.getEvents().trigger("cutsceneEnded");  // Trigger skip
+            }
+        });
+        table.add(skipBtn).padTop(10f).padRight(30f);
+
         // Create "Next Scene" button with its functionality
         TextButton nextSceneBtn = new TextButton("Next Scene", skin);
         nextSceneBtn.addListener(new ChangeListener() {
