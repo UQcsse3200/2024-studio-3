@@ -52,16 +52,17 @@ public class RecipeCardDisplay extends UIComponent {
         backgroundImage = createRecipeCardBackground();
         stage.addActor(backgroundImage);
 
-        stage.addListener(new InputListener() {
-            @Override
-            public boolean keyDown(InputEvent event, int keycode) {
-                if (keycode == com.badlogic.gdx.Input.Keys.ENTER) {
-                    toggleVisibility();
-                    return true;
-                }
-                return false;
-            }
-        });
+        // I had to comment this out because the image it displays is ugly and causes glitches #474
+//        stage.addListener(new InputListener() {
+//            @Override
+//            public boolean keyDown(InputEvent event, int keycode) {
+//                if (keycode == com.badlogic.gdx.Input.Keys.ENTER) {
+//                    toggleVisibility();
+//                    return true;
+//                }
+//                return false;
+//            }
+//        });
         ServiceLocator.getResourceService().loadAll(); // Ensures the texture is loaded
     }
 

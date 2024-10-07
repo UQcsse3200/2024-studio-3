@@ -93,7 +93,7 @@ public class MapLayout {
                     String square = parts[col];
 
                     // Log the current square being processed a
-                    logger.info("Checking square at row " + row + ", column " + col + ": " + square);
+//                    logger.info("Checking square at row " + row + ", column " + col + ": " + square);
 
                     // Spawn single bench row when 'X'
                     if (square.equals("X")) {
@@ -101,7 +101,7 @@ public class MapLayout {
                         strToNum2 = Integer.valueOf(parts[col + 2]);
                         benches.addAll(readBench("X", strToNum, strToNum2, row));
                         col += 3;
-                        logger.info("Spawning entity at row " + row + ", column " + col);
+//                        logger.info("Spawning entity at row " + row + ", column " + col);
                     }
                     // Spawn bench column when 'Y'
                     else if (square.equals("Y")) {

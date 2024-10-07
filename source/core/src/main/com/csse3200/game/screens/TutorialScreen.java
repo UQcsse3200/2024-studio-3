@@ -10,6 +10,7 @@ import com.csse3200.game.components.maingame.*;
 import com.csse3200.game.components.ordersystem.MainGameOrderBtnDisplay;
 import com.csse3200.game.components.ordersystem.MainGameOrderTicketDisplay;
 import com.csse3200.game.components.ordersystem.OrderActions;
+import com.csse3200.game.components.upgrades.*;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.entities.factories.RenderFactory;
@@ -162,14 +163,22 @@ public class TutorialScreen extends ScreenAdapter {
         Entity ui = new Entity();
         ui.addComponent(new GameBackgroundDisplay())
                 .addComponent(new InputDecorator(stage, 10))
+                .addComponent(new DocketLineDisplay())
                 .addComponent(new PerformanceDisplay())
                 .addComponent(new MainGameActions(this.game, UIFactory.createDocketUI()))
-                .addComponent(new MainGameExitDisplay())
+                //.addComponent(new MainGameExitDisplay())
                 .addComponent(new Terminal())
                 .addComponent(inputComponent)
                 .addComponent(new TerminalDisplay())
-                .addComponent(new DocketLineDisplay())
                 .addComponent(new OrderActions(this.game))
+                .addComponent(new PauseMenuActions(this.game))
+                .addComponent(new RageUpgrade())
+                .addComponent(new LoanUpgrade())
+                .addComponent(new SpeedBootsUpgrade())
+                .addComponent(new ExtortionUpgrade())
+                .addComponent(new DancePartyUpgrade())
+                .addComponent(new PauseMenuActions(this.game))
+
                 .addComponent(new TutorialScreenDisplay(this.game))
                 .addComponent(new TutorialTextDisplay(this));
 
