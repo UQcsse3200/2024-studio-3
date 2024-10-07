@@ -58,7 +58,6 @@ public class KeybindsButtonDisplay extends UIComponent {
 		Image backgroundImage = new Image(keybindsMenuTexture);
 		backgroundImage.setSize(1000, 1000);
 
-
 		keybindsMenu.add(backgroundImage);
 		return keybindsMenu;
 	}
@@ -69,6 +68,7 @@ public class KeybindsButtonDisplay extends UIComponent {
 	 */
 	public void showKeybinds(boolean isPressed) {
 		keybindsMenu.setVisible(isPressed);
+		keybindsText.setVisible(isPressed);
 	}
 
 	/**
@@ -98,20 +98,21 @@ public class KeybindsButtonDisplay extends UIComponent {
 	 * Creates the keybinds menu text
 	 * @return the keybinds menu text
 	 */
-//	public Table createKeybindsText() {
-//		keybindsText = new Table();
-//		keybindsText.center();
-//		keybindsText.setFillParent(true);
-//		//keybindsText.padTop(70f).padLeft(20f);
-//
-//		Label keybindsLabel = new Label("Keybindings", skin);
-//		Label movelLabel = new Label("W - Move Up\nA - Move Left\nS - Move Down\nD - Move Right", skin);
-//
-//		keybindsText.add(keybindsLabel).row();
-//		keybindsText.add(movelLabel).row();
-//
-//		return keybindsText;
-//	}
+	public Table createKeybindsText() {
+		keybindsText = new Table();
+		keybindsText.center();
+		keybindsText.setFillParent(true);
+		//keybindsText.padTop(70f).padLeft(20f);
+		keybindsText.setVisible(false);
+
+		Label keybindsLabel = new Label("Keybindings", skin);
+		Label movelLabel = new Label("W - Move Up\nA - Move Left\nS - Move Down\nD - Move Right", skin);
+
+		keybindsText.add(keybindsLabel).row();
+		keybindsText.add(movelLabel).row();
+
+		return keybindsText;
+	}
 
 	/**
 	 * Removes the button
