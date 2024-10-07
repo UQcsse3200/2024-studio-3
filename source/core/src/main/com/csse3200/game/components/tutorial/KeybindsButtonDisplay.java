@@ -53,6 +53,9 @@ public class KeybindsButtonDisplay extends UIComponent {
 		stage.addActor(table);
 	}
 
+	/**
+	 * Removes the button
+	 */
 	@Override
 	public void dispose() {
 		super.dispose();
@@ -62,27 +65,43 @@ public class KeybindsButtonDisplay extends UIComponent {
 		}
 	}
 
-
+	/**
+	 * Draws the button on the screen. The actual rendering is handled by the stage, so this method is empty.
+	 * @param batch Batch to render to.
+	 */
 	public void draw(SpriteBatch batch) {
-		// Drawing is handled by the stage, so no implementation needed here
+		// Drawing is handled by the stage, so no implementation needed
 	}
 
-
+	/**
+	 * Gets the state of the button
+	 * @return the stage
+	 */
 	public Stage getStage() {
 		return stage;
 	}
 
+	/**
+	 * Set the stage
+	 * @param stage the stage
+	 */
 	@Override
 	public void setStage(Stage stage) {
 		this.stage = stage;
 	}
 
-
+	/**
+	 * Set the table
+	 * @param table the gable
+	 */
 	public void setTable(Table table) {
 		this.table = table;
 	}
 
-
+	/**
+	 * Gets the table
+	 * @return the table
+	 */
 	public Table getTable() {
 		return table;
 	}
