@@ -232,11 +232,13 @@ public abstract class Cutscene extends Component {
         if (scene.getImagePaths() != null) {
             String[] imagePaths = scene.getImagePaths();
             Vector2[] imagePositions = scene.getImagePositions();
+            float[] imageScales = scene.getImageScales();
             for (int i = 0; i < imagePaths.length; i++) {
                 String imagePath = imagePaths[i];
                 Vector2 imagePosition = imagePositions[i];
+                float imageScale = imageScales[i];
                 // Assume that the animation is called idle for now.
-                Entity image = CutsceneFactory.createImage(imagePath);
+                Entity image = CutsceneFactory.createImage(imagePath, imageScale);
                 entities.add(image);
                 image.setPosition(imagePosition);
                 ServiceLocator.getEntityService().register(image);
