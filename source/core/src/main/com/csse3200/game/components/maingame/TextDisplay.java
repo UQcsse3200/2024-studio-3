@@ -197,14 +197,20 @@ public class TextDisplay extends UIComponent {
         stage.addListener(new InputListener() {
             @Override
             public boolean keyDown(InputEvent event, int keycode) {
-                if (keycode == com.badlogic.gdx.Input.Keys.ENTER) {
-                    currentPart++;
-                    charIndex = 0;
-                    lastUpdate = 0;
-                    TextDisplay.this.currentText = new StringBuilder();
-                    // if no more text remaining
-                    if (currentPart == TextDisplay.this.text.size()) {
-                        setVisible(false);
+                if (keycode == com.badlogic.gdx.Input.Keys.ENTER && keycode == com.badlogic.gdx.Input.Keys.SPACE) {
+                    // if the text hasn't been fully shown
+                    if (charIndex < TextDisplay.this.text.get(currentPart).length()) {
+                        label.setText(text.get(currentPart));
+                        charIndex = TextDisplay.this.text.get(currentPart).length();
+                    } else {
+                        currentPart++;
+                        charIndex = 0;
+                        lastUpdate = 0;
+                        TextDisplay.this.currentText = new StringBuilder();
+                        // if no more text remaining
+                        if (currentPart == TextDisplay.this.text.size()) {
+                            setVisible(false);
+                        }
                     }
                     return true;
                 }
