@@ -1,57 +1,117 @@
 package com.csse3200.game.components.tutorial;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Displays Keybindings button
  */
 public class KeybindsButtonDisplay extends UIComponent {
-	private static final Logger logger = LoggerFactory.getLogger(KeybindsButtonDisplay.class);
-	private Table table;
+	private Table keybindButton;
+	private Table keybindsMenu;
+	private Table keybindsText;
+	private boolean buttonPressed = false;
+	private static final String[] keybindsMenuTexture = {"images/pause_menu.png"};
 
 	/**
-	 * Initalizes button display
+	 * Initializes button display
 	 */
 	@Override
 	public void create() {
 		super.create();
-
-		addActors();
+		ServiceLocator.getResourceService().loadTextures(keybindsMenuTexture);
+		setupUI();
 	}
 
 	/**
 	 * Adds Keybindings button to UI
 	 */
-	private void addActors() {
-		if (table == null) {
-			table = new Table();
-		}
+	private void setupUI() {
+		keybindsMenu = createKeybindsMenu();
+		keybindButton = createButtonTable();
+		keybindsText = createKeybindsText();
 
-		table.left().left();
-		table.setFillParent(true);
-		table.padTop(100f).padLeft(20f);
+		stage.addActor(keybindsMenu);
+		stage.addActor(keybindButton);
+		stage.addActor(keybindsText);
+	}
+
+	/**
+	 * Creates keybinds table menu
+	 * @return the keybinds menu table
+	 */
+	public Table createKeybindsMenu() {
+		keybindsMenu = new Table();
+		keybindsMenu.center();
+		keybindsMenu.setFillParent(true);
+		keybindsMenu.padTop(50f);
+		keybindsMenu.setVisible(false);
+
+		Texture keybindsMenuTexture = ServiceLocator
+			.getResourceService().getAsset("images/pause_menu2.png", Texture.class);
+		Image backgroundImage = new Image(keybindsMenuTexture);
+		backgroundImage.setSize(1000, 1000);
+
+
+		keybindsMenu.add(backgroundImage);
+		return keybindsMenu;
+	}
+
+	/**
+	 * Toggles the visibility of the keybinds menu
+	 * @param isPressed keybinds button is pressed
+	 */
+	public void showKeybinds(boolean isPressed) {
+		keybindsMenu.setVisible(isPressed);
+	}
+
+	/**
+	 * Creates the button
+	 * @return the keybinds button
+	 */
+	public Table createButtonTable() {
+		keybindButton = new Table();
+		keybindButton.left();
+		keybindButton.setFillParent(true);
+		keybindButton.padTop(100f).padLeft(20f);
 
 		TextButton button = new TextButton("Keybindings", skin);
-
 		button.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent changeEvent, Actor actor) {
-				ServiceLocator.getEntityService().getEvents().trigger("keybindings");
+				buttonPressed = !buttonPressed;
+				showKeybinds(buttonPressed);
 			}
 		});
-		table.add(button);
+		keybindButton.add(button);
 
-		stage.addActor(table);
+		return keybindButton;
 	}
+
+	/**
+	 * Creates the keybinds menu text
+	 * @return the keybinds menu text
+	 */
+//	public Table createKeybindsText() {
+//		keybindsText = new Table();
+//		keybindsText.center();
+//		keybindsText.setFillParent(true);
+//		//keybindsText.padTop(70f).padLeft(20f);
+//
+//		Label keybindsLabel = new Label("Keybindings", skin);
+//		Label movelLabel = new Label("W - Move Up\nA - Move Left\nS - Move Down\nD - Move Right", skin);
+//
+//		keybindsText.add(keybindsLabel).row();
+//		keybindsText.add(movelLabel).row();
+//
+//		return keybindsText;
+//	}
 
 	/**
 	 * Removes the button
@@ -59,9 +119,14 @@ public class KeybindsButtonDisplay extends UIComponent {
 	@Override
 	public void dispose() {
 		super.dispose();
-
-		if (table != null) {
-			table.clear();
+		if (keybindButton != null) {
+			keybindButton.clear();
+		}
+		if (keybindsMenu != null) {
+			keybindsMenu.clear();
+		}
+		if (keybindsText != null) {
+			keybindsText.clear();
 		}
 	}
 
@@ -89,21 +154,4 @@ public class KeybindsButtonDisplay extends UIComponent {
 	public void setStage(Stage stage) {
 		this.stage = stage;
 	}
-
-	/**
-	 * Set the table
-	 * @param table the gable
-	 */
-	public void setTable(Table table) {
-		this.table = table;
-	}
-
-	/**
-	 * Gets the table
-	 * @return the table
-	 */
-	public Table getTable() {
-		return table;
-	}
-
 }

@@ -52,7 +52,6 @@ public class MainGameActions extends Component {
         ServiceLocator.getEntityService().getEvents().addListener("goodEnd", this::onGoodEnd);
         ServiceLocator.getEntityService().getEvents().addListener("badEnd", this::onBadEnd);
         ServiceLocator.getEntityService().getEvents().addListener("loseEnd", this::onLoseEnd);
-        ServiceLocator.getEntityService().getEvents().addListener("keybindings", this::onKeybindings);
     }
 
     /**
@@ -157,13 +156,6 @@ public class MainGameActions extends Component {
         } else {
             logger.info("Order limit of {} reached", ORDER_LIMIT);
         }
-    }
-
-    /**
-     * Show keybindings
-     */
-    public void onKeybindings() {
-        logger.info("Keybindings button clicked");
     }
 
     private String getPreferredRecipeFromSpawningAnimals() {
