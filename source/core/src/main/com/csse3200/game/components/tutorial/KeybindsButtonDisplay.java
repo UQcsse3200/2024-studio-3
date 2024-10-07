@@ -18,6 +18,9 @@ public class KeybindsButtonDisplay extends UIComponent {
 	private Table keybindsText;
 	private boolean buttonPressed = false;
 	private static final String[] keybindsMenuTexture = {"images/pause_menu.png"};
+	private String[] keybindsLabels = {"W - Move Up\nA - Move Left\nS - Move Down\nD - Move Right", "E - Pick Up",
+		"Q - Chop", "P - End Day Screen", "O - Pause", "F1 - Debug Terminal", "[ - Move Docket Left",
+		"] - Move Docket Right", "L - Loan Upgrade", "Z - Dance Party Upgrade", "R - Rage Upgrade"};
 
 	/**
 	 * Initializes button display
@@ -50,7 +53,7 @@ public class KeybindsButtonDisplay extends UIComponent {
 		keybindsMenu = new Table();
 		keybindsMenu.center();
 		keybindsMenu.setFillParent(true);
-		keybindsMenu.padTop(50f);
+		keybindsMenu.padTop(40f);
 		keybindsMenu.setVisible(false);
 
 		Texture keybindsMenuTexture = ServiceLocator
@@ -102,14 +105,13 @@ public class KeybindsButtonDisplay extends UIComponent {
 		keybindsText = new Table();
 		keybindsText.center();
 		keybindsText.setFillParent(true);
-		//keybindsText.padTop(70f).padLeft(20f);
+		keybindsText.padTop(20f);
 		keybindsText.setVisible(false);
 
-		Label keybindsLabel = new Label("Keybindings", skin);
-		Label movelLabel = new Label("W - Move Up\nA - Move Left\nS - Move Down\nD - Move Right", skin);
-
-		keybindsText.add(keybindsLabel).row();
-		keybindsText.add(movelLabel).row();
+		for (int i = 0; i < keybindsLabels.length; i++) {
+			Label text = new Label(keybindsLabels[i], skin);
+			keybindsText.add(text).row();
+		}
 
 		return keybindsText;
 	}
