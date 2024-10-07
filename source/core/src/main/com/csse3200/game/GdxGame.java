@@ -105,11 +105,11 @@ public class GdxGame extends Game {
       case CUTSCENE:
         return new CutsceneScreen(this, 0);
       case GOOD_END:
-        return new CutsceneScreen(this, 1);
+        return new CutsceneScreen(this, 4);
       case BAD_END:
-        return new CutsceneScreen(this, 2);
+        return new CutsceneScreen(this, 5);
       case LOSE_END:
-        return new CutsceneScreen(this, 3);
+        return new CutsceneScreen(this, 6);
       default:
         return null;
     }
