@@ -44,7 +44,7 @@ public class Confirmationpopup extends Dialog {
             // User chose "No", transition to BackstoryCutscene
             BackstoryCutscene backstoryCutscene = new BackstoryCutscene();
             game.setCurrentCutscene(backstoryCutscene); // Set the backstory cutscene as current
-            game.setScreen(new CutsceneScreen(game, 0)); // Start the cutscene screen with index 0
+            game.setScreen(new CutsceneScreen(game, GdxGame.CutsceneType.BACK_STORY)); // Start the cutscene screen the backstory
 
         }
 

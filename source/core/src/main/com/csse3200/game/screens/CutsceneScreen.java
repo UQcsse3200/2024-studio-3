@@ -36,7 +36,7 @@ public class CutsceneScreen extends ScreenAdapter {
 
     private final GdxGame game;
 
-    private int cutsceneVal;
+    private GdxGame.CutsceneType cutsceneVal;
     private final Renderer renderer;
 
     // Textures used for the cutscene screen
@@ -50,7 +50,7 @@ public class CutsceneScreen extends ScreenAdapter {
      * @param game       The main game instance.
      * @param cutsceneVal The cutscene value to determine which cutscene to load.
      */
-    public CutsceneScreen(GdxGame game, int cutsceneVal) {
+    public CutsceneScreen(GdxGame game, GdxGame.CutsceneType cutsceneVal) {
         this.game = game;
         this.cutsceneVal = cutsceneVal;
 
@@ -181,7 +181,7 @@ public class CutsceneScreen extends ScreenAdapter {
      *
      * @return The cutsceneVal value
      */
-    public int getVal() {
+    public GdxGame.CutsceneType getVal() {
         return cutsceneVal;
     }
 }

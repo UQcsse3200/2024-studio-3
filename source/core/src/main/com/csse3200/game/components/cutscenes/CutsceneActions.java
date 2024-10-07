@@ -47,7 +47,9 @@ public class CutsceneActions extends Component {
     private void cutsceneEnded() {
         logger.debug("Transitioning to next cutscene, game level or main menu.");
         // Logic for determining what the next screen should be (either next level or cutscene).
-        if (ServiceLocator.getCutsceneScreen().getVal() == 0) {
+        if (ServiceLocator.getCutsceneScreen().getVal() != GdxGame.CutsceneType.GOOD_END ||
+            ServiceLocator.getCutsceneScreen().getVal() != GdxGame.CutsceneType.BAD_END ||
+            ServiceLocator.getCutsceneScreen().getVal() != GdxGame.CutsceneType.LOSE) {
             game.setScreen(GdxGame.ScreenType.MAIN_GAME);
         } else {
             game.setScreen(GdxGame.ScreenType.MAIN_MENU);
