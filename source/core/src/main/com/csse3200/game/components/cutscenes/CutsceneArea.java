@@ -91,26 +91,4 @@ public class CutsceneArea extends GameArea {
         // Start the cutscene
         currentCutscene.start();
     }
-
-    /**
-     * Updates the cutscene area each frame. Transitions the game once the cutscene is completed.
-     *
-     * @param delta Time since the last frame in seconds
-     */
-    public void update(float delta) {
-        // Check if the cutscene has completed
-        if (cutsceneCompleted()) {
-            logger.debug("Cutscene is done");  // Log that the cutscene is completed
-            // Additional logic to trigger the transition to the next gameplay area could be added here
-        }
-    }
-
-    /**
-     * Checks if the current cutscene has been completed.
-     *
-     * @return true if the cutscene is completed, false otherwise.
-     */
-    private boolean cutsceneCompleted() {
-        return currentCutscene != null && currentCutscene.isCompleted();
-    }
 }

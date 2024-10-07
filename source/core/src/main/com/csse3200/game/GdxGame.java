@@ -17,6 +17,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.csse3200.game.services.*;
 
+import java.util.logging.Level;
+
 import static com.badlogic.gdx.Gdx.app;
 /**
  * Entry point of the non-platform-specific game logic. Controls which screen is currently running.
@@ -178,6 +180,10 @@ public class GdxGame extends Game {
 
   public enum CutsceneType {
     BACK_STORY, DAY_2, DAY_3, DAY_4, GOOD_END, BAD_END, LOSE
+  }
+
+  public enum LevelType {
+    LEVEL_1, LEVEL_2, LEVEL_3, LEVEL_4, LEVEL_5, DONE
   }
 
   /**
