@@ -21,6 +21,7 @@ import com.csse3200.game.ui.UIComponent;
 import java.util.List;
 import java.util.ArrayList;
 import com.badlogic.gdx.utils.Align;
+import com.csse3200.game.components.cutscenes.*;
 
 /***
  * The UIComponent to create textbox which are drawn to the bottom of the screen
@@ -42,18 +43,29 @@ public class TextDisplay extends UIComponent {
     private Label label;
     private Table table;
     private final ScreenAdapter game;
+    private String screen;
     public TextDisplay() {
         super();
         this.game = null;
+        this.screen = "";
         this.table = new Table();
         this.visible = false;
         this.currentText = new StringBuilder();
         this.text = new ArrayList<>(); //N! to fix crashing when pressing Enter
     }
     public TextDisplay(ScreenAdapter game) {
+        this.game = game;
+        this.screen = "";
+        this.table = new Table();
+        this.visible = false;
+        this.currentText = new StringBuilder();
+        this.text = new ArrayList<>();
+    }
+    public TextDisplay(ScreenAdapter game, String screen) {
         super();
         this.game = game;
         this.table = new Table();
+        this.screen = screen;
         this.visible = true;
         this.currentText = new StringBuilder();
         this.text = new ArrayList<>(); //N! to fix crashing when pressing Enter
@@ -205,7 +217,11 @@ public class TextDisplay extends UIComponent {
             public boolean keyDown(InputEvent event, int keycode) {
                 if (keycode == com.badlogic.gdx.Input.Keys.ENTER || keycode == com.badlogic.gdx.Input.Keys.SPACE) {
                     // if the text hasn't been fully shown
-                    if (charIndex < TextDisplay.this.text.get(currentPart).length()) {
+                    if (TextDisplay.this.screen == "cutscene") {
+                        Cutscene currentCutscene = ServiceLocator.getCurrentCutscene();
+                        currentCutscene.setTextForScene(currentCutscene.currentScene);
+                        label.setText(currentCutscene.currentText);
+                    } else if (charIndex < TextDisplay.this.text.get(currentPart).length()) {
                         label.setText(text.get(currentPart));
                         charIndex = TextDisplay.this.text.get(currentPart).length();
                     } else {

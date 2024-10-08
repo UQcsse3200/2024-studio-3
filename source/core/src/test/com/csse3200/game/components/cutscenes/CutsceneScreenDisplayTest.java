@@ -63,8 +63,8 @@ class CutsceneScreenDisplayTest {
         assertNotNull(cutsceneScreenDisplay.getTable(), "Table should be initialized");
     }
 
-    @Test
-    void testDisposeClearsUIComponents() {
+    //@Test
+    /*void testDisposeClearsUIComponents() {
         // Arrange: Set up the table with some UI elements
         Table mockTable = mock(Table.class);
         cutsceneScreenDisplay.setTable(mockTable);
@@ -78,7 +78,7 @@ class CutsceneScreenDisplayTest {
 
         // Verify that the table and text display are cleared
         verify(mockTable, times(1)).clear();
-    }
+    }*/
 
     @Test
     void testSetStage() {

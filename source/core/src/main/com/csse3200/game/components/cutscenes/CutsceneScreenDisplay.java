@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.csse3200.game.ui.UIComponent;
+import com.csse3200.game.components.maingame.TextDisplay;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,7 +20,7 @@ import org.slf4j.LoggerFactory;
 public class CutsceneScreenDisplay extends UIComponent {
     private static final Logger logger = LoggerFactory.getLogger(CutsceneScreenDisplay.class);
     private Table table;
-    private CutsceneTextDisplay textDisplay;
+    private TextDisplay textDisplay;
     private Skin skin = null;
     private boolean IsEnabled = true;
 
@@ -106,7 +107,7 @@ public class CutsceneScreenDisplay extends UIComponent {
      * Sets up the text display for the screen
      */
     public void setupTextDisplay() {
-        textDisplay = new CutsceneTextDisplay(this.skin);
+        textDisplay = new TextDisplay();
         stage.addActor(textDisplay.getTable());
     }
 
@@ -169,13 +170,13 @@ public class CutsceneScreenDisplay extends UIComponent {
      * Gets the cutscene text display component for the cutscene.
      * @return A CutsceneTextDisplay component for the cutscene.
      */
-    public CutsceneTextDisplay getTextDisplay() { return textDisplay; }
+    public TextDisplay getTextDisplay() { return textDisplay; }
 
     /**
      * Sets the Cutscene Text Display Component for the cutscene.
      * @param textDisplay the CutsceneTextDisplay to be set.
      */
-    public void setTextDisplay(CutsceneTextDisplay textDisplay) { this.textDisplay = textDisplay; }
+    public void setTextDisplay(TextDisplay textDisplay) { this.textDisplay = textDisplay; }
 
     /**
      * Function that enables or disables the text box.
