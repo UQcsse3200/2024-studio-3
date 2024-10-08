@@ -37,7 +37,7 @@ public class EntityService {
    * @param entity new entity.
    */
   public void register(Entity entity) {
-    logger.info("Registering {} in entity service", entity);
+//    logger.info("Registering {} in entity service", entity);
     entities.add(entity);
     entity.create();
   }

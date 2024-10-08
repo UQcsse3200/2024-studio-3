@@ -96,17 +96,15 @@ public class PlayerAnimationController extends Component {
     
     void animateStop(Vector2 lastdirection)
     {
-        if(lastdirection.x < -0.1) {
+        if (lastdirection.x < -0.1) {
             animator.startAnimation("Character_StandLeft");
-        } else if(lastdirection.x > 0.1 ){
+        } else if (lastdirection.x > 0.1 ){
             animator.startAnimation("Character_StandRight");
         } else if (lastdirection.y < -0.1) {
             animator.startAnimation("Character_StandDown");
-        } else if(lastdirection.y > 0.1 ){
+        } else if (lastdirection.y > 0.1 ){
             animator.startAnimation("Character_StandUp");
         }
-
-        
     }
     
     void animateStandLeft() {
@@ -156,6 +154,10 @@ public class PlayerAnimationController extends Component {
      * @param atlasPath new atlas to update player animation with
      */
     public void updateAnimation(String atlasPath) {
+        // Get the current animation going and stop it
+        String currentAnimation = animator.getCurrentAnimation();
+        animator.stopAnimation(); // Will do nothing if no animation
+
         //Removes all animations
         animator.removeAnimation("Character_StandDown");
         animator.removeAnimation("Character_StandUp");
@@ -171,11 +173,9 @@ public class PlayerAnimationController extends Component {
         animator.removeAnimation("Character_DownRight");
         animator.removeAnimation("Character_UpLeft");
 
-
         //Updates atlas
         animator.updateAtlas(ServiceLocator.getResourceService().getAsset(
                 "images/player/" + atlasPath, TextureAtlas.class));
-
 
         //Adds new animations
         animator.addAnimation("Character_StandDown", 0.2f);
@@ -191,6 +191,9 @@ public class PlayerAnimationController extends Component {
         animator.addAnimation("Character_Down", 0.2f, Animation.PlayMode.LOOP);
         animator.addAnimation("Character_UpLeft", 0.2f, Animation.PlayMode.LOOP);
         animator.addAnimation("Character_Right", 0.2f, Animation.PlayMode.LOOP);
+
+        // Now restart the animation that was going
+        animator.startAnimation(currentAnimation); // Will do nothing if no animation
     }
     
 }
