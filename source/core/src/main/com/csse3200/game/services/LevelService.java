@@ -91,9 +91,9 @@ public class LevelService {
      *
      * @param level the level number
      */
-    public void levelControl(int level) {
-        int spawnCap = 0;
-        switch (level) {
+    public void levelControl(GdxGame.LevelType level) {
+        //int spawnCap = 0;
+        /*switch (level) {
             case 0:
                 spawnCap = 1;
                 break;
@@ -127,7 +127,17 @@ public class LevelService {
             case 10:
                 spawnCap = 17;
                 break;
-        }
+        }*/
+
+        int spawnCap = switch(level) {
+            case LEVEL_1 -> 1;
+            case LEVEL_2 -> 3;
+            case LEVEL_3 -> 4;
+            case LEVEL_4 -> 5;
+            case LEVEL_5 -> 7;
+            case DONE -> 9;
+        };
+
         levelEventHandler.trigger("startSpawning", spawnCap);
     }
 }
