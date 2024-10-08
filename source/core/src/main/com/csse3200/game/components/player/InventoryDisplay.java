@@ -2,6 +2,8 @@
 package com.csse3200.game.components.player;
 
 import java.util.ArrayList;
+import java.util.Objects;
+
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -11,8 +13,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Stack;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
 import com.csse3200.game.components.items.ItemComponent;
-import com.csse3200.game.rendering.TextureRenderComponent;
-import java.lang.IllegalArgumentException;
 
 /**
  * A UI component used to display slots of an InventoryComponent and the
@@ -22,8 +22,7 @@ import java.lang.IllegalArgumentException;
  */
 public class InventoryDisplay extends UIComponent {
     private Table table;
-    private String slotImagePath;
-    private int slotSize;
+    private final int slotSize;
     private ArrayList<Stack> slots;
 
     /**
@@ -33,22 +32,17 @@ public class InventoryDisplay extends UIComponent {
      * an InventoryComponent.
      */
     public InventoryDisplay() {
-        this.slotImagePath = "images/inventory_ui/slot.png";
         this.slotSize = 200;
     }
 
     /**
-     * Creates an InventoryDisplay that displays slots with the slot image path
-     * provided, with the size provided.
-     * @param slotImagePath the path to the image to use as the background image
-     * of a displayed inventory item.
+     * Creates an InventoryDisplay that displays slots with the size provided.
      * @param slotSize how large the slots will be displayed.
      * @throws java.lang.IllegalArgumentException if slotSize is less than 1
      * Requires that the entity this component is being added to also have
      * an InventoryComponent.
     */
-    public InventoryDisplay(String slotImagePath, int slotSize) {
-        this.slotImagePath = slotImagePath;
+    public InventoryDisplay(int slotSize) {
         if (slotSize < 1) {
             throw new IllegalArgumentException("slotSize must be a positive non-zero integer");
         }
@@ -92,12 +86,8 @@ public class InventoryDisplay extends UIComponent {
                 Image itemImage;
 
 
-                if (itemTexturePath != null) {
-                    itemImage = new Image(ServiceLocator.getResourceService().getAsset(itemTexturePath, Texture.class));
-                } else {
-                    // null image if no texture found for item
-                    itemImage = new Image(ServiceLocator.getResourceService().getAsset("images/inventory_ui/null_image.png", Texture.class));
-                }
+                // null image if no texture found for item
+                itemImage = new Image(ServiceLocator.getResourceService().getAsset(Objects.requireNonNullElse(itemTexturePath, "images/inventory_ui/null_image.png"), Texture.class));
 
                 itemPadding.add(itemImage).pad(20);
                 currentStack.add(itemPadding);
@@ -118,7 +108,9 @@ public class InventoryDisplay extends UIComponent {
         for (int i = 0; i < slots.size(); i++) {
             Stack currentStack = slots.get(i);
             currentStack.clear();
-            currentStack.add(new Image(ServiceLocator.getResourceService().getAsset("images/inventory_ui/slot.png", Texture.class)));
+            currentStack.add(new Image(ServiceLocator.getResourceService().getAsset(
+                    "images/inventory_ui/slot.png",
+                    Texture.class)));
 
             // add item image if there is an item in the slot
             ItemComponent item = entity.getComponent(InventoryComponent.class).getItemAt(i);
@@ -127,12 +119,11 @@ public class InventoryDisplay extends UIComponent {
 
                 String itemTexturePath = item.getTexturePath();
                 Image itemImage;
-                if (itemTexturePath != null) {
-                    itemImage = new Image(ServiceLocator.getResourceService().getAsset(itemTexturePath, Texture.class));
-                } else {
-                    // null image if no texture found for item
-                    itemImage = new Image(ServiceLocator.getResourceService().getAsset("images/inventory_ui/null_image.png", Texture.class));
-                }
+                // null image if no texture found for item
+                itemImage = new Image(ServiceLocator.getResourceService().getAsset(
+                        Objects.requireNonNullElse(itemTexturePath,
+                        "images/inventory_ui/null_image.png"),
+                        Texture.class));
 
                 itemPadding.add(itemImage).pad(20);
                 currentStack.add(itemPadding);
@@ -145,6 +136,7 @@ public class InventoryDisplay extends UIComponent {
      * Updates this InventoryDisplay to reflect the current state of the InventoryComponent
      * of this component's parent entity.
      */
+    @Override
     public void update() {
         updateDisplay();
     }
