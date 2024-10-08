@@ -41,121 +41,93 @@ public class PlayerItemSpriteManager extends Component {
      * @param item The item to show the player sprite holding.
      */
     private void updatePlayerSprite(ItemComponent item) {
-        if (item == null) { // Player inventory empty
-            //Updates player sprite to default
-            entity.getEvents().trigger("updateAnimationEmptyInventory");
-            LOGGER.info("PlayerItemSpriteManager animation updated");
+        if (item == null) {
+            triggerDefaultAnimation();
             return;
         }
 
-        // Update the animation based on the item and its state
         switch (item.getItemType()) {
             case ItemType.ACAI:
-                //Updates player sprite back to hold fish (raw or chopped)
-                if (((IngredientComponent) item).getItemState().equals("raw")) {
-                    entity.getEvents().trigger("updateAnimationRawAcai");
-                } else {
-                    entity.getEvents().trigger("updateAnimationChoppedAcai");
-                }
+            case ItemType.BANANA:
+            case ItemType.LETTUCE:
+            case ItemType.CUCUMBER:
+            case ItemType.TOMATO:
+            case ItemType.STRAWBERRY:
+            case ItemType.CHOCOLATE:
+                handleRawOrChoppedAnimation((IngredientComponent) item);
                 break;
             case ItemType.BEEF:
-                //Updates player sprite back to hold fish (raw, cooked, burnt)
-                if (((IngredientComponent) item).getItemState().equals("raw")) {
-                    entity.getEvents().trigger("updateAnimationRawBeef");
-                } else if (((IngredientComponent) item).getItemState().equals("cooked")) {
-                    entity.getEvents().trigger("updateAnimationCookedBeef");
-                } else {
-                    entity.getEvents().trigger("updateAnimationBurntBeef");
-                }
-                break;
-            case ItemType.BANANA:
-                //Updates player sprite back to hold fish (raw or chopped)
-                if (((IngredientComponent) item).getItemState().equals("raw")) {
-                    entity.getEvents().trigger("updateAnimationRawBanana");
-                } else {
-                    entity.getEvents().trigger("updateAnimationChoppedBanana");
-                }
-                break;
-            case ItemType.LETTUCE:
-                //Updates player sprite back to hold fish (raw or chopped)
-                if (((IngredientComponent) item).getItemState().equals("raw")) {
-                    entity.getEvents().trigger("updateAnimationRawLettuce");
-                } else {
-                    entity.getEvents().trigger("updateAnimationChoppedLettuce");
-                }
-                break;
-            case ItemType.CUCUMBER:
-                //Updates player sprite back to hold fish (raw or chopped)
-                if (((IngredientComponent) item).getItemState().equals("raw")) {
-                    entity.getEvents().trigger("updateAnimationRawCucumber");
-                } else {
-                    entity.getEvents().trigger("updateAnimationChoppedCucumber");
-                }
-                break;
-            case ItemType.TOMATO:
-                //Updates player sprite back to hold fish (raw or chopped)
-                if (((IngredientComponent) item).getItemState().equals("raw")) {
-                    entity.getEvents().trigger("updateAnimationRawTomato");
-                } else {
-                    entity.getEvents().trigger("updateAnimationChoppedTomato");
-                }
-                break;
-            case ItemType.STRAWBERRY:
-                //Updates player sprite back to hold fish (raw or chopped)
-                if (((IngredientComponent) item).getItemState().equals("raw")) {
-                    entity.getEvents().trigger("updateAnimationRawStrawberry");
-                } else {
-                    entity.getEvents().trigger("updateAnimationChoppedStrawberry");
-                }
-                break;
-            case ItemType.CHOCOLATE:
-                //Updates player sprite back to hold fish (raw or chopped)
-                if (((IngredientComponent) item).getItemState().equals("raw")) {
-                    entity.getEvents().trigger("updateAnimationRawChocolate");
-                } else {
-                    entity.getEvents().trigger("updateAnimationChoppedChocolate");
-                }
+                handleBeefAnimation((IngredientComponent) item);
                 break;
             case ItemType.FISH:
-                //Updates player sprite back to hold fish (raw or cooked)
-                if (((IngredientComponent) item).getItemState().equals("raw")) {
-                    entity.getEvents().trigger("updateAnimationRawFish");
-                } else {
-                    entity.getEvents().trigger("updateAnimationCookedFish");
-                }
+                handleFishAnimation((IngredientComponent) item);
                 break;
             case ItemType.ACAIBOWL:
-                //Updates player sprite back to hold acai bowl
-                entity.getEvents().trigger("updateAnimationAcaiBowl");
+                triggerAnimation("updateAnimationAcaiBowl");
                 break;
             case ItemType.BANANASPLIT:
-                //Updates player sprite back to hold banana split
-                entity.getEvents().trigger("updateAnimationBananaSplit");
+                triggerAnimation("updateAnimationBananaSplit");
                 break;
             case ItemType.FRUITSALAD:
-                //Updates player sprite back to hold fruit salad
-                entity.getEvents().trigger("updateAnimationFruitSalad");
+                triggerAnimation("updateAnimationFruitSalad");
                 break;
             case ItemType.SALAD:
-                //Updates player sprite back to hold salad
-                entity.getEvents().trigger("updateAnimationSalad");
+                triggerAnimation("updateAnimationSalad");
                 break;
             case ItemType.STEAKMEAL:
-                //Updates player sprite back to hold steak meal
-                entity.getEvents().trigger("updateAnimationSteak");
+                triggerAnimation("updateAnimationSteak");
                 break;
             case ItemType.PLATE:
-                entity.getEvents().trigger("updateAnimationPlate");
+                triggerAnimation("updateAnimationPlate");
                 break;
             case ItemType.FIREEXTINGUISHER:
-                entity.getEvents().trigger("updateAnimationFireExtinguisher");
+                triggerAnimation("updateAnimationFireExtinguisher");
                 break;
             default:
-                //Updates player sprite back to default
-                entity.getEvents().trigger("updateAnimationEmptyInventory");
+                triggerDefaultAnimation();
                 break;
         }
         LOGGER.info("PlayerItemSpriteManager animation updated");
     }
 
+    private void handleRawOrChoppedAnimation(IngredientComponent item) {
+        String itemType = item.getItemType().toString().toLowerCase();
+        String itemState = item.getItemState();
+        if (itemState.equals("raw")) {
+            triggerAnimation("updateAnimationRaw" + capitalize(itemType));
+        } else {
+            triggerAnimation("updateAnimationChopped" + capitalize(itemType));
+        }
+    }
+
+    private void handleBeefAnimation(IngredientComponent item) {
+        String itemState = item.getItemState();
+        if (itemState.equals("raw")) {
+            triggerAnimation("updateAnimationRawBeef");
+        } else if (itemState.equals("cooked")) {
+            triggerAnimation("updateAnimationCookedBeef");
+        } else {
+            triggerAnimation("updateAnimationBurntBeef");
+        }
+    }
+
+    private void handleFishAnimation(IngredientComponent item) {
+        if (item.getItemState().equals("raw")) {
+            triggerAnimation("updateAnimationRawFish");
+        } else {
+            triggerAnimation("updateAnimationCookedFish");
+        }
+    }
+
+    private void triggerAnimation(String animation) {
+        entity.getEvents().trigger(animation);
+    }
+
+    private void triggerDefaultAnimation() {
+        triggerAnimation("updateAnimationEmptyInventory");
+    }
+
+    private String capitalize(String str) {
+        return str.substring(0, 1).toUpperCase() + str.substring(1);
+    }
 }
