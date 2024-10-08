@@ -150,6 +150,11 @@ public class TextDisplay extends UIComponent {
         this.text = newText;
     }
 
+    /** Alternative method to set text with no modificiation or spiliting up **/
+    public void setTextRaw(String text) {
+        label.setText(text);
+    }
+
     /***
      * Gets the text in the blocks allocated by the algorithm
      * @return an array of strings which is the text
@@ -228,5 +233,9 @@ public class TextDisplay extends UIComponent {
     }
     public Table getTable() {
         return table;
+    }
+    public void disable() {
+        visible = false;
+        table.setVisible(false);
     }
 }
