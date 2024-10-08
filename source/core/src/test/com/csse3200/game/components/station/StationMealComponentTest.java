@@ -5,7 +5,6 @@ import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.components.player.InventoryDisplay;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
-import com.csse3200.game.entities.factories.ItemFactory;
 import com.csse3200.game.events.EventHandler;
 import com.csse3200.game.extensions.GameExtension;
 import com.csse3200.game.physics.PhysicsService;
@@ -19,16 +18,14 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import java.util.ArrayList;
-import java.util.List;
 
-import static org.junit.Assert.assertNotNull;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(GameExtension.class)
-public class StationMealComponentTest {
+class StationMealComponentTest {
     protected StationMealComponent mealHandler;
     protected InventoryComponent stationInventory;
     protected InventoryComponent playerInventory;
@@ -124,8 +121,6 @@ public class StationMealComponentTest {
         assertTrue(mealHandler.isItemAccepted(item));
     }
 
-    // note there is no shouldntAcceptItem() since isItemAccepted() always returns true
-
     @Test
     void tooLittleShouldntMakeMeal() {
         ItemComponent banana = new ItemComponent("lettuce", ItemType.LETTUCE, 1);
@@ -165,7 +160,7 @@ public class StationMealComponentTest {
     }
 
     @Test
-    void incorrectIngrsShouldntMakeMeal() {
+    void incorrectIngredientsShouldntMakeMeal() {
         // mock items to be added
         ItemComponent item1 = new ItemComponent("banana", ItemType.BANANA, 1);
         ItemComponent item2 = new ItemComponent("lettuce", ItemType.LETTUCE, 1);
@@ -194,7 +189,7 @@ public class StationMealComponentTest {
         stationInventory.addItem(acai);
         stationInventory.addItem(banana);
         mealHandler.handleInteraction(playerInventory, inventoryDisplay, "combine");
-        // check if any component in inventory is of an acai bowl meal type
+        // check if any component in inventory is of an açaí bowl meal type
         boolean found = false;
         for (int index = 0; index < stationInventory.getCapacity(); index++) {
             ItemComponent item = stationInventory.getItemAt(index);
