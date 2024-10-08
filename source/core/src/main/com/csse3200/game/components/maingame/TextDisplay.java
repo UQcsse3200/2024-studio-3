@@ -223,5 +223,10 @@ public class TextDisplay extends UIComponent {
     @Override
     public void draw(SpriteBatch batch) {}
     @Override
-    public void setStage(Stage mock) {}
+    public void setStage(Stage stage) {
+        this.stage = stage;
+    }
+    public Table getTable() {
+        return table;
+    }
 }
