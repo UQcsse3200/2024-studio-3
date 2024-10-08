@@ -1,6 +1,7 @@
 package com.csse3200.game.services;
 
 
+import com.csse3200.game.GdxGame;
 import com.csse3200.game.areas.ForestGameArea;
 import com.csse3200.game.areas.GameArea;
 import com.csse3200.game.areas.map.BenchGenerator;
@@ -54,24 +55,16 @@ public class MapLayout {
      *
      * @param level - integer 1-5 corresponding to level
      */
-    public Map load(int level) {
+    public Map load(GdxGame.LevelType level) {
 
         String mapLevel = mapBase;
         BufferedReader reader = null;
-        if (level == 1) {
-            mapLevel = mapLevel1;
-        }
-        if (level == 2) {
-            mapLevel = mapLevel2;
-        }
-        if (level == 3) {
-            mapLevel = mapLevel3;
-        }
-        if (level == 4) {
-            mapLevel = mapLevel4;
-        }
-        if (level == 5) {
-            mapLevel = mapLevel5;
+        switch (level) {
+            case LEVEL_1 -> mapLevel = mapLevel1;
+            case LEVEL_2 -> mapLevel = mapLevel2;
+            case LEVEL_3 -> mapLevel = mapLevel3;
+            case LEVEL_4 -> mapLevel = mapLevel4;
+            case LEVEL_5 -> mapLevel = mapLevel5;
         }
 
         try {

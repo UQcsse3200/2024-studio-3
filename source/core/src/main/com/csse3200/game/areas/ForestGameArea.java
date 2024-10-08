@@ -231,7 +231,7 @@ public class ForestGameArea extends GameArea {
 
   private final TerrainFactory terrainFactory;
   private final UpgradesDisplay upgradesDisplay;
-  private final int level;
+  private final GdxGame.LevelType level;
 
   private Entity player;
   private CheckWinLoseComponent winLoseComponent;  // Reference to CheckWinLoseComponent
@@ -256,7 +256,7 @@ public class ForestGameArea extends GameArea {
    * @param terrainFactory TerrainFactory used to create the terrain for the GameArea.
    * @requires terrainFactory != null
    */
-  public ForestGameArea(TerrainFactory terrainFactory, int level, UpgradesDisplay upgradesDisplay) {
+  public ForestGameArea(TerrainFactory terrainFactory, GdxGame.LevelType level, UpgradesDisplay upgradesDisplay) {
     super();
     this.level = level;
     this.terrainFactory = terrainFactory;

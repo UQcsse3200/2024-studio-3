@@ -1,5 +1,6 @@
 package com.csse3200.game.services;
 
+import com.csse3200.game.GdxGame;
 import com.csse3200.game.events.EventHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -8,7 +9,7 @@ import org.slf4j.LoggerFactory;
 public class LevelService {
     private static final Logger logger = LoggerFactory.getLogger(LevelService.class);
     private EventHandler levelEventHandler;
-    private int currLevel;
+    private GdxGame.LevelType currLevel;
     private int currGold;
     private boolean playerFinishedLevel;
 
@@ -17,7 +18,7 @@ public class LevelService {
      */
     public LevelService() {
         levelEventHandler = new EventHandler();
-        currLevel = 1;
+        currLevel = GdxGame.LevelType.LEVEL_1;
         currGold = 50;
         playerFinishedLevel = false;
         levelEventHandler.addListener("startLevel", this::levelControl);
@@ -44,7 +45,7 @@ public class LevelService {
      *
      * @return  the current level number
      */
-    public int getCurrLevel() {
+    public GdxGame.LevelType getCurrLevel() {
         if (playerFinishedLevel) {
             incrementLevel();
             togglePlayerFinishedLevel();
@@ -65,7 +66,13 @@ public class LevelService {
      * Increases the integer representing the current level by one
      */
     public void incrementLevel() {
-        currLevel++;
+        switch (currLevel) {
+            case LEVEL_1 -> currLevel = GdxGame.LevelType.LEVEL_2;
+            case LEVEL_2 -> currLevel = GdxGame.LevelType.LEVEL_3;
+            case LEVEL_3 -> currLevel = GdxGame.LevelType.LEVEL_4;
+            case LEVEL_4 -> currLevel = GdxGame.LevelType.LEVEL_5;
+            case LEVEL_5 -> currLevel = GdxGame.LevelType.DONE;
+        }
     }
 
     /**
@@ -73,7 +80,7 @@ public class LevelService {
      *
      * @param newLevel the new level number
      */
-    public void setCurrLevel(int newLevel) {
+    public void setCurrLevel(GdxGame.LevelType newLevel) {
         currLevel = newLevel;
     }
 
