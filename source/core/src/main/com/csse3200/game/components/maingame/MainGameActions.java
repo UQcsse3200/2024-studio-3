@@ -42,6 +42,9 @@ public class MainGameActions extends Component {
      */
     @Override
     public void create() {
+        if (entity == null) {
+            throw new IllegalStateException("Entity is not initialized.");
+        }
         entity.getEvents().addListener("exit", this::onExit);
         ServiceLocator.getEntityService().getEvents().addListener("createOrder", this::onCreateOrder);
         ServiceLocator.getEntityService().getEvents().addListener("createAcaiDocket", this::onCreateAcai);
@@ -97,7 +100,7 @@ public class MainGameActions extends Component {
     /**
      * Exit main game screen
      */
-    private void onExit() {
+    public void onExit() {
         logger.info("Exiting main game screen");
         game.setScreen(GdxGame.ScreenType.MAIN_MENU);
     }
