@@ -61,6 +61,18 @@ public class PlayerStatsDisplay extends UIComponent {
   public static Label getDayLabel() { return dayLabel; }
 
   /**
+   * Sets the label for the timer
+   * @param label: The label being set
+   */
+  public static void setTimerLabel(Label label) { timerLabel = label; }
+
+  /**
+   * Gets the current timer label
+   * @return The current timer label
+   */
+  public static Label getTimerLabel() { return timerLabel; }
+
+  /**
    * Sets the player stats display
    * @param playerStatsDisplay: The Player stats display that is being set.
    */
@@ -111,9 +123,9 @@ public class PlayerStatsDisplay extends UIComponent {
 
     // Timer label for the remaining time in the day
     CharSequence TimerText = String.format("%s", convertDigital(timer));
-    timerLabel = new Label(TimerText, skin, LARGE_LABEL);
+    setTimerLabel(new Label(TimerText, skin, LARGE_LABEL));
     timerTable.add(timerImage).size(20f).left().padRight(5f);
-    timerTable.add(timerLabel).left();
+    timerTable.add(getTimerLabel()).left();
     table.add(timerTable).padTop(20f);
     stage.addActor(table);
   }
@@ -147,8 +159,8 @@ public class PlayerStatsDisplay extends UIComponent {
    */
 
   public static void updateTime(long time) {
-    CharSequence TimerText = String.format("Time Left: \n   %s", convertDigital(time));
-    timerLabel.setText(TimerText);
+    CharSequence timerText = String.format("Time Left: %n   %s", convertDigital(time));
+    getTimerLabel().setText(timerText);
     ServiceLocator.getDayNightService().getEvents().trigger("callpastsecond");
   }
 
@@ -159,7 +171,7 @@ public class PlayerStatsDisplay extends UIComponent {
     goldImage.remove();
     goldLabel.remove();
     getDayLabel().remove();
-    timerLabel.remove();
+    getTimerLabel().remove();
     timerImage.remove();
   }
 
