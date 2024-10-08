@@ -46,7 +46,7 @@ loadScripts(document, 'script');</script>
 <li>
 <p>Detail:</p>
 <ul>
-<li><a href="#field-detail">Field</a></li>
+<li>Field</li>
 <li><a href="#constructor-detail">Constr</a></li>
 <li><a href="#method-detail">Method</a></li>
 </ul>
@@ -64,7 +64,7 @@ loadScripts(document, 'script');</script>
 </ul>
 <ul class="sub-nav-list">
 <li>Detail:&nbsp;</li>
-<li><a href="#field-detail">Field</a>&nbsp;|&nbsp;</li>
+<li>Field&nbsp;|&nbsp;</li>
 <li><a href="#constructor-detail">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method-detail">Method</a></li>
 </ul>
@@ -101,7 +101,7 @@ loadScripts(document, 'script');</script>
 <hr>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">PlayerStatsDisplay</span>
 <span class="extends-implements">extends <a href="../../ui/UIComponent.html" title="class in com.csse3200.game.ui">UIComponent</a></span></div>
-<div class="block">A ui component for displaying player stats, e.g. health.</div>
+<div class="block">AN ui component for displaying player stats, e.g. health.</div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -109,15 +109,6 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="field-summary" id="field-summary">
 <h2>Field Summary</h2>
-<div class="caption"><span>Fields</span></div>
-<div class="summary-table three-column-summary">
-<div class="table-header col-first">Modifier and Type</div>
-<div class="table-header col-second">Field</div>
-<div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><code>static long</code></div>
-<div class="col-second even-row-color"><code><a href="#timer" class="member-name-link">timer</a></code></div>
-<div class="col-last even-row-color">&nbsp;</div>
-</div>
 <div class="inherited-list">
 <h3 id="fields-inherited-from-class-com.csse3200.game.ui.UIComponent">Fields inherited from class&nbsp;com.csse3200.game.ui.<a href="../../ui/UIComponent.html" title="class in com.csse3200.game.ui">UIComponent</a></h3>
 <code><a href="../../ui/UIComponent.html#skin">skin</a>, <a href="../../ui/UIComponent.html#stage">stage</a></code></div>
@@ -170,12 +161,44 @@ loadScripts(document, 'script');</script>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Draw the renderable.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="PlayerStatsDisplay.html" title="class in com.csse3200.game.components.player">PlayerStatsDisplay</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getInstance()" class="member-name-link">getInstance</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static com.badlogic.gdx.scenes.scene2d.ui.Label</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getDayLabel()" class="member-name-link">getDayLabel</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Gets the current day label</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="PlayerStatsDisplay.html" title="class in com.csse3200.game.components.player">PlayerStatsDisplay</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getInstance()" class="member-name-link">getInstance</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Gets the current Player stats display</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static com.badlogic.gdx.scenes.scene2d.ui.Label</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getTimerLabel()" class="member-name-link">getTimerLabel</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Gets the current timer label</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#setDayLabel(com.badlogic.gdx.scenes.scene2d.ui.Label)" class="member-name-link">setDayLabel</a><wbr>(com.badlogic.gdx.scenes.scene2d.ui.Label&nbsp;label)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Sets the label for the day</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#setPlayerStatsDisplay(com.csse3200.game.components.player.PlayerStatsDisplay)" class="member-name-link">setPlayerStatsDisplay</a><wbr>(<a href="PlayerStatsDisplay.html" title="class in com.csse3200.game.components.player">PlayerStatsDisplay</a>&nbsp;playerStatsDisplay)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Sets the player stats display</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setStage(com.badlogic.gdx.scenes.scene2d.Stage)" class="member-name-link">setStage</a><wbr>(com.badlogic.gdx.scenes.scene2d.Stage&nbsp;mock)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#setTimer(long)" class="member-name-link">setTimer</a><wbr>(long&nbsp;time)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Sets the timer to a specific time and starts counting down</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#setTimerLabel(com.badlogic.gdx.scenes.scene2d.ui.Label)" class="member-name-link">setTimerLabel</a><wbr>(com.badlogic.gdx.scenes.scene2d.ui.Label&nbsp;label)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Sets the label for the timer</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#updateDay()" class="member-name-link">updateDay</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
@@ -218,20 +241,6 @@ loadScripts(document, 'script');</script>
 </section>
 <section class="details">
 <ul class="details-list">
-<!-- ============ FIELD DETAIL =========== -->
-<li>
-<section class="field-details" id="field-detail">
-<h2>Field Details</h2>
-<ul class="member-list">
-<li>
-<section class="detail" id="timer">
-<h3>timer</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name">timer</span></div>
-</section>
-</li>
-</ul>
-</section>
-</li>
 <!-- ========= CONSTRUCTOR DETAIL ======== -->
 <li>
 <section class="constructor-details" id="constructor-detail">
@@ -263,9 +272,80 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
+<section class="detail" id="setTimer(long)">
+<h3>setTimer</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setTimer</span><wbr><span class="parameters">(long&nbsp;time)</span></div>
+<div class="block">Sets the timer to a specific time and starts counting down</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>time</code> - the time you want to set the timer to count down from in seconds</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="setDayLabel(com.badlogic.gdx.scenes.scene2d.ui.Label)">
+<h3>setDayLabel</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setDayLabel</span><wbr><span class="parameters">(com.badlogic.gdx.scenes.scene2d.ui.Label&nbsp;label)</span></div>
+<div class="block">Sets the label for the day</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>label</code> - : The label being set</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getDayLabel()">
+<h3>getDayLabel</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">com.badlogic.gdx.scenes.scene2d.ui.Label</span>&nbsp;<span class="element-name">getDayLabel</span>()</div>
+<div class="block">Gets the current day label</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>The current day label</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="setTimerLabel(com.badlogic.gdx.scenes.scene2d.ui.Label)">
+<h3>setTimerLabel</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setTimerLabel</span><wbr><span class="parameters">(com.badlogic.gdx.scenes.scene2d.ui.Label&nbsp;label)</span></div>
+<div class="block">Sets the label for the timer</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>label</code> - : The label being set</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getTimerLabel()">
+<h3>getTimerLabel</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">com.badlogic.gdx.scenes.scene2d.ui.Label</span>&nbsp;<span class="element-name">getTimerLabel</span>()</div>
+<div class="block">Gets the current timer label</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>The current timer label</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="setPlayerStatsDisplay(com.csse3200.game.components.player.PlayerStatsDisplay)">
+<h3>setPlayerStatsDisplay</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setPlayerStatsDisplay</span><wbr><span class="parameters">(<a href="PlayerStatsDisplay.html" title="class in com.csse3200.game.components.player">PlayerStatsDisplay</a>&nbsp;playerStatsDisplay)</span></div>
+<div class="block">Sets the player stats display</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>playerStatsDisplay</code> - : The Player stats display that is being set.</dd>
+</dl>
+</section>
+</li>
+<li>
 <section class="detail" id="getInstance()">
 <h3>getInstance</h3>
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="PlayerStatsDisplay.html" title="class in com.csse3200.game.components.player">PlayerStatsDisplay</a></span>&nbsp;<span class="element-name">getInstance</span>()</div>
+<div class="block">Gets the current Player stats display</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>the current player stats display</dd>
+</dl>
 </section>
 </li>
 <li>
