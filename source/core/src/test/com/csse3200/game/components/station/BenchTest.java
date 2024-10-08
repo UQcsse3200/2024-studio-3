@@ -37,7 +37,7 @@ class BenchTest {
      * Helper function to help test the bench creation.
      * @param benchType the type of bench being created
      */
-    private void validateBenchCreation(String benchType) {
+    void validateBenchCreation(String benchType) {
         Entity bench = Bench.createBench(benchType);
         assertNotNull(bench);
         assertNotNull(bench.getComponent(TextureRenderComponent.class));
@@ -51,7 +51,7 @@ class BenchTest {
      * Test the creation of a bench with the type "left_border".
      */
     @Test
-    public void testCreateBenchLeftBorder() {
+    void testCreateBenchLeftBorder() {
         validateBenchCreation("left_border");
     }
 
@@ -59,7 +59,7 @@ class BenchTest {
      * Test the creation of a bench with the type "middle".
      */
     @Test
-    public void testCreateBenchMiddle() {
+    void testCreateBenchMiddle() {
         validateBenchCreation("middle");
     }
 
@@ -67,7 +67,7 @@ class BenchTest {
      * Test the creation of a bench with the type "single".
      */
     @Test
-    public void testCreateBenchSingle() {
+    void testCreateBenchSingle() {
         validateBenchCreation("single");
     }
 }
