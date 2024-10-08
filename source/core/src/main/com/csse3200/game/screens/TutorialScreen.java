@@ -180,7 +180,7 @@ public class TutorialScreen extends ScreenAdapter {
                 .addComponent(new PauseMenuActions(this.game))
 
                 .addComponent(new TutorialScreenDisplay(this.game))
-                .addComponent(new TutorialTextDisplay(this));
+                .addComponent(new TextDisplay(this));
 
         ServiceLocator.getEntityService().register(ui);
     }

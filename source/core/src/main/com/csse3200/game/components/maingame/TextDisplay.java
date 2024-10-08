@@ -1,5 +1,6 @@
 package com.csse3200.game.components.maingame;
 
+import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
@@ -40,7 +41,7 @@ public class TextDisplay extends UIComponent {
     private boolean visible;
     private Label label;
     private Table table;
-    private final MainGameScreen game;
+    private final ScreenAdapter game;
     public TextDisplay() {
         super();
         this.game = null;
@@ -49,7 +50,7 @@ public class TextDisplay extends UIComponent {
         this.currentText = new StringBuilder();
         this.text = new ArrayList<>(); //N! to fix crashing when pressing Enter
     }
-    public TextDisplay(MainGameScreen game) {
+    public TextDisplay(ScreenAdapter game) {
         super();
         this.game = game;
         this.table = new Table();
@@ -197,7 +198,7 @@ public class TextDisplay extends UIComponent {
         stage.addListener(new InputListener() {
             @Override
             public boolean keyDown(InputEvent event, int keycode) {
-                if (keycode == com.badlogic.gdx.Input.Keys.ENTER && keycode == com.badlogic.gdx.Input.Keys.SPACE) {
+                if (keycode == com.badlogic.gdx.Input.Keys.ENTER || keycode == com.badlogic.gdx.Input.Keys.SPACE) {
                     // if the text hasn't been fully shown
                     if (charIndex < TextDisplay.this.text.get(currentPart).length()) {
                         label.setText(text.get(currentPart));
