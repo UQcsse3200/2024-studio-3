@@ -44,6 +44,8 @@ public class CutsceneScreen extends ScreenAdapter {
 
     private CutsceneScreenDisplay cutsceneScreenDisplay;
 
+    private boolean textBoxVisible = true;
+
     /**
      * Constructor for the CutsceneScreen.
      *
@@ -53,6 +55,9 @@ public class CutsceneScreen extends ScreenAdapter {
     public CutsceneScreen(GdxGame game, int cutsceneVal) {
         this.game = game;
         this.cutsceneVal = cutsceneVal;
+        if (cutsceneVal == 5) {
+            textBoxVisible = false;
+        }
 
         logger.debug("Initialising main game screen services");
         // Register essential services for cutscene operation
@@ -152,7 +157,7 @@ public class CutsceneScreen extends ScreenAdapter {
                 .addComponent(new TerminalDisplay())
                 .addComponent(new CutsceneActions(this.game))
                 .addComponent(cutsceneScreenDisplay)
-                .addComponent(new CutsceneTextDisplay());
+                .addComponent(new CutsceneTextDisplay(textBoxVisible));
 
         // Register the UI entity with the entity service
         ServiceLocator.getEntityService().register(ui);

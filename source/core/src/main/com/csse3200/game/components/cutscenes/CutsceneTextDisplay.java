@@ -32,9 +32,10 @@ public class CutsceneTextDisplay extends UIComponent {
     /**
      * Default constructor that initializes without a specific cutscene.
      */
-    public CutsceneTextDisplay() {
+    public CutsceneTextDisplay(boolean visible) {
         super();
         this.table = new Table();
+        this.visible = visible;
     }
 
     public CutsceneTextDisplay(Skin skin) {
@@ -86,6 +87,8 @@ public class CutsceneTextDisplay extends UIComponent {
 
         table.add(stack).padBottom(70).size(
                 (int) (Gdx.graphics.getWidth() * 0.5), (int) (Gdx.graphics.getHeight() * 0.2));
+
+        table.setVisible(visible);
     }
 
 
