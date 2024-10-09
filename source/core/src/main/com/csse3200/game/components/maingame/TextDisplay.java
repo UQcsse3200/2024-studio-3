@@ -2,6 +2,8 @@ package com.csse3200.game.components.maingame;
 
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.Gdx;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -28,6 +30,7 @@ import com.csse3200.game.components.cutscenes.*;
  */
 
 public class TextDisplay extends UIComponent {
+    private static final Logger logger = LoggerFactory.getLogger(TextDisplay.class);
     //String building variables
     private List<String> text;
     private int currentPart = 0;
@@ -96,9 +99,7 @@ public class TextDisplay extends UIComponent {
      */
     public void create() {
         super.create();
-
         // Create the table for layout control and stack for layering
-        setVisible(false);
         table.setFillParent(true);
         table.center().bottom();
         stage.addActor(table);
@@ -127,6 +128,11 @@ public class TextDisplay extends UIComponent {
 
         // Add the stack to the table with padding or alignment options
         table.add(stack).padBottom(70).padLeft(0).size((int)(Gdx.graphics.getWidth() * 0.5), (int)(Gdx.graphics.getHeight() * 0.2));
+        if (this.screen == "cutscene") {
+            setVisible(true);
+        } else {
+            setVisible(false);
+        }
         setupInputListener();
         entity.getEvents().addListener("SetText", this::setText);
     }
@@ -164,6 +170,7 @@ public class TextDisplay extends UIComponent {
 
     /** Alternative method to set text with no modificiation or spiliting up **/
     public void setTextRaw(String text) {
+
         label.setText(text);
     }
 

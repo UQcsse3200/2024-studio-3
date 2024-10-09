@@ -12,14 +12,14 @@ import com.csse3200.game.services.ServiceLocator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
-
+import com.csse3200.game.components.maingame.TextDisplay;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 class CutsceneScreenDisplayTest {
 
     private CutsceneScreenDisplay cutsceneScreenDisplay;
-    private CutsceneTextDisplay mockTextDisplay;
+    private TextDisplay mockTextDisplay;
     private Stage mockStage;
     private Entity mockEntity;
     private EventHandler mockEventHandler;
@@ -32,7 +32,7 @@ class CutsceneScreenDisplayTest {
         mockEntity = mock(Entity.class);
         mockEventHandler = mock(EventHandler.class);
         mockRenderService = mock(RenderService.class);
-        mockTextDisplay = mock(CutsceneTextDisplay.class);
+        mockTextDisplay = mock(TextDisplay.class);
         Skin mockSkin = mock(Skin.class);
 
         when(mockEntity.getEvents()).thenReturn(mockEventHandler);
