@@ -18,9 +18,13 @@ public class MoralDay2Cutscene extends Cutscene {
 
     private void createScene() {
         Array<String> sceneText = new Array<>();
-        sceneText.add("Mafia Boss > This is day 2 11.");
-        sceneText.add("Mafia Boss > This is day 2 22.");
-        sceneText.add("Mafia Boss > This is day 2 .");
+        sceneText.add("Mafia Boss > You handled the crowd well today.");
+        sceneText.add("Mafia Boss > But tonight, I've got a favor...");
+        sceneText.add("Mafia Boss > I need a place for some...gambling. Care to host?");
+        sceneText.add("Mafia Boss > Might make things easier for you.");
+        sceneText.add("Mafia Boss > Think about it.");
+
+
 
         String mafiaImage = "images/Cutscenes/Character Artwork/rhino_sprite.png";
         Vector2 mafiaPosition = new Vector2(3, -1);

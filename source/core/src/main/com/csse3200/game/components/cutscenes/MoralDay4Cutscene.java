@@ -18,24 +18,35 @@ public class MoralDay4Cutscene extends Cutscene {
 
     private void createScene() {
         Array<String> sceneText = new Array<>();
-        sceneText.add("Mafia Boss > This is day 2 11.");
-        sceneText.add("Mafia Boss > This is day 2 22.");
-        sceneText.add("Mafia Boss > This is day 2 .");
+        sceneText.add("Mafia Boss > You've impressed me, human. But stress gets to all of us.");
+
+        sceneText.add("Racoon Dealer > Try some of my stuff. Best in the city.");
+
+        sceneText.add("Mafia Boss > It’ll help you work faster tomorrow. What do you have to lose?");
+
+        sceneText.add("Mafia Boss > What do you say?");
+
+
 
         String mafiaImage = "images/Cutscenes/Character Artwork/rhino_sprite.png";
         Vector2 mafiaPosition = new Vector2(3, -1);
         float mafiaScale = 4.0f;
 
+        String racoonImage = "images/Cutscenes/Character Artwork/racoon.png";
+        Vector2 racoonPosition = new Vector2(-3, -1);
+        float racoonScale = 5.5f;
+
+
         String iconImage = "images/Cutscenes/moral_icons/drug_ico.png";
-        Vector2 iconPosition = new Vector2(-8, -2);
+        Vector2 iconPosition = new Vector2(-9, -2);
         float iconScale = 7.0f;
 
         // Add scenes with background images, animations, text, and duration
         Scene scene = new Scene("images/Cutscenes/Day2_Scene.png");
         scene.setImages(
-                new String[]{mafiaImage, iconImage},
-                new Vector2[] {mafiaPosition, iconPosition},
-                new float[] {mafiaScale, iconScale}
+                new String[]{mafiaImage, racoonImage, iconImage},
+                new Vector2[] {mafiaPosition, racoonPosition, iconPosition},
+                new float[] {mafiaScale, racoonScale, iconScale}
         );
 
         scene.setSceneText(sceneText);
@@ -55,7 +66,8 @@ public class MoralDay4Cutscene extends Cutscene {
 
         images = new String[] {
                 "images/Cutscenes/Character Artwork/rhino_sprite.png",
-                "images/Cutscenes/moral_icons/drug_ico.png",
+                "images/Cutscenes/Character Artwork/racoon.png",
+                "images/Cutscenes/moral_icons/drug_ico.png"
         };
 
         // Get the resource service to load assets
