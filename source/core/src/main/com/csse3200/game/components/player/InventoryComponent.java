@@ -1,7 +1,6 @@
 package com.csse3200.game.components.player;
 
 import com.csse3200.game.components.Component;
-import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.csse3200.game.components.items.ItemComponent;
@@ -16,21 +15,19 @@ import java.lang.IllegalArgumentException;
  */
 public class InventoryComponent extends Component {
   private static final Logger logger = LoggerFactory.getLogger(InventoryComponent.class);
-  private ArrayList<ItemComponent> items;
+  private final ArrayList<ItemComponent> items;
   private int capacity; // maximum number of items that can be stored
   private int size;     // current number of items in the Inventory 
   private int selected; // index of currently selected item
   private final String indexException = "Invalid index parameter. Must be non-negative and within the current size of the inventory.";
-  private final String sizeException = "Invalid size parameter. Must be an integer > 0.";
-  private final String itemException = "Index in Inventory already occupied by an Item.";
-  private final String nullException = "Index in Inventory does not contain an Item.";
-  private final String updateTrigger = "updateInventory";
+    private static final String updateTrigger = "updateInventory";
 
   /**
    * Creates inventory component
    * @param capacity the players inventory size
    */
   public InventoryComponent(int capacity) {
+    logger.info("Initialized Inventory Component");
     setCapacity(capacity);
     items = new ArrayList<>(capacity);
     for (int i = 0; i < capacity; i++) {        
@@ -67,7 +64,8 @@ public class InventoryComponent extends Component {
    */
   public void setCapacity(int newCapacity) {
       if (newCapacity < 1) {
-        throw new IllegalArgumentException(sizeException);
+          String sizeException = "Invalid size parameter. Must be an integer > 0.";
+          throw new IllegalArgumentException(sizeException);
       }
       this.capacity = newCapacity;
       if (entity != null) {
@@ -111,12 +109,12 @@ public class InventoryComponent extends Component {
     /**
      * Returns an ArrayList containing the items stored in this
      * InventoryComponent.
-     * 
+     *
      * @return - an ArrayList containing items currently stored in the inventory.
      */
-  public ArrayList<ItemComponent> getItems() {
-      return (ArrayList) items.clone();
-  }
+    public ArrayList<ItemComponent> getItems() {
+      return new ArrayList<>(items);
+    }
 
     /**
      * Returns true if Inventory data structure is full.
@@ -254,7 +252,8 @@ public class InventoryComponent extends Component {
       // index out of bounds
       throw new IllegalArgumentException(indexException);
     } else if (items.get(index) != null) {
-      throw new IllegalArgumentException(itemException);
+        String itemException = "Index in Inventory already occupied by an Item.";
+        throw new IllegalArgumentException(itemException);
     }
 
     if (!this.isFull()) {
@@ -278,6 +277,7 @@ public class InventoryComponent extends Component {
       // index out of bounds
       throw new IllegalArgumentException(indexException);
     } else if (items.get(index) == null) {
+        String nullException = "Index in Inventory does not contain an Item.";
         throw new IllegalArgumentException(nullException);
     } 
   
@@ -301,13 +301,8 @@ public class InventoryComponent extends Component {
    *
    * @return - the list of names of items in the inventory, null if empty.
    */
-  /**
-   * Returns the names of all items present in the list, in order.
-   *
-   * @return - the list of names of items in the inventory, null if empty.
-   */
   public List<String> getItemNames() {
-    List<String> itemNames = new ArrayList();
+    List<String> itemNames = new ArrayList<>();
 
     if (!this.isEmpty()) {
       for (ItemComponent item : items) {

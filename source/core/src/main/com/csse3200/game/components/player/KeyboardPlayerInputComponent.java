@@ -14,14 +14,12 @@ import java.util.HashMap;
  * This input handler only uses keyboard input.
  */
 public class KeyboardPlayerInputComponent extends InputComponent {
-  //private static final float ROOT2INV = 1f / (float) Math.sqrt(2f);
   private Vector2 walkDirection = Vector2.Zero.cpy();
-  public float walkSpeed = 1f;
-  private static HashMap<Integer, Integer> keyFlags = new HashMap<>();
-  private static final String WALKSTOP = "walkStop";
-  //private Entity player;
+  public static float walkSpeed = 1f;
+  private static final HashMap<Integer, Integer> keyFlags = new HashMap<>();
+  private static final String WALK_STOP = "walkStop";
   private boolean isChopping = false;
-
+  private static final String INTERACT = "interact";
   private boolean isInteracting = false;
 
   public KeyboardPlayerInputComponent() {
@@ -38,12 +36,12 @@ public class KeyboardPlayerInputComponent extends InputComponent {
   public boolean keyDown(int keycode) {
     keyFlags.put(keycode, 1);
 
-    // Check if were chopping and we recieve a different key
+    // Check if were chopping, and we receive a different key
     // If so stop chopping
     // This in effect freezes the player
     if (isChopping && keycode != Keys.Q) {
-      // We know item exits and is choppable
-      entity.getEvents().trigger("interact", "stopChop");
+      // We know item exits and is patchable
+      entity.getEvents().trigger(INTERACT, "stopChop");
       isChopping = false;
     }
 
@@ -54,19 +52,19 @@ public class KeyboardPlayerInputComponent extends InputComponent {
     
     if (keycode == Keys.E) {
       // Trigger an interaction attempt
-      entity.getEvents().trigger("interact", "default");
+      entity.getEvents().trigger(INTERACT, "default");
       return true;
     } else if (keycode == Keys.J) {
       // Trigger an attempt to combine existing items in a mixing station
-      entity.getEvents().trigger("interact", "combine");
+      entity.getEvents().trigger(INTERACT, "combine");
       return true;
     } else if (keycode == Keys.K) {
       // Trigger an attempt to rotate inventory of a station to update item display
-      entity.getEvents().trigger("interact", "rotate");
+      entity.getEvents().trigger(INTERACT, "rotate");
       return true;
     } else if (keycode == Keys.Q) {
       // Attempt to trigger an interaction to chops
-      entity.getEvents().trigger("interact", "chop");
+      entity.getEvents().trigger(INTERACT, "chop");
       isChopping = true;
     }
 
@@ -120,7 +118,6 @@ public class KeyboardPlayerInputComponent extends InputComponent {
    * @return whether the input was processed
    * @see InputProcessor#keyUp(int)
    */
-
   @Override
   public boolean keyUp(int keycode) {
     keyFlags.put(keycode, 0);
@@ -128,8 +125,8 @@ public class KeyboardPlayerInputComponent extends InputComponent {
     // If the 'Q' key is release we want to stop chopping
     // Also check if any other key but R is pressed too
     if (keycode != Keys.R && (keycode == Keys.Q || isChopping)) {
-      // We know item exits and is choppable
-      entity.getEvents().trigger("interact", "stopChop");
+      // We know item exits and is patchable
+      entity.getEvents().trigger(INTERACT, "stopChop");
       isChopping = false;
     }
 
@@ -153,48 +150,23 @@ public class KeyboardPlayerInputComponent extends InputComponent {
     Directions dir = keysToDirection();
     if(dir == Directions.NONE)
     {
-      entity.getEvents().trigger(WALKSTOP);
+      entity.getEvents().trigger(WALK_STOP);
       entity.getEvents().trigger("walkStopAnimation", lastDir);
       return;
     }
 
     switch(dir) {
-      case UP -> {
-        entity.getEvents().trigger("walkUp");
-      }
-      case DOWN -> {
-        entity.getEvents().trigger("walkDown");
-      }
-      case LEFT -> {
-        entity.getEvents().trigger("walkLeft");
-      }
-      case RIGHT -> {
-        entity.getEvents().trigger("walkRight");
-      }
-      case UPLEFT -> {
-        entity.getEvents().trigger("walkUpLeft");
-      }
-      case UPRIGHT -> {
-        entity.getEvents().trigger("walkUpRight");
-      }
-      case DOWNRIGHT -> {
-        entity.getEvents().trigger("walkDownRight");
-      }
-      case DOWNLEFT -> {
-        entity.getEvents().trigger("walkDownLeft");
-      }
-      default -> {
-        entity.getEvents().trigger(WALKSTOP);
-      }
+      case UP -> entity.getEvents().trigger("walkUp");
+      case DOWN -> entity.getEvents().trigger("walkDown");
+      case LEFT -> entity.getEvents().trigger("walkLeft");
+      case RIGHT -> entity.getEvents().trigger("walkRight");
+      case UP_LEFT -> entity.getEvents().trigger("walkUpLeft");
+      case UP_RIGHT -> entity.getEvents().trigger("walkUpRight");
+      case DOWN_RIGHT -> entity.getEvents().trigger("walkDownRight");
+      case DOWN_LEFT -> entity.getEvents().trigger("walkDownLeft");
+      default -> entity.getEvents().trigger(WALK_STOP);
     }
-    if (entity != null)
-    {
-      entity.getEvents().trigger("walk",walkDirection);
-    }
-
-
-
-
+    entity.getEvents().trigger("walk",walkDirection);
   }
 
   private Vector2 keysToVector() {
@@ -206,7 +178,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
     if (isPressed(Keys.W)) yCom += 1f;
     if (isPressed(Keys.S)) yCom -= 1f;
 
-// Normalize the vector for diagonal movement
+    // Normalize the vector for diagonal movement
     float length = (float) Math.sqrt(xCom * xCom + yCom * yCom);
     if (length > 0) {
       xCom /= length;
@@ -226,17 +198,17 @@ public class KeyboardPlayerInputComponent extends InputComponent {
     boolean left = isPressed(Keys.A);
     boolean right = isPressed(Keys.D);
 
-    if (up && right) return Directions.UPRIGHT;
-    if (up && left) return Directions.UPLEFT;
-    if (down && right) return Directions.DOWNRIGHT;
-    if (down && left) return Directions.DOWNLEFT;
+    if (up && right) return Directions.UP_RIGHT;
+    if (up && left) return Directions.UP_LEFT;
+    if (down && right) return Directions.DOWN_RIGHT;
+    if (down && left) return Directions.DOWN_LEFT;
     if (up) return Directions.UP;
     if (down) return Directions.DOWN;
     if (right) return Directions.RIGHT;
     if (left) return Directions.LEFT;
 
     return Directions.NONE;
-    };
+    }
 
 
 
@@ -244,9 +216,6 @@ public class KeyboardPlayerInputComponent extends InputComponent {
   public void create() {
     super.create();
     entity.getEvents().addListener("interactionEnd", this::whenInteractionEnds);
-    // Meant to restrict movement on some stations, not a current feature and clashing
-    // with existing system
-    //entity.getEvents().addListener("startInteraction", this::startInteraction);
   }
 
   private void whenInteractionEnds() {
@@ -259,10 +228,10 @@ public class KeyboardPlayerInputComponent extends InputComponent {
     DOWN,
     LEFT,
     RIGHT,
-    UPLEFT,
-    UPRIGHT,
-    DOWNLEFT,
-    DOWNRIGHT
+    UP_LEFT,
+    UP_RIGHT,
+    DOWN_LEFT,
+    DOWN_RIGHT
   }
 
 

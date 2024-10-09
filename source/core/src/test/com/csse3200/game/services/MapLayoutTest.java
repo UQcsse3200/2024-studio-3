@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.csse3200.game.GdxGame;
 import com.csse3200.game.areas.ForestGameArea;
 import com.csse3200.game.areas.map.BenchGenerator;
 import com.csse3200.game.areas.terrain.TerrainFactory;
@@ -108,7 +109,7 @@ class MapLayoutTest {
         when(mapLayoutSpy.readStation(anyString(), anyInt(), anyInt()))
                 .thenReturn(mock(Entity.class));
 
-        Map map = mapLayoutSpy.load(1);
+        Map map = mapLayoutSpy.load(GdxGame.LevelType.LEVEL_1);
 
         verify(mapLayoutSpy).readBench("X", 0, 8, 4);
         verify(mapLayoutSpy).readBench("Y", 0, 7, 4);
