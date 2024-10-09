@@ -1,15 +1,11 @@
 package com.csse3200.game.components.upgrades;
 
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -19,12 +15,8 @@ import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Stack;
 
 /**
  * A UI component for displaying and interacting with the upgrades menu in the game.
@@ -36,12 +28,9 @@ public class UpgradesDisplay extends UIComponent {
 
     private Image upgradesMenuImage;
     public boolean isVisible = false;
-    private List<Image> upgradeImages; // this is to store all the upgrades images
+    private final List<Image> upgradeImages; // this is to store all the upgrades images
     private Table upgradesTable;
-    private Image upgradeImage;
-    // private RandomCombination randomCombination= new RandomCombination();
 
-//    private Skin skin;
     private static final String[] upgradeTexturePaths = {
             "images/SpeedBoot.png",
             "images/Extortion1.png",
@@ -122,16 +111,6 @@ public class UpgradesDisplay extends UIComponent {
         upgradesTable.setVisible(false);
 
 
-        // stage.addListener(new InputListener() {
-        //     @Override
-        //     public boolean keyDown(InputEvent event, int keycode) {
-        //         if (keycode == Input.Keys.U) {
-        //             toggleVisibility();
-        //             return true;
-        //         }
-        //         return false;
-        //     }
-        // });
         ServiceLocator.getRandomComboService().getEvents().addListener("notenoughmoney", this::displayNotEnoughGoldUI);
     }
 
@@ -142,25 +121,18 @@ public class UpgradesDisplay extends UIComponent {
 //        upgradesTable.clearChildren();
         String upgrade = ServiceLocator.getRandomComboService().getSelectedUpgrade();
         logger.info(upgrade);
-        String texturePath = "";
-
-        switch (upgrade) {
-            case "Extortion":
-                texturePath = "images/Extortion1.png";
-                break;
-            case "Speed":
-                texturePath = "images/SpeedBoot.png";
-                break;
-            case "Loan":
-                texturePath = "images/Loan1.png";
-                break;
-        }
+        String texturePath = switch (upgrade) {
+            case "Extortion" -> "images/Extortion1.png";
+            case "Speed" -> "images/SpeedBoot.png";
+            case "Loan" -> "images/Loan1.png";
+            default -> "";
+        };
 
         Texture upgradeTexture = ServiceLocator.getResourceService().getAsset(texturePath, Texture.class);
-        Image upgradeImage = new Image(upgradeTexture);
+        Image upImage = new Image(upgradeTexture);
         upgradeImages.clear();
-        upgradeImages.add(upgradeImage);
-        upgradesTable.add(upgradeImage).pad(10);
+        upgradeImages.add(upImage);
+        upgradesTable.add(upImage).pad(10);
 
     }
 
@@ -181,7 +153,6 @@ public class UpgradesDisplay extends UIComponent {
                 ServiceLocator.getRandomComboService().activateUpgrade();
                 logger.info("YES button clicked");
                 ServiceLocator.getRandomComboService().getEvents().trigger("response");
-                // displayNotEnoughGoldUI();
                 toggleVisibility();
             }
         });
@@ -191,7 +162,6 @@ public class UpgradesDisplay extends UIComponent {
             public void clicked(InputEvent event, float x, float y) {
                 game.resume();
                 logger.info("NO button clicked");
-                // Handle NO button click
                 ServiceLocator.getRandomComboService().getEvents().trigger("response");
                 toggleVisibility();
             }
@@ -199,7 +169,6 @@ public class UpgradesDisplay extends UIComponent {
 
 
         buttonTable.add(yesButton).minWidth(200).minHeight(50).padTop(-100).padLeft(-40);
-        //buttonTable.row();  // Move to the next row
         buttonTable.add(noButton).minWidth(200).minHeight(50).padTop(-100).padRight(-700);
 
         return buttonTable;
@@ -224,12 +193,9 @@ public class UpgradesDisplay extends UIComponent {
 
         // Optionally, remove the image after some time or when clicked
         // Remove the image after 2 seconds
-        Actions Actions = new Actions();
         notEnoughGoldImage.addAction(Actions.sequence(
                 Actions.delay(2f),
-                Actions.run(() -> {
-                    notEnoughGoldImage.remove();
-                })
+                Actions.run(notEnoughGoldImage::remove)
         ));
     }
 
@@ -245,7 +211,7 @@ public class UpgradesDisplay extends UIComponent {
             game.pause();
 
             // Add a random upgrade image each time if th emenu is shown
-//            addRandomUpgradeImage();
+
             upgradesTable.setVisible(true);
         } else {
             logger.info("Upgrades menu is now hidden.");
@@ -263,6 +229,10 @@ public class UpgradesDisplay extends UIComponent {
 
     @Override
     protected void draw(SpriteBatch batch) {
+        // This method is intentionally left empty because the UpgradesDisplay component does not require
+        // custom drawing logic. Instead, it relies on the existing UI elements and actors added to the stage.
+        // If drawing is needed in the future, this method can be implemented accordingly.
+        throw new UnsupportedOperationException("Draw operation is not supported for UpgradesDisplay.");
 
     }
 

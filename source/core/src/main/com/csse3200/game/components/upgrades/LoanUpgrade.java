@@ -1,8 +1,6 @@
 package com.csse3200.game.components.upgrades;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.InputAdapter;
-import com.badlogic.gdx.InputMultiplexer;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.entities.Entity;
@@ -17,9 +15,7 @@ public class LoanUpgrade extends Component implements Upgrade {
 
     public LoanUpgrade(){
         super();
-        ServiceLocator.getPlayerService().getEvents().addListener("playerCreated", (Entity player) -> {
-            this.combatStatsComponent = player.getComponent(CombatStatsComponent.class);
-        });
+        ServiceLocator.getPlayerService().getEvents().addListener("playerCreated", (Entity player) -> this.combatStatsComponent = player.getComponent(CombatStatsComponent.class));
         ServiceLocator.getRandomComboService().getEvents().addListener("Loan", this::activate); 
     }
 
@@ -36,7 +32,11 @@ public class LoanUpgrade extends Component implements Upgrade {
         }
     }
 
+    /**
+     * Deactivates the loan upgrade
+     */
     public void deactivate() {}
+
 
     @Override
     public void update() {
