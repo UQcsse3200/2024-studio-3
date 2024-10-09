@@ -57,6 +57,9 @@ public class MainGameActions extends Component {
         ServiceLocator.getEntityService().getEvents().addListener("loseEnd", this::onLoseEnd);
 
         ServiceLocator.getEntityService().getEvents().addListener("endDay1", this::moral1);
+        ServiceLocator.getEntityService().getEvents().addListener("endDay1", this::moral2);
+        ServiceLocator.getEntityService().getEvents().addListener("endDay1", this::moral3);
+        ServiceLocator.getEntityService().getEvents().addListener("endDay1", this::moral4);
 
     }
 
@@ -68,6 +71,33 @@ public class MainGameActions extends Component {
 
         // Now we can transition to the cutscene
         game.setScreen(GdxGame.ScreenType.ENDDAY_1);
+    }
+    public void moral2(){
+        logger.info("Starting end of day 1 moral decision cutscene");
+
+        // Stop any background tasks
+        // ServiceLocator.getMainMenuDisplay().stopBackgroundTasks();
+
+        // Now we can transition to the cutscene
+        game.setScreen(GdxGame.ScreenType.ENDDAY_2);
+    }
+    public void moral3(){
+        logger.info("Starting end of day 1 moral decision cutscene");
+
+        // Stop any background tasks
+        // ServiceLocator.getMainMenuDisplay().stopBackgroundTasks();
+
+        // Now we can transition to the cutscene
+        game.setScreen(GdxGame.ScreenType.ENDDAY_3);
+    }
+    public void moral4(){
+        logger.info("Starting end of day 1 moral decision cutscene");
+
+        // Stop any background tasks
+        // ServiceLocator.getMainMenuDisplay().stopBackgroundTasks();
+
+        // Now we can transition to the cutscene
+        game.setScreen(GdxGame.ScreenType.ENDDAY_4);
     }
 
 

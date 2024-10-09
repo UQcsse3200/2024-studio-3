@@ -55,7 +55,7 @@ public class MoralDay2Cutscene extends Cutscene {
 
         images = new String[] {
                 "images/Cutscenes/Character Artwork/rhino_sprite.png",
-                "images/Cutscenes/moral_icons/laundering_ico.png",
+                "images/Cutscenes/moral_icons/gambling_ico.png",
         };
 
         // Get the resource service to load assets

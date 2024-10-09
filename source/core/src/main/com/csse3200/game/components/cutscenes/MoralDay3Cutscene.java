@@ -26,7 +26,7 @@ public class MoralDay3Cutscene extends Cutscene {
         Vector2 mafiaPosition = new Vector2(3, -1);
         float mafiaScale = 4.0f;
 
-        String iconImage = "images/Cutscenes/moral_icons/gambling_ico.png";
+        String iconImage = "images/Cutscenes/moral_icons/kill_ico.png";
         Vector2 iconPosition = new Vector2(-8, -2);
         float iconScale = 7.0f;
 
@@ -55,7 +55,7 @@ public class MoralDay3Cutscene extends Cutscene {
 
         images = new String[] {
                 "images/Cutscenes/Character Artwork/rhino_sprite.png",
-                "images/Cutscenes/moral_icons/laundering_ico.png",
+                "images/Cutscenes/moral_icons/kill_ico.png",
         };
 
         // Get the resource service to load assets
