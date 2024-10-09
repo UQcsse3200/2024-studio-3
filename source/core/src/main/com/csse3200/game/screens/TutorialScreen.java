@@ -89,7 +89,7 @@ public class TutorialScreen extends ScreenAdapter {
         renderer.getCamera().getEntity().setPosition(CAMERA_POSITION);
         renderer.getDebug().renderPhysicsWorld(physicsEngine.getWorld());
 
-        createUI();  // Create the UI after loading the assets
+createUI();  // Create the UI after loading the assets
 
         logger.debug("Initialising tutorial screen entities");
 //        TerrainFactory terrainFactory = new TerrainFactory(renderer.getCamera());

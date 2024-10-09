@@ -1,13 +1,17 @@
 package com.csse3200.game.components.cutscenes;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.utils.Scaling;
+import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,6 +25,9 @@ public class BackstoryCutsceneDisplay extends UIComponent {
     private Table table;
     private CutsceneTextDisplay textDisplay;
     private Skin skin = null;
+    private Image backgroundImage;
+    private float viewportWidth;
+    private float viewportHeight;
 
     public BackstoryCutsceneDisplay(Skin skin) {
         super(skin);
@@ -42,6 +49,17 @@ public class BackstoryCutsceneDisplay extends UIComponent {
             table = new Table();  // Initialize table if it's not already
         }
 
+        // Initialize the background image
+        backgroundImage = new Image(ServiceLocator.getResourceService().getAsset("images/backstory_background.png", Texture.class));
+        backgroundImage.setScaling(Scaling.fill);
+
+        // Retrieve viewport dimensions for resizing
+        viewportWidth = Gdx.graphics.getWidth();
+        viewportHeight = Gdx.graphics.getHeight();
+
+        // Resize the background image to fit the screen
+        resizeBackgroundImage();
+
         setupUI();
     }
 
@@ -57,7 +75,7 @@ public class BackstoryCutsceneDisplay extends UIComponent {
         }
 
         // Positioning the table for the cutscene
-        table.top().top();  // Move it to the top-center of the screen (modify if necessary)
+        table.top();  // Move it to the top-center of the screen
         table.setFillParent(true);
 
         // Create "Next Scene" button with its functionality
@@ -71,23 +89,27 @@ public class BackstoryCutsceneDisplay extends UIComponent {
         });
         table.add(nextSceneBtn).padTop(10f).padRight(10f);
 
-        // Add the table to the stage
+        // Add the table and background image to the stage
+        stage.addActor(backgroundImage);
         stage.addActor(table);
     }
 
     /**
-     * Sets up the text display for the screen, adjusting its size and position.
+     * Resizes the background image based on the current viewport dimensions.
      */
-//    public void setupTextDisplay() {
-//        textDisplay = new CutsceneTextDisplay(this.skin);
-//
-//        // Customize text display size and position
-//        textDisplay.getTable().setScale(0.8f); // Make the text display smaller
-//        textDisplay.getTable().top().center(); // Position it higher up
-//
-//        // Add the customized text display to the stage
-//        stage.addActor(textDisplay.getTable());
-//    }
+    private void resizeBackgroundImage() {
+        float scaleFactor = getScalingFactor(viewportWidth, viewportHeight);
+        backgroundImage.setSize(viewportWidth * scaleFactor, viewportHeight * scaleFactor);
+        backgroundImage.setPosition((viewportWidth - backgroundImage.getWidth()) / 2, (viewportHeight - backgroundImage.getHeight()) / 2);
+    }
+
+    /**
+     * Calculates the scaling factor for resizing the background image to fit the viewport.
+     */
+    private float getScalingFactor(float viewportWidth, float viewportHeight) {
+        return Math.min(viewportWidth / 1280f, viewportHeight / 720f);
+    }
+
     public void setupTextDisplay() {
         textDisplay = new CutsceneTextDisplay(this.skin);
 
@@ -114,6 +136,9 @@ public class BackstoryCutsceneDisplay extends UIComponent {
         }
         if (textDisplay != null && textDisplay.getTable() != null) {
             textDisplay.getTable().clear();  // Clear the text display table
+        }
+        if (backgroundImage != null) {
+            backgroundImage.clear();
         }
     }
 
