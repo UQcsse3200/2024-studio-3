@@ -56,7 +56,21 @@ public class MainGameActions extends Component {
         ServiceLocator.getEntityService().getEvents().addListener("badEnd", this::onBadEnd);
         ServiceLocator.getEntityService().getEvents().addListener("loseEnd", this::onLoseEnd);
 
+        ServiceLocator.getEntityService().getEvents().addListener("endDay1", this::moral1);
+
     }
+
+    public void moral1(){
+        logger.info("Starting end of day 1 moral decision cutscene");
+
+        // Stop any background tasks
+        // ServiceLocator.getMainMenuDisplay().stopBackgroundTasks();
+
+        // Now we can transition to the cutscene
+        game.setScreen(GdxGame.ScreenType.ENDDAY_1);
+    }
+
+
 
     /**
      * Starts bad ending cutscene
