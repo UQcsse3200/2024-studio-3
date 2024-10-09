@@ -7,7 +7,7 @@ import com.csse3200.game.GdxGame;
 import com.csse3200.game.components.cutscenes.CutsceneActions;
 import com.csse3200.game.components.cutscenes.CutsceneArea;
 import com.csse3200.game.components.cutscenes.CutsceneScreenDisplay;
-import com.csse3200.game.components.cutscenes.CutsceneTextDisplay;
+import com.csse3200.game.components.maingame.TextDisplay;
 import com.csse3200.game.components.gamearea.PerformanceDisplay;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
@@ -152,7 +152,7 @@ public class CutsceneScreen extends ScreenAdapter {
                 .addComponent(new TerminalDisplay())
                 .addComponent(new CutsceneActions(this.game))
                 .addComponent(cutsceneScreenDisplay)
-                .addComponent(new CutsceneTextDisplay());
+                .addComponent(new TextDisplay(this, "cutscene"));
 
         // Register the UI entity with the entity service
         ServiceLocator.getEntityService().register(ui);
