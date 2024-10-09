@@ -120,8 +120,16 @@ public class GdxGame extends Game {
         return new SettingsScreen(this);
       case LOAD_GAME:
         return new LoadGameScreen(this);
+
+//      case CUTSCENE:
+//        return new CutsceneScreen(this, CutsceneType.DAY_2);
+
       case CUTSCENE:
-        return new CutsceneScreen(this, CutsceneType.DAY_2);
+        return new CutsceneScreen(this, CutsceneType.MORAL_1);
+
+//      case ENDDAY_1:
+//        return new CutsceneScreen(this, CutsceneType.MORAL_1);
+
       case GOOD_END:
         return new CutsceneScreen(this, CutsceneType.GOOD_END);
       case BAD_END:
@@ -152,6 +160,10 @@ public class GdxGame extends Game {
         return new CutsceneScreen(this, CutsceneType.BAD_END);
       case LOSE:
         return new CutsceneScreen(this, CutsceneType.LOSE);
+
+      case MORAL_1:
+        return new CutsceneScreen(this, CutsceneType.MORAL_1);
+
       default:
         return null;
     }
@@ -175,11 +187,11 @@ public class GdxGame extends Game {
 
 
   public enum ScreenType {
-    MAIN_MENU, MAIN_GAME, SETTINGS, LOAD_GAME, CUTSCENE, GOOD_END, BAD_END, LOSE_END
+    MAIN_MENU, MAIN_GAME, SETTINGS, LOAD_GAME, CUTSCENE, GOOD_END, BAD_END, LOSE_END, ENDDAY_1
   }
 
   public enum CutsceneType {
-    BACK_STORY, DAY_2, DAY_3, DAY_4, GOOD_END, BAD_END, LOSE
+    BACK_STORY, DAY_2, DAY_3, DAY_4, GOOD_END, BAD_END, LOSE, MORAL_1, MORAL_2, MORAL_3, MORAL_4
   }
 
   public enum LevelType {
