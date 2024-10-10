@@ -32,7 +32,6 @@ public class StationCookingComponent extends Component  {
             .getEntity()
             .getEvents()
             .trigger("cookIngredient");
-        // TODO: modify the call to cookIngredient so that the correct times
     }
 
     /**
