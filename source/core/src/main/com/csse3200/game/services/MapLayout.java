@@ -11,6 +11,7 @@ import com.csse3200.game.entities.benches.Bench;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.factories.StationFactory;
 import com.csse3200.game.events.EventHandler;
+import com.csse3200.game.services.InteractableService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -189,6 +190,9 @@ public class MapLayout {
                 break;
         }
         station.setPosition(col + 4, row - 4);
+
+        InteractableService.registerEntity(station);
+
         return station;
     }
 

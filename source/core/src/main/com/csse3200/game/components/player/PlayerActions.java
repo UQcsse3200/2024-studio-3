@@ -1,5 +1,7 @@
 package com.csse3200.game.components.player;
 
+import java.util.Map;
+
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -11,6 +13,7 @@ import com.csse3200.game.components.items.PlateComponent;
 import com.csse3200.game.components.station.FireExtinguisherHandlerComponent;
 import com.csse3200.game.components.TooltipsDisplay;
 import com.csse3200.game.physics.components.PhysicsComponent;
+import com.csse3200.game.services.InteractableService;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.components.SensorComponent;
 
@@ -105,28 +108,27 @@ public class PlayerActions extends Component {
    * Triggers an interaction event. It holds the logic in how to interact with a given station
    */
   void interact(String type) {
-    // Get the closest fixture all call an interact method on it
-    Fixture interactable = interactionSensor.getClosestFixture();
-    if (interactable != null) {
-      // Uses attached information to Fixture on station creation to identify entity belonging
-      // too
-      Entity station = ((BodyUserData) interactable.getBody().getUserData()).entity;
+    Map<Entity, Vector2> interactables = InteractableService.getInteractables();
 
-      // Handle if it was a fire extinguisher
-      boolean interactingWithFireExtinguisher = FireExtinguisherHandlerComponent.handleFireExtinguisher(interactable, entity);
-      if (interactingWithFireExtinguisher) {
-        // No more interacting after this
-        return;
-      }
+    Entity closestEntity = null;
 
-      boolean interactingWithPlate = PlateComponent.handlePlateInteraction(interactable, entity);
-      if (interactingWithPlate) {
-        // Interaction handled by PlateComponent for plates
-        return;
-      }
-      // Logic for what interaction even to call on the station
-      station.getEvents().trigger("Station Interaction", playerInventory, displayInventory, type);
+    // Get the player position
+    Vector2 playerPosition = entity.getComponent(PhysicsComponent.class).getBody().getPosition();
+    float closestDistance = Float.MAX_VALUE;
+
+    for (Map.Entry<Entity, Vector2> entry : interactables.entrySet()) {
+        Entity entity = entry.getKey();
+        Vector2 entityPosition = entry.getValue();
+
+        float distance = playerPosition.dst(entityPosition);
+
+        if (/*distance <= 1f &&*/distance < closestDistance) {
+            closestDistance = distance;
+            closestEntity = entity;
+        }
     }
+    
+    closestEntity.getEvents().trigger("Station Interaction", playerInventory, displayInventory, type);
   }
 
   /**

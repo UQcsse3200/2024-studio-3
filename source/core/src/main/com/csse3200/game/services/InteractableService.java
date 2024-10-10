@@ -34,40 +34,27 @@ public class InteractableService {
     }
 
     /**
-     * Get the player instance from the player service
-     * @return the current player instance 
+     * Remove the entity from the interactables map
+     * @param entity to be removed
      */
-    private static Entity getPlayer() {
-        return ServiceLocator.getPlayerService().getPlayer();
+    public static void unregisterEntity(Entity entity) {
+        interactables.remove(entity);
     }
 
     /**
-     * Get the closest entity to the player
-     * @return the closest entity to the player
+     * Clear all entities from the interactables map
      */
-    public static Entity getClosestEntity() {
-        // Get the player and have a variable for the clostest entity
-        Entity player = getPlayer();
-        Entity closestEntity = null;
-
-        // Get the player position
-        Vector2 playerPosition = player.getComponent(PhysicsComponent.class).getBody().getPosition();
-        float closestDistance = Float.MAX_VALUE;
-
-        for (Map.Entry<Entity, Vector2> entry : interactables.entrySet()) {
-            Entity entity = entry.getKey();
-            Vector2 entityPosition = entry.getValue();
-
-            float distance = playerPosition.dst(entityPosition);
-
-            if (/*distance <= 1f &&*/distance < closestDistance) {
-                closestDistance = distance;
-                closestEntity = entity;
-            }
-        }
-
-        return closestEntity;
+    public static void clearEntities() {
+        interactables.clear();
     }
 
+    /**
+     * Get the interactables map which returns an Entity and its position as
+     * entries in a mao
+     * @return the interactables map
+     */
+    public static Map<Entity, Vector2> getInteractables() {
+        return interactables;
+    }
 
 }

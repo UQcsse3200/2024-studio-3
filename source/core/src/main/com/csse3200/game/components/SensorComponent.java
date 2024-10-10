@@ -1,14 +1,18 @@
 package com.csse3200.game.components;
 
+import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.physics.BodyUserData;
 import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.components.InteractionComponent;
+import com.csse3200.game.physics.components.PhysicsComponent;
+import com.csse3200.game.utils.math.Vector2Utils;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.Vector;
 /**
  * Finds the closest interactable object inside a range of the player
  */
