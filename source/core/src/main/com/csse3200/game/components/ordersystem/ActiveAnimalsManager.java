@@ -5,13 +5,13 @@ import java.util.Set;
 
 public class ActiveAnimalsManager {
     private static ActiveAnimalsManager instance;
-    private Set<String> activeAnimals;
+    private final Set<String> activeAnimals;
 
     private ActiveAnimalsManager() {
         activeAnimals = new HashSet<>();
     }
 
-    public static ActiveAnimalsManager getInstance() {
+    public static synchronized ActiveAnimalsManager getInstance() {
         if (instance == null) {
             instance = new ActiveAnimalsManager();
         }
@@ -20,12 +20,10 @@ public class ActiveAnimalsManager {
 
     public void addAnimal(String name) {
         activeAnimals.add(name);
-        System.out.println("Active animals: " + activeAnimals);
     }
 
     public void removeAnimal(String name) {
         activeAnimals.remove(name);
-        System.out.println("Active animals: " + activeAnimals);
     }
 
     public Set<String> getActiveAnimals() {
