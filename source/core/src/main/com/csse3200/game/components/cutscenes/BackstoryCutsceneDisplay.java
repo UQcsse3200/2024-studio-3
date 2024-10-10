@@ -122,18 +122,46 @@ public class BackstoryCutsceneDisplay extends UIComponent {
         return Math.min(viewportWidth / 1280f, viewportHeight / 720f);
     }
 
+//    public void setupTextDisplay() {
+//        textDisplay = new TextDisplay();  // Create an instance of TextDisplay
+//
+//        // Call the create method to initialize the TextDisplay
+//        textDisplay.create();
+//
+//        // Customize the text display size and position
+//        textDisplay.getTable().setScale(0.8f);  // Reduce the scale of the text display
+//        textDisplay.getTable().top().center();  // Position the text display at the top center of the screen
+//        textDisplay.getTable().padTop(100f);    // Adjust the padding to move it down from the top (if necessary)
+//
+//        // Add the text display to the stage
+//        stage.addActor(textDisplay.getTable());
+//
+//        // Optionally, set initial text for the display
+//        textDisplay.setText("Backstory text goes here...");
+//    }
+
     public void setupTextDisplay() {
-        textDisplay = new TextDisplay();
 
-        // Customize text display size and position
-        textDisplay.getTable().setScale(0.2f); // Make the text display smaller
+        textDisplay = new TextDisplay();  // Create an instance of TextDisplay
 
-        // Position the text display higher above the sprite's head
-        textDisplay.getTable().top().left(); // Align the text box at the top of the screen, left aligned
-        textDisplay.getTable().padTop(200f); // Adjust this padding to position it above the sprite’s head
+        // Call the create method to initialize the TextDisplay
+        textDisplay.create();
 
-        // Add the customized text display to the stage
+        textDisplay.getTable().top().left();  // Align the text display at the top left of the screen
+        textDisplay.getTable().padTop(200f);  // Adjust the padding to control the vertical position
+
+        // Customize the text display size and position
+        textDisplay.getTable().setScale(0.8f);  // Reduce the scale of the text display
+        textDisplay.getTable().top().center();  // Position the text display at the top center of the screen
+        textDisplay.getTable().padTop(100f);    // Adjust the padding to move it down from the top (if necessary)
+
+        // Add the text display to the stage
         stage.addActor(textDisplay.getTable());
+
+        // Optionally, set initial text for the display
+        textDisplay.setText("Backstory text goes here...");
+
+        textDisplay.setFontScale(1.0f);
     }
 
     /**
