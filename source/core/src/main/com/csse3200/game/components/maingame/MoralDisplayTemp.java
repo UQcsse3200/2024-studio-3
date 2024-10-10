@@ -4,7 +4,6 @@ package com.csse3200.game.components.maingame;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
@@ -12,7 +11,6 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -23,9 +21,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.csse3200.game.GdxGame;
 import com.csse3200.game.screens.MainGameScreen;
-import com.csse3200.game.services.DayNightService;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
 
@@ -39,7 +35,6 @@ public class MoralDisplayTemp extends UIComponent {
     private Table layout; // Layout manager
     private boolean isVisible;
     private final MainGameScreen game;
-    private Image dayEndImage;
     private static final Logger logger = LoggerFactory.getLogger(EndDayDisplay.class);
 
 
@@ -49,6 +44,7 @@ public class MoralDisplayTemp extends UIComponent {
         isVisible = false;
     }
 
+    @Override
     public void create() {
         super.create();
         layout = new Table();
@@ -69,11 +65,10 @@ public class MoralDisplayTemp extends UIComponent {
         Texture imgTexture = ServiceLocator.getResourceService()
                 .getAsset("images/bird.png", Texture.class);
         Drawable imgDrawable = new TextureRegionDrawable(imgTexture);
-        dayEndImage = new Image(imgDrawable);
+        Image dayEndImage = new Image(imgDrawable);
         layout.add(dayEndImage).center().padTop(10).row();
 
         initializeUI();
-        // setupInputListener();
 
         //from team 2, added the listener for when game day ends to toggle visibility
         ServiceLocator.getDayNightService().getEvents().addListener("TOMORAL", () -> {
@@ -114,18 +109,6 @@ public class MoralDisplayTemp extends UIComponent {
         layout.add(closeBtn).padTop(20).row();
     }
 
-    // private void setupInputListener() {
-    //     stage.addListener(new InputListener() {
-    //         @Override
-    //         public boolean keyDown(InputEvent event, int keycode) {
-    //             if (keycode == com.badlogic.gdx.Input.Keys.P) {
-    //                 toggleVisibility();
-    //                 return true;
-    //             }
-    //             return false;
-    //         }
-    //     });
-    // }
 
     public void show() {
         isVisible = true;
@@ -157,6 +140,6 @@ public class MoralDisplayTemp extends UIComponent {
 
     @Override
     public void setStage(Stage mock) {
-
+        // do nothing
     }
 }
