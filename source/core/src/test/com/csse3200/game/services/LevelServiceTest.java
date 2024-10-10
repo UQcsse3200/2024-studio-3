@@ -1,5 +1,6 @@
 package com.csse3200.game.services;
 
+import com.csse3200.game.GdxGame;
 import com.csse3200.game.events.EventHandler;
 import com.csse3200.game.events.listeners.EventListener0;
 import com.csse3200.game.events.listeners.EventListener1;
@@ -45,35 +46,35 @@ class LevelServiceTest {
 
     @Test
     void shouldReturnDefaultLevelValueOfOneFromGetCurrLevel() {
-        assertEquals(levelServiceSpy.getCurrLevel(),1);
+        assertEquals(levelServiceSpy.getCurrLevel(), GdxGame.LevelType.LEVEL_1);
     }
 
     @Test
     void shouldIncrementLevelByOneIfTriggerIsTrue() {
         levelServiceSpy.togglePlayerFinishedLevel();
-        assertEquals(levelServiceSpy.getCurrLevel(), 2);
+        assertEquals(levelServiceSpy.getCurrLevel(), GdxGame.LevelType.LEVEL_2);
     }
 
     @Test
     void shouldIncrementLevelByOne() {
         levelServiceSpy.incrementLevel();
-        assertEquals(levelServiceSpy.getCurrLevel(), 2);
+        assertEquals(levelServiceSpy.getCurrLevel(), GdxGame.LevelType.LEVEL_2);
     }
 
     @Test
     void shouldIncrementLevelMultipleTimesByTrigger() {
-        int level = 0;
+        GdxGame.LevelType level = GdxGame.LevelType.DONE;
         for (int i = 0; i < 4; i++) {
             levelServiceSpy.togglePlayerFinishedLevel();
             level = levelServiceSpy.getCurrLevel();
         }
-        assertEquals(5, level);
+        assertEquals(GdxGame.LevelType.LEVEL_5, level);
     }
 
     @Test
     void shouldManuallySetLevel() {
-        levelServiceSpy.setCurrLevel(5);
-        assertEquals(levelServiceSpy.getCurrLevel(),5);
+        levelServiceSpy.setCurrLevel(GdxGame.LevelType.LEVEL_5);
+        assertEquals(levelServiceSpy.getCurrLevel(), GdxGame.LevelType.LEVEL_5);
     }
 
     @Test
@@ -82,13 +83,24 @@ class LevelServiceTest {
         EventHandler eventHandler = new EventHandler();
         doReturn(eventHandler).when(levelServiceSpy).getEvents();
         levelServiceSpy.getEvents().addListener("startSpawning", mockEventListener);
-        for (int i = 0; i < 11; i++) {
-            levelServiceSpy.levelControl(i);
-            verify(levelServiceSpy).levelControl(i);
-            //when(levelServiceSpy.getEvents()).thenReturn(eventHandler);
-            //doReturn(eventHandler).when(levelServiceSpy).getEvents();
-            verify(mockEventListener, atMost(11)).handle(anyInt());
-        }
+
+        levelServiceSpy.levelControl(GdxGame.LevelType.LEVEL_1);
+        verify(levelServiceSpy).levelControl(GdxGame.LevelType.LEVEL_1);
+
+        levelServiceSpy.levelControl(GdxGame.LevelType.LEVEL_2);
+        verify(levelServiceSpy).levelControl(GdxGame.LevelType.LEVEL_2);
+
+        levelServiceSpy.levelControl(GdxGame.LevelType.LEVEL_3);
+        verify(levelServiceSpy).levelControl(GdxGame.LevelType.LEVEL_3);
+
+        levelServiceSpy.levelControl(GdxGame.LevelType.LEVEL_4);
+        verify(levelServiceSpy).levelControl(GdxGame.LevelType.LEVEL_4);
+
+        levelServiceSpy.levelControl(GdxGame.LevelType.LEVEL_5);
+        verify(levelServiceSpy).levelControl(GdxGame.LevelType.LEVEL_5);
+
+        levelServiceSpy.levelControl(GdxGame.LevelType.DONE);
+        verify(levelServiceSpy).levelControl(GdxGame.LevelType.DONE);
     }
 
     @Test

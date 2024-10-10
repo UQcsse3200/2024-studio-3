@@ -3,24 +3,23 @@ package com.csse3200.game.components.player;
 import com.badlogic.gdx.graphics.Texture;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.csse3200.game.rendering.RenderComponent;
 import com.csse3200.game.services.ServiceLocator;
-import java.lang.IllegalArgumentException;
 import com.csse3200.game.components.items.ItemComponent;
 import java.util.ArrayList;
+import java.util.Objects;
+
 import com.csse3200.game.physics.components.PhysicsComponent;
 
 
 /**
- * An component that display's the items in an entity's InventoryComponent as
+ * A component that display's the items in an entity's InventoryComponent as
  * images hovering above the entity. This is different to the InventoryDisplay
  * UI component, which displays items in slots that overlay the gameplay screen.
- *
  * To use: add this component to an entity that has an
  * InventoryComponent. This component will NOT work if the entity
  * it is added to does not have a InventoryComponent.
@@ -36,8 +35,8 @@ public class InventoryDisplayHoverComponent extends RenderComponent {
     private Vector2 scale;
     private static final float X_OFFSET = 0.2f;
     private static final float Y_OFFSET = 1.0F;
-    private static final float slotWidth = 0.6f;
-    private static final float slotHeight = 0.6f;
+    private static final float SLOT_WIDTH = 0.6f;
+    private static final float SLOT_HEIGHT = 0.6f;
 
     @Override
     public void create() {
@@ -56,6 +55,7 @@ public class InventoryDisplayHoverComponent extends RenderComponent {
             scale = entity.getScale();
             updateImages();
         }
+        logger.info("Created InventoryDisplayHoverComponent");
     }
 
     /**
@@ -71,12 +71,10 @@ public class InventoryDisplayHoverComponent extends RenderComponent {
                 if (item != null ) {
                     String itemTexturePath = item.getTexturePath();
                     Texture itemTexture;
-                    if (itemTexturePath != null) {
-                        itemTexture = new Texture(itemTexturePath);
-                    } else {
-                        // placeholder null image if item image cannot be found
-                        itemTexture = new Texture("images/inventory_ui/null_image.png");
-                    }
+                    // placeholder null image if item image cannot be found
+                    itemTexture = new Texture(Objects.requireNonNullElse(
+                            itemTexturePath,
+                            "images/inventory_ui/null_image.png"));
                     itemImages.add(itemTexture);
                 }
             }
@@ -87,6 +85,7 @@ public class InventoryDisplayHoverComponent extends RenderComponent {
      * Updates this InventoryDisplay to reflect the current state of the InventoryComponent
      * of this component's parent entity.
      */
+    @Override
     public void update() {
         updateImages();
     }
@@ -101,23 +100,23 @@ public class InventoryDisplayHoverComponent extends RenderComponent {
             if (i == itemImages.size() - 1 && itemImages.size() > 1) {
                 batch.draw(selectedBackgroundImage,
                     position.x + X_OFFSET,
-                    position.y + (i * slotHeight) + Y_OFFSET,
-                    slotWidth,
-                    slotHeight
+                    position.y + (i * SLOT_HEIGHT) + Y_OFFSET,
+                    SLOT_WIDTH,
+                    SLOT_HEIGHT
                 );
             } else {
                 batch.draw(backgroundImage,
                     position.x + X_OFFSET,
-                    position.y + (i * slotHeight) + Y_OFFSET,
-                    slotWidth,
-                    slotHeight
+                    position.y + (i * SLOT_HEIGHT) + Y_OFFSET,
+                    SLOT_WIDTH,
+                    SLOT_HEIGHT
                 );
             }
             batch.draw(itemImages.get(i),
                 position.x + X_OFFSET + 0.1f,
-                position.y + (i * slotHeight) + Y_OFFSET + 0.1f,
-                slotWidth - 0.2f,
-                slotHeight - 0.2f
+                position.y + (i * SLOT_HEIGHT) + Y_OFFSET + 0.1f,
+                SLOT_WIDTH - 0.2f,
+                SLOT_HEIGHT - 0.2f
             );
         }
     }
@@ -133,7 +132,7 @@ public class InventoryDisplayHoverComponent extends RenderComponent {
 
     @Override
     public void setStage(Stage mock) {
-
+        // This function needed to exist but not needed to be implemented
     }
 
 }

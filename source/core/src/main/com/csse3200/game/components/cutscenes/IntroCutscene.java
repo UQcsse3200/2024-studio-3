@@ -1,5 +1,7 @@
 package com.csse3200.game.components.cutscenes;
 
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Array;
 import com.csse3200.game.components.cutscenes.scenes.Scene;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
@@ -23,26 +25,39 @@ public class IntroCutscene extends Cutscene {
      */
     @Override
     protected void setupScenes() {
-        // Add text to be displayed during the cutscene
-        cutsceneText.add("First bit of text");
-        cutsceneText.add("Second bit of text");
-        cutsceneText.add("Third bit of text");
+        cutsceneText.add("Hello This is an Example Text");
+        cutsceneText.add("Wow, we can move forward, I wonder what else this can do :)");
+        cutsceneText.add("This is a quick check to see if truncation is working correctly or whether it does not " +
+                "show what it is meant to show or not.");
 
         // Add scenes with background images, animations, text, and duration
-        scenes.add(new Scene(
-                "images/Cutscenes/Beastly_Bistro_Background.png",
-                new String[]{"images/player/Cook_Model32.png"},
-                cutsceneText, 3.0f));
 
-        scenes.add(new Scene(
-                "images/Cutscenes/Graveyard_Scene.png",
-                new String[]{"images/player/Cook_Model32.png"},
-                cutsceneText, 4.0f));
+        Scene scene1 = new Scene("images/Cutscenes/Beastly_Bistro_Background.png");
+        scene1.setImages(
+                new String[]{"images/meals/acai_bowl.png"},
+                new Vector2[] {new Vector2(4, 2)},
+                new float[] {1.0f}
+        );
 
-        scenes.add(new Scene(
-                "images/Cutscenes/Beastly_Bistro_Background.png",
-                new String[]{"images/player/Cook_Model32.png"},
-                cutsceneText, 2.0f));
+        scene1.setSceneText(cutsceneText);
+        scene1.setDuration(3.0f);
+
+        scenes.add(scene1);
+
+        Scene scene2 = new Scene("images/Cutscenes/Graveyard_Scene.png");
+        scene2.setImages(
+                new String[]{"images/meals/acai_bowl.png"},
+                new Vector2[] {new Vector2(2, 2)},
+                new float[] {4.0f}
+        );
+        Array<String> scene2Text = new Array<>();
+        scene2Text.add("This is the second scene");
+        scene2Text.add("We made it");
+        scene2Text.add("LETS GO!!!!");
+        scene2.setSceneText(scene2Text);
+        scene2.setDuration(3.0f);
+
+        scenes.add(scene2);
     }
 
     /**
@@ -60,11 +75,14 @@ public class IntroCutscene extends Cutscene {
         // Load the animation images for the cutscene
         animations = new String[] {"images/player/Cook_Model32.png"};
 
+        images = new String[] {"images/meals/acai_bowl.png"};
+
         // Get the resource service to load assets
         ResourceService resourceService = ServiceLocator.getResourceService();
         resourceService.loadTextures(textures);
+        resourceService.loadTextures(images);
         resourceService.loadTextureAtlases(animations);
-        resourceService.loadAll();  // Ensure all assets are loaded
+        resourceService.loadAll();
     }
 
     /**

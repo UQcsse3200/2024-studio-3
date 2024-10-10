@@ -1,5 +1,6 @@
 package com.csse3200.game.services;
 
+import com.csse3200.game.GdxGame;
 import com.csse3200.game.components.cutscenes.Cutscene;
 import com.csse3200.game.screens.CutsceneScreen;
 import com.csse3200.game.components.mainmenu.MainMenuDisplay;
@@ -33,17 +34,17 @@ public class ServiceLocator {
   private static InputService inputService;
   private static PlayerService playerService;
   private static GameArea gameArea;
+  private static GdxGame game;
   private static MainGameScreen gameScreen;
   private static CutsceneScreen cutsceneScreen;
   private static Cutscene currentCutscene;
+  private static MapLayout map;
   private static MainMenuDisplay mainMenuDisplay;
 
   private static ResourceService resourceService;
 
   private static TicketDetails ticketDetails;
-  //Me new stuff :)
-
-
+  private static SaveLoadService saveLoadService;
   private static DocketService docketService;
   private static LevelService levelService;
 
@@ -52,6 +53,8 @@ public class ServiceLocator {
 
   // New services (e.g. CustomerMovementService, DialogueService)
   private static CustomerMovementService customerMovementService;
+
+  private static RandomComboService randomComboService;
 
   public static EntityService getEntityService() {
     return entityService;
@@ -85,6 +88,7 @@ public class ServiceLocator {
     return docketService;
   }
 
+  public static SaveLoadService getSaveLoadService() {return saveLoadService;}
 
   public static TicketDetails getTicketDetails() {
     return ticketDetails;
@@ -93,6 +97,7 @@ public class ServiceLocator {
   public static DayNightService getDayNightService() { //new
     return dayNightService;
   }
+
 
 
   public static OrderActions getOrderActions() {
@@ -116,6 +121,10 @@ public class ServiceLocator {
     return cutsceneScreen;
   }
 
+  public static MapLayout getMapLayout() {
+    return map;
+  }
+
   public static Cutscene getCurrentCutscene() {
     return currentCutscene;
   }
@@ -123,6 +132,10 @@ public class ServiceLocator {
   // New getters for additional services
   public static CustomerMovementService getCustomerMovementService() {
     return customerMovementService;
+  }
+
+  public static RandomComboService getRandomComboService(){
+    return randomComboService;
   }
 
   public static void setCurrentCutscene(Cutscene cutscene) {
@@ -195,6 +208,14 @@ public class ServiceLocator {
     orderActions = source;
   }
 
+  public static void registerGame(GdxGame new_game) {
+    logger.debug("Registering GdxGame");
+    game = new_game;
+  }
+
+  public static GdxGame getGame() {
+    return game;
+  }
 
   public static void registerLevelService(LevelService source) {
     if (levelService == null) {
@@ -252,6 +273,16 @@ public class ServiceLocator {
     customerMovementService = service;
   }
 
+  public static void registerSaveLoadService(SaveLoadService service) {
+    if (saveLoadService != null) {
+      logger.warn("SaveLoadService is being overwritten!");
+    }
+    saveLoadService = service;
+  }
+
+  public static void registerRandomComboService(RandomComboService service){
+    randomComboService = service;
+  }
 
   // Clear all services
   public static void clear() {
@@ -268,6 +299,8 @@ public class ServiceLocator {
     gameScreen = null;
     customerMovementService = null;
     dayNightService = null;
+    saveLoadService = null;
+    randomComboService = null;
   }
 
   private ServiceLocator() {
@@ -277,6 +310,11 @@ public class ServiceLocator {
 
   public static MainMenuDisplay getMainMenuDisplay() {
     return ServiceLocator.mainMenuDisplay;
+  }
+
+  public static void registerMapLayout(MapLayout mapLayout) {
+    logger.debug("Registering map layout {}", mapLayout);
+    map = mapLayout;
   }
 }
 

@@ -67,7 +67,7 @@ public class ItemTexturePathGetter {
      */
     private static String getTexturePathMeal(MealComponent meal) {
         // Get the item
-        String item = meal.getItemName();
+        String item = meal.getItemName().toLowerCase();
 
         // string for the meal name image
         String imageName = switch(item) {

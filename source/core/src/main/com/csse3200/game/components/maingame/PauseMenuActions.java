@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
  */
 public class PauseMenuActions extends Component {
     private static final Logger logger = LoggerFactory.getLogger(PauseMenuActions.class);
-    private GdxGame game;
+    private final GdxGame game;
 
     /**
      * Constructs a PauseMenuActions instance

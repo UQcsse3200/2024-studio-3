@@ -9,6 +9,8 @@ import com.csse3200.game.GdxGame;
 import com.csse3200.game.components.ordersystem.MainGameOrderBtnDisplay;
 import com.csse3200.game.components.player.PlayerActions;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.rendering.RenderService;
+import com.csse3200.game.services.PlayerService;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
 import com.csse3200.game.components.ordersystem.MainGameOrderTicketDisplay;
@@ -16,7 +18,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.Gdx;
-import com.csse3200.game.components.tutorial.TutorialTextDisplay;
+import com.csse3200.game.components.maingame.TextDisplay;
 
 /**
  * Displays tutorial-related UI components and manages tutorial flow using textDisplay.
@@ -32,16 +34,20 @@ public class TutorialScreenDisplay extends UIComponent {
     private boolean createOrderPressed = false;
     private boolean docketsShifted = false;
     private Table table;
-    private TutorialTextDisplay textDisplay;
+    private TextDisplay textDisplay;
     private boolean wPressedLastFrame = false;
     private boolean aPressedLastFrame = false;
     private boolean sPressedLastFrame = false;
     private boolean dPressedLastFrame = false;
+    private static final int MAX_TUTORIAL_STEP = 4;
+    int  i = 0;
 
     public TutorialScreenDisplay(GdxGame game) {
+
         this.game = game;
-        this.orderTicketDisplay = new MainGameOrderTicketDisplay();
-        this.orderBtnDisplay = new MainGameOrderBtnDisplay();
+//        this.orderTicketDisplay = new MainGameOrderTicketDisplay(ServiceLocator.getRenderService(), ServiceLocator.getPlayerService());
+//        this.orderBtnDisplay = new MainGameOrderBtnDisplay();
+
     }
 
     @Override
@@ -57,15 +63,17 @@ public class TutorialScreenDisplay extends UIComponent {
         setupUI();
 
         // Initialise the textDisplay before using it
-        textDisplay = new TutorialTextDisplay();
+        textDisplay = new TextDisplay();
         textDisplay.setVisible(false);  // Initially hidden
         stage.addActor(textDisplay.getTable());  // Add it to the stage
 
         advanceTutorialStep();  // Ensure textDisplay is initialized before calling this method
 
         // Add event listeners for create order
-        entity.getEvents().addListener("createOrder", this::onCreateOrderPressed);
-        ServiceLocator.getInputService().getEvents().addListener("createOrder", this::onCreateOrderPressed);
+        //entity.getEvents().addListener("createOrder", this::onCreateOrderPressed);
+        //ServiceLocator.getInputService().getEvents().addListener("createOrder", this::onCreateOrderPressed);
+//        ServiceLocator.getInputService().getEvents().addListener("walked", this::onPlayerMoved);
+//        ServiceLocator.getInputService().getEvents().addListener("interact", this::onInteraction);// start the tutorial from the first step
 
         stage.addActor(table);
     }
@@ -81,22 +89,26 @@ public class TutorialScreenDisplay extends UIComponent {
      * Proceeds to the next tutorial step using a switch-case.
      */
     public void advanceTutorialStep() {
-        tutorialStep++;
-        switch (tutorialStep) {
-            case 1:
-                showMovementTutorial();
-                break;
-            case 2:
-                showItemPickupTutorial();
-                break;
-            case 3:
-                showOrderingTutorial();
-                break;
-            case 4:
-                completeTutorial();
-                break;
-            default:
-                logger.error("Unexpected tutorial step: " + tutorialStep);
+        if (tutorialStep < MAX_TUTORIAL_STEP) {
+            tutorialStep++;
+            switch (tutorialStep) {
+                case 1:
+                    showMovementTutorial();
+                    break;
+                case 2:
+                    showItemPickupTutorial();
+                    break;
+                case 3:
+                    showOrderingTutorial();
+                    break;
+                case 4:
+                    completeTutorial();
+                    break;
+                default:
+                    logger.error("Unexpected tutorial step: " + tutorialStep);
+            }
+        } else {
+            logger.error("Tutorial step exceeded maximum value.");
         }
     }
 
@@ -104,16 +116,24 @@ public class TutorialScreenDisplay extends UIComponent {
      * Displays the movement tutorial. The player needs to use W/A/S/D to move.
      */
     private void showMovementTutorial() {
-        textDisplay.setVisible(true);
-        createTextBox("Use W/A/S/D to move around.");
+        if (textDisplay != null) {
+            textDisplay.setVisible(true);
+            createTextBox("Use W/A/S/D to move around.");
+        } else {
+            logger.error("textDisplay is null during showMovementTutorial.");
+        }
     }
 
     /**
      * Displays the item pickup tutorial. The player needs to press E to pick up an item.
      */
     private void showItemPickupTutorial() {
-        textDisplay.setVisible(true);
-        createTextBox("Press E to pick up items.");
+        if (textDisplay != null) {
+            textDisplay.setVisible(true);
+            createTextBox("Press E to pick up items.");
+        } else {
+            logger.error("textDisplay is null during showItemPickupTutorial.");
+        }
     }
 
     /**
@@ -121,29 +141,37 @@ public class TutorialScreenDisplay extends UIComponent {
      */
 
     public void showOrderingTutorial() {
-        textDisplay.setVisible(true);
+        if (textDisplay != null) {
+            textDisplay.setVisible(true);
 
-        // Combine both instructions into one
-        createTextBox("Press 'Create Order' and then use [ and ] keys to switch dockets.");
+            // Combine both instructions into one
+            createTextBox("Use [ and ] keys to switch dockets.");
 
-        // Check if both the order button is pressed and the dockets are shifted
-        if (createOrderPressed &&
-                (Gdx.input.isKeyJustPressed(Input.Keys.LEFT_BRACKET) || Gdx.input.isKeyJustPressed(Input.Keys.RIGHT_BRACKET))) {
+            // Check if both the order button is pressed and the dockets are shifted
+            if ((Gdx.input.isKeyJustPressed(Input.Keys.LEFT_BRACKET) || Gdx.input.isKeyJustPressed(Input.Keys.RIGHT_BRACKET))) {
 
-            docketsShifted = true;
-            logger.debug("Dockets shifted and create order pressed");
+                docketsShifted = true;
+                logger.debug("Dockets shifted!");
 
-            // Advance the tutorial as both conditions are now met
-            advanceTutorialStep();
+                // Advance the tutorial as both conditions are now met
+                advanceTutorialStep();
+            }
+        } else {
+            logger.error("textDisplay is null during showOrderingTutorial.");
         }
     }
+
 
     /**
      * Completes the tutorial and informs the player that they can continue.
      */
     private void completeTutorial() {
-        createTextBox("Tutorial Complete! Press ENTER to continue.");
-        textDisplay.setVisible(true);
+        if (textDisplay != null) {
+            textDisplay.setVisible(true);
+            createTextBox("Tutorial Complete! Press `Space` to continue.");
+        } else {
+            logger.error("textDisplay is null during completeTutorial.");
+        }
     }
 
     @Override
@@ -161,33 +189,24 @@ public class TutorialScreenDisplay extends UIComponent {
                 }
                 break;
             case 3:
-                if (createOrderPressed) {
-                    textDisplay.setText("Now use [ and ] keys to switch dockets.");
+                textDisplay.setText("Now use [ and ] keys to switch dockets.");
 
-                    // Check if the user presses [ or ]
-                    if (Gdx.input.isKeyJustPressed(Input.Keys.LEFT_BRACKET) || Gdx.input.isKeyJustPressed(Input.Keys.RIGHT_BRACKET)) {
+                if (Gdx.input.isKeyJustPressed(Input.Keys.LEFT_BRACKET) || Gdx.input.isKeyJustPressed(Input.Keys.RIGHT_BRACKET)) {
                         docketsShifted = true;
                         logger.debug("Dockets shifted");
-                    }
+                }
 
-                    if (createOrderPressed && docketsShifted) {
-                        logger.debug("Advancing tutorial after dockets shifted");
-                        advanceTutorialStep();
-                    }
+                if (docketsShifted) {
+                    logger.debug("Advancing tutorial after dockets shifted");
+                    advanceTutorialStep();
                 }
                 break;
             case 4:
-                if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
+                if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER) || Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
                     startGame();
                 }
                 break;
         }
-    }
-
-    public void onCreateOrderPressed() {
-        createOrderPressed = true;
-        logger.debug("Create order button pressed, createOrderPressed set to true");
-        textDisplay.setText("Now use [ and ] keys to switch dockets.");
     }
 
     /**
@@ -241,5 +260,17 @@ public class TutorialScreenDisplay extends UIComponent {
             return;
         }
         this.stage = stage;
+    }
+
+    public int getTutorialStep() {
+        return tutorialStep;
+    }
+
+    public void setTutorialStep(int i) {
+        this.tutorialStep = i;
+    }
+
+    public boolean isCreateOrderPressed() {
+        return createOrderPressed;
     }
 }

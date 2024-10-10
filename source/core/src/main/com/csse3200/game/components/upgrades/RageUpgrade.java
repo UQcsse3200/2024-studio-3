@@ -19,8 +19,12 @@ import com.csse3200.game.ui.UIComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
-public class RageUpgrade extends UIComponent {
+/**
+ * Manages the Rage Upgrade UI component, handling activation, deactivation,
+ * visual updates, and related sound effects.
+ * When in rage mode, stations operate twice as fast
+ */
+public class RageUpgrade extends UIComponent implements Upgrade {
     private static final Logger logger = LoggerFactory.getLogger(RageUpgrade.class);
     private final GameTime timesource;
 
@@ -28,18 +32,16 @@ public class RageUpgrade extends UIComponent {
     private Table layout;
 
     private ProgressBar rageMeter;
-    private float rageTimeRemaining; // Track remaining time for rage mode
-    private final float rageTime = 30f; // 1 minute duration
+    private float rageTimeRemaining;
+    private static final float rageTime = 30f;
     private boolean isRageActive = false;
 
     private float rageFillTimeRemaining;
-    private final float rageFillTime = 90f;
+    private static final float rageFillTime = 90f;
     private boolean isRageFilling = false;
 
     private Sound rageSound;
-    private Long rageSoundId;
     private Sound powerDownSound;
-    private Long powerDownId;
 
     public RageUpgrade() {
         super();
@@ -54,24 +56,39 @@ public class RageUpgrade extends UIComponent {
         layout.setFillParent(true);
         layout.setVisible(isOverlayVisible);
         stage.addActor(layout);
+        layout.setZIndex(0);
 
         setupRedOverlay();
         setupRageMeter();
         setupInputListener();
 
+        // https://freesound.org/people/Timbre/sounds/86241/
         rageSound = Gdx.audio.newSound(Gdx.files.internal("sounds/rage_sound.wav"));
+
+        // https://freesound.org/people/noirenex/sounds/159399/
         powerDownSound = Gdx.audio.newSound(Gdx.files.internal("sounds/power_down.wav"));
+        ServiceLocator.getRandomComboService().getEvents().addListener("Rage", this::activateRageMode);
     }
 
+    /**
+     * Create a red overlay image.
+     */
     private void setupRedOverlay() {
+        // https://www.freepik.com/free-vector/grunge-red-distressed-textured-background_4043545.htm#query=
+        // red%20overlay&position=32&from_view=keyword&track=ais_hybrid&uuid=5e1656db-c1a1-483b-b846-d3d666207271
         Texture texture = ServiceLocator.getResourceService().getAsset("images/red_overlay.jpg", Texture.class);
+
         Image image = new Image(texture);
         image.setFillParent(true);
         image.setColor(new Color(1, 0, 0, 0.3f));
         layout.add(image);
     }
 
+    /**
+     * Set up the meter to display the time when rage is activate
+     */
     private void setupRageMeter() {
+        // Made textures in Paint
         Texture whiteTexture = ServiceLocator.getResourceService().getAsset("images/white_background.png", Texture.class);
         Texture fillTexture = ServiceLocator.getResourceService().getAsset("images/red_fill.png", Texture.class);
 
@@ -108,9 +125,15 @@ public class RageUpgrade extends UIComponent {
         });
     }
 
+    public void activate() {
+    }
+    /**
+     * Activates Rage mode by triggering the event, playing activation sound,
+     * displaying the overlay, and initializing the rage timer.
+     */
     public void activateRageMode() {
-        entity.getEvents().trigger("rageModeOn");
-        rageSoundId = rageSound.play();
+        ServiceLocator.getEntityService().getEvents().trigger("rageModeOn");
+        long rageSoundId = rageSound.play();
         rageSound.setVolume(rageSoundId, 0.25f);
 
         isRageActive = true;
@@ -119,22 +142,32 @@ public class RageUpgrade extends UIComponent {
         rageTimeRemaining = rageTime;
     }
 
+    public void deactivate() {
+        }
+    
+    /**
+     * Deactivates Rage mode by triggering related events, playing power down sound,
+     * hiding the overlay, and initiating the rage meter refill process.
+     */
     public void deactivateRageMode() {
-        entity.getEvents().trigger("rageModeOff");
-        powerDownId = powerDownSound.play();
+        ServiceLocator.getEntityService().getEvents().trigger("rageModeOff");
+        long powerDownId = powerDownSound.play();
         powerDownSound.setVolume(powerDownId, 0.25f);
 
         isRageActive = false;
         isOverlayVisible = false;
         layout.setVisible(false);
-//        rageMeter.setValue(1f);
 
         isRageFilling = true;
-        logger.info("rage meter value: " + rageMeter.getValue());
+        logger.info(String.format("rage meter value: %.2f", rageMeter.getValue()));
         rageFillTimeRemaining = (1 - rageMeter.getValue()) * rageFillTime;
-        logger.info("rage fill time remaining : " + rageFillTimeRemaining);
+        logger.info(String.format("rage fill time remaining: %.2f", rageFillTimeRemaining));
     }
 
+    /**
+     * Updates the RageUpgrade component each frame, managing the rage timer
+     * and the refill process based on the current state.
+     */
     @Override
     public void update() {
         if (isRageActive) {
@@ -155,9 +188,19 @@ public class RageUpgrade extends UIComponent {
 
     @Override
     protected void draw(SpriteBatch batch) {
+        // This method is intended for rendering the UI component.
+        // The RageUpgrade component does not require custom drawing logic,
+        // as all visual elements are handled by Scene2D and are drawn automatically.
+        // Leaving this method empty prevents unnecessary processing
+        // while indicating that no custom drawing is needed.
     }
 
     @Override
     public void setStage(Stage mock) {
+        // This method is intended to set the stage for the UI component.
+        // However, this component does not require an explicit stage setting
+        // because it manages its own UI elements internally.
+        // Therefore, calling this method will result in an exception.
+        throw new UnsupportedOperationException("setStage is not supported for RageUpgrade.");
     }
 }

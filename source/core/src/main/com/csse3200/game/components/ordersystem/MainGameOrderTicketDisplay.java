@@ -1,6 +1,7 @@
 package com.csse3200.game.components.ordersystem;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
@@ -11,19 +12,24 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Cell;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.SnapshotArray;
 import com.badlogic.gdx.utils.TimeUtils;
-import com.csse3200.game.components.player.PlayerStatsDisplay;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.rendering.RenderService;
+import com.csse3200.game.services.PlayerService;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import com.csse3200.game.services.*;
 
 /**
  * Displays order tickets on the main game screen. This class manages the
@@ -35,11 +41,9 @@ public class MainGameOrderTicketDisplay extends UIComponent {
     private static final Logger logger = LoggerFactory.getLogger(MainGameOrderTicketDisplay.class);
     private static final float Z_INDEX = 3f;
     private static final float viewPortHeightMultiplier = 7f / 9f;
-    private static final float viewPortWidthMultiplier = 3f / 32f;
-    private static final float viewportHeight =
-            ServiceLocator.getRenderService().getStage().getViewport().getCamera().viewportHeight;
-    private static final float viewportWidth =
-            ServiceLocator.getRenderService().getStage().getViewport().getCamera().viewportWidth;
+//    private final float viewportHeight;
+    private final float viewportWidth;
+    private final float viewportHeight;
     private static final int distance = 20;
     private static ArrayList<Table> tableArrayList;
     private static ArrayList<Long> startTimeArrayList;
@@ -55,14 +59,24 @@ public class MainGameOrderTicketDisplay extends UIComponent {
     private DocketMealDisplay mealDisplay;
     private static final float DISTANCE_MULTIPLIER = 0.015f;
     public CombatStatsComponent combatStatsComponent;
+    public int goldMultiplier = 1;
     private boolean isPaused = false;
     private long pauseStartTime = 0;
     private long totalPausedDuration = 0;
 
+//    private static ArrayList<TextureRegionDrawable> textureArrayList;
+    private static ArrayList<Image> imageArrayList;
+    private static ArrayList<String> stringArrayList;
+
+    private static Map<String, Texture> texture_map;
+
     /**
      * Constructs an MainGameOrderTicketDisplay instance
      */
-    public MainGameOrderTicketDisplay() {
+    public MainGameOrderTicketDisplay(RenderService renderService, PlayerService playerService) {
+        this.viewportHeight = renderService.getStage().getViewport().getCamera().viewportHeight;
+        this.viewportWidth = renderService.getStage().getViewport().getCamera().viewportWidth;
+
         tableArrayList = new ArrayList<>();
         startTimeArrayList = new ArrayList<>();
         backgroundArrayList = new ArrayList<>();
@@ -70,9 +84,16 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         recipeTimeArrayList = new ArrayList<>();
         mealDisplay = new DocketMealDisplay();
         setRecipeValue(2);
-        ServiceLocator.getPlayerService().getEvents().addListener("playerCreated", (Entity player) -> {
+
+        playerService.getEvents().addListener("playerCreated", (Entity player) -> {
             combatStatsComponent = player.getComponent(CombatStatsComponent.class);
         });
+//        textureArrayList=new ArrayList<>();
+        imageArrayList=new ArrayList<>();
+        stringArrayList=new ArrayList<>();
+
+        texture_map=new HashMap<>();
+        loadTextures();
     }
 
     /**
@@ -84,7 +105,6 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         this.recipe = new Recipe(recipeName);
     }
 
-
     /**
      * Gets recipe data
      *
@@ -93,6 +113,11 @@ public class MainGameOrderTicketDisplay extends UIComponent {
     public Recipe getRecipe() {
         return this.recipe;
     }
+
+    /**
+     * Get recipe name
+     * @return recipe name
+     */
     public String getCurrentRecipeName() {
         return recipe != null ? recipe.getName() : null;
     }
@@ -111,18 +136,28 @@ public class MainGameOrderTicketDisplay extends UIComponent {
     }
 
     /**
+     * Pauses all order ticket times for the specified duration in milliseconds.
+     *
+     * @param durationMillis duration to pause in milliseconds
+     */
+    
+
+    /**
      * Initialises the display and sets up event listeners for creating and shifting orders.
      */
     @Override
     public void create() {
         super.create();
-        //entity.getEvents().addListener("createOrder", this::addActors);
+        entity.getEvents().addListener("createOrder", this::addActors);
         ServiceLocator.getDocketService().getEvents().addListener("shiftDocketsLeft", this::shiftDocketsLeft);
         ServiceLocator.getDocketService().getEvents().addListener("shiftDocketsRight", this::shiftDocketsRight);
-        // logger.info("Listeners added for shiftDocketsLeft and shiftDocketsRight events");
         ServiceLocator.getDocketService().getEvents().addListener("removeBigTicket", this::removeBigTicket);
 
-        //From team 2, i used your dispose method here when listening for a new day, so current dockets get removed
+        //From Team 2, these listeners are for our dance party upgrade to pause and unpause docket times
+        ServiceLocator.getDocketService().getEvents().addListener("Dancing", ()->{setPaused(true);});
+        ServiceLocator.getDocketService().getEvents().addListener("UnDancing", ()->{setPaused(false);});
+
+        //From team 2, I used your dispose method here when listening for a new day, so current dockets get removed
         //when the end of day occurs
         ServiceLocator.getDocketService().getEvents().addListener("Dispose", this::dispose);
 
@@ -136,6 +171,12 @@ public class MainGameOrderTicketDisplay extends UIComponent {
                 return false;
             }
         });
+    }
+
+    private void loadTextures() {
+        for(String path : DocketMealDisplay.getMealDocketTextures()){
+            texture_map.put(path, new Texture(Gdx.files.local(path)));
+        }
     }
 
     /**
@@ -155,6 +196,7 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         float xVal = cntXval(250f, tableArrayList.size());
         float yVal = viewportHeight * viewPortHeightMultiplier;
         table.setPosition(xVal, yVal);
+        table.padTop(25f);
         Docket background = new Docket(getTimer());
         backgroundArrayList.add(background);
         table.setBackground(background.getImage().getDrawable());
@@ -166,7 +208,11 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         Label recipeNameLabel = new Label(getRecipe().getName(), skin);
         table.add(recipeNameLabel).padLeft(10f).row();
 
-        mealImage = mealDisplay.getMealImage(getRecipe().getName());
+        String s=getRecipe().getName();
+        stringArrayList.add(s);
+        Texture texture=texture_map.get(mealDisplay.getMealImage(s,"vertical"));
+        mealImage=new Image(new TextureRegionDrawable(texture));
+        imageArrayList.add(mealImage);
         table.add(mealImage).row();
 
         recipeTimeArrayList.add(getTimer());
@@ -188,7 +234,7 @@ public class MainGameOrderTicketDisplay extends UIComponent {
      * @return the x-position for the order ticket.
      */
     private float cntXval(float startPoint, int instanceCnt) {
-        return startPoint + (instanceCnt - 1) * ((viewportWidth * DISTANCE_MULTIPLIER) + viewportWidth * 3f / 32f);
+        return startPoint + 100 + (instanceCnt - 1) * ((viewportWidth * DISTANCE_MULTIPLIER) + viewportWidth * 3f / 32f);
     }
 
     /**
@@ -197,6 +243,8 @@ public class MainGameOrderTicketDisplay extends UIComponent {
      * @param index the index of the docket that was removed or shifted.
      */
     public static void reorderDockets(int index) {
+        float viewportWidth = Gdx.graphics.getWidth();
+
         for (int i = index + 1; i < tableArrayList.size(); i++) {
             Table currTable = tableArrayList.get(i);
             currTable.setX(currTable.getX() - (distance + viewportWidth * 3f / 32f));
@@ -227,10 +275,16 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         long firstRecipeTime = recipeTimeArrayList.remove(0);
         recipeTimeArrayList.add(firstRecipeTime);
 
+        Image firstImage = imageArrayList.removeFirst();
+        imageArrayList.add(firstImage);
+
+        String firstString = stringArrayList.removeFirst();
+        stringArrayList.add(firstString);
+
         updateDocketPositions();
         updateDocketSizes();
 
-        logger.info("Docket positions updated after left shift");
+//        logger.info("Docket positions updated after left shift");
     }
 
 
@@ -241,18 +295,28 @@ public class MainGameOrderTicketDisplay extends UIComponent {
      * @param table  the table representing the docket.
      * @param i  the index of the docket.
      */
-    public void stageDispose(Docket docket, Table table, int i) {
+    public void stageDispose(Docket docket, Table table, int i, Boolean isSuccess) {
+        logger.info("Dispose Docket");
         table.setBackground((Drawable) null);
         table.clear();
         table.remove();
-        ServiceLocator.getDocketService().getEvents().trigger("removeOrder", i);
+        // ServiceLocator.getDocketService().getEvents().trigger("removeOrder", i);
         docket.dispose();
         tableArrayList.remove(i);
         backgroundArrayList.remove(i);
         startTimeArrayList.remove(i);
         countdownLabelArrayList.remove(i);
         recipeTimeArrayList.remove(i);
-        combatStatsComponent.addGold(getRecipeValue());
+        // combatStatsComponent.addGold(getRecipeValue());
+        // combatStatsComponent.addGold(getRecipeValue() * goldMultiplier);
+        // Commenting out because gold is already incremented in StationServingComponent.java in scoreMeal() method.
+        // ServiceLocator.getLevelService().setCurrGold(ServiceLocator.getLevelService().getCurrGold() + 10);
+        // if (isSuccess) {
+        //    combatStatsComponent.addGold(getRecipeValue());
+        // }
+        stringArrayList.remove(i);
+        imageArrayList.remove(i);
+
     }
 
     /**
@@ -295,10 +359,16 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         long recipeTime = recipeTimeArrayList.remove(recipeTimeArrayList.size() - 1);
         recipeTimeArrayList.add(0, recipeTime);
 
+        Image lastImage = imageArrayList.removeLast();
+        imageArrayList.addFirst(lastImage);
+
+        String lastString = stringArrayList.removeLast();
+        stringArrayList.addFirst(lastString);
+
         updateDocketPositions();
         updateDocketSizes();
 
-        logger.info("Docket positions updated after right shift");
+        // logger.info("Docket positions updated after right shift");
     }
 
     /**
@@ -339,7 +409,7 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         float xPosEnlarged = viewportWidth - enlargedDocketWidth - rightHandSideDistance;
         float yPosEnlarged = (viewportHeight * 0.938f) - (enlargedDocketHeight - 15);
 
-        float yPosNormal = (viewportHeight * 0.938f) - (normalDocketHeight - 15);
+        float yPosNormal = (viewportHeight * 0.938f) - (normalDocketHeight*0.8f - 15);
 
         for (int i = 0; i < tableArrayList.size(); i++) {
             Table table = tableArrayList.get(i);
@@ -349,36 +419,44 @@ public class MainGameOrderTicketDisplay extends UIComponent {
                 table.setSize(enlargedDocketWidth, enlargedDocketHeight);
                 // Fixed position for enlarged docket
                 table.setPosition(xPosEnlarged, yPosEnlarged);
-
                 table.setZIndex(10);
+
+                mealImage=(Image)table.getChildren().get(2);
+                Texture texture=texture_map.get(mealDisplay.getMealImage(stringArrayList.get(i),"vertical"));
+                mealImage.setDrawable(new TextureRegionDrawable(texture));
+
                 // Apply enlarged font size
                 for (int j = 0; j < cells.size; j++) {
-                    if (cells.get(j).getActor() instanceof Label) {
-                        Label label = (Label) cells.get(j).getActor();
+                    if (cells.get(j).getActor() instanceof Label label) {
                         label.setFontScale(viewportWidth / 1920f);
                         if (label.getText().toString().contains("Timer")) {
                             cells.get(j).padBottom(5f);
                         }
-                    } else if (cells.get(j).getActor() instanceof Image) {
-                        Image image = (Image) cells.get(j).getActor();
+                    } else if (cells.get(j).getActor() instanceof Image image) {
                         cells.get(j).padBottom(10f);
                         image.setScaling(Scaling.fit);
                     }
                 }
             } else { // Non-enlarged dockets
-                table.setSize(normalDocketWidth, normalDocketHeight);
+                table.setSize(normalDocketWidth*1.3f, normalDocketHeight*0.8f);
                 float xVal = cntXval(leftHandSideDistance,i + 1);
                 table.setPosition(xVal, yPosNormal);
                 table.setZIndex(5);
+
+                mealImage=(Image)table.getChildren().get(2);
+                Texture texture=texture_map.get(mealDisplay.getMealImage(stringArrayList.get(i),"horizontal"));
+                mealImage.setDrawable(new TextureRegionDrawable(texture));
+
                 for (int j = 0; j < cells.size; j++) {
-                    if (cells.get(j).getActor() instanceof Label) {
-                        Label label = (Label) cells.get(j).getActor();
+                    if (cells.get(j).getActor() instanceof Label label) {
+                        if (viewportWidth == 0) {
+                            viewportWidth = 1;
+                        }
                         label.setFontScale(0.7f * (viewportWidth / 1920f));
                         if (label.getText().toString().contains("Timer")) {
                             cells.get(j).padBottom(0f);
                         }
-                    } else if (cells.get(j).getActor() instanceof Image) {
-                        Image image = (Image) cells.get(j).getActor();
+                    } else if (cells.get(j).getActor() instanceof Image image) {
                         cells.get(j).padBottom(5f);
                         image.setScaling(Scaling.fit);
                     }
@@ -392,7 +470,7 @@ public class MainGameOrderTicketDisplay extends UIComponent {
      *
      * @param currentWidth current width of the game window screen.
      * @param currentHeight current height of the game window screen.
-     * @return
+     * @return scaling factor
      */
     public static float getScalingFactor(float currentWidth, float currentHeight) {
         float widthFactor = currentWidth / 1920;
@@ -423,8 +501,8 @@ public class MainGameOrderTicketDisplay extends UIComponent {
                 currBackground.updateDocketTexture((double) remainingTime / 1000);
                 currTable.setBackground(currBackground.getImage().getDrawable());
             } else {
-                stageDispose(currBackground, currTable, i);
-
+                logger.info("Remaining time is 0");
+                stageDispose(currBackground, currTable, i, false);
             }
         }
         if (!tableArrayList.isEmpty()) {
@@ -443,7 +521,7 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         Docket currBackground = backgroundArrayList.get(index);
         Table currTable = tableArrayList.get(index);
 
-        stageDispose(currBackground, currTable, index);
+        stageDispose(currBackground, currTable, index, true);
     }
 
     /**
@@ -469,19 +547,18 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         boolean ingredientBool = false;
         for (int i = 0; i < children.size; i++) {
             Actor actor = children.get(i);
-            if (actor instanceof Label) {
-                Label label = (Label) actor;
+            if (actor instanceof Label label) {
                 String text = label.getText().toString();
                 if (i == 0) {
                     orderNum = text.replace("Order ", "");
                 } else if (text.startsWith("Timer:")) {
                     timeLeft = text.replace("Timer: ", "");
                 } else { // handling meal name
-                    if (ingredientBool == false) { // only handles the ingredient meal
+                    if (!ingredientBool) { // only handles the ingredient meal
                         meal = text;
                         ingredientBool = true;
                     } else {
-                        //if you want to parse the individual ingredients of the recipe, factor the text value here
+                        // TODO: if you want to parse the individual ingredients of the recipe, factor the text value here
                         continue;
                     }
 
@@ -531,7 +608,7 @@ public class MainGameOrderTicketDisplay extends UIComponent {
     @Override
     public void dispose() {
         // Cleanup resources
-        //from team 2, i reset the ordernumb back to 0, for each new day when dispose is called
+        //from team 2, I reset the ordernumb back to 0, for each new day when dispose is called
 //        orderNumb = 0;
         for (Table table : tableArrayList) {
             table.clear();
@@ -541,6 +618,9 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         startTimeArrayList.clear();
         backgroundArrayList.clear();
         countdownLabelArrayList.clear();
+        stringArrayList.clear();
+//        textureArrayList.clear();
+        imageArrayList.clear();
         super.dispose();
     }
 

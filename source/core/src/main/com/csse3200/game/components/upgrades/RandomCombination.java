@@ -30,7 +30,7 @@ public class RandomCombination extends Component {
         
         switch (randomChoice) {
             case 0:
-                loanUpgrade.Loaner();  // Call Loaner() if randomChoice is 0
+                //loanUpgrade.Loaner();  // Call Loaner() if randomChoice is 0
                 break;
             case 1:
 //                rageUpgrade.activateRageMode();  // Call toggleRageModeOverlay() if randomChoice is 1

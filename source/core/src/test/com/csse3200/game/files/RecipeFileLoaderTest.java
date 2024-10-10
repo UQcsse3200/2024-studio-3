@@ -88,7 +88,8 @@ public class RecipeFileLoaderTest {
         assertEquals(expectedStation2, actualStation2);
 
         List<String> actualStation3 = configs.steakMeal.oven;
-        assertEquals(expectedStation1, actualStation3);
+        List<String> expectedStation3 = List.of();
+        assertEquals(expectedStation3, actualStation3);
 
         List<String> actualCollectStation = configs.steakMeal.produceBasket;
         assertEquals(expectedStation1, actualCollectStation);

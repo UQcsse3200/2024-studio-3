@@ -93,6 +93,7 @@ public class PlayerFactory {
 
     ServiceLocator.getPlayerService().getEvents().trigger("playerCreated", player);
 
+    ServiceLocator.getPlayerService().registerPlayer(player);
     animator.startAnimation("Character_StandUp");
     return player;
   }

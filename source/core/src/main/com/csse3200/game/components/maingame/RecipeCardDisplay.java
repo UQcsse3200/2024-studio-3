@@ -2,11 +2,8 @@ package com.csse3200.game.components.maingame;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.csse3200.game.screens.MainGameScreen;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
@@ -14,17 +11,19 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class RecipeCardDisplay extends UIComponent {
+
     private boolean isVisible;
     private final MainGameScreen game;
-    private static final Logger logger = LoggerFactory.getLogger(PauseMenuDisplay.class);
+    private static final Logger logger = LoggerFactory.getLogger(RecipeCardDisplay.class);
+
     private static final String[] recipeCardTexture = {"images/pause_menu2.png"};
+    private Image backgroundImage;
 
     //TODO add esc key exit
 
     public RecipeCardDisplay(MainGameScreen game) {
         super();
         this.game = game;
-        isVisible = false;
     }
 
     /**
@@ -37,12 +36,19 @@ public class RecipeCardDisplay extends UIComponent {
         Image backgroundImage = new Image(pauseMenuTexture);
         backgroundImage.setSize(800, 800);
 
+        backgroundImage.setVisible(false);
         return backgroundImage;
     }
 
+    @Override
     public void create() {
         super.create();
         ServiceLocator.getResourceService().loadTextures(recipeCardTexture);
+
+        backgroundImage = createRecipeCardBackground();
+        stage.addActor(backgroundImage);
+
+        // I had to comment this out because the image it displays is ugly and causes glitches #474
         ServiceLocator.getResourceService().loadAll(); // Ensures the texture is loaded
     }
 
@@ -50,19 +56,17 @@ public class RecipeCardDisplay extends UIComponent {
      * Pressing enter will stop the game and display the recipe card
      */
     public void displayScreen() {
-        stage.addListener(new InputListener() {
-            @Override
-            public boolean keyDown(InputEvent event, int keycode) {
-            if (keycode == com.badlogic.gdx.Input.Keys.ENTER) {
-                toggleVisibility();
-                return true;
-            }
-            return false;
-            }
-        });
+        isVisible = !isVisible;
+        backgroundImage.setVisible(isVisible);
+
         if (isVisible) {
-            toggleVisibility();
+            logger.info("Upgrades menu is now visible.");
+            game.pause();
+        } else {
+            logger.info("Upgrades menu is now hidden.");
+            game.resume();
         }
+
     }
 
     /**
@@ -72,6 +76,8 @@ public class RecipeCardDisplay extends UIComponent {
         isVisible = true;
         logger.info("PAUSE GAME");
         game.pause();
+
+        backgroundImage.setVisible(true);
     }
 
     /**
@@ -81,6 +87,9 @@ public class RecipeCardDisplay extends UIComponent {
         isVisible = false;
         logger.info("RESUME GAME");
         game.resume();
+        if (backgroundImage != null) {
+            backgroundImage.remove();
+        }
     }
 
 
@@ -98,14 +107,17 @@ public class RecipeCardDisplay extends UIComponent {
     @Override
     public void dispose() {
         super.dispose();
-        ServiceLocator.getResourceService().unloadAssets(recipeCardTexture);
+        ServiceLocator.getResourceService().unloadAssets(new String[]{"images/pause_menu2.png"});
+
     }
 
     @Override
     protected void draw(SpriteBatch batch) {
+        // draw is handled by the stage
     }
 
     @Override
     public void setStage(Stage mock) {
+        this.stage = mock;
     }
 }

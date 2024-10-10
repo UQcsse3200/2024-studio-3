@@ -21,6 +21,8 @@ public class EntityService {
 
   private Entity moralScreen;
 
+  private Entity DecisionSystem;
+
   private Entity endDayScreen;
 
   public EntityService() {
@@ -35,7 +37,7 @@ public class EntityService {
    * @param entity new entity.
    */
   public void register(Entity entity) {
-    logger.info("Registering {} in entity service", entity);
+//    logger.info("Registering {} in entity service", entity);
     entities.add(entity);
     entity.create();
   }
@@ -73,32 +75,77 @@ public class EntityService {
     }
   }
 
+  /**
+   * Get the moral screen entity.
+   * @return the moral screen entity
+   */
   public Entity getMoralScreen() {
-      return this.moralScreen;
+    return this.moralScreen;
   }
 
+  /**
+   * Get the moral system entity.
+   * @return the moral system entity
+   */
+  public Entity getMoralSystem(){
+    return this.DecisionSystem;
+  }
 
+  /**
+   * Register the moral screen entity.
+   * @param moralScreen the moral screen entity
+   */
   public void registerMoral(Entity moralScreen) {
     register(moralScreen);
     this.moralScreen = moralScreen;
   }
 
+  /**
+   * Unregister the moral screen entity.
+   */
   public void unregisterMoral(){
     unregister(moralScreen);
     this.moralScreen = null;
-
   }
 
+  /**
+   * Register the moral system entity.
+   * @param moralSystem the moral system entity
+   */
+  public void registerMoralSystem(Entity moralSystem){
+    register(moralSystem);
+    this.DecisionSystem = moralSystem;
+  }
+
+  /**
+   * Unregister the moral system entity.
+   */
+  public void unregisterMoralSystem(){
+    unregister(DecisionSystem);
+    this.DecisionSystem = null;
+  }
+
+  /**
+   * Register the end day screen entity.
+   * @param endDayScreen  the end day screen entity
+   */
   public void registerEndDay(Entity endDayScreen) {
     register(endDayScreen);
     this.endDayScreen = endDayScreen;
   }
 
+  /**
+   * Unregister the end day screen entity.
+   */
   public void unregisterEndDay(){
     unregister(endDayScreen);
     this.endDayScreen = null;
   }
 
+  /**
+   * Get the end day screen entity.
+   * @return
+   */
   public Entity getEndDayScreen() {
     return this.endDayScreen;
   }

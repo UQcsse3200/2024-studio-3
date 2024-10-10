@@ -1,41 +1,41 @@
 package com.csse3200.game.components.maingame;
 
+import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.Gdx;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Stack;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.csse3200.game.GdxGame;
-import com.csse3200.game.screens.MainGameScreen;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Objects;
+
 import com.badlogic.gdx.utils.Align;
+import com.csse3200.game.components.cutscenes.*;
 
 /***
  * The UIComponent to create textbox which are drawn to the bottom of the screen
  */
 
 public class TextDisplay extends UIComponent {
+    private static final Logger logger = LoggerFactory.getLogger(TextDisplay.class);
     //String building variables
     private List<String> text;
-    private int current_part = 0;
-    private int text_length = 0;
+    private int currentPart = 0;
+    private int textLength = 0;
     private StringBuilder currentText;
     private int textLimit = 60;
     private int charIndex = 0;
@@ -44,23 +44,32 @@ public class TextDisplay extends UIComponent {
 
     // Displaying variables
     private boolean visible;
-    private Stack layout;
     private Label label;
     private Table table;
-    private Image displayBox;
-    private final MainGameScreen game;
+    private final ScreenAdapter game;
+    private String screen;
     public TextDisplay() {
         super();
         this.game = null;
+        this.screen = "";
         this.table = new Table();
         this.visible = false;
         this.currentText = new StringBuilder();
         this.text = new ArrayList<>(); //N! to fix crashing when pressing Enter
     }
-    public TextDisplay(MainGameScreen game) {
+    public TextDisplay(ScreenAdapter game) {
+        this.game = game;
+        this.screen = "";
+        this.table = new Table();
+        this.visible = false;
+        this.currentText = new StringBuilder();
+        this.text = new ArrayList<>();
+    }
+    public TextDisplay(ScreenAdapter game, String screen) {
         super();
         this.game = game;
         this.table = new Table();
+        this.screen = screen;
         this.visible = true;
         this.currentText = new StringBuilder();
         this.text = new ArrayList<>(); //N! to fix crashing when pressing Enter
@@ -91,9 +100,7 @@ public class TextDisplay extends UIComponent {
      */
     public void create() {
         super.create();
-
         // Create the table for layout control and stack for layering
-        setVisible(false);
         table.setFillParent(true);
         table.center().bottom();
         stage.addActor(table);
@@ -122,10 +129,9 @@ public class TextDisplay extends UIComponent {
 
         // Add the stack to the table with padding or alignment options
         table.add(stack).padBottom(70).padLeft(0).size((int)(Gdx.graphics.getWidth() * 0.5), (int)(Gdx.graphics.getHeight() * 0.2));
+        setVisible(Objects.equals(this.screen, "cutscene"));
         setupInputListener();
         entity.getEvents().addListener("SetText", this::setText);
-
-        //setText("The shimmering moonlight cast a silvery glow over the tranquil ocean waves, gently lapping against the sandy shore as a soft breeze carried the scent of saltwater and seaweed through the air, while distant stars twinkled faintly in the vast, dark sky above, their light barely penetrating the velvety blackness that enveloped the world in a quiet, peaceful embrace, where the occasional call");
     }
 
     /***
@@ -134,29 +140,34 @@ public class TextDisplay extends UIComponent {
      */
     public void setText(String text) {
         setVisible(true);
-        current_part = 0;
-        List<String> new_text = new ArrayList<>();
-        text_length = text.length();
-        String temp = "";
-        String current = "";
-        for (int i = 0; i < text_length; i++) {
+        currentPart = 0;
+        List<String> newText = new ArrayList<>();
+        textLength = text.length();
+        StringBuilder temp = new StringBuilder();
+        StringBuilder current = new StringBuilder();
+        for (int i = 0; i < textLength; i++) {
             // if word formed in temp
             if (text.charAt(i) == ' ') {
-                temp += current;
-                current = "";
+                temp.append(current);
+                current = new StringBuilder();
             }
 
             if (i != 0 && i % textLimit == 0) {
-                temp += " (enter to continue)";
-                new_text.add(temp);
-                temp = "";
+                temp.append(" (enter to continue)");
+                newText.add(temp.toString());
+                temp = new StringBuilder();
             }
-            current += text.charAt(i);
+            current.    append(text.charAt(i));
         }
-        temp += current + " (enter to continue)";
-        new_text.add(temp);
-        System.out.println(new_text);
-        this.text = new_text;
+        temp.append(current).append(" (enter to continue)");
+        newText.add(temp.toString());
+        this.text = newText;
+    }
+
+    /** Alternative method to set text with no modificiation or spiliting up **/
+    public void setTextRaw(String text) {
+
+        label.setText(text);
     }
 
     /***
@@ -188,11 +199,11 @@ public class TextDisplay extends UIComponent {
     @Override
     public void update() {
         long time = ServiceLocator.getTimeSource().getTime();
-        if (this.text != null && current_part < TextDisplay.this.text.size() && charIndex < this.text.get(current_part).length()) {
+        if (this.text != null && currentPart < TextDisplay.this.text.size() && charIndex < this.text.get(currentPart).length()) {
             if (time - lastUpdate >= delay) {
                 lastUpdate = time;
                 // Add a character and set the label to new text
-                this.currentText.append(text.get(current_part).charAt(charIndex));
+                this.currentText.append(text.get(currentPart).charAt(charIndex));
                 label.setText(currentText.toString());
                 charIndex++;
             }
@@ -207,14 +218,24 @@ public class TextDisplay extends UIComponent {
         stage.addListener(new InputListener() {
             @Override
             public boolean keyDown(InputEvent event, int keycode) {
-                if (keycode == com.badlogic.gdx.Input.Keys.ENTER) {
-                    current_part++;
-                    charIndex = 0;
-                    lastUpdate = 0;
-                    TextDisplay.this.currentText = new StringBuilder();
-                    // if no more text remaining
-                    if (current_part == TextDisplay.this.text.size()) {
-                        setVisible(false);
+                if (keycode == com.badlogic.gdx.Input.Keys.ENTER || keycode == com.badlogic.gdx.Input.Keys.SPACE) {
+                    // if the text hasn't been fully shown
+                    if (TextDisplay.this.screen.equals("cutscene")) {
+                        Cutscene currentCutscene = ServiceLocator.getCurrentCutscene();
+                        currentCutscene.setTextForScene(currentCutscene.currentScene);
+                        label.setText(currentCutscene.currentText);
+                    } else if (charIndex < TextDisplay.this.text.get(currentPart).length()) {
+                        label.setText(text.get(currentPart));
+                        charIndex = TextDisplay.this.text.get(currentPart).length();
+                    } else {
+                        currentPart++;
+                        charIndex = 0;
+                        lastUpdate = 0;
+                        TextDisplay.this.currentText = new StringBuilder();
+                        // if no more text remaining
+                        if (currentPart == TextDisplay.this.text.size()) {
+                            setVisible(false);
+                        }
                     }
                     return true;
                 }
@@ -224,7 +245,18 @@ public class TextDisplay extends UIComponent {
     }
 
     @Override
-    public void draw(SpriteBatch batch) {}
+    public void draw(SpriteBatch batch) {
+        // draw is handled by the stage
+    }
     @Override
-    public void setStage(Stage mock) {}
+    public void setStage(Stage stage) {
+        this.stage = stage;
+    }
+    public Table getTable() {
+        return table;
+    }
+    public void disable() {
+        visible = false;
+        table.setVisible(false);
+    }
 }

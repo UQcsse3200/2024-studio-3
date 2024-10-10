@@ -19,12 +19,6 @@ public class StationItemHandlerComponent extends Component {
     protected InventoryComponent inventoryComponent;
     protected ArrayList<String> acceptableItems;
 
-    // General TODO:
-    // Add trigger calls to external for failed interactions
-    // Processing in Inventory component, animation, timing and mapping
-    // Create subclass for each station where needed, eg classic bench will need
-    // to call add second component method that we dont want all stations to be able to access
-
     /**
      * General constructor
      * @param type - storing type of station
@@ -83,22 +77,35 @@ public class StationItemHandlerComponent extends Component {
      * @param type the type of interaction attempt
      */
     public void handleInteraction(InventoryComponent playerInventoryComponent, InventoryDisplay inventoryDisplay, String type) {
-        // Pre calcs
-        boolean full = playerInventoryComponent.isFull() & this.inventoryComponent.isFull();
-        boolean empty = playerInventoryComponent.isEmpty() & this.inventoryComponent.isEmpty();
+        if (type.equals("default")) {
+            this.handleInteractionDefault(playerInventoryComponent, inventoryDisplay);
+        } else if (type.equals("chop")) {
+            this.handleInteractionChop();
+        } else if (type.equals("stopChop")) {
+            this.handleInteractionStopChop();
+        } else {
+            // Do nothing, other options aren't relavent...
+        }
+    }
 
-        if (full | empty) {
-            // Throw an invalid interaction, red cross on station etc
-            //entity.getEvents().trigger("showTooltip", "Why would you even try...");
+    /**
+     * Function to handle the default interaction between a player and a station.
+     * @param playerInventoryComponent
+     * @param inventoryDisplay
+     */
+    private void handleInteractionDefault(InventoryComponent playerInventoryComponent, InventoryDisplay inventoryDisplay) {
+        // Pre calculations
+        boolean full = playerInventoryComponent.isFull() && this.inventoryComponent.isFull();
+        boolean empty = playerInventoryComponent.isEmpty() && this.inventoryComponent.isEmpty();
 
+        if (full || empty) {
+            return;
+        }
         // Input to station
-        } else if (playerInventoryComponent.isFull()) {
+        if (playerInventoryComponent.isFull()) {
             ItemComponent item = playerInventoryComponent.getItemFirst();
             // Check item is accepted
-            if (!isItemAccepted(item)) {
-                // Throw an accept failure, interaction as item not valid in current station
-                //entity.getEvents().trigger("showTooltip", "We don't accept that trash here...");
-            } else {
+            if (isItemAccepted(item)) {
                 this.stationReceiveItem(item, playerInventoryComponent, inventoryDisplay);
             }
         // Output from station
@@ -106,6 +113,16 @@ public class StationItemHandlerComponent extends Component {
             // Player wants item from station
             this.stationGiveItem(playerInventoryComponent, inventoryDisplay);
         }
+    }
+
+    private void handleInteractionChop() {
+        // Attempt to start chopping the ingredient
+        entity.getEvents().trigger("Chop Ingredient");
+    }
+
+    private void handleInteractionStopChop() {
+        // Attempt to stop chopping the ingredient
+        entity.getEvents().trigger("Stop Chopping Ingredient");
     }
 
     /**
@@ -121,23 +138,20 @@ public class StationItemHandlerComponent extends Component {
      */
     private void onRecieveItem() {
         switch (type) {
-            case "oven": // Fall through
-            case "stove":
-                cookingStationRecieveItem();
+            case "oven", "stove":
+                cookingStationReceiveItem();
                 break;
-            case "cutting board": // Fall through
-            case "blender":
-                choppingStationRecieveItem();
-                break;
+            case "cutting board", "blender":
+                break; // Don't do anything since chopping is manual now :)
             default:
                 break;
         }
     }
 
     /**
-     * Function to be called when a cooking station recieves the item
+     * Function to be called when a cooking station receives the item
      */
-    private void cookingStationRecieveItem() {
+    private void cookingStationReceiveItem() {
         // First check the item is actually available and working
         ItemComponent item = inventoryComponent.getItemFirst();
 
@@ -151,33 +165,15 @@ public class StationItemHandlerComponent extends Component {
     }
 
     /**
-     * Function to be called when a chopping station recieves the item
-     */
-    private void choppingStationRecieveItem() {
-        // First check the item is actually available and working
-        ItemComponent item = inventoryComponent.getItemFirst();
-
-        if (item.getEntity().getComponent(IngredientComponent.class) == null
-                || !item.getEntity().getComponent(IngredientComponent.class).getIsChoppable()) {
-            return; // Item doesn't exit or isn't choppable
-        }
-
-        // We know item exits and is choppable
-        entity.getEvents().trigger("Chop Ingredient");
-    }
-
-    /**
      * Function to stop the updating of item when the station gives an item
      * back to the user
      */
     private void onGiveItem() {
         switch (type) {
-            case "oven": // Fall through
-            case "stove":
+            case "oven", "stove":
                 cookingStationGiveItem();
                 break;
-            case "cutting board": // Fall through
-            case "blender":
+            case "cutting board", "blender":
                 choppingStationGiveItem();
                 break;
             default:

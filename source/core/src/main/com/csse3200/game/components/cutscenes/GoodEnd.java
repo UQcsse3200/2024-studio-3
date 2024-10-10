@@ -1,14 +1,19 @@
 package com.csse3200.game.components.cutscenes;
 
 import com.badlogic.gdx.math.GridPoint2;
+import com.csse3200.game.GdxGame;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.factories.ItemFactory;
 import com.csse3200.game.areas.ForestGameArea;
 
 import com.csse3200.game.areas.terrain.TerrainFactory;
+import com.csse3200.game.components.upgrades.UpgradesDisplay;
 
 public class GoodEnd extends ForestGameArea {
     private TerrainFactory terrainFactory;
+    private UpgradesDisplay upgradesDisplay;
+    private GdxGame.LevelType level;
+
 
     /**
      * Initialise this ForestGameArea to use the provided TerrainFactory.
@@ -16,9 +21,12 @@ public class GoodEnd extends ForestGameArea {
      * @param terrainFactory TerrainFactory used to create the terrain for the GameArea.
      * @requires terrainFactory != null
      */
-    public GoodEnd(TerrainFactory terrainFactory) {
-        super(terrainFactory);
+    public GoodEnd(TerrainFactory terrainFactory, GdxGame.LevelType level, UpgradesDisplay upgradesDisplay) {
+        super(terrainFactory,level, upgradesDisplay);
         this.terrainFactory = terrainFactory;
+        this.level = level;
+        this.upgradesDisplay = upgradesDisplay; 
+
     }
 
     private static final String[] forestTextures = {

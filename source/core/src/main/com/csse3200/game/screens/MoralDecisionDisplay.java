@@ -25,7 +25,6 @@ import org.slf4j.LoggerFactory;
 public class MoralDecisionDisplay extends UIComponent {
 
     private static final Logger logger = LoggerFactory.getLogger(MoralDecisionDisplay.class);
-
     private Table layout; // Layout manager
     private boolean isVisible;
     private final MainGameScreen game;
