@@ -24,6 +24,7 @@ public class CutsceneCommand implements Command {
         switch (arg) {
             case "Day2":
                 ServiceLocator.getGame().setScreen(GdxGame.ScreenType.CUTSCENE, GdxGame.CutsceneType.DAY_2);
+                //ServiceLocator.getGame().setScreen(GdxGame.ScreenType.CUTSCENE, GdxGame.CutsceneType.MORAL_1);
                 return true;
             default:
                 logger.debug("Unrecognised argument received for 'debug' command: {}", args);
