@@ -3,20 +3,16 @@ package com.csse3200.game.components.station;
 import com.badlogic.gdx.graphics.Texture;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.csse3200.game.rendering.RenderComponent;
 import com.csse3200.game.services.ServiceLocator;
-import java.lang.IllegalArgumentException;
 import com.csse3200.game.components.items.ItemComponent;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.components.items.ItemTimerComponent;
 import com.csse3200.game.components.items.ChopIngredientComponent;
 import com.csse3200.game.components.items.CookIngredientComponent;
-import com.csse3200.game.components.station.StationItemHandlerComponent;
-import java.util.ArrayList;
 import com.csse3200.game.physics.components.PhysicsComponent;
 
 
@@ -39,11 +35,10 @@ public class StationProgressDisplay extends RenderComponent {
     private Vector2 scale;
     private float barPercentage;
     private boolean displayBar;
-    private InventoryComponent stationInventory;
     private static final float X_OFFSET = 0.0f;
     private static final float Y_OFFSET = 0.05F;
-    private final float barMaxWidth = 1.0f;
-    private final float barHeight = 0.2f;
+    private static final float barMaxWidth = 1.0f;
+    private static final float barHeight = 0.2f;
 
 
     @Override
@@ -60,49 +55,49 @@ public class StationProgressDisplay extends RenderComponent {
             // the regular getPosition() on stations does not return the correct position.
             position = entity.getComponent(PhysicsComponent.class).getBody().getPosition();
             scale = entity.getScale();
-            stationInventory = entity.getComponent(InventoryComponent.class);
+            InventoryComponent stationInventory = entity.getComponent(InventoryComponent.class);
         }
     }
 
     @Override
     public void update() {
         super.update();
-        if (entity != null) {
-
-            ItemComponent item = entity.getComponent(StationItemHandlerComponent.class).peek();
-            if (item != null) {
-                //N! more error handling required
-                // ItemTimerComponent holds completion percent, but is a different component to ItemComponent,
-                // added on an entity. Thus we have to find it via the entity.
-                ItemTimerComponent timerItem = item.getEntity().getComponent(ChopIngredientComponent.class);
-                if (timerItem == null) {
-                    // could not find a chop component, check if theres a cook component
-                    timerItem = item.getEntity().getComponent(CookIngredientComponent.class);
-                }
-                if (timerItem != null) {
-                    // if there is a chop or cook component, get the completion percent
-                    barPercentage = timerItem.getCompletionPercent() / 100;
-                    logger.info(String.valueOf(barPercentage));
-                    if (barPercentage < 1.0f) {
-                        // if completion percent is less than 100%, then display the
-                        // progress bar
-                        displayBar = true;
-                    } else if (barPercentage >= 1.0f && timerItem instanceof CookIngredientComponent
-                            && ((CookIngredientComponent) timerItem).getIsCooking()) {
-                        barPercentage = 1.0f;
-                        displayBar = true;
-                    } else {
-                        displayBar = false;
-                    }
-                } else {
-                    displayBar = false;
-                }
-            } else {
-                displayBar = false;
-                barPercentage = 0.0f;
-            }
+        if (entity == null) {
+            return;
         }
+
+        ItemComponent item = entity.getComponent(StationItemHandlerComponent.class).peek();
+        if (item == null) {
+            resetBar();
+            return;
+        }
+
+        ItemTimerComponent timerItem = item.getEntity().getComponent(ChopIngredientComponent.class);
+        if (timerItem == null) {
+            timerItem = item.getEntity().getComponent(CookIngredientComponent.class);
+        }
+
+        if (timerItem == null) {
+            resetBar();
+            return;
+        }
+
+        barPercentage = timerItem.getCompletionPercent() / 100;
+        displayBar = barPercentage < 1.0f || (timerItem instanceof CookIngredientComponent
+                && ((CookIngredientComponent) timerItem).getIsCooking());
+
+        if (barPercentage >= 1.0f) {
+            barPercentage = 1.0f;
+        }
+
+        logger.info(String.valueOf(barPercentage));
     }
+
+    private void resetBar() {
+        displayBar = false;
+        barPercentage = 0.0f;
+    }
+
 
     @Override
     public void draw(SpriteBatch batch)  {
@@ -137,7 +132,7 @@ public class StationProgressDisplay extends RenderComponent {
 
     @Override
     public void setStage(Stage mock) {
-
+        //Left empty as not needed for component
     }
 
 }
