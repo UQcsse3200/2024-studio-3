@@ -26,7 +26,7 @@ public class FireExtinguisherHandlerComponent extends Component {
      * Handles getting and putting back the fire extinguisher when the player interacts
      * @param fixture The fixture of the object that was interacted with
      * @param player The player entity
-     * @return Whether or not the fire extinguisher was handled
+     * @return Whether the fire extinguisher was handled
      */
     public static boolean handleFireExtinguisher(Fixture fixture, Entity player) {
         if (fixture.getUserData() instanceof Entity parentEntity) {
