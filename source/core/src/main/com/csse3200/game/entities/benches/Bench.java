@@ -14,6 +14,7 @@ import com.csse3200.game.physics.PhysicsUtils;
 import com.csse3200.game.physics.components.ColliderComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.rendering.TextureRenderComponent;
+import com.csse3200.game.services.InteractableService;
 import com.csse3200.game.physics.components.InteractionComponent;
 import com.csse3200.game.components.TooltipsDisplay;
 import com.csse3200.game.components.player.InventoryComponent;
@@ -58,6 +59,7 @@ public class Bench extends Entity{
         getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
         PhysicsUtils.setScaledCollider(this, 1f, 0.75f);
 
+        InteractableService.registerEntity(this);
     }
 
     /**

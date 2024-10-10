@@ -122,10 +122,15 @@ public class PlayerActions extends Component {
 
         float distance = playerPosition.dst(entityPosition);
 
-        if (/*distance <= 1f &&*/distance < closestDistance) {
+        if (distance <= 1.15f && distance < closestDistance) {
             closestDistance = distance;
             closestEntity = entity;
         }
+    }
+
+    // If no station meets the criteria, return
+    if (closestEntity == null) {
+        return;
     }
     
     closestEntity.getEvents().trigger("Station Interaction", playerInventory, displayInventory, type);
