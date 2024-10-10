@@ -1,5 +1,6 @@
 package com.csse3200.game.components.maingame;
 
+import com.csse3200.game.GdxGame;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -17,10 +18,9 @@ public class RecipeCardDisplay extends UIComponent {
 
     private boolean isVisible;
     private final MainGameScreen game;
-    //private static final Logger logger = LoggerFactory.getLogger(PauseMenuDisplay.class);
+    private Table table;
     private static final Logger logger = LoggerFactory.getLogger(RecipeCardDisplay.class);
-
-    private static final String[] recipeCardTexture = {"images/pause_menu2.png"};
+    private static final String[] recipeCardTexture = {"images/recipe_card_placeholder.png"};
     private Image backgroundImage;
 
     //TODO add esc key exit
@@ -28,7 +28,7 @@ public class RecipeCardDisplay extends UIComponent {
     public RecipeCardDisplay(MainGameScreen game) {
         super();
         this.game = game;
-       // isVisible = false;
+        isVisible = false;
     }
 
     /**
@@ -37,11 +37,10 @@ public class RecipeCardDisplay extends UIComponent {
      */
     private Image createRecipeCardBackground() {
         Texture pauseMenuTexture = ServiceLocator
-                .getResourceService().getAsset("images/pause_menu2.png", Texture.class);
+                .getResourceService().getAsset("images/recipe_card_placeholder.png", Texture.class);
         Image backgroundImage = new Image(pauseMenuTexture);
-        backgroundImage.setSize(800, 800);
+        backgroundImage.setSize(1000, 1000);
 
-        backgroundImage.setVisible(false);
         return backgroundImage;
     }
 
@@ -49,8 +48,12 @@ public class RecipeCardDisplay extends UIComponent {
         super.create();
         ServiceLocator.getResourceService().loadTextures(recipeCardTexture);
 
+        table = new Table();
+        table.setFillParent(true);
         backgroundImage = createRecipeCardBackground();
-        stage.addActor(backgroundImage);
+        table.add(backgroundImage).center().expand();
+        stage.addActor(table);
+        table.setVisible(isVisible);
 
         stage.addListener(new InputListener() {
             @Override
@@ -62,24 +65,8 @@ public class RecipeCardDisplay extends UIComponent {
                 return false;
             }
         });
+
         ServiceLocator.getResourceService().loadAll(); // Ensures the texture is loaded
-    }
-
-    /**
-     * Pressing enter will stop the game and display the recipe card
-     */
-    public void displayScreen() {
-        isVisible = !isVisible;
-        backgroundImage.setVisible(isVisible);
-
-        if (isVisible) {
-            logger.info("Upgrades menu is now visible.");
-            game.pause();
-        } else {
-            logger.info("Upgrades menu is now hidden.");
-            game.resume();
-        }
-
     }
 
     /**
@@ -90,7 +77,7 @@ public class RecipeCardDisplay extends UIComponent {
         logger.info("PAUSE GAME");
         game.pause();
 
-        backgroundImage.setVisible(true);
+        table.setVisible(true);
     }
 
     /**
@@ -100,8 +87,9 @@ public class RecipeCardDisplay extends UIComponent {
         isVisible = false;
         logger.info("RESUME GAME");
         game.resume();
-        if (backgroundImage != null) {
-            backgroundImage.remove();
+
+        if (table != null) {
+            table.setVisible(false);
         }
     }
 
@@ -110,18 +98,19 @@ public class RecipeCardDisplay extends UIComponent {
      * Toggle if the pause menu should be show or hide
      */
     public void toggleVisibility() {
-        if (isVisible) {
-            hideMenu();
-        } else {
-            showMenu();
+        if (ServiceLocator.getGame().getCurrentScreenType() == GdxGame.ScreenType.MAIN_GAME) {
+            if (isVisible) {
+                hideMenu();
+            } else {
+                showMenu();
+            }
         }
     }
 
     @Override
     public void dispose() {
         super.dispose();
-        ServiceLocator.getResourceService().unloadAssets(new String[]{"images/pause_menu2.png"});
-
+        ServiceLocator.getResourceService().unloadAssets(new String[]{"images/recipe_card_placeholder.png"});
     }
 
     @Override
