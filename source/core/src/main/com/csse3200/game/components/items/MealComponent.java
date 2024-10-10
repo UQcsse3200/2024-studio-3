@@ -1,5 +1,8 @@
 package com.csse3200.game.components.items;
 
+import com.csse3200.game.events.EventHandler;
+import com.csse3200.game.services.ServiceLocator;
+
 import java.util.List;
 
 public class MealComponent extends ItemComponent {
@@ -97,8 +100,14 @@ public class MealComponent extends ItemComponent {
 
         // Calculates the penalty score as a percentage of the total number of ingredients
         penalty = (int) Math.round(((double) penaltyCount / ingredients.size()) * 100);
+        int finalQuality = qualityScore - penalty;
 
-        return qualityScore - penalty;
+        // Trigger event for 100% quality meal
+        if (finalQuality == 100 && ServiceLocator.getEntityService() != null) {
+            ServiceLocator.getEntityService().getEvents().trigger("mealHighQuality");
+        }
+
+        return finalQuality;
     }
 
     /**

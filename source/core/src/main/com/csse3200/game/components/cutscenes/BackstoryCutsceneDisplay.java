@@ -15,6 +15,7 @@ import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import com.csse3200.game.components.maingame.TextDisplay;
 
 /**
  * The BackstoryCutsceneDisplay class manages the user interface for displaying the backstory cutscene.
@@ -23,7 +24,7 @@ import org.slf4j.LoggerFactory;
 public class BackstoryCutsceneDisplay extends UIComponent {
     private static final Logger logger = LoggerFactory.getLogger(BackstoryCutsceneDisplay.class);
     private Table table;
-    private CutsceneTextDisplay textDisplay;
+    private TextDisplay textDisplay;
     private Skin skin = null;
     private Image backgroundImage;
     private float viewportWidth;
@@ -78,6 +79,17 @@ public class BackstoryCutsceneDisplay extends UIComponent {
         table.top();  // Move it to the top-center of the screen
         table.setFillParent(true);
 
+        // Create "Skip" button with its functionality
+        TextButton skipBtn = new TextButton("Skip Backstory", skin);
+        skipBtn.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent changeEvent, Actor actor) {
+                logger.info("Backstory skipped.");
+                entity.getEvents().trigger("cutsceneEnded");  // Trigger skip
+            }
+        });
+        table.add(skipBtn).padBottom(10f).padRight(30f);
+
         // Create "Next Scene" button with its functionality
         TextButton nextSceneBtn = new TextButton("Next Scene", skin);
         nextSceneBtn.addListener(new ChangeListener() {
@@ -87,7 +99,7 @@ public class BackstoryCutsceneDisplay extends UIComponent {
                 entity.getEvents().trigger("nextCutscene");  // Trigger next cutscene
             }
         });
-        table.add(nextSceneBtn).padTop(10f).padRight(10f);
+        table.add(nextSceneBtn).padBottom(10f).padRight(10f);
 
         // Add the table and background image to the stage
         stage.addActor(backgroundImage);
@@ -111,7 +123,7 @@ public class BackstoryCutsceneDisplay extends UIComponent {
     }
 
     public void setupTextDisplay() {
-        textDisplay = new CutsceneTextDisplay(this.skin);
+        textDisplay = new TextDisplay();
 
         // Customize text display size and position
         textDisplay.getTable().setScale(0.2f); // Make the text display smaller
@@ -187,7 +199,7 @@ public class BackstoryCutsceneDisplay extends UIComponent {
      * Gets the cutscene text display component for the cutscene.
      * @return A CutsceneTextDisplay component for the cutscene.
      */
-    public CutsceneTextDisplay getTextDisplay() {
+    public TextDisplay getTextDisplay() {
         return textDisplay;
     }
 
@@ -195,7 +207,7 @@ public class BackstoryCutsceneDisplay extends UIComponent {
      * Sets the Cutscene Text Display Component for the cutscene.
      * @param textDisplay the CutsceneTextDisplay to be set.
      */
-    public void setTextDisplay(CutsceneTextDisplay textDisplay) {
+    public void setTextDisplay(TextDisplay textDisplay) {
         this.textDisplay = textDisplay;
     }
 }

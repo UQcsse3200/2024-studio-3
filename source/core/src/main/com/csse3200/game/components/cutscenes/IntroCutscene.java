@@ -25,7 +25,6 @@ public class IntroCutscene extends Cutscene {
      */
     @Override
     protected void setupScenes() {
-        // Add text to be displayed during the cutscene
         cutsceneText.add("Hello This is an Example Text");
         cutsceneText.add("Wow, we can move forward, I wonder what else this can do :)");
         cutsceneText.add("This is a quick check to see if truncation is working correctly or whether it does not " +

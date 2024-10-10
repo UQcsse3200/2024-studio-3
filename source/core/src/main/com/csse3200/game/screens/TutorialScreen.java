@@ -10,6 +10,7 @@ import com.csse3200.game.components.maingame.*;
 import com.csse3200.game.components.ordersystem.MainGameOrderBtnDisplay;
 import com.csse3200.game.components.ordersystem.MainGameOrderTicketDisplay;
 import com.csse3200.game.components.ordersystem.OrderActions;
+import com.csse3200.game.components.upgrades.*;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.entities.factories.RenderFactory;
@@ -26,7 +27,7 @@ import com.csse3200.game.ui.terminal.Terminal;
 import com.csse3200.game.ui.terminal.TerminalDisplay;
 import com.csse3200.game.components.gamearea.PerformanceDisplay;
 import com.csse3200.game.components.tutorial.TutorialScreenDisplay;
-import com.csse3200.game.components.tutorial.TutorialTextDisplay;
+import com.csse3200.game.components.maingame.TextDisplay;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.csse3200.game.components.ordersystem.DocketLineDisplay;
@@ -42,7 +43,7 @@ public class TutorialScreen extends ScreenAdapter {
     private static final String[] mainGameTextures = {
             "images/heart.png",
             "images/ordersystem/docket_background.png",
-            "images/ordersystem/pin_line.png",
+            "images/ordersystem/pin_line2.png",
             "images/bird.png",
             "images/textbox.png",
             "images/inventory_ui/slot.png",
@@ -162,16 +163,24 @@ createUI();  // Create the UI after loading the assets
         Entity ui = new Entity();
         ui.addComponent(new GameBackgroundDisplay())
                 .addComponent(new InputDecorator(stage, 10))
+                .addComponent(new DocketLineDisplay())
                 .addComponent(new PerformanceDisplay())
                 .addComponent(new MainGameActions(this.game, UIFactory.createDocketUI()))
-                .addComponent(new MainGameExitDisplay())
+                //.addComponent(new MainGameExitDisplay())
                 .addComponent(new Terminal())
                 .addComponent(inputComponent)
                 .addComponent(new TerminalDisplay())
-                .addComponent(new DocketLineDisplay())
                 .addComponent(new OrderActions(this.game))
+                .addComponent(new PauseMenuActions(this.game))
+                .addComponent(new RageUpgrade())
+                .addComponent(new LoanUpgrade())
+                .addComponent(new SpeedBootsUpgrade())
+                .addComponent(new ExtortionUpgrade())
+                .addComponent(new DancePartyUpgrade())
+                .addComponent(new PauseMenuActions(this.game))
+
                 .addComponent(new TutorialScreenDisplay(this.game))
-                .addComponent(new TutorialTextDisplay(this));
+                .addComponent(new TextDisplay(this));
 
         ServiceLocator.getEntityService().register(ui);
     }

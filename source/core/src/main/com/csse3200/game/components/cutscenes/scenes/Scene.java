@@ -84,9 +84,6 @@ public class Scene {
      *
      * @return Array of Vector2 positions for the images.
      */
-    public Vector2[] getImagePositions() {
-        return imagePositions;
-    }
 
     /**
      * Gets the image scales for the scene.
@@ -95,6 +92,9 @@ public class Scene {
      */
     public float[] getImageScales() {
         return imageScales;
+    }
+    public Vector2[] getImagePositions() {
+        return imagePositions;
     }
 
     public void setImages(String[] imagePaths, Vector2[] imagePositions, float[] imageScales) {

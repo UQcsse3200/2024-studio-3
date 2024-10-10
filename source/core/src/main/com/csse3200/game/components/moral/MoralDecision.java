@@ -7,6 +7,7 @@ import com.csse3200.game.components.upgrades.SpeedBootsUpgrade;
 import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import com.csse3200.game.services.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +35,7 @@ public class MoralDecision extends Component {
      * @return true if the decision was added successfully
      */
     public boolean addQuestion(String question) {
-        ListOfDecisions.add(new Decision(question, true));
+        ListOfDecisions.add(new Decision(question, true, 10));
         return true;
     }
 
@@ -42,11 +43,12 @@ public class MoralDecision extends Component {
      * Adds a new Question with the specified question, goodness, and decision points.
      *
      * @param question the question or statement of the decision
-     * @param isGood whether the decision is good
+     * @param isGood whether the effect is positive or negative
+     * @param effectMoney Money to be added or subtracted. Add/sub controlled by isGood
      * @return true if the decision was added successfully
      */
-    public boolean addQuestion(String question, boolean isGood) {
-        ListOfDecisions.add(new Decision(question, isGood));
+    public boolean addQuestion(String question, boolean isGood, int effectMoney) {
+        ListOfDecisions.add(new Decision(question, isGood, effectMoney));
         return true;
     }
 
@@ -119,7 +121,7 @@ public class MoralDecision extends Component {
                 case 0 -> ServiceLocator.getPlayerService().getPlayer().getComponent(CombatStatsComponent.class).addGold(MORALGOLD_D1);
                 case 1 -> ServiceLocator.getPlayerService().getPlayer().getComponent(CombatStatsComponent.class).addGold(MORALGOLD_D2);
                 case 2 -> ServiceLocator.getPlayerService().getPlayer().getComponent(SpeedBootsUpgrade.class).activate();
-                case 3 -> ServiceLocator.getPlayerService().getPlayer().getComponent(CheckWinLoseComponent.class).decreaseLoseThreshold();
+                //case 3 -> ServiceLocator.getPlayerService().getPlayer().getComponent(CheckWinLoseComponent.class).decreaseLoseThreshold();
                 default -> logger.error("moral decision with unknown index");
             }
         } else {
@@ -145,7 +147,7 @@ public class MoralDecision extends Component {
      * @param index the index of the decision
      * @return the statement of the decision
      */
-    public String getDecisionStatement(int index) {
+    public String getDecisionQuestion(int index) {
         return ListOfDecisions.get(index).getStatement();
     }
 

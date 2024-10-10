@@ -42,6 +42,9 @@ public class MainGameActions extends Component {
      */
     @Override
     public void create() {
+        if (entity == null) {
+            throw new IllegalStateException("Entity is not initialized.");
+        }
         entity.getEvents().addListener("exit", this::onExit);
         ServiceLocator.getEntityService().getEvents().addListener("createOrder", this::onCreateOrder);
         ServiceLocator.getEntityService().getEvents().addListener("createAcaiDocket", this::onCreateAcai);
@@ -49,12 +52,69 @@ public class MainGameActions extends Component {
         ServiceLocator.getEntityService().getEvents().addListener("createSaladDocket", this::onCreateSalad);
         ServiceLocator.getEntityService().getEvents().addListener("createSteakDocket", this::onCreateSteak);
         ServiceLocator.getEntityService().getEvents().addListener("createFruitSaladDocket", this::onCreateFruitSalad);
+        ServiceLocator.getEntityService().getEvents().addListener("goodEnd", this::onGoodEnd);
+        ServiceLocator.getEntityService().getEvents().addListener("badEnd", this::onBadEnd);
+        ServiceLocator.getEntityService().getEvents().addListener("loseEnd", this::onLoseEnd);
+
+        ServiceLocator.getEntityService().getEvents().addListener("endDay1", this::moral1);
+
+    }
+
+    public void moral1(){
+        logger.info("Starting end of day 1 moral decision cutscene");
+
+        // Stop any background tasks
+        // ServiceLocator.getMainMenuDisplay().stopBackgroundTasks();
+
+        // Now we can transition to the cutscene
+        game.setScreen(GdxGame.ScreenType.ENDDAY_1);
+    }
+
+
+
+    /**
+     * Starts bad ending cutscene
+     */
+    public void onLoseEnd(){
+        logger.info("Starting lose cutscene");
+
+        // Stop any background tasks
+        // ServiceLocator.getMainMenuDisplay().stopBackgroundTasks();
+
+        // Now we can transition to the cutscene
+        game.setScreen(GdxGame.ScreenType.LOSE_END);
+    }
+
+    /**
+     * Starts bad ending cutscene
+     */
+    public void onBadEnd(){
+        logger.info("Starting good cutscene");
+
+        // Stop any background tasks
+        // ServiceLocator.getMainMenuDisplay().stopBackgroundTasks();
+
+        // Now we can transition to the cutscene
+        game.setScreen(GdxGame.ScreenType.BAD_END);
+    }
+
+    /**
+     * Starts good ending cutscene
+     */
+    public void onGoodEnd(){
+        logger.info("Starting good cutscene");
+
+        // Stop any background tasks
+        // ServiceLocator.getMainMenuDisplay().stopBackgroundTasks();
+
+        // Now we can transition to the cutscene
+        game.setScreen(GdxGame.ScreenType.GOOD_END);
     }
 
     /**
      * Exit main game screen
      */
-    private void onExit() {
+    public void onExit() {
         logger.info("Exiting main game screen");
         game.setScreen(GdxGame.ScreenType.MAIN_MENU);
     }

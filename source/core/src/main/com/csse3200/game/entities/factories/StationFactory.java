@@ -56,7 +56,7 @@ public class StationFactory {
     // Add station reference
     PhysicsComponent physicsComponent = oven.getComponent(PhysicsComponent.class);
     Body body = physicsComponent.getBody();
-    
+
     body.setUserData(oven);
     oven.addComponent(animator);
     animator.startAnimation("OvenDefault");

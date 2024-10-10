@@ -1,9 +1,27 @@
 package com.csse3200.game.areas;
-
+import com.csse3200.game.components.maingame.CheckWinLoseComponent;
+import com.csse3200.game.components.moral.Decision;
+import com.csse3200.game.components.npc.PersonalCustomerEnums;
+import com.badlogic.gdx.utils.Null;
+import com.csse3200.game.GdxGame;
+import com.csse3200.game.components.maingame.TextDisplay;
+import com.csse3200.game.components.CombatStatsComponent;
+import com.csse3200.game.entities.benches.Bench;
+import com.csse3200.game.entities.configs.PlayerConfig;
+import com.csse3200.game.components.moral.MoralDecisionDisplay;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import com.csse3200.game.components.moral.MoralDayOne;
+import com.csse3200.game.components.moral.MoralDayTwo;
+import com.csse3200.game.components.moral.MoralDayThree;
+import com.csse3200.game.components.moral.MoralDayFour;
+import com.csse3200.game.areas.map.Map;
+import com.csse3200.game.services.MapLayout;
 import com.csse3200.game.entities.factories.*;
+import com.csse3200.game.components.moral.MoralDayTwo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,14 +42,26 @@ import com.csse3200.game.components.upgrades.UpgradesDisplay;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.benches.Bench;
 import com.csse3200.game.entities.configs.PlayerConfig;
-import com.csse3200.game.components.moral.MoralDayTwo;
+
+import com.csse3200.game.entities.factories.ItemFactory;
+import com.csse3200.game.entities.factories.NPCFactory;
+import com.csse3200.game.entities.factories.ObstacleFactory;
+import com.csse3200.game.entities.factories.PlateFactory;
+import com.csse3200.game.entities.factories.PlayerFactory;
+import com.csse3200.game.entities.factories.StationFactory;
+import com.csse3200.game.components.moral.MoralDecisionDisplay;
+
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.utils.math.GridPoint2Utils;
-
-
-
-
+import com.csse3200.game.entities.factories.NPCFactory;
+import com.csse3200.game.components.maingame.TextDisplay;
+import com.csse3200.game.entities.factories.ObstacleFactory;
+import com.csse3200.game.entities.EntityService;
+import com.csse3200.game.entities.factories.PlayerFactory;
+import com.csse3200.game.entities.factories.StationFactory;
+import com.csse3200.game.entities.factories.ItemFactory;
+import com.csse3200.game.entities.factories.PlateFactory;
 
 /** Forest area for the demo game with trees, a player, and some enemies. */
 public class ForestGameArea extends GameArea {
@@ -61,6 +91,7 @@ public class ForestGameArea extends GameArea {
     "images/ingredients/raw_lettuce.png",
     "images/ingredients/raw_chocolate.png",
     "images/money.png",
+    "images/hourglass.png",
     "images/meals/fruit_salad.png",
     "images/ingredients/raw_banana.png",
     "images/ingredients/chopped_banana.png",
@@ -141,6 +172,7 @@ public class ForestGameArea extends GameArea {
           "images/inventory_ui/null_image.png",
   };
   private static final String[] forestTextureAtlases = {
+          "images/Cutscenes/cutscene_badEnd.atlas",
     "images/terrain_iso_grass.atlas",
     "images/ghost.atlas",
     "images/ghostKing.atlas",
@@ -198,7 +230,8 @@ public class ForestGameArea extends GameArea {
   private static Entity customerSpawnController;
 
   private final TerrainFactory terrainFactory;
-  private final UpgradesDisplay upgradesDisplay; 
+  private final UpgradesDisplay upgradesDisplay;
+  private final GdxGame.LevelType level;
 
   private Entity player;
   private CheckWinLoseComponent winLoseComponent;  // Reference to CheckWinLoseComponent
@@ -223,10 +256,11 @@ public class ForestGameArea extends GameArea {
    * @param terrainFactory TerrainFactory used to create the terrain for the GameArea.
    * @requires terrainFactory != null
    */
-  public ForestGameArea(TerrainFactory terrainFactory, UpgradesDisplay upgradesDisplay) {
+  public ForestGameArea(TerrainFactory terrainFactory, GdxGame.LevelType level, UpgradesDisplay upgradesDisplay) {
     super();
+    this.level = level;
     this.terrainFactory = terrainFactory;
-    this.upgradesDisplay = upgradesDisplay; 
+    this.upgradesDisplay = upgradesDisplay;
     //this.textDisplay = textDisplay;
 
     ServiceLocator.registerGameArea(this);
@@ -235,54 +269,97 @@ public class ForestGameArea extends GameArea {
   /** Create the game area, including terrain, static entities (trees), dynamic entities (player) */
   @Override
   public void create() {
+    // call load function based on the level argument
+    // return list of items to spawn based on the load function
+    // Baaed on lsit of items to spawn, spawn the items
     loadAssets();
     displayUI();
     spawnTerrain();
     spawnWall();
-    spawnBenches();
+    MapLayout mapLayout = new MapLayout();
+    Map result = mapLayout.load(this.level);
+    for (Bench bench : result.getBenches()) {
+      spawnEntity(bench);
+      bench.setPosition(bench.x, bench.y);
+    }
+    for (Entity station : result.getStations()) {
+      spawnEntity(station);
+        //station.setPosition(station.getPosition().x, station.getPosition().y);
+    }
+
+      //ServiceLocator.getMapLayout().getEvents().trigger("load", "level1");
+
     new_border();
     //ticketDetails();
     spawnStations();
-    // Spawn beef
-//    spawnBeef("cooked");
-//    spawnStrawberry("chopped");
-//    spawnLettuce("chopped");
     customerSpawnController = spawnCustomerController();
-
-    //spawnplates
-      spawnStackPlate(5); //testplate spawn
-      //spawnPlatewithMeal();
-
-    // Spawn the player
-    player = spawnPlayer();
-    ServiceLocator.getDayNightService().getEvents().addListener("upgrade", () -> {
-      spawnPenguin(upgradesDisplay);});
-      
-    
-
-    // Check and trigger win/lose state
-    ServiceLocator.getDayNightService().getEvents().addListener("endGame", this::checkEndOfDayGameState);
-
     createMoralScreen();
     createMoralSystem();
+    //spawnplates
+      spawnStackPlate(5); //testplate spawn
+
+      //spawnPlatewithMeal();
+      player = spawnPlayer();
+      ServiceLocator.getPlayerService().registerPlayer(player);
+      //ServiceLocator.getSaveLoadService().setCombatStatsComponent(player.getComponent(CombatStatsComponent.class));
+      ServiceLocator.getSaveLoadService().load();
+      ServiceLocator.getDayNightService().getEvents().addListener("upgrade", () -> {
+          spawnPenguin(upgradesDisplay);});
+
+    // Check and trigger win/loss state
+    ServiceLocator.getDayNightService().getEvents().addListener("endGame", this::checkEndOfGameState);
+
     createEndDayScreen();
     playMusic();
   }
 
-  /***
-   * Checks using the checkWinLoseComponent if to call a cutscene and which one to call
+  /**
+   * Checks the player's game state using the CheckWinLoseComponent and determines whether
+   * to trigger a win or loss cutscene. If the player has won, it further checks the moral
+   * decisions to determine whether to trigger the "good" or "bad" ending.
+   *
+   * The function performs the following:
+   * 1. If the player has lost (gameState is "LOSE"), it triggers the "loseEnd" event and
+   *    displays a losing message to the player.
+   * 2. If the player has won (gameState is "WIN"), it checks the player's moral decisions
+   *    using the MoralDecision component:
+   *    - If the player made any bad decisions, it triggers the "badEnd" event and displays
+   *      a corresponding message.
+   *    - If no bad decisions are found, it triggers the "goodEnd" event and displays a positive
+   *      message.
    */
-  private void checkEndOfDayGameState() {
+  private void checkEndOfGameState() {
     String gameState = player.getComponent(CheckWinLoseComponent.class).checkGameState();
 
     if ("LOSE".equals(gameState)) {
       createTextBox("You *oink* two-legged moron! You're ruining my " +
               "business' *oink* reputation! Get out!");
-      triggerFiredEnd();  // Trigger the fired (bad) ending
-    } else if ("WIN".equals(gameState)) {
-      createTextBox("You *oink* amazing critter! You're a master! " +
-              "Enjoy a 40c raise for your efforts!");
-      triggerRaiseEnd();  // Trigger the raise (good) ending
+      ServiceLocator.getEntityService().getEvents().trigger("loseEnd");
+    }
+
+    else if ("WIN".equals(gameState)) {
+      List<Decision> decisionList = ServiceLocator.getEntityService()
+              .getMoralSystem()
+              .getComponent(MoralDecision.class)
+              .getListOfDecisions();
+
+      boolean hasBadDecisions = false;
+      for (Decision decision : decisionList) {
+        if (!decision.isGood()) {
+          hasBadDecisions = true;
+          break;
+        }
+      }
+
+      if (hasBadDecisions) {
+        createTextBox("You *oink* amazing critter! You're a master! " +
+                "Enjoy a 40c raise for your efforts!");
+        ServiceLocator.getEntityService().getEvents().trigger("badEnd");
+      } else {
+        createTextBox("You *oink* amazing critter! You're a master! " +
+                "Enjoy a 40c raise for your efforts!");
+        ServiceLocator.getEntityService().getEvents().trigger("goodEnd");
+      }
     }
   }
 
@@ -296,14 +373,6 @@ public class ForestGameArea extends GameArea {
     ui.addComponent(new GameAreaDisplay("Kitchen"));
     spawnEntity(ui);
   }
-  /*
-  private void ticketDetails(){
-    Entity ticket = new Entity();
-    ticket.addComponent(new TicketDetails());
-    spawnEntity(ticket);
-
-  }*/
-
   private void spawnTerrain() {
     // Background terrain
     terrain = terrainFactory.createTerrain(TerrainType.KITCHEN_DEMO);
@@ -406,81 +475,7 @@ public class ForestGameArea extends GameArea {
 
 
   private void spawnStations() {
-    GridPoint2 ovenPos = new GridPoint2(5,3);
-    Entity oven = StationFactory.createOven();
-    spawnEntityAt(oven, ovenPos, true, false);
-    oven.setPosition(oven.getPosition().x + 0.5f, oven.getPosition().y );
-
-    GridPoint2 stovePos = new GridPoint2(5,1);
-    Entity stove = StationFactory.createStove();
-    spawnEntityAt(stove, stovePos, false, false);
-    stove.setPosition(stove.getPosition().x + 2.5f , stove.getPosition().y );
-
-    GridPoint2 binPos = new GridPoint2(5,4);
-    Entity bin = StationFactory.createBin();
-    spawnEntityAt(bin, binPos, false, false);
-    bin.setPosition(bin.getPosition().x +1f , bin.getPosition().y - 6f);
-    bin.setPosition(bin.getPosition().x + 3f , bin.getPosition().y - 6f);
-
-    GridPoint2 bananaTreePos = new GridPoint2( 5, 4);
-    Entity bananaTree = StationFactory.createBananaBasket();
-    spawnEntityAt(bananaTree, bananaTreePos, false, false);
-    bananaTree.setPosition(bananaTree.getPosition().x - 4f , bananaTree.getPosition().y - 2f);
-
-    GridPoint2 strawberryPos = new GridPoint2( 5, 4);
-    Entity strawberryStation = StationFactory.createStrawberryBasket();
-    spawnEntityAt(strawberryStation, strawberryPos, false, false);
-    strawberryStation.setPosition(strawberryStation.getPosition().x - 2f , strawberryStation.getPosition().y - 2f);
-
-    GridPoint2 lettucePos = new GridPoint2( 5, 4);
-    Entity lettuceStation = StationFactory.createLettuceBasket();
-    spawnEntityAt(lettuceStation, lettucePos, false, false);
-    lettuceStation.setPosition(lettuceStation.getPosition().x + 0f , lettuceStation.getPosition().y - 2f);
-
-    GridPoint2 tomatoPos = new GridPoint2( 5, 4);
-    Entity tomatoStation = StationFactory.createTomatoBasket();
-    spawnEntityAt(tomatoStation, tomatoPos, false, false);
-    tomatoStation.setPosition(tomatoStation.getPosition().x + 2f , tomatoStation.getPosition().y - 2f);
-
-    GridPoint2 cucumberPos = new GridPoint2( 5, 3);
-    Entity cucumberStation = StationFactory.createCucumberBasket();
-    spawnEntityAt(cucumberStation, cucumberPos, false, false);
-    cucumberStation.setPosition(cucumberStation.getPosition().x + 2f , cucumberStation.getPosition().y - 2f);
-
-    GridPoint2 acaiPos = new GridPoint2( 5, 4);
-    Entity acaiStation = StationFactory.createAcaiBasket();
-    spawnEntityAt(acaiStation, acaiPos, false, false);
-    acaiStation.setPosition(acaiStation.getPosition().x  , acaiStation.getPosition().y - 6f);
-
-    GridPoint2 beefPos = new GridPoint2( 5, 4);
-    Entity beefStation = StationFactory.createBeefFridge();
-    spawnEntityAt(beefStation, beefPos, false, false);
-    beefStation.setPosition(beefStation.getPosition().x  , beefStation.getPosition().y - 5f);
-
-    GridPoint2 chocolatePos = new GridPoint2( 3, 2);
-    Entity chocolateStation = StationFactory.createChocolateFridge();
-    spawnEntityAt(chocolateStation, chocolatePos, false, false);
-    chocolateStation.setPosition(chocolateStation.getPosition().x  , chocolateStation.getPosition().y);
-
-    GridPoint2 serveryPos = new GridPoint2(1,1);
-    Entity servery = StationFactory.createSubmissionWindow();
-    spawnEntityAt(servery, serveryPos, false, false);
-    servery.setPosition(servery.getPosition().x + 2, servery.getPosition().y + 0.5f);
-    servery = StationFactory.createSubmissionWindow();
-    spawnEntityAt(servery, serveryPos, false, false);
-    servery.setPosition(servery.getPosition().x + 2, servery.getPosition().y);
-
-    // Bench
-    GridPoint2 middlePos = new GridPoint2(5,4);
-    Entity middle = StationFactory.createMainBenchTable();
-    spawnEntityAt(middle, middlePos, false, false);
-    middle.setPosition(middle.getPosition().x - 2f, middle.getPosition().y - 5f);
-
-    // Cutting Board
-    GridPoint2 cuttingPos = new GridPoint2(5,4);
-    Entity board = StationFactory.createCuttingBoard();
-    spawnEntityAt(board, cuttingPos, false, false);
-    board.setPosition(board.getPosition().x + 1f, board.getPosition().y - 5f);
+    int a = 0;
   }
 
   /**
@@ -781,7 +776,7 @@ public class ForestGameArea extends GameArea {
   // Spawn Upgrade NPC
   private void spawnPenguin(UpgradesDisplay upgradesDisplay){
     GridPoint2 position = new GridPoint2(1, 3);
-    
+
     Vector2 targetPos = new Vector2(1, 0);
     // Create the penguin entity
     Entity penguin = NPCFactory.createUpgradeNPC(targetPos, upgradesDisplay);
@@ -853,11 +848,12 @@ public class ForestGameArea extends GameArea {
     Entity moralScreen = new Entity();
     moralScreen
             //.addComponent(new MoralDecisionDisplay())
-            //.addComponent(new MoralDayOne())
-            .addComponent(new MoralDayTwo());
-            //.addComponent(new MoralDayThree())
-            //.addComponent(new MoralDayFour())
+            //.addComponent(new MoralDayOne());
+            //.addComponent(new MoralDayTwo());
+            //addComponent(new MoralDayThree());
+            .addComponent(new MoralDayFour());
 //            .addComponent(new MoralDecision());
+
     ServiceLocator.getEntityService().registerMoral(moralScreen);
   }
 

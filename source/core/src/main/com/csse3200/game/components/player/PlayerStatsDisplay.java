@@ -5,54 +5,84 @@ import java.util.concurrent.TimeUnit;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
 
 /**
- * A ui component for displaying player stats, e.g. health.
+ * AN ui component for displaying player stats, e.g. health.
  */
 public class PlayerStatsDisplay extends UIComponent {
   Table table;
-  private Image heartImage;
+  Table goldTable;
+  Table timerTable;
+  private Image timerImage;
   private Image goldImage;
-  private Label healthLabel;
   private Label goldLabel;
   private static Label dayLabel;
-  private static int currentday;
+  private static int currentDay;
   private static Label timerLabel;
-  public static long timer;
-  private static String digitaltime;
+  private static long timer;
   private static PlayerStatsDisplay instance;
 
 
-
-  /**
+    /**
    * Creates reusable ui styles and adds actors to the stage.
    */
   @Override
   public void create() {
     super.create();
-    instance = this;
+    setPlayerStatsDisplay(this);
     addActors();
-    timer =  ServiceLocator.getDayNightService().FIVE_MINUTES;
-  
+    setTimer(ServiceLocator.getDayNightService().FIVE_MINUTES);
 
-
-    entity.getEvents().addListener("updateHealth", this::updatePlayerHealthUI);
     entity.getEvents().addListener("updateGold", this::updatePlayerGoldUI);
-    ServiceLocator.getDayNightService().getEvents().addListener("newday", () -> {
-            updateDay();});
-    ServiceLocator.getDayNightService().getEvents().addListener("Second", () -> {
-      updateTime();});
+    ServiceLocator.getDayNightService().getEvents().addListener("newday", PlayerStatsDisplay::updateDay);
+    ServiceLocator.getDayNightService().getEvents().addListener("Second", (Long time) -> updateTime(time));
   }
 
-  public static PlayerStatsDisplay getInstance() {
-    return instance;
-  }
+  /**
+   * Sets the timer to a specific time and starts counting down
+   * @param time the time you want to set the timer to count down from in seconds
+   */
+  public static void setTimer(long time) { timer = time; }
+
+  /**
+   * Sets the label for the day
+   * @param label: The label being set
+   */
+  public static void setDayLabel(Label label) { dayLabel = label; }
+
+  /**
+   * Gets the current day label
+   * @return The current day label
+   */
+  public static Label getDayLabel() { return dayLabel; }
+
+  /**
+   * Sets the label for the timer
+   * @param label: The label being set
+   */
+  public static void setTimerLabel(Label label) { timerLabel = label; }
+
+  /**
+   * Gets the current timer label
+   * @return The current timer label
+   */
+  public static Label getTimerLabel() { return timerLabel; }
+
+  /**
+   * Sets the player stats display
+   * @param playerStatsDisplay: The Player stats display that is being set.
+   */
+  public static void setPlayerStatsDisplay(PlayerStatsDisplay playerStatsDisplay) { instance = playerStatsDisplay; }
+
+  /**
+   * Gets the current Player stats display
+   * @return the current player stats display
+   */
+  public static PlayerStatsDisplay getInstance() { return instance; }
 
   /**
    * Creates actors and positions them on the stage using a table.
@@ -62,41 +92,41 @@ public class PlayerStatsDisplay extends UIComponent {
     table = new Table();
     table.top().left();
     table.setFillParent(true);
-    table.padTop(45f).padLeft(5f);
+    table.padTop(80f).padLeft(20f);
 
-    // Heart image
-    float heartSideLength = 30f;
-    heartImage = new Image(ServiceLocator.getResourceService().getAsset("images/heart.png", Texture.class));
+    goldTable = new Table();
+    goldTable.left();
 
-    // Health text
-    int health = entity.getComponent(CombatStatsComponent.class).getHealth();
-    CharSequence healthText = String.format("Health: %d", health);
-    healthLabel = new Label(healthText, skin, "large");
-
-    table.add(heartImage).size(heartSideLength).pad(5);
-    table.add(healthLabel);
-    table.row();
-
-     goldImage = new Image(ServiceLocator.getResourceService().getAsset("images/money.png", Texture.class));
-     int gold = entity.getComponent(CombatStatsComponent.class).getGold();
-     CharSequence goldText = String.format("Cash: %d", gold);
-     goldLabel = new Label(goldText, skin, "large");
-
-     table.add(goldImage).size(heartSideLength).pad(5);
-     table.add(goldLabel);
-     table.row();
+    timerTable = new Table();
+    timerTable.left().pad(10f);
 
     //Label for the Current Day
-    CharSequence dayText = String.format("Day: %d", currentday); // Start with Day 1
-    dayLabel = new Label(dayText, skin, "large");
-    table.add(dayLabel);
-    stage.addActor(table);
+    CharSequence dayText = String.format("Day: %d", currentDay); // Start with Day 1
+    String LARGE_LABEL = "large";
+    setDayLabel(new Label(dayText, skin, LARGE_LABEL));
+    table.add(getDayLabel()).left();
     table.row();
 
+    //Label for Current Gold
+    goldImage = new Image(ServiceLocator.getResourceService().getAsset("images/money.png", Texture.class));
+    int gold = entity.getComponent(CombatStatsComponent.class).getGold();
+    CharSequence goldText = String.format("Cash: %d", gold);
+    goldLabel = new Label(goldText, skin, LARGE_LABEL);
+
+    goldTable.add(goldLabel).left();
+    goldTable.add(goldImage).size(20f).padLeft(5f);
+    table.add(goldTable);
+    table.row();
+
+    //Timer image
+    timerImage = new Image(ServiceLocator.getResourceService().getAsset("images/hourglass.png", Texture.class));
+
     // Timer label for the remaining time in the day
-    CharSequence TimerText = String.format("Time Left: \n    %s", convertDigital(timer)); 
-    timerLabel = new Label(TimerText, skin, "large");
-    table.add(timerLabel);
+    CharSequence TimerText = String.format("%s", convertDigital(timer));
+    setTimerLabel(new Label(TimerText, skin, LARGE_LABEL));
+    timerTable.add(timerImage).size(20f).left().padRight(5f);
+    timerTable.add(getTimerLabel()).left();
+    table.add(timerTable).padTop(20f);
     stage.addActor(table);
   }
 
@@ -106,20 +136,11 @@ public class PlayerStatsDisplay extends UIComponent {
   }
 
   /**
-   * Updates the player's health on the ui.
-   * @param health player health
-   */
-  public void updatePlayerHealthUI(int health) {
-    CharSequence text = String.format("Health: %d", health);
-    healthLabel.setText(text);
-  }
-
-  /**
    * Updates the player's gold on the ui.
    * @param gold player gold
    */
   public void updatePlayerGoldUI(int gold) {
-    CharSequence text = String.format("Gold: %d", gold);
+    CharSequence text = String.format("Cash: %d", gold);
     goldLabel.setText(text);
   }
 
@@ -127,37 +148,31 @@ public class PlayerStatsDisplay extends UIComponent {
    * Updates the displayed current day on the UI.
    */
   public static void updateDay() {
-    currentday++;
-    CharSequence dayText = String.format("Day: %d", currentday);
-    dayLabel.setText(dayText);
+    currentDay++;
+    CharSequence dayText = String.format("Day: %d", currentDay);
+    getDayLabel().setText(dayText);
   }
 
   /**
    * Updates the remaining time for the current day on the UI. Decreases the timer by one second
    * and updates the displayed time.
    */
-  public static void updateTime() {
-    // timer;
-    timer -= 1000;
-    System.out.println(timer);
-    CharSequence TimerText = String.format("Time Left: \n   %s", convertDigital(timer));
-    timerLabel.setText(TimerText);
+
+  public static void updateTime(long time) {
+    CharSequence timerText = String.format("Time Left: %n   %s", convertDigital(time));
+    getTimerLabel().setText(timerText);
     ServiceLocator.getDayNightService().getEvents().trigger("callpastsecond");
-
-
-
   }
 
 
   @Override
   public void dispose() {
     super.dispose();
-    heartImage.remove();
-    healthLabel.remove();
     goldImage.remove();
     goldLabel.remove();
-    dayLabel.remove();
-    timerLabel.remove();
+    getDayLabel().remove();
+    getTimerLabel().remove();
+    timerImage.remove();
   }
 
   @Override

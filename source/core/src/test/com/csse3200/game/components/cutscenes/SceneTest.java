@@ -28,7 +28,7 @@ class SceneTest {
         animationPositions = new Vector2[]{new Vector2(1, 1), new Vector2(1, 2)};
         imagePaths = new String[]{"img1.png", "img2.png"};
         imagePositions = new Vector2[]{new Vector2(1, 1), new Vector2(1, 2)};
-        imageScales = new float[] {1.0f};
+        imageScales = new float[] {4.0f, 1.5f};
         sceneText = new Array<>();
         sceneText.add("Line 1");
         sceneText.add("Line 2");

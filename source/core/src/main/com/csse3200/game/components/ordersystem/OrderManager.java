@@ -22,7 +22,7 @@ public class OrderManager {
         }
     }
 
-    static void loadRecipes() {
+    public static void loadRecipes() {
         // List of recipe names to load
         String[] recipeNames = {"acaiBowl", "salad", "fruitSalad", "steakMeal", "bananaSplit"};
 

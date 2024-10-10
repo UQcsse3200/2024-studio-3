@@ -19,18 +19,15 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(GameExtension.class)
-public class IngredientStationHandlerComponentTest {
+class IngredientStationHandlerComponentTest {
 
-    private Entity station;
     private IngredientStationHandlerComponent handler;
     private InventoryComponent stationInventory;
     private InventoryComponent playerInventory;
     private InventoryDisplay playerInventoryDisplay;
-    private StationCollectionComponent mockCollectionComponent;
-    private Entity mockCollectedItem;
 
     @BeforeEach
-    public void setup() {
+    void setup() {
         // Clear previous service locators
         ServiceLocator.clear();
         ServiceLocator.clear();
@@ -49,18 +46,18 @@ public class IngredientStationHandlerComponentTest {
         when(mockTime.getTime()).thenReturn(1000L);
         ServiceLocator.registerTimeSource(mockTime);
 
-        // Setup the station and its components
+        // Set up the station and its components
         stationInventory = new InventoryComponent(1);
-        mockCollectionComponent = mock(StationCollectionComponent.class);
+        StationCollectionComponent mockCollectionComponent = mock(StationCollectionComponent.class);
         handler = new IngredientStationHandlerComponent("oven", "banana");
 
-        station = new Entity();
+        Entity station = new Entity();
         station.addComponent(handler);
         station.addComponent(stationInventory);
         station.addComponent(mockCollectionComponent);
         handler.setEntity(station);
         stationInventory.setEntity(station);
-        mockCollectedItem = ItemFactory.createBaseItem("banana");
+        Entity mockCollectedItem = ItemFactory.createBaseItem("banana");
 
         // Mock collection to return the correct item
         when(mockCollectionComponent.collectItem(anyString()))
@@ -74,7 +71,7 @@ public class IngredientStationHandlerComponentTest {
     }
 
     @Test
-    public void testStationGivesItemToPlayer() {
+    void testStationGivesItemToPlayer() {
         // Simulate player interaction with the station
         handler.handleInteraction(playerInventory, playerInventoryDisplay, "default");
 
@@ -91,9 +88,10 @@ public class IngredientStationHandlerComponentTest {
     }
 
     @Test
-    public void testStationInteractionWhenPlayerInventoryIsFull() {
+    void testStationInteractionWhenPlayerInventoryIsFull() {
         // Fill the player inventory
         Entity tomatoItem = ItemFactory.createBaseItem("tomato");
+        assert tomatoItem != null;
         playerInventory.addItem(tomatoItem.getComponent(IngredientComponent.class));
 
         // Simulate player interaction with the station
@@ -106,9 +104,10 @@ public class IngredientStationHandlerComponentTest {
     }
 
     @Test
-    public void testStationRepopulatesAfterGivingItem() {
+    void testStationRepopulatesAfterGivingItem() {
         // Add an item to the station's inventory
         Entity cucumberItem = ItemFactory.createBaseItem("banana");
+        assert cucumberItem != null;
         stationInventory.addItem(cucumberItem.getComponent(IngredientComponent.class));
 
         // Simulate player interaction with the station
@@ -124,7 +123,7 @@ public class IngredientStationHandlerComponentTest {
     }
 
     @Test
-    public void testNoInteractionOnNonDefaultType() {
+    void testNoInteractionOnNonDefaultType() {
         // Simulate interaction with a different type
         handler.handleInteraction(playerInventory, playerInventoryDisplay, "non-default");
 
