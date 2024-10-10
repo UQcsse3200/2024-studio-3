@@ -19,12 +19,6 @@ public class StationItemHandlerComponent extends Component {
     protected InventoryComponent inventoryComponent;
     protected ArrayList<String> acceptableItems;
 
-    // General TODO:
-    // Add trigger calls to external for failed interactions
-    // Processing in Inventory component, animation, timing and mapping
-    // Create subclass for each station where needed, eg classic bench will need
-    // to call add second component method that we dont want all stations to be able to access
-
     /**
      * General constructor
      * @param type - storing type of station
