@@ -14,7 +14,7 @@ import java.util.HashMap;
  * based upon the player's proximity to the object and the type it is. i.e. a 
  * station will have more weight than a bench for instance
  */
-public class PlayerInteractionService {
+public class InteractableService {
 
     // This assumes the position of the entity is static in the world
     private static final Map<Entity, Vector2> interactables = new HashMap<Entity, Vector2>();
