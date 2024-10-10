@@ -1,15 +1,12 @@
 package com.csse3200.game.components.maingame;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.TimeUtils;
-import com.csse3200.game.GdxGame;
-import com.csse3200.game.screens.MainGameScreen;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
 import org.slf4j.Logger;
@@ -24,7 +21,7 @@ public class GameBackgroundDisplay extends UIComponent {
     protected long timeSinceLastUpdate;
     protected String currentImage;
     protected int currentImageIndex;
-    public static final String[] BACKGROUND_TEXTURES = {"images/background_images/1.0.png",
+    protected static final String[] BACKGROUND_TEXTURES = {"images/background_images/1.0.png",
             "images/background_images/1.5.png",
             "images/background_images/2.0.png",
             "images/background_images/2.5.png",
