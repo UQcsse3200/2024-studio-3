@@ -5,8 +5,6 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
@@ -18,8 +16,7 @@ import com.csse3200.game.entities.Entity;
 import com.csse3200.game.services.GameTime;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
 
 /**
  * Manages the Speed Boots Upgrade UI component, handling activation, deactivation,
@@ -27,7 +24,6 @@ import org.slf4j.LoggerFactory;
  * when activated, makes player move twice as fast
  */
 public class SpeedBootsUpgrade extends UIComponent implements Upgrade {
-    private static final Logger logger = LoggerFactory.getLogger(RageUpgrade.class);
     private static final long BOOST_DURATION = 30000; // 30 sec
     private static final float NORMAL_SPEED = 1f;
     private static final float BOOSTED_SPEED = 2f; // 2x speed
@@ -123,7 +119,7 @@ public class SpeedBootsUpgrade extends UIComponent implements Upgrade {
             stage.addActor(speedMeter);
             stage.addActor(text);
             activeTimeRemaining -= gameTime.getDeltaTime() * 1000; // Calculate speed boot duration
-            speedMeter.setValue((activeTimeRemaining / (float) BOOST_DURATION)); // Update progress bar
+            speedMeter.setValue((activeTimeRemaining /  BOOST_DURATION)); // Update progress bar
 
             if (activeTimeRemaining <= 4000 && !playSound) {
                 long countDownId = countDown.play();
@@ -144,7 +140,7 @@ public class SpeedBootsUpgrade extends UIComponent implements Upgrade {
      * Also initializes the accompanying label.
      */
     private void setupSpeedMeter() {
-        Texture whiteBgTexture = ServiceLocator
+        Texture whiteBcgTexture = ServiceLocator
                 .getResourceService().getAsset("images/white_background.png", Texture.class);
         Texture fillTexture = ServiceLocator
                 .getResourceService().getAsset("images/green_fill.png", Texture.class);
@@ -152,7 +148,7 @@ public class SpeedBootsUpgrade extends UIComponent implements Upgrade {
         ProgressBar.ProgressBarStyle style = new ProgressBar.ProgressBarStyle();
 
         // Setting white background
-        style.background = new TextureRegionDrawable(new TextureRegion(whiteBgTexture));
+        style.background = new TextureRegionDrawable(new TextureRegion(whiteBcgTexture));
         style.background.setMinHeight(15);
         style.background.setMinWidth(10);
 
@@ -178,23 +174,6 @@ public class SpeedBootsUpgrade extends UIComponent implements Upgrade {
         }
     }
 
-    /**
-     * Activate the speed boot if B is pressed
-     */
-    // private void setupInputListener() {
-    //     stage.addListener(new InputListener() {
-    //         @Override
-    //         public boolean keyDown(InputEvent event, int keycode) {
-    //             if (keycode == com.badlogic.gdx.Input.Keys.B) {
-    //                 if (!isActivate && boostStartTime == -1 && combatStatsComponent.getGold() >= 20){
-    //                     activate();
-    //                 }
-    //                 return true;
-    //             }
-    //             return false;
-    //         }
-    //     });
-    // }
 
     /**
      * Decrement cost when speed boot is activate.
@@ -211,11 +190,20 @@ public class SpeedBootsUpgrade extends UIComponent implements Upgrade {
     }
     @Override
     protected void draw(SpriteBatch batch) {
+        // This method is intended for custom rendering of the UI component.
+        // However, the SpeedBootsUpgrade UI does not require any additional
+        // drawing logic, as all visual elements are managed by Scene2D
+        // and drawn automatically. Therefore, this method is left empty.
 
     }
 
     @Override
     public void setStage(Stage mock) {
+        // This method is intended to set the stage for the UI component.
+        // However, this component manages its own UI elements and does not
+        // require an explicit stage setting. As such, calling this method
+        // does not have any meaningful effect.
+        throw new UnsupportedOperationException("setStage is not supported for SpeedBootsUpgrade.");
 
     }
 }
