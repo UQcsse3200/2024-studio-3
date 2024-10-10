@@ -105,7 +105,7 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Field</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><code>protected final <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/ArrayList.html" title="class or interface in java.util" class="external-link">ArrayList</a><wbr>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</code></div>
+<div class="col-first even-row-color"><code>protected final <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a><wbr>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</code></div>
 <div class="col-second even-row-color"><code><a href="#acceptableItems" class="member-name-link">acceptableItems</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>protected <a href="../player/InventoryComponent.html" title="class in com.csse3200.game.components.player">InventoryComponent</a></code></div>
@@ -128,8 +128,8 @@ loadScripts(document, 'script');</script>
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Constructor</div>
 <div class="table-header col-last">Description</div>
-<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(java.lang.String,java.util.ArrayList)" class="member-name-link">StationMealComponent</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;type,
- <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/ArrayList.html" title="class or interface in java.util" class="external-link">ArrayList</a>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;acceptableItems)</code></div>
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(java.lang.String,java.util.List)" class="member-name-link">StationMealComponent</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;type,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;acceptableItems)</code></div>
 <div class="col-last even-row-color">
 <div class="block">General constructor</div>
 </div>
@@ -166,7 +166,7 @@ loadScripts(document, 'script');</script>
  inventory to determine intended interaction</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isItemAccepted(com.csse3200.game.components.items.ItemComponent)" class="member-name-link">isItemAccepted</a><wbr>(<a href="../items/ItemComponent.html" title="class in com.csse3200.game.components.items">ItemComponent</a>&nbsp;item)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isItemAccepted()" class="member-name-link">isItemAccepted</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Checks if the item can be accepted</div>
 </div>
@@ -176,15 +176,13 @@ loadScripts(document, 'script');</script>
 <div class="block">Gets a look at the current item being stored.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#stationGiveItem(com.csse3200.game.components.player.InventoryComponent,com.csse3200.game.components.player.InventoryDisplay)" class="member-name-link">stationGiveItem</a><wbr>(<a href="../player/InventoryComponent.html" title="class in com.csse3200.game.components.player">InventoryComponent</a>&nbsp;playerInventoryComponent,
- <a href="../player/InventoryDisplay.html" title="class in com.csse3200.game.components.player">InventoryDisplay</a>&nbsp;inventoryDisplay)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#stationGiveItem(com.csse3200.game.components.player.InventoryComponent)" class="member-name-link">stationGiveItem</a><wbr>(<a href="../player/InventoryComponent.html" title="class in com.csse3200.game.components.player">InventoryComponent</a>&nbsp;playerInventoryComponent)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Takes the item from the station, and returns the old item</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#stationReceiveItem(com.csse3200.game.components.items.ItemComponent,com.csse3200.game.components.player.InventoryComponent,com.csse3200.game.components.player.InventoryDisplay)" class="member-name-link">stationReceiveItem</a><wbr>(<a href="../items/ItemComponent.html" title="class in com.csse3200.game.components.items">ItemComponent</a>&nbsp;item,
- <a href="../player/InventoryComponent.html" title="class in com.csse3200.game.components.player">InventoryComponent</a>&nbsp;playerInventoryComponent,
- <a href="../player/InventoryDisplay.html" title="class in com.csse3200.game.components.player">InventoryDisplay</a>&nbsp;inventoryDisplay)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#stationReceiveItem(com.csse3200.game.components.items.ItemComponent,com.csse3200.game.components.player.InventoryComponent)" class="member-name-link">stationReceiveItem</a><wbr>(<a href="../items/ItemComponent.html" title="class in com.csse3200.game.components.items">ItemComponent</a>&nbsp;item,
+ <a href="../player/InventoryComponent.html" title="class in com.csse3200.game.components.player">InventoryComponent</a>&nbsp;playerInventoryComponent)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Takes the item from the player and stores in station</div>
 </div>
@@ -223,7 +221,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="acceptableItems">
 <h3>acceptableItems</h3>
-<div class="member-signature"><span class="modifiers">protected final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/ArrayList.html" title="class or interface in java.util" class="external-link">ArrayList</a>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</span>&nbsp;<span class="element-name">acceptableItems</span></div>
+<div class="member-signature"><span class="modifiers">protected final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</span>&nbsp;<span class="element-name">acceptableItems</span></div>
 </section>
 </li>
 </ul>
@@ -235,15 +233,15 @@ loadScripts(document, 'script');</script>
 <h2>Constructor Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="&lt;init&gt;(java.lang.String,java.util.ArrayList)">
+<section class="detail" id="&lt;init&gt;(java.lang.String,java.util.List)">
 <h3>StationMealComponent</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">StationMealComponent</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;type,
- <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/ArrayList.html" title="class or interface in java.util" class="external-link">ArrayList</a>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;acceptableItems)</span></div>
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;acceptableItems)</span></div>
 <div class="block">General constructor</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>type</code> - - storing type of station</dd>
-<dd><code>acceptableItems</code> - - HashMap, HashSet etc of mappings for acceptable items based on station</dd>
+<dd><code>acceptableItems</code> - - HashMap, HashSet etc. of mappings for acceptable items based on station</dd>
 </dl>
 </section>
 </li>
@@ -279,15 +277,13 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="isItemAccepted(com.csse3200.game.components.items.ItemComponent)">
+<section class="detail" id="isItemAccepted()">
 <h3>isItemAccepted</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isItemAccepted</span><wbr><span class="parameters">(<a href="../items/ItemComponent.html" title="class in com.csse3200.game.components.items">ItemComponent</a>&nbsp;item)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isItemAccepted</span>()</div>
 <div class="block">Checks if the item can be accepted</div>
 <dl class="notes">
-<dt>Parameters:</dt>
-<dd><code>item</code> - - to check if can be accepted</dd>
 <dt>Returns:</dt>
-<dd>- true if it can be acceptedd, false otherwise.</dd>
+<dd>- true if it can be accepted, false otherwise.</dd>
 </dl>
 </section>
 </li>
@@ -319,30 +315,26 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="stationReceiveItem(com.csse3200.game.components.items.ItemComponent,com.csse3200.game.components.player.InventoryComponent,com.csse3200.game.components.player.InventoryDisplay)">
+<section class="detail" id="stationReceiveItem(com.csse3200.game.components.items.ItemComponent,com.csse3200.game.components.player.InventoryComponent)">
 <h3>stationReceiveItem</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">stationReceiveItem</span><wbr><span class="parameters">(<a href="../items/ItemComponent.html" title="class in com.csse3200.game.components.items">ItemComponent</a>&nbsp;item,
- <a href="../player/InventoryComponent.html" title="class in com.csse3200.game.components.player">InventoryComponent</a>&nbsp;playerInventoryComponent,
- <a href="../player/InventoryDisplay.html" title="class in com.csse3200.game.components.player">InventoryDisplay</a>&nbsp;inventoryDisplay)</span></div>
+ <a href="../player/InventoryComponent.html" title="class in com.csse3200.game.components.player">InventoryComponent</a>&nbsp;playerInventoryComponent)</span></div>
 <div class="block">Takes the item from the player and stores in station</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>item</code> - - valid item to be stored in the station inventory.</dd>
 <dd><code>playerInventoryComponent</code> - - reference to player inventory</dd>
-<dd><code>inventoryDisplay</code> - - reference to UI for inventory display</dd>
 </dl>
 </section>
 </li>
 <li>
-<section class="detail" id="stationGiveItem(com.csse3200.game.components.player.InventoryComponent,com.csse3200.game.components.player.InventoryDisplay)">
+<section class="detail" id="stationGiveItem(com.csse3200.game.components.player.InventoryComponent)">
 <h3>stationGiveItem</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">stationGiveItem</span><wbr><span class="parameters">(<a href="../player/InventoryComponent.html" title="class in com.csse3200.game.components.player">InventoryComponent</a>&nbsp;playerInventoryComponent,
- <a href="../player/InventoryDisplay.html" title="class in com.csse3200.game.components.player">InventoryDisplay</a>&nbsp;inventoryDisplay)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">stationGiveItem</span><wbr><span class="parameters">(<a href="../player/InventoryComponent.html" title="class in com.csse3200.game.components.player">InventoryComponent</a>&nbsp;playerInventoryComponent)</span></div>
 <div class="block">Takes the item from the station, and returns the old item</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>playerInventoryComponent</code> - - reference to player inventory</dd>
-<dd><code>inventoryDisplay</code> - - reference to UI for inventory display</dd>
 </dl>
 </section>
 </li>
