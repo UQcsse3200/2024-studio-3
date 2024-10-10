@@ -12,7 +12,7 @@ import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.components.items.ItemComponent;
 import java.util.ArrayList;
 import java.util.Objects;
-
+import com.csse3200.game.components.station.StationMealComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
 
 
@@ -30,8 +30,11 @@ public class InventoryDisplayHoverComponent extends RenderComponent {
     private ArrayList<Texture> itemImages;
     private Texture backgroundImage;
     private Texture selectedBackgroundImage;
-    private Boolean showKeys = true;
+    private boolean showKeys = false;
+    private boolean isMixingStation = false;
     private Texture interactKeyImage;
+    private Texture combineKeyImage;
+    private Texture rotateKeyImage;
     private ShapeRenderer shapeRenderer;
     private Vector2 position;
     private Vector2 scale;
@@ -48,12 +51,20 @@ public class InventoryDisplayHoverComponent extends RenderComponent {
         backgroundImage = new Texture("images/inventory_ui/item_background.png");
         selectedBackgroundImage = new Texture("images/inventory_ui/item_background_selected.png");
         interactKeyImage = new Texture("images/inventory_ui/interact_key.png");
+        combineKeyImage = new Texture("images/inventory_ui/combine_key.png");
+        rotateKeyImage = new Texture("images/inventory_ui/rotate_key.png");
         shapeRenderer = new ShapeRenderer();
         ServiceLocator.getRenderService().register(this);
 
         if (entity != null) {
             // listener for when the InventoryComponent attached to this entity is updated
             entity.getEvents().addListener("updateInventory", this::update);
+
+            entity.getEvents().addListener("showToolTip", this::showToolTip);
+            entity.getEvents().addListener("hideToolTip", this::hideToolTip);
+
+            isMixingStation = entity.getComponent(StationMealComponent.class) != null;
+
             // need to use the physics body position of the entity as
             // the regular getPosition() on stations does not return the correct position.
             position = entity.getComponent(PhysicsComponent.class).getBody().getPosition();
@@ -97,6 +108,20 @@ public class InventoryDisplayHoverComponent extends RenderComponent {
         updateImages();
     }
 
+    /**
+     * Sets this component to display keybind tooltip icons
+     */
+    private void showToolTip() {
+        this.showKeys = true;
+    }
+
+    /**
+     * Sets this component to hide keybind tooltip icons
+     */
+    private void hideToolTip() {
+        this.showKeys = false;
+    }
+
     @Override
     public void draw(SpriteBatch batch)  {
         if (entity == null || position == null || scale == null)
@@ -125,15 +150,29 @@ public class InventoryDisplayHoverComponent extends RenderComponent {
                 SLOT_WIDTH - 0.2f,
                 SLOT_HEIGHT - 0.2f
             );
-
-            if (showKeys) {
-                batch.draw(interactKeyImage,
+            }
+        if (showKeys) {
+            batch.draw(interactKeyImage,
+                    position.x,
+                    position.y + 0.7f,
+                    KEY_WIDTH,
+                    KEY_HEIGHT
+            );
+            if (isMixingStation) {
+                batch.draw(rotateKeyImage,
                         position.x,
-                        position.y + 0.7f,
+                        position.y + 0.4f,
+                        KEY_WIDTH,
+                        KEY_HEIGHT
+                );
+                batch.draw(combineKeyImage,
+                        position.x,
+                        position.y + 0.1f,
                         KEY_WIDTH,
                         KEY_HEIGHT
                 );
             }
+
         }
     }
 
