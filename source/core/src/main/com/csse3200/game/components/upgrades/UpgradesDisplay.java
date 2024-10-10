@@ -229,10 +229,6 @@ public class UpgradesDisplay extends UIComponent {
 
     @Override
     protected void draw(SpriteBatch batch) {
-        // This method is intentionally left empty because the UpgradesDisplay component does not require
-        // custom drawing logic. Instead, it relies on the existing UI elements and actors added to the stage.
-        // If drawing is needed in the future, this method can be implemented accordingly.
-        throw new UnsupportedOperationException("Draw operation is not supported for UpgradesDisplay.");
 
     }
 
