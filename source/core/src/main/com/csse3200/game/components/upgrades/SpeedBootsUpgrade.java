@@ -27,7 +27,7 @@ import org.slf4j.LoggerFactory;
  * when activated, makes player move twice as fast
  */
 public class SpeedBootsUpgrade extends UIComponent implements Upgrade {
-    private static final Logger logger = LoggerFactory.getLogger(RageUpgrade.class);
+    private static final Logger logger = LoggerFactory.getLogger(SpeedBootsUpgrade.class);
     private static final long BOOST_DURATION = 30000; // 30 sec
     private static final float NORMAL_SPEED = 1f;
     private static final float BOOSTED_SPEED = 2f; // 2x speed
@@ -45,6 +45,8 @@ public class SpeedBootsUpgrade extends UIComponent implements Upgrade {
     private float activeTimeRemaining;
     private Sound countDown;
     private boolean playSound = false;
+    private boolean isPaused = false;
+
 
 
     public SpeedBootsUpgrade() {
@@ -55,7 +57,6 @@ public class SpeedBootsUpgrade extends UIComponent implements Upgrade {
         });
         gameTime = ServiceLocator.getTimeSource();
         isActivate = false;
-        
     }
 
     @Override
@@ -69,9 +70,19 @@ public class SpeedBootsUpgrade extends UIComponent implements Upgrade {
         layout = new Table();
         layout.setFillParent(true);
         layout.setVisible(isVisible);
-        // setupInputListener();
-        ServiceLocator.getRandomComboService().getEvents().addListener("Speed", this::activate); 
- 
+//         setupInputListener();
+        ServiceLocator.getRandomComboService().getEvents().addListener("Speed", this::activate);
+        stage.addListener(new InputListener() {
+            @Override
+            public boolean keyDown(InputEvent event, int keycode) {
+                if (keycode == com.badlogic.gdx.Input.Keys.O) {
+                    setPaused(!isPaused);
+                    return true;
+                }
+                return false;
+            }
+        });
+
     }
 
     /**
@@ -112,6 +123,16 @@ public class SpeedBootsUpgrade extends UIComponent implements Upgrade {
         }
     }
 
+    public void setPaused(boolean paused) {
+        this.isPaused = paused;
+        if (paused) {
+            countDown.pause();
+        } else {
+            countDown.resume();
+        }
+    }
+
+
     /**
      * Updates the SpeedBootsUpgrade component each frame, managing the countdown timer
      * and handling deactivation when the boost duration expires.
@@ -129,6 +150,12 @@ public class SpeedBootsUpgrade extends UIComponent implements Upgrade {
                 long countDownId = countDown.play();
                 countDown.setVolume(countDownId, 0.05f);
                 playSound = true;
+            }
+
+            if (ServiceLocator.getTimeSource().isPaused()) {
+                countDown.pause();
+            } else {
+                countDown.resume();
             }
 
             // Check if boost has expired
@@ -181,20 +208,20 @@ public class SpeedBootsUpgrade extends UIComponent implements Upgrade {
     /**
      * Activate the speed boot if B is pressed
      */
-    // private void setupInputListener() {
-    //     stage.addListener(new InputListener() {
-    //         @Override
-    //         public boolean keyDown(InputEvent event, int keycode) {
-    //             if (keycode == com.badlogic.gdx.Input.Keys.B) {
-    //                 if (!isActivate && boostStartTime == -1 && combatStatsComponent.getGold() >= 20){
-    //                     activate();
-    //                 }
-    //                 return true;
-    //             }
-    //             return false;
-    //         }
-    //     });
-    // }
+     private void setupInputListener() {
+         stage.addListener(new InputListener() {
+             @Override
+             public boolean keyDown(InputEvent event, int keycode) {
+                 if (keycode == com.badlogic.gdx.Input.Keys.B) {
+                     if (!isActivate && boostStartTime == -1 && combatStatsComponent.getGold() >= 20){
+                         activate();
+                     }
+                     return true;
+                 }
+                 return false;
+             }
+         });
+     }
 
     /**
      * Decrement cost when speed boot is activate.
