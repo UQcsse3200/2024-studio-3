@@ -30,6 +30,8 @@ public class InventoryDisplayHoverComponent extends RenderComponent {
     private ArrayList<Texture> itemImages;
     private Texture backgroundImage;
     private Texture selectedBackgroundImage;
+    private Boolean showKeys = true;
+    private Texture interactKeyImage;
     private ShapeRenderer shapeRenderer;
     private Vector2 position;
     private Vector2 scale;
@@ -37,12 +39,15 @@ public class InventoryDisplayHoverComponent extends RenderComponent {
     private static final float Y_OFFSET = 1.0F;
     private static final float SLOT_WIDTH = 0.6f;
     private static final float SLOT_HEIGHT = 0.6f;
+    private static final float KEY_WIDTH = 1.0f;
+    private static final float KEY_HEIGHT = 0.3f;
 
     @Override
     public void create() {
         super.create();
         backgroundImage = new Texture("images/inventory_ui/item_background.png");
         selectedBackgroundImage = new Texture("images/inventory_ui/item_background_selected.png");
+        interactKeyImage = new Texture("images/inventory_ui/interact_key.png");
         shapeRenderer = new ShapeRenderer();
         ServiceLocator.getRenderService().register(this);
 
@@ -81,6 +86,8 @@ public class InventoryDisplayHoverComponent extends RenderComponent {
         }
     }
 
+
+
     /**
      * Updates this InventoryDisplay to reflect the current state of the InventoryComponent
      * of this component's parent entity.
@@ -118,6 +125,15 @@ public class InventoryDisplayHoverComponent extends RenderComponent {
                 SLOT_WIDTH - 0.2f,
                 SLOT_HEIGHT - 0.2f
             );
+
+            if (showKeys) {
+                batch.draw(interactKeyImage,
+                        position.x,
+                        position.y + 0.7f,
+                        KEY_WIDTH,
+                        KEY_HEIGHT
+                );
+            }
         }
     }
 
@@ -128,6 +144,11 @@ public class InventoryDisplayHoverComponent extends RenderComponent {
         if (shapeRenderer != null) {
             shapeRenderer.dispose();
         }
+    }
+
+    @Override
+    public int getLayer() {
+        return 3; // currently overlays the player, but decreasing this to 1 makes it hide behind the stations
     }
 
     @Override
