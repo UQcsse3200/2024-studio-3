@@ -26,6 +26,7 @@ import static com.badlogic.gdx.Gdx.app;
 public class GdxGame extends Game {
   private static final Logger logger = LoggerFactory.getLogger(GdxGame.class);
   private Screen previousScreen;
+  private ScreenType currentScreenType;
   private Texture backgroundTexture;
   private SpriteBatch batch;
   private Cutscene currentCutscene;
@@ -60,6 +61,7 @@ public class GdxGame extends Game {
   public void setScreen(ScreenType screenType) {
     logger.info("Setting game screen to {}", screenType);
     Screen currentScreen = getScreen();
+    currentScreenType = screenType;
 
     previousScreen = currentScreen;  // Save the current screen before changing
     SaveLoadService system = ServiceLocator.getSaveLoadService();
@@ -79,6 +81,14 @@ public class GdxGame extends Game {
    */
   public Screen getPreviousScreen() {
     return previousScreen;
+  }
+
+  /**
+   * Get the previous game's screen
+   * @return previous screen
+   */
+  public ScreenType getCurrentScreenType() {
+    return currentScreenType;
   }
 
   @Override
