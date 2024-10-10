@@ -11,6 +11,9 @@ import com.csse3200.game.services.ServiceLocator;
 import java.util.List;
 
 public class ItemFactory {
+    private ItemFactory() {
+        // No instantiation allowed
+    }
     public static Entity createTemplateItem() {
         return new Entity()
                 .addComponent(new PhysicsComponent())
