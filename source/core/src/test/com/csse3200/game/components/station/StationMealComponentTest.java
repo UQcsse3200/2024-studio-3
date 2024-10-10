@@ -17,7 +17,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
-import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -37,7 +38,7 @@ class StationMealComponentTest {
     protected EventHandler mockMealEventHandler;
     protected GameTime mockTime;
     protected InventoryDisplay inventoryDisplay;
-    protected ArrayList<String> acceptableItems;
+    protected List<String> acceptableItems;
 
     @BeforeEach
     void setUp() {
@@ -85,16 +86,10 @@ class StationMealComponentTest {
         when(mockTime.getTime()).thenReturn(1000L, 10000L);
 
         // all acceptable items in the game (only ingredients might need to change)
-        acceptableItems = new ArrayList<>();
-        acceptableItems.add("fish");
-        acceptableItems.add("banana");
-        acceptableItems.add("beef");
-        acceptableItems.add("acai");
-        acceptableItems.add("lettuce");
-        acceptableItems.add("cucumber");
-        acceptableItems.add("tomato");
-        acceptableItems.add("strawberry");
-        acceptableItems.add("chocolate");
+        acceptableItems = Arrays.asList(
+                "fish", "banana", "beef", "acai", "lettuce",
+                "cucumber", "tomato", "strawberry", "chocolate"
+        );
 
         // initialise the station meal component
         mealHandler = new StationMealComponent("combining", acceptableItems);
@@ -106,7 +101,7 @@ class StationMealComponentTest {
 
     @Test
     void shouldSetAcceptableItems() {
-        ArrayList<String> actualItems = mealHandler.acceptableItems;
+        List<String> actualItems = mealHandler.acceptableItems;
         assertEquals(acceptableItems, actualItems);
     }
 
@@ -118,7 +113,7 @@ class StationMealComponentTest {
     @Test
     void shouldAcceptItem() {
         ItemComponent item = new ItemComponent("banana", ItemType.BANANA, 1);
-        assertTrue(mealHandler.isItemAccepted(item));
+        assertTrue(mealHandler.isItemAccepted());
     }
 
     @Test
