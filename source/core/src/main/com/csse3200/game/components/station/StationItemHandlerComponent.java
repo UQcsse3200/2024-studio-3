@@ -12,7 +12,7 @@ import com.csse3200.game.components.station.loader.StationAcceptableItemsGetter;
 public class StationItemHandlerComponent extends Component {
     /**
      * String type - storing type of station
-     * StationInventoryComponent inventory component - instance of inventory for this station
+     * StationInventoryComponent inventorycomponent - instance of inventory for this station
      * acceptableItems - ArrayList which contains all accepted items or it null
      */
     protected final String type;
@@ -23,7 +23,7 @@ public class StationItemHandlerComponent extends Component {
     // Add trigger calls to external for failed interactions
     // Processing in Inventory component, animation, timing and mapping
     // Create subclass for each station where needed, eg classic bench will need
-    // to call add second component method that we don't want all stations to be able to access
+    // to call add second component method that we dont want all stations to be able to access
 
     /**
      * General constructor
@@ -54,12 +54,12 @@ public class StationItemHandlerComponent extends Component {
 
     /**
      * Checks if the item can be accepted
-     * @param item to check if you can be accepted
-     * @return true if it can be accepted, false otherwise.
+     * @param item to check if can be accepted
+     * @return true if it can be acceptedd, false otherwise.
      */
     public boolean isItemAccepted(ItemComponent item) {
         // If the acceptable items is null the station is assumed to be able
-        // to carry any item
+        // to carray any item
         if (this.acceptableItems == null) {
             return true;
         }
@@ -83,32 +83,41 @@ public class StationItemHandlerComponent extends Component {
      * @param type the type of interaction attempt
      */
     public void handleInteraction(InventoryComponent playerInventoryComponent, InventoryDisplay inventoryDisplay, String type) {
-        switch (type) {
-            case "default" -> this.handleInteractionDefault(playerInventoryComponent);
-            case "chop" -> this.handleInteractionChop();
-            case "stopChop" -> this.handleInteractionStopChop();
-            default -> {
-                // Do nothing, other options aren't relevant...
-            }
+        if (type.equals("default")) {
+            this.handleInteractionDefault(playerInventoryComponent, inventoryDisplay);
+        } else if (type.equals("chop")) {
+            this.handleInteractionChop();
+        } else if (type.equals("stopChop")) {
+            this.handleInteractionStopChop();
+        } else {
+            // Do nothing, other options aren't relavent...
         }
     }
 
     /**
      * Function to handle the default interaction between a player and a station.
-     * @param playerInventoryComponent: the inventory component of the player
+     * @param playerInventoryComponent
+     * @param inventoryDisplay
      */
-    private void handleInteractionDefault(InventoryComponent playerInventoryComponent) {
+    private void handleInteractionDefault(InventoryComponent playerInventoryComponent, InventoryDisplay inventoryDisplay) {
+        // Pre calculations
+        boolean full = playerInventoryComponent.isFull() && this.inventoryComponent.isFull();
+        boolean empty = playerInventoryComponent.isEmpty() && this.inventoryComponent.isEmpty();
+
+        if (full || empty) {
+            return;
+        }
         // Input to station
         if (playerInventoryComponent.isFull()) {
             ItemComponent item = playerInventoryComponent.getItemFirst();
             // Check item is accepted
             if (isItemAccepted(item)) {
-                this.stationReceiveItem(item, playerInventoryComponent);
+                this.stationReceiveItem(item, playerInventoryComponent, inventoryDisplay);
             }
         // Output from station
         } else if (inventoryComponent.isFull()) {
             // Player wants item from station
-            this.stationGiveItem(playerInventoryComponent);
+            this.stationGiveItem(playerInventoryComponent, inventoryDisplay);
         }
     }
 
@@ -131,9 +140,9 @@ public class StationItemHandlerComponent extends Component {
     }
 
     /**
-     * Function to start the updating of items when the station receives an item
+     * Function to start the updating of items when the station recieves an item
      */
-    private void onReceiveItem() {
+    private void onRecieveItem() {
         switch (type) {
             case "oven", "stove":
                 cookingStationReceiveItem();
@@ -154,10 +163,10 @@ public class StationItemHandlerComponent extends Component {
 
         if (item.getEntity().getComponent(IngredientComponent.class) == null
                 || !item.getEntity().getComponent(IngredientComponent.class).getIsCookable()) {
-            return; // Item doesn't exit or isn't bookable
+            return; // Item doesn't exit or isn't cookable
         }
 
-        // We know item exists and is bookable
+        // We know item exists and is cookable
         entity.getEvents().trigger("Cook Ingredient");
     }
 
@@ -188,10 +197,10 @@ public class StationItemHandlerComponent extends Component {
 
         if (item.getEntity().getComponent(IngredientComponent.class) == null
                 || !item.getEntity().getComponent(IngredientComponent.class).getIsCookable()) {
-            return; // Item doesn't exit or isn't bookable
+            return; // Item doesn't exit or isn't cookable
         }
 
-        // We know item exists and is bookable
+        // We know item exists and is cookable
         entity.getEvents().trigger("Stop Cooking Ingredient");
     }
 
@@ -205,31 +214,33 @@ public class StationItemHandlerComponent extends Component {
 
         if (item.getEntity().getComponent(IngredientComponent.class) == null
                 || !item.getEntity().getComponent(IngredientComponent.class).getIsChoppable()) {
-            return; // Item doesn't exit or isn't patchable
+            return; // Item doesn't exit or isn't choppable
         }
 
-        // We know item exits and is patchable
+        // We know item exits and is choppable
         entity.getEvents().trigger("Stop Chopping Ingredient");
     }
 
     /**
          Takes the item from the player and stores in station
          @param playerInventoryComponent reference to player inventory
+         @param inventoryDisplay reference to UI for inventory display
      */
-    public void stationReceiveItem(ItemComponent item, InventoryComponent playerInventoryComponent) {
+    public void stationReceiveItem(ItemComponent item, InventoryComponent playerInventoryComponent, InventoryDisplay inventoryDisplay) {
         this.inventoryComponent.addItemAt(item, 0);
         // 0 by default, same position as getItemFirst()
         playerInventoryComponent.removeAt(0);
         
         // Need timers and animation start here, for Animations and Timer task ticket
-        onReceiveItem();
+        onRecieveItem();
     }
 
     /**
         Takes the item from the station, and returns the old item
         @param playerInventoryComponent reference to player inventory
+        @param inventoryDisplay reference to UI for inventory display
      */
-    public void stationGiveItem(InventoryComponent playerInventoryComponent) {
+    public void stationGiveItem(InventoryComponent playerInventoryComponent, InventoryDisplay inventoryDisplay) {
         onGiveItem();
 
         ItemComponent item = inventoryComponent.getItemFirst();
