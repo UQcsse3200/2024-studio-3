@@ -34,32 +34,38 @@ public class SpawnRecipeCommandsTest {
     private Entity player;
     private MockedStatic<ItemFactory> mockedItemFactory;
 
+    // Setup method to initialise objects and mock behaviour before each test
     @BeforeEach
     void setUp() {
         spawnRecipeCommands = new SpawnRecipeCommands();
 
+        // Clear exisiting services and set up mocked inventory and player inventories
         ServiceLocator.clear();
-        // Mocking the player's inventory and the service locator to retrieve the player
         inventoryComponent = mock(InventoryComponent.class);
         player = mock(Entity.class);
         
+        // Conifigure the players inventory component to be retrieved when requested
         when(player.getComponent(InventoryComponent.class)).thenReturn(inventoryComponent);
         
+        // Mocking the PlayerService and registering it in ServiceLocator
         PlayerService playerService = mock(PlayerService.class);
         when(playerService.getPlayer()).thenReturn(player);
-        ServiceLocator.registerPlayerService(playerService); // Mocking ServiceLocator for player service
+        ServiceLocator.registerPlayerService(playerService); 
 
+        // Mocking the static methods in the ItemFactory class
         mockedItemFactory = Mockito.mockStatic(ItemFactory.class);
     }
 
     @Test
     void testSpawnBananaSplit() {
-        // Arrange
+        // Arrange the command arguments to simulate spawning a Banana Split
         ArrayList<String> args = new ArrayList<>();
         args.add("bananasplit");
 
-        // Mock inventory size and behavior
-        when(inventoryComponent.getSize()).thenReturn(0); // Assume inventory is empty
+        // Mock inventory state and item creation process, 
+        // assuming the inventory is empty 
+        when(inventoryComponent.getSize()).thenReturn(0);
+        when(inventoryComponent.isFull()).thenReturn(false);
 
         // Mock the creation of items in ItemFactory
         Entity strawberry = mock(Entity.class);
@@ -67,43 +73,44 @@ public class SpawnRecipeCommandsTest {
         Entity banana = mock(Entity.class);
         Entity bananaSplitMeal = mock(Entity.class);
 
-        // Mock the ingredient components
+        // Configure ingredient components for each mocked entity
         when(strawberry.getComponent(IngredientComponent.class)).thenReturn(mock(IngredientComponent.class));
         when(chocolate.getComponent(IngredientComponent.class)).thenReturn(mock(IngredientComponent.class));
         when(banana.getComponent(IngredientComponent.class)).thenReturn(mock(IngredientComponent.class));
 
-        // Mock meal creation
+        // Configure the banana split meal entity with its component
         when(bananaSplitMeal.getComponent(MealComponent.class)).thenReturn(mock(MealComponent.class));
 
-        // Stubbing the ItemFactory methods
+        // Stubbing the ItemFactory methods to return the mocked items and meal
         mockedItemFactory.when(() -> ItemFactory.createBaseItem("strawberry")).thenReturn(strawberry);
         mockedItemFactory.when(() -> ItemFactory.createBaseItem("chocolate")).thenReturn(chocolate);
         mockedItemFactory.when(() -> ItemFactory.createBaseItem("banana")).thenReturn(banana);
         mockedItemFactory.when(() -> ItemFactory.createMeal(eq("bananaSplit"), anyList())).thenReturn(bananaSplitMeal);
 
 
-        // Act
+        // Act by executing the spawn action with the arguments
         boolean result = spawnRecipeCommands.action(args);
 
-        // Assert
-        assertTrue(result); // Expect true since it's a valid recipe
-        verify(inventoryComponent).addItem(any(MealComponent.class)); // Ensure item was added to inventory
+        // Assert that the item was successfully spawned and added to the inventory
+        assertTrue(result);
+        verify(inventoryComponent).addItem(any(MealComponent.class));
     }
 
     @Test
     void testInvalidArgument() {
-        // Arrange
+        // Arrange the invalid recipe argument
         ArrayList<String> args = new ArrayList<>();
         args.add("invalidRecipe");
 
-        // Act
+        // Act by executing the command with an invalid recipe
         boolean result = spawnRecipeCommands.action(args);
 
-        // Assert
-        assertFalse(result); // Should return false due to invalid recipe
-        verify(inventoryComponent, never()).addItem(any(ItemComponent.class)); // Ensure no items were added
+        // Assert that the action failed and no item was added to the inventory
+        assertFalse(result);
+        verify(inventoryComponent, never()).addItem(any(ItemComponent.class));
     }
-/*
+
+    /*
     @Test
     void testRemoveExistingItemFromInventory() {
         // Arrange
@@ -111,24 +118,26 @@ public class SpawnRecipeCommandsTest {
         args.add("steakmeal");
 
         // Mock inventory size to simulate that it's not empty
-        when(inventoryComponent.getSize()).thenReturn(1); // Assume there's already an item in the inventory
+        when(inventoryComponent.getSize()).thenReturn(1);
+        when(inventoryComponent.isEmpty()).thenReturn(false);
 
         // Act
         boolean result = spawnRecipeCommands.action(args);
 
         // Assert
         assertTrue(result);
-        verify(inventoryComponent).removeItem(); // Ensure the existing item was removed
+        verify(inventoryComponent).removeItem();
     }
 */
     @Test
     void testSpawnFruitSalad() {
-        // Arrange
+        // Arrange the command arguments to simulate spawning a Fruit Salad
         ArrayList<String> args = new ArrayList<>();
         args.add("fruitSalad");
 
-        // Mock the inventory
+        // Mock the inventory state
         when(inventoryComponent.getSize()).thenReturn(0);
+        when(inventoryComponent.isEmpty()).thenReturn(false);
 
         // Mock the creation of items in ItemFactory
         Entity banana = mock(Entity.class);
@@ -147,23 +156,23 @@ public class SpawnRecipeCommandsTest {
         mockedItemFactory.when(() -> ItemFactory.createBaseItem("strawberry")).thenReturn(strawberry);
         mockedItemFactory.when(() -> ItemFactory.createMeal(eq("fruitSalad"), anyList())).thenReturn(fruitSaladMeal);
 
-        // Act
+        // Act by executing the soawn action with the arguments
         boolean result = spawnRecipeCommands.action(args);
 
-        // Assert
+        // Assert that the fruit salad successfully spawned and added to inventory
         assertTrue(result);
-        verify(inventoryComponent).addItem(any(MealComponent.class)); // Ensure the fruit salad was added
+        verify(inventoryComponent).addItem(any(MealComponent.class)); 
     }
 
     @Test
     void testNoArgs() {
-        // Arrange
+        // Arrange with no command arguments passed
         ArrayList<String> args = new ArrayList<>(); // No arguments passed
 
-        // Act
+        // Act by executing the command with no arguments
         boolean result = spawnRecipeCommands.action(args);
 
-        // Assert
+        // Assert that the action failed due to missing arguments
         assertFalse(result); // Should return false due to missing arguments
         verify(inventoryComponent, never()).addItem(any(ItemComponent.class)); // No item should be added
     }
@@ -174,3 +183,4 @@ public class SpawnRecipeCommandsTest {
         ServiceLocator.clear();
     }
 }
+
