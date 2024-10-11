@@ -1,20 +1,11 @@
 package com.csse3200.game.components.player;
 
-import java.util.Map;
-
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.Fixture;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.entities.Entity;
-import com.csse3200.game.physics.BodyUserData;
-import com.csse3200.game.components.items.PlateComponent;
-import com.csse3200.game.components.station.FireExtinguisherHandlerComponent;
-import com.csse3200.game.components.TooltipsDisplay;
-import com.csse3200.game.physics.components.InteractionComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
-import com.csse3200.game.services.InteractableService;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.components.SensorComponent;
 
@@ -32,7 +23,8 @@ public class PlayerActions extends Component {
   private SensorComponent sensor;
   private InventoryComponent playerInventory;
   private InventoryDisplay displayInventory;
-  private Fixture oldInteractable;
+  private Entity closestEntity = null;
+  private Entity oldClosestEntity = null;
 
   @Override
   public void create() {
@@ -52,20 +44,21 @@ public class PlayerActions extends Component {
     Vector2 position = body.getPosition();
 
     if (moving) {
-      // Stop if it's at min x position or max x position
-      if (position.x < MIN_X_POSITION) {
-        position.x = MIN_X_POSITION;
-        body.setTransform(MIN_X_POSITION, position.y, body.getAngle());
-        stopWalking();
-      } else if (position.x > MAX_X_POSITION) {
-        position.x = MAX_X_POSITION;
-        body.setTransform(MAX_X_POSITION, position.y, body.getAngle());
-        stopWalking();
-      } else {
-        updateSpeed();
-      }
+        updateInteraction();
+
+        // Stop if it's at min x position or max x position
+        if (position.x < MIN_X_POSITION) {
+            position.x = MIN_X_POSITION;
+            body.setTransform(MIN_X_POSITION, position.y, body.getAngle());
+            stopWalking();
+        } else if (position.x > MAX_X_POSITION) {
+            position.x = MAX_X_POSITION;
+            body.setTransform(MAX_X_POSITION, position.y, body.getAngle());
+            stopWalking();
+        } else {
+            updateSpeed();
+        }
     }
-    updateInteraction();
   }
 
   /**
@@ -75,35 +68,20 @@ public class PlayerActions extends Component {
    * the tooltip.
    * */
   private void updateInteraction() {
-    /*interactionSensor.update();
-    Fixture interactable = interactionSensor.getClosestFixture();
-    if (interactable != null) {
-      Vector2 objectPosition = interactable.getBody().getPosition();  // Get object position
-      String interactionKey = "Press E";
-      String itemName = "to interact";
+    oldClosestEntity = closestEntity;
+    closestEntity = sensor.getClosestInteractable();
 
-      if (oldInteractable == null) {
-        oldInteractable = interactable;
-      }
+    if (oldClosestEntity == closestEntity) {
+        return;
+    }
 
-      if (oldInteractable != null && oldInteractable.getBody().getPosition() != objectPosition) {
-        Entity oldStation = ((BodyUserData) oldInteractable.getBody().getUserData()).entity;
-        oldStation.getEvents().trigger("hideToolTip");
+    if (oldClosestEntity != null) {
+      oldClosestEntity.getEvents().trigger("hideToolTip");
+    }
 
-        Entity station = ((BodyUserData) interactable.getBody().getUserData()).entity;
-        station.getEvents().trigger("showToolTip");
-        oldInteractable = interactable;
-      }
-      // Create a TooltipInfo object with the text and position
-      TooltipsDisplay.TooltipInfo tooltipInfo = new TooltipsDisplay.TooltipInfo(interactionKey + " " + itemName, objectPosition);
-
-      // Trigger the event with the TooltipInfo object
-      entity.getEvents().trigger("showTooltip", tooltipInfo);
-
-    } else {
-
-      entity.getEvents().trigger("hideTooltip");
-    }*/
+    if (closestEntity != null) {
+      closestEntity.getEvents().trigger("showToolTip");
+    }
   }
 
   private void updateSpeed() {
@@ -124,8 +102,6 @@ public class PlayerActions extends Component {
    * Triggers an interaction event. It holds the logic in how to interact with a given station
    */
   void interact(String type) {
-    Entity closestEntity = sensor.getClosestInteractable();
-    
     closestEntity.getEvents().trigger("Station Interaction", playerInventory, displayInventory, type);
   }
 
