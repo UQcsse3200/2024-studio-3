@@ -1,5 +1,9 @@
 package com.csse3200.game.components.maingame;
 
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Stack;
 import com.csse3200.game.GdxGame;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -20,7 +24,7 @@ public class RecipeCardDisplay extends UIComponent {
     private final MainGameScreen game;
     private Table table;
     private static final Logger logger = LoggerFactory.getLogger(RecipeCardDisplay.class);
-    private static final String[] recipeCardTexture = {"images/recipe_card_placeholder.png"};
+    private static final String[] recipeCardTexture = {"images/recipe_card.png"};
     private Image backgroundImage;
 
     //TODO add esc key exit
@@ -36,10 +40,10 @@ public class RecipeCardDisplay extends UIComponent {
      * @return backgroundImage
      */
     private Image createRecipeCardBackground() {
-        Texture pauseMenuTexture = ServiceLocator
-                .getResourceService().getAsset("images/recipe_card_placeholder.png", Texture.class);
-        Image backgroundImage = new Image(pauseMenuTexture);
-        backgroundImage.setSize(1000, 1000);
+        Texture texture = ServiceLocator
+                .getResourceService().getAsset("images/recipe_card.png", Texture.class);
+        Image backgroundImage = new Image(texture);
+        backgroundImage.setSize(2000, 2000);
 
         return backgroundImage;
     }
@@ -52,8 +56,8 @@ public class RecipeCardDisplay extends UIComponent {
         table.setFillParent(true);
         backgroundImage = createRecipeCardBackground();
         table.add(backgroundImage).center().expand();
-        stage.addActor(table);
         table.setVisible(isVisible);
+        stage.addActor(table);
 
         stage.addListener(new InputListener() {
             @Override
@@ -110,7 +114,7 @@ public class RecipeCardDisplay extends UIComponent {
     @Override
     public void dispose() {
         super.dispose();
-        ServiceLocator.getResourceService().unloadAssets(new String[]{"images/recipe_card_placeholder.png"});
+        ServiceLocator.getResourceService().unloadAssets(new String[]{"images/recipe_card.png"});
     }
 
     @Override
