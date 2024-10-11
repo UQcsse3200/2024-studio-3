@@ -14,6 +14,7 @@ public class MoralDay4Cutscene extends Cutscene {
     @Override
     protected void setupScenes() {
         createScene();
+        createScene2();
     }
 
     private void createScene() {
@@ -22,7 +23,7 @@ public class MoralDay4Cutscene extends Cutscene {
 
         sceneText.add("Racoon Dealer > Try some of my stuff. Best in the city.");
 
-        sceneText.add("Mafia Boss > It’ll help you work faster tomorrow. What do you have to lose?");
+        sceneText.add("Mafia Boss > It'll help you work faster tomorrow. What do you have to lose?");
 
         sceneText.add("Mafia Boss > What do you say?");
 
@@ -39,7 +40,41 @@ public class MoralDay4Cutscene extends Cutscene {
 
         String iconImage = "images/Cutscenes/moral_icons/drug_ico.png";
         Vector2 iconPosition = new Vector2(-9, -2);
-        float iconScale = 7.0f;
+        float iconScale = 6.0f;
+
+        // Add scenes with background images, animations, text, and duration
+        Scene scene = new Scene("images/Cutscenes/Day2_Scene.png");
+        scene.setImages(
+                new String[]{mafiaImage, racoonImage, iconImage},
+                new Vector2[] {mafiaPosition, racoonPosition, iconPosition},
+                new float[] {mafiaScale, racoonScale, iconScale}
+        );
+
+        scene.setSceneText(sceneText);
+        scene.setDuration(3.0f);
+
+        scenes.add(scene);
+    }
+
+    private void createScene2() {
+        Array<String> sceneText = new Array<>();
+
+        sceneText.add("Press 'y' for yes and 'n' for no");
+
+
+
+        String mafiaImage = "images/Cutscenes/Character Artwork/rhino_sprite.png";
+        Vector2 mafiaPosition = new Vector2(3, -1);
+        float mafiaScale = 4.0f;
+
+        String racoonImage = "images/Cutscenes/Character Artwork/racoon.png";
+        Vector2 racoonPosition = new Vector2(-3, -1);
+        float racoonScale = 5.5f;
+
+
+        String iconImage = "images/Cutscenes/moral_icons/drug_ico.png";
+        Vector2 iconPosition = new Vector2(-9, -2);
+        float iconScale = 6.0f;
 
         // Add scenes with background images, animations, text, and duration
         Scene scene = new Scene("images/Cutscenes/Day2_Scene.png");
