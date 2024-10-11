@@ -6,6 +6,7 @@ import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.SensorComponent;
 import com.csse3200.game.components.TooltipsDisplay;
 import com.csse3200.game.components.maingame.CheckWinLoseComponent;
+import com.csse3200.game.components.player.InteractionComponent2;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.components.player.InventoryDisplay;
 import com.csse3200.game.components.player.PlayerActions;
@@ -78,11 +79,10 @@ public class PlayerFactory {
             .addComponent(inputComponent)
             .addComponent(animator)
             .addComponent(new PlayerAnimationController())
-            .addComponent(new TooltipsDisplay())
             .addComponent(new PlayerStatsDisplay())
-            .addComponent(new InteractionComponent(PhysicsLayer.INTERACTABLE))
-            .addComponent(new CheckWinLoseComponent(55, 55))
-            .addComponent(new SensorComponent(PhysicsLayer.INTERACTABLE, 5f));
+            .addComponent(new InteractionComponent2())
+            //.addComponent(new InteractionComponent(PhysicsLayer.INTERACTABLE))
+            .addComponent(new CheckWinLoseComponent(55, 55));
 
     player.scaleHeight(1.25f);
     PhysicsUtils.setScaledCollider(player, 0.5f, 0.5f);

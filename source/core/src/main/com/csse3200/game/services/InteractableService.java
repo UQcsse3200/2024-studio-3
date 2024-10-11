@@ -17,13 +17,13 @@ import java.util.HashMap;
 public class InteractableService {
 
     // This assumes the position of the entity is static in the world
-    private static final Map<Entity, Vector2> interactables = new HashMap<Entity, Vector2>();
+    private final Map<Entity, Vector2> interactables = new HashMap<Entity, Vector2>();
     
     /**
      * Register an interactable enitity to the service
      * @param entity - the entity to register
      */
-    public static void registerEntity(Entity entity) {
+    public void registerEntity(Entity entity) {
         PhysicsComponent physicsComponent = entity.getComponent(PhysicsComponent.class);
 
         if (physicsComponent == null) {
@@ -37,14 +37,14 @@ public class InteractableService {
      * Remove the entity from the interactables map
      * @param entity to be removed
      */
-    public static void unregisterEntity(Entity entity) {
+    public void unregisterEntity(Entity entity) {
         interactables.remove(entity);
     }
 
     /**
      * Clear all entities from the interactables map
      */
-    public static void clearEntities() {
+    public void clearEntities() {
         interactables.clear();
     }
 
@@ -53,7 +53,7 @@ public class InteractableService {
      * entries in a mao
      * @return the interactables map
      */
-    public static Map<Entity, Vector2> getInteractables() {
+    public Map<Entity, Vector2> getInteractables() {
         return interactables;
     }
 

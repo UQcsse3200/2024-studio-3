@@ -16,6 +16,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.*;
+import java.security.Provider.Service;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -191,7 +192,7 @@ public class MapLayout {
         }
         station.setPosition(col + 4, row - 4);
 
-        InteractableService.registerEntity(station);
+        ServiceLocator.getInteractableService().registerEntity(station);
 
         return station;
     }

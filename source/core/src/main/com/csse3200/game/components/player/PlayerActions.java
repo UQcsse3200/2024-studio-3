@@ -28,14 +28,16 @@ public class PlayerActions extends Component {
   private PhysicsComponent physicsComponent;
   private Vector2 walkDirection = Vector2.Zero.cpy();
   private boolean moving = false;
-  private SensorComponent interactionSensor;
+  //private SensorComponent interactionSensor;
   private InventoryComponent playerInventory;
   private InventoryDisplay displayInventory;
+  private InteractionComponent2 interactionComponent2;
 
   @Override
   public void create() {
+    interactionComponent2 = entity.getComponent(InteractionComponent2.class);
     physicsComponent = entity.getComponent(PhysicsComponent.class);
-    interactionSensor = entity.getComponent(SensorComponent.class);
+    //interactionSensor = entity.getComponent(SensorComponent.class);
     playerInventory = entity.getComponent(InventoryComponent.class);
     displayInventory = entity.getComponent(InventoryDisplay.class);
     entity.getEvents().addListener("walk", this::walk);
@@ -73,7 +75,7 @@ public class PlayerActions extends Component {
    * the tooltip.
    * */
   private void updateInteraction() {
-    interactionSensor.update();
+    /*interactionSensor.update();
     Fixture interactable = interactionSensor.getClosestFixture();
     if (interactable != null) {
       Vector2 objectPosition = interactable.getBody().getPosition();  // Get object position
@@ -87,7 +89,7 @@ public class PlayerActions extends Component {
 
     } else {
       entity.getEvents().trigger("hideTooltip");
-    }
+    }*/
   }
 
   private void updateSpeed() {
@@ -108,30 +110,7 @@ public class PlayerActions extends Component {
    * Triggers an interaction event. It holds the logic in how to interact with a given station
    */
   void interact(String type) {
-    Map<Entity, Vector2> interactables = InteractableService.getInteractables();
-
-    Entity closestEntity = null;
-
-    // Get the player position
-    Vector2 playerPosition = entity.getComponent(PhysicsComponent.class).getBody().getPosition();
-    float closestDistance = Float.MAX_VALUE;
-
-    for (Map.Entry<Entity, Vector2> entry : interactables.entrySet()) {
-        Entity entity = entry.getKey();
-        Vector2 entityPosition = entry.getValue();
-
-        float distance = playerPosition.dst(entityPosition);
-
-        if (distance <= 1.15f && distance < closestDistance) {
-            closestDistance = distance;
-            closestEntity = entity;
-        }
-    }
-
-    // If no station meets the criteria, return
-    if (closestEntity == null) {
-        return;
-    }
+    Entity closestEntity = interactionComponent2.getClosestInteractable();
     
     closestEntity.getEvents().trigger("Station Interaction", playerInventory, displayInventory, type);
   }
