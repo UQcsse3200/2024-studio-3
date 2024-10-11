@@ -58,7 +58,7 @@ public class InventoryDisplayHoverComponent extends RenderComponent {
 
         if (entity != null) {
             // listener for when the InventoryComponent attached to this entity is updated
-            entity.getEvents().addListener("updateInventory", this::update);
+            entity.getEvents().addListener("updateInventory", this::updateDisplay);
 
             entity.getEvents().addListener("showToolTip", this::showToolTip);
             entity.getEvents().addListener("hideToolTip", this::hideToolTip);
@@ -105,6 +105,10 @@ public class InventoryDisplayHoverComponent extends RenderComponent {
      */
     @Override
     public void update() {
+
+    }
+
+    public void updateDisplay() {
         updateImages();
     }
 

@@ -94,7 +94,7 @@ public class StationProgressDisplay extends RenderComponent {
     }
 
     private void resetBar() {
-        displayBar = true;
+        displayBar = false;
         barPercentage = 0.0f;
     }
 
