@@ -9,7 +9,6 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.csse3200.game.rendering.RenderComponent;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.components.items.ItemComponent;
-import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.components.items.ItemTimerComponent;
 import com.csse3200.game.components.items.ChopIngredientComponent;
 import com.csse3200.game.components.items.CookIngredientComponent;
@@ -55,7 +54,6 @@ public class StationProgressDisplay extends RenderComponent {
             // the regular getPosition() on stations does not return the correct position.
             position = entity.getComponent(PhysicsComponent.class).getBody().getPosition();
             scale = entity.getScale();
-            InventoryComponent stationInventory = entity.getComponent(InventoryComponent.class);
         }
     }
 
@@ -89,6 +87,7 @@ public class StationProgressDisplay extends RenderComponent {
             displayBar = true;
         } else {
             displayBar = false;
+            entity.getEvents().trigger("updateInventory");
         }
     }
 

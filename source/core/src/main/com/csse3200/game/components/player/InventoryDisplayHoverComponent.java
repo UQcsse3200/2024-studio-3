@@ -14,8 +14,6 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 import com.csse3200.game.components.station.IngredientStationHandlerComponent;
-import com.csse3200.game.components.station.StationChoppingComponent;
-import com.csse3200.game.components.station.StationCookingComponent;
 import com.csse3200.game.components.station.StationMealComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
 
@@ -37,8 +35,6 @@ public class InventoryDisplayHoverComponent extends RenderComponent {
     private boolean showKeys = false;
     private boolean isMixingStation = false;
     private boolean isBasket = false;
-    private boolean isCooking = false;
-    private boolean isChopping = false;
     private Texture interactKeyImage;
     private Texture combineKeyImage;
     private Texture rotateKeyImage;
@@ -72,8 +68,6 @@ public class InventoryDisplayHoverComponent extends RenderComponent {
 
             isMixingStation = entity.getComponent(StationMealComponent.class) != null;
             isBasket = entity.getComponent(IngredientStationHandlerComponent.class) != null;
-            isCooking = entity.getComponent(StationCookingComponent.class) != null;
-            isChopping = entity.getComponent(StationChoppingComponent.class) != null;
 
             // need to use the physics body position of the entity as
             // the regular getPosition() on stations does not return the correct position.
@@ -115,9 +109,7 @@ public class InventoryDisplayHoverComponent extends RenderComponent {
      */
     @Override
     public void update() {
-        if (isCooking || isChopping) {
-            updateImages();
-        }
+
     }
 
     public void updateDisplay() {
