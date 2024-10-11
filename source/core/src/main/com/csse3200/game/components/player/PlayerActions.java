@@ -38,28 +38,28 @@ public class PlayerActions extends Component {
     entity.getEvents().addListener("interact", this::interact);
   }
 
-  @Override
-  public void update() {
-    Body body = physicsComponent.getBody();
-    Vector2 position = body.getPosition();
+    @Override
+    public void update() {
+        Body body = physicsComponent.getBody();
+        Vector2 position = body.getPosition();
 
-    if (moving) {
-        updateInteraction();
+        if (moving) {
+            updateInteraction();
 
-        // Stop if it's at min x position or max x position
-        if (position.x < MIN_X_POSITION) {
-            position.x = MIN_X_POSITION;
-            body.setTransform(MIN_X_POSITION, position.y, body.getAngle());
-            stopWalking();
-        } else if (position.x > MAX_X_POSITION) {
-            position.x = MAX_X_POSITION;
-            body.setTransform(MAX_X_POSITION, position.y, body.getAngle());
-            stopWalking();
-        } else {
-            updateSpeed();
+            // Stop if it's at min x position or max x position
+            if (position.x < MIN_X_POSITION) {
+                position.x = MIN_X_POSITION;
+                body.setTransform(MIN_X_POSITION, position.y, body.getAngle());
+                stopWalking();
+            } else if (position.x > MAX_X_POSITION) {
+                position.x = MAX_X_POSITION;
+                body.setTransform(MAX_X_POSITION, position.y, body.getAngle());
+                stopWalking();
+            } else {
+                updateSpeed();
+            }
         }
     }
-  }
 
   /**
    * Updates the player's interaction with nearby objects. This method checks for the closest
