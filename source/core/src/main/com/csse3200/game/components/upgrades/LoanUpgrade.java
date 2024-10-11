@@ -33,6 +33,7 @@ public class LoanUpgrade extends Component implements Upgrade {
      */
     public void activate() { 
         if(combatStatsComponent.getGold() >= 20){
+            // https://pixabay.com/sound-effects/cha-ching-7053/
             moneySound = Gdx.audio.newSound(Gdx.files.internal("sounds/loan.mp3"));
             long moneySoundId = moneySound.play();
             moneySound.setVolume(moneySoundId, 0.2f);
