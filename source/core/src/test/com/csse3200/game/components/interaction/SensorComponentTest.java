@@ -1,275 +1,146 @@
 package com.csse3200.game.components.interaction;
 
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Fixture;
+import com.badlogic.gdx.physics.box2d.Body;
 import com.csse3200.game.components.SensorComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.extensions.GameExtension;
 import com.csse3200.game.physics.PhysicsService;
-import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.components.PhysicsComponent;
-import com.csse3200.game.physics.components.InteractionComponent;
+import com.csse3200.game.services.InteractableService;
 import com.csse3200.game.services.ServiceLocator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(GameExtension.class)
-class SensorComponentTest {
+public class SensorComponentTest {
 
     private SensorComponent sensorComponent;  // Declare sensorComponent here
-    private final short interactableLayer = PhysicsLayer.INTERACTABLE;
+    private Entity mockPlayer;
+    private PhysicsComponent mockPhysics;
+    private Body mockBody;
 
-    /*/
     @BeforeEach
     void beforeEach() {
-        ServiceLocator.registerPhysicsService(new PhysicsService());
+        ServiceLocator.clear();
+
+        // Create the mock player with set position of (0, 0)
         sensorComponent = new SensorComponent();
         assertNotNull(sensorComponent, "sensor component should have been initialised");
+
+        ServiceLocator.registerPhysicsService(new PhysicsService());
+
+        mockBody = mock(Body.class);
+        mockPhysics = mock(PhysicsComponent.class);
+        when(mockPhysics.getBody()).thenReturn(mockBody);
+        when(mockBody.getPosition()).thenReturn(new Vector2(0, 0));
+        mockPlayer = new Entity();
+        mockPlayer.addComponent(mockPhysics);
+        mockPlayer.addComponent(sensorComponent);
+
+        // Create an interactable service to be able to register entities
+        ServiceLocator.registerInteractableService(new InteractableService());
+
+        // Create the player entity
+        mockPlayer.create();
     }
 
-    @Test
-    void checkSensorInit() {
-        assertNotNull(this.sensorComponent, "The sensorComponent should not be null");
-        // Set up entities
-        Entity entity = createEntity(0, 0);
-        Entity target = createTarget(0, 0);
-
-        Fixture entityFixture = entity.getComponent(InteractionComponent.class).getFixture();
-        Fixture targetFixture = target.getComponent(InteractionComponent.class).getFixture();
-        //Ensure the sensor component is set up correctly
-        InteractionComponent sensorInteractionComponent = this.sensorComponent.getInteractionComponent();
-        assertNotNull(sensorInteractionComponent, "The interaction component for sensor should not be null");
+    private Entity createEntityAt(float x, float y) {
+        Body mockBodyOther = mock(Body.class);
+        PhysicsComponent mockPhysicsOther = mock(PhysicsComponent.class);
+        when(mockPhysicsOther.getBody()).thenReturn(mockBodyOther);
+        when(mockBodyOther.getPosition()).thenReturn(new Vector2(x, y));
         
-        Fixture sensorFixture = sensorInteractionComponent.getFixture();
-        assertNotNull(sensorFixture, "The fixture for interaction component of sensor should not be null");
+        Entity mockEntity = new Entity();
+        mockEntity.addComponent(mockPhysicsOther);
 
-        //Ensure the entity interaction component matchest the sensor interaction component
-        assertSame(sensorFixture, entityFixture, "Sensore fixture should match entity fixture");
+        return mockEntity;
     }
 
     @Test
-    void checkEntityInit() {
-        Entity entity = createEntity(0, 0);
-        InteractionComponent entityInteractionComponent = entity.getComponent(InteractionComponent.class);
-        assertEquals(PhysicsLayer.INTERACTABLE, entityInteractionComponent.getLayer());
-        Fixture entityFixture = entityInteractionComponent.getFixture();
-        assertNotNull(entityFixture, "The fixture for InteractionComponent should not be null");
-        assertEquals(interactableLayer, entityFixture.getFilterData().categoryBits);
-        assertTrue(PhysicsLayer.contains(interactableLayer, entityFixture.getFilterData().categoryBits),
-                "entity fixture should be in the physics layer");
+    void TestSensorInit() {
+        Vector2 playerPosition = mockPlayer.getComponent(PhysicsComponent.class).getBody().getPosition();
+        assertTrue(playerPosition.isZero());
     }
 
     @Test
-    void checkTargetInit() {
-        Entity target = createTarget(0, 0);
-        InteractionComponent targetInteractionComponent = target.getComponent(InteractionComponent.class);
-        assertEquals(PhysicsLayer.INTERACTABLE, targetInteractionComponent.getLayer());
-
-        Fixture targetFixture = targetInteractionComponent.getFixture();
-        assertNotNull(targetFixture, "The fixture for InteractionComponent should not be null");
-        assertEquals(targetFixture.getFilterData().categoryBits, interactableLayer);
-        assertTrue(PhysicsLayer.contains(interactableLayer, targetFixture.getFilterData().categoryBits),
-                "entity fixture should be in the physics layer");
+    void TestSensorNoInteractables() {
+        Entity closestEntity = mockPlayer.getComponent(SensorComponent.class).getClosestInteractable();
+        assertNull(closestEntity);
     }
 
     @Test
-    void shouldAddFixtureToList() {
-        Entity entity = createEntity(0, 0);
-        Entity target = createTarget(0, 0);
+    void TestSensorOneInteractableOutOfRange() {
+        Entity mockEntity = createEntityAt(1, 1);
+        ServiceLocator.getInteractableService().registerEntity(mockEntity);
 
-        Fixture entityFixture = entity.getComponent(InteractionComponent.class).getFixture();
-        Fixture targetFixture = target.getComponent(InteractionComponent.class).getFixture();
-
-        assertEquals(targetFixture.getFilterData().categoryBits, entityFixture.getFilterData().categoryBits,
-                "Target fixture layer should match entity fixture layer");
-
-        assertNotEquals(sensorComponent.getInteractionComponent().getFixture(), targetFixture);
-        assertTrue(PhysicsLayer.contains(interactableLayer, targetFixture.getFilterData().categoryBits),
-                "target fixture should be in the physics layer");
-        assertTrue(sensorComponent.isWithinDistance(targetFixture, 1));
-
-        sensorComponent.onCollisionStart(entityFixture, targetFixture);
-        assertEquals(1, sensorComponent.getNumFixtures(),
-                "There should be one fixture added to the list");
-    }
-
-     @Test
-     void shouldDetectClosestFixture() {
-         Entity entity = createEntity(0, 0);
-         Entity target = createTarget(0, 0);
-
-         InteractionComponent targetInteractionComponent = target.getComponent(InteractionComponent.class);
-         Fixture targetFixture = targetInteractionComponent.getFixture();
-
-         InteractionComponent entityInteractionComponent = entity.getComponent(InteractionComponent.class);
-         Fixture entityFixture = entityInteractionComponent.getFixture();
-
-         sensorComponent.onCollisionStart(entityFixture, targetFixture);
-
-         Fixture closestFixture = sensorComponent.getClosestFixture();
-         assertNotNull(closestFixture, "Closest fixture should not be null");
-         assertEquals(targetFixture, closestFixture, "The closest fixture should be the target's fixture");
-     }
-
-     @Test
-     void shouldNotDetectFarFeature() {
-         Entity entity = createEntity(0, 0);
-         Entity target = createTarget(10, 10);
-
-         Fixture entityFixture = entity.getComponent(InteractionComponent.class).getFixture();
-         Fixture targetFixture = target.getComponent(InteractionComponent.class).getFixture();
-
-         assertEquals(targetFixture.getFilterData().categoryBits, entityFixture.getFilterData().categoryBits,
-                 "Target fixture layer should match entity fixture layer");
-
-         assertNotEquals(sensorComponent.getInteractionComponent().getFixture(), targetFixture);
-         assertTrue(PhysicsLayer.contains(interactableLayer, targetFixture.getFilterData().categoryBits),
-                 "target fixture should be in the physics layer");
-         assertFalse(sensorComponent.isWithinDistance(targetFixture, 1));
-
-         sensorComponent.onCollisionStart(entityFixture, targetFixture);
-         assertEquals(0, sensorComponent.getNumFixtures(),
-                 "There should be no fixture added to the list");
-         Fixture closestFixture = sensorComponent.getClosestFixture();
-         assertNull(closestFixture, "Closest fixture should be null");
-     }
-
-     @Test
-     void shouldNotDetectBadTarget() {
-         Entity entity = createEntity(0, 0);
-         Entity badTarget = createBadTarget(0, 0);
-
-         Fixture entityFixture = entity.getComponent(InteractionComponent.class).getFixture();
-         Fixture badTargetFixture = badTarget.getComponent(InteractionComponent.class).getFixture();
-
-         sensorComponent.onCollisionStart(entityFixture, badTargetFixture);
-
-         // Should not detect a target with the wrong layer
-         assertEquals(0, sensorComponent.getNumFixtures(),
-                 "There should be no fixture added to the list");
-         Fixture closestFixture = sensorComponent.getClosestFixture();
-         assertNull(closestFixture, "Closest fixture should be null");
-     }
-
-     @Test
-     void shouldRemoveTargetAfterCollisionEnded() {
-         Entity entity = createEntity(0, 0);
-         Entity target = createTarget(0, 0);
-
-         Fixture entityFixture = entity.getComponent(InteractionComponent.class).getFixture();
-         Fixture targetFixture = target.getComponent(InteractionComponent.class).getFixture();
-
-         sensorComponent.onCollisionStart(entityFixture, targetFixture);
-
-         Fixture closestFixture = sensorComponent.getClosestFixture();
-         assertNotNull(closestFixture, "Closest fixture should not be null");
-         assertEquals(targetFixture, closestFixture, "The closest fixture should be the target's fixture");
-
-         // Move the entity out of collision box
-         entity.setPosition(20, 20);
-         sensorComponent.onCollisionEnd(entityFixture, targetFixture);
-
-         closestFixture = sensorComponent.getClosestFixture();
-         assertNull(closestFixture, "Closest fixture should now be null");
-     }
-
-    private Entity createEntity(float x, float y) {
-        Entity entity = new Entity();
-        entity.setPosition(x, y);
-        entity.addComponent(new PhysicsComponent()); // Initialize and add PhysicsComponent
-        entity.addComponent(sensorComponent); // Add SensorComponent
-        InteractionComponent component = new InteractionComponent(PhysicsLayer.INTERACTABLE);
-        entity.addComponent(component);
-        entity.create(); // Ensure components are created
-        return entity;
-    }
-
-    private Entity createTarget(float x, float y) {
-        Entity target = new Entity();
-        target.setPosition(x, y);
-        InteractionComponent interactionComponent = new InteractionComponent(PhysicsLayer.INTERACTABLE);
-        target.addComponent(new PhysicsComponent());
-        target.addComponent(interactionComponent);
-        target.create();
-        return target;
-    }
-
-    private Entity createBadTarget(float x, float y) {
-        Entity target = new Entity();
-        target.setPosition(x, y);
-        InteractionComponent interactionComponent = new InteractionComponent(PhysicsLayer.NPC);
-        target.addComponent(new PhysicsComponent());
-        target.addComponent(interactionComponent);
-        target.create();
-        return target;
+        Entity closestEntity = sensorComponent.getClosestInteractable();
+        assertNull(closestEntity);
     }
 
     @Test
-    void detectMultipleFixtures() {
-        Entity entity = createEntity(0, 0);
-        Entity target1 = createTarget(0.5f, 0.5f);
-        Entity target2 = createTarget(0.7f, 0.7f);
+    void TestSensorOneInteractableInRange() {
+        Entity mockEntity = createEntityAt(0, 1);
+        ServiceLocator.getInteractableService().registerEntity(mockEntity);
 
-        Fixture entityFixture = entity.getComponent(InteractionComponent.class).getFixture();
-        Fixture target1Fixture = target1.getComponent(InteractionComponent.class).getFixture();
-        Fixture target2Fixture = target2.getComponent(InteractionComponent.class).getFixture();
-
-        sensorComponent.onCollisionStart(entityFixture, target1Fixture);
-        sensorComponent.onCollisionStart(entityFixture, target2Fixture);
-
-        assertEquals(2, sensorComponent.getNumFixtures(), "Two fixtures should be detected");
+        Entity closestEntity = sensorComponent.getClosestInteractable();
+        assertNotNull(closestEntity);
+        assertEquals(mockEntity, closestEntity);
     }
 
     @Test
-    void removeAllTargetsAfterCollisionsEnded() {
-        Entity entity = createEntity(0, 0);
-        Entity target1 = createTarget(0.5f, 0.5f);
-        Entity target2 = createTarget(0.7f, 0.7f);
+    void TestSensorTwoInteractableBothOutOfRange() {
+        Entity mockEntity1 = createEntityAt(2, 1);
+        ServiceLocator.getInteractableService().registerEntity(mockEntity1);
 
-        Fixture entityFixture = entity.getComponent(InteractionComponent.class).getFixture();
-        Fixture target1Fixture = target1.getComponent(InteractionComponent.class).getFixture();
-        Fixture target2Fixture = target2.getComponent(InteractionComponent.class).getFixture();
+        Entity mockEntity2 = createEntityAt(1, 1);
+        ServiceLocator.getInteractableService().registerEntity(mockEntity2);
 
-        sensorComponent.onCollisionStart(entityFixture, target1Fixture);
-        sensorComponent.onCollisionStart(entityFixture, target2Fixture);
-
-        assertEquals(2, sensorComponent.getNumFixtures(), "There should be two fixtures detected");
-
-        sensorComponent.onCollisionEnd(entityFixture, target1Fixture);
-        sensorComponent.onCollisionEnd(entityFixture, target2Fixture);
-
-        assertEquals(0, sensorComponent.getNumFixtures(), "All fixtures should be removed after collision ends");
+        Entity closestEntity = sensorComponent.getClosestInteractable();
+        assertNull(closestEntity);
     }
 
     @Test
-    void ignoreTargetOutsideLayer() {
-        Entity entity = createEntity(0, 0);
-        Entity badTarget = createBadTarget(0.5f, 0.5f);
+    void TestSensorTwoInteractableBothInRangeBigToSmall() {
+        Entity mockEntity1 = createEntityAt(0f, 1f);
+        ServiceLocator.getInteractableService().registerEntity(mockEntity1);
 
-        Fixture entityFixture = entity.getComponent(InteractionComponent.class).getFixture();
-        Fixture badTargetFixture = badTarget.getComponent(InteractionComponent.class).getFixture();
+        Entity mockEntity2 = createEntityAt(0.5f, 0f);
+        ServiceLocator.getInteractableService().registerEntity(mockEntity2);
 
-        sensorComponent.onCollisionStart(entityFixture, badTargetFixture);
-
-        assertEquals(0, sensorComponent.getNumFixtures(), "No fixture should be added for target outside the interaction layer");
+        Entity closestEntity = sensorComponent.getClosestInteractable();
+        assertNotNull(closestEntity);
+        assertEquals(mockEntity2, closestEntity);
     }
 
     @Test
-    void shouldIgnoreRemovedFixtureAfterCollisionEnd() {
-        Entity entity = createEntity(0, 0);
-        Entity target = createTarget(0.5f, 0.5f);
+    void TestSensorTwoInteractableBothInRangeSmallToBig() {
+        Entity mockEntity1 = createEntityAt(0.5f, 0f);
+        ServiceLocator.getInteractableService().registerEntity(mockEntity1);
 
-        Fixture entityFixture = entity.getComponent(InteractionComponent.class).getFixture();
-        Fixture targetFixture = target.getComponent(InteractionComponent.class).getFixture();
+        Entity mockEntity2 = createEntityAt(0.5f, 1f);
+        ServiceLocator.getInteractableService().registerEntity(mockEntity2);
 
-        sensorComponent.onCollisionStart(entityFixture, targetFixture);
-        sensorComponent.onCollisionEnd(entityFixture, targetFixture);
-
-        // Ensure the target is removed from the sensor's list
-        assertEquals(0, sensorComponent.getNumFixtures(), "The fixture should be removed after the collision ends");
+        Entity closestEntity = sensorComponent.getClosestInteractable();
+        assertNotNull(closestEntity);
+        assertEquals(mockEntity1, closestEntity);
     }
-    */
+
+    @Test
+    void TestSensorTwoInteractableOneInRange() {
+        Entity mockEntity1 = createEntityAt(1, 1);
+        ServiceLocator.getInteractableService().registerEntity(mockEntity1);
+
+        Entity mockEntity2 = createEntityAt(0.5f, 0f);
+        ServiceLocator.getInteractableService().registerEntity(mockEntity2);
+
+        Entity closestEntity = sensorComponent.getClosestInteractable();
+        assertNotNull(closestEntity);
+        assertEquals(mockEntity2, closestEntity);
+    }
 }
