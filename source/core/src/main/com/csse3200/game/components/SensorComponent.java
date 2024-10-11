@@ -7,12 +7,16 @@ import com.csse3200.game.services.ServiceLocator;
 
 import java.util.Map;
 /**
- * Finds the closest interactable object inside a range of the player
+ * Finds the closest interactable object inside a range of the player's position.
+ * This component is used everytime the player moves to update the nearby
+ * interactable entities.
  */
 public class SensorComponent extends Component {
 
-    Vector2 playerPosition;
-    Map<Entity, Vector2> interactables;
+    private static final float INTERACTION_RANGE = 1.15f;
+
+    private Vector2 playerPosition;
+    private Map<Entity, Vector2> interactables;
 
     @Override
     public void create() {
@@ -20,6 +24,10 @@ public class SensorComponent extends Component {
         interactables = ServiceLocator.getInteractableService().getInteractables();
     }
     
+    /**
+     * Updates the closest interactable object to the player.
+     * @return the closest interactable object to the player.
+     */
     public Entity getClosestInteractable() {
         Entity closestEntity = null;
 
@@ -31,7 +39,7 @@ public class SensorComponent extends Component {
 
             float distance = playerPosition.dst(entityPosition);
 
-            if (distance <= 1.15f && distance < closestDistance) {
+            if (distance <= INTERACTION_RANGE && distance < closestDistance) {
                 closestDistance = distance;
                 closestEntity = entity;
             }
