@@ -415,7 +415,10 @@ public class StationFactory {
             .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
             .addComponent(new InteractionComponent(PhysicsLayer.INTERACTABLE))
             .addComponent(new TooltipsDisplay())
-            .addComponent(new InventoryComponent(1));
+            .addComponent(new InventoryComponent(1))
+            .addComponent(new InventoryDisplayHoverComponent());
+            // Change this handler to the combining one
+            //.addComponent(new StationItemHandlerComponent("benchTop", new ArrayList<>()));
 
     benchTable.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
     benchTable.getComponent(TextureRenderComponent.class).scaleEntity();
