@@ -45,8 +45,6 @@ public class SpeedBootsUpgrade extends UIComponent implements Upgrade {
     private float activeTimeRemaining;
     private Sound countDown;
     private boolean playSound = false;
-    private boolean isPaused = false;
-
 
 
     public SpeedBootsUpgrade() {
@@ -65,24 +63,13 @@ public class SpeedBootsUpgrade extends UIComponent implements Upgrade {
         ServiceLocator.getResourceService().loadTextures(whiteBgTexture);
         ServiceLocator.getResourceService().loadTextures(greenTexture);
         ServiceLocator.getResourceService().loadAll(); // Ensures the texture is loaded
-        // https://mixkit.co/free-sound-effects/countdown/
-        countDown = Gdx.audio.newSound(Gdx.files.internal("sounds/upgrade_count_down.wav"));
+        // https://pixabay.com/sound-effects/mouth-lightening-89463/
+        countDown = Gdx.audio.newSound(Gdx.files.internal("sounds/mouth_lightening_1sec.mp3"));
         layout = new Table();
         layout.setFillParent(true);
         layout.setVisible(isVisible);
 //         setupInputListener();
         ServiceLocator.getRandomComboService().getEvents().addListener("Speed", this::activate);
-        stage.addListener(new InputListener() {
-            @Override
-            public boolean keyDown(InputEvent event, int keycode) {
-                if (keycode == com.badlogic.gdx.Input.Keys.O) {
-                    setPaused(!isPaused);
-                    return true;
-                }
-                return false;
-            }
-        });
-
     }
 
     /**
@@ -123,15 +110,6 @@ public class SpeedBootsUpgrade extends UIComponent implements Upgrade {
         }
     }
 
-    public void setPaused(boolean paused) {
-        this.isPaused = paused;
-        if (paused) {
-            countDown.pause();
-        } else {
-            countDown.resume();
-        }
-    }
-
 
     /**
      * Updates the SpeedBootsUpgrade component each frame, managing the countdown timer
@@ -146,16 +124,10 @@ public class SpeedBootsUpgrade extends UIComponent implements Upgrade {
             activeTimeRemaining -= gameTime.getDeltaTime() * 1000; // Calculate speed boot duration
             speedMeter.setValue((activeTimeRemaining / (float) BOOST_DURATION)); // Update progress bar
 
-            if (activeTimeRemaining <= 4000 && !playSound) {
+            if (activeTimeRemaining <= 800 && !playSound) {
                 long countDownId = countDown.play();
-                countDown.setVolume(countDownId, 0.05f);
+                countDown.setVolume(countDownId, 0.2f);
                 playSound = true;
-            }
-
-            if (ServiceLocator.getTimeSource().isPaused()) {
-                countDown.pause();
-            } else {
-                countDown.resume();
             }
 
             // Check if boost has expired
