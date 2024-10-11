@@ -4,9 +4,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.SensorComponent;
-import com.csse3200.game.components.TooltipsDisplay;
 import com.csse3200.game.components.maingame.CheckWinLoseComponent;
-import com.csse3200.game.components.player.InteractionComponent2;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.components.player.InventoryDisplay;
 import com.csse3200.game.components.player.PlayerActions;
@@ -21,7 +19,6 @@ import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.PhysicsUtils;
 import com.csse3200.game.physics.components.ColliderComponent;
 import com.csse3200.game.physics.components.HitboxComponent;
-import com.csse3200.game.physics.components.InteractionComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
@@ -80,8 +77,7 @@ public class PlayerFactory {
             .addComponent(animator)
             .addComponent(new PlayerAnimationController())
             .addComponent(new PlayerStatsDisplay())
-            .addComponent(new InteractionComponent2())
-            //.addComponent(new InteractionComponent(PhysicsLayer.INTERACTABLE))
+            .addComponent(new SensorComponent())
             .addComponent(new CheckWinLoseComponent(55, 55));
 
     player.scaleHeight(1.25f);

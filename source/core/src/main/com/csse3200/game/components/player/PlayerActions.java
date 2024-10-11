@@ -12,6 +12,7 @@ import com.csse3200.game.physics.BodyUserData;
 import com.csse3200.game.components.items.PlateComponent;
 import com.csse3200.game.components.station.FireExtinguisherHandlerComponent;
 import com.csse3200.game.components.TooltipsDisplay;
+import com.csse3200.game.physics.components.InteractionComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.services.InteractableService;
 import com.csse3200.game.services.ServiceLocator;
@@ -28,16 +29,14 @@ public class PlayerActions extends Component {
   private PhysicsComponent physicsComponent;
   private Vector2 walkDirection = Vector2.Zero.cpy();
   private boolean moving = false;
-  //private SensorComponent interactionSensor;
+  private SensorComponent sensor;
   private InventoryComponent playerInventory;
   private InventoryDisplay displayInventory;
-  private InteractionComponent2 interactionComponent2;
 
   @Override
   public void create() {
-    interactionComponent2 = entity.getComponent(InteractionComponent2.class);
     physicsComponent = entity.getComponent(PhysicsComponent.class);
-    //interactionSensor = entity.getComponent(SensorComponent.class);
+    sensor = entity.getComponent(SensorComponent.class);
     playerInventory = entity.getComponent(InventoryComponent.class);
     displayInventory = entity.getComponent(InventoryDisplay.class);
     entity.getEvents().addListener("walk", this::walk);
@@ -110,7 +109,7 @@ public class PlayerActions extends Component {
    * Triggers an interaction event. It holds the logic in how to interact with a given station
    */
   void interact(String type) {
-    Entity closestEntity = interactionComponent2.getClosestInteractable();
+    Entity closestEntity = sensor.getClosestInteractable();
     
     closestEntity.getEvents().trigger("Station Interaction", playerInventory, displayInventory, type);
   }
