@@ -28,6 +28,7 @@ public class PlayerActions extends Component {
   private SensorComponent interactionSensor;
   private InventoryComponent playerInventory;
   private InventoryDisplay displayInventory;
+  private Fixture oldInteractable;
 
   @Override
   public void create() {
@@ -76,6 +77,19 @@ public class PlayerActions extends Component {
       Vector2 objectPosition = interactable.getBody().getPosition();  // Get object position
       String interactionKey = "Press E";
       String itemName = "to interact";
+
+      if (oldInteractable == null) {
+        oldInteractable = interactable;
+      }
+
+      if (oldInteractable != null && oldInteractable.getBody().getPosition() != objectPosition) {
+        Entity oldStation = ((BodyUserData) oldInteractable.getBody().getUserData()).entity;
+        oldStation.getEvents().trigger("hideToolTip");
+
+        Entity station = ((BodyUserData) interactable.getBody().getUserData()).entity;
+        station.getEvents().trigger("showToolTip");
+        oldInteractable = interactable;
+      }
       // Create a TooltipInfo object with the text and position
       TooltipsDisplay.TooltipInfo tooltipInfo = new TooltipsDisplay.TooltipInfo(interactionKey + " " + itemName, objectPosition);
 
@@ -83,6 +97,7 @@ public class PlayerActions extends Component {
       entity.getEvents().trigger("showTooltip", tooltipInfo);
 
     } else {
+
       entity.getEvents().trigger("hideTooltip");
     }
   }
@@ -126,6 +141,7 @@ public class PlayerActions extends Component {
       }
       // Logic for what interaction even to call on the station
       station.getEvents().trigger("Station Interaction", playerInventory, displayInventory, type);
+
     }
   }
 
