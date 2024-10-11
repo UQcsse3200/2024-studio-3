@@ -1,6 +1,7 @@
 package com.csse3200.game.entities.factories;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.TooltipsDisplay;
 import com.csse3200.game.components.maingame.CheckWinLoseComponent;
@@ -82,11 +83,13 @@ public class PlayerFactory {
             .addComponent(new PlayerStatsDisplay())
             .addComponent(new InteractionComponent(PhysicsLayer.INTERACTABLE))
             .addComponent(new CheckWinLoseComponent(55, 55))
-            .addComponent(new SensorComponent(PhysicsLayer.INTERACTABLE, 3f));
+            .addComponent(new SensorComponent(PhysicsLayer.INTERACTABLE, 5f));
 
     player.scaleHeight(1.25f);
-    PhysicsUtils.setScaledCollider(player, 0.1f, 0.3f);
+    PhysicsUtils.setScaledCollider(player, 0.5f, 0.5f);
     player.getComponent(ColliderComponent.class).setDensity(1.5f);
+    player.getComponent(HitboxComponent.class).setAsBox(player.getScale());
+    player.getComponent(ColliderComponent.class).setAsBox(new Vector2(0.3f, 0.3f), player.getCenterPosition().sub(new Vector2(0f, 0.2f)));
 
     ServiceLocator.getPlayerService().getEvents().trigger("playerCreated", player);
 
