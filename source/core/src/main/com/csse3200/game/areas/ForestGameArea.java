@@ -4,7 +4,6 @@ import com.csse3200.game.components.moral.Decision;
 import com.csse3200.game.components.npc.PersonalCustomerEnums;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.entities.benches.Bench;
-import com.csse3200.game.entities.configs.PlayerConfig;
 
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -22,19 +21,16 @@ import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.areas.terrain.TerrainFactory.TerrainType;
-import com.csse3200.game.areas.map.BenchLayout;
 import com.csse3200.game.components.gamearea.GameAreaDisplay;
 import com.csse3200.game.components.maingame.EndDayDisplay;
 import com.csse3200.game.components.moral.MoralDecision;
 import com.csse3200.game.components.upgrades.UpgradesDisplay;
 import com.csse3200.game.entities.Entity;
 
-import com.csse3200.game.entities.factories.ItemFactory;
 import com.csse3200.game.entities.factories.NPCFactory;
 import com.csse3200.game.entities.factories.ObstacleFactory;
 import com.csse3200.game.entities.factories.PlateFactory;
 import com.csse3200.game.entities.factories.PlayerFactory;
-import com.csse3200.game.entities.factories.StationFactory;
 
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
@@ -43,11 +39,7 @@ import com.csse3200.game.utils.math.GridPoint2Utils;
 /** Forest area for the demo game with trees, a player, and some enemies. */
 public class ForestGameArea extends GameArea {
   private static final Logger logger = LoggerFactory.getLogger(ForestGameArea.class);
-  private static final int NUM_TREES = 7;
-  private static final int NUM_GHOSTS = 2;
-  private static final int NUM_CUSTOMERS_BASE = 1;
   private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(5, 2);
-  private static final float WALL_WIDTH = 0.1f;
   private static final String[] forestTextures = {
     "images/special_NPCs/boss.png",
     "images/special_NPCs/penguin2.png",
@@ -211,34 +203,16 @@ public class ForestGameArea extends GameArea {
   private final GdxGame.LevelType level;
 
   private Entity player;
-  private CheckWinLoseComponent winLoseComponent;  // Reference to CheckWinLoseComponent
-
-
-  // Define the win/lose conditions
-  private int winAmount = 60;      // Example value for winning gold amount
-  private int loseThreshold = 50;   // Example value for losing threshold
-
-  public enum personalCustomerEnums{
-    HANK,
-    LEWIS,
-    SILVER,
-    JOHN,
-    MOONKI,
-    BASIC_CHICKEN,
-    BASIC_SHEEP
-  }
 
   /**
    * Initialise this ForestGameArea to use the provided TerrainFactory.
    * @param terrainFactory TerrainFactory used to create the terrain for the GameArea.
-   * @requires terrainFactory != null
    */
   public ForestGameArea(TerrainFactory terrainFactory, GdxGame.LevelType level, UpgradesDisplay upgradesDisplay) {
     super();
     this.level = level;
     this.terrainFactory = terrainFactory;
     this.upgradesDisplay = upgradesDisplay;
-    //this.textDisplay = textDisplay;
 
     ServiceLocator.registerGameArea(this);
   }
@@ -248,7 +222,7 @@ public class ForestGameArea extends GameArea {
   public void create() {
     // call load function based on the level argument
     // return list of items to spawn based on the load function
-    // Baaed on lsit of items to spawn, spawn the items
+    // Baaed on list of items to spawn, spawn the items
     loadAssets();
     displayUI();
     spawnTerrain();
@@ -261,27 +235,19 @@ public class ForestGameArea extends GameArea {
     }
     for (Entity station : result.getStations()) {
       spawnEntity(station);
-        //station.setPosition(station.getPosition().x, station.getPosition().y);
     }
 
-      //ServiceLocator.getMapLayout().getEvents().trigger("load", "level1");
 
     new_border();
-    //ticketDetails();
-    spawnStations();
     customerSpawnController = spawnCustomerController();
     createMoralScreen();
     createMoralSystem();
-    //spawnplates
-      spawnStackPlate(5); //testplate spawn
+    spawnStackPlate(5); //testplate spawn
 
-      //spawnPlatewithMeal();
-      player = spawnPlayer();
-      ServiceLocator.getPlayerService().registerPlayer(player);
-      //ServiceLocator.getSaveLoadService().setCombatStatsComponent(player.getComponent(CombatStatsComponent.class));
-      ServiceLocator.getSaveLoadService().load();
-      ServiceLocator.getDayNightService().getEvents().addListener("upgrade", () -> {
-          spawnPenguin(upgradesDisplay);});
+    player = spawnPlayer();
+    ServiceLocator.getPlayerService().registerPlayer(player);
+    ServiceLocator.getSaveLoadService().load();
+    ServiceLocator.getDayNightService().getEvents().addListener("upgrade", () -> spawnPenguin(upgradesDisplay));
 
     // Check and trigger win/loss state
     ServiceLocator.getDayNightService().getEvents().addListener("endGame", this::checkEndOfGameState);
@@ -294,7 +260,6 @@ public class ForestGameArea extends GameArea {
    * Checks the player's game state using the CheckWinLoseComponent and determines whether
    * to trigger a win or loss cutscene. If the player has won, it further checks the moral
    * decisions to determine whether to trigger the "good" or "bad" ending.
-   *
    * The function performs the following:
    * 1. If the player has lost (gameState is "LOSE"), it triggers the "loseEnd" event and
    *    displays a losing message to the player.
@@ -328,13 +293,11 @@ public class ForestGameArea extends GameArea {
         }
       }
 
-      if (hasBadDecisions) {
-        createTextBox("You *oink* amazing critter! You're a master! " +
+      createTextBox("You *oink* amazing critter! You're a master! " +
                 "Enjoy a 40c raise for your efforts!");
+      if (hasBadDecisions) {
         ServiceLocator.getEntityService().getEvents().trigger("badEnd");
       } else {
-        createTextBox("You *oink* amazing critter! You're a master! " +
-                "Enjoy a 40c raise for your efforts!");
         ServiceLocator.getEntityService().getEvents().trigger("goodEnd");
       }
     }
@@ -355,10 +318,7 @@ public class ForestGameArea extends GameArea {
     terrain = terrainFactory.createTerrain(TerrainType.KITCHEN_DEMO);
     spawnEntity(new Entity().addComponent(terrain));
 
-    // Terrain walls
-    float tileSize = terrain.getTileSize();
     GridPoint2 tileBounds = terrain.getMapBounds(0);
-    Vector2 worldBounds = new Vector2(tileBounds.x * tileSize, tileBounds.y * tileSize);
 
     // Left
     spawnEntityAt(
@@ -387,7 +347,6 @@ public class ForestGameArea extends GameArea {
    */
   private void spawnWall() {
     GridPoint2 coords;
-    Vector2 pos;
 
     for (int i=0;i<12;i++) {
       coords = new GridPoint2(i,7);
@@ -407,7 +366,6 @@ public class ForestGameArea extends GameArea {
    */
   private void new_border(){
     GridPoint2 coords = new GridPoint2(0,0);
-    Vector2 pos;
 
     for (int i=0;i<14;i++) {
         Entity top_border = ObstacleFactory.spawnBorderTile();
@@ -446,158 +404,12 @@ public class ForestGameArea extends GameArea {
 
   }
 
-  /**
-   * Renders a black border around the restaurant
-   */
-
-
-  private void spawnStations() {
-    int a = 0;
-  }
-
-  /**
-   * spawn a bench
-   *         note: coordinates begin at bottom left of screen
-   */
-  private void spawnBench() {
-    //Spawn a flame, this is temporary and for testing purposes
-    GridPoint2 flamePos = new GridPoint2(1,1);
-    Entity flame = StationFactory.createFlame();
-    spawnEntityAt(flame, flamePos, false, false);
-
-    GridPoint2 fireExtinguisherPos = new GridPoint2(3, 1);
-    Entity fireExtinguisher = StationFactory.createFireExtinguisher();
-    spawnEntityAt(fireExtinguisher, fireExtinguisherPos, false, false);
-  }
-  /**
-   * Spawns benches around the restaurant
-   */
-  private void spawnBenches() {
-    for (Bench bench : BenchLayout.levelOne()) {
-      spawnEntity(bench);
-      bench.setPosition(bench.x, bench.y);
-    }
-  }
-
   private Entity spawnPlayer() {
     Entity newPlayer;
-    PlayerConfig playerConfig = new PlayerConfig();
     newPlayer = PlayerFactory.createPlayer();
     spawnEntityAt(newPlayer, PLAYER_SPAWN, true, true);
     newPlayer.setPosition(PLAYER_SPAWN.x, 2.5f);
     return newPlayer;
-  }
-
-
-  /**
-   * Spawn a fish item.
-   * @param cookedLevel - The level the fish is cooked at, can be "raw", "cooked" or "burnt".
-   * @return A fish entity.
-   */
-  private Entity spawnFish(String cookedLevel) {
-    Entity newFish = ItemFactory.createFish(cookedLevel);
-    spawnEntityAt(newFish, new GridPoint2(15, 15), true, true);
-    return newFish;
-  }
-
-  /**
-   * Spawn a beef item.
-   * @param cookedLevel - The level the beef is cooked at, can be "raw", "cooked" or "burnt".
-   * @return A beef entity.
-   */
-  private Entity spawnBeef(String cookedLevel) {
-    Entity newBeef = ItemFactory.createBeef(cookedLevel);
-    spawnEntityAt(newBeef, new GridPoint2(4, 4), true, true);
-    newBeef.setScale(0.5f,0.5f);
-    newBeef.setPosition(9.2f, 8);
-    return newBeef;
-  }
-
-  /**
-   * Spawn a banana item.
-   * @param choppedLevel - The level the banana is chopped at, can be "raw" or "chopped".
-   * @return A banana entity.
-   */
-  private Entity spawnBanana(String choppedLevel) {
-    Entity newBanana = ItemFactory.createBanana(choppedLevel);
-    spawnEntityAt(newBanana, new GridPoint2(3, 3), true, true);
-    newBanana.setScale(0.5f,0.5f);
-    return newBanana;
-  }
-
-  /**
-   * Spawn a tomato item.
-   * @param choppedLevel - The level the tomato is chopped at, can be "raw" or "chopped".
-   * @return A tomato entity.
-   */
-  private Entity spawnTomato(String choppedLevel) {
-    Entity newTomato = ItemFactory.createTomato(choppedLevel);
-    spawnEntityAt(newTomato, new GridPoint2(8, 8), true, true);
-    newTomato.setScale(0.5f,0.5f);
-    return newTomato;
-  }
-
-  /**
-   * Spawn a cucumber item.
-   * @param choppedLevel - The level the cucumber is chopped at, can be "raw" or "chopped".
-   * @return A cucumber entity.
-   */
-  private Entity spawnCucumber(String choppedLevel) {
-    Entity newCucumber = ItemFactory.createCucumber(choppedLevel);
-    spawnEntityAt(newCucumber, new GridPoint2(9, 9), true, true);
-    newCucumber.setScale(0.5f,0.5f);
-    return newCucumber;
-  }
-
-  /**
-   * Spawn a strawberry item.
-   * @param choppedLevel - The level the strawberry is chopped at, can be "raw" or "chopped".
-   * @return A strawberry entity.
-   */
-  private Entity spawnStrawberry(String choppedLevel) {
-    Entity newStrawberry = ItemFactory.createStrawberry(choppedLevel);
-    spawnEntityAt(newStrawberry, new GridPoint2(6, 5), false, true);
-    newStrawberry.setScale(0.5f,0.5f);
-    newStrawberry.setPosition(7.3f, 5f);
-
-    return newStrawberry;
-  }
-
-  /**
-   * Spawn a lettuce item.
-   * @param choppedLevel - The level the lettuce is chopped at, can be "raw" or "chopped".
-   * @return A lettuce entity.
-   */
-  private Entity spawnLettuce(String choppedLevel) {
-    Entity newLettuce = ItemFactory.createLettuce(choppedLevel);
-    spawnEntityAt(newLettuce, new GridPoint2(5, 4), true, true);
-    newLettuce.setScale(0.5f,0.5f);
-    newLettuce.setPosition(9 + 0.2f, 9);
-    return newLettuce;
-  }
-
-  /**
-   * Spawn a chocolate item.
-   * @param choppedLevel - The level the chocolate is chopped at, can be "raw" or "chopped".
-   * @return A chocolate entity.
-   */
-  private Entity spawnChocolate(String choppedLevel) {
-    Entity newChocolate = ItemFactory.createChocolate(choppedLevel);
-    spawnEntityAt(newChocolate, new GridPoint2(4, 8), true, true);
-    newChocolate.setScale(0.5f,0.5f);
-    return newChocolate;
-  }
-
-  /**
-   * Spawn an Açaí item.
-   * @param choppedLevel - The level the Açaí is chopped at, can be "raw" or "chopped".
-   * @return A chocolate entity.
-   */
-  private Entity spawnAcai(String choppedLevel) {
-    Entity newAcai = ItemFactory.createAcai(choppedLevel);
-    spawnEntityAt(newAcai, new GridPoint2(4, 8), true, true);
-    newAcai.setScale(0.65f,0.65f);
-    return newAcai;
   }
 
   private Entity spawnCustomerController() {
@@ -652,26 +464,6 @@ public class ForestGameArea extends GameArea {
   private void spawnBasicSheep() {
     spawnBasicCustomer("Basic Sheep");
   }
-
-//  private void spawnGhosts() {
-//    GridPoint2 minPos = new GridPoint2(0, 0);
-//    GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
-//
-//    for (int i = 0; i < NUM_GHOSTS; i++) {
-//      GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
-//      Entity ghost = NPCFactory.createGhost(player);
-//      spawnEntityAt(ghost, randomPos, true, true);
-//    }
-//  }
-//
-//  private void spawnGhostKing() {
-//    GridPoint2 minPos = new GridPoint2(0, 0);
-//    GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
-//
-//    GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
-//    Entity ghostKing = NPCFactory.createGhostKing(player);
-//    spawnEntityAt(ghostKing, randomPos, true, true);
-//  }
 
   /**
    * Spawn Stack Plate item.
