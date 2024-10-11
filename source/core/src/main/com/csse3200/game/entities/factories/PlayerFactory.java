@@ -3,16 +3,15 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.components.CombatStatsComponent;
+import com.csse3200.game.components.SensorComponent;
 import com.csse3200.game.components.TooltipsDisplay;
 import com.csse3200.game.components.maingame.CheckWinLoseComponent;
-import com.csse3200.game.components.ordersystem.MainGameOrderTicketDisplay;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.components.player.InventoryDisplay;
-import com.csse3200.game.components.player.PlayerItemSpriteManager;
 import com.csse3200.game.components.player.PlayerActions;
+import com.csse3200.game.components.player.PlayerAnimationController;
+import com.csse3200.game.components.player.PlayerItemSpriteManager;
 import com.csse3200.game.components.player.PlayerStatsDisplay;
-import com.csse3200.game.components.player.*;
-import com.csse3200.game.components.SensorComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.configs.PlayerConfig;
 import com.csse3200.game.files.FileLoader;
@@ -89,7 +88,7 @@ public class PlayerFactory {
     PhysicsUtils.setScaledCollider(player, 0.5f, 0.5f);
     player.getComponent(ColliderComponent.class).setDensity(1.5f);
     player.getComponent(HitboxComponent.class).setAsBox(player.getScale());
-    player.getComponent(ColliderComponent.class).setAsBox(new Vector2(0.3f, 0.3f), player.getCenterPosition().sub(new Vector2(0f, 0.2f)));
+    player.getComponent(ColliderComponent.class).setAsBox(new Vector2(0.03f, 0.03f), player.getCenterPosition().sub(new Vector2(0f, 0.32f)));
 
     ServiceLocator.getPlayerService().getEvents().trigger("playerCreated", player);
 
