@@ -42,6 +42,8 @@ public class GdxGame extends Game {
 
     Gdx.gl.glClearColor(234f/255f, 221/255f, 202/255f, 1);
 
+    ServiceLocator.registerGame(this);
+
     setScreen(ScreenType.MAIN_MENU);
   }
 
