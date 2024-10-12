@@ -1,6 +1,6 @@
 package com.csse3200.game.components.upgrades;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -63,8 +63,45 @@ public class RageUpgradeTest {
     @Test
     void testRageOverlayPopsUP() {
         rageUpgrade.activateRageMode();
-        assertTrue(rageUpgrade.isOverlayVisible(), "The red overlay should be visible when rage mode is active.");
-        assertTrue(rageUpgrade.layout.isVisible(), "The layout should be visible when rage mode is active.");
+        assertTrue(rageUpgrade.isOverlayVisible());
+        assertTrue(rageUpgrade.layout.isVisible());
+    }
+
+    @Test
+    void testRageOverlayCloses() {
+        rageUpgrade.activateRageMode();
+        rageUpgrade.deactivateRageMode();
+        assertFalse(rageUpgrade.isOverlayVisible());
+        assertFalse(rageUpgrade.layout.isVisible());
+    }
+
+    @Test
+    void testRageMeterDepletesIn30Seconds() {
+        RageUpgrade spyRageUpgrade = Mockito.spy(rageUpgrade);
+        spyRageUpgrade.activateRageMode();
+
+        when(gameTime.getDeltaTime()).thenReturn(1f);
+        for (int i = 0; i < 30; i++) {
+            spyRageUpgrade.update();
+        }
+
+        assertEquals(0f, spyRageUpgrade.rageMeter.getValue());
+        verify(spyRageUpgrade).deactivateRageMode();
+    }
+
+    @Test
+    void testRageMeterFillsIn90Seconds() {
+        RageUpgrade spyRageUpgrade = Mockito.spy(rageUpgrade);
+        spyRageUpgrade.rageMeter.setValue(0f);
+        spyRageUpgrade.deactivateRageMode();
+
+        when(gameTime.getDeltaTime()).thenReturn(1f);
+        for (int i = 0; i < 90; i++) {
+            spyRageUpgrade.update();
+        }
+
+        assertEquals(1f, spyRageUpgrade.rageMeter.getValue());
+        assertFalse(spyRageUpgrade.isRageFilling());
     }
 
     @AfterEach

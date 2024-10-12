@@ -204,4 +204,8 @@ public class RageUpgrade extends UIComponent implements Upgrade {
         return isOverlayVisible;
     }
 
+    public boolean isRageFilling() {
+        return isRageFilling;
+    }
+
 }
