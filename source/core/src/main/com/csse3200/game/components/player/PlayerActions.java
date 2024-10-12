@@ -83,9 +83,15 @@ public class PlayerActions extends Component {
       }
 
       if (oldInteractable != null && oldInteractable.getBody().getPosition() != objectPosition) {
+        if ((BodyUserData) interactable.getBody().getUserData() == null) {
+          return;
+        }
         Entity oldStation = ((BodyUserData) oldInteractable.getBody().getUserData()).entity;
         oldStation.getEvents().trigger("hideToolTip");
 
+        if ((BodyUserData) interactable.getBody().getUserData() == null) {
+          return;
+        }
         Entity station = ((BodyUserData) interactable.getBody().getUserData()).entity;
         station.getEvents().trigger("showToolTip");
         oldInteractable = interactable;
