@@ -42,6 +42,7 @@ public class TutorialScreenDisplay extends UIComponent {
     private static final int MAX_TUTORIAL_STEP = 4;
     int  i = 0;
 
+
     public TutorialScreenDisplay(GdxGame game) {
 
         this.game = game;
