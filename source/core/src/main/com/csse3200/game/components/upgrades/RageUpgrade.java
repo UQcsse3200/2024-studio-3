@@ -29,9 +29,9 @@ public class RageUpgrade extends UIComponent implements Upgrade {
     private final GameTime timesource;
 
     private boolean isOverlayVisible;
-    private Table layout;
+    public Table layout;
 
-    private ProgressBar rageMeter;
+    public ProgressBar rageMeter;
     private float rageTimeRemaining;
     private final float rageTime = 30f;
     private boolean isRageActive = false;
@@ -146,9 +146,9 @@ public class RageUpgrade extends UIComponent implements Upgrade {
     }
 
     public void deactivate() {
-            // entity.getEvents().trigger("rageModeOff");
-        }
-    
+        // entity.getEvents().trigger("rageModeOff");
+    }
+
     /**
      * Deactivates Rage mode by triggering related events, playing power down sound,
      * hiding the overlay, and initiating the rage meter refill process.
@@ -197,5 +197,11 @@ public class RageUpgrade extends UIComponent implements Upgrade {
 
     @Override
     public void setStage(Stage mock) {
+        this.stage = mock;
     }
+
+    public boolean isOverlayVisible() {
+        return isOverlayVisible;
+    }
+
 }
