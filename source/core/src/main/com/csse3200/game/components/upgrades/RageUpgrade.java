@@ -117,7 +117,7 @@ public class RageUpgrade extends UIComponent implements Upgrade {
                 if (keycode == com.badlogic.gdx.Input.Keys.R) {
                     if (isRageActive) {
                         deactivateRageMode();
-                    } else if (rageMeter.getValue() == 1f){
+                    } else {
                         activateRageMode();
                     }
                     return true;
@@ -135,14 +135,16 @@ public class RageUpgrade extends UIComponent implements Upgrade {
      * displaying the overlay, and initializing the rage timer.
      */
     public void activateRageMode() {
-        ServiceLocator.getEntityService().getEvents().trigger("rageModeOn");
-        rageSoundId = rageSound.play();
-        rageSound.setVolume(rageSoundId, 0.25f);
+        if (rageMeter.getValue() == 1f) {
+            ServiceLocator.getEntityService().getEvents().trigger("rageModeOn");
+            rageSoundId = rageSound.play();
+            rageSound.setVolume(rageSoundId, 0.25f);
 
-        isRageActive = true;
-        isOverlayVisible = true;
-        layout.setVisible(true);
-        rageTimeRemaining = rageTime;
+            isRageActive = true;
+            isOverlayVisible = true;
+            layout.setVisible(true);
+            rageTimeRemaining = rageTime;
+        }
     }
 
     public void deactivate() {
@@ -210,6 +212,14 @@ public class RageUpgrade extends UIComponent implements Upgrade {
 
     public boolean isRageActive() {
         return isRageActive;
+    }
+
+    public float getRageFillTime() {
+        return rageFillTime;
+    }
+
+    public float getRageFillTimeRemaining() {
+        return rageFillTimeRemaining;
     }
 
 }

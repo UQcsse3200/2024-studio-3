@@ -113,6 +113,31 @@ public class RageUpgradeTest {
         assertFalse(spyRageUpgrade.isRageFilling());
     }
 
+    @Test
+    void testRageDeactivationBeforeDepletion() {
+        // Wanted to do parameterised testing here but need to ask about how to modify build.gradle for
+        // @ParamterizedTest annotation
+        rageUpgrade.rageMeter.setValue(0.5f);
+        rageUpgrade.deactivateRageMode();
+
+        // 45 seconds
+        float expectedFillTimeRemaining = (1 - rageUpgrade.rageMeter.getValue()) * rageUpgrade.getRageFillTime();
+        assertEquals(expectedFillTimeRemaining, rageUpgrade.getRageFillTimeRemaining(), 0.001f);
+
+        when(gameTime.getDeltaTime()).thenReturn(20f);
+        rageUpgrade.update();
+        float expectedRageMeterValue =
+                (rageUpgrade.getRageFillTime() - rageUpgrade.getRageFillTimeRemaining()) / rageUpgrade.getRageFillTime();
+        assertEquals(expectedRageMeterValue, rageUpgrade.rageMeter.getValue(), 0.01f);
+    }
+
+    @Test
+    void testCannotActivateRageModeWhileFilling() {
+        rageUpgrade.rageMeter.setValue(0.5f);
+        rageUpgrade.activateRageMode();
+        assertFalse(rageUpgrade.isRageActive());
+    }
+
     @AfterEach
     void tearDown() {
         ServiceLocator.clear();
