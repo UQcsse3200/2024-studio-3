@@ -208,4 +208,8 @@ public class RageUpgrade extends UIComponent implements Upgrade {
         return isRageFilling;
     }
 
+    public boolean isRageActive() {
+        return isRageActive;
+    }
+
 }

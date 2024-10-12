@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 import com.csse3200.game.entities.EntityService;
+import com.csse3200.game.events.EventHandler;
 import com.csse3200.game.extensions.GameExtension;
 import com.csse3200.game.rendering.RenderService;
 import com.csse3200.game.services.*;
@@ -33,6 +34,7 @@ public class RageUpgradeTest {
     @Mock Texture textureMock;
     @Mock Table mockLayout;
     @Mock ProgressBar mockRageMeter;
+    @Mock EventHandler eventHandler;
     RandomComboService randomComboService;
     EntityService entityService;
     private RageUpgrade rageUpgrade;
@@ -40,7 +42,7 @@ public class RageUpgradeTest {
     @BeforeEach
     void setUp() {
         randomComboService = new RandomComboService();
-        entityService = new EntityService();
+        entityService = spy(new EntityService(eventHandler));
 
         ServiceLocator.registerRandomComboService(randomComboService);
         ServiceLocator.registerRenderService(renderService);
@@ -63,21 +65,27 @@ public class RageUpgradeTest {
     @Test
     void testRageOverlayPopsUP() {
         rageUpgrade.activateRageMode();
+        verify(eventHandler).trigger("rageModeOn");
+
         assertTrue(rageUpgrade.isOverlayVisible());
         assertTrue(rageUpgrade.layout.isVisible());
+        assertTrue(rageUpgrade.isRageActive());
     }
 
     @Test
     void testRageOverlayCloses() {
         rageUpgrade.activateRageMode();
         rageUpgrade.deactivateRageMode();
+
+        verify(eventHandler).trigger("rageModeOff");
         assertFalse(rageUpgrade.isOverlayVisible());
         assertFalse(rageUpgrade.layout.isVisible());
+        assertFalse(rageUpgrade.isRageActive());
     }
 
     @Test
     void testRageMeterDepletesIn30Seconds() {
-        RageUpgrade spyRageUpgrade = Mockito.spy(rageUpgrade);
+        RageUpgrade spyRageUpgrade = spy(rageUpgrade);
         spyRageUpgrade.activateRageMode();
 
         when(gameTime.getDeltaTime()).thenReturn(1f);
@@ -87,6 +95,7 @@ public class RageUpgradeTest {
 
         assertEquals(0f, spyRageUpgrade.rageMeter.getValue());
         verify(spyRageUpgrade).deactivateRageMode();
+        assertTrue(spyRageUpgrade.isRageFilling());
     }
 
     @Test
