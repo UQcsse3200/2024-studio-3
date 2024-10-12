@@ -510,6 +510,10 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Clears all decisions from the list.</div>
 </dd>
+<dt><a href="com/csse3200/game/services/InteractableService.html#clearEntities()" class="member-name-link">clearEntities()</a> - Method in class com.csse3200.game.services.<a href="com/csse3200/game/services/InteractableService.html" title="class in com.csse3200.game.services">InteractableService</a></dt>
+<dd>
+<div class="block">Clear all entities from the interactables map</div>
+</dd>
 <dt><a href="com/csse3200/game/components/station/IngredientStationHandlerComponent.html#collectionComponent" class="member-name-link">collectionComponent</a> - Variable in class com.csse3200.game.components.station.<a href="com/csse3200/game/components/station/IngredientStationHandlerComponent.html" title="class in com.csse3200.game.components.station">IngredientStationHandlerComponent</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/station/StationCollectionComponent.html#collectItem(java.lang.String)" class="member-name-link">collectItem(String)</a> - Method in class com.csse3200.game.components.station.<a href="com/csse3200/game/components/station/StationCollectionComponent.html" title="class in com.csse3200.game.components.station">StationCollectionComponent</a></dt>
@@ -2147,10 +2151,10 @@ loadScripts(document, 'script');</script>
 </dd>
 <dt><a href="com/csse3200/game/components/CustomerSensorComponent.html#getClosestCustomer()" class="member-name-link">getClosestCustomer()</a> - Method in class com.csse3200.game.components.<a href="com/csse3200/game/components/CustomerSensorComponent.html" title="class in com.csse3200.game.components">CustomerSensorComponent</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="com/csse3200/game/components/SensorComponent.html#getClosestFixture()" class="member-name-link">getClosestFixture()</a> - Method in class com.csse3200.game.components.<a href="com/csse3200/game/components/SensorComponent.html" title="class in com.csse3200.game.components">SensorComponent</a></dt>
-<dd>&nbsp;</dd>
-<dt><a href="com/csse3200/game/components/SensorComponent.html#getClosestFixtures()" class="member-name-link">getClosestFixtures()</a> - Method in class com.csse3200.game.components.<a href="com/csse3200/game/components/SensorComponent.html" title="class in com.csse3200.game.components">SensorComponent</a></dt>
-<dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/components/SensorComponent.html#getClosestInteractable()" class="member-name-link">getClosestInteractable()</a> - Method in class com.csse3200.game.components.<a href="com/csse3200/game/components/SensorComponent.html" title="class in com.csse3200.game.components">SensorComponent</a></dt>
+<dd>
+<div class="block">Updates the closest interactable object to the player.</div>
+</dd>
 <dt><a href="com/csse3200/game/components/items/ItemTimerComponent.html#getCompletionPercent()" class="member-name-link">getCompletionPercent()</a> - Method in class com.csse3200.game.components.items.<a href="com/csse3200/game/components/items/ItemTimerComponent.html" title="class in com.csse3200.game.components.items">ItemTimerComponent</a></dt>
 <dd>
 <div class="block">Gets the percentage completion of the timer.</div>
@@ -2469,12 +2473,15 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Gets the current Player stats display</div>
 </dd>
+<dt><a href="com/csse3200/game/services/InteractableService.html#getInteractables()" class="member-name-link">getInteractables()</a> - Method in class com.csse3200.game.services.<a href="com/csse3200/game/services/InteractableService.html" title="class in com.csse3200.game.services">InteractableService</a></dt>
+<dd>
+<div class="block">Get the interactables map which returns an Entity and its position as
+ entries in a mao</div>
+</dd>
+<dt><a href="com/csse3200/game/services/ServiceLocator.html#getInteractableService()" class="member-name-link">getInteractableService()</a> - Static method in class com.csse3200.game.services.<a href="com/csse3200/game/services/ServiceLocator.html" title="class in com.csse3200.game.services">ServiceLocator</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/CustomerSensorComponent.html#getInteractionComponent()" class="member-name-link">getInteractionComponent()</a> - Method in class com.csse3200.game.components.<a href="com/csse3200/game/components/CustomerSensorComponent.html" title="class in com.csse3200.game.components">CustomerSensorComponent</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="com/csse3200/game/components/SensorComponent.html#getInteractionComponent()" class="member-name-link">getInteractionComponent()</a> - Method in class com.csse3200.game.components.<a href="com/csse3200/game/components/SensorComponent.html" title="class in com.csse3200.game.components">SensorComponent</a></dt>
-<dd>
-<div class="block">Getters</div>
-</dd>
 <dt><a href="com/csse3200/game/components/items/IngredientComponent.html#getIsChoppable()" class="member-name-link">getIsChoppable()</a> - Method in class com.csse3200.game.components.items.<a href="com/csse3200/game/components/items/IngredientComponent.html" title="class in com.csse3200.game.components.items">IngredientComponent</a></dt>
 <dd>
 <div class="block">Returns whether the ingredient can be chopped</div>
@@ -2634,8 +2641,6 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Get the total number of customers that have been spawned in the level currently</div>
 </dd>
-<dt><a href="com/csse3200/game/components/SensorComponent.html#getNumFixtures()" class="member-name-link">getNumFixtures()</a> - Method in class com.csse3200.game.components.<a href="com/csse3200/game/components/SensorComponent.html" title="class in com.csse3200.game.components">SensorComponent</a></dt>
-<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/areas/terrain/TerrainTile.html#getObjects()" class="member-name-link">getObjects()</a> - Method in class com.csse3200.game.areas.terrain.<a href="com/csse3200/game/areas/terrain/TerrainTile.html" title="class in com.csse3200.game.areas.terrain">TerrainTile</a></dt>
 <dd>
 <div class="block">Not required for game, unimplemented</div>
@@ -2883,8 +2888,6 @@ loadScripts(document, 'script');</script>
 <dt><a href="com/csse3200/game/ai/movement/MovementController.html#getTarget()" class="member-name-link">getTarget()</a> - Method in interface com.csse3200.game.ai.movement.<a href="com/csse3200/game/ai/movement/MovementController.html" title="interface in com.csse3200.game.ai.movement">MovementController</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/physics/components/PhysicsMovementComponent.html#getTarget()" class="member-name-link">getTarget()</a> - Method in class com.csse3200.game.physics.components.<a href="com/csse3200/game/physics/components/PhysicsMovementComponent.html" title="class in com.csse3200.game.physics.components">PhysicsMovementComponent</a></dt>
-<dd>&nbsp;</dd>
-<dt><a href="com/csse3200/game/components/SensorComponent.html#getTargetLayer()" class="member-name-link">getTargetLayer()</a> - Method in class com.csse3200.game.components.<a href="com/csse3200/game/components/SensorComponent.html" title="class in com.csse3200.game.components">SensorComponent</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/maingame/TextDisplay.html#getText()" class="member-name-link">getText()</a> - Method in class com.csse3200.game.components.maingame.<a href="com/csse3200/game/components/maingame/TextDisplay.html" title="class in com.csse3200.game.components.maingame">TextDisplay</a></dt>
 <dd>
@@ -3292,6 +3295,13 @@ loadScripts(document, 'script');</script>
 </dd>
 <dt><a href="com/csse3200/game/physics/PhysicsLayer.html#INTERACTABLE" class="member-name-link">INTERACTABLE</a> - Static variable in class com.csse3200.game.physics.<a href="com/csse3200/game/physics/PhysicsLayer.html" title="class in com.csse3200.game.physics">PhysicsLayer</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/services/InteractableService.html" class="type-name-link" title="class in com.csse3200.game.services">InteractableService</a> - Class in <a href="com/csse3200/game/services/package-summary.html">com.csse3200.game.services</a></dt>
+<dd>
+<div class="block">Class to register interactable objects to and to call when the player attempts
+ to interact with them.</div>
+</dd>
+<dt><a href="com/csse3200/game/services/InteractableService.html#%3Cinit%3E()" class="member-name-link">InteractableService()</a> - Constructor for class com.csse3200.game.services.<a href="com/csse3200/game/services/InteractableService.html" title="class in com.csse3200.game.services">InteractableService</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/physics/components/InteractionComponent.html" class="type-name-link" title="class in com.csse3200.game.physics.components">InteractionComponent</a> - Class in <a href="com/csse3200/game/physics/components/package-summary.html">com.csse3200.game.physics.components</a></dt>
 <dd>
 <div class="block">A physics component that detects a collision with an interactable object</div>
@@ -3422,10 +3432,6 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/CustomerSensorComponent.html#isWithinDistance(com.badlogic.gdx.physics.box2d.Fixture,float)" class="member-name-link">isWithinDistance(Fixture, float)</a> - Method in class com.csse3200.game.components.<a href="com/csse3200/game/components/CustomerSensorComponent.html" title="class in com.csse3200.game.components">CustomerSensorComponent</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="com/csse3200/game/components/SensorComponent.html#isWithinDistance(com.badlogic.gdx.physics.box2d.Fixture,float)" class="member-name-link">isWithinDistance(Fixture, float)</a> - Method in class com.csse3200.game.components.<a href="com/csse3200/game/components/SensorComponent.html" title="class in com.csse3200.game.components">SensorComponent</a></dt>
-<dd>
-<div class="block">Determines whether the distance to the fixture is within the required distance</div>
-</dd>
 <dt><a href="com/csse3200/game/components/items/ItemComponent.html" class="type-name-link" title="class in com.csse3200.game.components.items">ItemComponent</a> - Class in <a href="com/csse3200/game/components/items/package-summary.html">com.csse3200.game.components.items</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/items/ItemComponent.html#%3Cinit%3E(java.lang.String,com.csse3200.game.components.items.ItemType,int)" class="member-name-link">ItemComponent(String, ItemType, int)</a> - Constructor for class com.csse3200.game.components.items.<a href="com/csse3200/game/components/items/ItemComponent.html" title="class in com.csse3200.game.components.items">ItemComponent</a></dt>
@@ -4039,16 +4045,8 @@ loadScripts(document, 'script');</script>
 </dd>
 <dt><a href="com/csse3200/game/components/CustomerSensorComponent.html#onCollisionEnd(com.badlogic.gdx.physics.box2d.Fixture,com.badlogic.gdx.physics.box2d.Fixture)" class="member-name-link">onCollisionEnd(Fixture, Fixture)</a> - Method in class com.csse3200.game.components.<a href="com/csse3200/game/components/CustomerSensorComponent.html" title="class in com.csse3200.game.components">CustomerSensorComponent</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="com/csse3200/game/components/SensorComponent.html#onCollisionEnd(com.badlogic.gdx.physics.box2d.Fixture,com.badlogic.gdx.physics.box2d.Fixture)" class="member-name-link">onCollisionEnd(Fixture, Fixture)</a> - Method in class com.csse3200.game.components.<a href="com/csse3200/game/components/SensorComponent.html" title="class in com.csse3200.game.components">SensorComponent</a></dt>
-<dd>
-<div class="block">Called when a collision has ended between 2 fixtures</div>
-</dd>
 <dt><a href="com/csse3200/game/components/CustomerSensorComponent.html#onCollisionStart(com.badlogic.gdx.physics.box2d.Fixture,com.badlogic.gdx.physics.box2d.Fixture)" class="member-name-link">onCollisionStart(Fixture, Fixture)</a> - Method in class com.csse3200.game.components.<a href="com/csse3200/game/components/CustomerSensorComponent.html" title="class in com.csse3200.game.components">CustomerSensorComponent</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="com/csse3200/game/components/SensorComponent.html#onCollisionStart(com.badlogic.gdx.physics.box2d.Fixture,com.badlogic.gdx.physics.box2d.Fixture)" class="member-name-link">onCollisionStart(Fixture, Fixture)</a> - Method in class com.csse3200.game.components.<a href="com/csse3200/game/components/SensorComponent.html" title="class in com.csse3200.game.components">SensorComponent</a></dt>
-<dd>
-<div class="block">Called when the component collides with another collider</div>
-</dd>
 <dt><a href="com/csse3200/game/components/maingame/MainGameActions.html#onCreateAcai()" class="member-name-link">onCreateAcai()</a> - Method in class com.csse3200.game.components.maingame.<a href="com/csse3200/game/components/maingame/MainGameActions.html" title="class in com.csse3200.game.components.maingame">MainGameActions</a></dt>
 <dd>
 <div class="block">Creates Açai Bowl Docket</div>
@@ -4501,6 +4499,10 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Register the end day screen entity.</div>
 </dd>
+<dt><a href="com/csse3200/game/services/InteractableService.html#registerEntity(com.csse3200.game.entities.Entity)" class="member-name-link">registerEntity(Entity)</a> - Method in class com.csse3200.game.services.<a href="com/csse3200/game/services/InteractableService.html" title="class in com.csse3200.game.services">InteractableService</a></dt>
+<dd>
+<div class="block">Register an interactable enitity to the service</div>
+</dd>
 <dt><a href="com/csse3200/game/services/ServiceLocator.html#registerEntityService(com.csse3200.game.entities.EntityService)" class="member-name-link">registerEntityService(EntityService)</a> - Static method in class com.csse3200.game.services.<a href="com/csse3200/game/services/ServiceLocator.html" title="class in com.csse3200.game.services">ServiceLocator</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/services/ServiceLocator.html#registerGame(com.csse3200.game.GdxGame)" class="member-name-link">registerGame(GdxGame)</a> - Static method in class com.csse3200.game.services.<a href="com/csse3200/game/services/ServiceLocator.html" title="class in com.csse3200.game.services">ServiceLocator</a></dt>
@@ -4510,6 +4512,8 @@ loadScripts(document, 'script');</script>
 <dt><a href="com/csse3200/game/services/ServiceLocator.html#registerGameScreen(com.csse3200.game.screens.MainGameScreen)" class="member-name-link">registerGameScreen(MainGameScreen)</a> - Static method in class com.csse3200.game.services.<a href="com/csse3200/game/services/ServiceLocator.html" title="class in com.csse3200.game.services">ServiceLocator</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/services/ServiceLocator.html#registerInputService(com.csse3200.game.input.InputService)" class="member-name-link">registerInputService(InputService)</a> - Static method in class com.csse3200.game.services.<a href="com/csse3200/game/services/ServiceLocator.html" title="class in com.csse3200.game.services">ServiceLocator</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/services/ServiceLocator.html#registerInteractableService(com.csse3200.game.services.InteractableService)" class="member-name-link">registerInteractableService(InteractableService)</a> - Static method in class com.csse3200.game.services.<a href="com/csse3200/game/services/ServiceLocator.html" title="class in com.csse3200.game.services">ServiceLocator</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/services/ServiceLocator.html#registerLevelService(com.csse3200.game.services.LevelService)" class="member-name-link">registerLevelService(LevelService)</a> - Static method in class com.csse3200.game.services.<a href="com/csse3200/game/services/ServiceLocator.html" title="class in com.csse3200.game.services">ServiceLocator</a></dt>
 <dd>&nbsp;</dd>
@@ -4821,12 +4825,10 @@ loadScripts(document, 'script');</script>
 </dd>
 <dt><a href="com/csse3200/game/components/SensorComponent.html" class="type-name-link" title="class in com.csse3200.game.components">SensorComponent</a> - Class in <a href="com/csse3200/game/components/package-summary.html">com.csse3200.game.components</a></dt>
 <dd>
-<div class="block">Finds the closest interactable object inside a range of the player</div>
+<div class="block">Finds the closest interactable object inside a range of the player's position.</div>
 </dd>
-<dt><a href="com/csse3200/game/components/SensorComponent.html#%3Cinit%3E(short,float)" class="member-name-link">SensorComponent(short, float)</a> - Constructor for class com.csse3200.game.components.<a href="com/csse3200/game/components/SensorComponent.html" title="class in com.csse3200.game.components">SensorComponent</a></dt>
-<dd>
-<div class="block">Create a component that senses entities when it collides with them.</div>
-</dd>
+<dt><a href="com/csse3200/game/components/SensorComponent.html#%3Cinit%3E()" class="member-name-link">SensorComponent()</a> - Constructor for class com.csse3200.game.components.<a href="com/csse3200/game/components/SensorComponent.html" title="class in com.csse3200.game.components">SensorComponent</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/events/CookingAndServingHandler.html#serveMeal()" class="member-name-link">serveMeal()</a> - Method in class com.csse3200.game.events.<a href="com/csse3200/game/events/CookingAndServingHandler.html" title="class in com.csse3200.game.events">CookingAndServingHandler</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/services/ServiceLocator.html" class="type-name-link" title="class in com.csse3200.game.services">ServiceLocator</a> - Class in <a href="com/csse3200/game/services/package-summary.html">com.csse3200.game.services</a></dt>
@@ -6082,6 +6084,10 @@ loadScripts(document, 'script');</script>
 <dt><a href="com/csse3200/game/entities/EntityService.html#unregisterEndDay()" class="member-name-link">unregisterEndDay()</a> - Method in class com.csse3200.game.entities.<a href="com/csse3200/game/entities/EntityService.html" title="class in com.csse3200.game.entities">EntityService</a></dt>
 <dd>
 <div class="block">Unregister the end day screen entity.</div>
+</dd>
+<dt><a href="com/csse3200/game/services/InteractableService.html#unregisterEntity(com.csse3200.game.entities.Entity)" class="member-name-link">unregisterEntity(Entity)</a> - Method in class com.csse3200.game.services.<a href="com/csse3200/game/services/InteractableService.html" title="class in com.csse3200.game.services">InteractableService</a></dt>
+<dd>
+<div class="block">Remove the entity from the interactables map</div>
 </dd>
 <dt><a href="com/csse3200/game/entities/EntityService.html#unregisterMoral()" class="member-name-link">unregisterMoral()</a> - Method in class com.csse3200.game.entities.<a href="com/csse3200/game/entities/EntityService.html" title="class in com.csse3200.game.entities">EntityService</a></dt>
 <dd>

@@ -93,7 +93,9 @@ loadScripts(document, 'script');</script>
 <hr>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">SensorComponent</span>
 <span class="extends-implements">extends <a href="Component.html" title="class in com.csse3200.game.components">Component</a></span></div>
-<div class="block">Finds the closest interactable object inside a range of the player</div>
+<div class="block">Finds the closest interactable object inside a range of the player's position.
+ This component is used everytime the player moves to update the nearby
+ interactable entities.</div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -114,11 +116,8 @@ loadScripts(document, 'script');</script>
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Constructor</div>
 <div class="table-header col-last">Description</div>
-<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(short,float)" class="member-name-link">SensorComponent</a><wbr>(short&nbsp;targetLayer,
- float&nbsp;sensorDistance)</code></div>
-<div class="col-last even-row-color">
-<div class="block">Create a component that senses entities when it collides with them.</div>
-</div>
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E()" class="member-name-link">SensorComponent</a>()</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
 </div>
 </section>
 </li>
@@ -138,40 +137,10 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Called when the entity is created and registered.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>com.badlogic.gdx.physics.box2d.Fixture</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getClosestFixture()" class="member-name-link">getClosestFixture</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a><wbr>&lt;com.badlogic.gdx.physics.box2d.Fixture&gt;</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getClosestFixtures()" class="member-name-link">getClosestFixtures</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../physics/components/InteractionComponent.html" title="class in com.csse3200.game.physics.components">InteractionComponent</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getInteractionComponent()" class="member-name-link">getInteractionComponent</a>()</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../entities/Entity.html" title="class in com.csse3200.game.entities">Entity</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getClosestInteractable()" class="member-name-link">getClosestInteractable</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Getters</div>
-</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getNumFixtures()" class="member-name-link">getNumFixtures</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>short</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getTargetLayer()" class="member-name-link">getTargetLayer</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isWithinDistance(com.badlogic.gdx.physics.box2d.Fixture,float)" class="member-name-link">isWithinDistance</a><wbr>(com.badlogic.gdx.physics.box2d.Fixture&nbsp;fixture,
- float&nbsp;distance)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Determines whether the distance to the fixture is within the required distance</div>
-</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#onCollisionEnd(com.badlogic.gdx.physics.box2d.Fixture,com.badlogic.gdx.physics.box2d.Fixture)" class="member-name-link">onCollisionEnd</a><wbr>(com.badlogic.gdx.physics.box2d.Fixture&nbsp;me,
- com.badlogic.gdx.physics.box2d.Fixture&nbsp;other)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Called when a collision has ended between 2 fixtures</div>
-</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#onCollisionStart(com.badlogic.gdx.physics.box2d.Fixture,com.badlogic.gdx.physics.box2d.Fixture)" class="member-name-link">onCollisionStart</a><wbr>(com.badlogic.gdx.physics.box2d.Fixture&nbsp;me,
- com.badlogic.gdx.physics.box2d.Fixture&nbsp;other)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Called when the component collides with another collider</div>
+<div class="block">Updates the closest interactable object to the player.</div>
 </div>
 </div>
 </div>
@@ -194,15 +163,9 @@ loadScripts(document, 'script');</script>
 <h2>Constructor Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="&lt;init&gt;(short,float)">
+<section class="detail" id="&lt;init&gt;()">
 <h3>SensorComponent</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">SensorComponent</span><wbr><span class="parameters">(short&nbsp;targetLayer,
- float&nbsp;sensorDistance)</span></div>
-<div class="block">Create a component that senses entities when it collides with them.</div>
-<dl class="notes">
-<dt>Parameters:</dt>
-<dd><code>targetLayer</code> - The physics layer of the target's collider</dd>
-</dl>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">SensorComponent</span>()</div>
 </section>
 </li>
 </ul>
@@ -227,74 +190,13 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="getInteractionComponent()">
-<h3>getInteractionComponent</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../physics/components/InteractionComponent.html" title="class in com.csse3200.game.physics.components">InteractionComponent</a></span>&nbsp;<span class="element-name">getInteractionComponent</span>()</div>
-<div class="block">Getters</div>
-</section>
-</li>
-<li>
-<section class="detail" id="getTargetLayer()">
-<h3>getTargetLayer</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">short</span>&nbsp;<span class="element-name">getTargetLayer</span>()</div>
-</section>
-</li>
-<li>
-<section class="detail" id="getClosestFixtures()">
-<h3>getClosestFixtures</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;com.badlogic.gdx.physics.box2d.Fixture&gt;</span>&nbsp;<span class="element-name">getClosestFixtures</span>()</div>
-</section>
-</li>
-<li>
-<section class="detail" id="getNumFixtures()">
-<h3>getNumFixtures</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">getNumFixtures</span>()</div>
-</section>
-</li>
-<li>
-<section class="detail" id="onCollisionStart(com.badlogic.gdx.physics.box2d.Fixture,com.badlogic.gdx.physics.box2d.Fixture)">
-<h3>onCollisionStart</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">onCollisionStart</span><wbr><span class="parameters">(com.badlogic.gdx.physics.box2d.Fixture&nbsp;me,
- com.badlogic.gdx.physics.box2d.Fixture&nbsp;other)</span></div>
-<div class="block">Called when the component collides with another collider</div>
+<section class="detail" id="getClosestInteractable()">
+<h3>getClosestInteractable</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../entities/Entity.html" title="class in com.csse3200.game.entities">Entity</a></span>&nbsp;<span class="element-name">getClosestInteractable</span>()</div>
+<div class="block">Updates the closest interactable object to the player.</div>
 <dl class="notes">
-<dt>Parameters:</dt>
-<dd><code>me</code> - Should be the fixture that got collided with - aka this sensor component</dd>
-<dd><code>other</code> - The fixture that collided with this component</dd>
-</dl>
-</section>
-</li>
-<li>
-<section class="detail" id="onCollisionEnd(com.badlogic.gdx.physics.box2d.Fixture,com.badlogic.gdx.physics.box2d.Fixture)">
-<h3>onCollisionEnd</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">onCollisionEnd</span><wbr><span class="parameters">(com.badlogic.gdx.physics.box2d.Fixture&nbsp;me,
- com.badlogic.gdx.physics.box2d.Fixture&nbsp;other)</span></div>
-<div class="block">Called when a collision has ended between 2 fixtures</div>
-<dl class="notes">
-<dt>Parameters:</dt>
-<dd><code>me</code> - Should be the fixture that got collided with - aka this sensor component</dd>
-<dd><code>other</code> - The fixture that this component stopped colliding with</dd>
-</dl>
-</section>
-</li>
-<li>
-<section class="detail" id="getClosestFixture()">
-<h3>getClosestFixture</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">com.badlogic.gdx.physics.box2d.Fixture</span>&nbsp;<span class="element-name">getClosestFixture</span>()</div>
-</section>
-</li>
-<li>
-<section class="detail" id="isWithinDistance(com.badlogic.gdx.physics.box2d.Fixture,float)">
-<h3>isWithinDistance</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isWithinDistance</span><wbr><span class="parameters">(com.badlogic.gdx.physics.box2d.Fixture&nbsp;fixture,
- float&nbsp;distance)</span></div>
-<div class="block">Determines whether the distance to the fixture is within the required distance</div>
-<dl class="notes">
-<dt>Parameters:</dt>
-<dd><code>fixture</code> - The object being measured</dd>
-<dd><code>distance</code> - The maximum distance the fixture can be away from the sensor component</dd>
 <dt>Returns:</dt>
-<dd>True: If the distance to the fixture is less than the provided distance, False: Otherwise</dd>
+<dd>the closest interactable object to the player.</dd>
 </dl>
 </section>
 </li>
