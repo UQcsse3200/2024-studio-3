@@ -38,7 +38,7 @@ public class StationServingComponent extends Component {
     AnimationRenderComponent animator;
     TicketDetails bigTicket;
     
-    private final String SALAD = "salad";
+    private static final String SALAD = "salad";
 
     /**
      * On creation a listener for Submit Meal will be added to the station.
@@ -100,9 +100,6 @@ public class StationServingComponent extends Component {
 
         if (bigTicketInfo[0] != null) {
 
-            // Call to team 1's function with the big ticket info
-            //TBD(item, bigTicketInfo[0], bigTicketInfo[1], bigTicketInfo[2]);
-            // remove ticket
             logger.info("Submitting meal and removing docket");
             ServiceLocator.getDocketService().getEvents().trigger("removeOrder", -1); // removes the order from the order action list
             ServiceLocator.getDocketService().getEvents().trigger("removeBigTicket"); // removes the order from the display list
@@ -204,6 +201,7 @@ public class StationServingComponent extends Component {
             case "Smile Face" -> gold += 5;
             case "Frown Face" -> gold -= 5;
             case "Angry Face" -> gold -= 10;
+            default -> gold += 0;
         }
         return gold;
     }
