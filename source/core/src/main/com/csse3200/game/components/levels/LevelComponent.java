@@ -31,11 +31,11 @@ public class LevelComponent extends Component {
     public void initialiseAcceptableCustomers() {
         // map of acceptable customers in each level
         // key = game level i.e. LEVEL_1, value = array list of customers
-        // change this once modify NPCs.json
         ArrayList<String> levelOne = new ArrayList<>();
         levelOne.add("JOHN");
         ArrayList<String> levelTwo = new ArrayList<>();
         levelTwo.add("JOHN");
+        levelTwo.add("HANK");
         ArrayList<String> levelThree = new ArrayList<>();
         levelThree.add("JOHN");
         levelThree.add("SILVER");
