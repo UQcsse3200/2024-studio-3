@@ -125,6 +125,9 @@ public class PlayerActions extends Component {
     if (interactable != null) {
       // Uses attached information to Fixture on station creation to identify entity belonging
       // too
+      if ((BodyUserData) interactable.getBody().getUserData() == null) {
+        return;
+      }
       Entity station = ((BodyUserData) interactable.getBody().getUserData()).entity;
 
       // Handle if it was a fire extinguisher
@@ -141,7 +144,6 @@ public class PlayerActions extends Component {
       }
       // Logic for what interaction even to call on the station
       station.getEvents().trigger("Station Interaction", playerInventory, displayInventory, type);
-
     }
   }
 
