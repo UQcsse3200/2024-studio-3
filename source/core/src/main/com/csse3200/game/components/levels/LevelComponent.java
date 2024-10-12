@@ -27,22 +27,27 @@ public class LevelComponent extends Component {
     private ArrayList<String> customerNameArray;
     private HashMap<GdxGame.LevelType , ArrayList<String>> acceptableCustomers;
 
-
+    /**
+     * Initialise the map of acceptable customers in each level
+     * key = game level i.e. LEVEL_1, value = array list of customers
+     */
     public void initialiseAcceptableCustomers() {
-        // map of acceptable customers in each level
-        // key = game level i.e. LEVEL_1, value = array list of customers
         ArrayList<String> levelOne = new ArrayList<>();
         levelOne.add("JOHN");
+
         ArrayList<String> levelTwo = new ArrayList<>();
         levelTwo.add("JOHN");
         levelTwo.add("HANK");
+
         ArrayList<String> levelThree = new ArrayList<>();
         levelThree.add("JOHN");
         levelThree.add("SILVER");
+
         ArrayList<String> levelFour = new ArrayList<>();
         levelFour.add("HANK");
         levelFour.add("MOONKI");
         levelFour.add("LEWIS");
+
         ArrayList<String> levelFive = new ArrayList<>();
         levelFive.add("HANK");
         levelFive.add("JOHN");
@@ -56,20 +61,21 @@ public class LevelComponent extends Component {
         acceptableCustomers.put(GdxGame.LevelType.LEVEL_3, levelThree);
         acceptableCustomers.put(GdxGame.LevelType.LEVEL_4, levelFour);
         acceptableCustomers.put(GdxGame.LevelType.LEVEL_5, levelFive);
-
     }
 
+    /**
+     * Initialise the customer name array which is dependent on which customers are acceptable in each level.
+     */
     public void initialiseCustomerNameArr() {
         customerNameArray = new ArrayList<>();
         for (PersonalCustomerEnums customer: PersonalCustomerEnums.values()) {
             String name = customer.name();
             ArrayList<String> customersInLevel = acceptableCustomers.get(gameArea.getLevel());
-
+            // basic sheep & chicken was included in a previous commit, ive left it here
             if (!name.equals("BASIC_SHEEP") && !name.equals("BASIC_CHICKEN") && customersInLevel.contains(name)) {
                 customerNameArray.add(customer.name());
             }
         }
-
     }
 
     /**
@@ -95,6 +101,7 @@ public class LevelComponent extends Component {
             long elapsedTimeSecs = elapsedTime / 1000;
             initialiseCustomerNameArr();
             // if more than 60 secs or no customers then spawn. keep track of limits on customer num size
+            // this can certainly be changed I just put in an arbitrary time
             if ((currentCustomersLinedUp == 0 || elapsedTimeSecs >= 60) && numbCustomersSpawned < levelSpawnCap && currentCustomersLinedUp < 5) {
                 setSpawnStartTime();
                 customerSpawned();
