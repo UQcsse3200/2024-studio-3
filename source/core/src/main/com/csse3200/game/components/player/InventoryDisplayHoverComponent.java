@@ -13,6 +13,8 @@ import com.csse3200.game.components.items.ItemComponent;
 import java.util.ArrayList;
 import java.util.Objects;
 
+import com.csse3200.game.components.station.IngredientStationHandlerComponent;
+import com.csse3200.game.components.station.StationMealComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
 
 
@@ -30,6 +32,12 @@ public class InventoryDisplayHoverComponent extends RenderComponent {
     private ArrayList<Texture> itemImages;
     private Texture backgroundImage;
     private Texture selectedBackgroundImage;
+    private boolean showKeys = false;
+    private boolean isMixingStation = false;
+    private boolean isBasket = false;
+    private Texture interactKeyImage;
+    private Texture combineKeyImage;
+    private Texture rotateKeyImage;
     private ShapeRenderer shapeRenderer;
     private Vector2 position;
     private Vector2 scale;
@@ -37,18 +45,30 @@ public class InventoryDisplayHoverComponent extends RenderComponent {
     private static final float Y_OFFSET = 1.0F;
     private static final float SLOT_WIDTH = 0.6f;
     private static final float SLOT_HEIGHT = 0.6f;
+    private static final float KEY_WIDTH = 1.0f;
+    private static final float KEY_HEIGHT = 0.3f;
 
     @Override
     public void create() {
         super.create();
         backgroundImage = new Texture("images/inventory_ui/item_background.png");
         selectedBackgroundImage = new Texture("images/inventory_ui/item_background_selected.png");
+        interactKeyImage = new Texture("images/inventory_ui/interact_key.png");
+        combineKeyImage = new Texture("images/inventory_ui/combine_key.png");
+        rotateKeyImage = new Texture("images/inventory_ui/rotate_key.png");
         shapeRenderer = new ShapeRenderer();
         ServiceLocator.getRenderService().register(this);
 
         if (entity != null) {
             // listener for when the InventoryComponent attached to this entity is updated
-            entity.getEvents().addListener("updateInventory", this::update);
+            entity.getEvents().addListener("updateInventory", this::updateDisplay);
+
+            entity.getEvents().addListener("showToolTip", this::showToolTip);
+            entity.getEvents().addListener("hideToolTip", this::hideToolTip);
+
+            isMixingStation = entity.getComponent(StationMealComponent.class) != null;
+            isBasket = entity.getComponent(IngredientStationHandlerComponent.class) != null;
+
             // need to use the physics body position of the entity as
             // the regular getPosition() on stations does not return the correct position.
             position = entity.getComponent(PhysicsComponent.class).getBody().getPosition();
@@ -81,19 +101,68 @@ public class InventoryDisplayHoverComponent extends RenderComponent {
         }
     }
 
+
+
     /**
      * Updates this InventoryDisplay to reflect the current state of the InventoryComponent
      * of this component's parent entity.
      */
     @Override
     public void update() {
+
+    }
+
+    public void updateDisplay() {
         updateImages();
+    }
+
+    /**
+     * Sets this component to display keybind tooltip icons
+     */
+    private void showToolTip() {
+        this.showKeys = true;
+    }
+
+    /**
+     * Sets this component to hide keybind tooltip icons
+     */
+    private void hideToolTip() {
+        this.showKeys = false;
     }
 
     @Override
     public void draw(SpriteBatch batch)  {
         if (entity == null || position == null || scale == null)
             return;
+
+        if (showKeys) {
+            batch.draw(interactKeyImage,
+                    position.x,
+                    position.y + 0.7f,
+                    KEY_WIDTH,
+                    KEY_HEIGHT
+            );
+            if (isMixingStation) {
+                batch.draw(rotateKeyImage,
+                        position.x,
+                        position.y + 0.4f,
+                        KEY_WIDTH,
+                        KEY_HEIGHT
+                );
+                batch.draw(combineKeyImage,
+                        position.x,
+                        position.y + 0.1f,
+                        KEY_WIDTH,
+                        KEY_HEIGHT
+                );
+            }
+        }
+
+        // If we have a basked don't draw the images
+        if (isBasket) {
+            return;
+        }
+
         for (int i = 0; i < itemImages.size(); i++) {
             // draw selected background image for the next item to be taken out
             // (if there is more than 1 item displayed)
@@ -128,6 +197,11 @@ public class InventoryDisplayHoverComponent extends RenderComponent {
         if (shapeRenderer != null) {
             shapeRenderer.dispose();
         }
+    }
+
+    @Override
+    public int getLayer() {
+        return 3; // currently overlays the player, but decreasing this to 1 makes it hide behind the stations
     }
 
     @Override

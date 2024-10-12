@@ -85,7 +85,7 @@ public class TooltipsDisplay extends UIComponent {
         // Set the tooltip position above the interactable object based on viewport height
         table.setPosition(screenPos.x*190, screenPos.y*190 + (viewportHeight * 0.05f));  // Adjust Y position relative to object and screen size
 
-        table.setVisible(true);
+        table.setVisible(false);
     }
 
     private void hideTooltip() {
