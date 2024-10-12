@@ -90,7 +90,10 @@ public class TouchPlayerInputComponent extends InputComponent {
   @Override
   public boolean touchDown(int screenX, int screenY, int pointer, int button) {
     if (button == Input.Buttons.LEFT) {
-      entity.getEvents().trigger("clicked");
+      // entity.getEvents().trigger("clicked");
+      float convertedx = (float) ((screenX * 0.013936) - 3.620833); 
+      float convertedy = (float)((screenY * -0.01389) + 10.224049);
+      entity.getEvents().trigger("clicked", convertedx, convertedy);
     }
     return true;
   }
