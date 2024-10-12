@@ -12,6 +12,7 @@ import java.util.concurrent.Executors;
 
 import com.csse3200.game.components.moral.MoralDayFour;
 import com.csse3200.game.areas.map.Map;
+import com.csse3200.game.services.InteractableService;
 import com.csse3200.game.services.MapLayout;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -249,6 +250,10 @@ public class ForestGameArea extends GameArea {
     // call load function based on the level argument
     // return list of items to spawn based on the load function
     // Baaed on lsit of items to spawn, spawn the items
+    
+    // Create a new interactable service
+    ServiceLocator.registerInteractableService(new InteractableService());
+    
     loadAssets();
     displayUI();
     spawnTerrain();

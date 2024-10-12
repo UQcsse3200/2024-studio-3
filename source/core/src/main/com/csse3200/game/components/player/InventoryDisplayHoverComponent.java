@@ -12,6 +12,8 @@ import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.components.items.ItemComponent;
 import java.util.ArrayList;
 import java.util.Objects;
+
+import com.csse3200.game.components.station.IngredientStationHandlerComponent;
 import com.csse3200.game.components.station.StationMealComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
 
@@ -32,6 +34,7 @@ public class InventoryDisplayHoverComponent extends RenderComponent {
     private Texture selectedBackgroundImage;
     private boolean showKeys = false;
     private boolean isMixingStation = false;
+    private boolean isBasket = false;
     private Texture interactKeyImage;
     private Texture combineKeyImage;
     private Texture rotateKeyImage;
@@ -64,6 +67,7 @@ public class InventoryDisplayHoverComponent extends RenderComponent {
             entity.getEvents().addListener("hideToolTip", this::hideToolTip);
 
             isMixingStation = entity.getComponent(StationMealComponent.class) != null;
+            isBasket = entity.getComponent(IngredientStationHandlerComponent.class) != null;
 
             // need to use the physics body position of the entity as
             // the regular getPosition() on stations does not return the correct position.
@@ -130,6 +134,35 @@ public class InventoryDisplayHoverComponent extends RenderComponent {
     public void draw(SpriteBatch batch)  {
         if (entity == null || position == null || scale == null)
             return;
+
+        if (showKeys) {
+            batch.draw(interactKeyImage,
+                    position.x,
+                    position.y + 0.7f,
+                    KEY_WIDTH,
+                    KEY_HEIGHT
+            );
+            if (isMixingStation) {
+                batch.draw(rotateKeyImage,
+                        position.x,
+                        position.y + 0.4f,
+                        KEY_WIDTH,
+                        KEY_HEIGHT
+                );
+                batch.draw(combineKeyImage,
+                        position.x,
+                        position.y + 0.1f,
+                        KEY_WIDTH,
+                        KEY_HEIGHT
+                );
+            }
+        }
+
+        // If we have a basked don't draw the images
+        if (isBasket) {
+            return;
+        }
+
         for (int i = 0; i < itemImages.size(); i++) {
             // draw selected background image for the next item to be taken out
             // (if there is more than 1 item displayed)
@@ -154,29 +187,6 @@ public class InventoryDisplayHoverComponent extends RenderComponent {
                 SLOT_WIDTH - 0.2f,
                 SLOT_HEIGHT - 0.2f
             );
-            }
-        if (showKeys) {
-            batch.draw(interactKeyImage,
-                    position.x,
-                    position.y + 0.7f,
-                    KEY_WIDTH,
-                    KEY_HEIGHT
-            );
-            if (isMixingStation) {
-                batch.draw(rotateKeyImage,
-                        position.x,
-                        position.y + 0.4f,
-                        KEY_WIDTH,
-                        KEY_HEIGHT
-                );
-                batch.draw(combineKeyImage,
-                        position.x,
-                        position.y + 0.1f,
-                        KEY_WIDTH,
-                        KEY_HEIGHT
-                );
-            }
-
         }
     }
 

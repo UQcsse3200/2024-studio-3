@@ -11,10 +11,12 @@ import com.csse3200.game.entities.benches.Bench;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.factories.StationFactory;
 import com.csse3200.game.events.EventHandler;
+import com.csse3200.game.services.InteractableService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.*;
+import java.security.Provider.Service;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -189,6 +191,9 @@ public class MapLayout {
                 break;
         }
         station.setPosition(col + 4, row - 4);
+
+        ServiceLocator.getInteractableService().registerEntity(station);
+
         return station;
     }
 
