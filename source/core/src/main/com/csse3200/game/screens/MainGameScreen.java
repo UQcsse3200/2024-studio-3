@@ -329,8 +329,6 @@ public class MainGameScreen extends ScreenAdapter {
 				.addComponent(new SpeedBootsUpgrade())
 				.addComponent(new ExtortionUpgrade())
 				.addComponent(new DancePartyUpgrade())
-				.addComponent(new PauseMenuActions(this.game))
-				.addComponent(new PauseMenuDisplay(this))
 						.addComponent(new UpgradesDisplay(this))
 								.addComponent(new RecipeCardDisplay(this));
 
