@@ -40,6 +40,7 @@ public class ServiceLocator {
   private static Cutscene currentCutscene;
   private static MapLayout map;
   private static MainMenuDisplay mainMenuDisplay;
+  private static InteractableService interactableService;
 
   private static ResourceService resourceService;
 
@@ -96,6 +97,10 @@ public class ServiceLocator {
 
   public static DayNightService getDayNightService() { //new
     return dayNightService;
+  }
+
+  public static InteractableService getInteractableService() {
+    return interactableService;
   }
 
 
@@ -241,6 +246,10 @@ public class ServiceLocator {
 
   }
 
+  public static void registerInteractableService(InteractableService service) {
+    interactableService = service;
+  }
+
 
   public static void registerMainMenuDisplay(MainMenuDisplay display) {
     mainMenuDisplay = display;
@@ -301,6 +310,7 @@ public class ServiceLocator {
     dayNightService = null;
     saveLoadService = null;
     randomComboService = null;
+    interactableService = null;
   }
 
   private ServiceLocator() {

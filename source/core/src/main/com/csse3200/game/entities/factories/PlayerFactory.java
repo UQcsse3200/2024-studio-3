@@ -1,17 +1,16 @@
 package com.csse3200.game.entities.factories;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.components.CombatStatsComponent;
-import com.csse3200.game.components.TooltipsDisplay;
+import com.csse3200.game.components.SensorComponent;
 import com.csse3200.game.components.maingame.CheckWinLoseComponent;
-import com.csse3200.game.components.ordersystem.MainGameOrderTicketDisplay;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.components.player.InventoryDisplay;
-import com.csse3200.game.components.player.PlayerItemSpriteManager;
 import com.csse3200.game.components.player.PlayerActions;
+import com.csse3200.game.components.player.PlayerAnimationController;
+import com.csse3200.game.components.player.PlayerItemSpriteManager;
 import com.csse3200.game.components.player.PlayerStatsDisplay;
-import com.csse3200.game.components.player.*;
-import com.csse3200.game.components.SensorComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.configs.PlayerConfig;
 import com.csse3200.game.files.FileLoader;
@@ -20,7 +19,6 @@ import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.PhysicsUtils;
 import com.csse3200.game.physics.components.ColliderComponent;
 import com.csse3200.game.physics.components.HitboxComponent;
-import com.csse3200.game.physics.components.InteractionComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
@@ -78,15 +76,15 @@ public class PlayerFactory {
             .addComponent(inputComponent)
             .addComponent(animator)
             .addComponent(new PlayerAnimationController())
-            .addComponent(new TooltipsDisplay())
             .addComponent(new PlayerStatsDisplay())
-            .addComponent(new InteractionComponent(PhysicsLayer.INTERACTABLE))
-            .addComponent(new CheckWinLoseComponent(55, 55))
-            .addComponent(new SensorComponent(PhysicsLayer.INTERACTABLE, 3f));
+            .addComponent(new SensorComponent())
+            .addComponent(new CheckWinLoseComponent(55, 55));
 
     player.scaleHeight(1.25f);
-    PhysicsUtils.setScaledCollider(player, 0.1f, 0.3f);
+    PhysicsUtils.setScaledCollider(player, 0.5f, 0.5f);
     player.getComponent(ColliderComponent.class).setDensity(1.5f);
+    player.getComponent(HitboxComponent.class).setAsBox(player.getScale());
+    player.getComponent(ColliderComponent.class).setAsBox(new Vector2(0.03f, 0.03f), player.getCenterPosition().sub(new Vector2(0f, 0.32f)));
 
     ServiceLocator.getPlayerService().getEvents().trigger("playerCreated", player);
 
