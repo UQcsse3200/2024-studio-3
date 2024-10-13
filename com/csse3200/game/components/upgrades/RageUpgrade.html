@@ -46,7 +46,7 @@ loadScripts(document, 'script');</script>
 <li>
 <p>Detail:</p>
 <ul>
-<li>Field</li>
+<li><a href="#field-detail">Field</a></li>
 <li><a href="#constructor-detail">Constr</a></li>
 <li><a href="#method-detail">Method</a></li>
 </ul>
@@ -64,7 +64,7 @@ loadScripts(document, 'script');</script>
 </ul>
 <ul class="sub-nav-list">
 <li>Detail:&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#field-detail">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor-detail">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method-detail">Method</a></li>
 </ul>
@@ -112,6 +112,18 @@ implements <a href="Upgrade.html" title="interface in com.csse3200.game.componen
 <li>
 <section class="field-summary" id="field-summary">
 <h2>Field Summary</h2>
+<div class="caption"><span>Fields</span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Field</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>com.badlogic.gdx.scenes.scene2d.ui.Table</code></div>
+<div class="col-second even-row-color"><code><a href="#layout" class="member-name-link">layout</a></code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>com.badlogic.gdx.scenes.scene2d.ui.ProgressBar</code></div>
+<div class="col-second odd-row-color"><code><a href="#rageMeter" class="member-name-link">rageMeter</a></code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+</div>
 <div class="inherited-list">
 <h3 id="fields-inherited-from-class-com.csse3200.game.ui.UIComponent">Fields inherited from class&nbsp;com.csse3200.game.ui.<a href="../../ui/UIComponent.html" title="class in com.csse3200.game.ui">UIComponent</a></h3>
 <code><a href="../../ui/UIComponent.html#skin">skin</a>, <a href="../../ui/UIComponent.html#stage">stage</a></code></div>
@@ -176,12 +188,27 @@ implements <a href="Upgrade.html" title="interface in com.csse3200.game.componen
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Draw the renderable.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setStage(com.badlogic.gdx.scenes.scene2d.Stage)" class="member-name-link">setStage</a><wbr>(com.badlogic.gdx.scenes.scene2d.Stage&nbsp;mock)</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>float</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getRageFillTime()" class="member-name-link">getRageFillTime</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>float</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getRageFillTimeRemaining()" class="member-name-link">getRageFillTimeRemaining</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isOverlayVisible()" class="member-name-link">isOverlayVisible</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isRageActive()" class="member-name-link">isRageActive</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isRageFilling()" class="member-name-link">isRageFilling</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#update()" class="member-name-link">update</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setStage(com.badlogic.gdx.scenes.scene2d.Stage)" class="member-name-link">setStage</a><wbr>(com.badlogic.gdx.scenes.scene2d.Stage&nbsp;mock)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#update()" class="member-name-link">update</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Updates the RageUpgrade component each frame, managing the rage timer
  and the refill process based on the current state.</div>
 </div>
@@ -212,6 +239,26 @@ implements <a href="Upgrade.html" title="interface in com.csse3200.game.componen
 </section>
 <section class="details">
 <ul class="details-list">
+<!-- ============ FIELD DETAIL =========== -->
+<li>
+<section class="field-details" id="field-detail">
+<h2>Field Details</h2>
+<ul class="member-list">
+<li>
+<section class="detail" id="layout">
+<h3>layout</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">com.badlogic.gdx.scenes.scene2d.ui.Table</span>&nbsp;<span class="element-name">layout</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="rageMeter">
+<h3>rageMeter</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">com.badlogic.gdx.scenes.scene2d.ui.ProgressBar</span>&nbsp;<span class="element-name">rageMeter</span></div>
+</section>
+</li>
+</ul>
+</section>
+</li>
 <!-- ========= CONSTRUCTOR DETAIL ======== -->
 <li>
 <section class="constructor-details" id="constructor-detail">
@@ -318,6 +365,36 @@ implements <a href="Upgrade.html" title="interface in com.csse3200.game.componen
 <dt>Specified by:</dt>
 <dd><code><a href="../../rendering/Renderable.html#setStage(com.badlogic.gdx.scenes.scene2d.Stage)">setStage</a></code>&nbsp;in interface&nbsp;<code><a href="../../rendering/Renderable.html" title="interface in com.csse3200.game.rendering">Renderable</a></code></dd>
 </dl>
+</section>
+</li>
+<li>
+<section class="detail" id="isOverlayVisible()">
+<h3>isOverlayVisible</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isOverlayVisible</span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="isRageFilling()">
+<h3>isRageFilling</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isRageFilling</span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="isRageActive()">
+<h3>isRageActive</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isRageActive</span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getRageFillTime()">
+<h3>getRageFillTime</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">float</span>&nbsp;<span class="element-name">getRageFillTime</span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getRageFillTimeRemaining()">
+<h3>getRageFillTimeRemaining</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">float</span>&nbsp;<span class="element-name">getRageFillTimeRemaining</span>()</div>
 </section>
 </li>
 </ul>

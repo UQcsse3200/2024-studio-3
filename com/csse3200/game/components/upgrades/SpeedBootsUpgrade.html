@@ -46,7 +46,7 @@ loadScripts(document, 'script');</script>
 <li>
 <p>Detail:</p>
 <ul>
-<li>Field</li>
+<li><a href="#field-detail">Field</a></li>
 <li><a href="#constructor-detail">Constr</a></li>
 <li><a href="#method-detail">Method</a></li>
 </ul>
@@ -64,7 +64,7 @@ loadScripts(document, 'script');</script>
 </ul>
 <ul class="sub-nav-list">
 <li>Detail:&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#field-detail">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor-detail">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method-detail">Method</a></li>
 </ul>
@@ -112,6 +112,27 @@ implements <a href="Upgrade.html" title="interface in com.csse3200.game.componen
 <li>
 <section class="field-summary" id="field-summary">
 <h2>Field Summary</h2>
+<div class="caption"><span>Fields</span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Field</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>[]</code></div>
+<div class="col-second even-row-color"><code><a href="#greenTexture" class="member-name-link">greenTexture</a></code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>com.badlogic.gdx.scenes.scene2d.ui.Table</code></div>
+<div class="col-second odd-row-color"><code><a href="#layout" class="member-name-link">layout</a></code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>com.badlogic.gdx.scenes.scene2d.ui.ProgressBar</code></div>
+<div class="col-second even-row-color"><code><a href="#speedMeter" class="member-name-link">speedMeter</a></code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>com.badlogic.gdx.scenes.scene2d.ui.Label</code></div>
+<div class="col-second odd-row-color"><code><a href="#text" class="member-name-link">text</a></code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>[]</code></div>
+<div class="col-second even-row-color"><code><a href="#whiteBgTexture" class="member-name-link">whiteBgTexture</a></code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+</div>
 <div class="inherited-list">
 <h3 id="fields-inherited-from-class-com.csse3200.game.ui.UIComponent">Fields inherited from class&nbsp;com.csse3200.game.ui.<a href="../../ui/UIComponent.html" title="class in com.csse3200.game.ui">UIComponent</a></h3>
 <code><a href="../../ui/UIComponent.html#skin">skin</a>, <a href="../../ui/UIComponent.html#stage">stage</a></code></div>
@@ -130,6 +151,9 @@ implements <a href="Upgrade.html" title="interface in com.csse3200.game.componen
 <div class="table-header col-last">Description</div>
 <div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E()" class="member-name-link">SpeedBootsUpgrade</a>()</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
+<div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(com.csse3200.game.components.CombatStatsComponent,com.csse3200.game.components.player.KeyboardPlayerInputComponent)" class="member-name-link">SpeedBootsUpgrade</a><wbr>(<a href="../CombatStatsComponent.html" title="class in com.csse3200.game.components">CombatStatsComponent</a>&nbsp;combatStatsComponent,
+ <a href="../player/KeyboardPlayerInputComponent.html" title="class in com.csse3200.game.components.player">KeyboardPlayerInputComponent</a>&nbsp;keyboardPlayerInputComponent)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
 </div>
 </section>
 </li>
@@ -169,6 +193,30 @@ implements <a href="Upgrade.html" title="interface in com.csse3200.game.componen
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Draw the renderable.</div>
 </div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>float</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getActiveTimeRemaining()" class="member-name-link">getActiveTimeRemaining</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>long</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getBoostDuration()" class="member-name-link">getBoostDuration</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>float</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getBoostedSpeed()" class="member-name-link">getBoostedSpeed</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>long</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getBoostStartTime()" class="member-name-link">getBoostStartTime</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>float</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getNormalSpeed()" class="member-name-link">getNormalSpeed</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getPlaySound()" class="member-name-link">getPlaySound</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isActivate()" class="member-name-link">isActivate</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isVisible()" class="member-name-link">isVisible</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setStage(com.badlogic.gdx.scenes.scene2d.Stage)" class="member-name-link">setStage</a><wbr>(com.badlogic.gdx.scenes.scene2d.Stage&nbsp;mock)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
@@ -210,6 +258,44 @@ implements <a href="Upgrade.html" title="interface in com.csse3200.game.componen
 </section>
 <section class="details">
 <ul class="details-list">
+<!-- ============ FIELD DETAIL =========== -->
+<li>
+<section class="field-details" id="field-detail">
+<h2>Field Details</h2>
+<ul class="member-list">
+<li>
+<section class="detail" id="greenTexture">
+<h3>greenTexture</h3>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>[]</span>&nbsp;<span class="element-name">greenTexture</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="whiteBgTexture">
+<h3>whiteBgTexture</h3>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>[]</span>&nbsp;<span class="element-name">whiteBgTexture</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="layout">
+<h3>layout</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">com.badlogic.gdx.scenes.scene2d.ui.Table</span>&nbsp;<span class="element-name">layout</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="text">
+<h3>text</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">com.badlogic.gdx.scenes.scene2d.ui.Label</span>&nbsp;<span class="element-name">text</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="speedMeter">
+<h3>speedMeter</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">com.badlogic.gdx.scenes.scene2d.ui.ProgressBar</span>&nbsp;<span class="element-name">speedMeter</span></div>
+</section>
+</li>
+</ul>
+</section>
+</li>
 <!-- ========= CONSTRUCTOR DETAIL ======== -->
 <li>
 <section class="constructor-details" id="constructor-detail">
@@ -219,6 +305,13 @@ implements <a href="Upgrade.html" title="interface in com.csse3200.game.componen
 <section class="detail" id="&lt;init&gt;()">
 <h3>SpeedBootsUpgrade</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">SpeedBootsUpgrade</span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="&lt;init&gt;(com.csse3200.game.components.CombatStatsComponent,com.csse3200.game.components.player.KeyboardPlayerInputComponent)">
+<h3>SpeedBootsUpgrade</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">SpeedBootsUpgrade</span><wbr><span class="parameters">(<a href="../CombatStatsComponent.html" title="class in com.csse3200.game.components">CombatStatsComponent</a>&nbsp;combatStatsComponent,
+ <a href="../player/KeyboardPlayerInputComponent.html" title="class in com.csse3200.game.components.player">KeyboardPlayerInputComponent</a>&nbsp;keyboardPlayerInputComponent)</span></div>
 </section>
 </li>
 </ul>
@@ -321,6 +414,54 @@ implements <a href="Upgrade.html" title="interface in com.csse3200.game.componen
 <dt>Specified by:</dt>
 <dd><code><a href="../../rendering/Renderable.html#setStage(com.badlogic.gdx.scenes.scene2d.Stage)">setStage</a></code>&nbsp;in interface&nbsp;<code><a href="../../rendering/Renderable.html" title="interface in com.csse3200.game.rendering">Renderable</a></code></dd>
 </dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getNormalSpeed()">
+<h3>getNormalSpeed</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">float</span>&nbsp;<span class="element-name">getNormalSpeed</span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getBoostedSpeed()">
+<h3>getBoostedSpeed</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">float</span>&nbsp;<span class="element-name">getBoostedSpeed</span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="isActivate()">
+<h3>isActivate</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isActivate</span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="isVisible()">
+<h3>isVisible</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isVisible</span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getActiveTimeRemaining()">
+<h3>getActiveTimeRemaining</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">float</span>&nbsp;<span class="element-name">getActiveTimeRemaining</span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getBoostDuration()">
+<h3>getBoostDuration</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name">getBoostDuration</span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getBoostStartTime()">
+<h3>getBoostStartTime</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name">getBoostStartTime</span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getPlaySound()">
+<h3>getPlaySound</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">getPlaySound</span>()</div>
 </section>
 </li>
 </ul>

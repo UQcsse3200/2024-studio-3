@@ -173,25 +173,30 @@ loadScripts(document, 'script');</script>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Get the current cutscene being displayed.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>com.badlogic.gdx.Screen</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getPreviousScreen()" class="member-name-link">getPreviousScreen</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="GdxGame.ScreenType.html" title="enum class in com.csse3200.game">GdxGame.ScreenType</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getCurrentScreenType()" class="member-name-link">getCurrentScreenType</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Get the previous game's screen</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setCurrentCutscene(com.csse3200.game.components.cutscenes.Cutscene)" class="member-name-link">setCurrentCutscene</a><wbr>(<a href="components/cutscenes/Cutscene.html" title="class in com.csse3200.game.components.cutscenes">Cutscene</a>&nbsp;cutscene)</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>com.badlogic.gdx.Screen</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getPreviousScreen()" class="member-name-link">getPreviousScreen</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Set the current cutscene being displayed.</div>
+<div class="block">Get the previous game's screen</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setScreen(com.csse3200.game.GdxGame.ScreenType)" class="member-name-link">setScreen</a><wbr>(<a href="GdxGame.ScreenType.html" title="enum class in com.csse3200.game">GdxGame.ScreenType</a>&nbsp;screenType)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setCurrentCutscene(com.csse3200.game.components.cutscenes.Cutscene)" class="member-name-link">setCurrentCutscene</a><wbr>(<a href="components/cutscenes/Cutscene.html" title="class in com.csse3200.game.components.cutscenes">Cutscene</a>&nbsp;cutscene)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Sets the game's screen to a new screen of the provided type.</div>
+<div class="block">Set the current cutscene being displayed.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setScreen(com.csse3200.game.GdxGame.ScreenType,com.csse3200.game.GdxGame.CutsceneType)" class="member-name-link">setScreen</a><wbr>(<a href="GdxGame.ScreenType.html" title="enum class in com.csse3200.game">GdxGame.ScreenType</a>&nbsp;screenType,
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setScreen(com.csse3200.game.GdxGame.ScreenType)" class="member-name-link">setScreen</a><wbr>(<a href="GdxGame.ScreenType.html" title="enum class in com.csse3200.game">GdxGame.ScreenType</a>&nbsp;screenType)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Sets the game's screen to a new screen of the provided type.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setScreen(com.csse3200.game.GdxGame.ScreenType,com.csse3200.game.GdxGame.CutsceneType)" class="member-name-link">setScreen</a><wbr>(<a href="GdxGame.ScreenType.html" title="enum class in com.csse3200.game">GdxGame.ScreenType</a>&nbsp;screenType,
  <a href="GdxGame.CutsceneType.html" title="enum class in com.csse3200.game">GdxGame.CutsceneType</a>&nbsp;cutsceneType)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 </div>
 </div>
 </div>
@@ -254,6 +259,17 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="getPreviousScreen()">
 <h3>getPreviousScreen</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">com.badlogic.gdx.Screen</span>&nbsp;<span class="element-name">getPreviousScreen</span>()</div>
+<div class="block">Get the previous game's screen</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>previous screen</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getCurrentScreenType()">
+<h3>getCurrentScreenType</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="GdxGame.ScreenType.html" title="enum class in com.csse3200.game">GdxGame.ScreenType</a></span>&nbsp;<span class="element-name">getCurrentScreenType</span>()</div>
 <div class="block">Get the previous game's screen</div>
 <dl class="notes">
 <dt>Returns:</dt>
