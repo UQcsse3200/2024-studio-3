@@ -116,11 +116,12 @@ public class GameBackgroundDisplay extends UIComponent {
 
     @Override
     public void update() {
+        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!BACKGROUND UPDATE FUNCTION");
         if (!lastFrame) {
             long elapsedTime = ServiceLocator.getTimeSource().getTimeSince(timeSinceLastUpdate);
             long elapsedTimeSecs = elapsedTime/1000;
             //if time to update
-            if (elapsedTimeSecs >= this.timePerFrame) {
+            //if (elapsedTimeSecs >= this.timePerFrame) {
                 this.currentImageIndex++;
                 this.currentImage = BACKGROUND_TEXTURES[currentImageIndex];
                 this.timeSinceLastUpdate = ServiceLocator.getTimeSource().getTime();
@@ -130,7 +131,7 @@ public class GameBackgroundDisplay extends UIComponent {
                 logger.debug(message);
                 if (currentImageIndex >= 35) {
                     this.lastFrame = true; //stops updating when hits last frame of cycle
-                }
+                //}
             }
         }
     }

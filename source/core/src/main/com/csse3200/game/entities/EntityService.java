@@ -1,6 +1,7 @@
 package com.csse3200.game.entities;
 
 import com.badlogic.gdx.utils.Array;
+import com.csse3200.game.components.maingame.GameBackgroundDisplay;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.csse3200.game.events.EventHandler;
@@ -14,7 +15,7 @@ import com.csse3200.game.events.EventHandler;
  */
 public class EntityService {
   private static final Logger logger = LoggerFactory.getLogger(EntityService.class);
-  private static final int INITIAL_CAPACITY = 16;
+  private static final int INITIAL_CAPACITY = 32;
 
   private final Array<Entity> entities = new Array<>(false, INITIAL_CAPACITY);
   private final EventHandler entityEventHandler;
@@ -63,6 +64,8 @@ public class EntityService {
     for (Entity entity : entitiesCopy) {
       entity.earlyUpdate();
       entity.update();
+      //System.out.println("CALLED UPDATE FUNCTION!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+
     }
   }
 

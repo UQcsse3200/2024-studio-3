@@ -184,6 +184,7 @@ public class MainGameScreen extends ScreenAdapter {
 		if (!isPaused) {
 			physicsEngine.update();
 			ServiceLocator.getDayNightService().update();
+
 			ServiceLocator.getEntityService().update();
 		}
 		renderer.render();
@@ -334,8 +335,6 @@ public class MainGameScreen extends ScreenAdapter {
 						.addComponent(new UpgradesDisplay(this))
 								.addComponent(new RecipeCardDisplay(this));
 
-		//temporary moral display
-//			.addComponent(new MoralDisplayTemp(this));
 		ServiceLocator.getEntityService().register(ui);
 	}
 }
