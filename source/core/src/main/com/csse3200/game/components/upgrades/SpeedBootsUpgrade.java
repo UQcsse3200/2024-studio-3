@@ -39,7 +39,7 @@ public class SpeedBootsUpgrade extends UIComponent implements Upgrade {
     private static final String[] whiteBgTexture = {"images/white_background.png"};
     private boolean isActivate;
     public Table layout;
-    private Label text; // the "Upgrade" text above the speedMeter
+    public Label text; // the "Upgrade" text above the speedMeter
     public ProgressBar speedMeter; // the meter that show the remaining time
     private boolean isVisible;
     private float activeTimeRemaining;
@@ -248,5 +248,9 @@ public class SpeedBootsUpgrade extends UIComponent implements Upgrade {
 
     public long getBoostDuration() {
         return BOOST_DURATION;
+    }
+
+    public long getBoostStartTime() {
+        return boostStartTime;
     }
 }

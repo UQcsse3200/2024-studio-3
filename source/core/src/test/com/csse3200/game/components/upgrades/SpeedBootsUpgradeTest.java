@@ -37,6 +37,7 @@ public class SpeedBootsUpgradeTest {
     @Mock Texture textureMock;
     @Mock Table mockLayout;
     @Mock ProgressBar mockSpeedMeter;
+    @Mock Label mockText;
     @Mock CombatStatsComponent combatStatsComponent;
     @Mock KeyboardPlayerInputComponent keyboardPlayerInputComponent;
     private EventHandler eventHandler;
@@ -65,6 +66,7 @@ public class SpeedBootsUpgradeTest {
         speedBootsUpgrade.setStage(stage);
         speedBootsUpgrade.layout = mockLayout;
         speedBootsUpgrade.speedMeter = mockSpeedMeter;
+        speedBootsUpgrade.text = mockText;
         speedBootsUpgrade.create();
     }
 
@@ -89,6 +91,22 @@ public class SpeedBootsUpgradeTest {
     }
 
     @Test
+    void testSpeedBootsDeactivates() {
+        speedBootsUpgrade.activate();
+        when(mockSpeedMeter.hasParent()).thenReturn(true);
+        speedBootsUpgrade.deactivate();
+
+        verify(speedBootsUpgrade.speedMeter).remove();
+        verify(speedBootsUpgrade.text).remove();
+
+        assertFalse(speedBootsUpgrade.isActivate());
+        assertFalse(speedBootsUpgrade.isVisible());
+        assertFalse(speedBootsUpgrade.layout.isVisible());
+        assertEquals(-1, speedBootsUpgrade.getBoostStartTime());
+        verify(keyboardPlayerInputComponent).setWalkSpeed(speedBootsUpgrade.getNormalSpeed());
+    }
+
+    @Test
     void testLoseGoldOnPurchase() {
         when(combatStatsComponent.getGold()).thenReturn(100);
         speedBootsUpgrade.activate();
@@ -98,8 +116,14 @@ public class SpeedBootsUpgradeTest {
     @Test
     void testInsufficientGold() {
         when(combatStatsComponent.getGold()).thenReturn(10);
+        AtomicBoolean notEnoughMoney = new AtomicBoolean(false);
+        eventHandler.addListener("notenoughmoney", () -> {
+            notEnoughMoney.set(true);
+        });
+
         speedBootsUpgrade.activate();
 
+        assertTrue(notEnoughMoney.get());
         assertFalse(speedBootsUpgrade.isActivate());
         assertFalse(speedBootsUpgrade.isVisible());
         assertFalse(speedBootsUpgrade.layout.isVisible());
