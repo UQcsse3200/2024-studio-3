@@ -140,9 +140,24 @@ public class StationServingComponent extends Component {
         List<String> playerIngredients = playerRecipe.getIngredients();
         logger.info("Player ingredients: {}", playerIngredients);
 
-        int score = ScoreSystem.compareLists(playerIngredients, orderIngredients);
-        String scoreDescription = ScoreSystem.getScoreDescription(score);
+        int score = ScoreSystem.compareLists(playerIngredients, orderIngredients); // should rename to accuracyScore
+        String scoreDescription = ScoreSystem.getScoreDescription(score); // rename to finalScore
 
+        /* 
+         * String orderTime = bigTicketInfo[2];
+         * int timeScore = ScoreSystem.getTimeScore(orderTime);
+         * 
+         * for each ingredient in list, call ItemTimerComponent.getCompletionPercent():
+         * List<int> ingredientCompletionList = null;
+         * for (String ingredient : playerIngredients) {
+         *      int ingredientCompletion = ingredient.ItemTimerComponent.getCompletionPercent();
+         *      ingredientCompletionList.add(ingredientCompletion);
+         * }
+         * int cookLevelScore = ScoreSystem.getCookLevelScore(ingredientCompletionList);
+         * 
+         * String finalScore = ScoreSystem.getScoreDescription(accuracyScore, timeScore, cookLevelScore);
+         * 
+        */
         logOrderDetails(orderNumber, score, scoreDescription);
 
         Entity customer = CustomerManager.getCustomerByOrder(orderNumber);
