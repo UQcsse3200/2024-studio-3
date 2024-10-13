@@ -102,6 +102,10 @@ public class PlayerActions extends Component {
    * Triggers an interaction event. It holds the logic in how to interact with a given station
    */
   void interact(String type) {
+    if (closestEntity == null) {
+      return;
+    }
+
     closestEntity.getEvents().trigger("Station Interaction", playerInventory, displayInventory, type);
   }
 

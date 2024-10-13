@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 import com.csse3200.game.components.station.IngredientStationHandlerComponent;
+import com.csse3200.game.components.station.StationChoppingComponent;
 import com.csse3200.game.components.station.StationMealComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
 
@@ -34,10 +35,12 @@ public class InventoryDisplayHoverComponent extends RenderComponent {
     private Texture selectedBackgroundImage;
     private boolean showKeys = false;
     private boolean isMixingStation = false;
+    private boolean isChoppingStation = false;
     private boolean isBasket = false;
     private Texture interactKeyImage;
     private Texture combineKeyImage;
     private Texture rotateKeyImage;
+    private Texture chopKeyImage;
     private ShapeRenderer shapeRenderer;
     private Vector2 position;
     private Vector2 scale;
@@ -56,6 +59,7 @@ public class InventoryDisplayHoverComponent extends RenderComponent {
         interactKeyImage = new Texture("images/inventory_ui/interact_key.png");
         combineKeyImage = new Texture("images/inventory_ui/combine_key.png");
         rotateKeyImage = new Texture("images/inventory_ui/rotate_key.png");
+        chopKeyImage = new Texture("images/inventory_ui/chop_key.png");
         shapeRenderer = new ShapeRenderer();
         ServiceLocator.getRenderService().register(this);
 
@@ -67,6 +71,7 @@ public class InventoryDisplayHoverComponent extends RenderComponent {
             entity.getEvents().addListener("hideToolTip", this::hideToolTip);
 
             isMixingStation = entity.getComponent(StationMealComponent.class) != null;
+            isChoppingStation = entity.getComponent(StationChoppingComponent.class) != null;
             isBasket = entity.getComponent(IngredientStationHandlerComponent.class) != null;
 
             // need to use the physics body position of the entity as
@@ -101,17 +106,6 @@ public class InventoryDisplayHoverComponent extends RenderComponent {
         }
     }
 
-
-
-    /**
-     * Updates this InventoryDisplay to reflect the current state of the InventoryComponent
-     * of this component's parent entity.
-     */
-    @Override
-    public void update() {
-
-    }
-
     public void updateDisplay() {
         updateImages();
     }
@@ -142,6 +136,16 @@ public class InventoryDisplayHoverComponent extends RenderComponent {
                     KEY_WIDTH,
                     KEY_HEIGHT
             );
+
+            if (isChoppingStation) {
+                batch.draw(chopKeyImage,
+                        position.x,
+                        position.y + 0.4f,
+                        KEY_WIDTH,
+                        KEY_HEIGHT
+                );
+            }
+
             if (isMixingStation) {
                 batch.draw(rotateKeyImage,
                         position.x,
