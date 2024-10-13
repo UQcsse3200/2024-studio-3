@@ -1,7 +1,6 @@
 package com.csse3200.game.entities;
 
 import com.badlogic.gdx.utils.Array;
-import com.csse3200.game.components.maingame.GameBackgroundDisplay;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.csse3200.game.events.EventHandler;
@@ -9,8 +8,7 @@ import com.csse3200.game.events.EventHandler;
 /**
  * Provides a global access point for entities to register themselves. This allows for iterating
  * over entities to perform updates each loop. All game entities should be registered here.
- *
- * Avoid adding additional state here! Global access is often the easy but incorrect answer to
+  * Avoid adding additional state here! Global access is often the easy but incorrect answer to
  * sharing data.
  */
 public class EntityService {
@@ -64,8 +62,6 @@ public class EntityService {
     for (Entity entity : entitiesCopy) {
       entity.earlyUpdate();
       entity.update();
-      //System.out.println("CALLED UPDATE FUNCTION!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-
     }
   }
 
