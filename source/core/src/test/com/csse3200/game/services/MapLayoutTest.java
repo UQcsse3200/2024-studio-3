@@ -72,6 +72,7 @@ class MapLayoutTest {
 
         //ServiceLocator.registerResourceService(resourceService);
         //ServiceLocator.registerEntityService(entityService);
+        //ServiceLocator.registerEntityService(entityService);
         //ServiceLocator.registerRenderService(renderService);
         //ServiceLocator.registerPhysicsService(physicsService);
 

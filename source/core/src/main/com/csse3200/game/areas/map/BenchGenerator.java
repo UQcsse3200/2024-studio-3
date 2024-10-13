@@ -40,7 +40,7 @@ public class BenchGenerator {
             // add the top part of the bench
             arr.add(new Bench("top", x, endY));
         }
-        LOGGER.log(Level.INFO, "added column of " + arr.size() + " benches");
+        //  LOGGER.log(Level.INFO, "added column of " + arr.size() + " benches");
         return arr;
     }
     public static ArrayList<Bench> createBenchRow(int startX, int endX, int y) {

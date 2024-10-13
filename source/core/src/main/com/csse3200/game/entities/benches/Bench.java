@@ -43,8 +43,9 @@ public class Bench extends Entity{
         this.y = y;
 
         addComponent(new TextureRenderComponent("images/stations/benches/" + type + ".png"));
-        addComponent(new PhysicsComponent());
+        addComponent(new PhysicsComponent().setBodyType(BodyType.StaticBody));
         addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
+
 
         addComponent(new InteractionComponent(PhysicsLayer.INTERACTABLE));
         addComponent(new TooltipsDisplay());
