@@ -46,6 +46,7 @@ public class InventoryDisplayHoverComponent extends RenderComponent {
     private boolean isChoppingStation = false;
     private boolean isCollectionStation = false;
     private boolean isCookingStation = false;
+    private InventoryComponent inventory = null;
     private ItemComponent currentItem = null;
     private boolean isBasket = false;
     private boolean hasItem = false;
@@ -87,6 +88,7 @@ public class InventoryDisplayHoverComponent extends RenderComponent {
             isCookingStation = entity.getComponent(StationCookingComponent.class) != null;
             isCollectionStation = entity.getComponent(StationCollectionComponent.class) != null;
             isBasket = entity.getComponent(IngredientStationHandlerComponent.class) != null;
+            inventory = entity.getComponent(InventoryComponent.class);
 
             // need to use the physics body position of the entity as
             // the regular getPosition() on stations does not return the correct position.
@@ -126,6 +128,7 @@ public class InventoryDisplayHoverComponent extends RenderComponent {
 
     /**
      * Sets this component to display keybind tooltip icons
+     * @param item the item the player is currently holding
      */
     private void showToolTip(ItemComponent item) {
         this.currentItem = item;
@@ -146,7 +149,6 @@ public class InventoryDisplayHoverComponent extends RenderComponent {
         }
 
         // Get the item
-        InventoryComponent inventory = entity.getComponent(InventoryComponent.class);
         ItemComponent item = inventory.getItems().get(0);
 
         // Check if the item is still choppable
@@ -167,8 +169,7 @@ public class InventoryDisplayHoverComponent extends RenderComponent {
             return false;
         }
 
-        InventoryComponent inventory = entity.getComponent(InventoryComponent.class);
-
+        inventory = entity.getComponent(InventoryComponent.class);
         if (inventory.getSize() < 2) {
             return false;
         }
@@ -189,11 +190,8 @@ public class InventoryDisplayHoverComponent extends RenderComponent {
         // 1. the player doesn't have an item 
 
         if (isChoppingStation || isCookingStation) {
-            InventoryComponent inventory = entity.getComponent(InventoryComponent.class);
             boolean isFull = (inventory.getSize() == 1);
-
             StationItemHandlerComponent itemHandler = entity.getComponent(StationItemHandlerComponent.class);
-
             if (!hasItem) {
                 return isFull;
             } else {
@@ -201,9 +199,7 @@ public class InventoryDisplayHoverComponent extends RenderComponent {
             }
         }
 
-        if (isMixingStation) {
-            InventoryComponent inventory = entity.getComponent(InventoryComponent.class);
-            
+        if (isMixingStation) {            
             if (hasItem && inventory.getSize() >= inventory.getCapacity()) {
                 return false;
             } else if (hasItem && inventory.getSize() < inventory.getCapacity()) {
@@ -232,7 +228,6 @@ public class InventoryDisplayHoverComponent extends RenderComponent {
         }
 
         StationMealComponent mealComponent = entity.getComponent(StationMealComponent.class);
-
         if (!mealComponent.hasMeal()) {
             return false;
         }
