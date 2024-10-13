@@ -10,9 +10,6 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.csse3200.game.rendering.RenderComponent;
 import com.csse3200.game.services.ServiceLocator;
 
-import net.dermetfan.gdx.physics.box2d.PositionController.P;
-
-import com.csse3200.game.components.items.ChopIngredientComponent;
 import com.csse3200.game.components.items.IngredientComponent;
 import com.csse3200.game.components.items.ItemComponent;
 import java.util.ArrayList;
