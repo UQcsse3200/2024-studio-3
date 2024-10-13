@@ -35,7 +35,7 @@ public class LevelComponent extends Component {
         customerNameArray = new ArrayList<>();
         for (PersonalCustomerEnums customer: PersonalCustomerEnums.values()) {
             String name = customer.name();
-            if (name != "BASIC_SHEEP" && name != "BASIC_CHICKEN") {
+            if (!name.equals("BASIC_SHEEP") && !name.equals("BASIC_CHICKEN")) {
                 customerNameArray.add(customer.name());
             }
         }
