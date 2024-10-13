@@ -9,12 +9,20 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.csse3200.game.rendering.RenderComponent;
 import com.csse3200.game.services.ServiceLocator;
+
+import net.dermetfan.gdx.physics.box2d.PositionController.P;
+
+import com.csse3200.game.components.items.ChopIngredientComponent;
+import com.csse3200.game.components.items.IngredientComponent;
 import com.csse3200.game.components.items.ItemComponent;
 import java.util.ArrayList;
 import java.util.Objects;
 
 import com.csse3200.game.components.station.IngredientStationHandlerComponent;
 import com.csse3200.game.components.station.StationChoppingComponent;
+import com.csse3200.game.components.station.StationCollectionComponent;
+import com.csse3200.game.components.station.StationCookingComponent;
+import com.csse3200.game.components.station.StationItemHandlerComponent;
 import com.csse3200.game.components.station.StationMealComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
 
@@ -36,7 +44,11 @@ public class InventoryDisplayHoverComponent extends RenderComponent {
     private boolean showKeys = false;
     private boolean isMixingStation = false;
     private boolean isChoppingStation = false;
+    private boolean isCollectionStation = false;
+    private boolean isCookingStation = false;
+    private ItemComponent currentItem = null;
     private boolean isBasket = false;
+    private boolean hasItem = false;
     private Texture interactKeyImage;
     private Texture combineKeyImage;
     private Texture rotateKeyImage;
@@ -72,6 +84,8 @@ public class InventoryDisplayHoverComponent extends RenderComponent {
 
             isMixingStation = entity.getComponent(StationMealComponent.class) != null;
             isChoppingStation = entity.getComponent(StationChoppingComponent.class) != null;
+            isCookingStation = entity.getComponent(StationCookingComponent.class) != null;
+            isCollectionStation = entity.getComponent(StationCollectionComponent.class) != null;
             isBasket = entity.getComponent(IngredientStationHandlerComponent.class) != null;
 
             // need to use the physics body position of the entity as
@@ -113,7 +127,9 @@ public class InventoryDisplayHoverComponent extends RenderComponent {
     /**
      * Sets this component to display keybind tooltip icons
      */
-    private void showToolTip() {
+    private void showToolTip(ItemComponent item) {
+        this.currentItem = item;
+        this.hasItem = (item != null);
         this.showKeys = true;
     }
 
@@ -124,20 +140,123 @@ public class InventoryDisplayHoverComponent extends RenderComponent {
         this.showKeys = false;
     }
 
+    private boolean showChoppingKey() {
+        if (!isChoppingStation || hasItem) {
+            return false;
+        }
+
+        // Get the item
+        InventoryComponent inventory = entity.getComponent(InventoryComponent.class);
+        ItemComponent item = inventory.getItems().get(0);
+
+        // Check if the item is still choppable
+        if (item == null || !(item instanceof IngredientComponent)) {
+            return false;
+        }
+
+        IngredientComponent ingredientComponent = (IngredientComponent) item;
+        if (!ingredientComponent.getItemState().equals("raw")) {
+            return false;
+        }
+
+        return true;
+    }
+
+    private boolean showRotateKey() {
+        if (!isMixingStation || hasItem) {
+            return false;
+        }
+
+        InventoryComponent inventory = entity.getComponent(InventoryComponent.class);
+
+        if (inventory.getSize() < 2) {
+            return false;
+        }
+
+        return true;
+    }
+
+    private boolean showInteractKey() {
+        // If were chopping we want to show the interact key if
+        // 1. the player doesn't have an item but we do
+        // 2. the player has an item but we dont
+
+        // If were a mixing station we show interaction key if
+        // 1. the player has an item but we aren't full
+        // 2. the player doesn't have an item but we do
+
+        // If were a collection station we show interaction key if
+        // 1. the player doesn't have an item 
+
+        if (isChoppingStation || isCookingStation) {
+            InventoryComponent inventory = entity.getComponent(InventoryComponent.class);
+            boolean isFull = (inventory.getSize() == 1);
+
+            StationItemHandlerComponent itemHandler = entity.getComponent(StationItemHandlerComponent.class);
+
+            if (!hasItem) {
+                return isFull;
+            } else {
+                return !isFull && itemHandler.isItemAccepted(currentItem);
+            }
+        }
+
+        if (isMixingStation) {
+            InventoryComponent inventory = entity.getComponent(InventoryComponent.class);
+            
+            if (hasItem && inventory.getSize() >= inventory.getCapacity()) {
+                return false;
+            } else if (hasItem && inventory.getSize() < inventory.getCapacity()) {
+                return true;
+            } else if (!hasItem && inventory.getSize() > 0) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        if (isCollectionStation) {
+            if (hasItem) {
+                return false;
+            } else {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private boolean showCombineKey() {
+        if (!isMixingStation || hasItem) {
+            return false;
+        }
+
+        StationMealComponent mealComponent = entity.getComponent(StationMealComponent.class);
+
+        if (!mealComponent.hasMeal()) {
+            return false;
+        }
+
+        return true;
+    }
+
     @Override
     public void draw(SpriteBatch batch)  {
         if (entity == null || position == null || scale == null)
             return;
 
         if (showKeys) {
-            batch.draw(interactKeyImage,
-                    position.x,
-                    position.y + 0.7f,
-                    KEY_WIDTH,
-                    KEY_HEIGHT
-            );
 
-            if (isChoppingStation) {
+            if (showInteractKey()) {
+                batch.draw(interactKeyImage,
+                        position.x,
+                        position.y + 0.7f,
+                        KEY_WIDTH,
+                        KEY_HEIGHT
+                );
+            }
+
+            if (showChoppingKey()) {
                 batch.draw(chopKeyImage,
                         position.x,
                         position.y + 0.4f,
@@ -146,13 +265,16 @@ public class InventoryDisplayHoverComponent extends RenderComponent {
                 );
             }
 
-            if (isMixingStation) {
+            if (showRotateKey()) {
                 batch.draw(rotateKeyImage,
                         position.x,
                         position.y + 0.4f,
                         KEY_WIDTH,
                         KEY_HEIGHT
                 );
+            }
+
+            if (showCombineKey()) {
                 batch.draw(combineKeyImage,
                         position.x,
                         position.y + 0.1f,

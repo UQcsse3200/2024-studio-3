@@ -43,9 +43,9 @@ public class PlayerActions extends Component {
         Body body = physicsComponent.getBody();
         Vector2 position = body.getPosition();
 
-        if (moving) {
-            updateInteraction();
+        updateInteraction();
 
+        if (moving) {
             // Stop if it's at min x position or max x position
             if (position.x < MIN_X_POSITION) {
                 position.x = MIN_X_POSITION;
@@ -71,16 +71,16 @@ public class PlayerActions extends Component {
     oldClosestEntity = closestEntity;
     closestEntity = sensor.getClosestInteractable();
 
-    if (oldClosestEntity == closestEntity) {
-        return;
-    }
+    //if (oldClosestEntity == closestEntity) {
+    //    return;
+    //}
 
     if (oldClosestEntity != null) {
       oldClosestEntity.getEvents().trigger("hideToolTip");
     }
 
     if (closestEntity != null) {
-      closestEntity.getEvents().trigger("showToolTip");
+      closestEntity.getEvents().trigger("showToolTip", playerInventory.getItemFirst());
     }
   }
 
