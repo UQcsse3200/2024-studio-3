@@ -26,6 +26,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import static com.badlogic.gdx.Gdx.app;
+
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
@@ -311,6 +314,7 @@ public class ForestGameArea extends GameArea {
 
     createEndDayScreen();
     playMusic();
+
   }
 
   /**

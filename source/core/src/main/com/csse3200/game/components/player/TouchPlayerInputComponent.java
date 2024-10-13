@@ -16,10 +16,9 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
  * Input handler for the player for keyboard and touch (mouse) input.
  * This input handler uses keyboard and touch input.
  */
+
 public class TouchPlayerInputComponent extends InputComponent {
   private final Vector2 walkDirection = Vector2.Zero.cpy();
-  OrthographicCamera camera = new OrthographicCamera();
-
   public TouchPlayerInputComponent() {
     super(5);
   }
@@ -49,10 +48,15 @@ public class TouchPlayerInputComponent extends InputComponent {
         walkDirection.add(Vector2Utils.RIGHT);
         triggerWalkEvent();
         return true;
+      case Input.Keys.U:
+      // Trigger the "penguinactivated" event when "U" is pressed
+      entity.getEvents().trigger("penguinactivated");
+      return true;
       default:
         return false;
     }
   }
+
 
   /**
    * Triggers player events on specific keycodes.
