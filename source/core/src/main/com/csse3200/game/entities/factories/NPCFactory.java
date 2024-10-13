@@ -118,29 +118,16 @@ public class NPCFactory {
                 // Add TouchPlayerInputComponent for click detection
                 penguin.addComponent(new TouchPlayerInputComponent());
                 final boolean[] isClicked = {false};
-                
-                // Add a click event listener for the penguin
-                // penguin.getEvents().addListener("clicked", () -> {
-                //         if (!isClicked[0] && isHoverBox[0]) {
-                //                 hoverBox.setEnabled(false);
-                //                 logger.info("Penguin clicked!");
-                //                 upgradesDisplay.create();
-                //                 upgradesDisplay.toggleVisibility();
-                //                 // if(!upgradesDisplay.isVisible){
-                //                 //         penguin.dispose(); 
-                //                 // }
-                //                 isClicked[0] = true;  
-                //             } else {
-                //                 logger.info("Penguin has already been clicked, ignoring.");
-                //             }     
-                // });
+        
                 penguin.getEvents().addListener("clicked", (a, b) -> {
                         if (a instanceof Float && b instanceof Float) {
                             float x = ((Float) a); // cast a to float
                             float y = ((Float) b); // cast b to float
                             
-                            if ((penguin.getPosition().x - 0.3 <= x && x <= penguin.getPosition().x + 0.3) &&
-                                (penguin.getPosition().y - 0.5 <= y && y <= penguin.getPosition().y + 0.3)) {
+                        //     if ((penguin.getPosition().x - 0.3 <= x && x <= penguin.getPosition().x + 0.3) &&
+                        //         (penguin.getPosition().y - 0.5 <= y && y <= penguin.getPosition().y + 0.3)) {
+                                if ((penguin.getPosition().x - 1 <= x && x <= penguin.getPosition().x + 1) &&
+                                (penguin.getPosition().y - 1 <= y && y <= penguin.getPosition().y + 1)) {
                     
                                 if (!isClicked[0] && isHoverBox[0]) {
                                     hoverBox.setEnabled(false);

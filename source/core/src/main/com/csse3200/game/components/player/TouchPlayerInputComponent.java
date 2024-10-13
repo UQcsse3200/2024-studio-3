@@ -1,10 +1,16 @@
 package com.csse3200.game.components.player;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.csse3200.game.input.InputComponent;
 import com.csse3200.game.utils.math.Vector2Utils;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 
 /**
  * Input handler for the player for keyboard and touch (mouse) input.
@@ -12,6 +18,7 @@ import com.badlogic.gdx.InputProcessor;
  */
 public class TouchPlayerInputComponent extends InputComponent {
   private final Vector2 walkDirection = Vector2.Zero.cpy();
+  OrthographicCamera camera = new OrthographicCamera();
 
   public TouchPlayerInputComponent() {
     super(5);
@@ -90,10 +97,10 @@ public class TouchPlayerInputComponent extends InputComponent {
   @Override
   public boolean touchDown(int screenX, int screenY, int pointer, int button) {
     if (button == Input.Buttons.LEFT) {
-      // entity.getEvents().trigger("clicked");
       float convertedx = (float) ((screenX * 0.013936) - 3.620833); 
       float convertedy = (float)((screenY * -0.01389) + 10.224049);
       entity.getEvents().trigger("clicked", convertedx, convertedy);
+      System.out.println(convertedx + convertedy);
     }
     return true;
   }
