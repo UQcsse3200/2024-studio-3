@@ -188,7 +188,7 @@ public class InventoryDisplayHoverComponent extends RenderComponent {
 
         if (isChoppingStation || isCookingStation) {
             boolean isFull = (inventory.getSize() == 1);
-            StationItemHandlerComponent itemHandler = entity.getComponent(StationItemHandlerComponent.class);
+            StationItemHandlerComponent itemHandler = entity.getComponent(StationItemHandlerComponent.class);           
             if (!hasItem) {
                 return isFull;
             } else {
@@ -209,11 +209,7 @@ public class InventoryDisplayHoverComponent extends RenderComponent {
         }
 
         if (isCollectionStation) {
-            if (hasItem) {
-                return false;
-            } else {
-                return true;
-            }
+            return !hasItem;
         }
 
         return false;
