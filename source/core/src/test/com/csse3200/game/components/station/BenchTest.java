@@ -20,7 +20,7 @@ import com.csse3200.game.rendering.TextureRenderComponent;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
 
-public class BenchTest {
+class BenchTest {
 
     @BeforeEach
     public void setUp() {
@@ -32,46 +32,42 @@ public class BenchTest {
         ServiceLocator.registerResourceService(mockResourceService);
 
     }
+
     /**
-     * Test the creation of a bench with the type "left_border".
-        */
-    @Test
-    public void testCreateBench() {
-        Entity bench = Bench.createBench("left_border");
+     * Helper function to help test the bench creation.
+     * @param benchType the type of bench being created
+     */
+    void validateBenchCreation(String benchType) {
+        Entity bench = Bench.createBench(benchType);
         assertNotNull(bench);
         assertNotNull(bench.getComponent(TextureRenderComponent.class));
         assertNotNull(bench.getComponent(PhysicsComponent.class));
         assertNotNull(bench.getComponent(ColliderComponent.class));
         assertNotNull(bench.getComponent(StationItemHandlerComponent.class));
-
         assertEquals(BodyDef.BodyType.StaticBody, bench.getComponent(PhysicsComponent.class).getBody().getType());
     }
+
+    /**
+     * Test the creation of a bench with the type "left_border".
+     */
+    @Test
+    void testCreateBenchLeftBorder() {
+        validateBenchCreation("left_border");
+    }
+
     /**
      * Test the creation of a bench with the type "middle".
      */
     @Test
-    public void testCreateBench2() {
-        Entity bench = Bench.createBench("middle");
-        assertNotNull(bench);
-        assertNotNull(bench.getComponent(TextureRenderComponent.class));
-        assertNotNull(bench.getComponent(PhysicsComponent.class));
-        assertNotNull(bench.getComponent(ColliderComponent.class));
-        assertNotNull(bench.getComponent(StationItemHandlerComponent.class));
-
-        assertEquals(BodyDef.BodyType.StaticBody, bench.getComponent(PhysicsComponent.class).getBody().getType());
+    void testCreateBenchMiddle() {
+        validateBenchCreation("middle");
     }
+
     /**
      * Test the creation of a bench with the type "single".
      */
     @Test
-    public void testCreateBench3() {
-        Entity bench = Bench.createBench("single");
-        assertNotNull(bench);
-        assertNotNull(bench.getComponent(TextureRenderComponent.class));
-        assertNotNull(bench.getComponent(PhysicsComponent.class));
-        assertNotNull(bench.getComponent(ColliderComponent.class));
-        assertNotNull(bench.getComponent(StationItemHandlerComponent.class));
-
-        assertEquals(BodyDef.BodyType.StaticBody, bench.getComponent(PhysicsComponent.class).getBody().getType());
+    void testCreateBenchSingle() {
+        validateBenchCreation("single");
     }
 }

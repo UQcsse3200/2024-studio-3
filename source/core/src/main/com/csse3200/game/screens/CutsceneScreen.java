@@ -8,6 +8,7 @@ import com.csse3200.game.components.cutscenes.CutsceneActions;
 import com.csse3200.game.components.cutscenes.CutsceneArea;
 import com.csse3200.game.components.cutscenes.CutsceneScreenDisplay;
 import com.csse3200.game.components.cutscenes.CutsceneTextDisplay;
+import com.csse3200.game.components.maingame.TextDisplay;
 import com.csse3200.game.components.gamearea.PerformanceDisplay;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
@@ -36,7 +37,7 @@ public class CutsceneScreen extends ScreenAdapter {
 
     private final GdxGame game;
 
-    private int cutsceneVal;
+    private GdxGame.CutsceneType cutsceneVal;
     private final Renderer renderer;
 
     // Textures used for the cutscene screen
@@ -52,10 +53,10 @@ public class CutsceneScreen extends ScreenAdapter {
      * @param game       The main game instance.
      * @param cutsceneVal The cutscene value to determine which cutscene to load.
      */
-    public CutsceneScreen(GdxGame game, int cutsceneVal) {
+    public CutsceneScreen(GdxGame game, GdxGame.CutsceneType cutsceneVal) {
         this.game = game;
         this.cutsceneVal = cutsceneVal;
-        if (cutsceneVal == 4 || cutsceneVal == 5) {
+        if (cutsceneVal == GdxGame.CutsceneType.BAD_END || cutsceneVal == GdxGame.CutsceneType.GOOD_END) {
             textBoxVisible = false;
         }
 
@@ -157,7 +158,9 @@ public class CutsceneScreen extends ScreenAdapter {
                 .addComponent(new TerminalDisplay())
                 .addComponent(new CutsceneActions(this.game))
                 .addComponent(cutsceneScreenDisplay)
-                .addComponent(new CutsceneTextDisplay(textBoxVisible));
+                .addComponent(new CutsceneTextDisplay(textBoxVisible))
+                .addComponent(new TextDisplay(this, "cutscene"));
+
 
         // Register the UI entity with the entity service
         ServiceLocator.getEntityService().register(ui);
@@ -186,7 +189,7 @@ public class CutsceneScreen extends ScreenAdapter {
      *
      * @return The cutsceneVal value
      */
-    public int getVal() {
+    public GdxGame.CutsceneType getVal() {
         return cutsceneVal;
     }
 }

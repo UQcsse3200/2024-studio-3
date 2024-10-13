@@ -77,16 +77,6 @@ public class TouchPlayerInputComponent extends InputComponent {
     }
   }
 
-  /**
-   * Triggers the player attack.
-   * @return whether the input was processed
-   * @see InputProcessor#touchDown(int, int, int, int)
-   */
-  // @Override
-  // public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-  //   entity.getEvents().trigger("attack");
-  //   return true;
-  // }
   @Override
   public boolean touchDown(int screenX, int screenY, int pointer, int button) {
     if (button == Input.Buttons.LEFT) {

@@ -17,6 +17,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.csse3200.game.services.*;
 
+import java.util.logging.Level;
+
 import static com.badlogic.gdx.Gdx.app;
 /**
  * Entry point of the non-platform-specific game logic. Controls which screen is currently running.
@@ -73,6 +75,22 @@ public class GdxGame extends Game {
     setScreen(newScreen(screenType));
   }
 
+  public void setScreen(ScreenType screenType, CutsceneType cutsceneType) {
+    logger.info("Setting cutscene screen to {} with cutscene {}", screenType, cutsceneType);
+    Screen currentScreen = getScreen();
+
+    previousScreen = currentScreen;  // Save the current screen before changing
+    SaveLoadService system = ServiceLocator.getSaveLoadService();
+    if (currentScreen != null) {
+      currentScreen.dispose();
+    }
+    ServiceLocator.registerSaveLoadService(system); // I know this is probably bad practice but i need it to work
+
+    logger.warn("Is AWDAdwKA null? " + (ServiceLocator.getSaveLoadService() == null));
+
+    setScreen(newScreen(screenType, cutsceneType));
+  }
+
   /**
    * Get the previous game's screen
    * @return previous screen
@@ -102,14 +120,50 @@ public class GdxGame extends Game {
         return new SettingsScreen(this);
       case LOAD_GAME:
         return new LoadGameScreen(this);
+
+//      case CUTSCENE:
+//        return new CutsceneScreen(this, CutsceneType.DAY_2);
+
       case CUTSCENE:
-        return new CutsceneScreen(this, 0);
+        return new CutsceneScreen(this, CutsceneType.MORAL_1);
+
+//      case ENDDAY_1:
+//        return new CutsceneScreen(this, CutsceneType.MORAL_1);
+
       case GOOD_END:
-        return new CutsceneScreen(this, 4);
+        return new CutsceneScreen(this, CutsceneType.GOOD_END);
       case BAD_END:
-        return new CutsceneScreen(this, 5);
+        return new CutsceneScreen(this, CutsceneType.BAD_END);
       case LOSE_END:
-        return new CutsceneScreen(this, 6);
+        return new CutsceneScreen(this, CutsceneType.LOSE);
+      default:
+        return null;
+    }
+  }
+
+  private Screen newScreen(ScreenType screenType, CutsceneType cutsceneType) {
+    if (screenType != ScreenType.CUTSCENE) {
+      return null;
+    }
+    switch (cutsceneType) {
+      case BACK_STORY:
+        return new CutsceneScreen(this, CutsceneType.BACK_STORY);
+      case DAY_2:
+        return new CutsceneScreen(this, CutsceneType.DAY_2);
+      case DAY_3:
+        return new CutsceneScreen(this, CutsceneType.DAY_3);
+      case DAY_4:
+        return new CutsceneScreen(this, CutsceneType.DAY_4);
+      case GOOD_END:
+        return new CutsceneScreen(this, CutsceneType.GOOD_END);
+      case BAD_END:
+        return new CutsceneScreen(this, CutsceneType.BAD_END);
+      case LOSE:
+        return new CutsceneScreen(this, CutsceneType.LOSE);
+
+      case MORAL_1:
+        return new CutsceneScreen(this, CutsceneType.MORAL_1);
+
       default:
         return null;
     }
@@ -133,7 +187,15 @@ public class GdxGame extends Game {
 
 
   public enum ScreenType {
-    MAIN_MENU, MAIN_GAME, SETTINGS, LOAD_GAME, CUTSCENE, GOOD_END, BAD_END, LOSE_END
+    MAIN_MENU, MAIN_GAME, SETTINGS, LOAD_GAME, CUTSCENE, GOOD_END, BAD_END, LOSE_END, ENDDAY_1
+  }
+
+  public enum CutsceneType {
+    BACK_STORY, DAY_2, DAY_3, DAY_4, GOOD_END, BAD_END, LOSE, MORAL_1, MORAL_2, MORAL_3, MORAL_4
+  }
+
+  public enum LevelType {
+    LEVEL_1, LEVEL_2, LEVEL_3, LEVEL_4, LEVEL_5, DONE
   }
 
   /**

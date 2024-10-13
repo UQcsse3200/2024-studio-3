@@ -161,7 +161,7 @@ public class MainGameScreen extends ScreenAdapter {
 		logger.debug("Initialising main game screen entities");
 		TerrainFactory terrainFactory = new TerrainFactory(renderer.getCamera());
 
-		int currLevel = ServiceLocator.getLevelService().getCurrLevel();
+		GdxGame.LevelType currLevel = ServiceLocator.getLevelService().getCurrLevel();
 		UpgradesDisplay upgradesDisplay = new UpgradesDisplay(this);
 		ForestGameArea forestGameArea = new ForestGameArea(terrainFactory, currLevel, upgradesDisplay);
 		forestGameArea.create();
@@ -197,12 +197,19 @@ public class MainGameScreen extends ScreenAdapter {
 	 */
 	@Override
 	public void resize(int width, int height) {
+		logger.warn("HERE");
+		if (width == 0) {
+			width = 1;
+		}
+		if (height == 0) {
+			height = 1;
+		}
 		renderer.resize(width, height);
 		docketLineDisplay.resize();
 		if (orderTicketDisplay != null) {
 			orderTicketDisplay.updateDocketSizes();
 		}
-		logger.trace("Resized renderer: ({} x {})", width, height);
+		logger.warn("Resized renderer: ({} x {})", width, height);
 	}
 
 	/**
@@ -303,20 +310,18 @@ public class MainGameScreen extends ScreenAdapter {
 		InputComponent inputComponent =
 				ServiceLocator.getInputService().getInputFactory().createForTerminal();
 
-		docketLineDisplay = new DocketLineDisplay();
-
 		Entity ui = new Entity();
 		ui.addComponent(new GameBackgroundDisplay())
 			.addComponent(new InputDecorator(stage, 10))
-		  	.addComponent(docketLineDisplay)
+		  	.addComponent(docketLineDisplay = new DocketLineDisplay())
 			.addComponent(new PerformanceDisplay())
 			.addComponent(new MainGameActions(this.game, UIFactory.createDocketUI()))
-			//.addComponent(new MainGameExitDisplay())
+			.addComponent(new MainGameExitDisplay())
 			.addComponent(new Terminal())
 			.addComponent(inputComponent)
 			.addComponent(new TerminalDisplay())
 			.addComponent(new OrderActions(this.game))
-			//.addComponent(new MainGameOrderBtnDisplay())
+			.addComponent(new MainGameOrderBtnDisplay())
 			.addComponent(new PauseMenuActions(this.game))
 			.addComponent(new PauseMenuDisplay(this))
 			.addComponent(new RageUpgrade())

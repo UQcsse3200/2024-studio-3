@@ -188,12 +188,12 @@ public class IntroCutsceneTest {
         verify(ServiceLocator.getEntityService(), times(introCutscene.entities.size())).register(any(Entity.class));
     }
 
-//    @Test
-//        public void testSetTextForScene() {
-//            introCutscene.setupScenes();
-//            introCutscene.loadScene(0);
-//            assert introCutscene.currentText.equals("Hello This is an Example Text");
-//
-//            assert introCutscene.textIndex == 1;
-//    }
+    @Test
+        public void testSetTextForScene() {
+            introCutscene.setupScenes();
+            introCutscene.loadScene(0);
+            assert introCutscene.currentText.equals("Hello This is an Example Text");
+
+            assert introCutscene.textIndex == 1;
+    }
 }

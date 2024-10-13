@@ -18,7 +18,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.Gdx;
-import com.csse3200.game.components.tutorial.TutorialTextDisplay;
+import com.csse3200.game.components.maingame.TextDisplay;
 
 /**
  * Displays tutorial-related UI components and manages tutorial flow using textDisplay.
@@ -34,7 +34,7 @@ public class TutorialScreenDisplay extends UIComponent {
     private boolean createOrderPressed = false;
     private boolean docketsShifted = false;
     private Table table;
-    private TutorialTextDisplay textDisplay;
+    private TextDisplay textDisplay;
     private boolean wPressedLastFrame = false;
     private boolean aPressedLastFrame = false;
     private boolean sPressedLastFrame = false;
@@ -63,7 +63,7 @@ public class TutorialScreenDisplay extends UIComponent {
         setupUI();
 
         // Initialise the textDisplay before using it
-        textDisplay = new TutorialTextDisplay();
+        textDisplay = new TextDisplay();
         textDisplay.setVisible(false);  // Initially hidden
         stage.addActor(textDisplay.getTable());  // Add it to the stage
 
@@ -168,7 +168,7 @@ public class TutorialScreenDisplay extends UIComponent {
     private void completeTutorial() {
         if (textDisplay != null) {
             textDisplay.setVisible(true);
-            createTextBox("Tutorial Complete! Press ENTER to continue.");
+            createTextBox("Tutorial Complete! Press `Space` to continue.");
         } else {
             logger.error("textDisplay is null during completeTutorial.");
         }
@@ -202,7 +202,7 @@ public class TutorialScreenDisplay extends UIComponent {
                 }
                 break;
             case 4:
-                if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
+                if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER) || Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
                     startGame();
                 }
                 break;
