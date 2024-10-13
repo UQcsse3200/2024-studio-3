@@ -119,7 +119,7 @@ public class RecipeCardDisplay extends UIComponent {
 
     @Override
     protected void draw(SpriteBatch batch) {
-
+        // draw is handled by the stage
     }
 
     @Override

@@ -1,8 +1,6 @@
 package com.csse3200.game.components.upgrades;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.InputAdapter;
-import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.audio.Sound;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.Component;
@@ -38,13 +36,16 @@ public class LoanUpgrade extends Component implements Upgrade {
             long moneySoundId = moneySound.play();
             moneySound.setVolume(moneySoundId, 0.2f);
             playSound = true;
-            combatStatsComponent.addGold(100); 
+            combatStatsComponent.addGold(100);
         }
         else{
         ServiceLocator.getRandomComboService().getEvents().trigger("notenoughmoney"); 
         }
     }
 
+    /**
+     * Deactivates the loan upgrade
+     */
     public void deactivate() {}
 
     @Override

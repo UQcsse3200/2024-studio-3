@@ -195,6 +195,8 @@ public class DayNightService {
         pastUpgrade = false;
         day += 1;
         gameTime.setTimeScale(1); // Resume game time
+
+
     }
 
     /**

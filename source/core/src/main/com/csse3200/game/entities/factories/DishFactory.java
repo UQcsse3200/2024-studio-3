@@ -9,16 +9,18 @@ import java.util.*;
 
 /**
  * Factory to create a cooking entity with predefined components.
- *
  * Predefined recipe properties are loaded from a config stored as a json file and should have
  * the properties stores in 'CookingConfig'.
  */
 public class DishFactory {
     // read in recipe configs
-    private static final CookingConfig configs = FileLoader.readClass(CookingConfig.class, "configs/recipe.json");
-    public static Map<String, SingleStationRecipeConfig> singleStationRecipes = new HashMap<>();    // all single-station recipes
-    public static Map<String, MultiStationRecipeConfig> multiStationRecipes = new HashMap<>();      // all multi-station recipes
-    public static Map<String, SingleStationRecipeConfig> recipes = new HashMap<>();                                   // all recipes
+    private static final CookingConfig configs =
+            FileLoader.readClass(CookingConfig.class, "configs/recipe.json");
+    private static final Map<String, SingleStationRecipeConfig> singleStationRecipes =
+            new HashMap<>();    // all single-station recipes
+    private static final Map<String, MultiStationRecipeConfig> multiStationRecipes =
+            new HashMap<>();      // all multi-station recipes
+    private static final Map<String, SingleStationRecipeConfig> recipes = new HashMap<>();// all recipes
 
     /**
      * Constructor for the DishFactory class, no parameters required.
@@ -97,12 +99,12 @@ public class DishFactory {
      * @return - name of recipe that contain associated ingredients
      */
     public static Optional<String> getDefinitiveRecipe(List<String> ingredients) {
-        if (ingredients.size() >= 1) {
+        if (!ingredients.isEmpty()) {
             for (Map.Entry<String, SingleStationRecipeConfig> entry : getSingleStationRecipes().entrySet()) {
                 String recipe = entry.getKey();
                 SingleStationRecipeConfig recipeConfig = entry.getValue();
 
-                if (recipeConfig.ingredient.containsAll(ingredients)
+                if (new HashSet<>(recipeConfig.ingredient).containsAll(ingredients)
                         && recipeConfig.ingredient.size() == ingredients.size()) {
                     return Optional.of(recipe);
                 }
@@ -112,7 +114,7 @@ public class DishFactory {
                 String recipe = entry.getKey();
                 MultiStationRecipeConfig recipeConfig = entry.getValue();
 
-                if (recipeConfig.ingredient.containsAll(ingredients)
+                if (new HashSet<>(recipeConfig.ingredient).containsAll(ingredients)
                         && recipeConfig.ingredient.size() == ingredients.size()) {
                     return Optional.of(recipe);
                 }
@@ -156,29 +158,23 @@ public class DishFactory {
      * Populates all possible recipes from the dish factory configs.
      */
     private void generateAllRecipes() {
-        for (Map.Entry<String, SingleStationRecipeConfig> entry : getSingleStationRecipes().entrySet()) {
-            this.recipes.put(entry.getKey(), entry.getValue());
-        }
+        recipes.putAll(getSingleStationRecipes());
 
-        for (Map.Entry<String, MultiStationRecipeConfig> entry : getMultiStationRecipes().entrySet()) {
-            this.recipes.put(entry.getKey(), (SingleStationRecipeConfig) entry.getValue());
-        }
+        recipes.putAll(getMultiStationRecipes());
     }
 
     /**
-     * 
-     * 
-     * @return
+     * Get all the recipes from the dish factory
+     * @return the recipes from the dish factory
      */
     public Map<String, SingleStationRecipeConfig> getAllRecipes() {
-        return this.recipes;
+        return recipes;
     }
 
     /**
-     * 
-     * 
-     * @param ingredients
-     * @return
+     * get the recipe from a list of ingredients
+     * @param ingredients: The list of ingredients in the dish
+     * @return The recipe made from the ingredients
      */
     public Optional<String> getRealRecipe(List<String> ingredients) {
         for (Map.Entry<String, SingleStationRecipeConfig> entry : getAllRecipes().entrySet()) {
@@ -244,10 +240,10 @@ public class DishFactory {
 
     /**
      * Get the recipe for associated ingredients
-     * 
+     *
      * @param ingredient - needed to make the dish (specify in the recipe.json)
      * @return - list of recipes that contain associated ingredients
-     
+
     public static List<String> getRecipe(List<String> ingredient) {
         List<String> recipes = new ArrayList<>();
 

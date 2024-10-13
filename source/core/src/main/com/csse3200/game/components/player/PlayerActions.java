@@ -3,19 +3,11 @@ package com.csse3200.game.components.player;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.Fixture;
 import com.csse3200.game.components.Component;
-import com.csse3200.game.components.upgrades.RageUpgrade;
-import com.csse3200.game.entities.Entity;
-import com.csse3200.game.physics.BodyUserData;
-import com.csse3200.game.components.items.PlateComponent;
-import com.csse3200.game.components.station.FireExtinguisherHandlerComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.components.SensorComponent;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Action component for interacting with the player. Player events should be initialised in create()
@@ -28,14 +20,16 @@ public class PlayerActions extends Component {
   private PhysicsComponent physicsComponent;
   private Vector2 walkDirection = Vector2.Zero.cpy();
   private boolean moving = false;
-  private SensorComponent interactionSensor;
+  private SensorComponent sensor;
   private InventoryComponent playerInventory;
   private InventoryDisplay displayInventory;
+  private Entity closestEntity = null;
+  private Entity oldClosestEntity = null;
 
   @Override
   public void create() {
     physicsComponent = entity.getComponent(PhysicsComponent.class);
-    interactionSensor = entity.getComponent(SensorComponent.class);
+    sensor = entity.getComponent(SensorComponent.class);
     playerInventory = entity.getComponent(InventoryComponent.class);
     displayInventory = entity.getComponent(InventoryDisplay.class);
     entity.getEvents().addListener("walk", this::walk);
@@ -44,27 +38,28 @@ public class PlayerActions extends Component {
     entity.getEvents().addListener("interact", this::interact);
   }
 
-  @Override
-  public void update() {
-    Body body = physicsComponent.getBody();
-    Vector2 position = body.getPosition();
+    @Override
+    public void update() {
+        Body body = physicsComponent.getBody();
+        Vector2 position = body.getPosition();
 
-    if (moving) {
-      // Stop if it's at min x position or max x position
-      if (position.x < MIN_X_POSITION) {
-        position.x = MIN_X_POSITION;
-        body.setTransform(MIN_X_POSITION, position.y, body.getAngle());
-        stopWalking();
-      } else if (position.x > MAX_X_POSITION) {
-        position.x = MAX_X_POSITION;
-        body.setTransform(MAX_X_POSITION, position.y, body.getAngle());
-        stopWalking();
-      } else {
-        updateSpeed();
-      }
+        if (moving) {
+            updateInteraction();
+
+            // Stop if it's at min x position or max x position
+            if (position.x < MIN_X_POSITION) {
+                position.x = MIN_X_POSITION;
+                body.setTransform(MIN_X_POSITION, position.y, body.getAngle());
+                stopWalking();
+            } else if (position.x > MAX_X_POSITION) {
+                position.x = MAX_X_POSITION;
+                body.setTransform(MAX_X_POSITION, position.y, body.getAngle());
+                stopWalking();
+            } else {
+                updateSpeed();
+            }
+        }
     }
-    updateInteraction();
-  }
 
   /**
    * Updates the player's interaction with nearby objects. This method checks for the closest
@@ -73,28 +68,26 @@ public class PlayerActions extends Component {
    * the tooltip.
    * */
   private void updateInteraction() {
-    interactionSensor.update();
-    Fixture interactable = interactionSensor.getClosestFixture();
-    if (interactable != null) {
+    oldClosestEntity = closestEntity;
+    closestEntity = sensor.getClosestInteractable();
 
-      //This is where you show the tooltip / outline for the closest station
-//      String interactionKey = "Press E ";  // Hardcoded for simplicity, could be dynamic
-//      String itemName = "Some Task";  // Placeholder for actual item name
-      // Trigger show tooltip event with interaction details
-//      entity.getEvents().trigger("showTooltip", interactionKey + ": " + itemName);
-
-    } else {
-      // Hide tooltip if no interactable is nearby
-      entity.getEvents().trigger("hideTooltip");
+    if (oldClosestEntity == closestEntity) {
+        return;
     }
 
+    if (oldClosestEntity != null) {
+      oldClosestEntity.getEvents().trigger("hideToolTip");
+    }
+
+    if (closestEntity != null) {
+      closestEntity.getEvents().trigger("showToolTip");
+    }
   }
 
   private void updateSpeed() {
     Body body = physicsComponent.getBody();
     Vector2 velocity = body.getLinearVelocity();
     Vector2 desiredVelocity = walkDirection.cpy().scl(MAX_SPEED);
-    // impulse = (desiredVel - currentVel) * mass
 
     if (body.getPosition().x < MIN_X_POSITION || body.getPosition().x > MAX_X_POSITION) {
       // Do not apply any movement if out of bounds
@@ -109,30 +102,7 @@ public class PlayerActions extends Component {
    * Triggers an interaction event. It holds the logic in how to interact with a given station
    */
   void interact(String type) {
-    // Get the closest fixture all call an interact method on it
-    Fixture interactable = interactionSensor.getClosestFixture();
-    if (interactable != null) {
-      // Uses attached information to Fixture on station creation to identify entity belonging
-      // too
-      Entity station = ((BodyUserData) interactable.getBody().getUserData()).entity;
-
-      // Handle if it was a fire extinguisher
-      boolean interactingWithFireExtinguisher = FireExtinguisherHandlerComponent.handleFireExtinguisher(interactable, entity);
-      if (interactingWithFireExtinguisher) {
-        // No more interacting after this
-        return;
-      }
-
-      boolean interactingWithPlate = PlateComponent.handlePlateInteraction(interactable, entity);
-      if (interactingWithPlate) {
-        // Interaction handled by PlateComponent for plates
-        return;
-      }
-      // Code to freeze player, not a current feature
-      //entity.getEvents().trigger("startInteraction");
-      // Logic for what interaction even to call on the station
-      station.getEvents().trigger("Station Interaction", playerInventory, displayInventory, type);
-    }
+    closestEntity.getEvents().trigger("Station Interaction", playerInventory, displayInventory, type);
   }
 
   /**

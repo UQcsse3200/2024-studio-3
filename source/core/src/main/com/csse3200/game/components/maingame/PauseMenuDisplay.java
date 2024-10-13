@@ -134,7 +134,7 @@ public class PauseMenuDisplay extends UIComponent {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 ServiceLocator.getSaveLoadService().save();
-            };
+            }
         });
 
         loadBtn.addListener(new ClickListener() {
@@ -142,7 +142,7 @@ public class PauseMenuDisplay extends UIComponent {
             public void clicked(InputEvent event, float x, float y) {
                 ServiceLocator.getSaveLoadService().setSaveFile("saveFile.json");
                 ServiceLocator.getSaveLoadService().load();
-            };
+            }
         });
 
         restartBtn.addListener(new ChangeListener() {

@@ -11,12 +11,11 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class FireExtinguisherHandlerComponentTest {
+class FireExtinguisherHandlerComponentTest {
     private FireExtinguisherHandlerComponent handler;
     private InventoryComponent inventory;
     private Entity mockEntity;
-    private EventHandler mockEvents;
-    private Entity mockStation;
+
     @BeforeEach
     void setUp() {
         // Create handler to test
@@ -25,12 +24,12 @@ public class FireExtinguisherHandlerComponentTest {
         inventory = new InventoryComponent(1);
         // Mock Entity and EventHandler so stuff actually runs
         mockEntity = mock(Entity.class);
-        mockEvents = mock(EventHandler.class);
+        EventHandler mockEvents = mock(EventHandler.class);
         // Map any InventoryComponent calls to actually return mock inventory
         when(mockEntity.getComponent(InventoryComponent.class)).thenReturn(inventory);
         when(mockEntity.getEvents()).thenReturn(mockEvents);
 
-        mockStation = mock(Entity.class);
+        Entity mockStation = mock(Entity.class);
         when(mockStation.getComponent(FireExtinguisherHandlerComponent.class)).thenReturn(handler);
     }
 
@@ -38,8 +37,8 @@ public class FireExtinguisherHandlerComponentTest {
     void shouldGiveExtinguisher() {
         for(int i = 0; i < inventory.getSize(); i++) {
             assertNotSame(
-                    inventory.getItemAt(i).getItemType(),
                     ItemType.FIREEXTINGUISHER,
+                    inventory.getItemAt(i).getItemType(),
                     "Should not hold fire extinguisher");
         }
         handler.givePutExtinguisher(mockEntity);
@@ -58,8 +57,8 @@ public class FireExtinguisherHandlerComponentTest {
         handler.givePutExtinguisher(mockEntity);
         for(int i = 0; i < inventory.getSize(); i++) {
             assertNotSame(
-                    inventory.getItemAt(i).getItemType(),
                     ItemType.FIREEXTINGUISHER,
+                    inventory.getItemAt(i).getItemType(),
                     "Should not hold fire extinguisher");
         }
     }

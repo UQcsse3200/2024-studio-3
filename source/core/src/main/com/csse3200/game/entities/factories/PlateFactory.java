@@ -14,9 +14,13 @@ import com.csse3200.game.rendering.TextureRenderComponent;
 /**
  * PlateFactory is used to create manage plate entities in game with their textures
  * methods such as spawn individual plates, spawn plate stacks and spawn plates with meals
- * and also dipose plates also getmealtexture to limit meals
+ * and also depose plates also getmealtexture to limit meals
  */
 public class PlateFactory {
+
+    private PlateFactory() {
+        //This is private
+    }
     /**
      * Creates a template plate entity
      *
@@ -32,13 +36,12 @@ public class PlateFactory {
     }
 
     /**
-     * Spawns an single plate with an ID obtained from array of stacked plates
+     * Spawns a single plate with an ID obtained from array of stacked plates
      *
      * @param id The ID of the plate
      * @return The spawned plate entity
      */
     public static Entity spawnPlate(int id) {
-        System.out.println("Spawning plate id:" + id);
         String texturePath = "images/platecomponent/stackedplates/1plates.png";
 
         Entity plate = createTemplatePlate()
@@ -65,10 +68,6 @@ public class PlateFactory {
      * @return The spawned plate stack entity
      */
     public static Entity spawnPlateStack(int quantity) {
-        if (quantity < 1 || quantity > 5) {
-            //noone
-        }
-
         String texturePath = "images/platecomponent/stackedplates/" + quantity + "plates.png";
 
         Entity plateStack = createTemplatePlate()
@@ -99,7 +98,7 @@ public class PlateFactory {
     /**
      * Spawns a plate with a meal on it, retaining plate ID when it was empty
      *
-     * @param id       The Id of the plate
+     * @param id       The ID of the plate
      * @param mealType The mealType to place to plate
      * @return The plate entity with the meal
      */

@@ -1,8 +1,5 @@
 package com.csse3200.game.components.station;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
@@ -22,12 +19,13 @@ import com.csse3200.game.services.GameTime;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 @ExtendWith(GameExtension.class)
-public class StationCookingComponentTest {
+class StationCookingComponentTest {
 
     public Entity mockStation;
     public GameTime mockTime;
@@ -39,7 +37,7 @@ public class StationCookingComponentTest {
     public Entity fishEntity;
     
     @BeforeEach
-    public void BeforeEach() {
+    void BeforeEach() {
         // Clear service locator before each
         ServiceLocator.clear();
 
@@ -60,12 +58,12 @@ public class StationCookingComponentTest {
         when(mockResourceService.getAsset(anyString(), any())).thenReturn(null);
         ServiceLocator.registerResourceService(mockResourceService);
 
-        // Now creaate our fake entities
+        // Now create our fake entities
 
         // Create a fish entity
         mockIngredientComponent = mock(IngredientComponent.class);
         when(mockIngredientComponent.getCookTime()).thenReturn(1);
-        mockCookIngredientComponent = new CookIngredientComponent();//mock(CookIngredientComponent.class);
+        mockCookIngredientComponent = new CookIngredientComponent();
         fishEntity = new Entity()
             .addComponent(mockIngredientComponent)
             .addComponent(mockCookIngredientComponent);
@@ -85,48 +83,43 @@ public class StationCookingComponentTest {
         // Set up the fish entity for cooking and fake it being inside the itemHandler
         when(mockItemHandler.peek()).thenReturn(fishEntity.getComponent(IngredientComponent.class));
         when(mockItemHandler.peek().getEntity()).thenReturn(fishEntity);
-        assertNotNull(mockItemHandler.peek());
+        Assertions.assertNotNull(mockItemHandler.peek());
     }
 
     @Test
-    public void IngredientStartsCooking() {
+    void IngredientStartsCooking() {
         // Need to call create on station here
         mockStation.create();
 
         // Test the ingredient starts cooking
         mockStation.getEvents().trigger("Cook Ingredient");
 
-        //fishEntity.update();
-
         // Now check the item is cooking
         boolean isCooking = mockItemHandler.peek().getEntity().getComponent(CookIngredientComponent.class).getIsCooking();
-        assertTrue(isCooking);
+        Assertions.assertTrue(isCooking);
     }
 
     @Test
-    public void IngredientStartsCookingThenStops() {
+    void IngredientStartsCookingThenStops() {
         // Need to call create on station here
         mockStation.create();
 
         // Test the ingredient starts cooking
         mockStation.getEvents().trigger("Cook Ingredient");
 
-        //fishEntity.update();
-
         // Now check the item is cooking
         boolean isCooking = mockItemHandler.peek().getEntity().getComponent(CookIngredientComponent.class).getIsCooking();
-        assertTrue(isCooking);
+        Assertions.assertTrue(isCooking);
 
         // Now stop ingredient cooking
         mockStation.getEvents().trigger("Stop Cooking Ingredient");
-        //fishEntity.getEvents().trigger("stopCookingIngredient");
         
         isCooking = mockItemHandler.peek().getEntity().getComponent(CookIngredientComponent.class).getIsCooking();
-        assertFalse(isCooking);
+        Assertions.assertFalse(isCooking);
     }
 
     @Test
-    public void TestIngredientCooks() {
+    void TestIngredientCooks() {
         // Need to call create on station here
         mockStation.create();
 
@@ -138,7 +131,7 @@ public class StationCookingComponentTest {
         
         // Now check the item is cooking
         boolean isCooking = mockItemHandler.peek().getEntity().getComponent(CookIngredientComponent.class).getIsCooking();
-        assertTrue(isCooking);
+        Assertions.assertTrue(isCooking);
 
         // Now run the update thing
         fishEntity.update();
@@ -146,11 +139,11 @@ public class StationCookingComponentTest {
         // now check if it is cooked
         verify(mockIngredientComponent).cookItem();
         boolean isStillCooking = mockCookIngredientComponent.getIsCooking();
-        assertTrue(isStillCooking);
+        Assertions.assertTrue(isStillCooking);
     }
 
     @Test
-    public void TestIngredientBurns() {
+    void TestIngredientBurns() {
         // Need to call create on station here
         mockStation.create();
 
@@ -162,7 +155,7 @@ public class StationCookingComponentTest {
         
         // Now check the item is cooking
         boolean isCooking = mockItemHandler.peek().getEntity().getComponent(CookIngredientComponent.class).getIsCooking();
-        assertTrue(isCooking);
+        Assertions.assertTrue(isCooking);
 
         // Now run the update thing
         fishEntity.update();
@@ -170,11 +163,11 @@ public class StationCookingComponentTest {
         // now check if it is cooked
         verify(mockIngredientComponent).burnItem();
         boolean isStillCooking = mockCookIngredientComponent.getIsCooking();
-        assertFalse(isStillCooking);
+        Assertions.assertFalse(isStillCooking);
     }
 
     @Test
-    public void TestIngredientCooksThenBurns() {
+    void TestIngredientCooksThenBurns() {
         // Need to call create on station here
         mockStation.create();
 
@@ -186,7 +179,7 @@ public class StationCookingComponentTest {
         
         // Now check the item is cooking
         boolean isCooking = mockItemHandler.peek().getEntity().getComponent(CookIngredientComponent.class).getIsCooking();
-        assertTrue(isCooking);
+        Assertions.assertTrue(isCooking);
 
         // Now run the update thing
         fishEntity.update();
@@ -194,18 +187,18 @@ public class StationCookingComponentTest {
         // now check if it is cooked
         verify(mockIngredientComponent).cookItem();
         boolean isStillCooking = mockCookIngredientComponent.getIsCooking();
-        assertTrue(isStillCooking);
+        Assertions.assertTrue(isStillCooking);
 
         // Update the item again
         fishEntity.update();
 
         verify(mockIngredientComponent).burnItem();
         boolean isStillStillCooking = mockCookIngredientComponent.getIsCooking();
-        assertFalse(isStillStillCooking);
+        Assertions.assertFalse(isStillStillCooking);
     }
 
     @Test
-    public void TestIngredientDoesntBurn() {
+    void TestIngredientDoesntBurn() {
         // Need to call create on station here
         mockStation.create();
         
@@ -217,7 +210,7 @@ public class StationCookingComponentTest {
         
         // Now check the item is cooking
         boolean isCooking = mockItemHandler.peek().getEntity().getComponent(CookIngredientComponent.class).getIsCooking();
-        assertTrue(isCooking);
+        Assertions.assertTrue(isCooking);
 
         // Now run the update thing
         fishEntity.update();
@@ -225,7 +218,7 @@ public class StationCookingComponentTest {
         // now check if it is cooked
         verify(mockIngredientComponent).cookItem();
         boolean isStillCooking = mockCookIngredientComponent.getIsCooking();
-        assertTrue(isStillCooking);
+        Assertions.assertTrue(isStillCooking);
 
         // Now attempt to stop the cooking
         mockStation.getEvents().trigger("Stop Cooking Ingredient");
@@ -235,7 +228,7 @@ public class StationCookingComponentTest {
 
         verify(mockIngredientComponent, times(0)).burnItem();
         boolean isStillStillCooking = mockCookIngredientComponent.getIsCooking();
-        assertFalse(isStillStillCooking);
+        Assertions.assertFalse(isStillStillCooking);
     }
 
 }
