@@ -55,7 +55,7 @@ public class CutsceneScreen extends ScreenAdapter {
     public CutsceneScreen(GdxGame game, int cutsceneVal) {
         this.game = game;
         this.cutsceneVal = cutsceneVal;
-        if (cutsceneVal == 5) {
+        if (cutsceneVal == 4 || cutsceneVal == 5) {
             textBoxVisible = false;
         }
 

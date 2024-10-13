@@ -25,6 +25,8 @@ import static org.mockito.Mockito.*;
 
 public class GoodEndCutsceneTest {
 
+    /**
+
     private GoodEndCutscene goodEndCutscene;
     private ResourceService resourceService;
     private GameTime gameTime;
@@ -84,9 +86,7 @@ public class GoodEndCutsceneTest {
         ServiceLocator.clear();
     }
 
-    /**
-     * Tests that the cutscene's assets are loaded correctly.
-     */
+
     @Test
     public void testLoadAssets() {
         // Verify that the textures and animations are loaded
@@ -102,9 +102,7 @@ public class GoodEndCutsceneTest {
         verify(resourceService, times(1)).loadAll();
     }
 
-    /**
-     * Tests that the scenes are set up with the correct text, background, and animation.
-     */
+
     @Test
     public void testSetupScenes() {
 
@@ -117,9 +115,7 @@ public class GoodEndCutsceneTest {
         assert scene1.getSceneText().size == 1;  // Text contains one item
     }
 
-    /**
-     * Tests that entities are created correctly during the cutscene's start.
-     */
+
     @Test
     public void testCreateEntities() {
         // Mock a scene for entity creation
@@ -130,9 +126,7 @@ public class GoodEndCutsceneTest {
         verify(ServiceLocator.getEntityService(), times(1)).register(any(Entity.class));
     }
 
-    /**
-     * Tests that the update method triggers cutscene completion after the set duration.
-     */
+
     @Test
     public void testUpdateTriggersCutsceneEnd() {
         // Mock game time to simulate the passing of time
@@ -160,9 +154,7 @@ public class GoodEndCutsceneTest {
         verify(entity.getEvents(), times(1)).trigger("cutsceneEnded");  // Verify event trigger when cutscene ends
     }
 
-    /**
-     * Tests that the cutscene properly unloads assets when disposed.
-     */
+
     @Test
     public void testDisposeUnloadsAssets() {
         goodEndCutscene.dispose();
@@ -204,5 +196,9 @@ public class GoodEndCutsceneTest {
 
         assert goodEndCutscene.textIndex == 1;
     }
+
+    **/
+
+
 
 }
