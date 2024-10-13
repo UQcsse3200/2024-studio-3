@@ -61,7 +61,6 @@ public class SpeedBootsUpgradeTest {
         lenient().when(renderService.getStage().getViewport()).thenReturn(viewport);
         lenient().when(renderService.getStage().getViewport().getCamera()).thenReturn(camera);
 
-
         speedBootsUpgrade = new SpeedBootsUpgrade(combatStatsComponent, keyboardPlayerInputComponent);
         speedBootsUpgrade.setStage(stage);
         speedBootsUpgrade.layout = mockLayout;
@@ -88,6 +87,7 @@ public class SpeedBootsUpgradeTest {
         assertTrue(speedBootsUpgrade.layout.isVisible());
         verify(keyboardPlayerInputComponent).setWalkSpeed(speedBootsUpgrade.getBoostedSpeed());
         assertEquals(speedBootsUpgrade.getBoostDuration(), speedBootsUpgrade.getActiveTimeRemaining());
+        assertEquals(1f, speedBootsUpgrade.speedMeter.getValue());
     }
 
     @Test
@@ -104,6 +104,7 @@ public class SpeedBootsUpgradeTest {
         assertFalse(speedBootsUpgrade.layout.isVisible());
         assertEquals(-1, speedBootsUpgrade.getBoostStartTime());
         verify(keyboardPlayerInputComponent).setWalkSpeed(speedBootsUpgrade.getNormalSpeed());
+        assertEquals(0f, speedBootsUpgrade.speedMeter.getValue());
     }
 
     @Test
@@ -127,6 +128,35 @@ public class SpeedBootsUpgradeTest {
         assertFalse(speedBootsUpgrade.isActivate());
         assertFalse(speedBootsUpgrade.isVisible());
         assertFalse(speedBootsUpgrade.layout.isVisible());
+    }
+
+    @Test
+    void testSpeedBootsFor30Seconds() {
+        SpeedBootsUpgrade spySpeedBootsUpgrade = spy(speedBootsUpgrade);
+        when(combatStatsComponent.getGold()).thenReturn(100);
+        spySpeedBootsUpgrade.activate();
+
+        when(gameTime.getDeltaTime()).thenReturn(1f);
+        for (int i = 0; i < 15; i++) {
+            spySpeedBootsUpgrade.update();
+        }
+
+        assertEquals(spySpeedBootsUpgrade.getActiveTimeRemaining() /
+                (float) spySpeedBootsUpgrade.getBoostDuration(), spySpeedBootsUpgrade.speedMeter.getValue());
+
+        for (int i = 0; i < 15; i++) {
+            spySpeedBootsUpgrade.update();
+        }
+
+        verify(spySpeedBootsUpgrade).deactivate();
+        assertFalse(spySpeedBootsUpgrade.getPlaySound());
+    }
+
+    @Test
+    void testDispose() {
+        speedBootsUpgrade.dispose();
+        verify(resourceService).unloadAssets(SpeedBootsUpgrade.whiteBgTexture);
+        verify(resourceService).unloadAssets(SpeedBootsUpgrade.greenTexture);
     }
 
     @AfterEach

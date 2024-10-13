@@ -35,8 +35,8 @@ public class SpeedBootsUpgrade extends UIComponent implements Upgrade {
     private KeyboardPlayerInputComponent keyboardPlayerInputComponent;
     private final GameTime gameTime;
     private long boostStartTime = -1;
-    private static final String[] greenTexture = {"images/green_fill.png"};
-    private static final String[] whiteBgTexture = {"images/white_background.png"};
+    public static final String[] greenTexture = {"images/green_fill.png"};
+    public static final String[] whiteBgTexture = {"images/white_background.png"};
     private boolean isActivate;
     public Table layout;
     public Label text; // the "Upgrade" text above the speedMeter
@@ -252,5 +252,9 @@ public class SpeedBootsUpgrade extends UIComponent implements Upgrade {
 
     public long getBoostStartTime() {
         return boostStartTime;
+    }
+
+    public boolean getPlaySound() {
+        return playSound;
     }
 }
