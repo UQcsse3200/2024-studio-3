@@ -100,5 +100,14 @@ public class Bench extends Entity{
         return bench;
     }
 
+    // get x coordinate
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
 
 }
