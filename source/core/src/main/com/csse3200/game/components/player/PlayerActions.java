@@ -106,6 +106,9 @@ public class PlayerActions extends Component {
       return;
     }
 
+    // Check if the player has an item in its inventory and isn't trying to do the default action
+    if (playerInventory.getSize() != 0 && !type.equals("default")) return;
+
     closestEntity.getEvents().trigger("Station Interaction", playerInventory, displayInventory, type);
   }
 
