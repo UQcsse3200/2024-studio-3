@@ -29,6 +29,8 @@ public class EntityService {
     entityEventHandler = new EventHandler();
   }
 
+  public EntityService(EventHandler EventHandler) { this.entityEventHandler = EventHandler; }
+
 
   public Array<Entity> getEntities() { return entities; }
 

@@ -29,9 +29,9 @@ public class RageUpgrade extends UIComponent implements Upgrade {
     private final GameTime timesource;
 
     private boolean isOverlayVisible;
-    private Table layout;
+    public Table layout;
 
-    private ProgressBar rageMeter;
+    public ProgressBar rageMeter;
     private float rageTimeRemaining;
     private final float rageTime = 30f;
     private boolean isRageActive = false;
@@ -117,7 +117,7 @@ public class RageUpgrade extends UIComponent implements Upgrade {
                 if (keycode == com.badlogic.gdx.Input.Keys.R) {
                     if (isRageActive) {
                         deactivateRageMode();
-                    } else if (rageMeter.getValue() == 1f){
+                    } else {
                         activateRageMode();
                     }
                     return true;
@@ -135,20 +135,22 @@ public class RageUpgrade extends UIComponent implements Upgrade {
      * displaying the overlay, and initializing the rage timer.
      */
     public void activateRageMode() {
-        ServiceLocator.getEntityService().getEvents().trigger("rageModeOn");
-        rageSoundId = rageSound.play();
-        rageSound.setVolume(rageSoundId, 0.25f);
+        if (rageMeter.getValue() == 1f) {
+            ServiceLocator.getEntityService().getEvents().trigger("rageModeOn");
+            rageSoundId = rageSound.play();
+            rageSound.setVolume(rageSoundId, 0.25f);
 
-        isRageActive = true;
-        isOverlayVisible = true;
-        layout.setVisible(true);
-        rageTimeRemaining = rageTime;
+            isRageActive = true;
+            isOverlayVisible = true;
+            layout.setVisible(true);
+            rageTimeRemaining = rageTime;
+        }
     }
 
     public void deactivate() {
-            // entity.getEvents().trigger("rageModeOff");
-        }
-    
+        // entity.getEvents().trigger("rageModeOff");
+    }
+
     /**
      * Deactivates Rage mode by triggering related events, playing power down sound,
      * hiding the overlay, and initiating the rage meter refill process.
@@ -197,5 +199,27 @@ public class RageUpgrade extends UIComponent implements Upgrade {
 
     @Override
     public void setStage(Stage mock) {
+        this.stage = mock;
     }
+
+    public boolean isOverlayVisible() {
+        return isOverlayVisible;
+    }
+
+    public boolean isRageFilling() {
+        return isRageFilling;
+    }
+
+    public boolean isRageActive() {
+        return isRageActive;
+    }
+
+    public float getRageFillTime() {
+        return rageFillTime;
+    }
+
+    public float getRageFillTimeRemaining() {
+        return rageFillTimeRemaining;
+    }
+
 }
