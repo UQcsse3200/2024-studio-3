@@ -43,9 +43,9 @@ public class PlayerActions extends Component {
         Body body = physicsComponent.getBody();
         Vector2 position = body.getPosition();
 
-        updateInteraction();
-
         if (moving) {
+          updateInteraction();
+
             // Stop if it's at min x position or max x position
             if (position.x < MIN_X_POSITION) {
                 position.x = MIN_X_POSITION;
@@ -110,6 +110,7 @@ public class PlayerActions extends Component {
     if (playerInventory.getSize() != 0 && !type.equals("default")) return;
 
     closestEntity.getEvents().trigger("Station Interaction", playerInventory, displayInventory, type);
+    updateInteraction();
   }
 
   /**
