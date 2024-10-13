@@ -44,6 +44,7 @@ public class CutsceneArea extends GameArea {
                 logger.debug("Loading backstory cutscene");
                 currentCutscene = new BackstoryCutscene();  // Initialize the intro cutscene
                 ServiceLocator.setCurrentCutscene(currentCutscene);  // Set the current cutscene in the service locator
+                ServiceLocator.getLevelService().setCurrLevel(GdxGame.LevelType.LEVEL_1);
                 break;
 
             case GdxGame.CutsceneType.MORAL_1:
