@@ -41,6 +41,8 @@ public class RageUpgradeTest {
 
     @BeforeEach
     void setUp() {
+        ServiceLocator.clear();
+
         randomComboService = new RandomComboService();
         entityService = spy(new EntityService(eventHandler));
 

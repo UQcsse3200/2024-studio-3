@@ -38,9 +38,9 @@ public class SpeedBootsUpgrade extends UIComponent implements Upgrade {
     private static final String[] greenTexture = {"images/green_fill.png"};
     private static final String[] whiteBgTexture = {"images/white_background.png"};
     private boolean isActivate;
-    private Table layout;
+    public Table layout;
     private Label text; // the "Upgrade" text above the speedMeter
-    private ProgressBar speedMeter; // the meter that show the remaining time
+    public ProgressBar speedMeter; // the meter that show the remaining time
     private boolean isVisible;
     private float activeTimeRemaining;
     private Sound countDown;
@@ -53,6 +53,14 @@ public class SpeedBootsUpgrade extends UIComponent implements Upgrade {
             this.combatStatsComponent = player.getComponent(CombatStatsComponent.class);
             this.keyboardPlayerInputComponent = player.getComponent(KeyboardPlayerInputComponent.class);
         });
+        gameTime = ServiceLocator.getTimeSource();
+        isActivate = false;
+    }
+
+    public SpeedBootsUpgrade(CombatStatsComponent combatStatsComponent, KeyboardPlayerInputComponent keyboardPlayerInputComponent) {
+        super();
+        this.combatStatsComponent = combatStatsComponent;
+        this.keyboardPlayerInputComponent = keyboardPlayerInputComponent;
         gameTime = ServiceLocator.getTimeSource();
         isActivate = false;
     }
@@ -215,6 +223,30 @@ public class SpeedBootsUpgrade extends UIComponent implements Upgrade {
 
     @Override
     public void setStage(Stage mock) {
+        this.stage = mock;
+    }
 
+    public float getNormalSpeed() {
+        return NORMAL_SPEED;
+    }
+
+    public float getBoostedSpeed() {
+        return BOOSTED_SPEED;
+    }
+
+    public boolean isActivate() {
+        return isActivate;
+    }
+
+    public boolean isVisible() {
+        return isVisible;
+    }
+
+    public float getActiveTimeRemaining() {
+        return activeTimeRemaining;
+    }
+
+    public long getBoostDuration() {
+        return BOOST_DURATION;
     }
 }
