@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.utils.TimeUtils;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.entities.Entity;
@@ -28,7 +27,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Random;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.*;
@@ -216,7 +214,7 @@ class MainGameOrderTicketDisplayTest {
 	void testStageDispose() {
 		orderTicketDisplay.addActors();
 		combatStatsComponent = mock(CombatStatsComponent.class);
-		orderTicketDisplay.combatStatsComponent = combatStatsComponent;
+		orderTicketDisplay.setCombatStatsComponent(combatStatsComponent);
 
 		Assertions.assertNotNull(MainGameOrderTicketDisplay.getTableArrayList(), "Table ArrayList should not be null");
 		assertFalse(MainGameOrderTicketDisplay.getTableArrayList().isEmpty(), "Table ArrayList should not be empty");
@@ -234,7 +232,7 @@ class MainGameOrderTicketDisplayTest {
 		logger.info("Table: {}", table);
 		logger.info("Background: {}", background);
 
-		orderTicketDisplay.stageDispose(background, table, 0, true);
+		orderTicketDisplay.stageDispose(background, table, 0);
 
 		assertTrue(table.getChildren().isEmpty(), "Table should be cleared of children.");
 		assertTrue(hasChildrenBeforeDispose, "Table should have had children before dispose.");
