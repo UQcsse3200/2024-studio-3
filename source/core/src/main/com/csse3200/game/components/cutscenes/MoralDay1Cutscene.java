@@ -24,19 +24,19 @@ public class MoralDay1Cutscene extends Cutscene {
         sceneText.add("Mafia Boss > This is dialogue 3.");
 
         String mafiaImage = "images/Cutscenes/Character Artwork/rhino_sprite.png";
-        Vector2 mafiaPosition = new Vector2(-5, 1);
+        Vector2 mafiaPosition = new Vector2(3, -1);
         float mafiaScale = 4.0f;
 
-        String playerImage = "images/Cutscenes/moral_icons/drug_ico.png";
-        Vector2 playerPosition = new Vector2(4, -5);
-        float playerScale = 4.0f;
+        String iconImage = "images/Cutscenes/moral_icons/laundering_ico.png";
+        Vector2 iconPosition = new Vector2(-8, -2);
+        float iconScale = 7.0f;
 
         // Add scenes with background images, animations, text, and duration
-        Scene scene = new Scene("images/Cutscenes/resized_black_image.png");
+        Scene scene = new Scene("images/Cutscenes/Day2_Scene.png");
         scene.setImages(
-                new String[]{mafiaImage, playerImage},
-                new Vector2[] {mafiaPosition, playerPosition},
-                new float[] {mafiaScale, playerScale}
+                new String[]{mafiaImage, iconImage},
+                new Vector2[] {mafiaPosition, iconPosition},
+                new float[] {mafiaScale, iconScale}
         );
 
         scene.setSceneText(sceneText);
@@ -56,7 +56,7 @@ public class MoralDay1Cutscene extends Cutscene {
 
         images = new String[] {
                 "images/Cutscenes/Character Artwork/rhino_sprite.png",
-                "images/Cutscenes/moral_icons/drug_ico.png",
+                "images/Cutscenes/moral_icons/laundering_ico.png",
         };
 
         // Get the resource service to load assets

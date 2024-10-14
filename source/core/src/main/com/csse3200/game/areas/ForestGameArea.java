@@ -2,30 +2,25 @@ package com.csse3200.game.areas;
 import com.csse3200.game.components.maingame.CheckWinLoseComponent;
 import com.csse3200.game.components.moral.Decision;
 import com.csse3200.game.components.npc.PersonalCustomerEnums;
-import com.badlogic.gdx.utils.Null;
 import com.csse3200.game.GdxGame;
-import com.csse3200.game.components.maingame.TextDisplay;
-import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.entities.benches.Bench;
 import com.csse3200.game.entities.configs.PlayerConfig;
-import com.csse3200.game.components.moral.MoralDecisionDisplay;
-import java.util.ArrayList;
+
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import com.csse3200.game.components.moral.MoralDayOne;
-import com.csse3200.game.components.moral.MoralDayTwo;
-import com.csse3200.game.components.moral.MoralDayThree;
 import com.csse3200.game.components.moral.MoralDayFour;
 import com.csse3200.game.areas.map.Map;
+import com.csse3200.game.services.InteractableService;
 import com.csse3200.game.services.MapLayout;
-import com.csse3200.game.entities.factories.*;
-import com.csse3200.game.components.moral.MoralDayTwo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import static com.badlogic.gdx.Gdx.app;
+
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
@@ -33,15 +28,10 @@ import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.areas.terrain.TerrainFactory.TerrainType;
 import com.csse3200.game.areas.map.BenchLayout;
 import com.csse3200.game.components.gamearea.GameAreaDisplay;
-import com.csse3200.game.components.maingame.CheckWinLoseComponent;
 import com.csse3200.game.components.maingame.EndDayDisplay;
 import com.csse3200.game.components.moral.MoralDecision;
-import com.csse3200.game.components.npc.PersonalCustomerEnums;
-import com.csse3200.game.components.player.TouchPlayerInputComponent;
 import com.csse3200.game.components.upgrades.UpgradesDisplay;
 import com.csse3200.game.entities.Entity;
-import com.csse3200.game.entities.benches.Bench;
-import com.csse3200.game.entities.configs.PlayerConfig;
 
 import com.csse3200.game.entities.factories.ItemFactory;
 import com.csse3200.game.entities.factories.NPCFactory;
@@ -49,19 +39,10 @@ import com.csse3200.game.entities.factories.ObstacleFactory;
 import com.csse3200.game.entities.factories.PlateFactory;
 import com.csse3200.game.entities.factories.PlayerFactory;
 import com.csse3200.game.entities.factories.StationFactory;
-import com.csse3200.game.components.moral.MoralDecisionDisplay;
 
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.utils.math.GridPoint2Utils;
-import com.csse3200.game.entities.factories.NPCFactory;
-import com.csse3200.game.components.maingame.TextDisplay;
-import com.csse3200.game.entities.factories.ObstacleFactory;
-import com.csse3200.game.entities.EntityService;
-import com.csse3200.game.entities.factories.PlayerFactory;
-import com.csse3200.game.entities.factories.StationFactory;
-import com.csse3200.game.entities.factories.ItemFactory;
-import com.csse3200.game.entities.factories.PlateFactory;
 
 /** Forest area for the demo game with trees, a player, and some enemies. */
 public class ForestGameArea extends GameArea {
@@ -272,6 +253,10 @@ public class ForestGameArea extends GameArea {
     // call load function based on the level argument
     // return list of items to spawn based on the load function
     // Baaed on lsit of items to spawn, spawn the items
+    
+    // Create a new interactable service
+    ServiceLocator.registerInteractableService(new InteractableService());
+    
     loadAssets();
     displayUI();
     spawnTerrain();
@@ -312,6 +297,7 @@ public class ForestGameArea extends GameArea {
 
     createEndDayScreen();
     playMusic();
+
   }
 
   /**
@@ -386,22 +372,22 @@ public class ForestGameArea extends GameArea {
 
     // Left
     spawnEntityAt(
-        ObstacleFactory.createWall(WALL_WIDTH, worldBounds.y), GridPoint2Utils.ZERO, false, false);
+        ObstacleFactory.createWall(), GridPoint2Utils.ZERO, false, false);
     // Right
     spawnEntityAt(
-        ObstacleFactory.createWall(WALL_WIDTH, worldBounds.y),
+        ObstacleFactory.createWall(),
         new GridPoint2(tileBounds.x, 0),
         false,
         false);
     // Top
     spawnEntityAt(
-        ObstacleFactory.createWall(worldBounds.x, WALL_WIDTH),
+        ObstacleFactory.createWall(),
         new GridPoint2(0, tileBounds.y),
         false,
         false);
     // Bottom
     spawnEntityAt(
-        ObstacleFactory.createWall(worldBounds.x, WALL_WIDTH), GridPoint2Utils.ZERO, false, false);
+        ObstacleFactory.createWall(), GridPoint2Utils.ZERO, false, false);
 
   }
 
@@ -873,6 +859,15 @@ public class ForestGameArea extends GameArea {
     endDayScreen
             .addComponent(new EndDayDisplay());
     ServiceLocator.getEntityService().registerEndDay(endDayScreen);
+  }
+
+  /**
+   * Returns the level the game is currently on.
+   *
+   * @return level - the level the player is currently on
+   */
+  public GdxGame.LevelType getLevel() {
+    return this.level;
   }
 }
 

@@ -36,20 +36,19 @@ class StationCollectionComponentTest {
         when(mockResourceService.getAsset(anyString(), any())).thenReturn(null);
         ServiceLocator.registerResourceService(mockResourceService);
 
-        //collectionComponent = StationFactory.createAppleTree().getComponent(StationCollectionComponent.class);
         collectionComponent = new StationCollectionComponent();
     }
 
     @Test
     void TestCollection1() {
         Entity testEntity = collectionComponent.collectItem("fish");
-        Assertions.assertSame(testEntity.getComponent(IngredientComponent.class).getItemType(), ItemType.FISH);
+        Assertions.assertSame(ItemType.FISH, testEntity.getComponent(IngredientComponent.class).getItemType());
     }
 
     @Test
     void TestCollection2() {
         Entity tesEntity = collectionComponent.collectItem("beef");
-        Assertions.assertSame(tesEntity.getComponent(IngredientComponent.class).getItemType(), ItemType.BEEF);
+        Assertions.assertSame(ItemType.BEEF, tesEntity.getComponent(IngredientComponent.class).getItemType());
     }
 
     @Test

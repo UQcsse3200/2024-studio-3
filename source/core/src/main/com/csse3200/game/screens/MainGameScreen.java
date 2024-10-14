@@ -71,6 +71,7 @@ public class MainGameScreen extends ScreenAdapter {
 			"images/white_background.png",
 			"images/Upgrade_display.png",
 			"images/pause_menu2.png",
+			"images/recipe_card.png",
 			"images/textbox.png",
 			//background daylight cycle assets
 			"images/background_images/1.0.png",
@@ -316,12 +317,12 @@ public class MainGameScreen extends ScreenAdapter {
 		  	.addComponent(docketLineDisplay = new DocketLineDisplay())
 			.addComponent(new PerformanceDisplay())
 			.addComponent(new MainGameActions(this.game, UIFactory.createDocketUI()))
-			//.addComponent(new MainGameExitDisplay())
+			.addComponent(new MainGameExitDisplay())
 			.addComponent(new Terminal())
 			.addComponent(inputComponent)
 			.addComponent(new TerminalDisplay())
 			.addComponent(new OrderActions(this.game))
-			//.addComponent(new MainGameOrderBtnDisplay())
+			.addComponent(new MainGameOrderBtnDisplay())
 			.addComponent(new PauseMenuActions(this.game))
 			.addComponent(new PauseMenuDisplay(this))
 			.addComponent(new RageUpgrade())
