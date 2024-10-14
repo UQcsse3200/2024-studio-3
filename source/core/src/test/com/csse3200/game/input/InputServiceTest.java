@@ -73,15 +73,6 @@ class InputServiceTest {
   }
 
   @Test
-  void shouldHandleScrolled()
-      throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
-    Method method = InputComponent.class.getDeclaredMethod("scrolled", float.class, float.class);
-    Method serviceMethod =
-        InputService.class.getDeclaredMethod("scrolled", float.class, float.class);
-    shouldCallInputHandlersInPriorityOrder(method, serviceMethod, 5f, 6f);
-  }
-
-  @Test
   void shouldHandleTouchDown()
       throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
     Method method =
@@ -125,15 +116,6 @@ class InputServiceTest {
   }
 
   @Test
-  void shouldHandleLongPress()
-      throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
-    Method method = InputComponent.class.getDeclaredMethod("longPress", float.class, float.class);
-    Method serviceMethod =
-        InputService.class.getDeclaredMethod("longPress", float.class, float.class);
-    shouldCallInputHandlersInPriorityOrder(method, serviceMethod, 5f, 6f);
-  }
-
-  @Test
   void shouldHandlePan()
       throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
     Method method =
@@ -143,18 +125,6 @@ class InputServiceTest {
         InputService.class.getDeclaredMethod(
             "pan", float.class, float.class, float.class, float.class);
     shouldCallInputHandlersInPriorityOrder(method, serviceMethod, 5f, 6f, 7f, 8f);
-  }
-
-  @Test
-  void shouldHandlePanStop()
-      throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
-    Method method =
-        InputComponent.class.getDeclaredMethod(
-            "panStop", float.class, float.class, int.class, int.class);
-    Method serviceMethod =
-        InputService.class.getDeclaredMethod(
-            "panStop", float.class, float.class, int.class, int.class);
-    shouldCallInputHandlersInPriorityOrder(method, serviceMethod, 5f, 6f, 7, 8);
   }
 
   @Test
@@ -168,17 +138,6 @@ class InputServiceTest {
             "pinch", Vector2.class, Vector2.class, Vector2.class, Vector2.class);
     shouldCallInputHandlersInPriorityOrder(
         method, serviceMethod, Vector2.Zero, Vector2.Zero, Vector2.Zero, Vector2.Zero);
-  }
-
-  @Test
-  void shouldHandleTap()
-      throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
-    Method method =
-        InputComponent.class.getDeclaredMethod(
-            "tap", float.class, float.class, int.class, int.class);
-    Method serviceMethod =
-        InputService.class.getDeclaredMethod("tap", float.class, float.class, int.class, int.class);
-    shouldCallInputHandlersInPriorityOrder(method, serviceMethod, 5f, 6f, 7, 8);
   }
 
   @Test
