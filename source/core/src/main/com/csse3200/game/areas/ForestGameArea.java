@@ -262,7 +262,7 @@ public class ForestGameArea extends GameArea {
     spawnTerrain();
     spawnWall();
     MapLayout mapLayout = new MapLayout();
-    Map result = mapLayout.load(this.level);
+    Map result = mapLayout.load(GdxGame.LevelType.LEVEL_2);
     for (Bench bench : result.getBenches()) {
       spawnEntity(bench);
       bench.setPosition(bench.x, bench.y);
