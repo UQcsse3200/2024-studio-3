@@ -8,6 +8,9 @@ import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.events.EventHandler;
 import com.csse3200.game.files.FileLoader;
 import com.csse3200.game.files.GameState;
+import com.csse3200.game.services.DayNightService;
+import com.csse3200.game.services.PlayerService;
+import com.csse3200.game.services.ServiceLocator;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -127,6 +130,7 @@ public class SaveLoadServiceTest {
             mockedFileLoader.verify(() -> FileLoader.writeClass(any(GameState.class), eq(expectedFilePath), eq(FileLoader.Location.LOCAL)), times(1));
         }
     }
+
 
     @Test
     public void testLoadWithNullGameState() {
