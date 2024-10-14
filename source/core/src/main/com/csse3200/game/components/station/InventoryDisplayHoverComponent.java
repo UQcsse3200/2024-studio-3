@@ -1,4 +1,4 @@
-package com.csse3200.game.components.player;
+package com.csse3200.game.components.station;
 
 import com.badlogic.gdx.graphics.Texture;
 import org.slf4j.Logger;
@@ -12,16 +12,11 @@ import com.csse3200.game.services.ServiceLocator;
 
 import com.csse3200.game.components.items.IngredientComponent;
 import com.csse3200.game.components.items.ItemComponent;
+import com.csse3200.game.components.player.InventoryComponent;
+
 import java.util.ArrayList;
 import java.util.Objects;
 
-import com.csse3200.game.components.station.IngredientStationHandlerComponent;
-import com.csse3200.game.components.station.StationBinComponent;
-import com.csse3200.game.components.station.StationChoppingComponent;
-import com.csse3200.game.components.station.StationCollectionComponent;
-import com.csse3200.game.components.station.StationCookingComponent;
-import com.csse3200.game.components.station.StationItemHandlerComponent;
-import com.csse3200.game.components.station.StationMealComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
 
 
