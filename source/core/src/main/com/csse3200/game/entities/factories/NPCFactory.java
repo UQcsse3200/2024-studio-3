@@ -11,6 +11,7 @@ import com.csse3200.game.ai.tasks.AITaskComponent;
 import com.csse3200.game.components.npc.CustomerComponent;
 import com.csse3200.game.components.npc.CustomerManager;
 import com.csse3200.game.components.ordersystem.OrderManager;
+import com.csse3200.game.components.ordersystem.Recipe;
 import com.csse3200.game.components.player.TouchPlayerInputComponent;
 import com.csse3200.game.components.npc.GhostAnimationController;
 import com.csse3200.game.components.npc.SpecialNPCAnimationController;
@@ -60,7 +61,6 @@ public class NPCFactory {
         boss
                         .addComponent(animator)
                         .addComponent(new SpecialNPCAnimationController());
-
         return boss;
     }
 
@@ -74,7 +74,7 @@ public class NPCFactory {
     public static Entity createUpgradeNPC(Vector2 firstPosition, UpgradesDisplay upgradesDisplay) {
         Entity penguin = createStandard(firstPosition);
         AITaskComponent aiComponent = new AITaskComponent();
-        aiComponent.addTask(new PathFollowTask(firstPosition, 30));
+        aiComponent.addTask(new PathFollowTask(firstPosition, 30, 15));
 
         // Animation setup
         AnimationRenderComponent animator = new AnimationRenderComponent(
@@ -144,8 +144,6 @@ public class NPCFactory {
     public static Entity createCustomerPersonal(String name, Vector2 targetPosition) {
         Vector2 newTargetPosition = new Vector2(targetPosition.x, targetPosition.y + customerCount);
 
-        Entity customer = createBaseCustomer(newTargetPosition);
-
         CustomerPersonalityConfig config = switch (name) {
                 case "Hank" -> configs.Hank;
                 case "Lewis" -> configs.Lewis;
@@ -154,6 +152,13 @@ public class NPCFactory {
                 case "Moonki" -> configs.Moonki;
                 default -> configs.Default;
         };
+
+        // Retrieve recipe to determine the waiting time
+        Recipe recipe = OrderManager.getRecipe(config.preference);
+        float waitingTime = (recipe != null) ? recipe.getMakingTime() * 10 : 0; // Default to 0 seconds if no recipe
+        logger.info("waitingTime: {}", waitingTime);
+        Entity customer = createBaseCustomer(newTargetPosition, waitingTime);
+
         // orderID is to link a specific customer to a specific order ticket
         String orderNumber = String.valueOf(orderID);
         logger.info("Order number: {}", orderNumber);
@@ -179,7 +184,9 @@ public class NPCFactory {
         customer.getComponent(AnimationRenderComponent.class).scaleEntity();
 
         // Display the order for the customer
-        OrderManager.displayOrder(customer);
+        customer.getEvents().addListener("customerArrived", () -> {
+            OrderManager.displayOrder(customer);
+        });
 
         logger.debug("Created customer {} with initial position: {}", name, customer.getPosition());
 
@@ -209,7 +216,7 @@ public class NPCFactory {
     public static Entity createBasicCustomer(String name, Vector2 targetPosition) {
         Vector2 newTargetPosition = new Vector2(targetPosition.x, targetPosition.y + customerCount);
 
-        Entity customer = createBaseCustomer(newTargetPosition);
+        Entity customer = createBaseCustomer(newTargetPosition, 15);
 
         BaseCustomerConfig config = switch (name) {
                 case "Basic Chicken" -> configs.Basic_Chicken;
@@ -239,10 +246,10 @@ public class NPCFactory {
         return customer;
     }
 
-    public static Entity createBaseCustomer(Vector2 targetPosition) {
+    public static Entity createBaseCustomer(Vector2 targetPosition, float waitingTime) {
         AITaskComponent aiComponent = new AITaskComponent();
         aiComponent
-                .addTask(new PathFollowTask(targetPosition, 30));
+                .addTask(new PathFollowTask(targetPosition, 30, waitingTime));
         Entity npc = new Entity()
                         .addComponent(new PhysicsComponent())
                         .addComponent(new PhysicsMovementComponent())
@@ -258,7 +265,7 @@ public class NPCFactory {
     public static Entity createBaseCharacter(Vector2 targetPosition) {
         AITaskComponent aiComponent = new AITaskComponent();
         aiComponent
-                        .addTask(new PathFollowTask(targetPosition, 30)) // Default countdown
+                        .addTask(new PathFollowTask(targetPosition, 30, 15)) // Default countdown
                         .addTask(new TurnTask(10, 0.01f, 10f));
         Entity npc = new Entity()
                         .addComponent(new PhysicsComponent())
@@ -275,7 +282,7 @@ public class NPCFactory {
     public static Entity createStandard(Vector2 targetPosition) {
         AITaskComponent aiComponent = new AITaskComponent();
         aiComponent
-                        .addTask(new PathFollowTask(targetPosition, 30)); // Default countdown
+                        .addTask(new PathFollowTask(targetPosition, 30, 15)); // Default countdown
         //                 .addTask(new TurnTask(10, 0.01f, 10f));
         Entity npc = new Entity()
                         .addComponent(new PhysicsComponent())

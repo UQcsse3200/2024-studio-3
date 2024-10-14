@@ -50,6 +50,7 @@ public class EndDayDisplay extends UIComponent {
     private static final int STARTING_GOLD = ServiceLocator.getLevelService().getCurrGold();
     private static final String POINT_IMAGE_PATH = "images/point.png";
     private static final String TINY_5 = "flat-earth/skin/fonts/Tiny5-Regular.ttf";
+
     /**
      * Constructor for the EndDayDisplay class.
      */
@@ -79,6 +80,7 @@ public class EndDayDisplay extends UIComponent {
         setupUI();
         addListeners();
     }
+
     public void addListeners() {
         ServiceLocator.getDocketService().getEvents().addListener("goldUpdated", this::handleGoldUpdate);
         ServiceLocator.getLevelService().getEvents().addListener("customerSpawned", this::updateCustomerList);
@@ -90,6 +92,7 @@ public class EndDayDisplay extends UIComponent {
             logger.info("it is listened in end day");
             show();});
     }
+
     /**
      * Sets up a white background for the display using a predefined image.
      * This method loads a texture from the resource service and sets it as the background
@@ -102,6 +105,7 @@ public class EndDayDisplay extends UIComponent {
         Drawable background = new TextureRegionDrawable(new TextureRegion(texture));
         getLayout().setBackground(background);
     }
+
     /**
      * Sets up the images for various UI elements in the display.
      * This method initializes and positions images that are used to enhance the visual
@@ -113,6 +117,7 @@ public class EndDayDisplay extends UIComponent {
         setPointImage2(createImage(POINT_IMAGE_PATH));
         setPointImage3(createImage(POINT_IMAGE_PATH));
     }
+
     /**
      * Creates and returns an image actor for a given texture path.
      * This utility method simplifies the creation of an image actor from a texture,
@@ -192,6 +197,7 @@ public class EndDayDisplay extends UIComponent {
         List<String> passedCustomers = new List<>(skin);
         customerList = new List<>(skin);
         Table listTable = new Table();
+
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal(TINY_5));
         FreeTypeFontParameter parameter = new FreeTypeFontParameter();
         parameter.size = 30;
@@ -201,9 +207,9 @@ public class EndDayDisplay extends UIComponent {
         Label.LabelStyle newStyle = new Label.LabelStyle();
         newStyle.font = font;
         newStyle.fontColor = Color.WHITE;
+
         Label passedLabel = new Label("Passed Customers", newStyle);
         passedLabel.setFontScale(1.2f);
-
         Label failedLabel = new Label("Failed Customers", newStyle);
         failedLabel.setFontScale(1.2f);
         listTable.add(passedLabel).pad(10).center();
@@ -268,6 +274,7 @@ public class EndDayDisplay extends UIComponent {
         currentGold = gold;
         goldLabel.setText(currentGold);
     }
+
     /**
      * Updates the customer feedback lists when new customer feedback is received.
      * This method is called whenever there is new data about customer interactions,
@@ -279,6 +286,7 @@ public class EndDayDisplay extends UIComponent {
         customerNameArray.add(customerName);
         customerList.setItems(customerNameArray.toArray(new String[0]));
     }
+
     /**
      * Shows the end-of-day display.
      * This method makes the display visible and updates all dynamic content to reflect
@@ -302,6 +310,7 @@ public class EndDayDisplay extends UIComponent {
         Timer.schedule(birdMoveTask, 0, 1 / 60f); // Schedule the task
         this.animateGoldChange();
     }
+
     /**
      * Updates the position of the bird image on the display.
      * This method is used to animate the bird image across the display, creating a
@@ -372,49 +381,64 @@ public class EndDayDisplay extends UIComponent {
         // draw is handled by the stage
 
     }
+
     @Override
     public void setStage(Stage mock) {
         this.stage = mock;
     }
+
     public boolean isVisible() {
         return isVisible;
     }
+
     public void setVisible(boolean visible) {
         isVisible = visible;
     }
+
     public Table getLayout() {
         return layout;
     }
+
     public void setLayout(Table layout) {
         this.layout = layout;
     }
+
     public GdxGame getGame() {
         return game;
     }
+
     public void setGame(GdxGame game) {
         this.game = game;
     }
+
     public Image getBirdImage() {
         return birdImage;
     }
+
     public void setBirdImage(Image birdImage) {
         this.birdImage = birdImage;
     }
+
     public Image getPointImage1() {
         return pointImage1;
     }
+
     public void setPointImage1(Image pointImage1) {
         this.pointImage1 = pointImage1;
     }
+
     public Image getPointImage2() {
         return pointImage2;
     }
+
     public void setPointImage2(Image pointImage2) {
         this.pointImage2 = pointImage2;
     }
+
     public Image getPointImage3() {
         return pointImage3;
     }
+
     public void setPointImage3(Image pointImage3) {
         this.pointImage3 = pointImage3;
     }
