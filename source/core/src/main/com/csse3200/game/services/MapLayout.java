@@ -93,7 +93,13 @@ public class MapLayout {
                     // Spawn single bench row when 'X'
                     if (square.equals("X")) {
                         strToNum = Integer.valueOf(parts[col + 1]);
-                        strToNum2 = Integer.valueOf(parts[col + 2]);
+                        if (parts.length == 4) {
+                            strToNum2 = Integer.valueOf(parts[col + 2]);
+                            strToNum2 = strToNum2 + Integer.valueOf(parts[col + 3]);
+                        } else {
+                            strToNum2 = 1;
+                        }
+                        strToNum2 = Integer.valueOf(parts[col + 2] );
                         benches.addAll(readBench("X", strToNum, strToNum2, row));
                         col += 3;
 //                        logger.info("Spawning entity at row " + row + ", column " + col);
@@ -133,7 +139,11 @@ public class MapLayout {
     public ArrayList<Bench> readBench(String type, int startCol, int size, int row) {
         switch (type) {
             case "X":
-                return BenchGenerator.createBenchRow(startCol + 4, startCol + size, row - 4);
+                if (size == 1) {
+                    return BenchGenerator.singleBench(startCol + 4, row - 4);
+                }
+
+                return BenchGenerator.createBenchRow(startCol + 4, startCol + size +4, row - 4);
             case "Y":
                 return BenchGenerator.createBenchColumn(startCol + 4, row - 4, row + size - 4);
             default:

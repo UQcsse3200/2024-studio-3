@@ -73,4 +73,10 @@ public class BenchGenerator {
         LOGGER.log(Level.INFO, "added row of " + arr.size() + " flattened benches");
         return arr;
     }
+
+    public static ArrayList<Bench> singleBench(int x, int y) {
+        ArrayList<Bench> arr = new ArrayList<Bench>();
+        arr.add(new Bench("top_shadows", x, y));
+        return arr;
+    }
 }
