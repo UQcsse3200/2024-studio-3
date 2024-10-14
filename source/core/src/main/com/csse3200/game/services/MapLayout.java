@@ -32,7 +32,10 @@ public class MapLayout {
     private int strToNum2;
     private ArrayList<Bench> benches = new ArrayList<Bench>();
     private ArrayList<Entity> stations = new ArrayList<Entity>();
-
+    private String mapName;
+    private int mapWidth;
+    private int mapHeight;
+    private String mapSeparator;
     private Bench bench;
 
     private final String[] validStations = {"b", "s", "u", "t", "c", "a", "E", "O", "B", "C", "G", "N", "S", "F"};
@@ -72,14 +75,35 @@ public class MapLayout {
         try {
             reader = new BufferedReader(new FileReader(mapLevel));
             String line;
-            int row = 0;
+
 
             logger.info("Reading the grid...");
+            if ((line = reader.readLine()) != null) {
+                mapName = line; // 1st line is the map name
+                logger.info("Map Name: " + mapName);
+            }
+
+            if ((line = reader.readLine()) != null) {
+                mapWidth = Integer.parseInt(line); // 2nd line is the width
+                logger.info("Map Width: " + mapWidth);
+            }
+
+            if ((line = reader.readLine()) != null) {
+                mapHeight = Integer.parseInt(line); // 3rd line is the height
+                logger.info("Map Height: " + mapHeight);
+            }
+
+            if ((line = reader.readLine()) != null) {
+                mapSeparator = line; // 4th line is a separator (e.g., "===")
+                logger.info("Map Separator: " + mapSeparator);
+            }
+            int row = 4;
 
             // Read the file line by line
             while ((line = reader.readLine()) != null) {
                 // Log the entire line
                 logger.info("Line " + row + ": " + line);
+
 
                 // Split the line into individual characters
                 String[] parts = line.split("");
@@ -214,5 +238,17 @@ public class MapLayout {
             }
         }
         return false;
+    }
+
+    public String getMapName() {
+        return mapName;
+    }
+
+    public int getMapWidth() {
+        return mapWidth;
+    }
+
+    public int getMapHeight() {
+        return mapHeight;
     }
 }
