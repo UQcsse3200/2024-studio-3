@@ -9,7 +9,8 @@ import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.csse3200.game.components.FlameComponent;
 import com.csse3200.game.components.TooltipsDisplay;
 import com.csse3200.game.components.player.InventoryComponent;
-import com.csse3200.game.components.station.InventoryDisplayHoverComponent;
+import com.csse3200.game.components.station.MixingBenchHoverComponent;
+import com.csse3200.game.components.station.ChoppingBoardHoverComponent;
 import com.csse3200.game.components.station.*;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.physics.PhysicsLayer;
@@ -78,7 +79,7 @@ public class StationFactory {
             .addComponent(new InteractionComponent(PhysicsLayer.INTERACTABLE))
             .addComponent(new TooltipsDisplay())
             .addComponent(new InventoryComponent(1))
-            .addComponent(new InventoryDisplayHoverComponent())
+            .addComponent(new ChoppingBoardHoverComponent())
             .addComponent(new StationProgressDisplay())
             .addComponent(new StationChoppingComponent())
             .addComponent(new StationItemHandlerComponent("cutting board"));
@@ -423,8 +424,7 @@ public class StationFactory {
             .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
             .addComponent(new InteractionComponent(PhysicsLayer.INTERACTABLE))
             .addComponent(new TooltipsDisplay())
-            .addComponent(new InventoryComponent(1))
-            .addComponent(new InventoryDisplayHoverComponent());
+            .addComponent(new InventoryComponent(1));
             // Change this handler to the combining one
             //.addComponent(new StationItemHandlerComponent("benchTop", new ArrayList<>()));
 
@@ -452,7 +452,7 @@ public class StationFactory {
             .addComponent(new InteractionComponent(PhysicsLayer.INTERACTABLE))
             .addComponent(new TooltipsDisplay())
             .addComponent(new InventoryComponent(4))
-            .addComponent(new InventoryDisplayHoverComponent())
+            .addComponent(new MixingBenchHoverComponent())
             .addComponent(new StationMealComponent("combining", new ArrayList<>()));
             // Change this handler to the combining one
             //.addComponent(new StationItemHandlerComponent("benchMiddle", new ArrayList<>()));

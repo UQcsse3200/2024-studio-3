@@ -239,6 +239,7 @@ public class InventoryDisplayHoverComponent extends RenderComponent {
 
     @Override
     public void draw(SpriteBatch batch)  {
+        /**
         if (entity == null || position == null || scale == null)
             return;
 
@@ -311,6 +312,7 @@ public class InventoryDisplayHoverComponent extends RenderComponent {
                 SLOT_HEIGHT - 0.2f
             );
         }
+         */
     }
 
     @Override

@@ -20,39 +20,45 @@ import com.csse3200.game.physics.components.PhysicsComponent;
 
 
 /**
- * A component that display's the items in an entity's InventoryComponent as
- * images hovering above the entity. This is different to the InventoryDisplay
- * UI component, which displays items in slots that overlay the gameplay screen.
+ * An abstract component that displays the items in an a station's
+ * InventoryComponent as images hovering above the entity. This is
+ * different to the InventoryDisplay UI component, which displays items
+ * in slots that overlay the gameplay screen.
  * To use: add this component to an entity that has an
  * InventoryComponent. This component will NOT work if the entity
  * it is added to does not have a InventoryComponent.
- * The main use for this component is to show the inventories of the stations to the player.
+ *
+ * This component is also used to display key tooltips indicating
+ * available interactions the player can make with the station.
+ * Concrete classes should be made for each station type, extending this
+ * class and implement the drawToolTips() method to match the relevant
+ * key tooltips for the station.
  */
-abstract class StationHoverComponent extends RenderComponent {
+public abstract class StationHoverComponent extends RenderComponent {
     private static final Logger logger = LoggerFactory.getLogger(InventoryDisplayHoverComponent.class);
     private ArrayList<Texture> itemImages;
     private Texture backgroundImage;
     private Texture selectedBackgroundImage;
-    private boolean showKeys = false;
-    private InventoryComponent inventory = null;
+    protected boolean showKeys = false;
+    protected InventoryComponent inventory = null;
     private ItemComponent currentItem = null;
-    private boolean hasItem = false;
-    private Texture interactKeyImage;
-    private Texture combineKeyImage;
-    private Texture rotateKeyImage;
-    private Texture chopKeyImage;
-    private Texture placeKeyImage;
-    private Texture takeKeyImage;
-    private Texture submitKeyImage;
-    private Texture disposeKeyImage;
-    private Vector2 position;
-    private Vector2 scale;
+    protected boolean hasItem = false;
+    protected Texture interactKeyImage;
+    protected Texture combineKeyImage;
+    protected Texture rotateKeyImage;
+    protected Texture chopKeyImage;
+    protected Texture placeKeyImage;
+    protected Texture takeKeyImage;
+    protected Texture submitKeyImage;
+    protected Texture disposeKeyImage;
+    protected Vector2 position;
+    protected Vector2 scale;
     private static final float X_OFFSET = 0.2f;
     private static final float Y_OFFSET = 1.0F;
     private static final float SLOT_WIDTH = 0.6f;
     private static final float SLOT_HEIGHT = 0.6f;
-    private static final float KEY_WIDTH = 1.0f;
-    private static final float KEY_HEIGHT = 0.3f;
+    protected final float KEY_WIDTH = 1.0f;
+    protected static final float KEY_HEIGHT = 0.3f;
 
     @Override
     public void create() {
@@ -141,6 +147,7 @@ abstract class StationHoverComponent extends RenderComponent {
      * Draws the required key tooltips for the current interactions
      * that can be done on this station. Implement in subclass
      * based on station type
+     * @param batch The SpriteBatch used for drawing
      */
     public abstract void drawToolTips(SpriteBatch batch);
 

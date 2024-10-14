@@ -48,7 +48,7 @@ public class Bench extends Entity{
         addComponent(new InteractionComponent(PhysicsLayer.INTERACTABLE));
         addComponent(new TooltipsDisplay());
         addComponent(new InventoryComponent(4));
-        addComponent(new InventoryDisplayHoverComponent());
+        addComponent(new MixingBenchHoverComponent());
         addComponent(new StationMealComponent("combining", new ArrayList<>()));
 
         getComponent(InteractionComponent.class).setAsBox(getScale());
