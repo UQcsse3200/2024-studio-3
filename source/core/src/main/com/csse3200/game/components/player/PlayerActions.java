@@ -1,19 +1,11 @@
 package com.csse3200.game.components.player;
 
-import java.util.Map;
-
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.Fixture;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.entities.Entity;
-import com.csse3200.game.physics.BodyUserData;
-import com.csse3200.game.components.items.PlateComponent;
-import com.csse3200.game.components.station.FireExtinguisherHandlerComponent;
-import com.csse3200.game.components.TooltipsDisplay;
 import com.csse3200.game.physics.components.PhysicsComponent;
-import com.csse3200.game.services.InteractableService;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.components.SensorComponent;
 
@@ -28,14 +20,16 @@ public class PlayerActions extends Component {
   private PhysicsComponent physicsComponent;
   private Vector2 walkDirection = Vector2.Zero.cpy();
   private boolean moving = false;
-  private SensorComponent interactionSensor;
+  private SensorComponent sensor;
   private InventoryComponent playerInventory;
   private InventoryDisplay displayInventory;
+  private Entity closestEntity = null;
+  private Entity oldClosestEntity = null;
 
   @Override
   public void create() {
     physicsComponent = entity.getComponent(PhysicsComponent.class);
-    interactionSensor = entity.getComponent(SensorComponent.class);
+    sensor = entity.getComponent(SensorComponent.class);
     playerInventory = entity.getComponent(InventoryComponent.class);
     displayInventory = entity.getComponent(InventoryDisplay.class);
     entity.getEvents().addListener("walk", this::walk);
@@ -44,27 +38,28 @@ public class PlayerActions extends Component {
     entity.getEvents().addListener("interact", this::interact);
   }
 
-  @Override
-  public void update() {
-    Body body = physicsComponent.getBody();
-    Vector2 position = body.getPosition();
+    @Override
+    public void update() {
+        Body body = physicsComponent.getBody();
+        Vector2 position = body.getPosition();
 
-    if (moving) {
-      // Stop if it's at min x position or max x position
-      if (position.x < MIN_X_POSITION) {
-        position.x = MIN_X_POSITION;
-        body.setTransform(MIN_X_POSITION, position.y, body.getAngle());
-        stopWalking();
-      } else if (position.x > MAX_X_POSITION) {
-        position.x = MAX_X_POSITION;
-        body.setTransform(MAX_X_POSITION, position.y, body.getAngle());
-        stopWalking();
-      } else {
-        updateSpeed();
-      }
+        if (moving) {
+            updateInteraction();
+
+            // Stop if it's at min x position or max x position
+            if (position.x < MIN_X_POSITION) {
+                position.x = MIN_X_POSITION;
+                body.setTransform(MIN_X_POSITION, position.y, body.getAngle());
+                stopWalking();
+            } else if (position.x > MAX_X_POSITION) {
+                position.x = MAX_X_POSITION;
+                body.setTransform(MAX_X_POSITION, position.y, body.getAngle());
+                stopWalking();
+            } else {
+                updateSpeed();
+            }
+        }
     }
-    updateInteraction();
-  }
 
   /**
    * Updates the player's interaction with nearby objects. This method checks for the closest
@@ -73,20 +68,19 @@ public class PlayerActions extends Component {
    * the tooltip.
    * */
   private void updateInteraction() {
-    interactionSensor.update();
-    Fixture interactable = interactionSensor.getClosestFixture();
-    if (interactable != null) {
-      Vector2 objectPosition = interactable.getBody().getPosition();  // Get object position
-      String interactionKey = "Press E";
-      String itemName = "to interact";
-      // Create a TooltipInfo object with the text and position
-      TooltipsDisplay.TooltipInfo tooltipInfo = new TooltipsDisplay.TooltipInfo(interactionKey + " " + itemName, objectPosition);
+    oldClosestEntity = closestEntity;
+    closestEntity = sensor.getClosestInteractable();
 
-      // Trigger the event with the TooltipInfo object
-      entity.getEvents().trigger("showTooltip", tooltipInfo);
+    if (oldClosestEntity == closestEntity) {
+        return;
+    }
 
-    } else {
-      entity.getEvents().trigger("hideTooltip");
+    if (oldClosestEntity != null) {
+      oldClosestEntity.getEvents().trigger("hideToolTip");
+    }
+
+    if (closestEntity != null) {
+      closestEntity.getEvents().trigger("showToolTip");
     }
   }
 
@@ -108,31 +102,6 @@ public class PlayerActions extends Component {
    * Triggers an interaction event. It holds the logic in how to interact with a given station
    */
   void interact(String type) {
-    Map<Entity, Vector2> interactables = InteractableService.getInteractables();
-
-    Entity closestEntity = null;
-
-    // Get the player position
-    Vector2 playerPosition = entity.getComponent(PhysicsComponent.class).getBody().getPosition();
-    float closestDistance = Float.MAX_VALUE;
-
-    for (Map.Entry<Entity, Vector2> entry : interactables.entrySet()) {
-        Entity entity = entry.getKey();
-        Vector2 entityPosition = entry.getValue();
-
-        float distance = playerPosition.dst(entityPosition);
-
-        if (distance <= 1.15f && distance < closestDistance) {
-            closestDistance = distance;
-            closestEntity = entity;
-        }
-    }
-
-    // If no station meets the criteria, return
-    if (closestEntity == null) {
-        return;
-    }
-    
     closestEntity.getEvents().trigger("Station Interaction", playerInventory, displayInventory, type);
   }
 
