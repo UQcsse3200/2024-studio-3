@@ -55,7 +55,12 @@ public class TutorialScreenDisplay extends UIComponent {
     public void create() {
         super.create();
 
-        playerActions = entity.getComponent(PlayerActions.class);
+        if (entity != null) {
+            playerActions = entity.getComponent(PlayerActions.class);
+        } else {
+            logger.error("Entity null,");
+        }
+
         ServiceLocator.getLevelService().setCurrLevel(GdxGame.LevelType.LEVEL_0);
 
         if (table == null) {
