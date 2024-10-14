@@ -198,6 +198,11 @@ public class AnimationRenderComponent extends RenderComponent {
     this.atlas = atlasName;
   }
 
+  @Override
+  public int getLayer() {
+    return 2;
+  }
+
   public String getAtlasString() {
     if (this.atlas.equals(ServiceLocator.getResourceService().getAsset(
             "images/player/" + "rawTomato.atlas", TextureAtlas.class))) {

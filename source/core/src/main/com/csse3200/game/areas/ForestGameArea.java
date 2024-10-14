@@ -12,11 +12,15 @@ import java.util.concurrent.Executors;
 
 import com.csse3200.game.components.moral.MoralDayFour;
 import com.csse3200.game.areas.map.Map;
+import com.csse3200.game.services.InteractableService;
 import com.csse3200.game.services.MapLayout;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import static com.badlogic.gdx.Gdx.app;
+
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
@@ -249,6 +253,10 @@ public class ForestGameArea extends GameArea {
     // call load function based on the level argument
     // return list of items to spawn based on the load function
     // Baaed on lsit of items to spawn, spawn the items
+    
+    // Create a new interactable service
+    ServiceLocator.registerInteractableService(new InteractableService());
+    
     loadAssets();
     displayUI();
     spawnTerrain();
@@ -288,6 +296,7 @@ public class ForestGameArea extends GameArea {
 
     createEndDayScreen();
     playMusic();
+
   }
 
   /**
@@ -849,6 +858,15 @@ public class ForestGameArea extends GameArea {
     endDayScreen
             .addComponent(new EndDayDisplay());
     ServiceLocator.getEntityService().registerEndDay(endDayScreen);
+  }
+
+  /**
+   * Returns the level the game is currently on.
+   *
+   * @return level - the level the player is currently on
+   */
+  public GdxGame.LevelType getLevel() {
+    return this.level;
   }
 }
 

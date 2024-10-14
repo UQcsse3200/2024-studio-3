@@ -9,7 +9,6 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.csse3200.game.rendering.RenderComponent;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.components.items.ItemComponent;
-import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.components.items.ItemTimerComponent;
 import com.csse3200.game.components.items.ChopIngredientComponent;
 import com.csse3200.game.components.items.CookIngredientComponent;
@@ -55,17 +54,11 @@ public class StationProgressDisplay extends RenderComponent {
             // the regular getPosition() on stations does not return the correct position.
             position = entity.getComponent(PhysicsComponent.class).getBody().getPosition();
             scale = entity.getScale();
-            InventoryComponent stationInventory = entity.getComponent(InventoryComponent.class);
         }
     }
 
     @Override
     public void update() {
-        super.update();
-        if (entity == null) {
-            return;
-        }
-
         ItemComponent item = entity.getComponent(StationItemHandlerComponent.class).peek();
         if (item == null) {
             resetBar();
@@ -74,23 +67,28 @@ public class StationProgressDisplay extends RenderComponent {
 
         ItemTimerComponent timerItem = item.getEntity().getComponent(ChopIngredientComponent.class);
         if (timerItem == null) {
+            // could not find a chop component, check if theres a cook component
             timerItem = item.getEntity().getComponent(CookIngredientComponent.class);
         }
-
         if (timerItem == null) {
             resetBar();
             return;
         }
 
         barPercentage = timerItem.getCompletionPercent() / 100;
-        displayBar = barPercentage < 1.0f || (timerItem instanceof CookIngredientComponent
-                && ((CookIngredientComponent) timerItem).getIsCooking());
-
-        if (barPercentage >= 1.0f) {
-            barPercentage = 1.0f;
-        }
-
         logger.info(String.valueOf(barPercentage));
+        if (barPercentage < 1.0f) {
+            // if completion percent is less than 100%, then display the
+            // progress bar
+            displayBar = true;
+        } else if (barPercentage >= 1.0f && timerItem instanceof CookIngredientComponent
+                && ((CookIngredientComponent) timerItem).getIsCooking()) {
+            barPercentage = 1.0f;
+            displayBar = true;
+        } else {
+            displayBar = false;
+            entity.getEvents().trigger("updateInventory");
+        }
     }
 
     private void resetBar() {
@@ -101,8 +99,9 @@ public class StationProgressDisplay extends RenderComponent {
 
     @Override
     public void draw(SpriteBatch batch)  {
-        if (entity == null || position == null || scale == null)
+        if (entity == null || position == null || scale == null) {
             return;
+        }
         if (displayBar) {
             batch.draw(barOutline,
                     position.x + X_OFFSET,
@@ -127,7 +126,7 @@ public class StationProgressDisplay extends RenderComponent {
 
     @Override
     public int getLayer() {
-        return 2; // currently overlays the player, but decreasing this to 1 makes it hide behind the stations
+        return 3; // currently overlays the player, but decreasing this to 1 makes it hide behind the stations
     }
 
     @Override

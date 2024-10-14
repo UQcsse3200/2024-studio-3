@@ -42,10 +42,10 @@ public class GoodEnd extends ForestGameArea {
     @Override
     public void create() {
 
-        spawnBeef("cooked");
+        spawnBeefEnd("cooked");
     }
 
-    private void spawnBeef(String cookedLevel) {
+    private void spawnBeefEnd(String cookedLevel) {
         Entity newBeef = ItemFactory.createBeef(cookedLevel);
         spawnEntityAt(newBeef, new GridPoint2(3, 3), true, true);
         newBeef.setScale(0.5f,0.5f);
