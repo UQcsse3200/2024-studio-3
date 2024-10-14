@@ -476,7 +476,6 @@ public class StationFactory {
    */
   public static Entity createSubmissionWindow() {
 
-
     Entity submission = new Entity()
             .addComponent(new PhysicsComponent())
             .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
@@ -485,10 +484,10 @@ public class StationFactory {
             .addComponent(new InventoryComponent(1))
             .addComponent(new StationServingComponent());
 
-
     submission.getComponent(InteractionComponent.class).setAsBox(submission.getScale());
     submission.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
     PhysicsUtils.setScaledCollider(submission, 1f, 1f);
+    submission.scaleHeight(1f);
 
     AnimationRenderComponent animator =
             new AnimationRenderComponent(
