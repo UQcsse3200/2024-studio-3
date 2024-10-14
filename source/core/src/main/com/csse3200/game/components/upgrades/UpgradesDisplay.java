@@ -53,7 +53,7 @@ public class UpgradesDisplay extends UIComponent {
      * Create the upgrade menu to allow user to see which upgrade is generated
      * @return The upgrade menu background image
      */
-    private Image createUpgradesMenuDisplay() {
+    public Image createUpgradesMenuDisplay() {
         Texture pauseMenuTexture = ServiceLocator
                 .getResourceService().getAsset("images/Upgrade_display.png", Texture.class);
 
@@ -134,7 +134,6 @@ public class UpgradesDisplay extends UIComponent {
         upgradeImages.clear();
         upgradeImages.add(upImage);
         upgradesTable.add(upImage).pad(10);
-
     }
 
 
@@ -142,7 +141,7 @@ public class UpgradesDisplay extends UIComponent {
      * Allowing user to decide whether the upgrade is needed or not by pressing YES or NO button
      * @return The table with buttons
      */
-    private Table createButtonsTable() {
+    public Table createButtonsTable() {
         Table buttonTable = new Table();
 
         TextButton yesButton = new TextButton("YES", skin);

@@ -32,7 +32,6 @@ public class UpgradesDisplayTest {
     @Mock ResourceService resourceService;
     @Mock Texture textureMock;
     @Mock Table upgradesTable;
-    @Mock ProgressBar mockRageMeter;
     @Mock EventHandler eventHandler;
     @Mock MainGameScreen mainGameScreen;
     RandomComboService randomComboService;
@@ -42,7 +41,7 @@ public class UpgradesDisplayTest {
     void setUp() {
         ServiceLocator.clear();
 
-        randomComboService = new RandomComboService();
+        randomComboService = spy(new RandomComboService());
 
         ServiceLocator.registerRandomComboService(randomComboService);
         ServiceLocator.registerRenderService(renderService);
@@ -53,6 +52,7 @@ public class UpgradesDisplayTest {
         lenient().when(renderService.getStage()).thenReturn(stage);
         lenient().when(renderService.getStage().getViewport()).thenReturn(viewport);
         lenient().when(renderService.getStage().getViewport().getCamera()).thenReturn(camera);
+        lenient().when(randomComboService.getSelectedUpgrade()).thenReturn("Speed");
 
         upgradesDisplay = new UpgradesDisplay(mainGameScreen);
         upgradesDisplay.setUpgradesTable(upgradesTable);
@@ -74,6 +74,15 @@ public class UpgradesDisplayTest {
     }
 
     @Test
+    void testCreateCallsDependencies() {
+        UpgradesDisplay spyUpgradesDisplay = spy(upgradesDisplay);
+        spyUpgradesDisplay.create();
+        verify(spyUpgradesDisplay).addUpgradeImage();
+        verify(spyUpgradesDisplay).createUpgradesMenuDisplay();
+        verify(spyUpgradesDisplay).createButtonsTable();
+    }
+
+    @Test
     void testToggleVisibilityOn() {
         upgradesDisplay.toggleVisibility();
         assertTrue(upgradesDisplay.isVisible());
@@ -90,6 +99,24 @@ public class UpgradesDisplayTest {
         assertFalse(upgradesDisplay.getUpgradesMenuImage().isVisible());
         assertFalse(upgradesDisplay.getUpgradesTable().isVisible());
         verify(mainGameScreen).resume();
+    }
+
+    @Test
+    void testAddUpgradeImage() {
+        verify(randomComboService).getSelectedUpgrade();
+        String upgrade = randomComboService.getSelectedUpgrade();
+        String texturePath = switch (upgrade) {
+            case "Extortion" -> "images/Extortion1.png";
+            case "Speed" -> "images/SpeedBoot.png";
+            case "Loan" -> "images/Loan1.png";
+            case "Dance party" -> "images/Dance_party.png";
+            default -> "";
+        };
+
+        verify(resourceService).getAsset("images/Upgrade_display.png", Texture.class);
+        verify(resourceService).getAsset(texturePath, Texture.class);
+        assertEquals(2, upgradesDisplay.getUpgradesTable().getChildren().size);
+        assertInstanceOf(Image.class, upgradesDisplay.getUpgradesTable().getChildren().get(1));
     }
 
     @Test
