@@ -28,7 +28,6 @@ public class UpgradesDisplay extends UIComponent {
 
     private Image upgradesMenuImage;
     public boolean isVisible = false;
-    private final List<Image> upgradeImages; // this is to store all the upgrades images
     private Table upgradesTable;
 
     private static final String[] upgradeTexturePaths = {
@@ -45,7 +44,6 @@ public class UpgradesDisplay extends UIComponent {
     public UpgradesDisplay(MainGameScreen game) {
         super();
         this.game = game;
-        this.upgradeImages = new ArrayList<>();
     }
 
 
@@ -131,8 +129,6 @@ public class UpgradesDisplay extends UIComponent {
 
         Texture upgradeTexture = ServiceLocator.getResourceService().getAsset(texturePath, Texture.class);
         Image upImage = new Image(upgradeTexture);
-        upgradeImages.clear();
-        upgradeImages.add(upImage);
         upgradesTable.add(upImage).pad(10);
     }
 
