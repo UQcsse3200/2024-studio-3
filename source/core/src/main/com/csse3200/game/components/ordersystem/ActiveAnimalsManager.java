@@ -4,18 +4,21 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class ActiveAnimalsManager {
-    private static ActiveAnimalsManager instance;
+    // Use a static inner helper class for thread-safe lazy initialization
+    private static class SingletonHelper {
+        private static final ActiveAnimalsManager INSTANCE = new ActiveAnimalsManager();
+    }
+
     private final Set<String> activeAnimals;
 
+    // Private constructor to prevent external instantiation
     private ActiveAnimalsManager() {
         activeAnimals = new HashSet<>();
     }
 
-    public static synchronized ActiveAnimalsManager getInstance() {
-        if (instance == null) {
-            instance = new ActiveAnimalsManager();
-        }
-        return instance;
+    // Method to return the singleton instance
+    public static ActiveAnimalsManager getInstance() {
+        return SingletonHelper.INSTANCE;
     }
 
     public void addAnimal(String name) {
