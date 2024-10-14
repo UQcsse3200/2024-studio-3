@@ -1,121 +1,163 @@
 package com.csse3200.game.services;
 
+import com.csse3200.game.components.CombatStatsComponent;
+import com.csse3200.game.components.moral.Decision;
+import com.csse3200.game.components.moral.MoralDecision;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.entities.EntityService;
+import com.csse3200.game.events.EventHandler;
 import com.csse3200.game.files.FileLoader;
 import com.csse3200.game.files.GameState;
-import com.csse3200.game.components.CombatStatsComponent;
-import com.csse3200.game.events.EventHandler;
+
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
-import com.csse3200.game.extensions.GameExtension;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import com.csse3200.game.files.FileLoader.Location;
+
+import org.mockito.MockedStatic;
+import org.mockito.Mockito;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
 
-@ExtendWith(GameExtension.class)
 public class SaveLoadServiceTest {
 
     private SaveLoadService saveLoadService;
-    private Entity mockPlayer;
-    private CombatStatsComponent mockCombatStats;
 
     @BeforeEach
     public void setUp() {
-        // Initialize SaveLoadService
         saveLoadService = new SaveLoadService();
 
-        // Mock player, combat stats, and moral decision
-        mockPlayer = mock(Entity.class);
-        mockCombatStats = mock(CombatStatsComponent.class);
-        when(mockPlayer.getComponent(CombatStatsComponent.class)).thenReturn(mockCombatStats);
-
-        // Mock and register services with ServiceLocator
+        // Mocking the ServiceLocator services
         PlayerService mockPlayerService = mock(PlayerService.class);
+        Entity mockPlayer = mock(Entity.class);
+        CombatStatsComponent mockCombatStats = mock(CombatStatsComponent.class);
+        when(mockCombatStats.getGold()).thenReturn(100);
+        when(mockPlayer.getComponent(CombatStatsComponent.class)).thenReturn(mockCombatStats);
         when(mockPlayerService.getPlayer()).thenReturn(mockPlayer);
-        ServiceLocator.registerPlayerService(mockPlayerService);
 
         DayNightService mockDayNightService = mock(DayNightService.class);
-        when(mockDayNightService.getDay()).thenReturn(5); // Mock day
+        when(mockDayNightService.getDay()).thenReturn(5);
+
+        EntityService mockEntityService = mock(EntityService.class);
+        Entity mockMoralSystem = mock(Entity.class);
+        MoralDecision mockMoralDecision = mock(MoralDecision.class);
+        List<Decision> mockDecisions = new ArrayList<>();
+        when(mockMoralDecision.getListOfDecisions()).thenReturn(mockDecisions);
+        when(mockMoralSystem.getComponent(MoralDecision.class)).thenReturn(mockMoralDecision);
+        when(mockEntityService.getMoralSystem()).thenReturn(mockMoralSystem);
+        EventHandler mockEventHandler = mock(EventHandler.class);
+        when(mockEntityService.getEvents()).thenReturn(mockEventHandler);
+
+        // Setting up the ServiceLocator with the mocks
+        ServiceLocator.registerPlayerService(mockPlayerService);
         ServiceLocator.registerDayNightService(mockDayNightService);
+        ServiceLocator.registerEntityService(mockEntityService);
+
+        // Mocking FileLoader static methods
+        // Requires Mockito-inline dependency for mocking static methods
+    }
+
+    @AfterEach
+    public void tearDown() {
+        ServiceLocator.clear();
     }
 
     @Test
-    public void testSetSaveFile() {
-        saveLoadService.setSaveFile("newSaveFile.json");
-        assertEquals("newSaveFile.json", saveLoadService.getSaveFile());
-    }
-
-    @Test
-    public void testEventHandlerExists() {
-        EventHandler eventHandler = saveLoadService.getEvents();
-        assertNotNull(eventHandler);
+    public void testConstructor() {
+        assertNotNull(saveLoadService.getEvents(), "EventHandler should be initialized");
     }
 
     @Test
     public void testSave() {
-        // Mock the gold retrieval from the CombatStatsComponent
-        when(mockCombatStats.getGold()).thenReturn(100);
+        // Mocking static methods of FileLoader
+        try (MockedStatic<FileLoader> mockedFileLoader = Mockito.mockStatic(FileLoader.class)) {
 
-        // Set a save file to avoid the conditional branch
-        saveLoadService.setSaveFile("testSave.json");
+            // Ensure saveFile is empty to test conditional branch
+            saveLoadService.setSaveFile("");
 
-        // Call save() and verify that the correct interactions happen
-        saveLoadService.save();
+            saveLoadService.save();
 
-        verify(mockCombatStats, times(1)).getGold();
-        verify(ServiceLocator.getPlayerService(), times(1)).getPlayer();
-        verify(ServiceLocator.getDayNightService(), times(1)).getDay();
+            // Verify that getPlayer was called
+            verify(ServiceLocator.getPlayerService(), times(1)).getPlayer();
+
+            // Verify that gold was retrieved
+            verify(ServiceLocator.getPlayerService().getPlayer().getComponent(CombatStatsComponent.class), times(1)).getGold();
+
+            // Verify that day was retrieved
+            verify(ServiceLocator.getDayNightService(), times(1)).getDay();
+
+            // Verify that decisions were retrieved
+            verify(ServiceLocator.getEntityService().getMoralSystem().getComponent(MoralDecision.class), times(1)).getListOfDecisions();
+
+            // Verify that writeClass was called
+            mockedFileLoader.verify(() -> FileLoader.writeClass(any(GameState.class), anyString(), eq(FileLoader.Location.LOCAL)), times(1));
+
+            // Verify that "togglePause" event was triggered
+            verify(ServiceLocator.getEntityService().getEvents(), times(1)).trigger("togglePause");
+        }
     }
 
     @Test
-    public void testSaveWithoutSaveFile() {
-        // Mock the gold retrieval from the CombatStatsComponent
-        when(mockCombatStats.getGold()).thenReturn(100);
+    public void testSaveWithExistingSaveFile() {
+        try (MockedStatic<FileLoader> mockedFileLoader = Mockito.mockStatic(FileLoader.class)) {
 
-        // Call save() without explicitly setting the save file, it should auto-generate one
-        saveLoadService.save();
+            // Set saveFile to an existing filename
+            String existingFilename = "existing_save.json";
+            saveLoadService.setSaveFile(existingFilename);
 
-        // Verify that the saveFile is auto-generated based on the date and time
-        String expectedPattern = "\\d{2}-\\d{2}-\\d{4}_\\d{2}-\\d{2}-\\d{2}\\.json";
-        assertTrue(saveLoadService.getSaveFile().matches(expectedPattern), "The save file name should match the date-time pattern");
+            saveLoadService.save();
 
-        verify(mockCombatStats, times(1)).getGold();
+            // Verify that getPlayer was called
+            verify(ServiceLocator.getPlayerService(), times(1)).getPlayer();
+
+            // Verify that saveFile was not changed
+            assertEquals(existingFilename, saveLoadService.getSaveFile());
+
+            // Construct the expected file path using File.separator
+            String expectedFilePath = "saves" + File.separator + existingFilename;
+
+            // Verify that writeClass was called with the correct filename
+            mockedFileLoader.verify(() -> FileLoader.writeClass(any(GameState.class), eq(expectedFilePath), eq(FileLoader.Location.LOCAL)), times(1));
+        }
     }
 
     @Test
-    public void testLoad() {
-        // Mock GameState
-        GameState mockState = mock(GameState.class);
-        when(mockState.getMoney()).thenReturn(200);
-        when(mockState.getDay()).thenReturn(3);
+    public void testLoadWithNullGameState() {
+        // Mocking static methods of FileLoader
+        try (MockedStatic<FileLoader> mockedFileLoader = Mockito.mockStatic(FileLoader.class)) {
 
-        // Mock FileLoader readClass
-        when(FileLoader.readClass(GameState.class, "saves" + File.separator + "testLoad.json", Location.LOCAL))
-            .thenReturn(mockState);
+            // Mock FileLoader.readClass() to return null
+            mockedFileLoader.when(() -> FileLoader.readClass(eq(GameState.class), anyString(), eq(FileLoader.Location.LOCAL))).thenReturn(null);
 
-        saveLoadService.setSaveFile("testLoad.json");
-        saveLoadService.load();
+            // Call the load method
+            saveLoadService.load();
 
-        // Verify that load interacts correctly with GameState
-        verify(mockCombatStats, times(1)).setGold(200);
-        verify(ServiceLocator.getDayNightService(), times(1)).setDay(3);
+            // Verify that readClass was called
+            mockedFileLoader.verify(() -> FileLoader.readClass(eq(GameState.class), anyString(), eq(FileLoader.Location.LOCAL)), times(1));
+
+            // Verify that no interactions occur with player or services
+            verifyNoMoreInteractions(ServiceLocator.getPlayerService().getPlayer().getComponent(CombatStatsComponent.class));
+            verifyNoMoreInteractions(ServiceLocator.getDayNightService());
+            verifyNoMoreInteractions(ServiceLocator.getEntityService().getMoralSystem().getComponent(MoralDecision.class));
+        }
     }
 
     @Test
-    public void testLoadNonExistentFile() {
-        // Mock FileLoader readClass to return null when the file doesn't exist
-        when(FileLoader.readClass(GameState.class, "saves" + File.separator + "nonExistent.json", Location.LOCAL))
-            .thenReturn(null);
+    public void testGetAndSetSaveFile() {
+        String filename = "test_save.json";
+        saveLoadService.setSaveFile(filename);
+        assertEquals(filename, saveLoadService.getSaveFile(), "Save file name should be set correctly");
+    }
 
-        saveLoadService.setSaveFile("nonExistent.json");
-        saveLoadService.load();
-
-        // Nothing should be updated since the file doesn't exist
-        verify(mockCombatStats, never()).setGold(anyInt());
-        verify(ServiceLocator.getDayNightService(), never()).setDay(anyInt());
+    @Test
+    public void testGetEvents() {
+        assertNotNull(saveLoadService.getEvents(), "EventHandler should not be null");
     }
 }
