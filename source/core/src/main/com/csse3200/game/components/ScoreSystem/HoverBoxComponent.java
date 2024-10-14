@@ -1,21 +1,15 @@
 package com.csse3200.game.components.ScoreSystem;
 
 import com.badlogic.gdx.graphics.Texture;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.csse3200.game.rendering.RenderComponent;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.components.npc.CustomerComponent;
 
 public class HoverBoxComponent extends RenderComponent {
-    private static final Logger logger = LoggerFactory.getLogger(HoverBoxComponent.class);
     private Texture hoverImage;
     private ShapeRenderer shapeRenderer;
     private Vector2 position;

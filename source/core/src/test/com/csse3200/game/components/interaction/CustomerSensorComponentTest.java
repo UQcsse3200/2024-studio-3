@@ -28,7 +28,7 @@ class CustomerSensorComponentTest {
     @BeforeEach
     void beforeEach() {
         ServiceLocator.registerPhysicsService(new PhysicsService());
-        customerSensorComponent = new CustomerSensorComponent(customerLayer, 5f);
+        customerSensorComponent = new CustomerSensorComponent(5f);
         assertNotNull(customerSensorComponent, "CustomerSensorComponent should have been initialized");
     }
 
