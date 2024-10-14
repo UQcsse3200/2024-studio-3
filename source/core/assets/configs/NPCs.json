@@ -13,7 +13,7 @@
     "type": "Gorilla",
     "countDown": 20,
     "patience": 100,
-    "preference": "bananaSplit",
+    "preference": "fruitSalad",
     "reputation": 100,
     "texture": "images/animal_images/gorilla.atlas"
   },

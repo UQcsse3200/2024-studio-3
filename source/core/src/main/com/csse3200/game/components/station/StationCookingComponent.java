@@ -4,7 +4,6 @@ import com.csse3200.game.components.Component;
 
 /**
  * StationCookingComponent.java
- *
  * This class controls the cooking of items within a station. This is designed
  * to be used by cooking stations which include the stove and the over.
  */
@@ -33,9 +32,6 @@ public class StationCookingComponent extends Component  {
             .getEntity()
             .getEvents()
             .trigger("cookIngredient");
-        // TODO: modify the call to cookIngredient so that the correct timees
-        // can be used for each ingerdient
-        // May need to use the item handler for this
     }
 
     /**

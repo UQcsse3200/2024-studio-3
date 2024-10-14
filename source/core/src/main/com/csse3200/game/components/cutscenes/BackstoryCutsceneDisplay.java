@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.csse3200.game.ui.UIComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import com.csse3200.game.components.maingame.TextDisplay;
 
 /**
  * The BackstoryCutsceneDisplay class manages the user interface for displaying the backstory cutscene.
@@ -19,7 +20,7 @@ import org.slf4j.LoggerFactory;
 public class BackstoryCutsceneDisplay extends UIComponent {
     private static final Logger logger = LoggerFactory.getLogger(BackstoryCutsceneDisplay.class);
     private Table table;
-    private CutsceneTextDisplay textDisplay;
+    private TextDisplay textDisplay;
     private Skin skin = null;
 
     public BackstoryCutsceneDisplay(Skin skin) {
@@ -100,7 +101,7 @@ public class BackstoryCutsceneDisplay extends UIComponent {
 //        stage.addActor(textDisplay.getTable());
 //    }
     public void setupTextDisplay() {
-        textDisplay = new CutsceneTextDisplay(this.skin);
+        textDisplay = new TextDisplay();
 
         // Customize text display size and position
         textDisplay.getTable().setScale(0.2f); // Make the text display smaller
@@ -173,7 +174,7 @@ public class BackstoryCutsceneDisplay extends UIComponent {
      * Gets the cutscene text display component for the cutscene.
      * @return A CutsceneTextDisplay component for the cutscene.
      */
-    public CutsceneTextDisplay getTextDisplay() {
+    public TextDisplay getTextDisplay() {
         return textDisplay;
     }
 
@@ -181,7 +182,7 @@ public class BackstoryCutsceneDisplay extends UIComponent {
      * Sets the Cutscene Text Display Component for the cutscene.
      * @param textDisplay the CutsceneTextDisplay to be set.
      */
-    public void setTextDisplay(CutsceneTextDisplay textDisplay) {
+    public void setTextDisplay(TextDisplay textDisplay) {
         this.textDisplay = textDisplay;
     }
 }

@@ -16,9 +16,6 @@ import java.util.ArrayList;
  */
 public class FireExtinguisherHandlerComponent extends Component {
     private static final Logger logger = LoggerFactory.getLogger(FireExtinguisherHandlerComponent.class);
-    public FireExtinguisherHandlerComponent() {
-
-    }
 
     @Override
     public void create() {
@@ -29,7 +26,7 @@ public class FireExtinguisherHandlerComponent extends Component {
      * Handles getting and putting back the fire extinguisher when the player interacts
      * @param fixture The fixture of the object that was interacted with
      * @param player The player entity
-     * @return Whether or not the fire extinguisher was handled
+     * @return Whether the fire extinguisher was handled
      */
     public static boolean handleFireExtinguisher(Fixture fixture, Entity player) {
         if (fixture.getUserData() instanceof Entity parentEntity) {
@@ -61,12 +58,9 @@ public class FireExtinguisherHandlerComponent extends Component {
         boolean hasFireExtinguisher = false;
         int fireExtinguisherIndex = -1;
         ArrayList<ItemComponent> items = inventory.getItems();
-        for(int index = 0; index < inventory.getCapacity(); index++) {
+        for (int index = 0; index < inventory.getCapacity(); index++) {
             ItemComponent item = items.get(index);
-            if (item == null) {
-                continue;
-            }
-            if (item.getItemType() == ItemType.FIREEXTINGUISHER) {
+            if (item != null && item.getItemType() == ItemType.FIREEXTINGUISHER) {
                 // Has a fire extinguisher
                 hasFireExtinguisher = true;
                 fireExtinguisherIndex = index;

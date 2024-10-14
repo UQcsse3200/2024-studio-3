@@ -28,6 +28,7 @@ public class CutsceneFactory {
     public static Entity createBackground(String bgImgPath) {
         Entity background = new Entity();
 
+        
         // Create and add a texture component to the entity for rendering the background
         TextureRenderComponent textureComponent = new BackgroundRenderComponent(bgImgPath);
         background.addComponent(textureComponent);

@@ -1,8 +1,5 @@
 package com.csse3200.game.components.station;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
@@ -104,7 +101,7 @@ class StationChoppingComponentTest {
     }
 
     @Test
-    public void IngredientStartsChoppingThenStops() {
+    void IngredientStartsChoppingThenStops() {
 
         // Test the ingredient starts cooking
         mockStation.getEvents().trigger("Chop Ingredient");

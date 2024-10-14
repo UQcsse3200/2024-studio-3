@@ -2,6 +2,8 @@ package com.csse3200.game.services;
 
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.components.cutscenes.Cutscene;
+import com.csse3200.game.physics.PhysicsEngine;
+import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.screens.CutsceneScreen;
 import com.csse3200.game.components.mainmenu.MainMenuDisplay;
 import org.slf4j.Logger;
@@ -40,6 +42,7 @@ public class ServiceLocator {
   private static Cutscene currentCutscene;
   private static MapLayout map;
   private static MainMenuDisplay mainMenuDisplay;
+  private static InteractableService interactableService;
 
   private static ResourceService resourceService;
 
@@ -47,7 +50,7 @@ public class ServiceLocator {
   private static SaveLoadService saveLoadService;
   private static DocketService docketService;
   private static LevelService levelService;
-
+  private static PhysicsComponent physicsComponent;
   private static DayNightService dayNightService;
   private static OrderActions orderActions; //new
 
@@ -72,6 +75,8 @@ public class ServiceLocator {
     return timeSource;
   }
 
+  public static PhysicsComponent getPhysicsComponent() { return physicsComponent; }
+
   public static InputService getInputService() {
     return inputService;
   }
@@ -83,7 +88,9 @@ public class ServiceLocator {
   public static ResourceService getResourceService() {
     return resourceService;
   }
-
+  public static PhysicsEngine getPhysicsEngine() {
+    return physicsService.getPhysics();
+  }
   public static DocketService getDocketService() {
     return docketService;
   }
@@ -96,6 +103,10 @@ public class ServiceLocator {
 
   public static DayNightService getDayNightService() { //new
     return dayNightService;
+  }
+
+  public static InteractableService getInteractableService() {
+    return interactableService;
   }
 
 
@@ -155,15 +166,27 @@ public class ServiceLocator {
     docketService = service;
   }
 
+  public static void registerPhysicsComponent(PhysicsComponent component) {
+    logger.debug("Registering physics component {}", component);
+    physicsComponent = component;
+  }
+
   public static void registerRenderService(RenderService service) {
     logger.debug("Registering render service {}", service);
     renderService = service;
+  }
+
+  public static void registerPhysicsEngine(PhysicsEngine engine) {
+    logger.debug("Registering physics engine {}", engine);
+    physicsService = new PhysicsService(engine);
   }
 
   public static void registerPhysicsService(PhysicsService service) {
     logger.debug("Registering physics service {}", service);
     physicsService = service;
   }
+
+
 
   public static void registerTimeSource(GameTime source) {
     logger.debug("Registering time source {}", source);
@@ -241,6 +264,10 @@ public class ServiceLocator {
 
   }
 
+  public static void registerInteractableService(InteractableService service) {
+    interactableService = service;
+  }
+
 
   public static void registerMainMenuDisplay(MainMenuDisplay display) {
     mainMenuDisplay = display;
@@ -301,6 +328,7 @@ public class ServiceLocator {
     dayNightService = null;
     saveLoadService = null;
     randomComboService = null;
+    interactableService = null;
   }
 
   private ServiceLocator() {
