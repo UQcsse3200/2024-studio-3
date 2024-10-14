@@ -44,7 +44,7 @@ public class PlayerActions extends Component {
         Vector2 position = body.getPosition();
 
         if (moving) {
-            updateInteraction();
+          updateInteraction();
 
             // Stop if it's at min x position or max x position
             if (position.x < MIN_X_POSITION) {
@@ -71,16 +71,16 @@ public class PlayerActions extends Component {
     oldClosestEntity = closestEntity;
     closestEntity = sensor.getClosestInteractable();
 
-    if (oldClosestEntity == closestEntity) {
-        return;
-    }
+    //if (oldClosestEntity == closestEntity) {
+    //    return;
+    //}
 
     if (oldClosestEntity != null) {
       oldClosestEntity.getEvents().trigger("hideToolTip");
     }
 
     if (closestEntity != null) {
-      closestEntity.getEvents().trigger("showToolTip");
+      closestEntity.getEvents().trigger("showToolTip", playerInventory.getItemFirst());
     }
   }
 
@@ -102,7 +102,15 @@ public class PlayerActions extends Component {
    * Triggers an interaction event. It holds the logic in how to interact with a given station
    */
   void interact(String type) {
+    if (closestEntity == null) {
+      return;
+    }
+
+    // Check if the player has an item in its inventory and isn't trying to do the default action
+    if (playerInventory.getSize() != 0 && !type.equals("default")) return;
+
     closestEntity.getEvents().trigger("Station Interaction", playerInventory, displayInventory, type);
+    updateInteraction();
   }
 
   /**

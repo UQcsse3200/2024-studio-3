@@ -18,6 +18,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import static com.badlogic.gdx.Gdx.app;
+
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
@@ -293,6 +296,7 @@ public class ForestGameArea extends GameArea {
 
     createEndDayScreen();
     playMusic();
+
   }
 
   /**
@@ -854,6 +858,15 @@ public class ForestGameArea extends GameArea {
     endDayScreen
             .addComponent(new EndDayDisplay());
     ServiceLocator.getEntityService().registerEndDay(endDayScreen);
+  }
+
+  /**
+   * Returns the level the game is currently on.
+   *
+   * @return level - the level the player is currently on
+   */
+  public GdxGame.LevelType getLevel() {
+    return this.level;
   }
 }
 

@@ -1,6 +1,7 @@
 package com.csse3200.game.components.upgrades;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.audio.Sound;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.entities.Entity;
@@ -13,9 +14,14 @@ import com.csse3200.game.services.ServiceLocator;
 public class LoanUpgrade extends Component implements Upgrade {
     private CombatStatsComponent combatStatsComponent;
 
+    private Sound moneySound;
+    private boolean playSound = false;
+
     public LoanUpgrade(){
         super();
-        ServiceLocator.getPlayerService().getEvents().addListener("playerCreated", (Entity player) -> this.combatStatsComponent = player.getComponent(CombatStatsComponent.class));
+        ServiceLocator.getPlayerService().getEvents().addListener("playerCreated", (Entity player) -> {
+            this.combatStatsComponent = player.getComponent(CombatStatsComponent.class);
+        });
         ServiceLocator.getRandomComboService().getEvents().addListener("Loan", this::activate); 
     }
 
@@ -25,7 +31,12 @@ public class LoanUpgrade extends Component implements Upgrade {
      */
     public void activate() { 
         if(combatStatsComponent.getGold() >= 20){
-            combatStatsComponent.addGold(100); 
+            // https://pixabay.com/sound-effects/cha-ching-7053/
+            moneySound = Gdx.audio.newSound(Gdx.files.internal("sounds/loan.mp3"));
+            long moneySoundId = moneySound.play();
+            moneySound.setVolume(moneySoundId, 0.2f);
+            playSound = true;
+            combatStatsComponent.addGold(100);
         }
         else{
         ServiceLocator.getRandomComboService().getEvents().trigger("notenoughmoney"); 
@@ -36,7 +47,6 @@ public class LoanUpgrade extends Component implements Upgrade {
      * Deactivates the loan upgrade
      */
     public void deactivate() {}
-
 
     @Override
     public void update() {

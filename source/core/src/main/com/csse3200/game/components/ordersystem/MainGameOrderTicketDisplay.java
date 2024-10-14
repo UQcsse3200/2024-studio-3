@@ -164,7 +164,7 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         stage.addListener(new InputListener() {
             @Override
             public boolean keyDown(InputEvent event, int keycode) {
-                if (keycode == com.badlogic.gdx.Input.Keys.O) {
+                if (keycode == com.badlogic.gdx.Input.Keys.ESCAPE) {
                     setPaused(!isPaused);
                     return true;
                 }
