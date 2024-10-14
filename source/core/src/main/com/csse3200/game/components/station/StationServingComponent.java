@@ -120,7 +120,8 @@ public class StationServingComponent extends Component {
      * Updates the HoverBoxComponent to display customer satisfaction by face types.
      * Increments the gold and updates the gold in the UI according to customer satisfaction and actual ordered meal price.
      *
-     * @param playerMeal - the meal that the player is currently submitting to the customer.
+     * @param playerMeal - the name of the meal that the player is currently submitting to the customer.
+     * @param meal - the item that the player is submitting to the customer.
      */
     private void scoreMeal(String playerMeal, ItemComponent meal) {
         String[] bigTicketInfo = bigTicket.getCurrentBigTicketInfo();
@@ -131,27 +132,43 @@ public class StationServingComponent extends Component {
 
         String orderNumber = bigTicketInfo[0];
         String orderedMeal = bigTicketInfo[1];
-        logger.info("Ordered meal: {}", orderedMeal);
 
+        // Retrieves the ingredients of the customer's order
         Recipe orderRecipe = OrderManager.getRecipe(orderedMeal);
         List<String> orderIngredients = orderRecipe.getIngredients();
-        logger.info("Order ingredients: {}", orderIngredients);
 
-        int orderedMealPrice = getMealPrice(orderedMeal);
-
-        logger.info("Player meal: {}", playerMeal);
+        // Retrieves the ingredients of the player's meal
         Recipe playerRecipe = OrderManager.getRecipe(playerMeal);
         List<String> playerIngredients = playerRecipe.getIngredients();
-        logger.info("Player ingredients: {}", playerIngredients);
 
-        int accuracyScore = ScoreSystem.getAccuracyScore(playerIngredients, orderIngredients); // should rename to accuracyScore
+        // Determines the accuracy of the player's meal against the customer's order
+        int accuracyScore = ScoreSystem.getAccuracyScore(playerIngredients, orderIngredients);
 
+        // Retrieves the time remaining when the meal is submitted
+        // Then determines the score based on the time remaining
         String orderTime = bigTicketInfo[2];
         int timeScore = ScoreSystem.getTimeScore(orderTime);
 
-        // for each ingredient in list, call ItemTimerComponent.getCompletionPercent():
-        // find the meal in ItemComponent form: Done
-        // call meal.getIngredients() to return ingredients in IngredientComponent form
+        // Retrieves the completion percentages of the ingredients in the player's meal
+        // Then determines the score based on how 'cooked' or 'chopped' the ingredients are
+        List<Float> completionList = getCompletionList(meal);
+        int completionScore = ScoreSystem.getCompletionScore(completionList);
+
+        // Determines the final score based on the three previous scoring criteria
+        String finalScore = ScoreSystem.getFinalScore(accuracyScore, timeScore, completionScore);
+        logOrderDetails(orderNumber, finalScore);
+
+        // Updating the gold amount and the HoverBox display based on the final score
+        Entity customer = CustomerManager.getCustomerByOrder(orderNumber);
+        int orderedMealPrice = getMealPrice(orderedMeal);
+        if (customer != null) {
+            processCustomerReaction(customer, finalScore, orderedMealPrice);
+        }
+
+        CustomerManager.removeCustomerByOrder(orderNumber);
+    }
+
+    private List<Float> getCompletionList(ItemComponent meal) {
         List<Float> ingredientCompletionList = new ArrayList<>();
         if (meal instanceof MealComponent) {
             MealComponent mealComponent = (MealComponent) meal;
@@ -165,40 +182,7 @@ public class StationServingComponent extends Component {
         } else {
             logger.error("The provided meal is not a MealComponent.");
         }
-
-
-        // for (IngredientComponent ingredient : playerIngredients) {
-        //      ItemTimerComponent itemTimer = getItemTimerForIngredient(ingredient);
-        //      int ingredientCompletion = (int) itemTimer.getCompletionPercent();
-        //      ingredientCompletionList.add(ingredientCompletion);
-
-        int completionScore = ScoreSystem.getCompletionScore(ingredientCompletionList);
-        String finalScore = ScoreSystem.getFinalScore(accuracyScore, timeScore, completionScore);
-
-
-        /* 
-         * String orderTime = bigTicketInfo[2];
-         * int timeScore = ScoreSystem.getTimeScore(orderTime);
-         * 
-         * for each ingredient in list, call ItemTimerComponent.getCompletionPercent():
-         * List<int> ingredientCompletionList = null;
-         * for (String ingredient : playerIngredients) {
-         *      int ingredientCompletion = ingredient.ItemTimerComponent.getCompletionPercent();
-         *      ingredientCompletionList.add(ingredientCompletion);
-         * }
-         * int cookLevelScore = ScoreSystem.getCookLevelScore(ingredientCompletionList);
-         * 
-         * String finalScore = ScoreSystem.getScoreDescription(accuracyScore, timeScore, cookLevelScore);
-         * 
-        */
-        logOrderDetails(orderNumber, finalScore);
-
-        Entity customer = CustomerManager.getCustomerByOrder(orderNumber);
-        if (customer != null) {
-            processCustomerReaction(customer, finalScore, orderedMealPrice);
-        }
-
-        CustomerManager.removeCustomerByOrder(orderNumber);
+        return ingredientCompletionList;
     }
 
     private int getMealPrice(String orderedMeal) {
