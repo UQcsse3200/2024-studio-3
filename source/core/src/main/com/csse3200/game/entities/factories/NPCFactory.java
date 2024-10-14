@@ -37,266 +37,263 @@ import org.slf4j.LoggerFactory;
  * components.
  */
 public class NPCFactory {
+    private static final NPCConfigs configs = FileLoader.readClass(NPCConfigs.class, "configs/NPCs.json");
+    private static final Logger logger = LoggerFactory.getLogger(NPCFactory.class);
+    private static int customerCount = 0;
+    private static int orderID = 1;
 
-        private static final NPCConfigs configs = FileLoader.readClass(NPCConfigs.class, "configs/NPCs.json");
+    /**
+     * Creates a boss entity.
+     *
+     * @param targetPosition Place to roam to
+     * @return entity
+     */
+    public static Entity createBoss(Vector2 targetPosition) {
+        Entity boss = createBaseCharacter(targetPosition);
 
-        private static final Logger logger = LoggerFactory.getLogger(NPCFactory.class);
-        private static int customerCount = 0;
-        private static int orderID = 1;
+        AnimationRenderComponent animator = new AnimationRenderComponent(
+                        ServiceLocator.getResourceService()
+                                        .getAsset("images/special_NPCs/boss.atlas", TextureAtlas.class));
+        animator.addAnimation("walk", 0.3f, Animation.PlayMode.LOOP);
+        animator.addAnimation("turn", 0.3f, Animation.PlayMode.LOOP);
 
-        /**
-         * Creates a boss entity.
-         *
-         * @param targetPosition Place to roam to
-         * @return entity
-         */
-        public static Entity createBoss(Vector2 targetPosition) {
-            Entity boss = createBaseCharacter(targetPosition);
+        boss
+                        .addComponent(animator)
+                        .addComponent(new SpecialNPCAnimationController());
 
-            AnimationRenderComponent animator = new AnimationRenderComponent(
-                            ServiceLocator.getResourceService()
-                                            .getAsset("images/special_NPCs/boss.atlas", TextureAtlas.class));
-            animator.addAnimation("walk", 0.3f, Animation.PlayMode.LOOP);
-            animator.addAnimation("turn", 0.3f, Animation.PlayMode.LOOP);
-
-            boss
-                            .addComponent(animator)
-                            .addComponent(new SpecialNPCAnimationController());
-
-            return boss;
-        }
+        return boss;
+    }
 
 
-        /**
-         * Utility class for creating upgrade NPCs within the game.
-         * This method initializes a penguin entity with various components and behaviors
-         * to serve as an upgrade vendor. The penguin can be interacted with by the player
-         * to display available upgrades.
-         */
-       public static Entity createUpgradeNPC(Vector2 firstPosition, UpgradesDisplay upgradesDisplay) {
+    /**
+     * Utility class for creating upgrade NPCs within the game.
+     * This method initializes a penguin entity with various components and behaviors
+     * to serve as an upgrade vendor. The penguin can be interacted with by the player
+     * to display available upgrades.
+     */
+    public static Entity createUpgradeNPC(Vector2 firstPosition, UpgradesDisplay upgradesDisplay) {
+        Entity penguin = createStandard(firstPosition);
+        AITaskComponent aiComponent = new AITaskComponent();
+        aiComponent.addTask(new PathFollowTask(firstPosition, 30));
 
-            Entity penguin = createStandard(firstPosition);
-            AITaskComponent aiComponent = new AITaskComponent();
-            aiComponent.addTask(new PathFollowTask(firstPosition, 30));
+        // Animation setup
+        AnimationRenderComponent animator = new AnimationRenderComponent(
+            ServiceLocator.getResourceService()
+                    .getAsset("images/special_NPCs/penguin.atlas", TextureAtlas.class));
+        animator.addAnimation("walk", 0.3f, Animation.PlayMode.LOOP);
+        animator.addAnimation("turn", 0.3f, Animation.PlayMode.LOOP);
+        penguin.addComponent(animator)
+            .addComponent(new SpecialNPCAnimationController())
+            .addComponent(aiComponent);
 
-            // Animation setup
-            AnimationRenderComponent animator = new AnimationRenderComponent(
-                    ServiceLocator.getResourceService()
-                            .getAsset("images/special_NPCs/penguin.atlas", TextureAtlas.class));
-            animator.addAnimation("walk", 0.3f, Animation.PlayMode.LOOP);
-            animator.addAnimation("turn", 0.3f, Animation.PlayMode.LOOP);
-            penguin.addComponent(animator)
-                    .addComponent(new SpecialNPCAnimationController())
-                    .addComponent(aiComponent);
+        final boolean[] isHoverBox = {false};
+        HoverBoxComponent hoverBox = new HoverBoxComponent(new Texture("images/special_NPCs/upgrade_sign.png"));
+        hoverBox.setEnabled(false);  // Disable hover box visibility initially
+        penguin.addComponent(hoverBox);
 
-            final boolean[] isHoverBox = {false};
-            HoverBoxComponent hoverBox = new HoverBoxComponent(new Texture("images/special_NPCs/upgrade_sign.png"));
-            hoverBox.setEnabled(false);  // Disable hover box visibility initially
-            penguin.addComponent(hoverBox);
+        penguin.getEvents().addListener("ready", () -> {
+            hoverBox.setEnabled(true);
+            isHoverBox[0] = true;
+        });
 
-            penguin.getEvents().addListener("ready", () -> {
-                    hoverBox.setEnabled(true);
-                    isHoverBox[0] = true;
-                    });
+        // Add TouchPlayerInputComponent for click detection
+        penguin.addComponent(new TouchPlayerInputComponent());
+        final boolean[] isClicked = {false};
 
-            // Add TouchPlayerInputComponent for click detection
-            penguin.addComponent(new TouchPlayerInputComponent());
-            final boolean[] isClicked = {false};
-
-           // Add a click event listener for the penguin
-            penguin.getEvents().addListener("penguinactivated", ()->{
-                    if (!isClicked[0] && isHoverBox[0]) {
-                            hoverBox.setEnabled(false);
-                            logger.info("Penguin clicked!");
-                            upgradesDisplay.create();
-                            upgradesDisplay.toggleVisibility();
-                            isClicked[0] = true;
-                        } else {
-                            logger.info("Penguin has already been clicked, ignoring.");
-                        }
-            });
-
-            // penguin.getEvents().addListener("clicked", (a, b) -> {
-            //         if (a instanceof Float && b instanceof Float) {
-            //             float x = ((Float) a); // cast a to float
-            //             float y = ((Float) b); // cast b to float
-
-            //         //     if ((penguin.getPosition().x - 0.3 <= x && x <= penguin.getPosition().x + 0.3) &&
-            //         //         (penguin.getPosition().y - 0.5 <= y && y <= penguin.getPosition().y + 0.3)) {
-            //                 if ((penguin.getPosition().x - 1 <= x && x <= penguin.getPosition().x + 1) &&
-            //                 (penguin.getPosition().y - 1 <= y && y <= penguin.getPosition().y + 1)) {
-
-            //                 if (!isClicked[0] && isHoverBox[0]) {
-            //                     hoverBox.setEnabled(false);
-            //                     logger.info("Penguin clicked!");
-            //                     upgradesDisplay.create();
-            //                     upgradesDisplay.toggleVisibility();
-            //                     isClicked[0] = true;
-            //                 } else {
-            //                     logger.info("Penguin has already been clicked, ignoring.");
-            //                 }
-            //             }
-            //         }
-            //     });
-
-           //            System.out.println("getting disposed of penguin");
-           ServiceLocator.getRandomComboService().getEvents().addListener("response", penguin::dispose);
-
-            return penguin;
-        }
-        public static Entity createCustomerPersonal(String name, Vector2 targetPosition) {
-            Vector2 newTargetPosition = new Vector2(targetPosition.x, targetPosition.y + customerCount);
-
-            Entity customer = createBaseCustomer(newTargetPosition);
-
-            CustomerPersonalityConfig config = switch (name) {
-                    case "Hank" -> configs.Hank;
-                    case "Lewis" -> configs.Lewis;
-                    case "Silver" -> configs.Silver;
-                    case "John" -> configs.John;
-                    case "Moonki" -> configs.Moonki;
-                    default -> configs.Default;
-            };
-            // orderID is to link a specific customer to a specific order ticket
-            String orderNumber = String.valueOf(orderID);
-            logger.info("Order number: {}", orderNumber);
-            CustomerComponent customerComponent = new CustomerComponent(config);
-            customerComponent.setOrderNumber(orderNumber);
-            customer.addComponent(customerComponent);
-
-            CustomerManager.addCustomer(orderNumber, customer);
-
-            // gets the preference of the customer
-            String preference = customer.getComponent(CustomerComponent.class).getPreference();
-            // finding the correct imagePath to display the customer's meal image above them when spawning in
-            String imagePath = getMealImagePath(preference);
-
-            AnimationRenderComponent animator = new AnimationRenderComponent(
-                            ServiceLocator.getResourceService()
-                                            .getAsset(config.texture, TextureAtlas.class));
-            animator.addAnimation("walk", 0.3f, Animation.PlayMode.LOOP);
-
-            customer.addComponent(animator)
-                    .addComponent(new GhostAnimationController());
-
-            customer.getComponent(AnimationRenderComponent.class).scaleEntity();
-
-            // Display the order for the customer
-            OrderManager.displayOrder(customer);
-
-            logger.debug("Created customer {} with initial position: {}", name, customer.getPosition());
-
-            if (customer.getComponent(HoverBoxComponent.class) == null) {
-                    customer.addComponent(new HoverBoxComponent(new Texture(imagePath)));
+        // Add a click event listener for the penguin
+        penguin.getEvents().addListener("penguinactivated", ()->{
+            if (!isClicked[0] && isHoverBox[0]) {
+                    hoverBox.setEnabled(false);
+                    logger.info("Penguin clicked!");
+                    upgradesDisplay.create();
+                    upgradesDisplay.toggleVisibility();
+                    isClicked[0] = true;
+            } else {
+                logger.info("Penguin has already been clicked, ignoring.");
             }
-            customerCount++;
-            orderID++;
+        });
 
-            return customer;
+        // penguin.getEvents().addListener("clicked", (a, b) -> {
+        //         if (a instanceof Float && b instanceof Float) {
+        //             float x = ((Float) a); // cast a to float
+        //             float y = ((Float) b); // cast b to float
+
+        //         //     if ((penguin.getPosition().x - 0.3 <= x && x <= penguin.getPosition().x + 0.3) &&
+        //         //         (penguin.getPosition().y - 0.5 <= y && y <= penguin.getPosition().y + 0.3)) {
+        //                 if ((penguin.getPosition().x - 1 <= x && x <= penguin.getPosition().x + 1) &&
+        //                 (penguin.getPosition().y - 1 <= y && y <= penguin.getPosition().y + 1)) {
+
+        //                 if (!isClicked[0] && isHoverBox[0]) {
+        //                     hoverBox.setEnabled(false);
+        //                     logger.info("Penguin clicked!");
+        //                     upgradesDisplay.create();
+        //                     upgradesDisplay.toggleVisibility();
+        //                     isClicked[0] = true;
+        //                 } else {
+        //                     logger.info("Penguin has already been clicked, ignoring.");
+        //                 }
+        //             }
+        //         }
+        //     });
+
+        //            System.out.println("getting disposed of penguin");
+        ServiceLocator.getRandomComboService().getEvents().addListener("response", penguin::dispose);
+        return penguin;
+    }
+
+    public static Entity createCustomerPersonal(String name, Vector2 targetPosition) {
+        Vector2 newTargetPosition = new Vector2(targetPosition.x, targetPosition.y + customerCount);
+
+        Entity customer = createBaseCustomer(newTargetPosition);
+
+        CustomerPersonalityConfig config = switch (name) {
+                case "Hank" -> configs.Hank;
+                case "Lewis" -> configs.Lewis;
+                case "Silver" -> configs.Silver;
+                case "John" -> configs.John;
+                case "Moonki" -> configs.Moonki;
+                default -> configs.Default;
+        };
+        // orderID is to link a specific customer to a specific order ticket
+        String orderNumber = String.valueOf(orderID);
+        logger.info("Order number: {}", orderNumber);
+        CustomerComponent customerComponent = new CustomerComponent(config);
+        customerComponent.setOrderNumber(orderNumber);
+        customer.addComponent(customerComponent);
+
+        CustomerManager.addCustomer(orderNumber, customer);
+
+        // gets the preference of the customer
+        String preference = customer.getComponent(CustomerComponent.class).getPreference();
+        // finding the correct imagePath to display the customer's meal image above them when spawning in
+        String imagePath = getMealImagePath(preference);
+
+        AnimationRenderComponent animator = new AnimationRenderComponent(
+                        ServiceLocator.getResourceService()
+                                        .getAsset(config.texture, TextureAtlas.class));
+        animator.addAnimation("walk", 0.3f, Animation.PlayMode.LOOP);
+
+        customer.addComponent(animator)
+                .addComponent(new GhostAnimationController());
+
+        customer.getComponent(AnimationRenderComponent.class).scaleEntity();
+
+        // Display the order for the customer
+        OrderManager.displayOrder(customer);
+
+        logger.debug("Created customer {} with initial position: {}", name, customer.getPosition());
+
+        if (customer.getComponent(HoverBoxComponent.class) == null) {
+                customer.addComponent(new HoverBoxComponent(new Texture(imagePath)));
         }
+        customerCount++;
+        orderID++;
 
-        private static String getMealImagePath(String preference) {
-            return switch (preference) {
-                case "acaiBowl" -> "images/meals/acai_bowl.png";
-                case "salad" -> "images/meals/salad.png";
-                case "fruitSalad" -> "images/meals/fruit_salad.png";
-                case "steakMeal" -> "images/meals/steak_meal.png";
-                case "bananaSplit" -> "images/meals/banana_split.png";
-                default -> {
-                    logger.error("No image found for preference: {}", preference);
-                    yield "images/meals/incorrect_meal.png"; // Provide a default image
-                }
-            };
-        }
+        return customer;
+    }
 
-        public static Entity createBasicCustomer(String name, Vector2 targetPosition) {
-                Vector2 newTargetPosition = new Vector2(targetPosition.x, targetPosition.y + customerCount);
+    private static String getMealImagePath(String preference) {
+        return switch (preference) {
+            case "acaiBowl" -> "images/meals/acai_bowl.png";
+            case "salad" -> "images/meals/salad.png";
+            case "fruitSalad" -> "images/meals/fruit_salad.png";
+            case "steakMeal" -> "images/meals/steak_meal.png";
+            case "bananaSplit" -> "images/meals/banana_split.png";
+            default -> {
+                logger.error("No image found for preference: {}", preference);
+                yield "images/meals/incorrect_meal.png"; // Provide a default image
+            }
+        };
+    }
 
-                Entity customer = createBaseCustomer(newTargetPosition);
+    public static Entity createBasicCustomer(String name, Vector2 targetPosition) {
+        Vector2 newTargetPosition = new Vector2(targetPosition.x, targetPosition.y + customerCount);
 
-                BaseCustomerConfig config = switch (name) {
-                        case "Basic Chicken" -> configs.Basic_Chicken;
-                        case "Basic Sheep" -> configs.Basic_Sheep;
-                        default -> configs.Default;
-                };
+        Entity customer = createBaseCustomer(newTargetPosition);
 
-                // Ensure CustomerComponent is added
-                customer.addComponent(new CustomerComponent(config));
+        BaseCustomerConfig config = switch (name) {
+                case "Basic Chicken" -> configs.Basic_Chicken;
+                case "Basic Sheep" -> configs.Basic_Sheep;
+                default -> configs.Default;
+        };
 
-                AnimationRenderComponent animator = new AnimationRenderComponent(
-                                ServiceLocator.getResourceService()
-                                                .getAsset("images/ghostKing.atlas", TextureAtlas.class));
-                animator.addAnimation("float", 0.3f, Animation.PlayMode.LOOP);
-                animator.addAnimation("angry_float", 0.3f, Animation.PlayMode.LOOP);
+        // Ensure CustomerComponent is added
+        customer.addComponent(new CustomerComponent(config));
 
-                customer
-                                .addComponent(animator)
-                                .addComponent(new GhostAnimationController());
+        AnimationRenderComponent animator = new AnimationRenderComponent(
+                        ServiceLocator.getResourceService()
+                                        .getAsset("images/ghostKing.atlas", TextureAtlas.class));
+        animator.addAnimation("float", 0.3f, Animation.PlayMode.LOOP);
+        animator.addAnimation("angry_float", 0.3f, Animation.PlayMode.LOOP);
 
-                customer.getComponent(AnimationRenderComponent.class).scaleEntity();
+        customer
+                        .addComponent(animator)
+                        .addComponent(new GhostAnimationController());
 
-                // Display the order for the customer
-                OrderManager.displayOrder(customer);
-                customerCount++;
+        customer.getComponent(AnimationRenderComponent.class).scaleEntity();
 
-                return customer;
-        }
+        // Display the order for the customer
+        OrderManager.displayOrder(customer);
+        customerCount++;
 
-        public static Entity createBaseCustomer(Vector2 targetPosition) {
-                AITaskComponent aiComponent = new AITaskComponent();
-                aiComponent
-                        .addTask(new PathFollowTask(targetPosition, 30));
-                Entity npc = new Entity()
-                                .addComponent(new PhysicsComponent())
-                                .addComponent(new PhysicsMovementComponent())
-                                .addComponent(new ColliderComponent())
-                                .addComponent(new HitboxComponent().setLayer(PhysicsLayer.NPC))
-                                .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 1.5f))
+        return customer;
+    }
 
-                                .addComponent(aiComponent);
-                PhysicsUtils.setScaledCollider(npc, 0.9f, 0.4f);
-                return npc;
-        }
+    public static Entity createBaseCustomer(Vector2 targetPosition) {
+        AITaskComponent aiComponent = new AITaskComponent();
+        aiComponent
+                .addTask(new PathFollowTask(targetPosition, 30));
+        Entity npc = new Entity()
+                        .addComponent(new PhysicsComponent())
+                        .addComponent(new PhysicsMovementComponent())
+                        .addComponent(new ColliderComponent())
+                        .addComponent(new HitboxComponent().setLayer(PhysicsLayer.NPC))
+                        .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 1.5f))
 
-        public static Entity createBaseCharacter(Vector2 targetPosition) {
-                AITaskComponent aiComponent = new AITaskComponent();
-                aiComponent
-                                .addTask(new PathFollowTask(targetPosition, 30)) // Default countdown
-                                .addTask(new TurnTask(10, 0.01f, 10f));
-                Entity npc = new Entity()
-                                .addComponent(new PhysicsComponent())
-                                .addComponent(new PhysicsMovementComponent())
-                                .addComponent(new ColliderComponent())
-                                .addComponent(new HitboxComponent().setLayer(PhysicsLayer.NPC))
-                                .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 1.5f))
-                                .addComponent(aiComponent);
-                PhysicsUtils.setScaledCollider(npc, 0.9f, 0.4f);
-                npc.getComponent(PhysicsComponent.class).getBody().setUserData("Customer");
-                return npc;
-        }
+                        .addComponent(aiComponent);
+        PhysicsUtils.setScaledCollider(npc, 0.9f, 0.4f);
+        return npc;
+    }
 
-        public static Entity createStandard(Vector2 targetPosition) {
-                AITaskComponent aiComponent = new AITaskComponent();
-                aiComponent
-                                .addTask(new PathFollowTask(targetPosition, 30)); // Default countdown
-                //                 .addTask(new TurnTask(10, 0.01f, 10f));
-                Entity npc = new Entity()
-                                .addComponent(new PhysicsComponent())
-                                .addComponent(new PhysicsMovementComponent())
-                                .addComponent(new ColliderComponent())
-                                .addComponent(new HitboxComponent().setLayer(PhysicsLayer.NPC))
-                                .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 1.5f));
-                                // .addComponent(aiComponent);
-                PhysicsUtils.setScaledCollider(npc, 0.9f, 0.4f);
-                npc.getComponent(PhysicsComponent.class).getBody().setUserData("Customer");
-                return npc;
-        }
+    public static Entity createBaseCharacter(Vector2 targetPosition) {
+        AITaskComponent aiComponent = new AITaskComponent();
+        aiComponent
+                        .addTask(new PathFollowTask(targetPosition, 30)) // Default countdown
+                        .addTask(new TurnTask(10, 0.01f, 10f));
+        Entity npc = new Entity()
+                        .addComponent(new PhysicsComponent())
+                        .addComponent(new PhysicsMovementComponent())
+                        .addComponent(new ColliderComponent())
+                        .addComponent(new HitboxComponent().setLayer(PhysicsLayer.NPC))
+                        .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 1.5f))
+                        .addComponent(aiComponent);
+        PhysicsUtils.setScaledCollider(npc, 0.9f, 0.4f);
+        npc.getComponent(PhysicsComponent.class).getBody().setUserData("Customer");
+        return npc;
+    }
+
+    public static Entity createStandard(Vector2 targetPosition) {
+        AITaskComponent aiComponent = new AITaskComponent();
+        aiComponent
+                        .addTask(new PathFollowTask(targetPosition, 30)); // Default countdown
+        //                 .addTask(new TurnTask(10, 0.01f, 10f));
+        Entity npc = new Entity()
+                        .addComponent(new PhysicsComponent())
+                        .addComponent(new PhysicsMovementComponent())
+                        .addComponent(new ColliderComponent())
+                        .addComponent(new HitboxComponent().setLayer(PhysicsLayer.NPC))
+                        .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 1.5f));
+                        // .addComponent(aiComponent);
+        PhysicsUtils.setScaledCollider(npc, 0.9f, 0.4f);
+        npc.getComponent(PhysicsComponent.class).getBody().setUserData("Customer");
+        return npc;
+    }
 
     public static void decreaseCustomerCount() {
-                customerCount --;
-        }
+        customerCount --;
+    }
 
-        private NPCFactory() {
-                throw new IllegalStateException("Instantiating static util class");
-        }
+    private NPCFactory() {
+        throw new IllegalStateException("Instantiating static util class");
+    }
 }
