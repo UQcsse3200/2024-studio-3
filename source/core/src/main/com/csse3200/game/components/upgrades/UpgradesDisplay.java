@@ -24,7 +24,7 @@ import java.util.List;
 public class UpgradesDisplay extends UIComponent {
     private final MainGameScreen game;
     private static final String[] upgradesMenuTexture = {"images/Upgrade_display.png"};
-    private static final Logger logger = LoggerFactory.getLogger(PauseMenuDisplay.class);
+    private static final Logger logger = LoggerFactory.getLogger(UpgradesDisplay.class);
 
     private Image upgradesMenuImage;
     public boolean isVisible = false;
@@ -35,7 +35,7 @@ public class UpgradesDisplay extends UIComponent {
             "images/SpeedBoot.png",
             "images/Extortion1.png",
             "images/Loan1.png",
-        "images/notEnoughGold.png",
+            "images/notEnoughGold.png",
     };
 
     /**
@@ -125,6 +125,7 @@ public class UpgradesDisplay extends UIComponent {
             case "Extortion" -> "images/Extortion1.png";
             case "Speed" -> "images/SpeedBoot.png";
             case "Loan" -> "images/Loan1.png";
+            case "Dance party" -> "images/Loan.png";
             default -> "";
         };
 

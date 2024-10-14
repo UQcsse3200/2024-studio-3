@@ -26,7 +26,7 @@ public class RandomComboService extends Component {
     private Random random;
     private int randomChoice;
     private EventHandler eventHandler;
-    private int total_upgrades = 3;
+    private int total_upgrades = 4;
 
     public RandomComboService() {
         this(new EventHandler());
@@ -55,6 +55,9 @@ public class RandomComboService extends Component {
             case 2:
                 upgrade = "Speed";
                 break;
+            case 3:
+                upgrade = "Dance party";
+                break;
             default:
                 upgrade = "";
         }
@@ -68,8 +71,7 @@ public class RandomComboService extends Component {
      * by pressing the "YES" button in the game's UI.
      */
     public void activateUpgrade() {
-        eventHandler.trigger(getSelectedUpgrade()); 
-        
+        eventHandler.trigger(getSelectedUpgrade());
     }
 
     public EventHandler getEvents() {
