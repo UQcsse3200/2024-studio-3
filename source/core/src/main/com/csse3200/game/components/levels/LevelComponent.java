@@ -173,7 +173,7 @@ public class LevelComponent extends Component {
     }
 
     /**
-     * Stores the new levels spawn capacity in the levelSpawnCap attribute
+     * Stores the new levels spawn capacity in  the levelSpawnCap attribute
      *
      * @param cap the number of customers that must be spawned
      */
