@@ -4,7 +4,7 @@ import java.util.List;
 import com.csse3200.game.components.Component;
 
 public class ScoreSystem extends Component {
-    public static int compareLists(List<String> playerIngredients, List<String> orderIngredients) {
+    public static int getAccuracyScore(List<String> playerIngredients, List<String> orderIngredients) {
         // Determine the size of the longer ingredient list
         int longerIngredientList = Math.max(playerIngredients.size(), orderIngredients.size());
 
@@ -20,6 +20,25 @@ public class ScoreSystem extends Component {
         double percentage = ((double) matchingIngredients / longerIngredientList) * 100;
 
         // Round to nearest whole digit
+        return (int) Math.round(percentage);
+    }
+
+    // Add function that determines the time remaining on order ticket.
+    public static int getTimeScore(String orderTime) {
+        float time = Float.parseFloat(orderTime);
+        double percentage;
+        if (time >= 15) {
+            percentage = 100;
+        } else if (time >= 10 && time < 15) {
+            percentage = 75;
+        } else if (time >= 5 && time < 10) {
+            percentage = 50;
+        } else if (time > 0 && time < 5) {
+            percentage = 25;
+        } else {
+            percentage = 0;
+        }
+
         return (int) Math.round(percentage);
     }
 
