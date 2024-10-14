@@ -1,5 +1,8 @@
 package com.csse3200.game.components.upgrades;
 
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -22,6 +25,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.stream.Stream;
+
 @ExtendWith(GameExtension.class)
 @ExtendWith(MockitoExtension.class)
 public class UpgradesDisplayTest {
@@ -36,6 +41,10 @@ public class UpgradesDisplayTest {
     @Mock MainGameScreen mainGameScreen;
     RandomComboService randomComboService;
     private UpgradesDisplay upgradesDisplay;
+
+    private static Stream<String> provideUpgrades() {
+        return Stream.of("Speed", "Extortion", "Loan", "Dance party");
+    }
 
     @BeforeEach
     void setUp() {
@@ -52,16 +61,16 @@ public class UpgradesDisplayTest {
         lenient().when(renderService.getStage()).thenReturn(stage);
         lenient().when(renderService.getStage().getViewport()).thenReturn(viewport);
         lenient().when(renderService.getStage().getViewport().getCamera()).thenReturn(camera);
-        lenient().when(randomComboService.getSelectedUpgrade()).thenReturn("Speed");
 
         upgradesDisplay = new UpgradesDisplay(mainGameScreen);
         upgradesDisplay.setUpgradesTable(upgradesTable);
         upgradesDisplay.setStage(stage);
-        upgradesDisplay.create();
     }
 
     @Test
     void testVisibilityOnSetup() {
+        upgradesDisplay.create();
+
         assertNotNull(upgradesDisplay);
         assertFalse(upgradesDisplay.isVisible());
         assertFalse(upgradesDisplay.getUpgradesMenuImage().isVisible());
@@ -75,6 +84,8 @@ public class UpgradesDisplayTest {
 
     @Test
     void testCreateCallsDependencies() {
+        upgradesDisplay.create();
+
         UpgradesDisplay spyUpgradesDisplay = spy(upgradesDisplay);
         spyUpgradesDisplay.create();
         verify(spyUpgradesDisplay).addUpgradeImage();
@@ -84,6 +95,8 @@ public class UpgradesDisplayTest {
 
     @Test
     void testToggleVisibilityOn() {
+        upgradesDisplay.create();
+
         upgradesDisplay.toggleVisibility();
         assertTrue(upgradesDisplay.isVisible());
         assertTrue(upgradesDisplay.getUpgradesMenuImage().isVisible());
@@ -93,6 +106,8 @@ public class UpgradesDisplayTest {
 
     @Test
     void testToggleVisibilityOff() {
+        upgradesDisplay.create();
+
         upgradesDisplay.toggleVisibility();
         upgradesDisplay.toggleVisibility();
         assertFalse(upgradesDisplay.isVisible());
@@ -101,10 +116,13 @@ public class UpgradesDisplayTest {
         verify(mainGameScreen).resume();
     }
 
-    @Test
-    void testAddUpgradeImage() {
+    @ParameterizedTest
+    @MethodSource("provideUpgrades")
+    void testAddUpgradeImage(String upgrade) {
+        when(randomComboService.getSelectedUpgrade()).thenReturn(upgrade);
+        upgradesDisplay.create();
+
         verify(randomComboService).getSelectedUpgrade();
-        String upgrade = randomComboService.getSelectedUpgrade();
         String texturePath = switch (upgrade) {
             case "Extortion" -> "images/Extortion1.png";
             case "Speed" -> "images/SpeedBoot.png";

@@ -105,6 +105,7 @@ project(":core") {
         testRuntimeOnly("org.junit.platform:junit-platform-launcher") {
             because 'Allows tests to run from IDEs that bundle older version of launcher'
         }
+        testImplementation "org.junit.jupiter:junit-jupiter-params:$junit5Version"
 
         testImplementation "org.mockito:mockito-junit-jupiter:$mockitoVersion"
         testImplementation "org.mockito:mockito-inline:$mockitoVersion"
