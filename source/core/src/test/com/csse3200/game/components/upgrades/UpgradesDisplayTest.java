@@ -9,7 +9,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
-import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.events.EventHandler;
 import com.csse3200.game.extensions.GameExtension;
 import com.csse3200.game.rendering.RenderService;
@@ -64,6 +63,30 @@ public class UpgradesDisplayTest {
     @Test
     void testNotNull() {
         assertNotNull(upgradesDisplay);
+    }
+
+    @Test
+    void testToggleVisibilityOn() {
+        upgradesDisplay.toggleVisibility();
+        assertTrue(upgradesDisplay.isVisible());
+        assertTrue(upgradesDisplay.getUpgradesMenuImage().isVisible());
+        assertTrue(upgradesDisplay.getUpgradesTable().isVisible());
+        verify(mainGameScreen).pause();
+    }
+
+    @Test
+    void testToggleVisibilityOff() {
+        upgradesDisplay.toggleVisibility();
+        upgradesDisplay.toggleVisibility();
+        assertFalse(upgradesDisplay.isVisible());
+        assertFalse(upgradesDisplay.getUpgradesMenuImage().isVisible());
+        assertFalse(upgradesDisplay.getUpgradesTable().isVisible());
+        verify(mainGameScreen).resume();
+    }
+
+    @Test
+    void testDispose() {
+
     }
 
     @AfterEach

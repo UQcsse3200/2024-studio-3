@@ -241,4 +241,16 @@ public class UpgradesDisplay extends UIComponent {
     public void setUpgradesTable(Table upgradesTable) {
         this.upgradesTable = upgradesTable;
     }
+
+    public Table getUpgradesTable() {
+        return upgradesTable;
+    }
+
+    public boolean isVisible() {
+        return isVisible;
+    }
+
+    public Image getUpgradesMenuImage() {
+        return upgradesMenuImage;
+    }
 }
