@@ -272,6 +272,7 @@ public class ForestGameArea extends GameArea {
         //station.setPosition(station.getPosition().x, station.getPosition().y);
     }
 
+
       //ServiceLocator.getMapLayout().getEvents().trigger("load", "level1");
 
     new_border();
