@@ -36,7 +36,6 @@ import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.factories.ItemFactory;
 import com.csse3200.game.entities.factories.NPCFactory;
 import com.csse3200.game.entities.factories.ObstacleFactory;
-import com.csse3200.game.entities.factories.PlateFactory;
 import com.csse3200.game.entities.factories.PlayerFactory;
 import com.csse3200.game.entities.factories.StationFactory;
 
@@ -282,7 +281,7 @@ public class ForestGameArea extends GameArea {
     createMoralScreen();
     createMoralSystem();
     //spawnplates
-      spawnStackPlate(5); //testplate spawn
+    //spawnStackPlate(5); //testplate spawn
 
       //spawnPlatewithMeal();
       player = spawnPlayer();
@@ -687,7 +686,7 @@ public class ForestGameArea extends GameArea {
    * Spawn Stack Plate item.
    * @param quantity - amount of stack.
    * @return A newPlate entity.
-   */
+   
   private Entity spawnStackPlate(int quantity) {
     Entity newPlate = PlateFactory.spawnPlateStack(quantity);
     GridPoint2 platePosition = new GridPoint2(5, 3);
@@ -696,11 +695,12 @@ public class ForestGameArea extends GameArea {
     newPlate.setPosition(newPlate.getPosition().x - 6f , newPlate.getPosition().y + 0f);
     return newPlate;
   }
+    
 
   /**
    * Spawn Stack Plate item but with meals
    * @return A newPlate entity with meal
-   */
+   
   private Entity spawnPlatewithMeal() {
     Entity newPlate = PlateFactory.spawnMealOnPlate(1,"salad");
     GridPoint2 platePosition = new GridPoint2(6, 4);
@@ -709,6 +709,7 @@ public class ForestGameArea extends GameArea {
 
     return newPlate;
   }
+    */
 
   /**
    * Plays the background music
