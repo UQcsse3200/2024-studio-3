@@ -85,10 +85,21 @@ public class DancePartyUpgrade extends UIComponent implements Upgrade {
             style.background = new TextureRegionDrawable(new TextureRegion(whiteBgTexture));
             style.knobBefore = new TextureRegionDrawable(new TextureRegion(fillTexture));
 
+            style.background = new TextureRegionDrawable(new TextureRegion(whiteBgTexture));
+            style.background.setMinHeight(15);
+            style.background.setMinWidth(10);
+
+            // Setting green fill color
+            style.knobBefore = new TextureRegionDrawable(new TextureRegion(fillTexture));
+            style.knobBefore.setMinHeight(15);
+            style.background.setMinWidth(10);
+
             meter = new ProgressBar(0f, 1f, 0.01f, false, style);
             meter.setValue(1f);
+            meter.setPosition(8, 500);
 
             text = new Label("Upgrade", skin);
+            text.setPosition(meter.getX(), meter.getY() + meter.getHeight() + 8);
             layout.add(text).row();
             layout.add(meter);
         }
