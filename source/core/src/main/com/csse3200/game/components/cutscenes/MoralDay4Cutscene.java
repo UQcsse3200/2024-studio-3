@@ -62,7 +62,6 @@ public class MoralDay4Cutscene extends Cutscene {
         sceneText.add("Press 'y' for yes and 'n' for no");
 
 
-
         String mafiaImage = "images/Cutscenes/Character Artwork/rhino_sprite.png";
         Vector2 mafiaPosition = new Vector2(3, -1);
         float mafiaScale = 4.0f;
@@ -76,12 +75,21 @@ public class MoralDay4Cutscene extends Cutscene {
         Vector2 iconPosition = new Vector2(-9, -2);
         float iconScale = 6.0f;
 
+
+        String yesImage = "images/Cutscenes/moral_icons/yes_ico.png";
+        Vector2 yesPosition = new Vector2(-10, -4);
+        float yesScale = 11.0f;
+
+        String noImage = "images/Cutscenes/moral_icons/no_ico.png";
+        Vector2 noPosition = new Vector2(-1, -4);
+        float noScale = 11.0f;
+
         // Add scenes with background images, animations, text, and duration
         Scene scene = new Scene("images/Cutscenes/Day2_Scene.png");
         scene.setImages(
-                new String[]{mafiaImage, racoonImage, iconImage},
-                new Vector2[] {mafiaPosition, racoonPosition, iconPosition},
-                new float[] {mafiaScale, racoonScale, iconScale}
+                new String[]{mafiaImage, racoonImage, iconImage, yesImage, noImage},
+                new Vector2[] {mafiaPosition, racoonPosition, iconPosition, yesPosition, noPosition},
+                new float[] {mafiaScale, racoonScale, iconScale, yesScale, noScale}
         );
 
         scene.setSceneText(sceneText);
@@ -102,7 +110,9 @@ public class MoralDay4Cutscene extends Cutscene {
         images = new String[] {
                 "images/Cutscenes/Character Artwork/rhino_sprite.png",
                 "images/Cutscenes/Character Artwork/racoon.png",
-                "images/Cutscenes/moral_icons/drug_ico.png"
+                "images/Cutscenes/moral_icons/drug_ico.png",
+                "images/Cutscenes/moral_icons/yes_ico.png",
+                "images/Cutscenes/moral_icons/no_ico.png"
         };
 
         // Get the resource service to load assets
