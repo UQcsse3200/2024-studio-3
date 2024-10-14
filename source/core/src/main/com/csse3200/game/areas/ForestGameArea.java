@@ -859,5 +859,14 @@ public class ForestGameArea extends GameArea {
             .addComponent(new EndDayDisplay());
     ServiceLocator.getEntityService().registerEndDay(endDayScreen);
   }
+
+  /**
+   * Returns the level the game is currently on.
+   *
+   * @return level - the level the player is currently on
+   */
+  public GdxGame.LevelType getLevel() {
+    return this.level;
+  }
 }
 
