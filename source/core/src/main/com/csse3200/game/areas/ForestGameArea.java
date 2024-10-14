@@ -43,11 +43,7 @@ import com.csse3200.game.utils.math.GridPoint2Utils;
 /** Forest area for the demo game with trees, a player, and some enemies. */
 public class ForestGameArea extends GameArea {
   private static final Logger logger = LoggerFactory.getLogger(ForestGameArea.class);
-  private static final int NUM_TREES = 7;
-  private static final int NUM_GHOSTS = 2;
-  private static final int NUM_CUSTOMERS_BASE = 1;
   private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(5, 2);
-  private static final float WALL_WIDTH = 0.1f;
   private static final String[] forestTextures = {
     "images/special_NPCs/boss.png",
     "images/special_NPCs/penguin2.png",
@@ -202,8 +198,8 @@ public class ForestGameArea extends GameArea {
           "images/special_NPCs/penguin.atlas",
   };
   private static final String[] forestSounds = {"sounds/Impact4.ogg"};
-  private static final String backgroundMusic = "sounds/BB_BGM.mp3";
-  private static final String[] forestMusic = {backgroundMusic};
+  private static final String backgroundmusic = "sounds/BB_BGM.mp3";
+  private static final String[] forestMusic = {backgroundmusic};
   private static Entity customerSpawnController;
 
   private final TerrainFactory terrainFactory;
@@ -212,11 +208,6 @@ public class ForestGameArea extends GameArea {
 
   private Entity player;
   private CheckWinLoseComponent winLoseComponent;  // Reference to CheckWinLoseComponent
-
-
-  // Define the win/lose conditions
-  private int winAmount = 60;      // Example value for winning gold amount
-  private int loseThreshold = 50;   // Example value for losing threshold
 
   public enum personalCustomerEnums{
     HANK,
@@ -238,7 +229,6 @@ public class ForestGameArea extends GameArea {
     this.level = level;
     this.terrainFactory = terrainFactory;
     this.upgradesDisplay = upgradesDisplay;
-    //this.textDisplay = textDisplay;
 
     ServiceLocator.registerGameArea(this);
   }
@@ -265,25 +255,20 @@ public class ForestGameArea extends GameArea {
     }
     for (Entity station : result.getStations()) {
       spawnEntity(station);
-        //station.setPosition(station.getPosition().x, station.getPosition().y);
+
     }
 
 
-      //ServiceLocator.getMapLayout().getEvents().trigger("load", "level1");
 
     newborder();
-    //ticketDetails();
+
     spawnStations();
     customerSpawnController = spawnCustomerController();
     createMoralScreen();
     createMoralSystem();
-    //spawnplates
-    //spawnStackPlate(5); //testplate spawn
 
-      //spawnPlatewithMeal();
       player = spawnPlayer();
       ServiceLocator.getPlayerService().registerPlayer(player);
-      //ServiceLocator.getSaveLoadService().setCombatStatsComponent(player.getComponent(CombatStatsComponent.class));
       ServiceLocator.getSaveLoadService().load();
       ServiceLocator.getDayNightService().getEvents().addListener("upgrade", () -> spawnPenguin(upgradesDisplay));
 
@@ -334,8 +319,8 @@ public class ForestGameArea extends GameArea {
       }
 
       if (hasBadDecisions) {
-        createTextBox("You *oink* amazing critter! You're a master! " +
-                "Enjoy a 40c raise for your efforts!");
+        createTextBox("You *oink* bad critter! You're a failure! " +
+                "You will not get any raise");
         ServiceLocator.getEntityService().getEvents().trigger("badEnd");
       } else {
         createTextBox("You *oink* amazing critter! You're a master! " +
@@ -453,7 +438,7 @@ public class ForestGameArea extends GameArea {
 
 
   private void spawnStations() {
-    int a = 0;
+
   }
 
   /**
@@ -653,26 +638,6 @@ public class ForestGameArea extends GameArea {
     spawnBasicCustomer("Basic Sheep");
   }
 
-//  private void spawnGhosts() {
-//    GridPoint2 minPos = new GridPoint2(0, 0);
-//    GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
-//
-//    for (int i = 0; i < NUM_GHOSTS; i++) {
-//      GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
-//      Entity ghost = NPCFactory.createGhost(player);
-//      spawnEntityAt(ghost, randomPos, true, true);
-//    }
-//  }
-//
-//  private void spawnGhostKing() {
-//    GridPoint2 minPos = new GridPoint2(0, 0);
-//    GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
-//
-//    GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
-//    Entity ghostKing = NPCFactory.createGhostKing(player);
-//    spawnEntityAt(ghostKing, randomPos, true, true);
-//  }
-
   /**
    * Spawn Stack Plate item.
    * @param quantity - amount of stack.
@@ -706,7 +671,7 @@ public class ForestGameArea extends GameArea {
    * Plays the background music
    */
   private void playMusic() {
-    Music music = ServiceLocator.getResourceService().getAsset(backgroundMusic, Music.class);
+    Music music = ServiceLocator.getResourceService().getAsset(backgroundmusic, Music.class);
     music.setLooping(true);
     music.setVolume(0.02f);
     music.play();
@@ -738,7 +703,7 @@ public class ForestGameArea extends GameArea {
   @Override
   public void dispose() {
     super.dispose();
-    ServiceLocator.getResourceService().getAsset(backgroundMusic, Music.class).stop();
+    ServiceLocator.getResourceService().getAsset(backgroundmusic, Music.class).stop();
     this.unloadAssets();
   }
 
