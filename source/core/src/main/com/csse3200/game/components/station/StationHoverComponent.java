@@ -29,7 +29,7 @@ import com.csse3200.game.physics.components.PhysicsComponent;
  * it is added to does not have a InventoryComponent.
  * The main use for this component is to show the inventories of the stations to the player.
  */
-public class InventoryDisplayHoverComponent extends RenderComponent {
+public class StationHoverComponent extends RenderComponent {
     private static final Logger logger = LoggerFactory.getLogger(InventoryDisplayHoverComponent.class);
     private ArrayList<Texture> itemImages;
     private Texture backgroundImage;
