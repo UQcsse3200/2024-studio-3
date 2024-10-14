@@ -125,7 +125,7 @@ public class UpgradesDisplay extends UIComponent {
             case "Extortion" -> "images/Extortion1.png";
             case "Speed" -> "images/SpeedBoot.png";
             case "Loan" -> "images/Loan1.png";
-            case "Dance party" -> "images/Loan.png";
+            case "Dance party" -> "images/Dance_party.png";
             default -> "";
         };
 
