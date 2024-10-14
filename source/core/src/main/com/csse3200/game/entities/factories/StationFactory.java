@@ -393,6 +393,35 @@ public class StationFactory {
   }
 
   /**
+   * Creates an dishwasher, a type of item station which gives out clean plates. 
+   * @return Entity of type station with added components and references
+   */
+  public static Entity createDishwasher() {
+    Entity dishwasher = new Entity()
+            .addComponent(new TextureRenderComponent("images/stations/baskets/dishwasher.png"))
+            .addComponent(new PhysicsComponent())
+            .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
+            .addComponent(new InteractionComponent(PhysicsLayer.INTERACTABLE))
+            .addComponent(new TooltipsDisplay())
+            .addComponent(new InventoryDisplayHoverComponent())
+            .addComponent(new StationCollectionComponent())
+            .addComponent(new InventoryComponent(1))
+            .addComponent(new DishwasherStationHandlerComponent("dishwasher", "plate"));
+    // Physics components
+
+    dishwasher.getComponent(InteractionComponent.class).setAsBox(dishwasher.getScale());
+    dishwasher.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
+    dishwasher.getComponent(TextureRenderComponent.class).scaleEntity();
+    dishwasher.scaleHeight(1f);
+    PhysicsUtils.setScaledCollider(dishwasher, 1f, 1f);
+    // Add station reference
+    PhysicsComponent physicsComponent = dishwasher.getComponent(PhysicsComponent.class);
+    Body body = physicsComponent.getBody();
+    body.setUserData(dishwasher);
+    return dishwasher;
+  }
+
+  /**
    * Creates the leg section of the bench table, a station where combinations of ingredients are done.
    * @return Entity of type station with added components and references
    */
