@@ -24,7 +24,7 @@ public class RandomComboService extends Component {
     private static final Logger logger = LoggerFactory.getLogger(RandomComboService.class);
     // private List<Upgrade> upgrades;
     private Random random;
-    private int randomChoice;
+    int randomChoice;
     private EventHandler eventHandler;
     private int total_upgrades = 4;
 

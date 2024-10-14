@@ -22,6 +22,12 @@ public class RandomComboServiceTest {
     }
 
     @Test
+    public void testDefaultConstructor() {
+        RandomComboService defaultService = new RandomComboService();
+        assertNotNull(defaultService.getEvents());
+    }
+
+    @Test
     public void testGetSelectedUpgrade() {
         String selectedUpgrade = randomComboService.getSelectedUpgrade();
         assertTrue(
@@ -48,5 +54,67 @@ public class RandomComboServiceTest {
     public void testGetEvents() {
         assertEquals(mockEventHandler, randomComboService.getEvents());
     }
+
+    @Test
+    public void testActivateUpgradeForExtortion() {
+        randomComboService = new RandomComboService(mockEventHandler) {
+            @Override
+            public String getSelectedUpgrade() {
+                return "Extortion";
+            }
+        };
+        randomComboService.activateUpgrade();
+        verify(mockEventHandler, times(1)).trigger("Extortion");
+    }
+
+    @Test
+    public void testActivateUpgradeForLoan() {
+        randomComboService = new RandomComboService(mockEventHandler) {
+            @Override
+            public String getSelectedUpgrade() {
+                return "Loan";
+            }
+        };
+        randomComboService.activateUpgrade();
+        verify(mockEventHandler, times(1)).trigger("Loan");
+    }
+
+    @Test
+    public void testActivateUpgradeForSpeed() {
+        randomComboService = new RandomComboService(mockEventHandler) {
+            @Override
+            public String getSelectedUpgrade() {
+                return "Speed";
+            }
+        };
+        randomComboService.activateUpgrade();
+        verify(mockEventHandler, times(1)).trigger("Speed");
+    }
+
+    @Test
+    public void testActivateUpgradeForDanceParty() {
+        randomComboService = new RandomComboService(mockEventHandler) {
+            @Override
+            public String getSelectedUpgrade() {
+                return "Dance party";
+            }
+        };
+        randomComboService.activateUpgrade();
+        verify(mockEventHandler, times(1)).trigger("Dance party");
+    }
+
+    @Test
+    public void testInvalidRandomChoice() {
+        randomComboService = new RandomComboService(mockEventHandler) {
+            @Override
+            public String getSelectedUpgrade() {
+                randomChoice = 5;  // Invalid index (out of bounds)
+                return super.getSelectedUpgrade();
+            }
+        };
+        assertEquals("", randomComboService.getSelectedUpgrade());
+    }
 }
+
+
 
