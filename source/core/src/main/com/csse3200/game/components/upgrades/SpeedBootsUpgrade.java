@@ -27,7 +27,7 @@ import org.slf4j.LoggerFactory;
  * when activated, makes player move twice as fast
  */
 public class SpeedBootsUpgrade extends UIComponent implements Upgrade {
-    private static final Logger logger = LoggerFactory.getLogger(RageUpgrade.class);
+    private static final Logger logger = LoggerFactory.getLogger(SpeedBootsUpgrade.class);
     private static final long BOOST_DURATION = 30000; // 30 sec
     private static final float NORMAL_SPEED = 1f;
     private static final float BOOSTED_SPEED = 2f; // 2x speed
@@ -35,12 +35,12 @@ public class SpeedBootsUpgrade extends UIComponent implements Upgrade {
     private KeyboardPlayerInputComponent keyboardPlayerInputComponent;
     private final GameTime gameTime;
     private long boostStartTime = -1;
-    private static final String[] greenTexture = {"images/green_fill.png"};
-    private static final String[] whiteBgTexture = {"images/white_background.png"};
+    public static final String[] greenTexture = {"images/green_fill.png"};
+    public static final String[] whiteBgTexture = {"images/white_background.png"};
     private boolean isActivate;
-    private Table layout;
-    private Label text; // the "Upgrade" text above the speedMeter
-    private ProgressBar speedMeter; // the meter that show the remaining time
+    public Table layout;
+    public Label text; // the "Upgrade" text above the speedMeter
+    public ProgressBar speedMeter; // the meter that show the remaining time
     private boolean isVisible;
     private float activeTimeRemaining;
     private Sound countDown;
@@ -55,7 +55,14 @@ public class SpeedBootsUpgrade extends UIComponent implements Upgrade {
         });
         gameTime = ServiceLocator.getTimeSource();
         isActivate = false;
-        
+    }
+
+    public SpeedBootsUpgrade(CombatStatsComponent combatStatsComponent, KeyboardPlayerInputComponent keyboardPlayerInputComponent) {
+        super();
+        this.combatStatsComponent = combatStatsComponent;
+        this.keyboardPlayerInputComponent = keyboardPlayerInputComponent;
+        gameTime = ServiceLocator.getTimeSource();
+        isActivate = false;
     }
 
     @Override
@@ -64,14 +71,13 @@ public class SpeedBootsUpgrade extends UIComponent implements Upgrade {
         ServiceLocator.getResourceService().loadTextures(whiteBgTexture);
         ServiceLocator.getResourceService().loadTextures(greenTexture);
         ServiceLocator.getResourceService().loadAll(); // Ensures the texture is loaded
-        // https://mixkit.co/free-sound-effects/countdown/
-        countDown = Gdx.audio.newSound(Gdx.files.internal("sounds/upgrade_count_down.wav"));
+        // https://pixabay.com/sound-effects/mouth-lightening-89463/
+        countDown = Gdx.audio.newSound(Gdx.files.internal("sounds/mouth_lightening_1sec.mp3"));
         layout = new Table();
         layout.setFillParent(true);
         layout.setVisible(isVisible);
-        // setupInputListener();
-        ServiceLocator.getRandomComboService().getEvents().addListener("Speed", this::activate); 
- 
+//         setupInputListener();
+        ServiceLocator.getRandomComboService().getEvents().addListener("Speed", this::activate);
     }
 
     /**
@@ -123,11 +129,11 @@ public class SpeedBootsUpgrade extends UIComponent implements Upgrade {
             stage.addActor(speedMeter);
             stage.addActor(text);
             activeTimeRemaining -= gameTime.getDeltaTime() * 1000; // Calculate speed boot duration
-            speedMeter.setValue((activeTimeRemaining / (float) BOOST_DURATION)); // Update progress bar
+            speedMeter.setValue((activeTimeRemaining /  BOOST_DURATION)); // Update progress bar
 
-            if (activeTimeRemaining <= 4000 && !playSound) {
+            if (activeTimeRemaining <= 800 && !playSound) {
                 long countDownId = countDown.play();
-                countDown.setVolume(countDownId, 0.05f);
+                countDown.setVolume(countDownId, 0.2f);
                 playSound = true;
             }
 
@@ -181,20 +187,20 @@ public class SpeedBootsUpgrade extends UIComponent implements Upgrade {
     /**
      * Activate the speed boot if B is pressed
      */
-    // private void setupInputListener() {
-    //     stage.addListener(new InputListener() {
-    //         @Override
-    //         public boolean keyDown(InputEvent event, int keycode) {
-    //             if (keycode == com.badlogic.gdx.Input.Keys.B) {
-    //                 if (!isActivate && boostStartTime == -1 && combatStatsComponent.getGold() >= 20){
-    //                     activate();
-    //                 }
-    //                 return true;
-    //             }
-    //             return false;
-    //         }
-    //     });
-    // }
+     private void setupInputListener() {
+         stage.addListener(new InputListener() {
+             @Override
+             public boolean keyDown(InputEvent event, int keycode) {
+                 if (keycode == com.badlogic.gdx.Input.Keys.B) {
+                     if (!isActivate && boostStartTime == -1 && combatStatsComponent.getGold() >= 20){
+                         activate();
+                     }
+                     return true;
+                 }
+                 return false;
+             }
+         });
+     }
 
     /**
      * Decrement cost when speed boot is activate.
@@ -211,11 +217,47 @@ public class SpeedBootsUpgrade extends UIComponent implements Upgrade {
     }
     @Override
     protected void draw(SpriteBatch batch) {
+        // This method is intended for custom rendering of the UI component.
+        // However, the SpeedBootsUpgrade UI does not require any additional
+        // drawing logic, as all visual elements are managed by Scene2D
+        // and drawn automatically. Therefore, this method is left empty.
 
     }
 
     @Override
     public void setStage(Stage mock) {
+        this.stage = mock;
+    }
 
+    public float getNormalSpeed() {
+        return NORMAL_SPEED;
+    }
+
+    public float getBoostedSpeed() {
+        return BOOSTED_SPEED;
+    }
+
+    public boolean isActivate() {
+        return isActivate;
+    }
+
+    public boolean isVisible() {
+        return isVisible;
+    }
+
+    public float getActiveTimeRemaining() {
+        return activeTimeRemaining;
+    }
+
+    public long getBoostDuration() {
+        return BOOST_DURATION;
+    }
+
+    public long getBoostStartTime() {
+        return boostStartTime;
+    }
+
+    public boolean getPlaySound() {
+        return playSound;
     }
 }

@@ -1,7 +1,8 @@
+package com.csse3200.game.components.interaction;
+
 import com.csse3200.game.components.CustomerSensorComponent;
 import com.csse3200.game.components.npc.CustomerComponent;
 
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.configs.BaseCustomerConfig;
@@ -27,7 +28,7 @@ class CustomerSensorComponentTest {
     @BeforeEach
     void beforeEach() {
         ServiceLocator.registerPhysicsService(new PhysicsService());
-        customerSensorComponent = new CustomerSensorComponent(customerLayer, 5f);
+        customerSensorComponent = new CustomerSensorComponent(5f);
         assertNotNull(customerSensorComponent, "CustomerSensorComponent should have been initialized");
     }
 
@@ -37,10 +38,8 @@ class CustomerSensorComponentTest {
 
         // Set up entities
         Entity player = createEntity(0, 0);
-        Entity customer = createCustomer(1, 1);
 
         Fixture playerFixture = player.getComponent(InteractionComponent.class).getFixture();
-        Fixture customerFixture = customer.getComponent(InteractionComponent.class).getFixture();
 
         InteractionComponent sensorInteractionComponent = this.customerSensorComponent.getInteractionComponent();
         assertNotNull(sensorInteractionComponent, "The interaction component for sensor should not be null");

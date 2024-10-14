@@ -17,11 +17,12 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.csse3200.game.screens.MainGameScreen;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Objects;
+
 import com.badlogic.gdx.utils.Align;
 import com.csse3200.game.components.cutscenes.*;
 
@@ -128,11 +129,7 @@ public class TextDisplay extends UIComponent {
 
         // Add the stack to the table with padding or alignment options
         table.add(stack).padBottom(70).padLeft(0).size((int)(Gdx.graphics.getWidth() * 0.5), (int)(Gdx.graphics.getHeight() * 0.2));
-        if (this.screen == "cutscene") {
-            setVisible(true);
-        } else {
-            setVisible(false);
-        }
+        setVisible(Objects.equals(this.screen, "cutscene"));
         setupInputListener();
         entity.getEvents().addListener("SetText", this::setText);
     }
@@ -146,25 +143,24 @@ public class TextDisplay extends UIComponent {
         currentPart = 0;
         List<String> newText = new ArrayList<>();
         textLength = text.length();
-        String temp = "";
-        String current = "";
+        StringBuilder temp = new StringBuilder();
+        StringBuilder current = new StringBuilder();
         for (int i = 0; i < textLength; i++) {
             // if word formed in temp
             if (text.charAt(i) == ' ') {
-                temp += current;
-                current = "";
+                temp.append(current);
+                current = new StringBuilder();
             }
 
             if (i != 0 && i % textLimit == 0) {
-                temp += " (enter to continue)";
-                newText.add(temp);
-                temp = "";
+                temp.append(" (enter to continue)");
+                newText.add(temp.toString());
+                temp = new StringBuilder();
             }
-            current += text.charAt(i);
+            current.    append(text.charAt(i));
         }
-        temp += current + " (enter to continue)";
-        newText.add(temp);
-        System.out.println(newText);
+        temp.append(current).append(" (enter to continue)");
+        newText.add(temp.toString());
         this.text = newText;
     }
 
@@ -224,7 +220,7 @@ public class TextDisplay extends UIComponent {
             public boolean keyDown(InputEvent event, int keycode) {
                 if (keycode == com.badlogic.gdx.Input.Keys.ENTER || keycode == com.badlogic.gdx.Input.Keys.SPACE) {
                     // if the text hasn't been fully shown
-                    if (TextDisplay.this.screen == "cutscene") {
+                    if (TextDisplay.this.screen.equals("cutscene")) {
                         Cutscene currentCutscene = ServiceLocator.getCurrentCutscene();
                         currentCutscene.setTextForScene(currentCutscene.currentScene);
                         label.setText(currentCutscene.currentText);
@@ -249,7 +245,9 @@ public class TextDisplay extends UIComponent {
     }
 
     @Override
-    public void draw(SpriteBatch batch) {}
+    public void draw(SpriteBatch batch) {
+        // draw is handled by the stage
+    }
     @Override
     public void setStage(Stage stage) {
         this.stage = stage;

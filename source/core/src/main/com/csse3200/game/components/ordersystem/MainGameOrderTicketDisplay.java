@@ -164,7 +164,7 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         stage.addListener(new InputListener() {
             @Override
             public boolean keyDown(InputEvent event, int keycode) {
-                if (keycode == com.badlogic.gdx.Input.Keys.O) {
+                if (keycode == com.badlogic.gdx.Input.Keys.ESCAPE) {
                     setPaused(!isPaused);
                     return true;
                 }
@@ -516,12 +516,13 @@ public class MainGameOrderTicketDisplay extends UIComponent {
     /**
      * Removes the current big ticket from the UI, as well as its values in the array
      */
-    public void removeBigTicket(){
-        int index = tableArrayList.size() - 1;
-        Docket currBackground = backgroundArrayList.get(index);
-        Table currTable = tableArrayList.get(index);
-
-        stageDispose(currBackground, currTable, index, true);
+    public void removeBigTicket() {
+        if (tableArrayList.size() > 0) {
+            int index = tableArrayList.size() - 1;
+            Docket currBackground = backgroundArrayList.get(index);
+            Table currTable = tableArrayList.get(index);
+            stageDispose(currBackground, currTable, index, true);
+        }
     }
 
     /**

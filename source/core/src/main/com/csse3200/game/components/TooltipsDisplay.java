@@ -19,11 +19,10 @@ public class TooltipsDisplay extends UIComponent {
     private Table table;
     private Image tooltipBackground;
     private Label tooltipLabel;
-    private CameraComponent cameraComponent;
 
     public static class TooltipInfo {
-        public String text;
-        public Vector2 position;
+        public final String text;
+        public final Vector2 position;
 
         public TooltipInfo(String text, Vector2 position) {
             this.text = text;
@@ -85,7 +84,7 @@ public class TooltipsDisplay extends UIComponent {
         // Set the tooltip position above the interactable object based on viewport height
         table.setPosition(screenPos.x*190, screenPos.y*190 + (viewportHeight * 0.05f));  // Adjust Y position relative to object and screen size
 
-        table.setVisible(true);
+        table.setVisible(false);
     }
 
     private void hideTooltip() {

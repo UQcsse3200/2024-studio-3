@@ -57,8 +57,8 @@ class FireExtinguisherHandlerComponentTest {
         handler.givePutExtinguisher(mockEntity);
         for(int i = 0; i < inventory.getSize(); i++) {
             assertNotSame(
-                    inventory.getItemAt(i).getItemType(),
                     ItemType.FIREEXTINGUISHER,
+                    inventory.getItemAt(i).getItemType(),
                     "Should not hold fire extinguisher");
         }
     }

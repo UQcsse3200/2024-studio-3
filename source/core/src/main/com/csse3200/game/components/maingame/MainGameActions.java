@@ -2,7 +2,6 @@ package com.csse3200.game.components.maingame;
 
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.components.Component;
-import com.csse3200.game.components.npc.CustomerComponent;
 import com.csse3200.game.components.ordersystem.MainGameOrderTicketDisplay;
 import com.csse3200.game.components.ordersystem.RecipeNameEnums;
 import com.csse3200.game.entities.Entity;
@@ -10,9 +9,7 @@ import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.List;
 import java.util.Random;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * Actions on the main game
@@ -22,7 +19,6 @@ public class MainGameActions extends Component {
     private static final int ORDER_LIMIT = 8;
     private static final String[] RECIPE_NAMES = {"acaiBowl", "salad", "fruitSalad", "steakMeal", "bananaSplit"};
     private final GdxGame game;
-    private static final List<String> currentlySpawningAnimals = new CopyOnWriteArrayList<>();
     private final Entity ui;
     private final MainGameOrderTicketDisplay docketDisplayer;
 
@@ -63,8 +59,6 @@ public class MainGameActions extends Component {
     public void moral1(){
         logger.info("Starting end of day 1 moral decision cutscene");
 
-        // Stop any background tasks
-        // ServiceLocator.getMainMenuDisplay().stopBackgroundTasks();
 
         // Now we can transition to the cutscene
         game.setScreen(GdxGame.ScreenType.ENDDAY_1);
@@ -78,8 +72,6 @@ public class MainGameActions extends Component {
     public void onLoseEnd(){
         logger.info("Starting lose cutscene");
 
-        // Stop any background tasks
-        // ServiceLocator.getMainMenuDisplay().stopBackgroundTasks();
 
         // Now we can transition to the cutscene
         game.setScreen(GdxGame.ScreenType.LOSE_END);
@@ -91,8 +83,6 @@ public class MainGameActions extends Component {
     public void onBadEnd(){
         logger.info("Starting good cutscene");
 
-        // Stop any background tasks
-        // ServiceLocator.getMainMenuDisplay().stopBackgroundTasks();
 
         // Now we can transition to the cutscene
         game.setScreen(GdxGame.ScreenType.BAD_END);
@@ -104,8 +94,6 @@ public class MainGameActions extends Component {
     public void onGoodEnd(){
         logger.info("Starting good cutscene");
 
-        // Stop any background tasks
-        // ServiceLocator.getMainMenuDisplay().stopBackgroundTasks();
 
         // Now we can transition to the cutscene
         game.setScreen(GdxGame.ScreenType.GOOD_END);
@@ -162,7 +150,6 @@ public class MainGameActions extends Component {
     public void onCreateOrder(String preferredRecipe) {
         int orderCount = MainGameOrderTicketDisplay.getTableArrayList().size();
         if (orderCount < ORDER_LIMIT) {
-//            String preferredRecipe = getPreferredRecipeFromSpawningAnimals();
             if (preferredRecipe == null || preferredRecipe.isEmpty()) {
                 logger.warn("No recipe preference set. Falling back to random recipe.");
                 preferredRecipe = RECIPE_NAMES[new Random().nextInt(RECIPE_NAMES.length)];
@@ -174,39 +161,5 @@ public class MainGameActions extends Component {
         } else {
             logger.info("Order limit of {} reached", ORDER_LIMIT);
         }
-    }
-
-    private String getPreferredRecipeFromSpawningAnimals() {
-        for (String animalName : currentlySpawningAnimals) {
-            String preference = getRecipePreferenceForAnimal(animalName);
-            if (preference != null && !preference.isEmpty()) {
-                return preference;
-            }
-        }
-        return null;
-    }
-
-    private String getRecipePreferenceForAnimal(String animalName) {
-        // Iterate over all entities to find the one with the matching name
-        for (Entity entity : ServiceLocator.getEntityService().getEntities()) {
-            CustomerComponent customerComponent = entity.getComponent(CustomerComponent.class);
-
-            if (customerComponent != null && animalName.equals(customerComponent.getName())) {
-                return customerComponent.getPreference();
-            }
-        }
-
-        logger.warn("Entity with name '{}' not found", animalName);
-        return null;
-    }
-
-    public static void addSpawningAnimal(String animalName) {
-        if (!currentlySpawningAnimals.contains(animalName)) {
-            currentlySpawningAnimals.add(animalName);
-        }
-    }
-
-    public static void removeSpawningAnimal(String animalName) {
-        currentlySpawningAnimals.remove(animalName);
     }
 }

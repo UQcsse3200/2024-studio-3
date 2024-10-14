@@ -1,4 +1,4 @@
-package com.csse3200.game.components;
+package com.csse3200.game.components.interaction;
 
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.csse3200.game.entities.Entity;
