@@ -5,8 +5,6 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
@@ -18,8 +16,6 @@ import com.csse3200.game.entities.Entity;
 import com.csse3200.game.services.GameTime;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Manages the Speed Boots Upgrade UI component, handling activation, deactivation,
@@ -27,7 +23,6 @@ import org.slf4j.LoggerFactory;
  * when activated, makes player move twice as fast
  */
 public class SpeedBootsUpgrade extends UIComponent implements Upgrade {
-    private static final Logger logger = LoggerFactory.getLogger(SpeedBootsUpgrade.class);
     private static final long BOOST_DURATION = 30000; // 30 sec
     private static final float NORMAL_SPEED = 1f;
     private static final float BOOSTED_SPEED = 2f; // 2x speed
@@ -76,7 +71,6 @@ public class SpeedBootsUpgrade extends UIComponent implements Upgrade {
         layout = new Table();
         layout.setFillParent(true);
         layout.setVisible(isVisible);
-//         setupInputListener();
         ServiceLocator.getRandomComboService().getEvents().addListener("Speed", this::activate);
     }
 
@@ -183,24 +177,6 @@ public class SpeedBootsUpgrade extends UIComponent implements Upgrade {
             text = null;
         }
     }
-
-    /**
-     * Activate the speed boot if B is pressed
-     */
-     private void setupInputListener() {
-         stage.addListener(new InputListener() {
-             @Override
-             public boolean keyDown(InputEvent event, int keycode) {
-                 if (keycode == com.badlogic.gdx.Input.Keys.B) {
-                     if (!isActivate && boostStartTime == -1 && combatStatsComponent.getGold() >= 20){
-                         activate();
-                     }
-                     return true;
-                 }
-                 return false;
-             }
-         });
-     }
 
     /**
      * Decrement cost when speed boot is activate.
