@@ -253,4 +253,12 @@ public class UpgradesDisplay extends UIComponent {
     public Image getUpgradesMenuImage() {
         return upgradesMenuImage;
     }
+
+    public String[] getUpgradesMenuTexture() {
+        return upgradesMenuTexture;
+    }
+
+    public String[] getUpgradeTexturePaths() {
+        return upgradeTexturePaths;
+    }
 }

@@ -86,7 +86,9 @@ public class UpgradesDisplayTest {
 
     @Test
     void testDispose() {
-
+        upgradesDisplay.dispose();
+        verify(resourceService).unloadAssets(upgradesDisplay.getUpgradesMenuTexture());
+        verify(resourceService).unloadAssets(upgradesDisplay.getUpgradeTexturePaths());
     }
 
     @AfterEach
