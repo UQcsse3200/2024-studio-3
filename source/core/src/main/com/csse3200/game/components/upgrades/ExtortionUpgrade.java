@@ -58,6 +58,7 @@ public class ExtortionUpgrade extends UIComponent implements Upgrade {
         ServiceLocator.getResourceService().loadTextures(greenTexture);
         ServiceLocator.getResourceService().loadAll();
 
+        // https://pixabay.com/sound-effects/fx-mario-brothers-coin-grab-236423/
         bgEffect = Gdx.audio.newSound(Gdx.files.internal("sounds/extortion.mp3"));
         layout = new Table();
         layout.setFillParent(true);
