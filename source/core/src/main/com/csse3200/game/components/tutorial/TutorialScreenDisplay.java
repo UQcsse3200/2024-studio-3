@@ -42,6 +42,7 @@ public class TutorialScreenDisplay extends UIComponent {
     private static final int MAX_TUTORIAL_STEP = 4;
     int  i = 0;
 
+
     public TutorialScreenDisplay(GdxGame game) {
 
         this.game = game;
@@ -54,7 +55,13 @@ public class TutorialScreenDisplay extends UIComponent {
     public void create() {
         super.create();
 
-        playerActions = entity.getComponent(PlayerActions.class);
+        if (entity != null) {
+            playerActions = entity.getComponent(PlayerActions.class);
+        } else {
+            logger.error("Entity null");
+        }
+
+        ServiceLocator.getLevelService().setCurrLevel(GdxGame.LevelType.LEVEL_0);
 
         if (table == null) {
             table = new Table();  // Ensure table is initialised
@@ -229,6 +236,7 @@ public class TutorialScreenDisplay extends UIComponent {
         if (table != null) {
             table.clear();  // Safely clear the table
         }
+        ServiceLocator.getLevelService().setCurrLevel(GdxGame.LevelType.LEVEL_1);
         game.setScreen(GdxGame.ScreenType.MAIN_GAME);  // Transition to the main game
     }
 
