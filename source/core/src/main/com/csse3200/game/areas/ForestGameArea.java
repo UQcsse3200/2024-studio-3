@@ -4,7 +4,6 @@ import com.csse3200.game.components.moral.Decision;
 import com.csse3200.game.components.npc.PersonalCustomerEnums;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.entities.benches.Bench;
-import com.csse3200.game.entities.configs.PlayerConfig;
 
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -399,9 +398,9 @@ public class ForestGameArea extends GameArea {
       topwall.setPosition(i, 8f);
     }
     coords = new GridPoint2(3,7);
-    Entity left_door = ObstacleFactory.door("full_door");
-    spawnEntityAt(left_door, coords, true, true);
-    left_door.setPosition(1f, 8f);
+    Entity leftdoor = ObstacleFactory.door("full_door");
+    spawnEntityAt(leftdoor, coords, true, true);
+    leftdoor.setPosition(1f, 8f);
 
 
   }
@@ -454,6 +453,7 @@ public class ForestGameArea extends GameArea {
 
 
   private void spawnStations() {
+    int a = 0;
   }
 
   /**
