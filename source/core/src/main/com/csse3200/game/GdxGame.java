@@ -195,7 +195,7 @@ public class GdxGame extends Game {
   }
 
   public enum LevelType {
-    LEVEL_1, LEVEL_2, LEVEL_3, LEVEL_4, LEVEL_5, DONE
+    LEVEL_0, LEVEL_1, LEVEL_2, LEVEL_3, LEVEL_4, LEVEL_5, DONE
   }
 
   /**

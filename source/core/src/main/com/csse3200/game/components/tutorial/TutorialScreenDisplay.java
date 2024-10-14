@@ -56,6 +56,7 @@ public class TutorialScreenDisplay extends UIComponent {
         super.create();
 
         playerActions = entity.getComponent(PlayerActions.class);
+        ServiceLocator.getLevelService().setCurrLevel(GdxGame.LevelType.LEVEL_0);
 
         if (table == null) {
             table = new Table();  // Ensure table is initialised
@@ -230,6 +231,7 @@ public class TutorialScreenDisplay extends UIComponent {
         if (table != null) {
             table.clear();  // Safely clear the table
         }
+        ServiceLocator.getLevelService().setCurrLevel(GdxGame.LevelType.LEVEL_1);
         game.setScreen(GdxGame.ScreenType.MAIN_GAME);  // Transition to the main game
     }
 

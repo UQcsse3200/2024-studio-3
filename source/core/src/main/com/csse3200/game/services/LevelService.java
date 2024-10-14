@@ -67,6 +67,7 @@ public class LevelService {
      */
     public void incrementLevel() {
         switch (currLevel) {
+//            case LEVEL_0 -> currLevel = GdxGame.LevelType.LEVEL_2;
             case LEVEL_1 -> currLevel = GdxGame.LevelType.LEVEL_2;
             case LEVEL_2 -> currLevel = GdxGame.LevelType.LEVEL_3;
             case LEVEL_3 -> currLevel = GdxGame.LevelType.LEVEL_4;
@@ -81,7 +82,8 @@ public class LevelService {
      * @param newLevel the new level number
      */
     public void setCurrLevel(GdxGame.LevelType newLevel) {
-        currLevel = newLevel;
+            currLevel = newLevel;
+//        currLevel = newLevel;
     }
 
     /**
@@ -130,6 +132,7 @@ public class LevelService {
         }*/
 
         int spawnCap = switch(level) {
+            case LEVEL_0 -> 1;
             case LEVEL_1 -> 1;
             case LEVEL_2 -> 3;
             case LEVEL_3 -> 4;
