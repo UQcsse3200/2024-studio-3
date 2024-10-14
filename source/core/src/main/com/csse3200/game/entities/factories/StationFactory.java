@@ -398,7 +398,7 @@ public class StationFactory {
    */
   public static Entity createDishwasher() {
     Entity dishwasher = new Entity()
-            .addComponent(new TextureRenderComponent("images/stations/baskets/basket_cucumber.png"))
+            .addComponent(new TextureRenderComponent("images/stations/benches/dishwasher.png"))
             .addComponent(new PhysicsComponent())
             .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
             .addComponent(new InteractionComponent(PhysicsLayer.INTERACTABLE))
@@ -407,8 +407,8 @@ public class StationFactory {
             .addComponent(new StationCollectionComponent())
             .addComponent(new InventoryComponent(1))
             .addComponent(new PlateStationHandlerComponent());
+    
     // Physics components
-
     dishwasher.getComponent(InteractionComponent.class).setAsBox(dishwasher.getScale());
     dishwasher.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
     dishwasher.getComponent(TextureRenderComponent.class).scaleEntity();
@@ -505,7 +505,6 @@ public class StationFactory {
    */
   public static Entity createSubmissionWindow() {
 
-
     Entity submission = new Entity()
             .addComponent(new PhysicsComponent())
             .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
@@ -514,10 +513,10 @@ public class StationFactory {
             .addComponent(new InventoryComponent(1))
             .addComponent(new StationServingComponent());
 
-
     submission.getComponent(InteractionComponent.class).setAsBox(submission.getScale());
     submission.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
     PhysicsUtils.setScaledCollider(submission, 1f, 1f);
+    submission.scaleHeight(1f);
 
     AnimationRenderComponent animator =
             new AnimationRenderComponent(
