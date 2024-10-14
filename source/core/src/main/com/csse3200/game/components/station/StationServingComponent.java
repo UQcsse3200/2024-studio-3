@@ -3,7 +3,10 @@ package com.csse3200.game.components.station;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.ScoreSystem.HoverBoxComponent;
 import com.csse3200.game.components.ScoreSystem.ScoreSystem;
+import com.csse3200.game.components.items.IngredientComponent;
 import com.csse3200.game.components.items.ItemComponent;
+import com.csse3200.game.components.items.ItemTimerComponent;
+import com.csse3200.game.components.items.MealComponent;
 import com.csse3200.game.components.ordersystem.OrderManager;
 import com.csse3200.game.components.ordersystem.Recipe;
 import com.csse3200.game.components.ordersystem.TicketDetails;
@@ -20,6 +23,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.List;
+import java.util.ArrayList;
 
 /**
  * StationServingComponent.java
@@ -83,7 +87,7 @@ public class StationServingComponent extends Component {
                     logger.error("No recipe found for this item: {}", itemName);
                     return; // Exit the method
             }
-            scoreMeal(playerMeal);
+            scoreMeal(playerMeal, item);
             playerInventoryComponent.removeAt(0);
             inventoryDisplay.update();
             submitMeal(item);
@@ -118,7 +122,7 @@ public class StationServingComponent extends Component {
      *
      * @param playerMeal - the meal that the player is currently submitting to the customer.
      */
-    private void scoreMeal(String playerMeal) {
+    private void scoreMeal(String playerMeal, ItemComponent meal) {
         String[] bigTicketInfo = bigTicket.getCurrentBigTicketInfo();
         if (bigTicketInfo == null || bigTicketInfo.length < 2) {
             logger.warn("No current order to score the meal for.");
@@ -140,8 +144,37 @@ public class StationServingComponent extends Component {
         List<String> playerIngredients = playerRecipe.getIngredients();
         logger.info("Player ingredients: {}", playerIngredients);
 
-        int score = ScoreSystem.compareLists(playerIngredients, orderIngredients); // should rename to accuracyScore
-        String scoreDescription = ScoreSystem.getScoreDescription(score); // rename to finalScore
+        int accuracyScore = ScoreSystem.getAccuracyScore(playerIngredients, orderIngredients); // should rename to accuracyScore
+
+        String orderTime = bigTicketInfo[2];
+        int timeScore = ScoreSystem.getTimeScore(orderTime);
+
+        // for each ingredient in list, call ItemTimerComponent.getCompletionPercent():
+        // find the meal in ItemComponent form: Done
+        // call meal.getIngredients() to return ingredients in IngredientComponent form
+        List<Float> ingredientCompletionList = new ArrayList<>();
+        if (meal instanceof MealComponent) {
+            MealComponent mealComponent = (MealComponent) meal;
+            List<IngredientComponent> ingredients = mealComponent.getIngredients();
+            for (IngredientComponent ingredient : ingredients) {
+                Entity ingredientEntity = ingredient.getEntity();
+                ItemTimerComponent timerComponent = ingredientEntity.getComponent(ItemTimerComponent.class);
+                Float ingredientCompletionPercent = timerComponent.getCompletionPercent();
+                ingredientCompletionList.add(ingredientCompletionPercent);
+            }
+        } else {
+            logger.error("The provided meal is not a MealComponent.");
+        }
+
+
+        // for (IngredientComponent ingredient : playerIngredients) {
+        //      ItemTimerComponent itemTimer = getItemTimerForIngredient(ingredient);
+        //      int ingredientCompletion = (int) itemTimer.getCompletionPercent();
+        //      ingredientCompletionList.add(ingredientCompletion);
+
+        int completionScore = ScoreSystem.getCompletionScore(ingredientCompletionList);
+        String finalScore = ScoreSystem.getFinalScore(accuracyScore, timeScore, completionScore);
+
 
         /* 
          * String orderTime = bigTicketInfo[2];
@@ -158,11 +191,11 @@ public class StationServingComponent extends Component {
          * String finalScore = ScoreSystem.getScoreDescription(accuracyScore, timeScore, cookLevelScore);
          * 
         */
-        logOrderDetails(orderNumber, score, scoreDescription);
+        logOrderDetails(orderNumber, finalScore);
 
         Entity customer = CustomerManager.getCustomerByOrder(orderNumber);
         if (customer != null) {
-            processCustomerReaction(customer, scoreDescription, orderedMealPrice);
+            processCustomerReaction(customer, finalScore, orderedMealPrice);
         }
 
         CustomerManager.removeCustomerByOrder(orderNumber);
@@ -177,18 +210,17 @@ public class StationServingComponent extends Component {
         };
     }
 
-    private void logOrderDetails(String orderNumber, int score, String scoreDescription) {
+    private void logOrderDetails(String orderNumber, String scoreDescription) {
         logger.info("Order number: {}", orderNumber);
-        logger.info("Score: {}%", score);
         logger.info("Description: {}", scoreDescription);
     }
 
-    private void processCustomerReaction(Entity customer, String scoreDescription, int mealPrice) {
+    private void processCustomerReaction(Entity customer, String finalScore, int mealPrice) {
         HoverBoxComponent hoverBox = customer.getComponent(HoverBoxComponent.class);
         if (hoverBox == null) return;
 
-        String faceImagePath = getFaceImagePath(scoreDescription);
-        int gold = updateGoldBasedOnScore(ServiceLocator.getLevelService().getCurrGold(), scoreDescription, mealPrice);
+        String faceImagePath = getFaceImagePath(finalScore);
+        int gold = updateGoldBasedOnScore(ServiceLocator.getLevelService().getCurrGold(), finalScore, mealPrice);
 
         hoverBox.setTexture(new Texture(faceImagePath));
         ServiceLocator.getLevelService().setCurrGold(gold);
