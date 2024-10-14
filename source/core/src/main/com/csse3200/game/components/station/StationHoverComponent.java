@@ -181,6 +181,10 @@ public abstract class StationHoverComponent extends RenderComponent {
                     SLOT_HEIGHT - 0.2f
             );
         }
+
+        if (this.showKeys) {
+            drawToolTips(batch);
+        }
     }
 
     @Override

@@ -11,6 +11,7 @@ import com.csse3200.game.components.TooltipsDisplay;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.components.station.MixingBenchHoverComponent;
 import com.csse3200.game.components.station.ChoppingBoardHoverComponent;
+import com.csse3200.game.components.station.BasketHoverComponent;
 import com.csse3200.game.components.station.*;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.physics.PhysicsLayer;
@@ -178,7 +179,7 @@ public class StationFactory {
             .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
             .addComponent(new InteractionComponent(PhysicsLayer.INTERACTABLE))
             .addComponent(new TooltipsDisplay())
-            .addComponent(new InventoryDisplayHoverComponent())
+            .addComponent(new BasketHoverComponent())
             .addComponent(new StationCollectionComponent())
             .addComponent(new InventoryComponent(1))
             .addComponent(new IngredientStationHandlerComponent("bananaTree", "banana"));
@@ -207,7 +208,7 @@ public class StationFactory {
             .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
             .addComponent(new InteractionComponent(PhysicsLayer.INTERACTABLE))
             .addComponent(new TooltipsDisplay())
-            .addComponent(new InventoryDisplayHoverComponent())
+            .addComponent(new BasketHoverComponent())
             .addComponent(new StationCollectionComponent())
             .addComponent(new InventoryComponent(1))
             .addComponent(new IngredientStationHandlerComponent("strawberriesStation", "strawberry"));
@@ -235,7 +236,7 @@ public class StationFactory {
             .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
             .addComponent(new InteractionComponent(PhysicsLayer.INTERACTABLE))
             .addComponent(new TooltipsDisplay())
-            .addComponent(new InventoryDisplayHoverComponent())
+            .addComponent(new BasketHoverComponent())
             .addComponent(new StationCollectionComponent())
             .addComponent(new InventoryComponent(1))
             .addComponent(new IngredientStationHandlerComponent("acaiStation", "acai"));
@@ -263,7 +264,7 @@ public class StationFactory {
             .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
             .addComponent(new InteractionComponent(PhysicsLayer.INTERACTABLE))
             .addComponent(new TooltipsDisplay())
-            .addComponent(new InventoryDisplayHoverComponent())
+            .addComponent(new BasketHoverComponent())
             .addComponent(new StationCollectionComponent())
             .addComponent(new InventoryComponent(1))
             .addComponent(new IngredientStationHandlerComponent("lettuceStation", "lettuce"));
@@ -292,7 +293,7 @@ public class StationFactory {
             .addComponent(new InteractionComponent(PhysicsLayer.INTERACTABLE))
             .addComponent(new TooltipsDisplay())
             .addComponent(new StationCollectionComponent())
-            .addComponent(new InventoryDisplayHoverComponent())
+            .addComponent(new BasketHoverComponent())
             .addComponent(new InventoryComponent(1))
             .addComponent(new IngredientStationHandlerComponent("tomatoStation", "tomato"));
     // Physics components
@@ -321,7 +322,7 @@ public class StationFactory {
             .addComponent(new InteractionComponent(PhysicsLayer.INTERACTABLE))
             .addComponent(new TooltipsDisplay())
             .addComponent(new StationCollectionComponent())
-            .addComponent(new InventoryDisplayHoverComponent())
+            .addComponent(new BasketHoverComponent())
             .addComponent(new InventoryComponent(1))
             .addComponent(new IngredientStationHandlerComponent("cucumberStation", "cucumber"));
     // Physics components
@@ -348,7 +349,7 @@ public class StationFactory {
             .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
             .addComponent(new InteractionComponent(PhysicsLayer.INTERACTABLE))
             .addComponent(new TooltipsDisplay())
-            .addComponent(new InventoryDisplayHoverComponent())
+            .addComponent(new BasketHoverComponent())
             .addComponent(new StationCollectionComponent())
             .addComponent(new InventoryComponent(1))
             .addComponent(new IngredientStationHandlerComponent("beefStation", "beef"));
@@ -376,7 +377,7 @@ public class StationFactory {
             .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
             .addComponent(new InteractionComponent(PhysicsLayer.INTERACTABLE))
             .addComponent(new TooltipsDisplay())
-            .addComponent(new InventoryDisplayHoverComponent())
+            .addComponent(new BasketHoverComponent())
             .addComponent(new StationCollectionComponent())
             .addComponent(new InventoryComponent(1))
             .addComponent(new IngredientStationHandlerComponent("beefStation", "chocolate"));
