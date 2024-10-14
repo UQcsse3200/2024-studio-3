@@ -1,6 +1,7 @@
 package com.csse3200.game.components.ordersystem;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -164,7 +165,7 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         stage.addListener(new InputListener() {
             @Override
             public boolean keyDown(InputEvent event, int keycode) {
-                if (keycode == com.badlogic.gdx.Input.Keys.O) {
+                if (keycode == Input.Keys.ESCAPE) {
                     setPaused(!isPaused);
                     return true;
                 }

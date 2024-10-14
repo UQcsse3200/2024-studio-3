@@ -15,7 +15,7 @@ import java.util.Random;
  */
 public class DayNightService {
     private static final Logger logger = LoggerFactory.getLogger(DayNightService.class);
-    public long FIVE_MINUTES = 5L * 60 * 1000; // 5 minutes in milliseconds
+    public long FIVE_MINUTES = 5L* 60 * 1000; // 5 minutes in milliseconds
     public static final int MAX_DAYS = 5; // Maximum number of days
     public long SEVENTY_FIVE_PERCENT = (long) (FIVE_MINUTES * 0.75);
     public long lastSecondCheck;

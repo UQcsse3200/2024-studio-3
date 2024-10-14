@@ -37,7 +37,7 @@ public class StationServingComponent extends Component {
     private static final Logger logger = LoggerFactory.getLogger(StationServingComponent.class);
     AnimationRenderComponent animator;
     TicketDetails bigTicket;
-    
+    private int goldMultiplier = 1;
     private final String SALAD = "salad";
 
     /**
@@ -197,13 +197,21 @@ public class StationServingComponent extends Component {
         };
     }
 
+    /**
+     * Sets the gold multiplier
+     * @param multiplier the multiplier desired
+     */
+    public void setGoldMultiplier(int multiplier) {
+        goldMultiplier = multiplier;
+    }
+
     private int updateGoldBasedOnScore(int currentGold, String scoreDescription, int mealPrice) {
         int gold = currentGold + mealPrice;
         switch (scoreDescription) {
-            case "Grin Face" -> gold += 10;
-            case "Smile Face" -> gold += 5;
-            case "Frown Face" -> gold -= 5;
-            case "Angry Face" -> gold -= 10;
+            case "Grin Face" -> gold += 10 * goldMultiplier;
+            case "Smile Face" -> gold += 5 * goldMultiplier;
+            case "Frown Face" -> gold -= 5 * goldMultiplier;
+            case "Angry Face" -> gold -= 10 * goldMultiplier;
         }
         return gold;
     }
