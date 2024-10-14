@@ -406,7 +406,7 @@ public class StationFactory {
             .addComponent(new InventoryDisplayHoverComponent())
             .addComponent(new StationCollectionComponent())
             .addComponent(new InventoryComponent(1))
-            .addComponent(new DishwasherStationHandlerComponent("dishwasher", "plate"));
+            .addComponent(new PlateStationHandlerComponent());
     // Physics components
 
     dishwasher.getComponent(InteractionComponent.class).setAsBox(dishwasher.getScale());
