@@ -4,7 +4,6 @@ import com.badlogic.gdx.graphics.Texture;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.csse3200.game.rendering.RenderComponent;
@@ -29,26 +28,23 @@ import com.csse3200.game.physics.components.PhysicsComponent;
  * it is added to does not have a InventoryComponent.
  * The main use for this component is to show the inventories of the stations to the player.
  */
-public class StationHoverComponent extends RenderComponent {
+abstract class StationHoverComponent extends RenderComponent {
     private static final Logger logger = LoggerFactory.getLogger(InventoryDisplayHoverComponent.class);
     private ArrayList<Texture> itemImages;
     private Texture backgroundImage;
     private Texture selectedBackgroundImage;
     private boolean showKeys = false;
-    private boolean isMixingStation = false;
-    private boolean isChoppingStation = false;
-    private boolean isCollectionStation = false;
-    private boolean isCookingStation = false;
-    private boolean isBin = false;
     private InventoryComponent inventory = null;
     private ItemComponent currentItem = null;
-    private boolean isBasket = false;
     private boolean hasItem = false;
     private Texture interactKeyImage;
     private Texture combineKeyImage;
     private Texture rotateKeyImage;
     private Texture chopKeyImage;
-    private ShapeRenderer shapeRenderer;
+    private Texture placeKeyImage;
+    private Texture takeKeyImage;
+    private Texture submitKeyImage;
+    private Texture disposeKeyImage;
     private Vector2 position;
     private Vector2 scale;
     private static final float X_OFFSET = 0.2f;
@@ -63,26 +59,26 @@ public class StationHoverComponent extends RenderComponent {
         super.create();
         backgroundImage = new Texture("images/inventory_ui/item_background.png");
         selectedBackgroundImage = new Texture("images/inventory_ui/item_background_selected.png");
+
+        // images used by subclasses
         interactKeyImage = new Texture("images/inventory_ui/interact_key.png");
         combineKeyImage = new Texture("images/inventory_ui/combine_key.png");
         rotateKeyImage = new Texture("images/inventory_ui/rotate_key.png");
         chopKeyImage = new Texture("images/inventory_ui/chop_key.png");
-        shapeRenderer = new ShapeRenderer();
+        placeKeyImage = new Texture("images/inventory_ui/place_key.png");
+        takeKeyImage = new Texture("images/inventory_ui/take_key.png");
+        submitKeyImage = new Texture("images/inventory_ui/submit_key.png");
+        disposeKeyImage = new Texture("images/inventory_ui/dispose_key.png");
+
         ServiceLocator.getRenderService().register(this);
 
         if (entity != null) {
             // listener for when the InventoryComponent attached to this entity is updated
             entity.getEvents().addListener("updateInventory", this::updateDisplay);
 
+            // listeners for subclasses
             entity.getEvents().addListener("showToolTip", this::showToolTip);
             entity.getEvents().addListener("hideToolTip", this::hideToolTip);
-
-            isMixingStation = entity.getComponent(StationMealComponent.class) != null;
-            isChoppingStation = entity.getComponent(StationChoppingComponent.class) != null;
-            isCookingStation = entity.getComponent(StationCookingComponent.class) != null;
-            isCollectionStation = entity.getComponent(StationCollectionComponent.class) != null;
-            isBasket = entity.getComponent(IngredientStationHandlerComponent.class) != null;
-            isBin = entity.getComponent(StationBinComponent.class) != null;
 
             inventory = entity.getComponent(InventoryComponent.class);
 
@@ -117,6 +113,9 @@ public class StationHoverComponent extends RenderComponent {
         }
     }
 
+    /**
+     * Updates the inventory display of this StationHoverComponent
+     */
     public void updateDisplay() {
         updateImages();
     }
@@ -138,146 +137,17 @@ public class StationHoverComponent extends RenderComponent {
         this.showKeys = false;
     }
 
-    private boolean showChoppingKey() {
-        if (!isChoppingStation || hasItem) {
-            return false;
-        }
-
-        // Get the item
-        ItemComponent item = inventory.getItems().get(0);
-
-        // Check if the item is still choppable
-        if (item == null || !(item instanceof IngredientComponent)) {
-            return false;
-        }
-
-        IngredientComponent ingredientComponent = (IngredientComponent) item;
-        if (!ingredientComponent.getItemState().equals("raw")) {
-            return false;
-        }
-
-        return true;
-    }
-
-    private boolean showRotateKey() {
-        if (!isMixingStation || hasItem) {
-            return false;
-        }
-
-        inventory = entity.getComponent(InventoryComponent.class);
-        if (inventory.getSize() < 2) {
-            return false;
-        }
-
-        return true;
-    }
-
-    private boolean showInteractKey() {
-        // If were chopping we want to show the interact key if
-        // 1. the player doesn't have an item but we do
-        // 2. the player has an item but we dont
-
-        // If were a mixing station we show interaction key if
-        // 1. the player has an item but we aren't full
-        // 2. the player doesn't have an item but we do
-
-        // If were a collection station we show interaction key if
-        // 1. the player doesn't have an item
-
-        if (isChoppingStation || isCookingStation) {
-            boolean isFull = (inventory.getSize() == 1);
-            StationItemHandlerComponent itemHandler = entity.getComponent(StationItemHandlerComponent.class);
-            if (!hasItem) {
-                return isFull;
-            } else {
-                return !isFull && itemHandler.isItemAccepted(currentItem);
-            }
-        }
-
-        if (isMixingStation) {
-            if (hasItem && inventory.getSize() >= inventory.getCapacity()) {
-                return false;
-            } else if (hasItem && inventory.getSize() < inventory.getCapacity()) {
-                return true;
-            } else if (!hasItem && inventory.getSize() > 0) {
-                return true;
-            } else {
-                return false;
-            }
-        }
-
-        if (isCollectionStation) {
-            return !hasItem;
-        }
-
-        if (isBin) {
-            return hasItem;
-        }
-
-        return false;
-    }
-
-    private boolean showCombineKey() {
-        if (!isMixingStation || hasItem) {
-            return false;
-        }
-
-        StationMealComponent mealComponent = entity.getComponent(StationMealComponent.class);
-        if (!mealComponent.hasMeal()) {
-            return false;
-        }
-
-        return true;
-    }
+    /**
+     * Draws the required key tooltips for the current interactions
+     * that can be done on this station. Implement in subclass
+     * based on station type
+     */
+    public abstract void drawToolTips(SpriteBatch batch);
 
     @Override
     public void draw(SpriteBatch batch)  {
         if (entity == null || position == null || scale == null)
             return;
-
-        if (showKeys) {
-
-            if (showInteractKey()) {
-                batch.draw(interactKeyImage,
-                        position.x,
-                        position.y + 0.7f,
-                        KEY_WIDTH,
-                        KEY_HEIGHT
-                );
-            }
-
-            if (showChoppingKey()) {
-                batch.draw(chopKeyImage,
-                        position.x,
-                        position.y + 0.4f,
-                        KEY_WIDTH,
-                        KEY_HEIGHT
-                );
-            }
-
-            if (showRotateKey()) {
-                batch.draw(rotateKeyImage,
-                        position.x,
-                        position.y + 0.4f,
-                        KEY_WIDTH,
-                        KEY_HEIGHT
-                );
-            }
-
-            if (showCombineKey()) {
-                batch.draw(combineKeyImage,
-                        position.x,
-                        position.y + 0.1f,
-                        KEY_WIDTH,
-                        KEY_HEIGHT
-                );
-            }
-        }
-
-        // If we have a basked don't draw the images
-        if (isBasket) {
-            return;
-        }
 
         for (int i = 0; i < itemImages.size(); i++) {
             // draw selected background image for the next item to be taken out
@@ -310,9 +180,6 @@ public class StationHoverComponent extends RenderComponent {
     public void dispose() {
         super.dispose();
         ServiceLocator.getRenderService().unregister(this);
-        if (shapeRenderer != null) {
-            shapeRenderer.dispose();
-        }
     }
 
     @Override
