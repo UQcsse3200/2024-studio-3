@@ -22,7 +22,6 @@ public class PlateStationHandlerComponent extends Component {
 
     /**
      * General constructor
-     * @param type - storing type of station
      */
     public PlateStationHandlerComponent() {/* nothing to see here */}
 
