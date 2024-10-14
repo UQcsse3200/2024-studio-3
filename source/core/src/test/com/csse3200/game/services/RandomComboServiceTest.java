@@ -27,7 +27,8 @@ public class RandomComboServiceTest {
         assertTrue(
                 selectedUpgrade.equals("Extortion") ||
                         selectedUpgrade.equals("Loan") ||
-                        selectedUpgrade.equals("Speed"));
+                        selectedUpgrade.equals("Speed") ||
+                        selectedUpgrade.equals("Dance party"));
     }
 
     @Test

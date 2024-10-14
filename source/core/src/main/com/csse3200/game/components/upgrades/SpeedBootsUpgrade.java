@@ -118,7 +118,6 @@ public class SpeedBootsUpgrade extends UIComponent implements Upgrade {
         }
     }
 
-
     /**
      * Updates the SpeedBootsUpgrade component each frame, managing the countdown timer
      * and handling deactivation when the boost duration expires.
@@ -130,7 +129,7 @@ public class SpeedBootsUpgrade extends UIComponent implements Upgrade {
             stage.addActor(speedMeter);
             stage.addActor(text);
             activeTimeRemaining -= gameTime.getDeltaTime() * 1000; // Calculate speed boot duration
-            speedMeter.setValue((activeTimeRemaining / (float) BOOST_DURATION)); // Update progress bar
+            speedMeter.setValue((activeTimeRemaining /  BOOST_DURATION)); // Update progress bar
 
             if (activeTimeRemaining <= 800 && !playSound) {
                 long countDownId = countDown.play();
@@ -218,6 +217,10 @@ public class SpeedBootsUpgrade extends UIComponent implements Upgrade {
     }
     @Override
     protected void draw(SpriteBatch batch) {
+        // This method is intended for custom rendering of the UI component.
+        // However, the SpeedBootsUpgrade UI does not require any additional
+        // drawing logic, as all visual elements are managed by Scene2D
+        // and drawn automatically. Therefore, this method is left empty.
 
     }
 

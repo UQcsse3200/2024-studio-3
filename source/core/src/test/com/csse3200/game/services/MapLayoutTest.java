@@ -1,27 +1,14 @@
 package com.csse3200.game.services;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.csse3200.game.areas.ForestGameArea;
-import com.csse3200.game.areas.map.BenchGenerator;
+import com.csse3200.game.GdxGame;
 import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.areas.map.Map;
-import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.entities.benches.Bench;
-import com.csse3200.game.events.EventHandler;
 import com.csse3200.game.events.listeners.EventListener0;
-import com.csse3200.game.events.listeners.EventListener1;
 import com.csse3200.game.extensions.GameExtension;
-import com.csse3200.game.physics.PhysicsService;
-import com.csse3200.game.rendering.RenderService;
-import com.csse3200.game.rendering.Renderable;
-import com.csse3200.game.screens.MainGameScreen;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -29,8 +16,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.*;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.io.BufferedReader;
-import java.io.StringReader;
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -78,6 +63,7 @@ class MapLayoutTest {
 
         mapLayoutSpy = spy(new MapLayout());
         ServiceLocator.registerMapLayout(mapLayoutSpy);
+        ServiceLocator.registerInteractableService(new InteractableService());
 
     }
 
@@ -108,7 +94,7 @@ class MapLayoutTest {
         when(mapLayoutSpy.readStation(anyString(), anyInt(), anyInt()))
                 .thenReturn(mock(Entity.class));
 
-        Map map = mapLayoutSpy.load(1);
+        Map map = mapLayoutSpy.load(GdxGame.LevelType.LEVEL_1);
 
         verify(mapLayoutSpy).readBench("X", 0, 8, 4);
         verify(mapLayoutSpy).readBench("Y", 0, 7, 4);

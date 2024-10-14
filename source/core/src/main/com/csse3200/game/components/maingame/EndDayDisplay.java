@@ -35,21 +35,23 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFont
 import java.util.ArrayList;
 
     public class EndDayDisplay extends UIComponent {
-        public Table layout; // Layout manager
-        public boolean isVisible;
+        private Table layout; // Layout manager
+        private boolean isVisible;
         private static final Logger logger = LoggerFactory.getLogger(com.csse3200.game.components.maingame.EndDayDisplay.class);
         private final MainGameScreen gameScreen;
-        public GdxGame game;
-        public Image birdImage;
-        public Image pointImage1;
-        public Image pointImage2;
-        public Image pointImage3;
+        private GdxGame game;
+        private Image birdImage;
+        private Image pointImage1;
+        private Image pointImage2;
+        private Image pointImage3;
         private float imageX;
         private int currentGold;
         private Label goldLabel;
-        public final ArrayList<String> customerNameArray;
+        public final java.util.List<String> customerNameArray;
         private List<String> customerList;
         private static final int STARTING_GOLD = ServiceLocator.getLevelService().getCurrGold();
+        private static final String POINT_IMAGE_PATH = "images/point.png";
+        private static final String TINY_5 = "flat-earth/skin/fonts/Tiny5-Regular.ttf";
 
         /**
          * Constructor for the EndDayDisplay class.
@@ -57,8 +59,8 @@ import java.util.ArrayList;
         public EndDayDisplay() {
             super();
             this.gameScreen = ServiceLocator.getGameScreen();
-            this.game = ServiceLocator.getGameScreen().getGame();
-            isVisible = false;
+            this.setGame(ServiceLocator.getGameScreen().getGame());
+            setVisible(false);
             this.currentGold = STARTING_GOLD;
             this.customerNameArray = new ArrayList<>();
         }
@@ -68,12 +70,13 @@ import java.util.ArrayList;
          * This method sets up the entire layout for the display including background,
          * images, and interactive elements like buttons and lists.
          */
+        @Override
         public void create() {
             super.create();
-            layout = new Table();
-            layout.setFillParent(true);
-            layout.setVisible(isVisible);
-            stage.addActor(layout);
+            setLayout(new Table());
+            getLayout().setFillParent(true);
+            getLayout().setVisible(isVisible());
+            stage.addActor(getLayout());
 
             createBackground();
             setupImages();
@@ -103,7 +106,7 @@ import java.util.ArrayList;
             Texture texture = ServiceLocator.getResourceService()
                     .getAsset("images/endday.png", Texture.class);
             Drawable background = new TextureRegionDrawable(new TextureRegion(texture));
-            layout.setBackground(background);
+            getLayout().setBackground(background);
         }
 
         /**
@@ -112,10 +115,10 @@ import java.util.ArrayList;
          * representation of the display, such as birds and points icons.
          */
         public void setupImages() {
-            birdImage = createImage("images/bird.png");
-            pointImage1 = createImage("images/point.png");
-            pointImage2 = createImage("images/point.png");
-            pointImage3 = createImage("images/point.png");
+            setBirdImage(createImage("images/bird.png"));
+            setPointImage1(createImage(POINT_IMAGE_PATH));
+            setPointImage2(createImage(POINT_IMAGE_PATH));
+            setPointImage3(createImage(POINT_IMAGE_PATH));
         }
 
         /**
@@ -154,8 +157,8 @@ import java.util.ArrayList;
          */
         public void addSpacer() {
             Table spacer = new Table();
-            spacer.add().height(4 * birdImage.getHeight() / 5);
-            layout.add(spacer).row();
+            spacer.add().height(4 * getBirdImage().getHeight() / 5);
+            getLayout().add(spacer).row();
         }
 
         /**
@@ -169,7 +172,7 @@ import java.util.ArrayList;
             Drawable coinDrawable = new TextureRegionDrawable(new TextureRegion(coinTexture));
             Image coinImage = new Image(coinDrawable);
 
-            FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("flat-earth/skin/fonts/Tiny5-Regular.ttf"));
+            FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal(TINY_5));
             FreeTypeFontParameter parameter = new FreeTypeFontParameter();
             parameter.size = 300;
             parameter.gamma = 1.8f;
@@ -184,7 +187,7 @@ import java.util.ArrayList;
             coinAndGoldLayout.add(goldLabel);  // Add the gold label next to the coin
 
             // Add the sub-table to the main layout, centered horizontally
-            layout.add(coinAndGoldLayout).expandX().fillX().center().row();
+            getLayout().add(coinAndGoldLayout).expandX().fillX().center().row();
         }
 
         /**
@@ -195,11 +198,10 @@ import java.util.ArrayList;
         public void setupCustomerLists() {
             // Customer lists
             List<String> passedCustomers = new List<>(skin);
-            List<String> failedCustomers = new List<>(skin);
             customerList = new List<>(skin);
             Table listTable = new Table();
 
-            FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("flat-earth/skin/fonts/Tiny5-Regular.ttf"));
+            FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal(TINY_5));
             FreeTypeFontParameter parameter = new FreeTypeFontParameter();
             parameter.size = 30;
             parameter.gamma = 1.8f;
@@ -228,7 +230,7 @@ import java.util.ArrayList;
             listTable.add(failedScrollPane).pad(10).expand().width(400).fillY().row();
             listTable.padLeft(350).padRight(250);
 
-            layout.add(listTable).expand().fill().row();
+            getLayout().add(listTable).expand().fill().row();
         }
 
         /**
@@ -242,9 +244,8 @@ import java.util.ArrayList;
                     .getAsset("images/finish.png", Texture.class);
 
             style.up = new TextureRegionDrawable(new TextureRegion(texture));
-            // style.down = new TextureRegionDrawable(new TextureRegion(new Texture("button_down.png")));
 
-            FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("flat-earth/skin/fonts/Tiny5-Regular.ttf"));
+            FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal(TINY_5));
             FreeTypeFontParameter parameter = new FreeTypeFontParameter();
             parameter.size = 30;
             parameter.gamma = 1.8f;
@@ -261,7 +262,7 @@ import java.util.ArrayList;
                     toggleVisibility();
                 }
             });
-            layout.add(closeBtn)
+            getLayout().add(closeBtn)
                     .expand()
                     .padTop(80)
                     .padLeft(100)
@@ -300,12 +301,12 @@ import java.util.ArrayList;
          * the current game state. It is usually called in response to a game event.
          */
         public void show() {
-            isVisible = true;
-            layout.setVisible(true);
-            birdImage.setVisible(true);
-            pointImage1.setVisible(true);
-            pointImage2.setVisible(true);
-            pointImage3.setVisible(true);
+            setVisible(true);
+            getLayout().setVisible(true);
+            getBirdImage().setVisible(true);
+            getPointImage1().setVisible(true);
+            getPointImage2().setVisible(true);
+            getPointImage3().setVisible(true);
             gameScreen.pause(); // Pause the game when the display is shown
 
             imageX = (float) (3 * Gdx.graphics.getWidth()) / 4; // Reset image position
@@ -328,14 +329,14 @@ import java.util.ArrayList;
          */
         public void updateBirdPosition(float delta) {
             imageX -= 200 * delta;
-            if (imageX + birdImage.getWidth() < 0) {
+            if (imageX + getBirdImage().getWidth() < 0) {
                 imageX = Gdx.graphics.getWidth();
             }
-            birdImage.setPosition(imageX, birdImage.getY());
+            getBirdImage().setPosition(imageX, getBirdImage().getY());
 
-            pointImage1.setPosition(imageX + birdImage.getWidth(), pointImage1.getY());
-            pointImage2.setPosition(imageX + birdImage.getWidth() + pointImage1.getWidth(), pointImage2.getY());
-            pointImage3.setPosition(imageX + birdImage.getWidth() + 2 * pointImage1.getWidth(), pointImage3.getY());
+            getPointImage1().setPosition(imageX + getBirdImage().getWidth(), getPointImage1().getY());
+            getPointImage2().setPosition(imageX + getBirdImage().getWidth() + getPointImage1().getWidth(), getPointImage2().getY());
+            getPointImage3().setPosition(imageX + getBirdImage().getWidth() + 2 * getPointImage1().getWidth(), getPointImage3().getY());
         }
 
         /**
@@ -367,7 +368,7 @@ import java.util.ArrayList;
          */
         public void hide() {
             ServiceLocator.getLevelService().togglePlayerFinishedLevel();
-            game.setScreen(GdxGame.ScreenType.MAIN_GAME);
+            getGame().setScreen(GdxGame.ScreenType.MAIN_GAME);
             ServiceLocator.getDayNightService().getEvents().trigger("TOMORAL");
         }
 
@@ -377,7 +378,7 @@ import java.util.ArrayList;
          * display based on its current visibility state.
          */
         public void toggleVisibility() {
-            if (isVisible) {
+            if (isVisible()) {
                 hide();
             } else {
                 show();
@@ -393,5 +394,61 @@ import java.util.ArrayList;
         @Override
         public void setStage(Stage mock) {
             this.stage = mock;
+        }
+
+        public boolean isVisible() {
+            return isVisible;
+        }
+
+        public void setVisible(boolean visible) {
+            isVisible = visible;
+        }
+
+        public Table getLayout() {
+            return layout;
+        }
+
+        public void setLayout(Table layout) {
+            this.layout = layout;
+        }
+
+        public GdxGame getGame() {
+            return game;
+        }
+
+        public void setGame(GdxGame game) {
+            this.game = game;
+        }
+
+        public Image getBirdImage() {
+            return birdImage;
+        }
+
+        public void setBirdImage(Image birdImage) {
+            this.birdImage = birdImage;
+        }
+
+        public Image getPointImage1() {
+            return pointImage1;
+        }
+
+        public void setPointImage1(Image pointImage1) {
+            this.pointImage1 = pointImage1;
+        }
+
+        public Image getPointImage2() {
+            return pointImage2;
+        }
+
+        public void setPointImage2(Image pointImage2) {
+            this.pointImage2 = pointImage2;
+        }
+
+        public Image getPointImage3() {
+            return pointImage3;
+        }
+
+        public void setPointImage3(Image pointImage3) {
+            this.pointImage3 = pointImage3;
         }
     }

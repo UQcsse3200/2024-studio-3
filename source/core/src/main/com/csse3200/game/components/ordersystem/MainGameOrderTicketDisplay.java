@@ -450,6 +450,9 @@ public class MainGameOrderTicketDisplay extends UIComponent {
 
                 for (int j = 0; j < cells.size; j++) {
                     if (cells.get(j).getActor() instanceof Label label) {
+                        if (viewportWidth == 0) {
+                            viewportWidth = 1;
+                        }
                         label.setFontScale(0.7f * (viewportWidth / 1920f));
                         if (label.getText().toString().contains("Timer")) {
                             cells.get(j).padBottom(0f);

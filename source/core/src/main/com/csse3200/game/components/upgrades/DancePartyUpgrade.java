@@ -51,6 +51,8 @@ public class DancePartyUpgrade extends UIComponent implements Upgrade {
         this.orderManager = orderManager;
         gameTime = ServiceLocator.getTimeSource();
         this.isActive = false;
+
+        ServiceLocator.getRandomComboService().getEvents().addListener("Dance party", this::activate);
     }
 
     @Override

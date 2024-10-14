@@ -13,12 +13,14 @@ import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Array;
+import com.csse3200.game.GdxGame;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.npc.CustomerComponent;
 import com.csse3200.game.components.ordersystem.MainGameOrderTicketDisplay;
 import com.csse3200.game.components.ordersystem.OrderManager;
 import com.csse3200.game.components.ordersystem.OrderActions;
+import com.csse3200.game.components.station.StationServingComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.services.GameTime;
 import com.csse3200.game.services.ServiceLocator;
@@ -37,6 +39,7 @@ public class ExtortionUpgrade extends UIComponent implements Upgrade {
     private final GameTime gameTime;
     private long actviateTime;
     private CombatStatsComponent combatStatsComponent;
+    private StationServingComponent stationServingComponent;
     //TODO will need to add whatever currency dependencies as well as morality and order stuff
 
     private static final String[] greenTexture = {"images/green_fill.png"};
@@ -56,6 +59,10 @@ public class ExtortionUpgrade extends UIComponent implements Upgrade {
         ServiceLocator.getPlayerService().getEvents().addListener("playerCreated", (Entity player) ->
         {
             this.combatStatsComponent = player.getComponent(CombatStatsComponent.class);
+        });
+        ServiceLocator.getLevelService().getEvents().addListener("startLevel", (GdxGame.LevelType currLevel) ->
+        {
+            this.getStationServingComponent();
         });
         ServiceLocator.getRandomComboService().getEvents().addListener("Extortion", this::activate); 
     }
@@ -122,6 +129,9 @@ public class ExtortionUpgrade extends UIComponent implements Upgrade {
             this.isActive = true;
             combatStatsComponent.addGold(-40);
 
+            // Set gold multiplier
+            stationServingComponent.setGoldMultiplier(2);
+
             // Display the meter
             activateTimeRemaining = upgradeDuration;
             isVisible = true;
@@ -142,6 +152,9 @@ public class ExtortionUpgrade extends UIComponent implements Upgrade {
         this.isActive = false;
         ServiceLocator.getRandomComboService().getEvents().trigger("ExtortionActive", false);
 
+        // Reset gold multiplier
+        stationServingComponent.setGoldMultiplier(1);
+
         // Remove meter
         isVisible = false;
         layout.setVisible(false);
@@ -155,6 +168,21 @@ public class ExtortionUpgrade extends UIComponent implements Upgrade {
 
     public boolean isActive() {
         return isActive;
+    }
+
+    /**
+     * Finds an instance of StationServingComponent attached to an entity
+     * @return StationServingComponent
+     */
+    private void getStationServingComponent() {
+
+        //ServiceLocator.getInteractableService()
+        for (Entity entity : ServiceLocator.getEntityService().getEntities()) {
+            StationServingComponent component = entity.getComponent(StationServingComponent.class);
+            if (component != null) {
+                stationServingComponent = component;
+            }
+        }
     }
 
     /**

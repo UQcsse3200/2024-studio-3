@@ -33,17 +33,15 @@ public class RageUpgrade extends UIComponent implements Upgrade {
 
     public ProgressBar rageMeter;
     private float rageTimeRemaining;
-    private final float rageTime = 30f;
+    private static final float rageTime = 30f;
     private boolean isRageActive = false;
 
     private float rageFillTimeRemaining;
-    private final float rageFillTime = 90f;
+    private static final float rageFillTime = 90f;
     private boolean isRageFilling = false;
 
     private Sound rageSound;
-    private Long rageSoundId;
     private Sound powerDownSound;
-    private Long powerDownId;
 
     public RageUpgrade() {
         super();
@@ -128,7 +126,6 @@ public class RageUpgrade extends UIComponent implements Upgrade {
     }
 
     public void activate() {
-        // entity.getEvents().trigger("rageModeOn");
     }
     /**
      * Activates Rage mode by triggering the event, playing activation sound,
@@ -137,7 +134,7 @@ public class RageUpgrade extends UIComponent implements Upgrade {
     public void activateRageMode() {
         if (rageMeter.getValue() == 1f) {
             ServiceLocator.getEntityService().getEvents().trigger("rageModeOn");
-            rageSoundId = rageSound.play();
+            long rageSoundId = rageSound.play();
             rageSound.setVolume(rageSoundId, 0.25f);
 
             isRageActive = true;
@@ -148,27 +145,25 @@ public class RageUpgrade extends UIComponent implements Upgrade {
     }
 
     public void deactivate() {
-        // entity.getEvents().trigger("rageModeOff");
-    }
-
+        }
+    
     /**
      * Deactivates Rage mode by triggering related events, playing power down sound,
      * hiding the overlay, and initiating the rage meter refill process.
      */
     public void deactivateRageMode() {
         ServiceLocator.getEntityService().getEvents().trigger("rageModeOff");
-        powerDownId = powerDownSound.play();
+        long powerDownId = powerDownSound.play();
         powerDownSound.setVolume(powerDownId, 0.25f);
 
         isRageActive = false;
         isOverlayVisible = false;
         layout.setVisible(false);
-//        rageMeter.setValue(1f);
 
         isRageFilling = true;
-        logger.info("rage meter value: " + rageMeter.getValue());
+        logger.info(String.format("rage meter value: %.2f", rageMeter.getValue()));
         rageFillTimeRemaining = (1 - rageMeter.getValue()) * rageFillTime;
-        logger.info("rage fill time remaining : " + rageFillTimeRemaining);
+        logger.info(String.format("rage fill time remaining: %.2f", rageFillTimeRemaining));
     }
 
     /**
@@ -195,6 +190,11 @@ public class RageUpgrade extends UIComponent implements Upgrade {
 
     @Override
     protected void draw(SpriteBatch batch) {
+        // This method is intended for rendering the UI component.
+        // The RageUpgrade component does not require custom drawing logic,
+        // as all visual elements are handled by Scene2D and are drawn automatically.
+        // Leaving this method empty prevents unnecessary processing
+        // while indicating that no custom drawing is needed.
     }
 
     @Override

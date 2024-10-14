@@ -9,6 +9,19 @@ import com.csse3200.game.services.ServiceLocator;
 
 public class PlayerAnimationController extends Component {
     AnimationRenderComponent animator;
+    private final String CHARACTER_LEFT = "Character_Left";
+    private final String CHARACTER_RIGHT = "Character_Right";
+    private final String CHARACTER_UP = "Character_Up";
+    private final String CHARACTER_DOWN = "Character_Down";
+    private final String CHARACTER_UP_LEFT = "Character_UpLeft";
+    private final String CHARACTER_UP_RIGHT = "Character_UpRight";
+    private final String CHARACTER_DOWN_LEFT = "Character_DownLeft";
+    private final String CHARACTER_DOWN_RIGHT = "Character_DownRight";
+    private final String CHARACTER_STAND_LEFT = "Character_StandLeft";
+    private final String CHARACTER_STAND_RIGHT = "Character_StandRight";
+    private final String CHARACTER_STAND_DOWN = "Character_StandDown";
+    private final String CHARACTER_STAND_UP = "Character_StandUp";
+
 
     /**
      * Creates the player animation controller
@@ -78,44 +91,42 @@ public class PlayerAnimationController extends Component {
                 this::updateAnimationFireExtinguisher);
     }
     
-    void animateLeft() {animator.startAnimation("Character_Left");}
+    void animateLeft() {animator.startAnimation(CHARACTER_LEFT);}
     
-    void animateRight() {animator.startAnimation("Character_Right");}
+    void animateRight() {animator.startAnimation(CHARACTER_RIGHT);}
     
-    void animateUp() {animator.startAnimation("Character_Up");}
+    void animateUp() {animator.startAnimation(CHARACTER_UP);}
     
-    void animateDown() {animator.startAnimation("Character_Down");}
+    void animateDown() {animator.startAnimation(CHARACTER_DOWN);}
     
-    void animateUpLeft() {animator.startAnimation("Character_UpLeft");}
+    void animateUpLeft() {animator.startAnimation(CHARACTER_UP_LEFT);}
     
-    void animateUpRight() {animator.startAnimation("Character_UpRight");}
+    void animateUpRight() {animator.startAnimation(CHARACTER_UP_RIGHT);}
     
-    void animateDownLeft() {animator.startAnimation("Character_DownLeft");}
+    void animateDownLeft() {animator.startAnimation(CHARACTER_DOWN_LEFT);}
     
-    void animateDownRight() {animator.startAnimation("Character_DownRight");}
+    void animateDownRight() {animator.startAnimation(CHARACTER_DOWN_RIGHT);}
     
-    void animateStop(Vector2 lastdirection)
+    void animateStop(Vector2 last_direction)
     {
-        if(lastdirection.x < -0.1) {
-            animator.startAnimation("Character_StandLeft");
-        } else if(lastdirection.x > 0.1 ){
-            animator.startAnimation("Character_StandRight");
-        } else if (lastdirection.y < -0.1) {
-            animator.startAnimation("Character_StandDown");
-        } else if(lastdirection.y > 0.1 ){
-            animator.startAnimation("Character_StandUp");
+        if (last_direction.x < -0.1) {
+            animator.startAnimation(CHARACTER_STAND_LEFT);
+        } else if (last_direction.x > 0.1 ){
+            animator.startAnimation(CHARACTER_STAND_RIGHT);
+        } else if (last_direction.y < -0.1) {
+            animator.startAnimation(CHARACTER_STAND_DOWN);
+        } else if (last_direction.y > 0.1 ){
+            animator.startAnimation(CHARACTER_STAND_UP);
         }
-
-        
     }
     
     void animateStandLeft() {
-        animator.startAnimation("Character_StandLeft");
+        animator.startAnimation(CHARACTER_STAND_LEFT);
     }
     
-    void animateStandRight() { animator.startAnimation("Character_StandRight");}
+    void animateStandRight() { animator.startAnimation(CHARACTER_STAND_RIGHT);}
     
-    void animateStandUp() { animator.startAnimation("Character_StandUp");}
+    void animateStandUp() { animator.startAnimation(CHARACTER_STAND_UP);}
 
     //Update animation to hold ingredients
     void updateAnimationEmptyInventory(){updateAnimation("player.atlas");}
@@ -156,41 +167,46 @@ public class PlayerAnimationController extends Component {
      * @param atlasPath new atlas to update player animation with
      */
     public void updateAnimation(String atlasPath) {
+        // Get the current animation going and stop it
+        String currentAnimation = animator.getCurrentAnimation();
+        animator.stopAnimation(); // Will do nothing if no animation
+
         //Removes all animations
-        animator.removeAnimation("Character_StandDown");
-        animator.removeAnimation("Character_StandUp");
-        animator.removeAnimation("Character_StandLeft");
-        animator.removeAnimation("Character_StandRight");
+        animator.removeAnimation(CHARACTER_STAND_DOWN);
+        animator.removeAnimation(CHARACTER_STAND_UP);
+        animator.removeAnimation(CHARACTER_STAND_LEFT);
+        animator.removeAnimation(CHARACTER_STAND_RIGHT);
 
-        animator.removeAnimation("Character_DownLeft");
-        animator.removeAnimation("Character_UpRight");
-        animator.removeAnimation("Character_Up");
-        animator.removeAnimation("Character_Left");
-        animator.removeAnimation("Character_Right");
-        animator.removeAnimation("Character_Down");
-        animator.removeAnimation("Character_DownRight");
-        animator.removeAnimation("Character_UpLeft");
-
+        animator.removeAnimation(CHARACTER_DOWN_LEFT);
+        animator.removeAnimation(CHARACTER_UP_RIGHT);
+        animator.removeAnimation(CHARACTER_UP);
+        animator.removeAnimation(CHARACTER_LEFT);
+        animator.removeAnimation(CHARACTER_RIGHT);
+        animator.removeAnimation(CHARACTER_DOWN);
+        animator.removeAnimation(CHARACTER_DOWN_RIGHT);
+        animator.removeAnimation(CHARACTER_UP_LEFT);
 
         //Updates atlas
         animator.updateAtlas(ServiceLocator.getResourceService().getAsset(
                 "images/player/" + atlasPath, TextureAtlas.class));
 
-
         //Adds new animations
-        animator.addAnimation("Character_StandDown", 0.2f);
-        animator.addAnimation("Character_StandUp", 0.2f);
-        animator.addAnimation("Character_StandLeft", 0.2f);
-        animator.addAnimation("Character_StandRight", 0.2f);
+        animator.addAnimation(CHARACTER_STAND_DOWN, 0.2f);
+        animator.addAnimation(CHARACTER_STAND_UP, 0.2f);
+        animator.addAnimation(CHARACTER_STAND_LEFT, 0.2f);
+        animator.addAnimation(CHARACTER_STAND_RIGHT, 0.2f);
 
-        animator.addAnimation("Character_DownLeft", 0.2f, Animation.PlayMode.LOOP);
-        animator.addAnimation("Character_UpRight", 0.2f, Animation.PlayMode.LOOP);
-        animator.addAnimation("Character_Up", 0.2f, Animation.PlayMode.LOOP);
-        animator.addAnimation("Character_Left", 0.2f, Animation.PlayMode.LOOP);
-        animator.addAnimation("Character_DownRight", 0.2f, Animation.PlayMode.LOOP);
-        animator.addAnimation("Character_Down", 0.2f, Animation.PlayMode.LOOP);
-        animator.addAnimation("Character_UpLeft", 0.2f, Animation.PlayMode.LOOP);
-        animator.addAnimation("Character_Right", 0.2f, Animation.PlayMode.LOOP);
+        animator.addAnimation(CHARACTER_DOWN_LEFT, 0.2f, Animation.PlayMode.LOOP);
+        animator.addAnimation(CHARACTER_UP_RIGHT, 0.2f, Animation.PlayMode.LOOP);
+        animator.addAnimation(CHARACTER_UP, 0.2f, Animation.PlayMode.LOOP);
+        animator.addAnimation(CHARACTER_LEFT, 0.2f, Animation.PlayMode.LOOP);
+        animator.addAnimation(CHARACTER_DOWN_RIGHT, 0.2f, Animation.PlayMode.LOOP);
+        animator.addAnimation(CHARACTER_DOWN, 0.2f, Animation.PlayMode.LOOP);
+        animator.addAnimation(CHARACTER_UP_LEFT, 0.2f, Animation.PlayMode.LOOP);
+        animator.addAnimation(CHARACTER_RIGHT, 0.2f, Animation.PlayMode.LOOP);
+
+        // Now restart the animation that was going
+        animator.startAnimation(currentAnimation); // Will do nothing if no animation
     }
     
 }
