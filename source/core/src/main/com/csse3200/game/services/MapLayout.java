@@ -143,6 +143,13 @@ public class MapLayout {
                         col += 3;
                         logger.info("Spawning entity at row " + row + ", column " + col);
                     }
+                    else if (square.equals("P")) {
+                        strToNum = Integer.valueOf(parts[col + 1]);
+
+                        benches.addAll(readBench("P", strToNum, 1, row));
+                        col += 3;
+                        logger.info("Spawning entity at row " + row + ", column " + col);
+                    }
                     // Spawn a station
                     else if (validateStation(square)) {
                         strToNum = Integer.valueOf(parts[col + 1]);
@@ -176,6 +183,10 @@ public class MapLayout {
             case "Q":
                 if (size == 1) {
                     return BenchGenerator.singleShadowBench(startCol + 4, row - 4);
+                }
+            case "P":
+                if (size == 1) {
+                    return BenchGenerator.singleBlocker(startCol + 4, row - 4);
                 }
 
                 return BenchGenerator.createBenchRow(startCol + 4, startCol + size +4, row - 4);

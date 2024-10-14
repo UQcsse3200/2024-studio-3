@@ -85,4 +85,10 @@ public class BenchGenerator {
         arr.add(new Bench("bottom_shadow", x, y));
         return arr;
     }
+
+    public static ArrayList<Bench> singleBlocker(int x, int y) {
+        ArrayList<Bench> arr = new ArrayList<Bench>();
+        arr.add(new Bench("single", x, y));
+        return arr;
+    }
 }
