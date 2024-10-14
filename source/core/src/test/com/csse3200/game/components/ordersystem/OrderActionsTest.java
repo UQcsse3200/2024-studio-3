@@ -38,7 +38,7 @@ class OrderActionsTest {
         ServiceLocator.registerDocketService(docketService);
         ServiceLocator.registerInputService(new InputService());
         entity = new Entity();
-        entity.addComponent(new OrderActions(new GdxGame()));
+        entity.addComponent(new OrderActions());
         orderActions = entity.getComponent(OrderActions.class); // Simulate the creation phase where listeners are registered
     }
 

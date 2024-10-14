@@ -320,7 +320,7 @@ public class MainGameScreen extends ScreenAdapter {
 			.addComponent(new Terminal())
 			.addComponent(inputComponent)
 			.addComponent(new TerminalDisplay())
-			.addComponent(new OrderActions(this.game))
+			.addComponent(new OrderActions())
 			.addComponent(new MainGameOrderBtnDisplay())
 			.addComponent(new PauseMenuActions(this.game))
 			.addComponent(new PauseMenuDisplay(this))
