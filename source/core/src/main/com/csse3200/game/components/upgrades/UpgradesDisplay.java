@@ -236,4 +236,8 @@ public class UpgradesDisplay extends UIComponent {
     public void setStage(Stage stage) {
        this.stage = stage;
     }
+
+    public void setUpgradesTable(Table upgradesTable) {
+        this.upgradesTable = upgradesTable;
+    }
 }
