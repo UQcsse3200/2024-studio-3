@@ -61,8 +61,16 @@ public class UpgradesDisplayTest {
     }
 
     @Test
-    void testNotNull() {
+    void testVisibilityOnSetup() {
         assertNotNull(upgradesDisplay);
+        assertFalse(upgradesDisplay.isVisible());
+        assertFalse(upgradesDisplay.getUpgradesMenuImage().isVisible());
+        assertFalse(upgradesDisplay.getUpgradesTable().isVisible());
+        assertTrue(upgradesDisplay.getUpgradesTable().getChildren().get(1).isVisible());
+        assertTrue(upgradesDisplay.getUpgradesTable().getChildren().get(0).isVisible());
+        Table buttonsTable = (Table) upgradesDisplay.getUpgradesTable().getChildren().get(0);
+        assertTrue(buttonsTable.getChildren().get(0).isVisible());
+        assertTrue(buttonsTable.getChildren().get(1).isVisible());
     }
 
     @Test
