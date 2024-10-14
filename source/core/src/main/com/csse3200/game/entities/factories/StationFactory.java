@@ -398,7 +398,7 @@ public class StationFactory {
    */
   public static Entity createDishwasher() {
     Entity dishwasher = new Entity()
-            .addComponent(new TextureRenderComponent("images/stations/baskets/dishwasher.png"))
+            .addComponent(new TextureRenderComponent("images/stations/baskets/basket_cucumber.png"))
             .addComponent(new PhysicsComponent())
             .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
             .addComponent(new InteractionComponent(PhysicsLayer.INTERACTABLE))

@@ -4,7 +4,6 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.entities.Entity;
-import com.csse3200.game.entities.factories.PlateFactory;
 import com.csse3200.game.components.items.ItemType;
 
 /**
@@ -40,7 +39,7 @@ public class PlateComponent extends ItemComponent {
      */
     @Override
     public void create() {
-        entity.getEvents().addListener("interactWithPlate", this::interactWithPlate);
+        //entity.getEvents().addListener("interactWithPlate", this::interactWithPlate);
     }
 
     /**

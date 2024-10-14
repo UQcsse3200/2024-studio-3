@@ -36,8 +36,8 @@ public class PlateStationHandlerComponent extends Component {
         this.inventoryComponent = entity.getComponent(InventoryComponent.class);
 
         // create and add a plate into the inventory
-        PlateComponent newPlate = ItemFactory.createPlate();
-        this.inventoryComponent.addItemAt(newPlate, 0);
+        Entity plate = ItemFactory.createPlate();
+        this.inventoryComponent.addItemAt(plate.getComponent(PlateComponent.class), 0);
     }
 
     /**
@@ -77,8 +77,8 @@ public class PlateStationHandlerComponent extends Component {
         this.inventoryComponent.removeAt(0);
 
         // create and add a plate into the inventory
-        PlateComponent newPlate = ItemFactory.createPlate();
-        this.inventoryComponent.addItemAt(newPlate, 0);
+        Entity plate = ItemFactory.createPlate();
+        this.inventoryComponent.addItemAt(plate.getComponent(PlateComponent.class), 0);
     }
 
 }
