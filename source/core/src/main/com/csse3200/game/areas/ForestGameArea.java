@@ -19,8 +19,6 @@ import org.slf4j.LoggerFactory;
 
 import static com.badlogic.gdx.Gdx.app;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
@@ -274,7 +272,7 @@ public class ForestGameArea extends GameArea {
 
       //ServiceLocator.getMapLayout().getEvents().trigger("load", "level1");
 
-    new_border();
+    newborder();
     //ticketDetails();
     spawnStations();
     customerSpawnController = spawnCustomerController();
@@ -288,8 +286,7 @@ public class ForestGameArea extends GameArea {
       ServiceLocator.getPlayerService().registerPlayer(player);
       //ServiceLocator.getSaveLoadService().setCombatStatsComponent(player.getComponent(CombatStatsComponent.class));
       ServiceLocator.getSaveLoadService().load();
-      ServiceLocator.getDayNightService().getEvents().addListener("upgrade", () -> {
-          spawnPenguin(upgradesDisplay);});
+      ServiceLocator.getDayNightService().getEvents().addListener("upgrade", () -> spawnPenguin(upgradesDisplay));
 
     // Check and trigger win/loss state
     ServiceLocator.getDayNightService().getEvents().addListener("endGame", this::checkEndOfGameState);
@@ -365,9 +362,7 @@ public class ForestGameArea extends GameArea {
     spawnEntity(new Entity().addComponent(terrain));
 
     // Terrain walls
-    float tileSize = terrain.getTileSize();
     GridPoint2 tileBounds = terrain.getMapBounds(0);
-    Vector2 worldBounds = new Vector2(tileBounds.x * tileSize, tileBounds.y * tileSize);
 
     // Left
     spawnEntityAt(
@@ -396,13 +391,12 @@ public class ForestGameArea extends GameArea {
    */
   private void spawnWall() {
     GridPoint2 coords;
-    Vector2 pos;
 
     for (int i=0;i<12;i++) {
       coords = new GridPoint2(i,7);
-      Entity top_wall = ObstacleFactory.wall();
-      spawnEntityAt(top_wall, coords, true, true);
-      top_wall.setPosition(i, 8f);
+      Entity topwall = ObstacleFactory.wall();
+      spawnEntityAt(topwall, coords, true, true);
+      topwall.setPosition(i, 8f);
     }
     coords = new GridPoint2(3,7);
     Entity left_door = ObstacleFactory.door("full_door");
@@ -414,43 +408,42 @@ public class ForestGameArea extends GameArea {
   /**
    * Spawns the border around the restaurant
    */
-  private void new_border(){
+  private void newborder(){
     GridPoint2 coords = new GridPoint2(0,0);
-    Vector2 pos;
 
     for (int i=0;i<14;i++) {
-        Entity top_border = ObstacleFactory.spawnBorderTile();
-        spawnEntityAt(top_border, coords, true, true);
-        top_border.setPosition(i, -0.08f);
+        Entity topborder = ObstacleFactory.spawnBorderTile();
+        spawnEntityAt(topborder, coords, true, true);
+        topborder.setPosition(i, -0.08f);
     }
 
     for (int i=0;i<14;i++) {
-      Entity top_border = ObstacleFactory.spawnBorderTile();
-      spawnEntityAt(top_border, coords, true, true);
-      top_border.setPosition(i, 8f);
+      Entity topborder = ObstacleFactory.spawnBorderTile();
+      spawnEntityAt(topborder, coords, true, true);
+      topborder.setPosition(i, 8f);
     }
     for (int i=0;i<14;i++) {
-      Entity top_border = ObstacleFactory.spawnBorderTile();
-      spawnEntityAt(top_border, coords, true, true);
-      top_border.setPosition(i, 9f);
+      Entity topborder = ObstacleFactory.spawnBorderTile();
+      spawnEntityAt(topborder, coords, true, true);
+      topborder.setPosition(i, 9f);
     }
 
     for (int y=0;y<9;y++) {
-      Entity left_border = ObstacleFactory.spawnBorderTileVertical();
-      spawnEntityAt(left_border, coords, true, true);
-       left_border.setPosition(0, y);
+      Entity leftborder = ObstacleFactory.spawnBorderTileVertical();
+      spawnEntityAt(leftborder, coords, true, true);
+       leftborder.setPosition(0, y);
     }
 
     for (int y=0;y<9;y++) {
-      Entity left_border = ObstacleFactory.spawnBorderTileVertical();
-      spawnEntityAt(left_border, coords, true, true);
-      left_border.setPosition(13.89f, y);
+      Entity leftborder = ObstacleFactory.spawnBorderTileVertical();
+      spawnEntityAt(leftborder, coords, true, true);
+      leftborder.setPosition(13.89f, y);
     }
 
     for (int y=0;y<9;y++) {
-      Entity left_border = ObstacleFactory.spawnBorderTileVertical();
-      spawnEntityAt(left_border, coords, true, true);
-      left_border.setPosition(4, y);
+      Entity leftborder = ObstacleFactory.spawnBorderTileVertical();
+      spawnEntityAt(leftborder, coords, true, true);
+      leftborder.setPosition(4, y);
     }
 
   }
@@ -461,7 +454,6 @@ public class ForestGameArea extends GameArea {
 
 
   private void spawnStations() {
-    int a = 0;
   }
 
   /**
@@ -490,7 +482,6 @@ public class ForestGameArea extends GameArea {
 
   private Entity spawnPlayer() {
     Entity newPlayer;
-    PlayerConfig playerConfig = new PlayerConfig();
     newPlayer = PlayerFactory.createPlayer();
     spawnEntityAt(newPlayer, PLAYER_SPAWN, true, true);
     newPlayer.setPosition(PLAYER_SPAWN.x, 2.5f);
