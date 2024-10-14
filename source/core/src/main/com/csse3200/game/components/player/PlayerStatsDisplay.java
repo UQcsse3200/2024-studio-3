@@ -211,6 +211,9 @@ public class PlayerStatsDisplay extends UIComponent {
     getInstance().timeBar.setValue(progressPercentage);
 
     // Trigger other events if necessary
+    CharSequence timerText = String.format("Time Left: %n   %s", convertDigital(time));
+    getTimerLabel().setText(timerText);
+
     ServiceLocator.getDayNightService().getEvents().trigger("callpastsecond");
 
   }
