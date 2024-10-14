@@ -10,6 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Scaling;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
@@ -141,27 +142,23 @@ public class BackstoryCutsceneDisplay extends UIComponent {
 //    }
 
     public void setupTextDisplay() {
-
         textDisplay = new TextDisplay();  // Create an instance of TextDisplay
+        textDisplay.create();  // Initialize the TextDisplay with its default settings
 
-        // Call the create method to initialize the TextDisplay
-        textDisplay.create();
+        // Adjust the position of the text box to be higher on the screen
+        textDisplay.setPosition(Align.top, 250f, 0f, 0f);  // Align to the top of the screen with padding from the top
 
-        textDisplay.getTable().top().left();  // Align the text display at the top left of the screen
-        textDisplay.getTable().padTop(200f);  // Adjust the padding to control the vertical position
+        // Adjust the scale to make the text box smaller
+        textDisplay.setTableScale(0.5f, 0.5f);  // Reduce the size (adjust values as necessary)
 
-        // Customize the text display size and position
-        textDisplay.getTable().setScale(0.8f);  // Reduce the scale of the text display
-        textDisplay.getTable().top().center();  // Position the text display at the top center of the screen
-        textDisplay.getTable().padTop(100f);    // Adjust the padding to move it down from the top (if necessary)
+        // Optionally, adjust the font size to make the text smaller
+        textDisplay.setFontScale(1.5f);  // Set the font scale (smaller than the default 3.0f)
 
-        // Add the text display to the stage
+        // Add the text display table to the stage after modifying it
         stage.addActor(textDisplay.getTable());
 
-        // Optionally, set initial text for the display
+        // Optionally, set any initial text for the cutscene
         textDisplay.setText("Backstory text goes here...");
-
-        textDisplay.setFontScale(1.0f);
     }
 
     /**
