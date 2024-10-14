@@ -4,6 +4,7 @@ import com.csse3200.game.GdxGame;
 import com.csse3200.game.areas.ForestGameArea;
 import com.csse3200.game.areas.GameArea;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.services.LevelService;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
@@ -31,6 +32,7 @@ public class CutsceneArea extends GameArea {
     public CutsceneArea(GdxGame.CutsceneType cutsceneValue) {
         super();
         ServiceLocator.registerGameArea(this);  // Register this cutscene area in the service locator
+        ServiceLocator.registerLevelService(new LevelService());
         this.cutsceneValue = cutsceneValue;
     }
 
