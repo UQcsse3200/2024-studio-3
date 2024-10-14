@@ -58,7 +58,7 @@ public class TutorialScreenDisplay extends UIComponent {
         if (entity != null) {
             playerActions = entity.getComponent(PlayerActions.class);
         } else {
-            logger.error("Entity null,");
+            logger.error("Entity null");
         }
 
         ServiceLocator.getLevelService().setCurrLevel(GdxGame.LevelType.LEVEL_0);
