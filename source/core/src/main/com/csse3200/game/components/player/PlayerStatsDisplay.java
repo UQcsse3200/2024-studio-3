@@ -2,13 +2,18 @@ package com.csse3200.game.components.player;
 
 import java.util.concurrent.TimeUnit;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.utils.BaseDrawable;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
+
 
 /**
  * AN ui component for displaying player stats, e.g. health.
@@ -24,7 +29,11 @@ public class PlayerStatsDisplay extends UIComponent {
   private static int currentDay;
   private static Label timerLabel;
   private static long timer;
+  private static long startTime;
   private static PlayerStatsDisplay instance;
+  private ProgressBar timeBar;
+  private static final float MAX_TIME = 300f;
+
 
 
     /**
@@ -37,6 +46,7 @@ public class PlayerStatsDisplay extends UIComponent {
     addActors();
     setTimer(ServiceLocator.getDayNightService().FIVE_MINUTES);
 
+
     entity.getEvents().addListener("updateGold", this::updatePlayerGoldUI);
     ServiceLocator.getDayNightService().getEvents().addListener("newday", PlayerStatsDisplay::updateDay);
     ServiceLocator.getDayNightService().getEvents().addListener("Second", (Long time) -> updateTime(time));
@@ -46,7 +56,7 @@ public class PlayerStatsDisplay extends UIComponent {
    * Sets the timer to a specific time and starts counting down
    * @param time the time you want to set the timer to count down from in seconds
    */
-  public static void setTimer(long time) { timer = time; }
+  public static void setTimer(long time) { timer = time; startTime = time;}
 
   /**
    * Sets the label for the day
@@ -128,6 +138,33 @@ public class PlayerStatsDisplay extends UIComponent {
     timerTable.add(getTimerLabel()).left();
     table.add(timerTable).padTop(20f);
     stage.addActor(table);
+
+    //Skin skin =// Add empty knob if missing
+    //  skin.get("loading", ProgressBar.ProgressBarStyle.class).knob = new BaseDrawable(); // Add empty knob if missing
+
+    Texture whiteBgTexture = ServiceLocator
+            .getResourceService().getAsset("images/white_background.png", Texture.class);
+
+    ProgressBar.ProgressBarStyle style = new ProgressBar.ProgressBarStyle();
+
+    // Setting white background
+    style.background = new TextureRegionDrawable(new TextureRegion(whiteBgTexture));
+    style.background.setMinHeight(15);
+    style.background.setMinWidth(10);
+// Static white background ProgressBar
+
+    timeBar = new ProgressBar(0f, 100f, 1f, false, skin);
+    timeBar.setValue(100f);  // Start at full value (100%)
+    table.row();
+    // Add the progress
+
+    table.add(timeBar).width(200f).height(300f).fill();
+
+
+
+
+
+
   }
 
   @Override
@@ -159,9 +196,26 @@ public class PlayerStatsDisplay extends UIComponent {
    */
 
   public static void updateTime(long time) {
+    /*
     CharSequence timerText = String.format("Time Left: %n   %s", convertDigital(time));
     getTimerLabel().setText(timerText);
     ServiceLocator.getDayNightService().getEvents().trigger("callpastsecond");
+
+     */
+    timer = time;
+
+    // Calculate progress as a percentage of the time remaining
+    float progressPercentage = (float) timer / startTime * 100f;
+
+    // Update the progress bar value to reflect the remaining time
+    getInstance().timeBar.setValue(progressPercentage);
+
+    // Trigger other events if necessary
+    CharSequence timerText = String.format("Time Left: %n   %s", convertDigital(time));
+    getTimerLabel().setText(timerText);
+
+    ServiceLocator.getDayNightService().getEvents().trigger("callpastsecond");
+
   }
 
 
