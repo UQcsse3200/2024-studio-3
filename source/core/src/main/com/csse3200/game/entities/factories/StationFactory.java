@@ -9,9 +9,6 @@ import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.csse3200.game.components.FlameComponent;
 import com.csse3200.game.components.TooltipsDisplay;
 import com.csse3200.game.components.player.InventoryComponent;
-import com.csse3200.game.components.station.MixingBenchHoverComponent;
-import com.csse3200.game.components.station.ChoppingBoardHoverComponent;
-import com.csse3200.game.components.station.BasketHoverComponent;
 import com.csse3200.game.components.station.*;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.physics.PhysicsLayer;
@@ -135,7 +132,7 @@ public class StationFactory {
         .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
         .addComponent(new InteractionComponent(PhysicsLayer.INTERACTABLE))
         .addComponent(new StationBinComponent())
-        .addComponent(new InventoryDisplayHoverComponent());
+        .addComponent(new BinHoverComponent());
 
     bin.getComponent(InteractionComponent.class).setAsBox(bin.getScale());
     bin.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);

@@ -64,19 +64,5 @@ public class MixingBenchHoverComponent extends StationHoverComponent {
             );
             currentOffset -= OFFSET_SPACING;
         }
-
     }
-
-    @Override
-    public void draw(SpriteBatch batch) {
-        if (entity == null || position == null || scale == null)
-            return;
-
-        super.draw(batch);
-
-        if (this.showKeys) {
-            drawToolTips(batch);
-        }
-    }
-
 }

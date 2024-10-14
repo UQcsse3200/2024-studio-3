@@ -65,17 +65,4 @@ public class ChoppingBoardHoverComponent extends StationHoverComponent {
         }
 
     }
-
-    @Override
-    public void draw(SpriteBatch batch) {
-        if (entity == null || position == null || scale == null)
-            return;
-
-        super.draw(batch);
-
-        if (this.showKeys) {
-            drawToolTips(batch);
-        }
-    }
-
 }
