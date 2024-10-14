@@ -21,13 +21,6 @@ import com.csse3200.game.physics.components.PhysicsComponent;
 
 
 /**
- * NOTE: THIS CLASS HAS BEEN DISCONTINUED... IT REMAINS HERE FOR NOW
- * TO NOT BREAK PREVIOUS FUNCTIONALITY (but will be removed later)
- * It has replaced and been converted to an abstract class, StationHoverComponent,
- * which is used as the base class to inherit from when creating hover UI
- * components for stations. This allows each station to have its own
- * type of hover UI, suited towards its interactions.
- *
  * A component that display's the items in an entity's InventoryComponent as
  * images hovering above the entity. This is different to the InventoryDisplay
  * UI component, which displays items in slots that overlay the gameplay screen.
@@ -90,7 +83,7 @@ public class InventoryDisplayHoverComponent extends RenderComponent {
             isCollectionStation = entity.getComponent(StationCollectionComponent.class) != null;
             isBasket = entity.getComponent(IngredientStationHandlerComponent.class) != null;
             isBin = entity.getComponent(StationBinComponent.class) != null;
-            
+
             inventory = entity.getComponent(InventoryComponent.class);
 
             // need to use the physics body position of the entity as
@@ -189,11 +182,11 @@ public class InventoryDisplayHoverComponent extends RenderComponent {
         // 2. the player doesn't have an item but we do
 
         // If were a collection station we show interaction key if
-        // 1. the player doesn't have an item 
+        // 1. the player doesn't have an item
 
         if (isChoppingStation || isCookingStation) {
             boolean isFull = (inventory.getSize() == 1);
-            StationItemHandlerComponent itemHandler = entity.getComponent(StationItemHandlerComponent.class);           
+            StationItemHandlerComponent itemHandler = entity.getComponent(StationItemHandlerComponent.class);
             if (!hasItem) {
                 return isFull;
             } else {
@@ -201,7 +194,7 @@ public class InventoryDisplayHoverComponent extends RenderComponent {
             }
         }
 
-        if (isMixingStation) {            
+        if (isMixingStation) {
             if (hasItem && inventory.getSize() >= inventory.getCapacity()) {
                 return false;
             } else if (hasItem && inventory.getSize() < inventory.getCapacity()) {
@@ -291,24 +284,24 @@ public class InventoryDisplayHoverComponent extends RenderComponent {
             // (if there is more than 1 item displayed)
             if (i == itemImages.size() - 1 && itemImages.size() > 1) {
                 batch.draw(selectedBackgroundImage,
-                    position.x + X_OFFSET,
-                    position.y + (i * SLOT_HEIGHT) + Y_OFFSET,
-                    SLOT_WIDTH,
-                    SLOT_HEIGHT
+                        position.x + X_OFFSET,
+                        position.y + (i * SLOT_HEIGHT) + Y_OFFSET,
+                        SLOT_WIDTH,
+                        SLOT_HEIGHT
                 );
             } else {
                 batch.draw(backgroundImage,
-                    position.x + X_OFFSET,
-                    position.y + (i * SLOT_HEIGHT) + Y_OFFSET,
-                    SLOT_WIDTH,
-                    SLOT_HEIGHT
+                        position.x + X_OFFSET,
+                        position.y + (i * SLOT_HEIGHT) + Y_OFFSET,
+                        SLOT_WIDTH,
+                        SLOT_HEIGHT
                 );
             }
             batch.draw(itemImages.get(i),
-                position.x + X_OFFSET + 0.1f,
-                position.y + (i * SLOT_HEIGHT) + Y_OFFSET + 0.1f,
-                SLOT_WIDTH - 0.2f,
-                SLOT_HEIGHT - 0.2f
+                    position.x + X_OFFSET + 0.1f,
+                    position.y + (i * SLOT_HEIGHT) + Y_OFFSET + 0.1f,
+                    SLOT_WIDTH - 0.2f,
+                    SLOT_HEIGHT - 0.2f
             );
         }
     }
