@@ -31,7 +31,7 @@ public class InventoryDisplay extends UIComponent {
      * Requires that the entity this component is being added to also have
      * an InventoryComponent.
      */
-public InventoryDisplay() {
+    public InventoryDisplay() {
         this.slotSize = 200;
     }
 
@@ -47,6 +47,10 @@ public InventoryDisplay() {
             throw new IllegalArgumentException("slotSize must be a positive non-zero integer");
         }
         this.slotSize = slotSize;
+    }
+
+    public int getSlotSize() {
+        return this.slotSize;
     }
 
     @Override
