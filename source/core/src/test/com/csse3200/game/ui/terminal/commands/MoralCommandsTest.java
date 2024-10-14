@@ -33,12 +33,4 @@ public class MoralCommandsTest {
         ServiceLocator.registerGameArea(gameArea);
     }
 
-//    @Test
-//    void testMoralCommands() {
-//
-//        args.add("addQuestion 'Is it good'");
-//        command.action(args);
-//
-//        verify(ServiceLocator.getEntityService().getMoralScreen().getComponent(MoralDecision.class)).addQuestion("Is it good");
-//    }
 }
