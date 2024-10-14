@@ -40,7 +40,7 @@ public class BenchGenerator {
             // add the top part of the bench
             arr.add(new Bench("top", x, endY));
         }
-        LOGGER.log(Level.INFO, "added column of " + arr.size() + " benches");
+        //  LOGGER.log(Level.INFO, "added column of " + arr.size() + " benches");
         return arr;
     }
     public static ArrayList<Bench> createBenchRow(int startX, int endX, int y) {
@@ -71,6 +71,24 @@ public class BenchGenerator {
             arr.add(new Bench("right_border", endX, y));
         }
         LOGGER.log(Level.INFO, "added row of " + arr.size() + " flattened benches");
+        return arr;
+    }
+
+    public static ArrayList<Bench> singleBench(int x, int y) {
+        ArrayList<Bench> arr = new ArrayList<Bench>();
+        arr.add(new Bench("vertical", x, y));
+        return arr;
+    }
+
+    public static ArrayList<Bench> singleShadowBench(int x, int y) {
+        ArrayList<Bench> arr = new ArrayList<Bench>();
+        arr.add(new Bench("bottom_shadow", x, y));
+        return arr;
+    }
+
+    public static ArrayList<Bench> singleBlocker(int x, int y) {
+        ArrayList<Bench> arr = new ArrayList<Bench>();
+        arr.add(new Bench("single", x, y));
         return arr;
     }
 }
