@@ -22,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(GameExtension.class)
-public class BenchTwoTest {
+public class BenchGeneratorTest {
     private AutoCloseable mocks;
     private BenchGenerator benchGenerator;
 

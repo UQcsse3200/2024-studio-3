@@ -133,7 +133,7 @@ public class MapLayout {
     public ArrayList<Bench> readBench(String type, int startCol, int size, int row) {
         switch (type) {
             case "X":
-                return BenchGenerator.createBenchRow(startCol + 4, startCol + size + 4, row - 4);
+                return BenchGenerator.createBenchRow(startCol + 4, startCol + size, row - 4);
             case "Y":
                 return BenchGenerator.createBenchColumn(startCol + 4, row - 4, row + size - 4);
             default:

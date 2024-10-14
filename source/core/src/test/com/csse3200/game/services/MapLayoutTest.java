@@ -10,6 +10,7 @@ import com.csse3200.game.GdxGame;
 import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.areas.map.Map;
+import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.entities.benches.Bench;
 import com.csse3200.game.events.listeners.EventListener0;
 import com.csse3200.game.extensions.GameExtension;
