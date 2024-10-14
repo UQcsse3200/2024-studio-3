@@ -26,7 +26,7 @@ import com.csse3200.game.components.CombatStatsComponent;
  */
 
 public class DancePartyUpgrade extends UIComponent implements Upgrade {
-    private static final long UPGRADE_DURATION = 3000;
+    private static final long UPGRADE_DURATION = 30000;
     private OrderManager orderManager;
     private final GameTime gameTime;
     private boolean isActive;
@@ -53,22 +53,6 @@ public class DancePartyUpgrade extends UIComponent implements Upgrade {
         this.isActive = false;
 
         ServiceLocator.getRandomComboService().getEvents().addListener("Dance party", this::activate);
-    }
-
-    private void showMeter() {
-        if (meter != null && !meter.hasParent()) {
-            stage.addActor(layout);
-            stage.addActor(meter);
-            stage.addActor(text);
-        }
-    }
-
-    private void hidemeter() {
-        if (meter != null && meter.hasParent()) {
-            meter.remove();
-            text.remove();
-            layout.setVisible(false);
-        }
     }
 
     @Override
@@ -121,7 +105,6 @@ public class DancePartyUpgrade extends UIComponent implements Upgrade {
              dancePartyCost();
              isActive = true;
              layout.setVisible(true);
-             showMeter();
 
              ServiceLocator.getDocketService().getEvents().trigger("Dancing");
          }
@@ -135,7 +118,8 @@ public class DancePartyUpgrade extends UIComponent implements Upgrade {
     public void deactivate() {
         isActive = false;
         layout.setVisible(false);
-        hidemeter();
+        meter.remove();
+        text.remove();
 
         ServiceLocator.getDocketService().getEvents().trigger("UnDancing");
     }
@@ -148,6 +132,9 @@ public class DancePartyUpgrade extends UIComponent implements Upgrade {
     @Override
     public void update() {
         if (isActive) {
+            stage.addActor(layout);
+            stage.addActor(meter);
+            stage.addActor(text);
             activeTimeRemaining -= gameTime.getDeltaTime() * 1000;
             meter.setValue((activeTimeRemaining / (float) UPGRADE_DURATION));
 
