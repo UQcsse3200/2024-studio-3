@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 import com.csse3200.game.components.station.IngredientStationHandlerComponent;
+import com.csse3200.game.components.station.StationBinComponent;
 import com.csse3200.game.components.station.StationChoppingComponent;
 import com.csse3200.game.components.station.StationCollectionComponent;
 import com.csse3200.game.components.station.StationCookingComponent;
@@ -43,6 +44,7 @@ public class InventoryDisplayHoverComponent extends RenderComponent {
     private boolean isChoppingStation = false;
     private boolean isCollectionStation = false;
     private boolean isCookingStation = false;
+    private boolean isBin = false;
     private InventoryComponent inventory = null;
     private ItemComponent currentItem = null;
     private boolean isBasket = false;
@@ -85,6 +87,8 @@ public class InventoryDisplayHoverComponent extends RenderComponent {
             isCookingStation = entity.getComponent(StationCookingComponent.class) != null;
             isCollectionStation = entity.getComponent(StationCollectionComponent.class) != null;
             isBasket = entity.getComponent(IngredientStationHandlerComponent.class) != null;
+            isBin = entity.getComponent(StationBinComponent.class) != null;
+            
             inventory = entity.getComponent(InventoryComponent.class);
 
             // need to use the physics body position of the entity as
@@ -103,8 +107,7 @@ public class InventoryDisplayHoverComponent extends RenderComponent {
     private void updateImages() {
         itemImages = new ArrayList<>();
 
-        if (entity != null) {
-            InventoryComponent inventory = entity.getComponent(InventoryComponent.class);
+        if (entity != null && inventory != null) {
             for (ItemComponent item : inventory.getItems()) {
                 if (item != null ) {
                     String itemTexturePath = item.getTexturePath();
@@ -210,6 +213,10 @@ public class InventoryDisplayHoverComponent extends RenderComponent {
 
         if (isCollectionStation) {
             return !hasItem;
+        }
+
+        if (isBin) {
+            return hasItem;
         }
 
         return false;
