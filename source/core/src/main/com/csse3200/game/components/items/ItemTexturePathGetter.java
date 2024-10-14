@@ -23,6 +23,7 @@ public class ItemTexturePathGetter {
     // The formate strings used to get the full image name
     private static final String ingredientFormat = "images/ingredients/%s_%s.png";
     private static final String mealFormat = "images/meals/%s.png";
+    private static final String plateFormat = "images/platecomponent/cleanplate.png";
     
     /**
      * Static function to return the texture path based on the entity and
@@ -36,6 +37,8 @@ public class ItemTexturePathGetter {
             return getTexturePathIngredient(entity.getComponent(IngredientComponent.class));
         } else if (entity.getComponent(MealComponent.class) != null) {
             return getTexturePathMeal(entity.getComponent(MealComponent.class));
+        } else if (entity.getComponent(PlateComponent.class) != null) {
+            return getTexturePathPlate();
         } else {
             return null;
         }
@@ -89,6 +92,19 @@ public class ItemTexturePathGetter {
         logger.info(String.format(mealFormat, imageName));
 
         return String.format(mealFormat, imageName);
+    }
+
+    /**
+     * Static function to return the plate texture path. 
+     * 
+     * @return the path to the clean plate image.
+     */ 
+    private static String getTexturePathPlate() {
+
+        logger.info("The texture of the item is:");
+        logger.info(plateFormat);
+
+        return plateFormat;
     }
 
 }

@@ -247,4 +247,14 @@ public class ItemFactory {
         ServiceLocator.getEntityService().register(entity);
         return entity;
     }
+
+    /**
+     * Create a plate item.
+     * 
+     * @return - A Plate item entity.
+     */
+    public static Entity createPlate() {
+        return new Entity()
+                .addComponent(new PlateComponent(0));
+    }
 }
