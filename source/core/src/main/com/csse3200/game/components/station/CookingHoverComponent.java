@@ -1,17 +1,17 @@
 package com.csse3200.game.components.station;
 
 import com.csse3200.game.components.station.StationHoverComponent;
-import com.csse3200.game.components.items.ChopIngredientComponent;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.csse3200.game.components.items.CookIngredientComponent;
 import com.csse3200.game.components.items.IngredientComponent;
 import com.csse3200.game.components.items.ItemComponent;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.csse3200.game.components.player.InventoryComponent;
 
 /**
- * A component used to display the inventory of a chopping board
+ * A component used to display the inventory of a cooking
  * station, as well as interaction key tooltips for the station.
  */
-public class ChoppingBoardHoverComponent extends StationHoverComponent {
+public class CookingHoverComponent extends StationHoverComponent {
     private static final float FIRST_OFFSET = 0.7f;
     private static final float OFFSET_SPACING = 0.3f;
     private static final float KEY_X_OFFSET = 0.1f;
@@ -27,14 +27,23 @@ public class ChoppingBoardHoverComponent extends StationHoverComponent {
         inventory = entity.getComponent(InventoryComponent.class);
 
         if (hasItem && inventory.getSize() < inventory.getCapacity()) {
-            // player can place item
-            batch.draw(placeKeyImage,
-                    position.x + KEY_X_OFFSET,
-                    position.y + currentOffset,
-                    KEY_WIDTH,
-                    KEY_HEIGHT
-            );
-            currentOffset -= OFFSET_SPACING;
+
+            // Check if the item is cookable
+            if (currentItem != null && currentItem instanceof IngredientComponent) {
+                IngredientComponent ingredientComponent = (IngredientComponent) currentItem;
+
+                if (currentItem.getEntity().getComponent(CookIngredientComponent.class) != null
+                        && ingredientComponent.getItemState().equals("raw")) {
+
+                    batch.draw(cookKeyImage,
+                            position.x + KEY_X_OFFSET,
+                            position.y + currentOffset,
+                            KEY_WIDTH,
+                            KEY_HEIGHT
+                    );
+                    currentOffset -= OFFSET_SPACING;
+                }
+            }
         }
 
         if (!hasItem && inventory.getSize() > 0) {
@@ -47,26 +56,5 @@ public class ChoppingBoardHoverComponent extends StationHoverComponent {
             );
             currentOffset -= OFFSET_SPACING;
         }
-
-        // Get the item
-        ItemComponent item = inventory.getItemFirst();
-
-        // Check if the item is still choppable
-        if (!hasItem && item != null && item instanceof IngredientComponent) {
-            IngredientComponent ingredientComponent = (IngredientComponent) item;
-
-            if (item.getEntity().getComponent(ChopIngredientComponent.class) != null
-                    && ingredientComponent.getItemState().equals("raw")) {
-
-                batch.draw(chopKeyImage,
-                        position.x + KEY_X_OFFSET,
-                        position.y + currentOffset,
-                        KEY_WIDTH,
-                        KEY_HEIGHT
-                );
-                currentOffset -= OFFSET_SPACING;
-            }
-        }
-
     }
 }

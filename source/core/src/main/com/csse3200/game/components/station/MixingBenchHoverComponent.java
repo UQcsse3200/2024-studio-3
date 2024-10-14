@@ -5,6 +5,10 @@ import com.csse3200.game.components.station.StationMealComponent;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.csse3200.game.components.player.InventoryComponent;
 
+/**
+ * A component used to display the inventory of a mixing bench
+ * station, as well as interaction key tooltips for the station.
+ */
 public class MixingBenchHoverComponent extends StationHoverComponent {
     private static final float FIRST_OFFSET = 0.7f;
     private static final float OFFSET_SPACING = 0.3f;

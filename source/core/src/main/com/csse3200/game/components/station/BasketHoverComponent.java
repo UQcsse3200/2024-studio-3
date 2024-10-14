@@ -4,10 +4,14 @@ import com.csse3200.game.components.station.StationHoverComponent;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.csse3200.game.components.player.InventoryComponent;
 
+/**
+ * A component used to display interaction key tooltips for
+ * a basket station component.
+ */
 public class BasketHoverComponent extends StationHoverComponent {
     private static final float OFFSET_SPACING = 0.3f;
     private static final float KEY_X_OFFSET = 0.1f;
-    private static final float KEY_Y_OFFSET = 0.3f;
+    private static final float KEY_Y_OFFSET = 0.7f;
 
     /**
      * Draws the required key tooltips for the current interactions
@@ -21,7 +25,7 @@ public class BasketHoverComponent extends StationHoverComponent {
         if (!hasItem && inventory.getSize() > 0) {
             // player can take item
             batch.draw(takeKeyImage,
-                    position.x + KEY_X_OFFSET,
+                    position.x,
                     position.y + KEY_Y_OFFSET,
                     KEY_WIDTH,
                     KEY_HEIGHT

@@ -45,7 +45,7 @@ public class StationFactory {
         .addComponent(new StationCookingComponent())
         .addComponent(new StationItemHandlerComponent("oven"))
         .addComponent(new InventoryComponent(1))
-        .addComponent(new InventoryDisplayHoverComponent())
+        .addComponent(new CookingHoverComponent())
         .addComponent(new StationProgressDisplay());
 
 
@@ -107,7 +107,7 @@ public class StationFactory {
         .addComponent(new InteractionComponent(PhysicsLayer.INTERACTABLE))
         .addComponent(new TooltipsDisplay())
         .addComponent(new InventoryComponent(1))
-        .addComponent(new InventoryDisplayHoverComponent())
+        .addComponent(new CookingHoverComponent())
         .addComponent(new StationCookingComponent())  
         .addComponent(new StationItemHandlerComponent("stove"))
         .addComponent(new StationProgressDisplay());
@@ -509,6 +509,7 @@ public class StationFactory {
             .addComponent(new InteractionComponent(PhysicsLayer.INTERACTABLE))
             .addComponent(new TooltipsDisplay())
             .addComponent(new InventoryComponent(1))
+            .addComponent(new SubmitHoverComponent())
             .addComponent(new StationServingComponent());
 
     submission.getComponent(InteractionComponent.class).setAsBox(submission.getScale());

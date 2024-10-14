@@ -41,7 +41,7 @@ public abstract class StationHoverComponent extends RenderComponent {
     private Texture selectedBackgroundImage;
     protected boolean showKeys = false;
     protected InventoryComponent inventory = null;
-    private ItemComponent currentItem = null;
+    protected ItemComponent currentItem = null;
     protected boolean hasItem = false;
     protected Texture interactKeyImage;
     protected Texture combineKeyImage;
@@ -51,6 +51,7 @@ public abstract class StationHoverComponent extends RenderComponent {
     protected Texture takeKeyImage;
     protected Texture submitKeyImage;
     protected Texture disposeKeyImage;
+    protected Texture cookKeyImage;
     protected Vector2 position;
     protected Vector2 scale;
     private static final float X_OFFSET = 0.2f;
@@ -75,6 +76,7 @@ public abstract class StationHoverComponent extends RenderComponent {
         takeKeyImage = new Texture("images/inventory_ui/take_key.png");
         submitKeyImage = new Texture("images/inventory_ui/submit_key.png");
         disposeKeyImage = new Texture("images/inventory_ui/dispose_key.png");
+        cookKeyImage = new Texture("images/inventory_ui/cook_key.png");
 
         ServiceLocator.getRenderService().register(this);
 

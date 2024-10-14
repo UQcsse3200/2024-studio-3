@@ -5,11 +5,12 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 /**
  * A component used to display interaction key tooltips for
- * a bin station component.
+ * a submission station component.
  */
-public class BinHoverComponent extends StationHoverComponent {
+public class SubmitHoverComponent extends StationHoverComponent {
     private static final float OFFSET_SPACING = 0.3f;
-    private static final float KEY_Y_OFFSET = 0.9f;
+    private static final float KEY_X_OFFSET = 0.1f;
+    private static final float KEY_Y_OFFSET = 0.6f;
 
     /**
      * Draws the required key tooltips for the current interactions
@@ -19,8 +20,8 @@ public class BinHoverComponent extends StationHoverComponent {
     public void drawToolTips(SpriteBatch batch) {
         if (hasItem) {
             // player can dispose item
-            batch.draw(disposeKeyImage,
-                    position.x,
+            batch.draw(submitKeyImage,
+                    position.x + KEY_X_OFFSET,
                     position.y + KEY_Y_OFFSET,
                     KEY_WIDTH,
                     KEY_HEIGHT
