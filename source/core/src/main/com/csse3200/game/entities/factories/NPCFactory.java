@@ -300,10 +300,6 @@ public class NPCFactory {
         customerCount --;
     }
 
-    public static void reset() {
-        customerCount = 0;
-    }
-
     private NPCFactory() {
         throw new IllegalStateException("Instantiating static util class");
     }

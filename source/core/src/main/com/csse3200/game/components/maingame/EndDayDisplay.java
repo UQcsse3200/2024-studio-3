@@ -1,10 +1,5 @@
 package com.csse3200.game.components.maingame;
 
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.scenes.scene2d.ui.*;
-import com.csse3200.game.entities.configs.CustomerPersonalityConfig;
-import com.csse3200.game.entities.configs.NPCConfigs;
-import com.csse3200.game.files.FileLoader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,6 +11,12 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.List;
+import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
@@ -47,12 +48,11 @@ public class EndDayDisplay extends UIComponent {
     public final java.util.List<String> customerNameArray;
     public final java.util.List<String> passedCustomerArray;
     public final java.util.List<String> failedCustomerArray;
-    private final Table passedCustomerTable;
-    private final Table failedCustomerTable;
+    private List<String> passedCustomerList;
+    private List<String> failedCustomerList;
     private static final int STARTING_GOLD = ServiceLocator.getLevelService().getCurrGold();
     private static final String POINT_IMAGE_PATH = "images/point.png";
     private static final String TINY_5 = "flat-earth/skin/fonts/Tiny5-Regular.ttf";
-    private static final NPCConfigs configs = FileLoader.readClass(NPCConfigs.class, "configs/NPCs.json");
 
     /**
      * Constructor for the EndDayDisplay class.
@@ -66,8 +66,8 @@ public class EndDayDisplay extends UIComponent {
         this.customerNameArray = new ArrayList<>();
         this.passedCustomerArray = new ArrayList<>();
         this.failedCustomerArray = new ArrayList<>();
-        passedCustomerTable = new Table(skin);
-        failedCustomerTable = new Table(skin);
+        passedCustomerList = new List<>(skin);
+        failedCustomerList = new List<>(skin);
     }
 
     /**
@@ -88,9 +88,6 @@ public class EndDayDisplay extends UIComponent {
         addListeners();
     }
 
-    /**
-     * Registers event listeners relevant to the end-of-day display operations, such as gold updates and customer events.
-     */
     public void addListeners() {
         ServiceLocator.getDocketService().getEvents().addListener("goldUpdated", this::handleGoldUpdate);
         ServiceLocator.getLevelService().getEvents().addListener("customerSpawned", this::updateCustomerList);
@@ -207,16 +204,25 @@ public class EndDayDisplay extends UIComponent {
         // Customer lists
         Table listTable = new Table();
 
-        Label passedLabel = new Label("Passed Customers", skin);
-        passedLabel.setFontScale(1.8f);
-        Label failedLabel = new Label("Failed Customers", skin);
-        failedLabel.setFontScale(1.8f);
+        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal(TINY_5));
+        FreeTypeFontParameter parameter = new FreeTypeFontParameter();
+        parameter.size = 30;
+        parameter.gamma = 1.8f;
+        BitmapFont font = generator.generateFont(parameter);
+        generator.dispose();
+        Label.LabelStyle newStyle = new Label.LabelStyle();
+        newStyle.font = font;
+        newStyle.fontColor = Color.WHITE;
+
+        Label passedLabel = new Label("Passed Customers", newStyle);
+        passedLabel.setFontScale(1.2f);
+        Label failedLabel = new Label("Failed Customers", newStyle);
+        failedLabel.setFontScale(1.2f);
         listTable.add(passedLabel).pad(10).center();
         listTable.add(failedLabel).pad(10).center().row();
-
-        ScrollPane passedScrollPane = new ScrollPane(passedCustomerTable, skin);
+        ScrollPane passedScrollPane = new ScrollPane(passedCustomerList, skin);
         passedScrollPane.setSmoothScrolling(true);
-        ScrollPane failedScrollPane = new ScrollPane(failedCustomerTable, skin);
+        ScrollPane failedScrollPane = new ScrollPane(failedCustomerList, skin);
         failedScrollPane.setSmoothScrolling(true);
         listTable.add(passedScrollPane).pad(10).expand().width(400).fillY();
         listTable.add(failedScrollPane).pad(10).expand().width(400).fillY().row();
@@ -231,12 +237,22 @@ public class EndDayDisplay extends UIComponent {
      * the end-of-day display, effectively closing it.
      */
     public void addCloseButton() {
+        TextButton.TextButtonStyle style = new TextButton.TextButtonStyle();
         Texture texture = ServiceLocator.getResourceService()
                 .getAsset("images/finish.png", Texture.class);
 
-        Drawable drawable = new TextureRegionDrawable(new TextureRegion(texture));
+        style.up = new TextureRegionDrawable(new TextureRegion(texture));
 
-        ImageButton closeBtn = new ImageButton(drawable);
+        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal(TINY_5));
+        FreeTypeFontParameter parameter = new FreeTypeFontParameter();
+        parameter.size = 30;
+        parameter.gamma = 1.8f;
+        BitmapFont font = generator.generateFont(parameter);
+        generator.dispose();
+        style.font = font;
+        style.fontColor = Color.RED;
+
+        TextButton closeBtn = new TextButton("", style);
 
         closeBtn.addListener(new ClickListener() {
             @Override
@@ -267,6 +283,7 @@ public class EndDayDisplay extends UIComponent {
 
     public void handlePassedCustomer(String customerName) {
         passedCustomerArray.add(customerName.toUpperCase());
+        passedCustomerList.setItems(passedCustomerArray.toArray(new String[0]));
         logger.info("Customer passed: {}", customerName);
     }
 
@@ -282,64 +299,39 @@ public class EndDayDisplay extends UIComponent {
         logger.info("Updated customer list with: {}", customerNameArray);
     }
 
-    /**
-     * Recalculates the failed customers list, updating UI elements accordingly.
-     */
     private void recalculateFailedCustomers() {
-        failedCustomerTable.clearChildren();
         failedCustomerArray.clear();
         failedCustomerArray.addAll(customerNameArray);
         for (String passedName : passedCustomerArray) {
             failedCustomerArray.remove(passedName);
         }
-        for (String passedName : passedCustomerArray) {
-            assertCustomerTexture(passedName, passedCustomerTable);
-        }
-        for (String failedName : failedCustomerArray) {
-            assertCustomerTexture(failedName, failedCustomerTable);
-        }
+        failedCustomerList.setItems(failedCustomerArray.toArray(new String[0]));
         logger.info("Failed customers recalculated: {}", failedCustomerArray);
     }
 
     /**
-     * Retrieves configuration details for a customer based on their name.
-     *
-     * @param name the name of the customer.
-     * @return the configuration details of the customer.
+     * Shows the end-of-day display.
+     * This method makes the display visible and updates all dynamic content to reflect
+     * the current game state. It is usually called in response to a game event.
      */
-    private CustomerPersonalityConfig getCustomerConfig(String name) {
-        return switch (name) {
-            case "HANK" -> configs.Hank;
-            case "LEWIS" -> configs.Lewis;
-            case "SILVER" -> configs.Silver;
-            case "JOHN" -> configs.John;
-            case "MOONKI" -> configs.Moonki;
-            default -> configs.Default;
+    public void show() {
+        recalculateFailedCustomers();
+        setVisible(true);
+        getLayout().setVisible(true);
+        getBirdImage().setVisible(true);
+        getPointImage1().setVisible(true);
+        getPointImage2().setVisible(true);
+        getPointImage3().setVisible(true);
+        gameScreen.pause(); // Pause the game when the display is shown
+        imageX = (float) (3 * Gdx.graphics.getWidth()) / 4; // Reset image position
+        Task birdMoveTask = new Task() {
+            @Override
+            public void run() {
+                updateBirdPosition(Gdx.graphics.getDeltaTime());
+            }
         };
-    }
-
-    /**
-     * Attempts to load and display a customer's texture in the provided table. This method retrieves the customer's
-     * texture based on their personality configuration and adds it to the specified table along with the customer's name.
-     *
-     * @param customerName The name of the customer for whom the texture is to be loaded.
-     * @param customerTable The table where the customer's image and name label are to be displayed.
-     */
-    private void assertCustomerTexture(String customerName, Table customerTable) {
-        CustomerPersonalityConfig config = getCustomerConfig(customerName);
-        try {
-            TextureAtlas atlas = ServiceLocator.getResourceService().getAsset(config.texture, TextureAtlas.class);
-            TextureRegion region = atlas.findRegion("default");
-            Image image = new Image(region);
-            Label label = new Label(customerName, skin);
-            label.setFontScale(1.5f);
-
-            customerTable.row().pad(10);
-            customerTable.add(image).size(70, 70);
-            customerTable.add(label);
-        } catch (Exception e) {
-            logger.error("Failed to load texture for customer {}", customerName, e);
-        }
+        Timer.schedule(birdMoveTask, 0, 1 / 60f); // Schedule the task
+        this.animateGoldChange();
     }
 
     /**
@@ -381,31 +373,6 @@ public class EndDayDisplay extends UIComponent {
                 })),
                 Actions.run(() -> goldLabel.setText(String.valueOf(currentGold)))
         ));
-    }
-
-    /**
-     * Shows the end-of-day display.
-     * This method makes the display visible and updates all dynamic content to reflect
-     * the current game state. It is usually called in response to a game event.
-     */
-    public void show() {
-        recalculateFailedCustomers();
-        setVisible(true);
-        getLayout().setVisible(true);
-        getBirdImage().setVisible(true);
-        getPointImage1().setVisible(true);
-        getPointImage2().setVisible(true);
-        getPointImage3().setVisible(true);
-        gameScreen.pause(); // Pause the game when the display is shown
-        imageX = (float) (3 * Gdx.graphics.getWidth()) / 4; // Reset image position
-        Task birdMoveTask = new Task() {
-            @Override
-            public void run() {
-                updateBirdPosition(Gdx.graphics.getDeltaTime());
-            }
-        };
-        Timer.schedule(birdMoveTask, 0, 1 / 60f); // Schedule the task
-        this.animateGoldChange();
     }
 
     /**
