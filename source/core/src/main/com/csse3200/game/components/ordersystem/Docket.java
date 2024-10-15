@@ -54,11 +54,24 @@ public class Docket extends UIComponent {
     }
 
     /**
+     * Gets the skin associated with this docket.
+     * @return The skin associated with this docket
+     */
+    public Skin getSkin() { return docketSkin; }
+    /**
      * Sets the image associated with this docketImage.
      * @param docketImage the image to be associated with this docketImage.
      */
     public void setDocketImage(Image docketImage) {
         this.docketImage = docketImage;
+    }
+
+    /**
+     * Gets the image associated with this docket
+     * @return the image associated with this docket
+     */
+    public Image getDocketImage() {
+        return docketImage;
     }
 
     /**
@@ -95,14 +108,6 @@ public class Docket extends UIComponent {
     }
 
     /**
-     * Returns the skin object containing the docketImage textures.
-     * @return the docketImage skin
-     */
-    public Skin getDocketSkin() {
-        return docketSkin;
-    }
-
-    /**
      * Returns the start time of when the docketImage was created.
      *
      * @return the start time in milliseconds
@@ -117,6 +122,22 @@ public class Docket extends UIComponent {
 
     public boolean getPaused() {
         return isPaused;
+    }
+
+    /**
+     * Gets the total recipe time
+     * @return the total recipe time
+     */
+    public long getTotalRecipeTime() {
+        return totalRecipeTime;
+    }
+
+    /**
+     * Sets the total recipe time
+     * @param totalRecipeTime: the total recipe time to be set
+     */
+    public void setTotalRecipeTime(long totalRecipeTime) {
+        this.totalRecipeTime = totalRecipeTime;
     }
 
     /**
