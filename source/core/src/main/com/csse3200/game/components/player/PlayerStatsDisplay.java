@@ -29,10 +29,15 @@ public class PlayerStatsDisplay extends UIComponent {
   Table timerTable;
   Table dayTable;
   Table goldContentsTable;
+  Table dayContentsTable;
+
   private Image timerImage;
   private Image goldImage;
+  private Image calendarImage;
+
   private Label goldLabel;
   private static Label dayLabel;
+  private static Label rageLabel;
   private static int currentDay;
   private static Label timerLabel;
   private static long timer;
@@ -116,16 +121,17 @@ public class PlayerStatsDisplay extends UIComponent {
     timerTable = new Table();
     dayTable = new Table();
     goldContentsTable = new Table();
+    dayContentsTable = new Table();
 
     table.row();
 
-    String LARGE_LABEL = "large";
     String SMALL_LABEL = "cash";
+    String rageText = "Rage Meter";
 
 
     // Timer label for the remaining time in the day
     CharSequence TimerText = String.format("%s", convertDigital(timer));
-    setTimerLabel(new Label(TimerText, skin, LARGE_LABEL));
+    setTimerLabel(new Label(TimerText, skin, SMALL_LABEL));
 
     // Timer Icon
     timerImage = new Image(ServiceLocator.getResourceService().getAsset("images/hourglass.png", Texture.class));
@@ -138,14 +144,35 @@ public class PlayerStatsDisplay extends UIComponent {
     table.add(timerTable).expandX().padTop(0f);  // Ensure the timer is centered
     table.row();
 
+    // --- Update: Day Label with Container ---
+
     // Label for the Current Day
     CharSequence dayText = String.format("Day: %d", currentDay); // Start with Day 1
-    setDayLabel(new Label(dayText, skin, LARGE_LABEL));
-    table.add(dayLabel).left().padLeft(30).height(0);
+    dayLabel = new Label(dayText, skin, SMALL_LABEL);
+    dayLabel.setColor(Color.GOLD);  // Set text color to white for contrast
+
+    // Wrap day label in container for background
+    Container<Label> dayLabelContainer = new Container<>(dayLabel);
+
+    // Set background for day label container (similar to gold label)
+    TextureRegionDrawable dayBackground = new TextureRegionDrawable(
+        new TextureRegion(ServiceLocator.getResourceService().getAsset("images/box_background4.png", Texture.class))
+    );
+    dayLabelContainer.setBackground(dayBackground);  // Set background drawable
+
+    // Calendar Icon
+    calendarImage = new Image(ServiceLocator.getResourceService().getAsset("images/calendar.png", Texture.class));
+    dayContentsTable.add(calendarImage).size(50).padRight(0).padLeft(5); // Add icon before the gold label
+
+    // Add padding to the container for better spacing
+    dayLabelContainer.pad(10).padLeft(20);  // Optional: Adjust padding as needed
+
+    // Add the day label container to the table
+    dayContentsTable.add(dayLabelContainer);
+    table.add(dayContentsTable).left().width(210f).height(180).padTop(0);
     table.row();
 
-    // Label for Current Gold
-    //goldImage = new Image(ServiceLocator.getResourceService().getAsset("images/money.png", Texture.class));
+    // --- Existing: Gold Label with Container ---
     int gold = entity.getComponent(CombatStatsComponent.class).getGold();
     CharSequence goldText = String.format("Cash: %d", gold);
 
@@ -157,10 +184,10 @@ public class PlayerStatsDisplay extends UIComponent {
     Container<Label> goldLabelContainer = new Container<>(goldLabel);
 
     // Set background for container
-    TextureRegionDrawable background = new TextureRegionDrawable(
+    TextureRegionDrawable goldBackground = new TextureRegionDrawable(
         new TextureRegion(ServiceLocator.getResourceService().getAsset("images/box_background.png", Texture.class))
     );
-    goldLabelContainer.setBackground(background);  // Set background drawable
+    goldLabelContainer.setBackground(goldBackground);  // Set background drawable
 
     // Gold Icon
     goldImage = new Image(ServiceLocator.getResourceService().getAsset("images/coin.png", Texture.class));
@@ -168,9 +195,15 @@ public class PlayerStatsDisplay extends UIComponent {
 
     // Add the gold label container and image to the goldTable
     goldContentsTable.add(goldLabelContainer);
-    //goldContentsTable.add(goldImage).size(30).padLeft(10);
     goldTable.add(goldContentsTable);
     table.add(goldTable).left().width(220f).height(170).padTop(0);  // Align to the very left
+
+    table.row();
+
+    // Create a label for the rage meter
+    rageLabel = new Label(rageText, skin, SMALL_LABEL);
+    rageLabel.setColor(Color.RED); // Make text red
+    table.add(rageLabel).left().padTop(110).padLeft(30);
 
     // Add the table to the stage
     stage.addActor(table);

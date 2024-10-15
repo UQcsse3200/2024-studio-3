@@ -72,6 +72,8 @@ public class MainGameScreen extends ScreenAdapter {
 			"images/box_background.png",
 			"images/box_background2.png",
 			"images/box_background3.png",
+			"images/box_background4.png",
+			"images/calendar.png",
 			"images/Upgrade_display.png",
 			"images/pause_menu2.png",
 			"images/recipe_card.png",
