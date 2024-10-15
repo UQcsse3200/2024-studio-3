@@ -10,17 +10,15 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Timer;
-import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.util.Random;
-import java.util.TimerTask;
+
 
 /**
  * An ui component for displaying the Main menu.
@@ -43,7 +41,7 @@ public class MainMenuDisplay extends UIComponent {
   private String list_of_animals[]={"thegoat","goos","gorill","monki","wolf","raw_acai","raw_banana","chopped_strawb","chopped_chocolate","salad"};
   private int animal_on_screen=2;
  // private int animal_on_screen=5;
-  private float width_of_screen=Gdx.graphics.getWidth(),height_of_screen=Gdx.graphics.getHeight();
+  private float width_of_screen =Gdx.graphics.getWidth(),height_of_screen=Gdx.graphics.getHeight();
 
   private Timer.Task animalMoveTask,clearstage;
 
@@ -128,8 +126,8 @@ public class MainMenuDisplay extends UIComponent {
       }
 
       random=randomGenerator(1,number_of_animals)-1;
-      Image actor=new Image(ServiceLocator.getResourceService().getAsset("images/main_menu_animals/"+list_of_animals[random]+".png",Texture.class));;
-      actor.addAction(Actions.parallel(Actions.moveTo(endX,endY,duration),Actions.rotateBy(degrees,rotate_duration)));
+      Image actor=new Image(ServiceLocator.getResourceService().getAsset("images/main_menu_animals/"+list_of_animals[random]+".png",Texture.class));
+        actor.addAction(Actions.parallel(Actions.moveTo(endX,endY,duration),Actions.rotateBy(degrees,rotate_duration)));
       actor.setPosition(startX,startY);
       height=actor.getHeight();
       width=actor.getWidth();
@@ -173,10 +171,8 @@ public class MainMenuDisplay extends UIComponent {
     settingsBtn.setScale(scale_of_button);
     exitBtn.setTransform(true);
     exitBtn.setScale(scale_of_button);
-//    tutBtn.setTransform(true);
-//    tutBtn.setScale(scale_of_button);
 
-    cutsceneBtn.setTransform((true));
+      cutsceneBtn.setTransform((true));
     cutsceneBtn.setScale(scale_of_button);
       // Triggers an event when the button is pressed
     startBtn.addListener(
@@ -218,14 +214,6 @@ public class MainMenuDisplay extends UIComponent {
             entity.getEvents().trigger("exit");
           }
         });
-//      tutBtn.addListener(
-//              new ChangeListener() {
-//                  @Override
-//                  public void changed(ChangeEvent changeEvent, Actor actor) {
-//                      logger.debug("tutorial button clicked");
-//                      entity.getEvents().trigger("tutorial");
-//                  }
-//              });
       cutsceneBtn.addListener(
             new ChangeListener() {
                 @Override
