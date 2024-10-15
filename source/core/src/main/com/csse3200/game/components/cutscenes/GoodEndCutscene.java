@@ -7,17 +7,22 @@ import com.csse3200.game.services.ServiceLocator;
 import java.util.List;
 
 /**
- * The IntroCutscene class represents a specific cutscene that plays at the start of the game.
- * It defines the scenes, assets, and entities used during the intro cutscene.
+ * The GoodEndCutscene class plays the good end cutscene when triggered at the end of the game.
  */
 public class GoodEndCutscene extends Cutscene {
 
-
+    /**
+     * Constructor for the GoodEndCutscene class.
+     */
     public GoodEndCutscene() {
         super();
         this.IsAnimatedScenes = true;
     }
 
+    /**
+     * Sets up the scenes for the good end cutscene, in particular,
+     * the animation images for each scene.
+     */
     @Override
     protected void setupScenes() {
         animatedScenes.add(new AnimatedScene(
@@ -51,6 +56,10 @@ public class GoodEndCutscene extends Cutscene {
 
     }
 
+    /**
+     * Loads the assets needed for the cutscene, including textures for backgrounds
+     * and animations.
+     */
     @Override
     protected void loadAssets() {
         textures = new String[] {

@@ -11,12 +11,11 @@ import com.csse3200.game.services.ServiceLocator;
 public class GoodEndCutsceneTest {
 
     private GoodEndCutscene goodEndCutscene;
-    private ResourceService resourceService;
 
     @BeforeEach
     public void setUp() {
         // Mock the ServiceLocator's ResourceService
-        resourceService = Mockito.mock(ResourceService.class);
+        ResourceService resourceService = Mockito.mock(ResourceService.class);
         ServiceLocator.registerResourceService(resourceService);
 
         // Create an instance of BadEndCutscene
