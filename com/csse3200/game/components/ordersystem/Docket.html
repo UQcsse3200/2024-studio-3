@@ -158,10 +158,10 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Retrieves the name of the current drawable's texture.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>com.badlogic.gdx.scenes.scene2d.ui.Skin</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getDocketSkin()" class="member-name-link">getDocketSkin</a>()</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>com.badlogic.gdx.scenes.scene2d.ui.Image</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getDocketImage()" class="member-name-link">getDocketImage</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Returns the skin object containing the docketImage textures.</div>
+<div class="block">Gets the image associated with this docket</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>com.badlogic.gdx.scenes.scene2d.ui.Image</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getImage()" class="member-name-link">getImage</a>()</code></div>
@@ -171,15 +171,25 @@ loadScripts(document, 'script');</script>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getPaused()" class="member-name-link">getPaused</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>long</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getStartTime()" class="member-name-link">getStartTime</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>com.badlogic.gdx.scenes.scene2d.ui.Skin</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getSkin()" class="member-name-link">getSkin</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Gets the skin associated with this docket.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>long</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getStartTime()" class="member-name-link">getStartTime</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Returns the start time of when the docketImage was created.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>[]</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getTextureNameArray()" class="member-name-link">getTextureNameArray</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>[]</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getTextureNameArray()" class="member-name-link">getTextureNameArray</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Returns the array of texture names corresponding to the different states of the docketImage.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>long</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getTotalRecipeTime()" class="member-name-link">getTotalRecipeTime</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Gets the total recipe time</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setCellHash(int)" class="member-name-link">setCellHash</a><wbr>(int&nbsp;cellHash)</code></div>
@@ -203,8 +213,13 @@ loadScripts(document, 'script');</script>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setStage(com.badlogic.gdx.scenes.scene2d.Stage)" class="member-name-link">setStage</a><wbr>(com.badlogic.gdx.scenes.scene2d.Stage&nbsp;mock)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#updateDocketTexture(double)" class="member-name-link">updateDocketTexture</a><wbr>(double&nbsp;remainingTimeSecs)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setTotalRecipeTime(long)" class="member-name-link">setTotalRecipeTime</a><wbr>(long&nbsp;totalRecipeTime)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Sets the total recipe time</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#updateDocketTexture(double)" class="member-name-link">updateDocketTexture</a><wbr>(double&nbsp;remainingTimeSecs)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Updates the texture of the docketImage based on the remaining time before it disposes.</div>
 </div>
 </div>
@@ -266,6 +281,17 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
+<section class="detail" id="getSkin()">
+<h3>getSkin</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">com.badlogic.gdx.scenes.scene2d.ui.Skin</span>&nbsp;<span class="element-name">getSkin</span>()</div>
+<div class="block">Gets the skin associated with this docket.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>The skin associated with this docket</dd>
+</dl>
+</section>
+</li>
+<li>
 <section class="detail" id="setDocketImage(com.badlogic.gdx.scenes.scene2d.ui.Image)">
 <h3>setDocketImage</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setDocketImage</span><wbr><span class="parameters">(com.badlogic.gdx.scenes.scene2d.ui.Image&nbsp;docketImage)</span></div>
@@ -273,6 +299,17 @@ loadScripts(document, 'script');</script>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>docketImage</code> - the image to be associated with this docketImage.</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getDocketImage()">
+<h3>getDocketImage</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">com.badlogic.gdx.scenes.scene2d.ui.Image</span>&nbsp;<span class="element-name">getDocketImage</span>()</div>
+<div class="block">Gets the image associated with this docket</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>the image associated with this docket</dd>
 </dl>
 </section>
 </li>
@@ -321,17 +358,6 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="getDocketSkin()">
-<h3>getDocketSkin</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">com.badlogic.gdx.scenes.scene2d.ui.Skin</span>&nbsp;<span class="element-name">getDocketSkin</span>()</div>
-<div class="block">Returns the skin object containing the docketImage textures.</div>
-<dl class="notes">
-<dt>Returns:</dt>
-<dd>the docketImage skin</dd>
-</dl>
-</section>
-</li>
-<li>
 <section class="detail" id="getStartTime()">
 <h3>getStartTime</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name">getStartTime</span>()</div>
@@ -352,6 +378,28 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="getPaused()">
 <h3>getPaused</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">getPaused</span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getTotalRecipeTime()">
+<h3>getTotalRecipeTime</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name">getTotalRecipeTime</span>()</div>
+<div class="block">Gets the total recipe time</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>the total recipe time</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="setTotalRecipeTime(long)">
+<h3>setTotalRecipeTime</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setTotalRecipeTime</span><wbr><span class="parameters">(long&nbsp;totalRecipeTime)</span></div>
+<div class="block">Sets the total recipe time</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>totalRecipeTime</code> - : the total recipe time to be set</dd>
+</dl>
 </section>
 </li>
 <li>

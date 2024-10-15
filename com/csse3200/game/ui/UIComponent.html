@@ -104,7 +104,7 @@ loadScripts(document, 'script');</script>
 <div class="type-signature"><span class="modifiers">public abstract class </span><span class="element-name type-name-label">UIComponent</span>
 <span class="extends-implements">extends <a href="../rendering/RenderComponent.html" title="class in com.csse3200.game.rendering">RenderComponent</a>
 implements <a href="../rendering/Renderable.html" title="interface in com.csse3200.game.rendering">Renderable</a></span></div>
-<div class="block">A generic component for rendering onto the ui.</div>
+<div class="block">A generic component for rendering onto the UI.</div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -117,7 +117,7 @@ implements <a href="../rendering/Renderable.html" title="interface in com.csse32
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Field</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><code>protected static com.badlogic.gdx.scenes.scene2d.ui.Skin</code></div>
+<div class="col-first even-row-color"><code>protected com.badlogic.gdx.scenes.scene2d.ui.Skin</code></div>
 <div class="col-second even-row-color"><code><a href="#skin" class="member-name-link">skin</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>protected com.badlogic.gdx.scenes.scene2d.Stage</code></div>
@@ -140,7 +140,9 @@ implements <a href="../rendering/Renderable.html" title="interface in com.csse32
 <div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E()" class="member-name-link">UIComponent</a>()</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(com.badlogic.gdx.scenes.scene2d.ui.Skin)" class="member-name-link">UIComponent</a><wbr>(com.badlogic.gdx.scenes.scene2d.ui.Skin&nbsp;skin)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-last odd-row-color">
+<div class="block">Constructor that allows injecting the Skin object.</div>
+</div>
 </div>
 </section>
 </li>
@@ -202,7 +204,7 @@ implements <a href="../rendering/Renderable.html" title="interface in com.csse32
 <li>
 <section class="detail" id="skin">
 <h3>skin</h3>
-<div class="member-signature"><span class="modifiers">protected static</span>&nbsp;<span class="return-type">com.badlogic.gdx.scenes.scene2d.ui.Skin</span>&nbsp;<span class="element-name">skin</span></div>
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">com.badlogic.gdx.scenes.scene2d.ui.Skin</span>&nbsp;<span class="element-name">skin</span></div>
 </section>
 </li>
 <li>
@@ -223,6 +225,12 @@ implements <a href="../rendering/Renderable.html" title="interface in com.csse32
 <section class="detail" id="&lt;init&gt;(com.badlogic.gdx.scenes.scene2d.ui.Skin)">
 <h3>UIComponent</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">UIComponent</span><wbr><span class="parameters">(com.badlogic.gdx.scenes.scene2d.ui.Skin&nbsp;skin)</span></div>
+<div class="block">Constructor that allows injecting the Skin object.
+ If no Skin is provided, a default Skin is loaded.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>skin</code> - the Skin to use for the component, or null to use the default.</dd>
+</dl>
 </section>
 </li>
 <li>

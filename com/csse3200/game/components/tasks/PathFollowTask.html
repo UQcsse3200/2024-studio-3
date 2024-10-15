@@ -127,8 +127,9 @@ implements <a href="../../ai/tasks/PriorityTask.html" title="interface in com.cs
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Constructor</div>
 <div class="table-header col-last">Description</div>
-<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(com.badlogic.gdx.math.Vector2,int)" class="member-name-link">PathFollowTask</a><wbr>(com.badlogic.gdx.math.Vector2&nbsp;targetPos,
- int&nbsp;customer_id)</code></div>
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(com.badlogic.gdx.math.Vector2,int,float)" class="member-name-link">PathFollowTask</a><wbr>(com.badlogic.gdx.math.Vector2&nbsp;targetPos,
+ int&nbsp;customer_id,
+ float&nbsp;waitingTime)</code></div>
 <div class="col-last even-row-color">
 <div class="block">Task to make an entity follow a path to a target position.</div>
 </div>
@@ -195,15 +196,17 @@ implements <a href="../../ai/tasks/PriorityTask.html" title="interface in com.cs
 <h2>Constructor Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="&lt;init&gt;(com.badlogic.gdx.math.Vector2,int)">
+<section class="detail" id="&lt;init&gt;(com.badlogic.gdx.math.Vector2,int,float)">
 <h3>PathFollowTask</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">PathFollowTask</span><wbr><span class="parameters">(com.badlogic.gdx.math.Vector2&nbsp;targetPos,
- int&nbsp;customer_id)</span></div>
+ int&nbsp;customer_id,
+ float&nbsp;waitingTime)</span></div>
 <div class="block">Task to make an entity follow a path to a target position.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>targetPos</code> - The target position to move to</dd>
 <dd><code>customer_id</code> - The id of the customer</dd>
+<dd><code>waitingTime</code> - The making time from the recipe, scaled by any time factor like DEFAULT_TIMER if needed.</dd>
 </dl>
 </section>
 </li>

@@ -126,7 +126,7 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Description</div>
 <div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E()" class="member-name-link">OrderActions</a>()</code></div>
 <div class="col-last even-row-color">
-<div class="block">Constructs an OrderActions instance with a reference to the main game object.</div>
+<div class="block">Constructs an OrderActions instance.</div>
 </div>
 </div>
 </section>
@@ -148,21 +148,22 @@ loadScripts(document, 'script');</script>
 <div class="block">Initialises the OrderActions component by registering input listeners and
  event listeners for order-related actions.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#keyDown(int)" class="member-name-link">keyDown</a><wbr>(int&nbsp;keycode)</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>org.slf4j.Logger</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getLogger()" class="member-name-link">getLogger</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Handles key press events.</div>
+<div class="block">Get the logger instance for testing purposes.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#keyTyped(char)" class="member-name-link">keyTyped</a><wbr>(char&nbsp;character)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#keyDown(int)" class="member-name-link">keyDown</a><wbr>(int&nbsp;keycode)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Handles key typed events.</div>
+<div class="block">Handles key press events.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#keyUp(int)" class="member-name-link">keyUp</a><wbr>(int&nbsp;keycode)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Handles key release events.</div>
-</div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#keyTyped(char)" class="member-name-link">keyTyped</a><wbr>(char&nbsp;character)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#keyUp(int)" class="member-name-link">keyUp</a><wbr>(int&nbsp;keycode)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 </div>
 </div>
 </div>
@@ -190,7 +191,7 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="&lt;init&gt;()">
 <h3>OrderActions</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">OrderActions</span>()</div>
-<div class="block">Constructs an OrderActions instance with a reference to the main game object. - Tia</div>
+<div class="block">Constructs an OrderActions instance.</div>
 </section>
 </li>
 </ul>
@@ -217,7 +218,7 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="keyDown(int)">
 <h3>keyDown</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">keyDown</span><wbr><span class="parameters">(int&nbsp;keycode)</span></div>
-<div class="block">Handles key press events. Shifts dockets left or right based on the pressed key. - Tia</div>
+<div class="block">Handles key press events. Shifts dockets left or right based on the pressed key.</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code>keyDown</code>&nbsp;in interface&nbsp;<code>com.badlogic.gdx.InputProcessor</code></dd>
@@ -240,16 +241,11 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="keyUp(int)">
 <h3>keyUp</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">keyUp</span><wbr><span class="parameters">(int&nbsp;keycode)</span></div>
-<div class="block">Handles key release events. Currently does nothing. - Tia</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code>keyUp</code>&nbsp;in interface&nbsp;<code>com.badlogic.gdx.InputProcessor</code></dd>
 <dt>Overrides:</dt>
 <dd><code><a href="../../input/InputComponent.html#keyUp(int)">keyUp</a></code>&nbsp;in class&nbsp;<code><a href="../../input/InputComponent.html" title="class in com.csse3200.game.input">InputComponent</a></code></dd>
-<dt>Parameters:</dt>
-<dd><code>keycode</code> - the code of the released key</dd>
-<dt>Returns:</dt>
-<dd>false, as no action is taken</dd>
 <dt>See Also:</dt>
 <dd>
 <ul class="tag-list">
@@ -263,22 +259,28 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="keyTyped(char)">
 <h3>keyTyped</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">keyTyped</span><wbr><span class="parameters">(char&nbsp;character)</span></div>
-<div class="block">Handles key typed events. Currently does nothing. - Tia</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code>keyTyped</code>&nbsp;in interface&nbsp;<code>com.badlogic.gdx.InputProcessor</code></dd>
 <dt>Overrides:</dt>
 <dd><code><a href="../../input/InputComponent.html#keyTyped(char)">keyTyped</a></code>&nbsp;in class&nbsp;<code><a href="../../input/InputComponent.html" title="class in com.csse3200.game.input">InputComponent</a></code></dd>
-<dt>Parameters:</dt>
-<dd><code>character</code> - the typed character</dd>
-<dt>Returns:</dt>
-<dd>false, as no action is taken</dd>
 <dt>See Also:</dt>
 <dd>
 <ul class="tag-list">
 <li><code>InputProcessor.keyTyped(char)</code></li>
 </ul>
 </dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getLogger()">
+<h3>getLogger</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">org.slf4j.Logger</span>&nbsp;<span class="element-name">getLogger</span>()</div>
+<div class="block">Get the logger instance for testing purposes.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>the logger instance.</dd>
 </dl>
 </section>
 </li>
