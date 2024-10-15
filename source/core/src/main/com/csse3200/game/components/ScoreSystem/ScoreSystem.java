@@ -5,7 +5,7 @@ import com.csse3200.game.components.Component;
 
 public class ScoreSystem extends Component {
     public static int getAccuracyScore(List<String> playerIngredients, List<String> orderIngredients) {
-        int score;
+        int score = 0;
         // Determine the size of the longer ingredient list
         int longerIngredientList = Math.max(playerIngredients.size(), orderIngredients.size());
 
@@ -18,7 +18,10 @@ public class ScoreSystem extends Component {
         }
 
         // Calculate percentage score
-        score = (matchingIngredients / longerIngredientList) * 100;
+        if (longerIngredientList > 0) {
+            double fraction = (double) matchingIngredients / longerIngredientList;
+            score = (int) Math.round(fraction * 100);
+        }
 
         // Round to nearest whole digit
         return score;
