@@ -32,10 +32,7 @@ public class CookingHoverComponent extends StationHoverComponent {
 
             // Check if the item is cookable
             if (currentItem != null && currentItem instanceof IngredientComponent) {
-                IngredientComponent ingredientComponent = (IngredientComponent) currentItem;
-
-                if (currentItem.getEntity().getComponent(CookIngredientComponent.class) != null
-                        && ingredientComponent.getItemState().equals("raw")) {
+                if (currentItem.getEntity().getComponent(CookIngredientComponent.class) != null) {
 
                     batch.draw(cookKeyImage,
                             position.x + KEY_X_OFFSET,
