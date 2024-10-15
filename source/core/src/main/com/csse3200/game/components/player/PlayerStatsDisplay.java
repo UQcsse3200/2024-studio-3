@@ -17,6 +17,8 @@ import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import com.badlogic.gdx.utils.Timer;
+
 
 
 /**
@@ -224,6 +226,14 @@ public class PlayerStatsDisplay extends UIComponent {
       getTimerLabel().setColor(Color.WHITE);  // Reset to the default color (white or original)
     }
 
+    // Emphasize the timer when below 1 minute by flickering and increasing size
+    if (timer < TimeUnit.MINUTES.toMillis(1)) {
+      flickerTimer();
+      increaseTimerSize();
+    } else {
+      resetTimerSize();  // Reset the size when the time is above 1 minute
+    }
+
     // Format and update the timer label with the remaining time
     CharSequence timerText = String.format("Time Left: %n   %s", convertDigital(time));
     getTimerLabel().setText(timerText);
@@ -232,6 +242,34 @@ public class PlayerStatsDisplay extends UIComponent {
     ServiceLocator.getDayNightService().getEvents().trigger("callpastsecond");
   }
 
+  /**
+   * Flickers the timer by toggling its visibility every 0.5 seconds.
+   */
+  private static void flickerTimer() {
+    Timer.schedule(new Timer.Task() {
+      @Override
+      public void run() {
+        boolean isVisible = getTimerLabel().isVisible();
+        getTimerLabel().setVisible(!isVisible);  // Toggle visibility
+      }
+    }, 0, 0.5f);  // Flicker every 0.5 seconds
+  }
+
+  /**
+   * Increases the size of the timer as it approaches zero.
+   */
+  private static void increaseTimerSize() {
+    float newFontScale = 1.5f;  // Make the timer 1.5x its original size
+    getTimerLabel().setFontScale(newFontScale);
+  }
+
+  /**
+   * Resets the timer label size to its original value.
+   */
+  private static void resetTimerSize() {
+    float originalFontScale = 1.0f;  // Reset the font scale
+    getTimerLabel().setFontScale(originalFontScale);
+  }
 
   @Override
   public void dispose() {
