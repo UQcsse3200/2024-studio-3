@@ -72,6 +72,7 @@ public class SpeedBootsUpgrade extends UIComponent implements Upgrade {
         layout.setFillParent(true);
         layout.setVisible(isVisible);
         ServiceLocator.getRandomComboService().getEvents().addListener("Speed", this::activate);
+        ServiceLocator.getRandomComboService().getEvents().addListener("Speedoff", this::deactivate);
     }
 
     /**

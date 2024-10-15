@@ -53,6 +53,7 @@ public class DancePartyUpgrade extends UIComponent implements Upgrade {
         this.isActive = false;
 
         ServiceLocator.getRandomComboService().getEvents().addListener("Dance party", this::activate);
+        ServiceLocator.getRandomComboService().getEvents().addListener("Dance partyoff", this::deactivate);
     }
 
     @Override

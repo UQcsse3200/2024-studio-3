@@ -74,6 +74,11 @@ public class RandomComboService extends Component {
         eventHandler.trigger(getSelectedUpgrade());
     }
 
+    public void deactivateUpgrade() {
+        eventHandler.trigger(getSelectedUpgrade() + "off");
+    }
+
+
     public EventHandler getEvents() {
         return eventHandler;
       }

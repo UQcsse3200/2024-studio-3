@@ -301,6 +301,7 @@ import java.util.ArrayList;
          * the current game state. It is usually called in response to a game event.
          */
         public void show() {
+            ServiceLocator.getRandomComboService().deactivateUpgrade();
             setVisible(true);
             getLayout().setVisible(true);
             getBirdImage().setVisible(true);
