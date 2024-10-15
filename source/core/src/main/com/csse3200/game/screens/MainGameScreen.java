@@ -124,6 +124,7 @@ public class MainGameScreen extends ScreenAdapter {
 	 */
 	public MainGameScreen(GdxGame game) {
 		this.game = game;
+		MainGameOrderTicketDisplay.resetOrderNumb();
 
 		logger.debug("Initialising main game screen services");
 		ServiceLocator.registerTimeSource(new GameTime());
@@ -313,6 +314,7 @@ public class MainGameScreen extends ScreenAdapter {
 		ui.addComponent(new GameBackgroundDisplay())
 			.addComponent(new InputDecorator(stage, 10))
 		  	.addComponent(docketLineDisplay = new DocketLineDisplay())
+		  	.addComponent(new DocketLineDisplay())
 			.addComponent(new PerformanceDisplay())
 			.addComponent(new MainGameActions(this.game, UIFactory.createDocketUI()))
 			.addComponent(new MainGameExitDisplay())
@@ -328,6 +330,8 @@ public class MainGameScreen extends ScreenAdapter {
 				.addComponent(new SpeedBootsUpgrade())
 				.addComponent(new ExtortionUpgrade())
 				.addComponent(new DancePartyUpgrade())
+				.addComponent(new PauseMenuActions(this.game))
+				.addComponent(new PauseMenuDisplay(this))
 						.addComponent(new UpgradesDisplay(this))
 								.addComponent(new RecipeCardDisplay(this));
 

@@ -75,7 +75,7 @@ public class TutorialScreenDisplayTest {
     @Test
     public void testCompleteTutorial() {
         tutorialScreenDisplay.setTutorialStep(4);
-        when(Gdx.input.isKeyJustPressed(Input.Keys.ENTER)).thenReturn(true);
+        when(Gdx.input.isKeyJustPressed(Input.Keys.SPACE)).thenReturn(true);
         tutorialScreenDisplay.update();
         verify(mockGame).setScreen(GdxGame.ScreenType.MAIN_GAME);
     }
