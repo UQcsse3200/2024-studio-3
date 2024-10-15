@@ -17,27 +17,84 @@ class DocketTest {
 
     @BeforeEach
     void setUp() {
-        Skin mockSkin = new Skin();
-        Image mockImage = new Image();
+
         docket = new Docket(5000);
         docket2 = new Docket(5000);
     }
 
-//    @Test
-//    public void testUpdateDocketTexture() {
-//        // Check initial texture
-//        assertEquals("fresh_docket", getTextureName(docket.getImage()));
-//
-//        // Update texture with different remaining times
-//        docket.updateDocketTexture(2.5);
-//        assertEquals("mild_docket", getTextureName(docket.getImage()));
-//
-//        docket.updateDocketTexture(1.5);
-//        assertEquals("old_docket", getTextureName(docket.getImage()));
-//
-//        docket.updateDocketTexture(0.5);
-//        assertEquals("expired_docket", getTextureName(docket.getImage()));
-//    }
+    @Test
+    void testGetCurrentTextureName() {
+        docket.getDocketImage().setDrawable(docket.getSkin().getDrawable(docket.getTextureNameArray()[0]));
+        assertEquals(docket.getTextureNameArray()[0], docket.getCurrentTextureName());
+        docket.getDocketImage().setDrawable(null);
+        assertEquals("none", docket.getCurrentTextureName());
+    }
+
+    @Test
+    void testUpdateDocketTextures() {
+        docket.setPaused(true);
+        updateAndAssertDocketTexture(0.5, 0);
+
+        docket.setPaused(false);
+        double remainingTimeSecs = 1.5;
+        setRecipeTimeAndUpdate(remainingTimeSecs, 0.6);
+        updateAndAssertDocketTexture(remainingTimeSecs, 0);
+
+        setRecipeTimeAndUpdate(remainingTimeSecs, 0.3);
+        updateAndAssertDocketTexture(remainingTimeSecs, 1);
+
+        remainingTimeSecs = 1;
+        docket.setTotalRecipeTime(10);
+        updateAndAssertDocketTexture(remainingTimeSecs, 2);
+
+        remainingTimeSecs = -1;
+        updateAndAssertDocketTexture(remainingTimeSecs, 3);
+    }
+
+    private void setRecipeTimeAndUpdate(double remainingTimeSecs, double factor) {
+        docket.setTotalRecipeTime((long) (remainingTimeSecs / factor));
+        docket.updateDocketTexture(remainingTimeSecs);
+    }
+
+    private void updateAndAssertDocketTexture(double remainingTimeSecs, int textureIndex) {
+        docket.updateDocketTexture(remainingTimeSecs);
+        assertEquals(
+                docket.getSkin().getDrawable(docket.getTextureNameArray()[textureIndex]),
+                docket.getDocketImage().getDrawable()
+        );
+    }
+
+
+    @Test
+    void testRecipeTimeSetAndGet() {
+        docket.setTotalRecipeTime((long) 1.5);
+        assertEquals((long) 1.5, docket.getTotalRecipeTime());
+
+        docket.setTotalRecipeTime((long) 3.8);
+        assertEquals((long) 3.8, docket.getTotalRecipeTime());
+    }
+
+    @Test
+    void testPauseSetAndGet() {
+        docket.setPaused(true);
+        assertTrue(docket.getPaused());
+        docket.setPaused(false);
+        assertFalse(docket.getPaused());
+    }
+
+    @Test
+    void testSkinSetAndGet() {
+        Skin mockSkin = new Skin();
+        docket.setSkin(mockSkin);
+        assertEquals(mockSkin, docket.getSkin());
+    }
+
+    @Test
+    void testImageSetAndGet() {
+        Image mockImage = new Image();
+        docket.setDocketImage(mockImage);
+        assertEquals(mockImage, docket.getDocketImage());
+    }
 
     @Test
     void testDefaultStartTime() {
