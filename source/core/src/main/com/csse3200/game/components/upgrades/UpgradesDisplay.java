@@ -2,9 +2,11 @@ package com.csse3200.game.components.upgrades;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -213,6 +215,38 @@ public class UpgradesDisplay extends UIComponent {
             logger.info("Upgrades menu is now hidden.");
             game.resume();
             upgradesTable.setVisible(false);
+        }
+    }
+
+    public Button getYesButton() {
+        Table buttonTable = (Table) this.getUpgradesTable().getChildren().get(0);
+        return (TextButton) buttonTable.getChildren().get(0);
+    }
+
+    public Button getNoButton() {
+        Table buttonTable = (Table) this.getUpgradesTable().getChildren().get(0);
+        return (TextButton) buttonTable.getChildren().get(1);
+    }
+
+    public void simulateYesButtonClick() {
+        TextButton yesButton = (TextButton) this.getYesButton();
+        yesButton.getClickListener().clicked(null, 0, 0);
+
+        for (EventListener listener : yesButton.getListeners()) {
+            if (listener instanceof ClickListener) {
+                ((ClickListener) listener).clicked(null, 0, 0);
+            }
+        }
+    }
+
+    public void simulateNoButtonClick() {
+        TextButton noButton = (TextButton) this.getNoButton();
+        noButton.getClickListener().clicked(null, 0, 0);
+
+        for (EventListener listener : noButton.getListeners()) {
+            if (listener instanceof ClickListener) {
+                ((ClickListener) listener).clicked(null, 0, 0);
+            }
         }
     }
 
