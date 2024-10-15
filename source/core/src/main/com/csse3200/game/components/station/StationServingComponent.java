@@ -126,7 +126,6 @@ public class StationServingComponent extends Component {
             CustomerManager.removeCustomerByOrder(bigTicketInfo[0]);
 
             // Call to team 1's function with the big ticket info
-            //TBD(item, bigTicketInfo[0], bigTicketInfo[1], bigTicketInfo[2]);
             // remove ticket
             logger.info("Submitting meal and removing docket");
             ServiceLocator.getDocketService().getEvents().trigger("removeOrder", -1); // removes the order from the order action list
@@ -146,7 +145,7 @@ public class StationServingComponent extends Component {
      * Increments the gold and updates the gold in the UI according to customer satisfaction and actual ordered meal price.
      *
      * @param playerMeal - the name of the meal that the player is currently submitting to the customer.
-     * @param meal - the item that the player is submitting to the customer.
+     * @param meal - the meal item that the player is submitting to the customer.
      */
     private void scoreMeal(String playerMeal, ItemComponent meal) {
         String[] bigTicketInfo = bigTicket.getCurrentBigTicketInfo();
@@ -181,7 +180,6 @@ public class StationServingComponent extends Component {
 
         // Determines the final score based on the three previous scoring criteria
         String finalScore = ScoreSystem.getFinalScore(accuracyScore, timeScore, completionScore);
-        logOrderDetails(orderNumber, finalScore);
 
         // Updating the gold amount and the HoverBox display based on the final score
         Entity customer = CustomerManager.getCustomerByOrder(orderNumber);
@@ -191,6 +189,11 @@ public class StationServingComponent extends Component {
         }
     }
 
+    /**
+     * Function that is called to retrieve the completion statuses of the ingredients used in the player's meal.
+     *
+     * @param meal - the meal item that the player is submitting to the customer.
+     */
     private List<Float> getCompletionList(ItemComponent meal) {
         List<Float> ingredientCompletionList = new ArrayList<>();
         if (meal instanceof MealComponent) {
@@ -222,6 +225,11 @@ public class StationServingComponent extends Component {
         return ingredientCompletionList;
     }
 
+    /**
+     * Function that is called to retrieve the meal price.
+     *
+     * @param orderedMeal - the name of the meal that the player is currently submitting to the customer.
+     */
     private int getMealPrice(String orderedMeal) {
         return switch (orderedMeal) {
             case "acaiBowl", "fruitSalad" -> 20;
@@ -231,11 +239,13 @@ public class StationServingComponent extends Component {
         };
     }
 
-    private void logOrderDetails(String orderNumber, String scoreDescription) {
-        logger.info("Order number: {}", orderNumber);
-        logger.info("Description: {}", scoreDescription);
-    }
-
+    /**
+     * Function that is called to process the customer reaction, and increments the gold.
+     *
+     * @param customer - the customer entity.
+     * @param finalScore - the final score that is assigned to a meal.
+     * @param mealPrice - the price of the meal.
+     */
     private void processCustomerReaction(Entity customer, String finalScore, int mealPrice) {
         HoverBoxComponent hoverBox = customer.getComponent(HoverBoxComponent.class);
         if (hoverBox == null) return;
@@ -248,23 +258,35 @@ public class StationServingComponent extends Component {
         updateGoldUI(gold);
     }
 
-    private String getFaceImagePath(String scoreDescription) {
-        return switch (scoreDescription) {
+    /**
+     * Function that is called to retrieve the path to update the HoverBox Display.
+     *
+     * @param finalScore - the final score that is assigned to a meal.
+     */
+    private String getFaceImagePath(String finalScore) {
+        return switch (finalScore) {
             case "Grin Face" -> "images/customer_faces/grin_face.png";
             case "Smile Face" -> "images/customer_faces/smile_face.png";
             case "Neutral Face" -> "images/customer_faces/neutral_face.png";
             case "Frown Face" -> "images/customer_faces/frown_face.png";
             case "Angry Face" -> "images/customer_faces/angry_face.png";
             default -> {
-                logger.error("No image found for preference: {}", scoreDescription);
+                logger.error("No image found for preference: {}", finalScore);
                 yield "images/customer_faces/angry_face.png"; // Provide a default image
             }
         };
     }
 
-    private int updateGoldBasedOnScore(int currentGold, String scoreDescription, int mealPrice) {
+    /**
+     * Function that is called to update the gold based on the meal price.
+     *
+     * @param currentGold - the current amount of gold the player has.
+     * @param finalScore - the final score that is assigned to a meal.
+     * @param mealPrice - the price of the meal.
+     */    
+    private int updateGoldBasedOnScore(int currentGold, String finalScore, int mealPrice) {
         int gold = currentGold + mealPrice;
-        switch (scoreDescription) {
+        switch (finalScore) {
             case "Grin Face" -> gold += 10;
             case "Smile Face" -> gold += 5;
             case "Frown Face" -> gold -= 5;

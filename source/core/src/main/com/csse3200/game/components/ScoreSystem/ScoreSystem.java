@@ -4,6 +4,13 @@ import java.util.List;
 import com.csse3200.game.components.Component;
 
 public class ScoreSystem extends Component {
+
+    /**
+     * Function that is called to retrieve the accuracy of the player's meal.
+     *
+     * @param playerIngredients - the ingredients used in the player's meal.
+     * @param orderIngredients - the ingredients needed to make the ordered meal.
+     */
     public static int getAccuracyScore(List<String> playerIngredients, List<String> orderIngredients) {
         int score = 0;
         // Determine the size of the longer ingredient list
@@ -27,7 +34,11 @@ public class ScoreSystem extends Component {
         return score;
     }
 
-    // Add function that determines the time remaining on order ticket.
+    /**
+     * Function that is called to retrieve the score based on the time remaining before the ticket expires.
+     *
+     * @param orderTime - the time that is remaining before the order ticket disappears.
+     */
     public static int getTimeScore(String orderTime) {
         float time = Float.parseFloat(orderTime);
         int score;
@@ -46,6 +57,11 @@ public class ScoreSystem extends Component {
         return score;
     }
 
+    /**
+     * Function that is called to retrieve the score based on the how 'chopped' or 'cooked' an ingredient is.
+     *
+     * @param ingredients - the ingredients that were used to create the player's meal.
+     */
     public static int getCompletionScore(List<Float> ingredients) {
         int totalScore = 0; 
         int score;
@@ -57,7 +73,13 @@ public class ScoreSystem extends Component {
         return score;
     }
 
-
+    /**
+     * Function that is called to retrieve the final score based on all considered factors.
+     *
+     * @param accuracyScore - the score that measures the accuracy of the player's meal.
+     * @param timeScore - the score that is dependent on how much time remains on the ticket.
+     * @param completionScore - the score that indicates how 'cooked' or 'chopped' the ingredients are.
+     */
     public static String getFinalScore(int accuracyScore, int timeScore, int completionScore) {
         int score;
         score = (accuracyScore + timeScore + completionScore) / 3;
