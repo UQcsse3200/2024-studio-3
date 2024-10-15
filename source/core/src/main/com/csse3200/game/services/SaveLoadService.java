@@ -51,8 +51,10 @@ public class SaveLoadService {
             Entity player = ServiceLocator.getPlayerService().getPlayer();
             player.getComponent(CombatStatsComponent.class).setGold(state.getMoney());
             ServiceLocator.getDayNightService().setDay(state.getDay());
+
+            // Load saved decisions from the state, not from the current system
             MoralDecision system = ServiceLocator.getEntityService().getMoralSystem().getComponent(MoralDecision.class);
-            for (Decision decision: system.getListOfDecisions()) {
+            for (Decision decision : state.getDecisions()) {
                 system.addDecision(decision);
             }
         }
