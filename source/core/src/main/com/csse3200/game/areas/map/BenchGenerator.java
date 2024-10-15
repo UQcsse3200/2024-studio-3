@@ -46,21 +46,6 @@ public class BenchGenerator {
         LOGGER.log(Level.INFO, "added row of " + arr.size() + " benches");
         return arr;
     }
-    public static ArrayList<Bench> createBenchRowFlat(int startX, int endX, int y) {
-        ArrayList<Bench> arr = new ArrayList<>();
-        // add the left part of the bench
-        arr.add(new Bench("left_border", startX, y));
-        if (endX - startX > 1){ // the bench has 2 or more segments
-            // add the middle parts of the bench
-            for (int i = startX+1; i < endX; i++) {
-                arr.add(new Bench("middle", i, y));
-            }
-            // add the right part of the bench
-            arr.add(new Bench("right_border", endX, y));
-        }
-        LOGGER.log(Level.INFO, "added row of " + arr.size() + " flattened benches");
-        return arr;
-    }
 
     public static ArrayList<Bench> singleBench(int x, int y) {
         ArrayList<Bench> arr = new ArrayList<>();
