@@ -37,7 +37,7 @@ public class UpgradesDisplayTest {
     @Mock ResourceService resourceService;
     @Mock Texture textureMock;
     @Mock Table upgradesTable;
-    @Mock EventHandler eventHandler;
+    @Mock EventHandler mockEventHandler;
     @Mock MainGameScreen mainGameScreen;
     RandomComboService randomComboService;
     private UpgradesDisplay upgradesDisplay;
@@ -62,7 +62,7 @@ public class UpgradesDisplayTest {
         lenient().when(renderService.getStage()).thenReturn(stage);
         lenient().when(renderService.getStage().getViewport()).thenReturn(viewport);
         lenient().when(renderService.getStage().getViewport().getCamera()).thenReturn(camera);
-        lenient().when(randomComboService.getEvents()).thenReturn(eventHandler);
+        lenient().when(randomComboService.getEvents()).thenReturn(mockEventHandler);
 
         upgradesDisplay = new UpgradesDisplay(mainGameScreen);
         upgradesDisplay.setUpgradesTable(upgradesTable);
@@ -177,12 +177,23 @@ public class UpgradesDisplayTest {
         upgradesDisplay.toggleVisibility(); // Show the upgrades menu
         Table buttonsTable = (Table) upgradesDisplay.getUpgradesTable().getChildren().get(0);
 
-
         upgradesDisplay.simulateNoButtonClick();
 
         verify(mainGameScreen, times(2)).resume();
         verify(randomComboService.getEvents()).trigger("response");
         assertFalse(upgradesDisplay.isVisible(), "Upgrades display should be hidden after clicking NO");
+    }
+
+    @Test
+    void testDisplayNotEnoughGoldUI() {
+        upgradesDisplay.create();
+        upgradesDisplay.toggleVisibility();
+        upgradesDisplay.displayNotEnoughGoldUI();
+
+        verify(resourceService).getAsset("images/notEnoughGold.png", Texture.class);
+        assertEquals(1, upgradesDisplay.getNotEnoughGoldImages().size());
+        assertInstanceOf(Image.class, upgradesDisplay.getNotEnoughGoldImages().getFirst());
+        assertTrue(upgradesDisplay.getNotEnoughGoldImages().getFirst().isVisible());
     }
 
     @Test

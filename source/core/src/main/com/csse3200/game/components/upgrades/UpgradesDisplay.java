@@ -31,6 +31,7 @@ public class UpgradesDisplay extends UIComponent {
     private Image upgradesMenuImage;
     public boolean isVisible = false;
     private Table upgradesTable;
+    private List<Image> notEnoughGoldImages;
 
     private static final String[] upgradeTexturePaths = {
             "images/SpeedBoot.png",
@@ -46,6 +47,7 @@ public class UpgradesDisplay extends UIComponent {
      */
     public UpgradesDisplay(MainGameScreen game) {
         super();
+        notEnoughGoldImages = new ArrayList<>();
         this.game = game;
     }
 
@@ -188,6 +190,7 @@ public class UpgradesDisplay extends UIComponent {
         float yPosition = (stage.getHeight() - notEnoughGoldImage.getHeight()) / 2;
         notEnoughGoldImage.setPosition(xPosition, yPosition);
 
+        notEnoughGoldImages.add(notEnoughGoldImage);
         stage.addActor(notEnoughGoldImage);
 
         // Optionally, remove the image after some time or when clicked
@@ -290,5 +293,9 @@ public class UpgradesDisplay extends UIComponent {
 
     public String[] getUpgradeTexturePaths() {
         return upgradeTexturePaths;
+    }
+
+    public List<Image> getNotEnoughGoldImages() {
+        return notEnoughGoldImages;
     }
 }
