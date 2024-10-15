@@ -39,6 +39,7 @@ public class StationServingComponent extends Component {
     TicketDetails bigTicket;
     private int goldMultiplier = 1;
     private final String SALAD = "salad";
+    private boolean IsExtortion = false; 
 
     /**
      * On creation a listener for Submit Meal will be added to the station.
@@ -49,6 +50,10 @@ public class StationServingComponent extends Component {
         animator = this.entity.getComponent(AnimationRenderComponent.class);
         animator.startAnimation("servery_idle");
         bigTicket = ServiceLocator.getTicketDetails();
+        ServiceLocator.getRandomComboService().getEvents().addListener("extortion active", ()->
+        {IsExtortion = true;});
+        ServiceLocator.getRandomComboService().getEvents().addListener("extortion unactive", ()->
+        {IsExtortion = false;});
     }
 
     /**
@@ -225,7 +230,12 @@ public class StationServingComponent extends Component {
         private void updateGoldUI(int gold) {
         PlayerStatsDisplay playerStatsDisplay = PlayerStatsDisplay.getInstance();
         if (playerStatsDisplay != null) {
-            playerStatsDisplay.updatePlayerGoldUI(gold);
+            if(IsExtortion){
+                playerStatsDisplay.updatePlayerGoldUI(2*gold);
+            }
+            else{
+                playerStatsDisplay.updatePlayerGoldUI(gold);
+            }
         } else {
             logger.error("PlayerStatsDisplay instance is null");
         }

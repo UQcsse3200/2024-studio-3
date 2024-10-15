@@ -37,6 +37,7 @@ public class UpgradesDisplay extends UIComponent {
             "images/Extortion1.png",
             "images/Loan1.png",
             "images/notEnoughGold.png",
+            "images/Dance_party.png"
     };
 
     /**
