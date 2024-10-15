@@ -198,12 +198,12 @@ public class PlayerStatsDisplay extends UIComponent {
     goldTable.add(goldContentsTable);
     table.add(goldTable).left().width(220f).height(170).padTop(0);  // Align to the very left
 
-    table.row();
-
-    // Create a label for the rage meter
-    rageLabel = new Label(rageText, skin, SMALL_LABEL);
-    rageLabel.setColor(Color.RED); // Make text red
-    table.add(rageLabel).left().padTop(110).padLeft(30);
+//    table.row();
+//
+//    // Create a label for the rage meter
+//    rageLabel = new Label(rageText, skin, SMALL_LABEL);
+//    rageLabel.setColor(Color.RED); // Make text red
+//    table.add(rageLabel).left().padTop(110).padLeft(30);
 
     // Add the table to the stage
     stage.addActor(table);
