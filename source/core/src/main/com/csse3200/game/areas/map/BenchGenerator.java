@@ -3,12 +3,8 @@ package com.csse3200.game.areas.map;
 import java.util.ArrayList;
 
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.csse3200.game.entities.benches.Bench;
-import com.csse3200.game.physics.PhysicsLayer;
-import com.csse3200.game.physics.PhysicsUtils;
 import com.csse3200.game.physics.components.ColliderComponent;
-import com.csse3200.game.physics.components.InteractionComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
 
 import java.util.logging.Logger;
@@ -29,9 +25,11 @@ public class BenchGenerator {
         ArrayList<Bench> arr = new ArrayList<>();
         // add the bottom part of the bench and set collisions for whole column
         Bench b = new Bench("bottom_shadow", x, startY);
+//        b.addComponent(new ColliderComponent()
+//                .setAsBoxAligned(new Vector2(1f, endY - startY + 1),
+//                        PhysicsComponent.AlignX.LEFT, PhysicsComponent.AlignY.BOTTOM));
         b.addComponent(new ColliderComponent()
-                .setAsBoxAligned(new Vector2(1f, endY - startY + 1),
-                        PhysicsComponent.AlignX.LEFT, PhysicsComponent.AlignY.BOTTOM));
+                .setAsBox(new Vector2(1f, endY - startY + 1), new Vector2(0, 0)));
         arr.add(b);
 
         if (endY - startY > 0){ // the bench has 2 or more segments
