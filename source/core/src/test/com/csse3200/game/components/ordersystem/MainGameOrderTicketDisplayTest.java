@@ -280,17 +280,14 @@ class MainGameOrderTicketDisplayTest {
 	@Test
 	void testSetPaused() {
 		assertFalse(orderTicketDisplay.isPaused());
-
 		orderTicketDisplay.setPaused(true);
 
 		assertTrue(orderTicketDisplay.isPaused());
 		assertTrue(orderTicketDisplay.getPauseStartTime() > 0);
-
 		orderTicketDisplay.setPaused(false);
 
 		assertFalse(orderTicketDisplay.isPaused());
-
-		long elapsedTime = System.currentTimeMillis() - orderTicketDisplay.getPauseStartTime(); // or use your time utility
+		long elapsedTime = System.currentTimeMillis() - orderTicketDisplay.getPauseStartTime();
 		assertTrue(orderTicketDisplay.getTotalPausedDuration() >= elapsedTime);
 	}
 
