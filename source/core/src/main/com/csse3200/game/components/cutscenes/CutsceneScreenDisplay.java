@@ -8,6 +8,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.csse3200.game.GdxGame;
+import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
 import com.csse3200.game.components.maingame.TextDisplay;
 import org.slf4j.Logger;
@@ -22,7 +24,6 @@ public class CutsceneScreenDisplay extends UIComponent {
     private Table table;
     private TextDisplay textDisplay;
     private Skin skin = null;
-    private boolean IsEnabled = true;
 
     public CutsceneScreenDisplay(Skin skin) {
         super(skin);
@@ -68,6 +69,7 @@ public class CutsceneScreenDisplay extends UIComponent {
             @Override
             public void changed(ChangeEvent changeEvent, Actor actor) {
                 logger.info("Backstory skipped.");
+                ServiceLocator.getLevelService().setCurrLevel(GdxGame.LevelType.LEVEL_1);
                 entity.getEvents().trigger("cutsceneEnded");  // Trigger skip
             }
         });
@@ -85,8 +87,8 @@ public class CutsceneScreenDisplay extends UIComponent {
         table.add(nextSceneBtn).padBottom(10f).padRight(10f);
 
         // Create "Exit" button to transition back to the main menu
-        TextButton ExitButton = new TextButton("Exit", skin);
-        ExitButton.addListener(new ChangeListener() {
+        TextButton Exitbutton = new TextButton("Exit", skin);
+        Exitbutton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent changeEvent, Actor actor) {
                 logger.debug("Main Menu button clicked");
@@ -98,7 +100,7 @@ public class CutsceneScreenDisplay extends UIComponent {
         Table topRightTable = new Table();
         topRightTable.setFillParent(true);
         topRightTable.top().right();
-        topRightTable.add(ExitButton).padTop(20f).padRight(20f);
+        topRightTable.add(Exitbutton).padTop(20f).padRight(20f);
         stage.addActor(topRightTable);
         stage.addActor(table);
     }
@@ -119,7 +121,7 @@ public class CutsceneScreenDisplay extends UIComponent {
         super.dispose();
 
         if (table != null) {
-            table.clear();  // Clear the table safely
+            table.clear();
         }
         if (textDisplay != null && textDisplay.getTable() != null) {
             textDisplay.getTable().clear();  // Clear the text display table

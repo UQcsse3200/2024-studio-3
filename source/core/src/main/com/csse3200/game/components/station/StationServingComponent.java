@@ -1,15 +1,19 @@
 package com.csse3200.game.components.station;
 
+import com.csse3200.game.ai.tasks.AITaskComponent;
+import com.csse3200.game.ai.tasks.Task;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.ScoreSystem.HoverBoxComponent;
 import com.csse3200.game.components.ScoreSystem.ScoreSystem;
 import com.csse3200.game.components.items.ItemComponent;
+import com.csse3200.game.components.npc.CustomerComponent;
 import com.csse3200.game.components.ordersystem.OrderManager;
 import com.csse3200.game.components.ordersystem.Recipe;
 import com.csse3200.game.components.ordersystem.TicketDetails;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.components.player.InventoryDisplay;
 import com.csse3200.game.components.player.PlayerStatsDisplay;
+import com.csse3200.game.components.tasks.PathFollowTask;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
@@ -49,6 +53,16 @@ public class StationServingComponent extends Component {
         animator = this.entity.getComponent(AnimationRenderComponent.class);
         animator.startAnimation("servery_idle");
         bigTicket = ServiceLocator.getTicketDetails();
+    }
+
+    public boolean canSubmitMeal(ItemComponent item) {
+        String itemName = item.getItemName();
+        switch (itemName) {
+            case "acai bowl", SALAD, "fruit salad", "steak meal", "banana split":
+                return true;
+            default:
+                return false;
+        }
     }
 
     /**
@@ -97,8 +111,23 @@ public class StationServingComponent extends Component {
     public void submitMeal(ItemComponent item) {
 
         String[] bigTicketInfo = bigTicket.getCurrentBigTicketInfo();
-
         if (bigTicketInfo[0] != null) {
+
+            // Triggering customer leave for successful meal submission
+            Entity customer = CustomerManager.getCustomerByOrder(bigTicketInfo[0]);
+            if (customer != null) {
+                ServiceLocator.getEntityService().getEvents().trigger("customerPassed",
+                        customer.getComponent(CustomerComponent.class).getName());
+                AITaskComponent aiTaskComponent = customer.getComponent(AITaskComponent.class);
+                if (aiTaskComponent != null) {
+                    Task highestPriorityTask = aiTaskComponent.getHighestPriorityTask();
+                    if (highestPriorityTask instanceof PathFollowTask pathFollowTask) {
+                        pathFollowTask.triggerMoveToPredefinedPosition();
+                    }
+                }
+            }
+
+            CustomerManager.removeCustomerByOrder(bigTicketInfo[0]);
 
             // Call to team 1's function with the big ticket info
             //TBD(item, bigTicketInfo[0], bigTicketInfo[1], bigTicketInfo[2]);
@@ -106,6 +135,7 @@ public class StationServingComponent extends Component {
             logger.info("Submitting meal and removing docket");
             ServiceLocator.getDocketService().getEvents().trigger("removeOrder", -1); // removes the order from the order action list
             ServiceLocator.getDocketService().getEvents().trigger("removeBigTicket"); // removes the order from the display list
+
 
         } else {
             logger.info("no ticket when submitting"); // team 1 can decide if they want to handle this edge case
@@ -152,8 +182,6 @@ public class StationServingComponent extends Component {
         if (customer != null) {
             processCustomerReaction(customer, scoreDescription, orderedMealPrice);
         }
-
-        CustomerManager.removeCustomerByOrder(orderNumber);
     }
 
     private int getMealPrice(String orderedMeal) {
