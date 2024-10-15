@@ -65,6 +65,7 @@ public class BenchGenerator {
         LOGGER.log(Level.INFO, "added row of " + arr.size() + " benches");
         return arr;
     }
+
     public static ArrayList<Bench> createBenchRowFlat(int startX, int endX, int y) {
         ArrayList<Bench> arr = new ArrayList<>();
         // add the left part of the bench and set collisions for whole row
@@ -88,19 +89,31 @@ public class BenchGenerator {
 
     public static ArrayList<Bench> singleBench(int x, int y) {
         ArrayList<Bench> arr = new ArrayList<>();
-        arr.add(new Bench("vertical", x, y));
+        Bench b = new Bench("vertical", x, y);
+        b.addComponent(new ColliderComponent()
+                .setAsBoxAligned(new Vector2(1f, 1f),
+                        PhysicsComponent.AlignX.LEFT, PhysicsComponent.AlignY.BOTTOM));
+        arr.add(b);
         return arr;
     }
 
     public static ArrayList<Bench> singleShadowBench(int x, int y) {
         ArrayList<Bench> arr = new ArrayList<>();
-        arr.add(new Bench("bottom_shadow", x, y));
+        Bench b = new Bench("bottom_shadow", x, y);
+        b.addComponent(new ColliderComponent()
+                .setAsBoxAligned(new Vector2(1f, 1f),
+                        PhysicsComponent.AlignX.LEFT, PhysicsComponent.AlignY.BOTTOM));
+        arr.add(b);
         return arr;
     }
 
     public static ArrayList<Bench> singleBlocker(int x, int y) {
         ArrayList<Bench> arr = new ArrayList<>();
-        arr.add(new Bench("single", x, y));
+        Bench b = new Bench("single", x, y);
+        b.addComponent(new ColliderComponent()
+                .setAsBoxAligned(new Vector2(1f, 1f),
+                        PhysicsComponent.AlignX.LEFT, PhysicsComponent.AlignY.BOTTOM));
+        arr.add(b);
         return arr;
     }
 }
