@@ -177,8 +177,6 @@ public class TutorialScreen extends ScreenAdapter {
                 .addComponent(new SpeedBootsUpgrade())
                 .addComponent(new ExtortionUpgrade())
                 .addComponent(new DancePartyUpgrade())
-                .addComponent(new PauseMenuActions(this.game))
-
                 .addComponent(new TutorialScreenDisplay(this.game))
                 .addComponent(new TextDisplay(this));
 
