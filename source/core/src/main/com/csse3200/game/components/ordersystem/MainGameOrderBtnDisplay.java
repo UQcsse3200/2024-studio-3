@@ -31,6 +31,10 @@ public class MainGameOrderBtnDisplay extends UIComponent{
 		logger.info("order button created");
 	}
 
+	public Table getTable() {
+		return table;
+	}
+
 	/**
 	 * Adds the button to the UI and sets up the event listener for the button click.
 	 * When the "Create Order" button is clicked, it triggers the "createOrder" event.

@@ -81,8 +81,8 @@ class MainGameOrderBtnDisplayTest {
         entity.addComponent(createOrderBtn);
         entity.create();
 
-        assertTrue(createOrderBtn.table.hasChildren());
+        assertTrue(createOrderBtn.getTable().hasChildren());
         createOrderBtn.dispose();
-        assertFalse(createOrderBtn.table.hasChildren());
+        assertFalse(createOrderBtn.getTable().hasChildren());
     }
 }
