@@ -627,6 +627,9 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         super.dispose();
     }
 
+    /**
+     * Resets order number to 0 for screen transition purposes.
+     */
     public static void resetOrderNumb(){
         orderNumb = 0;
     }

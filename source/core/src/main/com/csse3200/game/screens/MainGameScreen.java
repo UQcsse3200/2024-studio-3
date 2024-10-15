@@ -127,7 +127,8 @@ public class MainGameScreen extends ScreenAdapter {
 	 */
 	public MainGameScreen(GdxGame game) {
 		this.game = game;
-		MainGameOrderTicketDisplay.resetOrderNumb();
+		MainGameOrderTicketDisplay.resetOrderNumb()
+		;
 
 		logger.debug("Initialising main game screen services");
 		ServiceLocator.registerTimeSource(new GameTime());
