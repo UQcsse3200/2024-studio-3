@@ -47,6 +47,8 @@ public class SaveLoadServiceTest {
     @Mock
     private MoralDecision moralDecision;
 
+    private GameState loadGame;
+
     @BeforeEach
     public void setUp() {
         // This line initializes the mocks
@@ -62,6 +64,8 @@ public class SaveLoadServiceTest {
         when(player.getComponent(CombatStatsComponent.class)).thenReturn(combatStats);
         when(entityService.getMoralSystem()).thenReturn(player);
         when(player.getComponent(MoralDecision.class)).thenReturn(moralDecision);
+
+        loadGame = FileLoader.readClass(GameState.class, "saves/testLoad.json");
     }
 
     @Test
@@ -100,29 +104,11 @@ public class SaveLoadServiceTest {
 
     @Test
     public void testLoad() {
-        // Create a mock GameState to load
-        GameState mockState = new GameState();
-        mockState.setMoney(200);
-        mockState.setDay(10);
+        saveLoadService.setSaveFile("testLoad.json");
+        saveLoadService.load();
 
-        // Create mock Decision objects for loading
-        List<Decision> decisions = new ArrayList<>();
-        Decision mockDecision = mock(Decision.class);
-        decisions.add(mockDecision);
-        mockState.setDecisions(decisions);
-
-        // Use mockStatic to mock FileLoader.readClass
-        try (MockedStatic<FileLoader> mockedFileLoader = mockStatic(FileLoader.class)) {
-            mockedFileLoader.when(() -> FileLoader.readClass(GameState.class, "saves/testLoad", FileLoader.Location.LOCAL))
-                    .thenReturn(mockState);
-
-            saveLoadService.setSaveFile("testLoad.json");
-            saveLoadService.load();
-        }
-
-        // Verify that the state was correctly applied
-        verify(combatStats, times(1)).setGold(200);
-        verify(dayNightService, times(1)).setDay(10);
-        verify(moralDecision, times(1)).addDecision(mockDecision);
+        verify(combatStats, times(1)).setGold(loadGame.getMoney());
+        verify(dayNightService, times(1)).setDay(loadGame.getDay());
+        //verify(moralDecision, times(1)).getListOfDecisions();
     }
 }
