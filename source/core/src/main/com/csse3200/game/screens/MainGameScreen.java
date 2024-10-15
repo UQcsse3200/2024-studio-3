@@ -69,6 +69,11 @@ public class MainGameScreen extends ScreenAdapter {
 			"images/red_overlay.jpg",
 			"images/red_fill.png",
 			"images/white_background.png",
+			"images/box_background.png",
+			"images/box_background2.png",
+			"images/box_background3.png",
+			"images/box_background4.png",
+			"images/calendar.png",
 			"images/Upgrade_display.png",
 			"images/pause_menu2.png",
 			"images/recipe_card.png",
@@ -127,8 +132,7 @@ public class MainGameScreen extends ScreenAdapter {
 	 */
 	public MainGameScreen(GdxGame game) {
 		this.game = game;
-		MainGameOrderTicketDisplay.resetOrderNumb()
-		;
+		MainGameOrderTicketDisplay.resetOrderNumb();
 
 		logger.debug("Initialising main game screen services");
 		ServiceLocator.registerTimeSource(new GameTime());
@@ -139,12 +143,13 @@ public class MainGameScreen extends ScreenAdapter {
 
 		ServiceLocator.registerInputService(new InputService());
 		ServiceLocator.registerResourceService(new ResourceService());
-		ServiceLocator.registerLevelService(new LevelService());
+
 		ServiceLocator.registerEntityService(new EntityService());
 		ServiceLocator.registerRenderService(new RenderService());
 		ServiceLocator.registerDocketService(new DocketService());
 		ServiceLocator.registerDayNightService(new DayNightService());
 		ServiceLocator.registerRandomComboService(new RandomComboService());
+		ServiceLocator.registerLevelService(new LevelService());
 		ServiceLocator.registerMapLayout(new MapLayout());
 		ServiceLocator.registerPlayerService(new PlayerService());
 		logger.warn("Is SaveService null? " + (ServiceLocator.getSaveLoadService() == null));
@@ -208,7 +213,7 @@ public class MainGameScreen extends ScreenAdapter {
 			height = 1;
 		}
 		renderer.resize(width, height);
-		//docketLineDisplay.resize();
+		docketLineDisplay.resize();
 		if (orderTicketDisplay != null) {
 			orderTicketDisplay.updateDocketSizes();
 		}
@@ -320,12 +325,12 @@ public class MainGameScreen extends ScreenAdapter {
 		  	.addComponent(new DocketLineDisplay())
 			.addComponent(new PerformanceDisplay())
 			.addComponent(new MainGameActions(this.game, UIFactory.createDocketUI()))
-			//.addComponent(new MainGameExitDisplay())
+			.addComponent(new MainGameExitDisplay())
 			.addComponent(new Terminal())
 			.addComponent(inputComponent)
 			.addComponent(new TerminalDisplay())
-			.addComponent(new OrderActions(this.game))
-			//.addComponent(new MainGameOrderBtnDisplay())
+			.addComponent(new OrderActions())
+			.addComponent(new MainGameOrderBtnDisplay())
 			.addComponent(new PauseMenuActions(this.game))
 			.addComponent(new PauseMenuDisplay(this))
 			.addComponent(new RageUpgrade())

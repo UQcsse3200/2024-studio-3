@@ -24,7 +24,6 @@ public class CutsceneScreenDisplay extends UIComponent {
     private Table table;
     private TextDisplay textDisplay;
     private Skin skin = null;
-    private boolean IsEnabled = true;
 
     public CutsceneScreenDisplay(Skin skin) {
         super(skin);
@@ -88,8 +87,8 @@ public class CutsceneScreenDisplay extends UIComponent {
         table.add(nextSceneBtn).padBottom(10f).padRight(10f);
 
         // Create "Exit" button to transition back to the main menu
-        TextButton ExitButton = new TextButton("Exit", skin);
-        ExitButton.addListener(new ChangeListener() {
+        TextButton Exitbutton = new TextButton("Exit", skin);
+        Exitbutton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent changeEvent, Actor actor) {
                 logger.debug("Main Menu button clicked");
@@ -101,7 +100,7 @@ public class CutsceneScreenDisplay extends UIComponent {
         Table topRightTable = new Table();
         topRightTable.setFillParent(true);
         topRightTable.top().right();
-        topRightTable.add(ExitButton).padTop(20f).padRight(20f);
+        topRightTable.add(Exitbutton).padTop(20f).padRight(20f);
         stage.addActor(topRightTable);
         stage.addActor(table);
     }

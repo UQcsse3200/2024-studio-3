@@ -170,15 +170,13 @@ public class TutorialScreen extends ScreenAdapter {
                 .addComponent(new Terminal())
                 .addComponent(inputComponent)
                 .addComponent(new TerminalDisplay())
-                .addComponent(new OrderActions(this.game))
+                .addComponent(new OrderActions())
                 .addComponent(new PauseMenuActions(this.game))
                 .addComponent(new RageUpgrade())
                 .addComponent(new LoanUpgrade())
                 .addComponent(new SpeedBootsUpgrade())
                 .addComponent(new ExtortionUpgrade())
                 .addComponent(new DancePartyUpgrade())
-                .addComponent(new PauseMenuActions(this.game))
-
                 .addComponent(new TutorialScreenDisplay(this.game))
                 .addComponent(new TextDisplay(this));
 

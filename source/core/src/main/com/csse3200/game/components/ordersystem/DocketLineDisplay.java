@@ -4,7 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.csse3200.game.components.mainmenu.MainMenuDisplay;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -13,7 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * A UI component for displaying the Docket Pin Line
+ * A UI component for displaying the Docket Pin Line.
  */
 public class DocketLineDisplay extends UIComponent {
 	private static final Logger logger = LoggerFactory.getLogger(DocketLineDisplay.class);
@@ -21,77 +21,85 @@ public class DocketLineDisplay extends UIComponent {
 	private Table table;
 	private Image pinLine;
 
+	public DocketLineDisplay(Skin skin) {
+		super(skin);
+	}
 
-	/**
-	 * Initializes the DocketLineDisplay component by creating and adding its actors to the stage.
-	 */
+	public DocketLineDisplay() {
+		super(null);  // Use default skin if none is provided
+	}
+
 	@Override
 	public void create() {
 		super.create();
 		addActors();
+		logger.info("Just created the Docket line display");
 	}
 
-	/**
-	 * Adds the actors to the table and sets up the layout.
-	 */
 	private void addActors() {
-		table = new Table();table.setFillParent(true);
+		table = new Table();
+		table.setFillParent(true);
 
-		pinLine =
-				new Image(
-						ServiceLocator.getResourceService()
-								.getAsset("images/ordersystem/pin_line2.png", Texture.class));
+		pinLine = new Image(
+				ServiceLocator.getResourceService().getAsset(
+						"images/ordersystem/pin_line2.png", Texture.class));
 
-		pinLine.setWidth(Gdx.graphics.getWidth() * 1f); //0.7958f
+		pinLine.setWidth(Gdx.graphics.getWidth() * 1f);
 		pinLine.setHeight(30);
 		pinLine.setPosition(Gdx.graphics.getWidth() * 0f, Gdx.graphics.getHeight() * 0.938f);
-
 
 		table.add(pinLine);
 		stage.addActor(table);
 		stage.addActor(pinLine);
-		table.setZIndex((int)getZIndex());
-		pinLine.setZIndex((int)getZIndex());
+		setZIndexToActors();
 	}
 
-	/**
-	 * Resizes the docket line display by removing image, clearing table and re-adding actors.
-	 */
+	private void setZIndexToActors() {
+		table.setZIndex((int) getZIndex());
+		pinLine.setZIndex((int) getZIndex());
+	}
+
 	public void resize() {
 		pinLine.remove();
 		table.clear();
 		addActors();
 	}
 
-	/**
-	 * Draws the DocketLineDisplay component.
-	 * @param batch the SpriteBatch used for drawing
-	 */
 	@Override
 	public void draw(SpriteBatch batch) {
-		// draw is handled by the stage
+		// Drawing is handled by the stage
 	}
 
-	/**
-	 * Returns the Z-index of the DocketLineDisplay component.
-	 * @return the Z-index of the component
-	 */
 	@Override
 	public float getZIndex() {
 		return Z_INDEX;
 	}
 
-	/**
-	 * Clears the table and calls the superclass' dispose method.
-	 */
 	@Override
-	public void setStage(Stage mock) {
-
+	public void setStage(Stage stage) {
+		this.stage = stage;
 	}
 
-	/**
-	 * Removes the table
-	 */
+	public Stage getStage() {
+		return this.stage;
+	}
+
+	public void setPinLine(Image pinLine) {
+		this.pinLine = pinLine;
+	}
+
+	public Image getPinLine() {
+		return pinLine;
+	}
+
+	public void setTable(Table table) {
+		this.table = table;
+	}
+
+	public Table getTable() {
+		return table;
+	}
+
 	@Override
 	public void dispose() {
 		table.clear();

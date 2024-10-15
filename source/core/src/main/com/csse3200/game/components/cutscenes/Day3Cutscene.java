@@ -26,8 +26,6 @@ public class Day3Cutscene extends Cutscene {
         sceneText.add("Mafia Boss > Make those orders perfect or you'll be paying for it.");
 
         String backgroundImage = "images/Cutscenes/Day3_Scene.png";
-        Vector2 backgroundPosition = new Vector2(-7, -7);
-        float backgroundScale = 20.0f;
 
 
         String mafiaBossImage = "images/Cutscenes/Character Artwork/rhino_sprite.png";

@@ -9,7 +9,6 @@ import com.csse3200.game.GdxGame;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.events.EventHandler;
-import com.csse3200.game.events.listeners.EventListener0;
 import com.csse3200.game.extensions.GameExtension;
 import com.csse3200.game.rendering.RenderService;
 import com.csse3200.game.services.DocketService;
@@ -106,7 +105,7 @@ class MainGameActionsTest {
 	 * Test should change game screen
 	 */
 	@Test
-	public void testOnExit() {
+	void testOnExit() {
 		mainGameActions.onExit();
 		verify(mockGame, times(1)).setScreen(GdxGame.ScreenType.MAIN_MENU);
 	}
@@ -115,7 +114,7 @@ class MainGameActionsTest {
 	 * Test should create order when table is below the limit
 	 */
 	@Test
-	public void testOnCreateOrderBelowLimit() {
+	void testOnCreateOrderBelowLimit() {
 		mainGameActions.onCreateOrder(null);
 		verify(orderTicketDisplay, times(1)).setRecipe(anyString());
 		verify(orderTicketDisplay, times(1)).addActors();
@@ -125,7 +124,7 @@ class MainGameActionsTest {
 	 * Test should not create the order when the table size is full
 	 */
 	@Test
-	public void testOnCreateOrderAboveLimit() {
+	void testOnCreateOrderAboveLimit() {
 		int limit = 8;
 		for (int i = 0; i < limit; i++) {
 			tableArrayList.add(table);
@@ -140,7 +139,7 @@ class MainGameActionsTest {
 	 * Test should create order when preferredRecipe is empty
 	 */
 	@Test
-	public void testOnCreateOrderEmptyRecipe() {
+	void testOnCreateOrderEmptyRecipe() {
 		mainGameActions.onCreateOrder("");
 		verify(orderTicketDisplay, times(1)).setRecipe(anyString());
 		verify(orderTicketDisplay, times(1)).addActors();
@@ -150,7 +149,7 @@ class MainGameActionsTest {
 	 * Test should set Acai Bowl recipe
 	 */
 	@Test
-	public void testOnCreateAcai() {
+	void testOnCreateAcai() {
 		mainGameActions.onCreateAcai();
 		verify(orderTicketDisplay, times(1)).setRecipe(RecipeNameEnums.ACAI_BOWL.getRecipeName());
 		verify(orderTicketDisplay, times(1)).addActors();
@@ -160,7 +159,7 @@ class MainGameActionsTest {
 	 * Test should set Banana Split recipe
 	 */
 	@Test
-	public void testOnCreateBanana() {
+	void testOnCreateBanana() {
 		mainGameActions.onCreateBanana();
 		verify(orderTicketDisplay, times(1)).setRecipe(RecipeNameEnums.BANANA_SPLIT.getRecipeName());
 		verify(orderTicketDisplay, times(1)).addActors();
@@ -170,7 +169,7 @@ class MainGameActionsTest {
 	 * Test should set Salad recipe
 	 */
 	@Test
-	public void testOnCreateSalad() {
+	void testOnCreateSalad() {
 		mainGameActions.onCreateSalad();
 		verify(orderTicketDisplay, times(1)).setRecipe(RecipeNameEnums.SALAD.getRecipeName());
 		verify(orderTicketDisplay, times(1)).addActors();
@@ -180,7 +179,7 @@ class MainGameActionsTest {
 	 * Test should set Steak recipe
 	 */
 	@Test
-	public void testOnCreateSteak() {
+	void testOnCreateSteak() {
 		mainGameActions.onCreateSteak();
 		verify(orderTicketDisplay, times(1)).setRecipe(RecipeNameEnums.STEAK_MEAL.getRecipeName());
 		verify(orderTicketDisplay, times(1)).addActors();
@@ -190,7 +189,7 @@ class MainGameActionsTest {
 	 * Test should set Fruit Salad recipe
 	 */
 	@Test
-	public void testOnCreateFruitSalad() {
+	void testOnCreateFruitSalad() {
 		mainGameActions.onCreateFruitSalad();
 		verify(orderTicketDisplay, times(1)).setRecipe(RecipeNameEnums.FRUIT_SALAD.getRecipeName());
 		verify(orderTicketDisplay, times(1)).addActors();
