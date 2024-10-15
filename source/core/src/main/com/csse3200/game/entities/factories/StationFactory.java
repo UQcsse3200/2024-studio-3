@@ -402,7 +402,7 @@ public class StationFactory {
             .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
             .addComponent(new InteractionComponent(PhysicsLayer.INTERACTABLE))
             .addComponent(new TooltipsDisplay())
-            .addComponent(new InventoryDisplayHoverComponent())
+            .addComponent(new DishwasherHoverComponent())
             .addComponent(new StationCollectionComponent())
             .addComponent(new InventoryComponent(1))
             .addComponent(new PlateStationHandlerComponent());

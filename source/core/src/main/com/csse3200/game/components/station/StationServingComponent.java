@@ -51,6 +51,16 @@ public class StationServingComponent extends Component {
         bigTicket = ServiceLocator.getTicketDetails();
     }
 
+    public boolean canSubmitMeal(ItemComponent item) {
+        String itemName = item.getItemName();
+        switch (itemName) {
+            case "acai bowl", SALAD, "fruit salad", "steak meal", "banana split":
+                return true;
+            default:
+                return false;
+        }
+    }
+
     /**
      * Handles any interaction with station, using current state of player and station
      * inventory to determine intended interaction

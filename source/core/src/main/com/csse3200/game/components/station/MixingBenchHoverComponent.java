@@ -1,7 +1,5 @@
 package com.csse3200.game.components.station;
 
-import com.csse3200.game.components.station.StationHoverComponent;
-import com.csse3200.game.components.station.StationMealComponent;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.csse3200.game.components.player.InventoryComponent;
 

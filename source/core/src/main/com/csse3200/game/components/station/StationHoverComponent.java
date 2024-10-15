@@ -9,7 +9,6 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.csse3200.game.rendering.RenderComponent;
 import com.csse3200.game.services.ServiceLocator;
 
-import com.csse3200.game.components.items.IngredientComponent;
 import com.csse3200.game.components.items.ItemComponent;
 import com.csse3200.game.components.player.InventoryComponent;
 
@@ -35,7 +34,7 @@ import com.csse3200.game.physics.components.PhysicsComponent;
  * key tooltips for the station.
  */
 public abstract class StationHoverComponent extends RenderComponent {
-    private static final Logger logger = LoggerFactory.getLogger(InventoryDisplayHoverComponent.class);
+    private static final Logger logger = LoggerFactory.getLogger(StationHoverComponent.class);
     private ArrayList<Texture> itemImages;
     private Texture backgroundImage;
     private Texture selectedBackgroundImage;

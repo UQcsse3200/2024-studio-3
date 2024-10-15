@@ -1,6 +1,5 @@
 package com.csse3200.game.components.station;
 
-import com.csse3200.game.components.station.StationHoverComponent;
 import com.csse3200.game.components.items.ChopIngredientComponent;
 import com.csse3200.game.components.items.IngredientComponent;
 import com.csse3200.game.components.items.ItemComponent;
@@ -27,14 +26,16 @@ public class ChoppingBoardHoverComponent extends StationHoverComponent {
         inventory = entity.getComponent(InventoryComponent.class);
 
         if (hasItem && inventory.getSize() < inventory.getCapacity()) {
-            // player can place item
-            batch.draw(placeKeyImage,
+            if (entity.getComponent(StationItemHandlerComponent.class).isItemAccepted(currentItem)) {
+                // player can place item
+                batch.draw(placeKeyImage,
                     position.x + KEY_X_OFFSET,
                     position.y + currentOffset,
                     KEY_WIDTH,
                     KEY_HEIGHT
-            );
-            currentOffset -= OFFSET_SPACING;
+                );
+                currentOffset -= OFFSET_SPACING;
+            }
         }
 
         if (!hasItem && inventory.getSize() > 0) {

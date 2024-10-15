@@ -1,6 +1,5 @@
 package com.csse3200.game.components.station;
 
-import com.csse3200.game.components.station.StationHoverComponent;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 /**
@@ -8,7 +7,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
  * a submission station component.
  */
 public class SubmitHoverComponent extends StationHoverComponent {
-    private static final float OFFSET_SPACING = 0.3f;
     private static final float KEY_X_OFFSET = 0.1f;
     private static final float KEY_Y_OFFSET = 0.6f;
 
@@ -18,7 +16,10 @@ public class SubmitHoverComponent extends StationHoverComponent {
      * @param batch The SpriteBatch used for drawing
      */
     public void drawToolTips(SpriteBatch batch) {
-        if (hasItem) {
+        // Check the current item can be submitted
+        StationServingComponent servingComponent = entity.getComponent(StationServingComponent.class);
+
+        if (hasItem && servingComponent.canSubmitMeal(currentItem)) {
             // player can dispose item
             batch.draw(submitKeyImage,
                     position.x + KEY_X_OFFSET,

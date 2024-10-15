@@ -1,10 +1,8 @@
 package com.csse3200.game.components.station;
 
-import com.csse3200.game.components.station.StationHoverComponent;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.csse3200.game.components.items.CookIngredientComponent;
 import com.csse3200.game.components.items.IngredientComponent;
-import com.csse3200.game.components.items.ItemComponent;
 import com.csse3200.game.components.player.InventoryComponent;
 
 /**
@@ -27,6 +25,10 @@ public class CookingHoverComponent extends StationHoverComponent {
         inventory = entity.getComponent(InventoryComponent.class);
 
         if (hasItem && inventory.getSize() < inventory.getCapacity()) {
+
+            if (!entity.getComponent(StationItemHandlerComponent.class).isItemAccepted(currentItem)) {
+                return;
+            }
 
             // Check if the item is cookable
             if (currentItem != null && currentItem instanceof IngredientComponent) {
