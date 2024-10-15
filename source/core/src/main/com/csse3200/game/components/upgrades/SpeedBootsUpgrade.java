@@ -167,7 +167,7 @@ public class SpeedBootsUpgrade extends UIComponent implements Upgrade {
         if (isActivate) {
             speedMeter = new ProgressBar(0f, 1f, 0.01f, false, style);
             speedMeter.setValue(1f); // Initially, the meter is full
-            speedMeter.setPosition(8, 500);
+            speedMeter.setPosition(30, 250);
 
             // Set up text
             text =  new Label("Upgrade", skin);
