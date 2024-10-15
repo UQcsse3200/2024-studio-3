@@ -7,15 +7,14 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
-import com.badlogic.gdx.maps.tiled.renderers.HexagonalTiledMapRenderer;
-import com.badlogic.gdx.maps.tiled.renderers.IsometricTiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.GridPoint2;
 import com.csse3200.game.areas.terrain.TerrainComponent.TerrainOrientation;
 import com.csse3200.game.components.CameraComponent;
-import com.csse3200.game.utils.math.RandomUtils;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
+
+import java.util.Objects;
 
 /** Factory for creating game terrains. */
 public class TerrainFactory {
@@ -76,48 +75,46 @@ public class TerrainFactory {
   }
 
   private TerrainComponent createKitchenDemoTerrain(
-      float tileWorldSize, TextureRegion floor, TextureRegion customer_tiles) {
+      float tileWorldSize, TextureRegion floor, TextureRegion customertiles) {
     // Customer_tiles are the blue tiles where the customers/animals are going to be
     GridPoint2 tilePixelSize = new GridPoint2(floor.getRegionWidth(), floor.getRegionHeight());
-    TiledMap tiledMap = createKitchenDemoTiles(tilePixelSize, floor, customer_tiles);
+    TiledMap tiledMap = createKitchenDemoTiles(tilePixelSize, floor, customertiles);
     TiledMapRenderer renderer = createRenderer(tiledMap, tileWorldSize / tilePixelSize.x);
     return new TerrainComponent(camera, tiledMap, renderer, orientation, tileWorldSize);
   }
 
   private TerrainComponent createBenchDemoTerrain(
-          float tileWorldSize, TextureRegion floor, TextureRegion customer_tiles) {
+          float tileWorldSize, TextureRegion floor, TextureRegion customertiles) {
     // Customer_tiles are the blue tiles where the customers/animals are going to be
     GridPoint2 tilePixelSize = new GridPoint2(floor.getRegionWidth(), floor.getRegionHeight());
-    TiledMap tiledMap = createBenchTileLevels(tilePixelSize, floor, customer_tiles);
+    TiledMap tiledMap = createBenchTileLevels(tilePixelSize, floor, customertiles);
     TiledMapRenderer renderer = createRenderer(tiledMap, tileWorldSize / tilePixelSize.x);
     return new TerrainComponent(camera, tiledMap, renderer, orientation, tileWorldSize);
   }
 
   private TiledMapRenderer createRenderer(TiledMap tiledMap, float tileScale) {
-    switch (orientation) {
-      case ORTHOGONAL:
-        return new OrthogonalTiledMapRenderer(tiledMap, tileScale);
-      default:
-        return null;
-    }
+      if (Objects.requireNonNull(orientation) == TerrainOrientation.ORTHOGONAL) {
+          return new OrthogonalTiledMapRenderer(tiledMap, tileScale);
+      }
+      return null;
   }
 
   private TiledMap createBenchTileLevels(
-          GridPoint2 tileSize,  TextureRegion bench, TextureRegion customer_tiles) {
+          GridPoint2 tileSize,  TextureRegion bench, TextureRegion customertiles) {
     TiledMap tiledMap = new TiledMap();
     TerrainTile benchTile= new TerrainTile(bench);
-    TerrainTile customerTile = new TerrainTile(customer_tiles);
+    TerrainTile customerTile = new TerrainTile(customertiles);
     // Bench tile
     TiledMapTileLayer layer = new TiledMapTileLayer(MAP_SIZE.x, MAP_SIZE.y, tileSize.x , tileSize.y);
 
     // Size for blue tiles
-    GridPoint2 modified_size = new GridPoint2(MAP_SIZE.x , MAP_SIZE.y);
+    GridPoint2 modifiedsize = new GridPoint2(MAP_SIZE.x , MAP_SIZE.y);
 
     // Create base orange tiles
     fillTiles(layer, MAP_SIZE, benchTile);
     // Create blue tiles with modified map size
 
-    fillBlueTiles(layer, modified_size, customerTile, CUST_TILE_COUNT);
+    fillBlueTiles(layer, modifiedsize, customerTile, CUST_TILE_COUNT);
 
     tiledMap.getLayers().add(layer);
     tiledMap.getLayers().add(layer);
@@ -125,10 +122,10 @@ public class TerrainFactory {
   }
 
   private TiledMap createKitchenDemoTiles(
-      GridPoint2 tileSize,  TextureRegion floor, TextureRegion customer_tiles) {
+      GridPoint2 tileSize,  TextureRegion floor, TextureRegion customertiles) {
     TiledMap tiledMap = new TiledMap();
     TerrainTile floorTile= new TerrainTile(floor);
-    TerrainTile customerTile = new TerrainTile(customer_tiles);
+    TerrainTile customerTile = new TerrainTile(customertiles);
     // Bench tile
 
     TiledMapTileLayer layer = new TiledMapTileLayer(MAP_SIZE.x, MAP_SIZE.y, tileSize.x , tileSize.y);

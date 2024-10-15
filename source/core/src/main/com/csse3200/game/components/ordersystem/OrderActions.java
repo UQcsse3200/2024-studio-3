@@ -14,20 +14,12 @@ import org.slf4j.LoggerFactory;
  */
 public class OrderActions extends InputComponent {
     private static final Logger logger = LoggerFactory.getLogger(OrderActions.class);
-    private static final int SHIFT_LEFT_KEY = Input.Keys.LEFT_BRACKET; // Key for shifting left
-    private static final int SHIFT_RIGHT_KEY = Input.Keys.RIGHT_BRACKET; // Key for shifting right
-
-    // key values of big ticket
-    private String currentOrderNumber;
-    private String currentMeal;
-    private String currentTimeLeft;
 
     /**
      * Constructs an OrderActions instance with a reference to the main game object. - Tia
      *
-     * @param game the main game instance
      */
-    public OrderActions(GdxGame game) {
+    public OrderActions() {
         super(5);
     }
 

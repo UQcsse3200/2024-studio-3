@@ -8,6 +8,7 @@ import com.csse3200.game.components.player.PlayerActions;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.extensions.GameExtension;
 import com.csse3200.game.rendering.RenderService;
+import com.csse3200.game.services.LevelService;
 import com.csse3200.game.services.PlayerService;
 import com.csse3200.game.services.ServiceLocator;
 import org.junit.jupiter.api.BeforeEach;
@@ -23,6 +24,7 @@ public class TutorialScreenDisplayTest {
     private TutorialScreenDisplay tutorialScreenDisplay;
     private GdxGame mockGame;
     private Stage mockStage;
+    private LevelService mockLevelService;
 
     @BeforeEach
     public void setUp() {
@@ -34,6 +36,10 @@ public class TutorialScreenDisplayTest {
         // Mock services and entities
         ServiceLocator.registerRenderService(mock(RenderService.class));  // Ensure RenderService is registered
         ServiceLocator.registerPlayerService(mock(PlayerService.class));
+
+        mockLevelService = mock(LevelService.class);
+        ServiceLocator.registerLevelService(mockLevelService);
+
         Gdx.input = mock(Input.class);
     }
 

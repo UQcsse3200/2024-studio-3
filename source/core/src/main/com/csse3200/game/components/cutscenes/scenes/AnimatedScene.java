@@ -1,7 +1,5 @@
 package com.csse3200.game.components.cutscenes.scenes;
 
-import com.badlogic.gdx.utils.Array;
-import com.csse3200.game.services.ServiceLocator;
 
 /**
  * AnimatedScene class represents one animated scene for a cutscene.
