@@ -40,7 +40,6 @@ public class MapLayout {
         line = mapReader.readLine();
         final int height = Integer.parseInt(line);
         line = mapReader.readLine();
-        final String seperator = line;
         line = mapReader.readLine();
         return new MapLayout(name, width, height);
     }

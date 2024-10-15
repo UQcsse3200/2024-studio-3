@@ -59,7 +59,7 @@ public class MainGameExitDisplay extends UIComponent {
 
   @Override
   public void setStage(Stage mock) {
-
+    // do nothing
   }
 
   @Override

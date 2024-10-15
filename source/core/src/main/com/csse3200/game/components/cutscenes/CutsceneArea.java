@@ -4,6 +4,7 @@ import com.csse3200.game.GdxGame;
 import com.csse3200.game.areas.ForestGameArea;
 import com.csse3200.game.areas.GameArea;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.services.LevelService;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
@@ -31,6 +32,7 @@ public class CutsceneArea extends GameArea {
     public CutsceneArea(GdxGame.CutsceneType cutsceneValue) {
         super();
         ServiceLocator.registerGameArea(this);  // Register this cutscene area in the service locator
+        ServiceLocator.registerLevelService(new LevelService());
         this.cutsceneValue = cutsceneValue;
     }
 
@@ -44,6 +46,7 @@ public class CutsceneArea extends GameArea {
                 logger.debug("Loading backstory cutscene");
                 currentCutscene = new BackstoryCutscene();  // Initialize the intro cutscene
                 ServiceLocator.setCurrentCutscene(currentCutscene);  // Set the current cutscene in the service locator
+                ServiceLocator.getLevelService().setCurrLevel(GdxGame.LevelType.LEVEL_1);
                 break;
 
             case GdxGame.CutsceneType.MORAL_1:

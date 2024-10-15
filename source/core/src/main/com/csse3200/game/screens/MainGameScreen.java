@@ -71,6 +71,7 @@ public class MainGameScreen extends ScreenAdapter {
 			"images/white_background.png",
 			"images/Upgrade_display.png",
 			"images/pause_menu2.png",
+			"images/recipe_card.png",
 			"images/textbox.png",
 			//background daylight cycle assets
 			"images/background_images/1.0.png",
@@ -184,6 +185,7 @@ public class MainGameScreen extends ScreenAdapter {
 		if (!isPaused) {
 			physicsEngine.update();
 			ServiceLocator.getDayNightService().update();
+
 			ServiceLocator.getEntityService().update();
 		}
 		renderer.render();
@@ -334,8 +336,6 @@ public class MainGameScreen extends ScreenAdapter {
 						.addComponent(new UpgradesDisplay(this))
 								.addComponent(new RecipeCardDisplay(this));
 
-		//temporary moral display
-//			.addComponent(new MoralDisplayTemp(this));
 		ServiceLocator.getEntityService().register(ui);
 	}
 }

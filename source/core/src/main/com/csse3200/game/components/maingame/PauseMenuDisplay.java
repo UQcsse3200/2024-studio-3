@@ -1,5 +1,6 @@
 package com.csse3200.game.components.maingame;
 
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -133,7 +134,7 @@ public class PauseMenuDisplay extends UIComponent {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 ServiceLocator.getSaveLoadService().save();
-            };
+            }
         });
 
         loadBtn.addListener(new ClickListener() {
@@ -141,7 +142,7 @@ public class PauseMenuDisplay extends UIComponent {
             public void clicked(InputEvent event, float x, float y) {
                 ServiceLocator.getSaveLoadService().setSaveFile("saveFile.json");
                 ServiceLocator.getSaveLoadService().load();
-            };
+            }
         });
 
         restartBtn.addListener(new ChangeListener() {
@@ -244,7 +245,7 @@ public class PauseMenuDisplay extends UIComponent {
         stage.addListener(new InputListener() {
             @Override
             public boolean keyDown(InputEvent event, int keycode) {
-                if (keycode == com.badlogic.gdx.Input.Keys.O) {
+                if (keycode == Input.Keys.ESCAPE) {
                     toggleVisibility();
                     return true;
                 }

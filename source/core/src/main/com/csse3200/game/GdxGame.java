@@ -3,7 +3,6 @@ package com.csse3200.game;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.csse3200.game.components.cutscenes.BackstoryCutscene;
 import com.csse3200.game.components.cutscenes.Cutscene;
 import com.csse3200.game.screens.CutsceneScreen;
 import com.csse3200.game.files.UserSettings;
@@ -17,8 +16,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.csse3200.game.services.*;
 
-import java.util.logging.Level;
-
 import static com.badlogic.gdx.Gdx.app;
 /**
  * Entry point of the non-platform-specific game logic. Controls which screen is currently running.
@@ -28,6 +25,7 @@ import static com.badlogic.gdx.Gdx.app;
 public class GdxGame extends Game {
   private static final Logger logger = LoggerFactory.getLogger(GdxGame.class);
   private Screen previousScreen;
+  private ScreenType currentScreenType;
   private Texture backgroundTexture;
   private SpriteBatch batch;
   private Cutscene currentCutscene;
@@ -42,6 +40,8 @@ public class GdxGame extends Game {
     // I want to set the background ot an image
 
     Gdx.gl.glClearColor(234f/255f, 221/255f, 202/255f, 1);
+
+    ServiceLocator.registerGame(this);
 
     setScreen(ScreenType.MAIN_MENU);
   }
@@ -62,6 +62,7 @@ public class GdxGame extends Game {
   public void setScreen(ScreenType screenType) {
     logger.info("Setting game screen to {}", screenType);
     Screen currentScreen = getScreen();
+    currentScreenType = screenType;
 
     previousScreen = currentScreen;  // Save the current screen before changing
     SaveLoadService system = ServiceLocator.getSaveLoadService();
@@ -97,6 +98,14 @@ public class GdxGame extends Game {
    */
   public Screen getPreviousScreen() {
     return previousScreen;
+  }
+
+  /**
+   * Get the previous game's screen
+   * @return previous screen
+   */
+  public ScreenType getCurrentScreenType() {
+    return currentScreenType;
   }
 
   @Override
@@ -195,7 +204,7 @@ public class GdxGame extends Game {
   }
 
   public enum LevelType {
-    LEVEL_1, LEVEL_2, LEVEL_3, LEVEL_4, LEVEL_5, DONE
+    LEVEL_0, LEVEL_1, LEVEL_2, LEVEL_3, LEVEL_4, LEVEL_5, DONE
   }
 
   /**

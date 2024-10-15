@@ -11,7 +11,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @ExtendWith(GameExtension.class)
-public class ScoreSystemTest {
+class ScoreSystemTest {
 
     @Test
     void testCompareListsFullMatch() {

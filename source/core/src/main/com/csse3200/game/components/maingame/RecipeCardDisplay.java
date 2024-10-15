@@ -1,5 +1,10 @@
 package com.csse3200.game.components.maingame;
 
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Stack;
+import com.csse3200.game.GdxGame;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -17,10 +22,9 @@ public class RecipeCardDisplay extends UIComponent {
 
     private boolean isVisible;
     private final MainGameScreen game;
-    //private static final Logger logger = LoggerFactory.getLogger(PauseMenuDisplay.class);
+    private Table table;
     private static final Logger logger = LoggerFactory.getLogger(RecipeCardDisplay.class);
-
-    private static final String[] recipeCardTexture = {"images/pause_menu2.png"};
+    private static final String[] recipeCardTexture = {"images/recipe_card.png"};
     private Image backgroundImage;
 
     //TODO add esc key exit
@@ -28,7 +32,7 @@ public class RecipeCardDisplay extends UIComponent {
     public RecipeCardDisplay(MainGameScreen game) {
         super();
         this.game = game;
-       // isVisible = false;
+        isVisible = false;
     }
 
     /**
@@ -36,12 +40,11 @@ public class RecipeCardDisplay extends UIComponent {
      * @return backgroundImage
      */
     private Image createRecipeCardBackground() {
-        Texture pauseMenuTexture = ServiceLocator
-                .getResourceService().getAsset("images/pause_menu2.png", Texture.class);
-        Image backgroundImage = new Image(pauseMenuTexture);
-        backgroundImage.setSize(800, 800);
+        Texture texture = ServiceLocator
+                .getResourceService().getAsset("images/recipe_card.png", Texture.class);
+        Image backgroundImage = new Image(texture);
+        backgroundImage.setSize(2000, 2000);
 
-        backgroundImage.setVisible(false);
         return backgroundImage;
     }
 
@@ -49,38 +52,25 @@ public class RecipeCardDisplay extends UIComponent {
         super.create();
         ServiceLocator.getResourceService().loadTextures(recipeCardTexture);
 
+        table = new Table();
+        table.setFillParent(true);
         backgroundImage = createRecipeCardBackground();
-        stage.addActor(backgroundImage);
+        table.add(backgroundImage).center().expand();
+        table.setVisible(isVisible);
+        stage.addActor(table);
 
-        // I had to comment this out because the image it displays is ugly and causes glitches #474
-//        stage.addListener(new InputListener() {
-//            @Override
-//            public boolean keyDown(InputEvent event, int keycode) {
-//                if (keycode == com.badlogic.gdx.Input.Keys.ENTER) {
-//                    toggleVisibility();
-//                    return true;
-//                }
-//                return false;
-//            }
-//        });
+        stage.addListener(new InputListener() {
+            @Override
+            public boolean keyDown(InputEvent event, int keycode) {
+                if (keycode == com.badlogic.gdx.Input.Keys.ENTER) {
+                    toggleVisibility();
+                    return true;
+                }
+                return false;
+            }
+        });
+
         ServiceLocator.getResourceService().loadAll(); // Ensures the texture is loaded
-    }
-
-    /**
-     * Pressing enter will stop the game and display the recipe card
-     */
-    public void displayScreen() {
-        isVisible = !isVisible;
-        backgroundImage.setVisible(isVisible);
-
-        if (isVisible) {
-            logger.info("Upgrades menu is now visible.");
-            game.pause();
-        } else {
-            logger.info("Upgrades menu is now hidden.");
-            game.resume();
-        }
-
     }
 
     /**
@@ -91,7 +81,7 @@ public class RecipeCardDisplay extends UIComponent {
         logger.info("PAUSE GAME");
         game.pause();
 
-        backgroundImage.setVisible(true);
+        table.setVisible(true);
     }
 
     /**
@@ -101,8 +91,9 @@ public class RecipeCardDisplay extends UIComponent {
         isVisible = false;
         logger.info("RESUME GAME");
         game.resume();
-        if (backgroundImage != null) {
-            backgroundImage.remove();
+
+        if (table != null) {
+            table.setVisible(false);
         }
     }
 
@@ -111,23 +102,24 @@ public class RecipeCardDisplay extends UIComponent {
      * Toggle if the pause menu should be show or hide
      */
     public void toggleVisibility() {
-        if (isVisible) {
-            hideMenu();
-        } else {
-            showMenu();
+        if (ServiceLocator.getGame().getCurrentScreenType() == GdxGame.ScreenType.MAIN_GAME) {
+            if (isVisible) {
+                hideMenu();
+            } else {
+                showMenu();
+            }
         }
     }
 
     @Override
     public void dispose() {
         super.dispose();
-        ServiceLocator.getResourceService().unloadAssets(new String[]{"images/pause_menu2.png"});
-
+        ServiceLocator.getResourceService().unloadAssets(new String[]{"images/recipe_card.png"});
     }
 
     @Override
     protected void draw(SpriteBatch batch) {
-
+        // draw is handled by the stage
     }
 
     @Override
