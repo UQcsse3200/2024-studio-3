@@ -206,6 +206,21 @@ public class PlayerStatsDisplay extends UIComponent {
   }
 
   /**
+   * Updates the colour of the timer text depending on current time
+   */
+  private static void updateTimeColor() {
+    long timeInSeconds = TimeUnit.MILLISECONDS.toSeconds(timer);
+
+    if (timeInSeconds <= 60) {
+      getTimerLabel().setColor(Color.RED);  // Critical - red when below 1 minute
+    } else if (timeInSeconds <= 150) {
+      getTimerLabel().setColor(Color.YELLOW);  // Warning - yellow when below 2 minutes and 30 seconds
+    } else {
+      getTimerLabel().setColor(Color.WHITE);  // Safe - white when above 2:30
+    }
+  }
+
+  /**
    * Updates the remaining time for the current day on the UI. Decreases the timer by one second
    * and updates the displayed time.
    */
@@ -219,12 +234,8 @@ public class PlayerStatsDisplay extends UIComponent {
     // Update the progress bar value to reflect the remaining time
     getInstance().timeBar.setValue(progressPercentage);
 
-    // Check if the remaining time is less than 4 minutes (240 seconds)
-    if (timer < TimeUnit.MINUTES.toMillis(4)) {
-      getTimerLabel().setColor(Color.RED);  // Change color to red
-    } else {
-      getTimerLabel().setColor(Color.WHITE);  // Reset to the default color (white or original)
-    }
+    // Update the timer color based on remaining time
+    updateTimeColor();
 
     // Emphasize the timer when below 1 minute by flickering and increasing size
     if (timer < TimeUnit.MINUTES.toMillis(1)) {
