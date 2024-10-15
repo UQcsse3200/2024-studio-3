@@ -122,7 +122,7 @@ public class CutsceneScreenDisplay extends UIComponent {
         super.dispose();
 
         if (table != null) {
-            table.clear();  // Clear the table safely
+            table.clear();
         }
         if (textDisplay != null && textDisplay.getTable() != null) {
             textDisplay.getTable().clear();  // Clear the text display table

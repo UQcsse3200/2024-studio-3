@@ -209,7 +209,7 @@ public class TutorialScreenDisplay extends UIComponent {
                 }
                 break;
             case 4:
-                if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER) || Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
+                if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
                     startGame();
                 }
                 break;

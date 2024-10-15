@@ -137,13 +137,12 @@ public class MainGameScreen extends ScreenAdapter {
 
 		ServiceLocator.registerInputService(new InputService());
 		ServiceLocator.registerResourceService(new ResourceService());
-
+		ServiceLocator.registerLevelService(new LevelService());
 		ServiceLocator.registerEntityService(new EntityService());
 		ServiceLocator.registerRenderService(new RenderService());
 		ServiceLocator.registerDocketService(new DocketService());
 		ServiceLocator.registerDayNightService(new DayNightService());
 		ServiceLocator.registerRandomComboService(new RandomComboService());
-		ServiceLocator.registerLevelService(new LevelService());
 		ServiceLocator.registerMapLayout(new MapLayout());
 		ServiceLocator.registerPlayerService(new PlayerService());
 		logger.warn("Is SaveService null? " + (ServiceLocator.getSaveLoadService() == null));
@@ -207,7 +206,7 @@ public class MainGameScreen extends ScreenAdapter {
 			height = 1;
 		}
 		renderer.resize(width, height);
-		docketLineDisplay.resize();
+		//docketLineDisplay.resize();
 		if (orderTicketDisplay != null) {
 			orderTicketDisplay.updateDocketSizes();
 		}
@@ -316,14 +315,15 @@ public class MainGameScreen extends ScreenAdapter {
 		ui.addComponent(new GameBackgroundDisplay())
 			.addComponent(new InputDecorator(stage, 10))
 		  	.addComponent(docketLineDisplay = new DocketLineDisplay())
+		  	.addComponent(new DocketLineDisplay())
 			.addComponent(new PerformanceDisplay())
 			.addComponent(new MainGameActions(this.game, UIFactory.createDocketUI()))
-			.addComponent(new MainGameExitDisplay())
+			//.addComponent(new MainGameExitDisplay())
 			.addComponent(new Terminal())
 			.addComponent(inputComponent)
 			.addComponent(new TerminalDisplay())
 			.addComponent(new OrderActions(this.game))
-			.addComponent(new MainGameOrderBtnDisplay())
+			//.addComponent(new MainGameOrderBtnDisplay())
 			.addComponent(new PauseMenuActions(this.game))
 			.addComponent(new PauseMenuDisplay(this))
 			.addComponent(new RageUpgrade())
