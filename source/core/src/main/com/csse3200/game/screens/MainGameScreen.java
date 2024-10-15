@@ -19,6 +19,7 @@ import com.csse3200.game.components.ordersystem.TicketDetails;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.entities.factories.LevelFactory;
+import com.csse3200.game.entities.factories.NPCFactory;
 import com.csse3200.game.entities.factories.RenderFactory;
 import com.csse3200.game.entities.factories.UIFactory;
 import com.csse3200.game.input.InputComponent;
@@ -265,6 +266,7 @@ public class MainGameScreen extends ScreenAdapter {
 	 * Reset screen UI
 	 */
 	public void resetScreen() {
+		NPCFactory.reset();
 		EntityService entityService = ServiceLocator.getEntityService();
 		entityService.dispose();
 		ServiceLocator.registerEntityService(new EntityService());
