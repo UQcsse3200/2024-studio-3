@@ -115,10 +115,8 @@ public class ExtortionUpgrade extends UIComponent implements Upgrade {
             isVisible = true;
             layout.setVisible(true);
             setupMeter();
-
-            ServiceLocator.getRandomComboService().getEvents().trigger("ExtortionActive", true);
-
-        } else {
+        }
+        else {
             ServiceLocator.getRandomComboService().getEvents().trigger("notenoughmoney");
         }
     }
@@ -128,7 +126,6 @@ public class ExtortionUpgrade extends UIComponent implements Upgrade {
      */
     public void deactivate() {
         this.isActive = false;
-        ServiceLocator.getRandomComboService().getEvents().trigger("ExtortionActive", false);
 
         // Remove meter
         isVisible = false;
