@@ -39,16 +39,11 @@ public class TutorialScreenDisplay extends UIComponent {
     private boolean aPressedLastFrame = false;
     private boolean sPressedLastFrame = false;
     private boolean dPressedLastFrame = false;
-    private static final int MAX_TUTORIAL_STEP = 4;
-    int  i = 0;
-
+    private static final int MAX_TUTORIAL_STEP = 8;  // Increased for combining step
+    int i = 0;
 
     public TutorialScreenDisplay(GdxGame game) {
-
         this.game = game;
-//        this.orderTicketDisplay = new MainGameOrderTicketDisplay(ServiceLocator.getRenderService(), ServiceLocator.getPlayerService());
-//        this.orderBtnDisplay = new MainGameOrderBtnDisplay();
-
     }
 
     @Override
@@ -76,12 +71,6 @@ public class TutorialScreenDisplay extends UIComponent {
 
         advanceTutorialStep();  // Ensure textDisplay is initialized before calling this method
 
-        // Add event listeners for create order
-        //entity.getEvents().addListener("createOrder", this::onCreateOrderPressed);
-        //ServiceLocator.getInputService().getEvents().addListener("createOrder", this::onCreateOrderPressed);
-//        ServiceLocator.getInputService().getEvents().addListener("walked", this::onPlayerMoved);
-//        ServiceLocator.getInputService().getEvents().addListener("interact", this::onInteraction);// start the tutorial from the first step
-
         stage.addActor(table);
     }
 
@@ -98,6 +87,10 @@ public class TutorialScreenDisplay extends UIComponent {
     public void advanceTutorialStep() {
         if (tutorialStep < MAX_TUTORIAL_STEP) {
             tutorialStep++;
+
+            // Clear the previous text before showing the next step's instructions
+            clearTextBox();
+
             switch (tutorialStep) {
                 case 1:
                     showMovementTutorial();
@@ -109,13 +102,36 @@ public class TutorialScreenDisplay extends UIComponent {
                     showOrderingTutorial();
                     break;
                 case 4:
+                    showRageModeTutorial();
+                    break;
+                case 5:
+                    showChoppingTutorial();
+                    break;
+                case 6:
                     completeTutorial();
+                    break;
+                case 7:
+                    showRotationTutorial();  // New rotation step
+                    break;
+                case 8:
+                    showCombiningTutorial();  // New combining step
                     break;
                 default:
                     logger.error("Unexpected tutorial step: " + tutorialStep);
             }
         } else {
             logger.error("Tutorial step exceeded maximum value.");
+        }
+    }
+
+    /**
+     * Clears the tutorial text box.
+     */
+    private void clearTextBox() {
+        if (textDisplay != null) {
+            textDisplay.setText("");  // Clear the text
+        } else {
+            logger.error("textDisplay is null during clearTextBox.");
         }
     }
 
@@ -146,21 +162,15 @@ public class TutorialScreenDisplay extends UIComponent {
     /**
      * Displays the ordering tutorial. The player needs to use [ and ] to switch dockets.
      */
-
     public void showOrderingTutorial() {
         if (textDisplay != null) {
             textDisplay.setVisible(true);
-
-            // Combine both instructions into one
             createTextBox("Use [ and ] keys to switch dockets.");
 
-            // Check if both the order button is pressed and the dockets are shifted
             if ((Gdx.input.isKeyJustPressed(Input.Keys.LEFT_BRACKET) || Gdx.input.isKeyJustPressed(Input.Keys.RIGHT_BRACKET))) {
-
                 docketsShifted = true;
                 logger.debug("Dockets shifted!");
 
-                // Advance the tutorial as both conditions are now met
                 advanceTutorialStep();
             }
         } else {
@@ -168,6 +178,53 @@ public class TutorialScreenDisplay extends UIComponent {
         }
     }
 
+    /**
+     * Displays the Rage Mode tutorial. The player needs to press R to activate Rage Mode.
+     */
+    public void showRageModeTutorial() {
+        if (textDisplay != null) {
+            textDisplay.setVisible(true);
+            createTextBox("Press R to activate rage mode.");
+        } else {
+            logger.error("textDisplay is null during showRageModeTutorial.");
+        }
+    }
+
+    /**
+     * Displays the chopping tutorial. The player needs to press Q to chop an item.
+     */
+    public void showChoppingTutorial() {
+        if (textDisplay != null) {
+            textDisplay.setVisible(true);
+            createTextBox("Pick up an item and press Q to chop it.");
+        } else {
+            logger.error("textDisplay is null during showChoppingTutorial.");
+        }
+    }
+
+    /**
+     * Displays the rotation tutorial. The player needs to pick up 2 or more items and press K to rotate.
+     */
+    public void showRotationTutorial() {
+        if (textDisplay != null) {
+            textDisplay.setVisible(true);
+            createTextBox("Pick up 2 or more items and then press K to rotate them.");
+        } else {
+            logger.error("textDisplay is null during showRotationTutorial.");
+        }
+    }
+
+    /**
+     * Displays the combining tutorial. The player needs to pick up 2 or more items and press J to combine them into a meal.
+     */
+    public void showCombiningTutorial() {
+        if (textDisplay != null) {
+            textDisplay.setVisible(true);
+            createTextBox("Pick up 2 or more items and press J to combine them into a meal.");
+        } else {
+            logger.error("textDisplay is null during showCombiningTutorial.");
+        }
+    }
 
     /**
      * Completes the tutorial and informs the player that they can continue.
@@ -199,16 +256,35 @@ public class TutorialScreenDisplay extends UIComponent {
                 textDisplay.setText("Now use [ and ] keys to switch dockets.");
 
                 if (Gdx.input.isKeyJustPressed(Input.Keys.LEFT_BRACKET) || Gdx.input.isKeyJustPressed(Input.Keys.RIGHT_BRACKET)) {
-                        docketsShifted = true;
-                        logger.debug("Dockets shifted");
+                    docketsShifted = true;
+                    logger.debug("Dockets shifted");
                 }
 
                 if (docketsShifted) {
-                    logger.debug("Advancing tutorial after dockets shifted");
                     advanceTutorialStep();
                 }
                 break;
             case 4:
+                if (Gdx.input.isKeyJustPressed(Input.Keys.R)) {  // Triggered by R key press
+                    advanceTutorialStep();
+                }
+                break;
+            case 5:
+                if (Gdx.input.isKeyJustPressed(Input.Keys.Q)) {  // Triggered by Q key press for chopping
+                    advanceTutorialStep();
+                }
+                break;
+            case 6:
+                if (Gdx.input.isKeyJustPressed(Input.Keys.K)) {  // Triggered by K key press for rotation
+                    advanceTutorialStep();
+                }
+                break;
+            case 7:
+                if (Gdx.input.isKeyJustPressed(Input.Keys.J)) {  // Triggered by J key press for combining
+                    advanceTutorialStep();
+                }
+                break;
+            case 8:
                 if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER) || Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
                     startGame();
                 }
@@ -261,6 +337,7 @@ public class TutorialScreenDisplay extends UIComponent {
     public void draw(SpriteBatch batch) {
         // handled by stage
     }
+
     @Override
     public void setStage(Stage stage) {
         if (stage == null) {
