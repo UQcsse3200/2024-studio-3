@@ -1,15 +1,24 @@
 package com.csse3200.game.components.station;
 
+import com.csse3200.game.ai.tasks.AITaskComponent;
+import com.csse3200.game.ai.tasks.Task;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.ScoreSystem.HoverBoxComponent;
 import com.csse3200.game.components.ScoreSystem.ScoreSystem;
+import com.csse3200.game.components.items.ChopIngredientComponent;
+import com.csse3200.game.components.items.CookIngredientComponent;
+import com.csse3200.game.components.items.IngredientComponent;
 import com.csse3200.game.components.items.ItemComponent;
+import com.csse3200.game.components.items.ItemTimerComponent;
+import com.csse3200.game.components.items.MealComponent;
+import com.csse3200.game.components.npc.CustomerComponent;
 import com.csse3200.game.components.ordersystem.OrderManager;
 import com.csse3200.game.components.ordersystem.Recipe;
 import com.csse3200.game.components.ordersystem.TicketDetails;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.components.player.InventoryDisplay;
 import com.csse3200.game.components.player.PlayerStatsDisplay;
+import com.csse3200.game.components.tasks.PathFollowTask;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
@@ -20,6 +29,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.List;
+import java.util.ArrayList;
 
 /**
  * StationServingComponent.java
@@ -38,8 +48,8 @@ public class StationServingComponent extends Component {
     AnimationRenderComponent animator;
     TicketDetails bigTicket;
     private int goldMultiplier = 1;
-    private final String SALAD = "salad";
-    private boolean IsExtortion = false; 
+    private static final String SALAD = "salad";
+    private boolean IsExtortion = false;
 
     /**
      * On creation a listener for Submit Meal will be added to the station.
@@ -54,6 +64,16 @@ public class StationServingComponent extends Component {
         {IsExtortion = true;});
         ServiceLocator.getRandomComboService().getEvents().addListener("extortion unactive", ()->
         {IsExtortion = false;});
+    }
+
+    public boolean canSubmitMeal(ItemComponent item) {
+        String itemName = item.getItemName();
+        switch (itemName) {
+            case "acai bowl", SALAD, "fruit salad", "steak meal", "banana split":
+                return true;
+            default:
+                return false;
+        }
     }
 
     /**
@@ -88,7 +108,7 @@ public class StationServingComponent extends Component {
                     logger.error("No recipe found for this item: {}", itemName);
                     return; // Exit the method
             }
-            scoreMeal(playerMeal);
+            scoreMeal(playerMeal, item);
             playerInventoryComponent.removeAt(0);
             inventoryDisplay.update();
             submitMeal(item);
@@ -102,15 +122,30 @@ public class StationServingComponent extends Component {
     public void submitMeal(ItemComponent item) {
 
         String[] bigTicketInfo = bigTicket.getCurrentBigTicketInfo();
-
         if (bigTicketInfo[0] != null) {
 
+            // Triggering customer leave for successful meal submission
+            Entity customer = CustomerManager.getCustomerByOrder(bigTicketInfo[0]);
+            if (customer != null) {
+                ServiceLocator.getEntityService().getEvents().trigger("customerPassed",
+                        customer.getComponent(CustomerComponent.class).getName());
+                AITaskComponent aiTaskComponent = customer.getComponent(AITaskComponent.class);
+                if (aiTaskComponent != null) {
+                    Task highestPriorityTask = aiTaskComponent.getHighestPriorityTask();
+                    if (highestPriorityTask instanceof PathFollowTask pathFollowTask) {
+                        pathFollowTask.triggerMoveToPredefinedPosition();
+                    }
+                }
+            }
+
+            CustomerManager.removeCustomerByOrder(bigTicketInfo[0]);
+
             // Call to team 1's function with the big ticket info
-            //TBD(item, bigTicketInfo[0], bigTicketInfo[1], bigTicketInfo[2]);
             // remove ticket
             logger.info("Submitting meal and removing docket");
             ServiceLocator.getDocketService().getEvents().trigger("removeOrder", -1); // removes the order from the order action list
             ServiceLocator.getDocketService().getEvents().trigger("removeBigTicket"); // removes the order from the display list
+
 
         } else {
             logger.info("no ticket when submitting"); // team 1 can decide if they want to handle this edge case
@@ -124,9 +159,10 @@ public class StationServingComponent extends Component {
      * Updates the HoverBoxComponent to display customer satisfaction by face types.
      * Increments the gold and updates the gold in the UI according to customer satisfaction and actual ordered meal price.
      *
-     * @param playerMeal - the meal that the player is currently submitting to the customer.
+     * @param playerMeal - the name of the meal that the player is currently submitting to the customer.
+     * @param meal - the meal item that the player is submitting to the customer.
      */
-    private void scoreMeal(String playerMeal) {
+    private void scoreMeal(String playerMeal, ItemComponent meal) {
         String[] bigTicketInfo = bigTicket.getCurrentBigTicketInfo();
         if (bigTicketInfo == null || bigTicketInfo.length < 2) {
             logger.warn("No current order to score the meal for.");
@@ -135,32 +171,80 @@ public class StationServingComponent extends Component {
 
         String orderNumber = bigTicketInfo[0];
         String orderedMeal = bigTicketInfo[1];
-        logger.info("Ordered meal: {}", orderedMeal);
 
+        // Retrieves the ingredients of the customer's order
         Recipe orderRecipe = OrderManager.getRecipe(orderedMeal);
         List<String> orderIngredients = orderRecipe.getIngredients();
-        logger.info("Order ingredients: {}", orderIngredients);
 
-        int orderedMealPrice = getMealPrice(orderedMeal);
-
-        logger.info("Player meal: {}", playerMeal);
+        // Retrieves the ingredients of the player's meal
         Recipe playerRecipe = OrderManager.getRecipe(playerMeal);
         List<String> playerIngredients = playerRecipe.getIngredients();
-        logger.info("Player ingredients: {}", playerIngredients);
 
-        int score = ScoreSystem.compareLists(playerIngredients, orderIngredients);
-        String scoreDescription = ScoreSystem.getScoreDescription(score);
+        // Determines the accuracy of the player's meal against the customer's order
+        int accuracyScore = ScoreSystem.getAccuracyScore(playerIngredients, orderIngredients);
 
-        logOrderDetails(orderNumber, score, scoreDescription);
+        // Retrieves the time remaining when the meal is submitted
+        // Then determines the score based on the time remaining
+        String orderTime = bigTicketInfo[2];
+        int timeScore = ScoreSystem.getTimeScore(orderTime);
 
+        // Retrieves the completion percentages of the ingredients in the player's meal
+        // Then determines the score based on how 'cooked' or 'chopped' the ingredients are
+        List<Float> completionList = getCompletionList(meal);
+        int completionScore = ScoreSystem.getCompletionScore(completionList);
+
+        // Determines the final score based on the three previous scoring criteria
+        String finalScore = ScoreSystem.getFinalScore(accuracyScore, timeScore, completionScore);
+
+        // Updating the gold amount and the HoverBox display based on the final score
         Entity customer = CustomerManager.getCustomerByOrder(orderNumber);
+        int orderedMealPrice = getMealPrice(orderedMeal);
         if (customer != null) {
-            processCustomerReaction(customer, scoreDescription, orderedMealPrice);
+            processCustomerReaction(customer, finalScore, orderedMealPrice);
         }
-
-        CustomerManager.removeCustomerByOrder(orderNumber);
     }
 
+    /**
+     * Function that is called to retrieve the completion statuses of the ingredients used in the player's meal.
+     *
+     * @param meal - the meal item that the player is submitting to the customer.
+     */
+    private List<Float> getCompletionList(ItemComponent meal) {
+        List<Float> ingredientCompletionList = new ArrayList<>();
+        if (meal instanceof MealComponent) {
+            MealComponent mealComponent = (MealComponent) meal;
+            List<IngredientComponent> ingredients = mealComponent.getIngredients();
+            for (IngredientComponent ingredient : ingredients) {
+                logger.info(ingredient.getItemName());
+                Entity ingredientEntity = ingredient.getEntity();
+                ItemTimerComponent timerComponent = null;
+
+                if (ingredientEntity != null) {
+
+                    // Check for ChopIngredientComponent
+                    if (ingredientEntity.getComponent(ChopIngredientComponent.class) != null) {
+                        timerComponent = ingredientEntity.getComponent(ChopIngredientComponent.class);
+                    }
+                    // Check for CookIngredientComponent
+                    else if (ingredientEntity.getComponent(CookIngredientComponent.class) != null) {
+                        timerComponent = ingredientEntity.getComponent(CookIngredientComponent.class);
+                    }
+                }
+
+                Float ingredientCompletionPercent = timerComponent.getCompletionPercent();
+                ingredientCompletionList.add(ingredientCompletionPercent);
+            }
+        } else {
+            logger.error("The provided meal is not a MealComponent.");
+        }
+        return ingredientCompletionList;
+    }
+
+    /**
+     * Function that is called to retrieve the meal price.
+     *
+     * @param orderedMeal - the name of the meal that the player is currently submitting to the customer.
+     */
     private int getMealPrice(String orderedMeal) {
         return switch (orderedMeal) {
             case "acaiBowl", "fruitSalad" -> 20;
@@ -170,33 +254,39 @@ public class StationServingComponent extends Component {
         };
     }
 
-    private void logOrderDetails(String orderNumber, int score, String scoreDescription) {
-        logger.info("Order number: {}", orderNumber);
-        logger.info("Score: {}%", score);
-        logger.info("Description: {}", scoreDescription);
-    }
-
-    private void processCustomerReaction(Entity customer, String scoreDescription, int mealPrice) {
+    /**
+     * Function that is called to process the customer reaction, and increments the gold.
+     *
+     * @param customer - the customer entity.
+     * @param finalScore - the final score that is assigned to a meal.
+     * @param mealPrice - the price of the meal.
+     */
+    private void processCustomerReaction(Entity customer, String finalScore, int mealPrice) {
         HoverBoxComponent hoverBox = customer.getComponent(HoverBoxComponent.class);
         if (hoverBox == null) return;
 
-        String faceImagePath = getFaceImagePath(scoreDescription);
-        int gold = updateGoldBasedOnScore(ServiceLocator.getLevelService().getCurrGold(), scoreDescription, mealPrice);
+        String faceImagePath = getFaceImagePath(finalScore);
+        int gold = updateGoldBasedOnScore(ServiceLocator.getLevelService().getCurrGold(), finalScore, mealPrice);
 
         hoverBox.setTexture(new Texture(faceImagePath));
         ServiceLocator.getLevelService().setCurrGold(gold);
         updateGoldUI(gold);
     }
 
-    private String getFaceImagePath(String scoreDescription) {
-        return switch (scoreDescription) {
+    /**
+     * Function that is called to retrieve the path to update the HoverBox Display.
+     *
+     * @param finalScore - the final score that is assigned to a meal.
+     */
+    private String getFaceImagePath(String finalScore) {
+        return switch (finalScore) {
             case "Grin Face" -> "images/customer_faces/grin_face.png";
             case "Smile Face" -> "images/customer_faces/smile_face.png";
             case "Neutral Face" -> "images/customer_faces/neutral_face.png";
             case "Frown Face" -> "images/customer_faces/frown_face.png";
             case "Angry Face" -> "images/customer_faces/angry_face.png";
             default -> {
-                logger.error("No image found for preference: {}", scoreDescription);
+                logger.error("No image found for preference: {}", finalScore);
                 yield "images/customer_faces/angry_face.png"; // Provide a default image
             }
         };
@@ -210,13 +300,21 @@ public class StationServingComponent extends Component {
         goldMultiplier = multiplier;
     }
 
-    private int updateGoldBasedOnScore(int currentGold, String scoreDescription, int mealPrice) {
+    /**
+     * Function that is called to update the gold based on the meal price.
+     *
+     * @param currentGold - the current amount of gold the player has.
+     * @param finalScore - the final score that is assigned to a meal.
+     * @param mealPrice - the price of the meal.
+     */
+    private int updateGoldBasedOnScore(int currentGold, String finalScore, int mealPrice) {
         int gold = currentGold + mealPrice;
-        switch (scoreDescription) {
+        switch (finalScore) {
             case "Grin Face" -> gold += 10 * goldMultiplier;
             case "Smile Face" -> gold += 5 * goldMultiplier;
             case "Frown Face" -> gold -= 5 * goldMultiplier;
             case "Angry Face" -> gold -= 10 * goldMultiplier;
+            default -> gold += 0;
         }
         return gold;
     }

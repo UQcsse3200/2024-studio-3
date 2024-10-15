@@ -1,15 +1,7 @@
 package com.csse3200.game.components.ordersystem;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.csse3200.game.services.ServiceLocator;
-
 
 public class DocketMealDisplay {
-    private String mealImage;
     private static final String[] mealDocketTextures = {
             "images/ordersystem/salad_docket.png",
             "images/ordersystem/fruit_salad_docket.png",
@@ -29,6 +21,7 @@ public class DocketMealDisplay {
 
 
     public String getMealImage(String mealName, String type) {
+        String mealImage;
         if(type.equalsIgnoreCase("vertical")){
 
 

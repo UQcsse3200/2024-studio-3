@@ -18,7 +18,7 @@ public class CustomerBehaviorComponent extends Component implements TaskRunner {
 
         // Initialize the path-follow task with an initial target position
         Vector2 initialTarget = new Vector2(0, 0); // Replace with actual initial target
-        pathFollowTask = new PathFollowTask(initialTarget, getEntity().getId());
+        pathFollowTask = new PathFollowTask(initialTarget, getEntity().getId(), 15);
         pathFollowTask.create(this); // Create the path-follow task
 
         // Listener for the "leaveEarly" event, which triggers when the customer should leave early
@@ -50,7 +50,7 @@ public class CustomerBehaviorComponent extends Component implements TaskRunner {
         if (pathFollowTask != null) {
             // Stop the current task and create a new one with the updated target position
             pathFollowTask.stop();
-            pathFollowTask = new PathFollowTask(targetPosition, getEntity().getId());
+            pathFollowTask = new PathFollowTask(targetPosition, getEntity().getId(), 15);
             pathFollowTask.create(this);
             pathFollowTask.start();
         }

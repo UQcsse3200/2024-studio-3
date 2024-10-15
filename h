@@ -23,7 +23,7 @@
   [31mremotes/origin/feature/stations[m
   [31mremotes/origin/gh-pages[m
   [31mremotes/origin/main[m
-  [31mremotes/origin/order-docket-movement[m
+  [31mremotes/origin/order-docketImage-movement[m
   [31mremotes/origin/origin/team6[m
   [31mremotes/origin/quick-fixes[m
   [31mremotes/origin/revert-49-Team08[m

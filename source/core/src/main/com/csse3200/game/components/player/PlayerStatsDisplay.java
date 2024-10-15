@@ -1,14 +1,24 @@
 package com.csse3200.game.components.player;
 
+import com.badlogic.gdx.Gdx;
+import com.csse3200.game.GdxGame;
 import java.util.concurrent.TimeUnit;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.utils.BaseDrawable;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import com.badlogic.gdx.utils.Timer;
+import com.badlogic.gdx.utils.Align;  // Import Align class
 
 /**
  * AN ui component for displaying player stats, e.g. health.
@@ -17,14 +27,28 @@ public class PlayerStatsDisplay extends UIComponent {
   Table table;
   Table goldTable;
   Table timerTable;
+  Table dayTable;
+  Table goldContentsTable;
+  Table dayContentsTable;
+
   private Image timerImage;
   private Image goldImage;
+  private Image calendarImage;
+
   private Label goldLabel;
   private static Label dayLabel;
+  private static Label rageLabel;
   private static int currentDay = 1;
   private static Label timerLabel;
   private static long timer;
+  private static long startTime;
   private static PlayerStatsDisplay instance;
+  private ProgressBar timeBar;
+  private static final float MAX_TIME = 300f;
+  private float screenWidth = Gdx.graphics.getWidth();
+  private float screenHeight = Gdx.graphics.getHeight();
+  private static final Logger logger = LoggerFactory.getLogger(GdxGame.class);
+
 
 
     /**
@@ -37,6 +61,7 @@ public class PlayerStatsDisplay extends UIComponent {
     addActors();
     setTimer(ServiceLocator.getDayNightService().FIVE_MINUTES);
 
+
     entity.getEvents().addListener("updateGold", this::updatePlayerGoldUI);
     ServiceLocator.getDayNightService().getEvents().addListener("newday", PlayerStatsDisplay::updateDay);
     ServiceLocator.getDayNightService().getEvents().addListener("Second", (Long time) -> updateTime(time));
@@ -46,7 +71,7 @@ public class PlayerStatsDisplay extends UIComponent {
    * Sets the timer to a specific time and starts counting down
    * @param time the time you want to set the timer to count down from in seconds
    */
-  public static void setTimer(long time) { timer = time; }
+  public static void setTimer(long time) { timer = time; startTime = time;}
 
   /**
    * Sets the label for the day
@@ -90,44 +115,113 @@ public class PlayerStatsDisplay extends UIComponent {
    */
   private void addActors() {
     table = new Table();
-    table.top().left();
+    table.top().left();  // Position table to the top-left of the screen
     table.setFillParent(true);
-    table.padTop(80f).padLeft(20f);
-
     goldTable = new Table();
-    goldTable.left();
-
     timerTable = new Table();
-    timerTable.left().pad(10f);
+    dayTable = new Table();
+    goldContentsTable = new Table();
+    dayContentsTable = new Table();
 
-    //Label for the Current Day
-    CharSequence dayText = String.format("Day: %d", currentDay); // Start with Day 1
-    String LARGE_LABEL = "large";
-    setDayLabel(new Label(dayText, skin, LARGE_LABEL));
-    table.add(getDayLabel()).left();
     table.row();
 
-    //Label for Current Gold
-    goldImage = new Image(ServiceLocator.getResourceService().getAsset("images/money.png", Texture.class));
-    int gold = entity.getComponent(CombatStatsComponent.class).getGold();
-    CharSequence goldText = String.format("Cash: %d", gold);
-    goldLabel = new Label(goldText, skin, LARGE_LABEL);
+    String SMALL_LABEL = "cash";
+    String rageText = "Rage Meter";
 
-    goldTable.add(goldLabel).left();
-    goldTable.add(goldImage).size(20f).padLeft(5f);
-    table.add(goldTable);
-    table.row();
-
-    //Timer image
-    timerImage = new Image(ServiceLocator.getResourceService().getAsset("images/hourglass.png", Texture.class));
 
     // Timer label for the remaining time in the day
     CharSequence TimerText = String.format("%s", convertDigital(timer));
-    setTimerLabel(new Label(TimerText, skin, LARGE_LABEL));
-    timerTable.add(timerImage).size(20f).left().padRight(5f);
-    timerTable.add(getTimerLabel()).left();
-    table.add(timerTable).padTop(20f);
+    setTimerLabel(new Label(TimerText, skin, SMALL_LABEL));
+
+    // Timer Icon
+    timerImage = new Image(ServiceLocator.getResourceService().getAsset("images/hourglass.png", Texture.class));
+    timerTable.add(timerImage).size(50).padRight(5); // Add icon before the timer label
+
+    // Add the timer label to the timerTable
+    timerTable.add(getTimerLabel()).center();
+
+    // Center the timer table in the middle of the screen
+    table.add(timerTable).expandX().padTop(0f);  // Ensure the timer is centered
+    table.row();
+
+    // --- Update: Day Label with Container ---
+
+    // Label for the Current Day
+    CharSequence dayText = String.format("Day: %d", currentDay); // Start with Day 1
+    dayLabel = new Label(dayText, skin, SMALL_LABEL);
+    dayLabel.setColor(Color.GOLD);  // Set text color to white for contrast
+
+    // Wrap day label in container for background
+    Container<Label> dayLabelContainer = new Container<>(dayLabel);
+
+    // Set background for day label container (similar to gold label)
+    TextureRegionDrawable dayBackground = new TextureRegionDrawable(
+        new TextureRegion(ServiceLocator.getResourceService().getAsset("images/box_background4.png", Texture.class))
+    );
+    dayLabelContainer.setBackground(dayBackground);  // Set background drawable
+
+    // Calendar Icon
+    calendarImage = new Image(ServiceLocator.getResourceService().getAsset("images/calendar.png", Texture.class));
+    dayContentsTable.add(calendarImage).size(50).padRight(0).padLeft(5); // Add icon before the gold label
+
+    // Add padding to the container for better spacing
+    dayLabelContainer.pad(10).padLeft(20);  // Optional: Adjust padding as needed
+
+    // Add the day label container to the table
+    dayContentsTable.add(dayLabelContainer);
+    table.add(dayContentsTable).left().width(210f).height(180).padTop(0);
+    table.row();
+
+    // --- Existing: Gold Label with Container ---
+    int gold = entity.getComponent(CombatStatsComponent.class).getGold();
+    CharSequence goldText = String.format("Cash: %d", gold);
+
+    // Create a container to hold the gold label
+    goldLabel = new Label(goldText, skin, SMALL_LABEL);
+    goldLabel.setColor(Color.GOLD);  // Make text color gold
+
+    // Wrap gold label in container for background
+    Container<Label> goldLabelContainer = new Container<>(goldLabel);
+
+    // Set background for container
+    TextureRegionDrawable goldBackground = new TextureRegionDrawable(
+        new TextureRegion(ServiceLocator.getResourceService().getAsset("images/box_background.png", Texture.class))
+    );
+    goldLabelContainer.setBackground(goldBackground);  // Set background drawable
+
+    // Gold Icon
+    goldImage = new Image(ServiceLocator.getResourceService().getAsset("images/coin.png", Texture.class));
+    goldContentsTable.add(goldImage).size(35).padRight(0).padLeft(10); // Add icon before the gold label
+
+    // Add the gold label container and image to the goldTable
+    goldContentsTable.add(goldLabelContainer);
+    goldTable.add(goldContentsTable);
+    table.add(goldTable).left().width(220f).height(170).padTop(0);  // Align to the very left
+
+//    table.row();
+//
+//    // Create a label for the rage meter
+//    rageLabel = new Label(rageText, skin, SMALL_LABEL);
+//    rageLabel.setColor(Color.RED); // Make text red
+//    table.add(rageLabel).left().padTop(110).padLeft(30);
+
+    // Add the table to the stage
     stage.addActor(table);
+
+//    // Progress bar settings
+//    Texture whiteBgTexture = ServiceLocator
+//        .getResourceService().getAsset("images/white_background.png", Texture.class);
+//
+//    ProgressBar.ProgressBarStyle style = new ProgressBar.ProgressBarStyle();
+//    style.background = new TextureRegionDrawable(new TextureRegion(whiteBgTexture));
+//    style.background.setMinHeight(15);
+//    style.background.setMinWidth(10);
+//
+//    // Static white background ProgressBar
+//    timeBar = new ProgressBar(0f, 100f, 1f, false, skin);
+//    timeBar.setValue(100f);  // Start at full value (100%)
+//    table.row();
+//    table.add(timeBar).width(200f).height(300f).fill();
   }
 
   @Override
@@ -154,16 +248,81 @@ public class PlayerStatsDisplay extends UIComponent {
   }
 
   /**
+   * Updates the colour of the timer text depending on current time
+   */
+  private static void updateTimeColor() {
+    long timeInSeconds = TimeUnit.MILLISECONDS.toSeconds(timer);
+
+    if (timeInSeconds <= 60) {
+      getTimerLabel().setColor(Color.RED);  // Critical - red when below 1 minute
+    } else if (timeInSeconds <= 150) {
+      getTimerLabel().setColor(Color.YELLOW);  // Warning - yellow when below 2 minutes and 30 seconds
+    } else {
+      getTimerLabel().setColor(Color.WHITE);  // Safe - white when above 2:30
+    }
+  }
+
+  /**
    * Updates the remaining time for the current day on the UI. Decreases the timer by one second
    * and updates the displayed time.
    */
 
   public static void updateTime(long time) {
+    timer = time;
+
+//    // Calculate progress as a percentage of the time remaining
+//    float progressPercentage = (float) timer / startTime * 100f;
+//
+//    // Update the progress bar value to reflect the remaining time
+//    getInstance().timeBar.setValue(progressPercentage);
+
+    // Update the timer color based on remaining time
+    updateTimeColor();
+
+    // Emphasize the timer when below 1 minute by flickering and increasing size
+    if (timer < TimeUnit.MINUTES.toMillis(1)) {
+      flickerTimer();
+      increaseTimerSize();
+    } else {
+      resetTimerSize();  // Reset the size when the time is above 1 minute
+    }
+
+    // Format and update the timer label with the remaining time
     CharSequence timerText = String.format("Time Left: %n   %s", convertDigital(time));
     getTimerLabel().setText(timerText);
+
+    // Trigger other events if necessary
     ServiceLocator.getDayNightService().getEvents().trigger("callpastsecond");
   }
 
+  /**
+   * Flickers the timer by toggling its visibility every 0.5 seconds.
+   */
+  private static void flickerTimer() {
+    Timer.schedule(new Timer.Task() {
+      @Override
+      public void run() {
+        boolean isVisible = getTimerLabel().isVisible();
+        getTimerLabel().setVisible(!isVisible);  // Toggle visibility
+      }
+    }, 0, 0.5f);  // Flicker every 0.5 seconds
+  }
+
+  /**
+   * Increases the size of the timer as it approaches zero.
+   */
+  private static void increaseTimerSize() {
+    float newFontScale = 1.2f;  // Make the timer 1.2x its original size
+    getTimerLabel().setFontScale(newFontScale);
+  }
+
+  /**
+   * Resets the timer label size to its original value.
+   */
+  private static void resetTimerSize() {
+    float originalFontScale = 1.0f;  // Reset the font scale
+    getTimerLabel().setFontScale(originalFontScale);
+  }
 
   @Override
   public void dispose() {
@@ -193,7 +352,7 @@ public class PlayerStatsDisplay extends UIComponent {
     
 }
 public static void reset() {
-  currentDay = 1; 
+  currentDay = 1;
 }
 
 

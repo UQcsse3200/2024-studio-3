@@ -3,7 +3,6 @@ package com.csse3200.game;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.csse3200.game.components.cutscenes.BackstoryCutscene;
 import com.csse3200.game.components.cutscenes.Cutscene;
 import com.csse3200.game.screens.CutsceneScreen;
 import com.csse3200.game.files.UserSettings;
@@ -16,8 +15,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.csse3200.game.services.*;
-
-import java.util.logging.Level;
 
 import static com.badlogic.gdx.Gdx.app;
 /**
@@ -207,7 +204,7 @@ public class GdxGame extends Game {
   }
 
   public enum LevelType {
-    LEVEL_1, LEVEL_2, LEVEL_3, LEVEL_4, LEVEL_5, DONE
+    LEVEL_0, LEVEL_1, LEVEL_2, LEVEL_3, LEVEL_4, LEVEL_5, DONE
   }
 
   /**
