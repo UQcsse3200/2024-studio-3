@@ -1,8 +1,6 @@
 package com.csse3200.game.components.ordersystem;
 
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Input.Keys;
-import com.csse3200.game.GdxGame;
 import com.csse3200.game.input.InputComponent;
 import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
@@ -14,20 +12,11 @@ import org.slf4j.LoggerFactory;
  */
 public class OrderActions extends InputComponent {
     private static final Logger logger = LoggerFactory.getLogger(OrderActions.class);
-    private static final int SHIFT_LEFT_KEY = Input.Keys.LEFT_BRACKET; // Key for shifting left
-    private static final int SHIFT_RIGHT_KEY = Input.Keys.RIGHT_BRACKET; // Key for shifting right
-
-    // key values of big ticket
-    private String currentOrderNumber;
-    private String currentMeal;
-    private String currentTimeLeft;
 
     /**
-     * Constructs an OrderActions instance with a reference to the main game object. - Tia
-     *
-     * @param game the main game instance
+     * Constructs an OrderActions instance.
      */
-    public OrderActions(GdxGame game) {
+    public OrderActions() {
         super(5);
     }
 
@@ -39,12 +28,11 @@ public class OrderActions extends InputComponent {
     public void create() {
         ServiceLocator.getInputService().register(this);
         ServiceLocator.getDocketService().getEvents().addListener("removeOrder", this::onRemoveOrder);
-        ServiceLocator.getDocketService().getEvents().addListener(
-                "reorderDockets", MainGameOrderTicketDisplay::reorderDockets);
+        ServiceLocator.getDocketService().getEvents().addListener("reorderDockets", MainGameOrderTicketDisplay::reorderDockets);
     }
 
     /**
-     * Handles key press events. Shifts dockets left or right based on the pressed key. - Tia
+     * Handles key press events. Shifts dockets left or right based on the pressed key.
      *
      * @param keycode the code of the pressed key
      * @return true if the key event was handled, false otherwise
@@ -64,23 +52,11 @@ public class OrderActions extends InputComponent {
         return false;
     }
 
-     /**
-     * Handles key release events. Currently does nothing. - Tia
-     *
-     * @param keycode the code of the released key
-     * @return false, as no action is taken
-     */
     @Override
     public boolean keyUp(int keycode) {
         return false;
     }
 
-    /**
-     * Handles key typed events. Currently does nothing. - Tia
-     *
-     * @param character the typed character
-     * @return false, as no action is taken
-     */
     @Override
     public boolean keyTyped(char character) {
         return false;
@@ -91,8 +67,17 @@ public class OrderActions extends InputComponent {
      *
      * @param index the index of the order to be removed
      */
-    private void onRemoveOrder(int index) {
+    void onRemoveOrder(int index) {
         logger.info("Remove order");
         ServiceLocator.getDocketService().getEvents().trigger("reorderDockets", index);
+    }
+
+    /**
+     * Get the logger instance for testing purposes.
+     *
+     * @return the logger instance.
+     */
+    public Logger getLogger() {
+        return logger;
     }
 }

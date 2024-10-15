@@ -13,13 +13,13 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Displays a button on the main game screen that allows players to create a new order.
- * The button is positioned at the bottom right corner of the screen.
+ * The button is positioned in the bottom right corner of the screen.
  */
 public class MainGameOrderBtnDisplay extends UIComponent{
 	private static final Logger logger = LoggerFactory.getLogger(MainGameOrderBtnDisplay.class);
 	private static final float Z_INDEX = 2f;
-	public Table table;
-	public boolean pressed = false;
+	private Table table;
+	private boolean pressed = false;
 
 	/**
 	 * Initialises the button display and sets up the actors in the UI.
@@ -29,6 +29,10 @@ public class MainGameOrderBtnDisplay extends UIComponent{
 		super.create();
 		addActors();
 		logger.info("order button created");
+	}
+
+	public Table getTable() {
+		return table;
 	}
 
 	/**
@@ -82,7 +86,7 @@ public class MainGameOrderBtnDisplay extends UIComponent{
 	 */
 	@Override
 	public void setStage(Stage mock) {
-		this.stage = stage;
+		// This function is not needed nor is it called
 	}
 
 	/**
@@ -93,6 +97,8 @@ public class MainGameOrderBtnDisplay extends UIComponent{
 	public boolean getState(){
 		return pressed;
 	}
+
+	public void setState(boolean pressed) { this.pressed = pressed;}
 
 	/**
 	 * Removes the button

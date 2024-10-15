@@ -322,7 +322,7 @@ public class MainGameScreen extends ScreenAdapter {
 			.addComponent(new Terminal())
 			.addComponent(inputComponent)
 			.addComponent(new TerminalDisplay())
-			.addComponent(new OrderActions(this.game))
+			.addComponent(new OrderActions())
 			.addComponent(new MainGameOrderBtnDisplay())
 			.addComponent(new PauseMenuActions(this.game))
 			.addComponent(new PauseMenuDisplay(this))
@@ -331,8 +331,6 @@ public class MainGameScreen extends ScreenAdapter {
 				.addComponent(new SpeedBootsUpgrade())
 				.addComponent(new ExtortionUpgrade())
 				.addComponent(new DancePartyUpgrade())
-				.addComponent(new PauseMenuActions(this.game))
-				.addComponent(new PauseMenuDisplay(this))
 						.addComponent(new UpgradesDisplay(this))
 								.addComponent(new RecipeCardDisplay(this));
 

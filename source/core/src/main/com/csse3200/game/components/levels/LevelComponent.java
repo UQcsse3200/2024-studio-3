@@ -202,7 +202,7 @@ public class LevelComponent extends Component {
     /**
      * Is the game spawning customers?
      *
-     * @return whether or not the game is spawning customers
+     * @return whether the game is spawning customers
      */
     public boolean getNowSpawning() {
         return nowSpawning;
@@ -227,7 +227,7 @@ public class LevelComponent extends Component {
     }
 
     /**
-     * Get the Entity that handles all of the customer spawning events
+     * Get the Entity that handles all the customer spawning events
      *
      * @return the Entity with all customer spawning events
      */
