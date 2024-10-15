@@ -622,7 +622,13 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         stringArrayList.clear();
 //        textureArrayList.clear();
         imageArrayList.clear();
+        resetOrderNumb();
+        //orderNumb = 0;
         super.dispose();
+    }
+
+    public static void resetOrderNumb(){
+        orderNumb = 0;
     }
 
     /**
