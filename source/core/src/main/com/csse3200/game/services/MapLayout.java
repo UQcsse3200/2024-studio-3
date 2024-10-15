@@ -130,11 +130,6 @@ public class MapLayout {
                 logger.warn("Failed to close the reader: " + ex.getMessage());
             }
         }
-        long initTime = ServiceLocator.getTimeSource().getTime();
-//        for (Bench b : benches) {
-//            b.init();
-//        }
-        logger.info("initialising benches (" + (ServiceLocator.getTimeSource().getTime() - initTime) + "ms)");
 
         return new Map(benches, stations);
 
