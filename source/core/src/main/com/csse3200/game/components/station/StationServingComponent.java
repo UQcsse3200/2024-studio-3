@@ -5,6 +5,8 @@ import com.csse3200.game.ai.tasks.Task;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.ScoreSystem.HoverBoxComponent;
 import com.csse3200.game.components.ScoreSystem.ScoreSystem;
+import com.csse3200.game.components.items.ChopIngredientComponent;
+import com.csse3200.game.components.items.CookIngredientComponent;
 import com.csse3200.game.components.items.IngredientComponent;
 import com.csse3200.game.components.items.ItemComponent;
 import com.csse3200.game.components.items.ItemTimerComponent;
@@ -195,8 +197,22 @@ public class StationServingComponent extends Component {
             MealComponent mealComponent = (MealComponent) meal;
             List<IngredientComponent> ingredients = mealComponent.getIngredients();
             for (IngredientComponent ingredient : ingredients) {
+                logger.info(ingredient.getItemName());
                 Entity ingredientEntity = ingredient.getEntity();
-                ItemTimerComponent timerComponent = ingredientEntity.getComponent(ItemTimerComponent.class);
+                ItemTimerComponent timerComponent = null;
+
+                if (ingredientEntity != null) {
+
+                    // Check for ChopIngredientComponent
+                    if (ingredientEntity.getComponent(ChopIngredientComponent.class) != null) {
+                        timerComponent = ingredientEntity.getComponent(ChopIngredientComponent.class);
+                    }
+                    // Check for CookIngredientComponent
+                    else if (ingredientEntity.getComponent(CookIngredientComponent.class) != null) {
+                        timerComponent = ingredientEntity.getComponent(CookIngredientComponent.class);
+                    }
+                }
+
                 Float ingredientCompletionPercent = timerComponent.getCompletionPercent();
                 ingredientCompletionList.add(ingredientCompletionPercent);
             }
