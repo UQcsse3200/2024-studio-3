@@ -23,7 +23,6 @@ import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.areas.terrain.TerrainFactory.TerrainType;
-import com.csse3200.game.areas.map.BenchLayout;
 import com.csse3200.game.components.gamearea.GameAreaDisplay;
 import com.csse3200.game.components.maingame.EndDayDisplay;
 import com.csse3200.game.components.moral.MoralDecision;
@@ -460,18 +459,13 @@ public class ForestGameArea extends GameArea {
   /**
    * Spawns benches around the restaurant
    */
-  private void spawnBenches() {
-    for (Bench bench : BenchLayout.levelOne()) {
-      spawnEntity(bench);
-      bench.setPosition(bench.x, bench.y);
-    }
-  }
+
 
   private Entity spawnPlayer() {
     Entity newPlayer;
     newPlayer = PlayerFactory.createPlayer();
     spawnEntityAt(newPlayer, PLAYER_SPAWN, true, true);
-    newPlayer.setPosition(PLAYER_SPAWN.x, 2.5f);
+    newPlayer.setPosition(PLAYER_SPAWN.x, 3.1f);
     return newPlayer;
   }
 
