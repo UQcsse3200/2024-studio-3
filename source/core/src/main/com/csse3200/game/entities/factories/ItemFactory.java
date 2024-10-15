@@ -21,12 +21,7 @@ public class ItemFactory {
                 .addComponent(new HitboxComponent().setLayer(PhysicsLayer.PLAYER));
     }
 
-    /**
-     * Create a fish item.
-     * 
-     * @param cookedLevel - The level the fish is cooked at, can be "raw", "cooked" or "burnt".
-     * @return - A fish entity.
-     */
+
     public static Entity createFish(String cookedLevel) {
         return new Entity()
                 .addComponent(new IngredientComponent("fish", ItemType.FISH, 2, 10,
