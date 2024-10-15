@@ -86,6 +86,7 @@ public class InventoryDisplayTest2 {
         // Create a mock Stage
         stage = mock(Stage.class);
 
+        // Mock getStage to return a mock Stage
         when(renderService.getStage()).thenReturn(stage);
     }
 
@@ -149,6 +150,141 @@ public class InventoryDisplayTest2 {
             // Assuming that each slot should have exactly one Image (the slot background)
             assertEquals(1, slot.getChildren().size);
         }
+    }
+
+    @Test
+    public void testCreateWithItems() throws NoSuchFieldException, IllegalAccessException {
+        // Arrange
+        int inventoryCapacity = 3;
+        Entity entity = new Entity();
+        InventoryComponent inventory = new InventoryComponent(inventoryCapacity);
+        entity.addComponent(inventory);
+
+        // Create mock items
+        ItemComponent item1 = mock(ItemComponent.class);
+        when(item1.getTexturePath()).thenReturn("images/items/item1.png");
+
+        ItemComponent item2 = mock(ItemComponent.class);
+        when(item2.getTexturePath()).thenReturn("images/items/item2.png");
+
+        // Add items to inventory
+        inventory.addItem(item1);
+        inventory.addItem(item2);
+
+        InventoryDisplay display = new InventoryDisplay();
+        // Add InventoryDisplay to the entity
+        entity.addComponent(display);
+        display.setStage(stage);
+
+        // Act
+        entity.create();
+
+        // Assert
+        // Use reflection to access the private 'slots' field
+        Field slotsField = InventoryDisplay.class.getDeclaredField("slots");
+        slotsField.setAccessible(true);
+        ArrayList<Stack> slots = (ArrayList<Stack>) slotsField.get(display);
+
+        assertNotNull(slots);
+        assertEquals(inventoryCapacity, slots.size());
+
+        // Verify that getAsset() was called for each slot (3 times)
+        verify(resourceService, times(inventoryCapacity)).getAsset("images/inventory_ui/slot.png", Texture.class);
+
+        // Verify that getAsset() was called for each item's texture
+        verify(resourceService).getAsset("images/items/item1.png", Texture.class);
+        verify(resourceService).getAsset("images/items/item2.png", Texture.class);
+
+        // Verify that each slot contains the correct number of children
+        for (int i = 0; i < inventoryCapacity; i++) {
+            Stack slot = slots.get(i);
+            if (i < 2) { // First two slots have items
+                // Each slot should have two children: slot background and item image
+                assertEquals(2, slot.getChildren().size);
+            } else { // Third slot is empty
+                // Only slot background should be present
+                assertEquals(1, slot.getChildren().size);
+            }
+        }
+
+        // Verify that the stage adds the table
+        verify(stage).addActor(any(Table.class));
+    }
+
+    @Test
+    public void testUpdateInventory() throws NoSuchFieldException, IllegalAccessException {
+        // Arrange
+        int inventoryCapacity = 2;
+        Entity entity = new Entity();
+        InventoryComponent inventory = new InventoryComponent(inventoryCapacity);
+        entity.addComponent(inventory);
+
+        // Create initial item
+        ItemComponent item1 = mock(ItemComponent.class);
+        when(item1.getTexturePath()).thenReturn("images/items/item1.png");
+        inventory.addItem(item1);
+
+        InventoryDisplay display = new InventoryDisplay();
+        // Add InventoryDisplay to the entity
+        entity.addComponent(display);
+        display.setStage(stage);
+
+        // Act
+        entity.create();
+
+        // Access the slots
+        Field slotsField = InventoryDisplay.class.getDeclaredField("slots");
+        slotsField.setAccessible(true);
+        ArrayList<Stack> slots = (ArrayList<Stack>) slotsField.get(display);
+
+        // Verify initial state
+        verify(resourceService, times(inventoryCapacity)).getAsset("images/inventory_ui/slot.png", Texture.class);
+        verify(resourceService).getAsset("images/items/item1.png", Texture.class);
+
+        // Act: Add a new item to the inventory
+        ItemComponent item2 = mock(ItemComponent.class);
+        when(item2.getTexturePath()).thenReturn("images/items/item2.png");
+        inventory.addItem(item2);
+
+        // Trigger the updateInventory event
+        // entity.getEvents().trigger("updateInventory");
+
+        // Assert: Verify that the second slot is updated with the new item
+        verify(resourceService).getAsset("images/items/item2.png", Texture.class);
+
+        // Verify that getAsset for slot.png was called again 'inventoryCapacity' times during update
+        verify(resourceService, times(inventoryCapacity * 2)).getAsset("images/inventory_ui/slot.png", Texture.class);
+
+        // Verify that the second slot now has two children
+        Stack secondSlot = slots.get(1);
+        assertEquals(2, secondSlot.getChildren().size);
+
+        // Act: Remove the first item
+        inventory.removeAt(0);
+
+        // Trigger the updateInventory event
+        // entity.getEvents().trigger("updateInventory");
+
+        // Verify that getAsset for slot.png was called again 'inventoryCapacity' times during update
+        verify(resourceService, times(inventoryCapacity * 3)).getAsset("images/inventory_ui/slot.png", Texture.class);
+
+        // Assert: Verify that the first slot is now empty
+        Stack firstSlot = slots.get(0);
+        assertEquals(1, firstSlot.getChildren().size);
+
+        // Act: Change the texture path of the second item to null
+        when(item2.getTexturePath()).thenReturn(null);
+        entity.getEvents().trigger("updateInventory");
+
+        // Assert: Verify that null_image.png was attempted to be loaded
+        verify(resourceService).getAsset("images/inventory_ui/null_image.png", Texture.class);
+
+        // Verify that getAsset for slot.png was called again 'inventoryCapacity' times during update
+        verify(resourceService, times(inventoryCapacity * 4)).getAsset("images/inventory_ui/slot.png", Texture.class);
+        
+        // Verify that the second slot now has two children (slot background + null image)
+        Stack updatedSecondSlot = slots.get(1);
+        assertEquals(2, updatedSecondSlot.getChildren().size);
     }
 
 }
