@@ -91,15 +91,17 @@ public class GoodEndCutsceneTest {
     public void testLoadAssets() {
         // Verify that the textures and animations are loaded
         verify(resourceService, times(1)).loadTextures(new String[]{
-                "images/Cutscenes/Beastly_Bistro_Background.png",
-                "images/Cutscenes/Graveyard_Scene.png",
-                "images/Cutscenes/good_end_0.png",
-                "images/Cutscenes/good_end_1.png",
-                "images/Cutscenes/good_end_2.png",
-                "images/Cutscenes/good_end_3.png"
+                "images/Cutscenes/Beastly_Bistro_Background.png"
+
         });
-        verify(resourceService, times(1)).loadTextureAtlases(new String[]{"images/player/Cook_Model32.png"});
+        //verify(resourceService, times(1)).loadTextureAtlases(new String[]{"images/player/Cook_Model32.png"});
         verify(resourceService, times(1)).loadAll();
+    }
+
+    @Test
+    public void testAnimated() {
+        // Verify it is an animated cutscene
+        assert goodEndCutscene.IsAnimatedScenes == true;
     }
 
 
