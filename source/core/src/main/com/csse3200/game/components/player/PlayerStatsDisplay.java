@@ -127,6 +127,10 @@ public class PlayerStatsDisplay extends UIComponent {
     CharSequence TimerText = String.format("%s", convertDigital(timer));
     setTimerLabel(new Label(TimerText, skin, LARGE_LABEL));
 
+    // Timer Icon
+    timerImage = new Image(ServiceLocator.getResourceService().getAsset("images/hourglass.png", Texture.class));
+    timerTable.add(timerImage).size(50).padRight(5); // Add icon before the timer label
+
     // Add the timer label to the timerTable
     timerTable.add(getTimerLabel()).center();
 
@@ -158,11 +162,15 @@ public class PlayerStatsDisplay extends UIComponent {
     );
     goldLabelContainer.setBackground(background);  // Set background drawable
 
+    // Gold Icon
+    goldImage = new Image(ServiceLocator.getResourceService().getAsset("images/coin.png", Texture.class));
+    goldContentsTable.add(goldImage).size(35).padRight(0).padLeft(10); // Add icon before the gold label
+
     // Add the gold label container and image to the goldTable
     goldContentsTable.add(goldLabelContainer);
     //goldContentsTable.add(goldImage).size(30).padLeft(10);
     goldTable.add(goldContentsTable);
-    table.add(goldTable).left().width(200f).height(150).padTop(0);  // Align to the very left
+    table.add(goldTable).left().width(220f).height(170).padTop(0);  // Align to the very left
 
     // Add the table to the stage
     stage.addActor(table);
