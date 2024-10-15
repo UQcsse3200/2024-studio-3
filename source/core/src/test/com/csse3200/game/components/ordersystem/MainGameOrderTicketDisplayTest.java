@@ -139,7 +139,7 @@ class MainGameOrderTicketDisplayTest {
 	}
 
 	/**
-	 * Test should add and remove tables to MainGameOrderTicketDisplay array
+	 * Test should reset Order Nmber to Zero
 	 */
 	@Test
 	void shouldResetOrderNumbtoZero() {
@@ -157,7 +157,7 @@ class MainGameOrderTicketDisplayTest {
 		orderTicketDisplay.addActors();
 
 		orderTicketDisplay.dispose();
-		assertEquals(1, orderTicketDisplay.getTableArrayList().size());
+		assertEquals(0, orderTicketDisplay.getTableArrayList().size());
 	}
 
 	/**
