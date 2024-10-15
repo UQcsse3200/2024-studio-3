@@ -132,7 +132,7 @@ public class PauseMenuDisplay extends UIComponent {
                                 @Override
                                 public void clicked(InputEvent event, float x, float y) {
                                     toggleVisibility();
-                                    entity.getEvents().trigger("save");
+                                    entity.getEvents().trigger("saveGame");
                                 }
                             });
 

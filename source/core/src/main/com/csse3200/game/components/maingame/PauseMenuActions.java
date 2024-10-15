@@ -46,7 +46,6 @@ public class PauseMenuActions extends Component {
         if (ServiceLocator.getSaveLoadService().getSaveFile().length() == 0) {
             new TextPopup("New Save File", skin, stage, game);
         }
-        ServiceLocator.getSaveLoadService().save();
     }
 
     /**

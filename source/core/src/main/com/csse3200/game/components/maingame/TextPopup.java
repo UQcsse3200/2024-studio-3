@@ -37,7 +37,8 @@ public class TextPopup extends Dialog {
     protected void result(Object object) {
         if ((boolean) object) {
             String saveFileName = inputField.getText();
-            ServiceLocator.getSaveLoadService().setSaveFile(saveFileName);
+            ServiceLocator.getSaveLoadService().setSaveFile(saveFileName + ".json");
+            ServiceLocator.getSaveLoadService().save();
         }
     }
 }
