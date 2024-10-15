@@ -170,6 +170,13 @@ public class StationMealComponent extends Component {
      * and return it to the station inventory.
      */
     private void processMeal() {
+        ItemComponent plate = this.inventoryComponent.removeItemName("PlateComponent");
+        if (plate == null) {
+            // no plate component, invalid recipe
+            logger.info("Inventory is missing a plate, please add a Plate from the Dishwasher to the combining station");
+            return;
+        }
+
         Optional<String> possibleRecipe = mealFactory.getRealRecipe(this.inventoryComponent.getItemNames()); 
         
         if (possibleRecipe.isPresent()) {
