@@ -2,13 +2,10 @@ package com.csse3200.game.components.moral;
 
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.Component;
-import com.csse3200.game.components.maingame.CheckWinLoseComponent;
 import com.csse3200.game.components.upgrades.SpeedBootsUpgrade;
 import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import com.csse3200.game.services.*;
-
 import java.util.ArrayList;
 import java.util.List;
 
