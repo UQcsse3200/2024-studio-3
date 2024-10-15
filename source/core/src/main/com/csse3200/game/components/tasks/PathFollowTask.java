@@ -20,22 +20,25 @@ public class PathFollowTask extends DefaultTask implements PriorityTask {
     private final int Customer_id;
 
     private Vector2 predefinedTargetPos = new Vector2(1, 0);
-    private static final float WAIT_TIME = 15f;
     private float elapsedTime = 0f;
     boolean hasMovedToPredefined = false;
     private float elapsedTime2 = 0f;
     private float upgradeDuration = 5f;
     private float upgradeStart = 3f;
     private boolean hoverboxcheck = false;
+    private float makingTime; // Dynamic making time based on the recipe
+    private boolean reachedFirstTarget = false;
 
     /**
      * Task to make an entity follow a path to a target position.
      * @param targetPos The target position to move to
      * @param customer_id The id of the customer
+     * @param waitingTime The making time from the recipe, scaled by any time factor like DEFAULT_TIMER if needed.
      */
-    public PathFollowTask(Vector2 targetPos, int customer_id) {
+    public PathFollowTask(Vector2 targetPos, int customer_id, float waitingTime) {
         this.targetPos = targetPos;
         this.Customer_id = customer_id;
+        this.makingTime = waitingTime;
     }
 
     /**
@@ -85,14 +88,22 @@ public class PathFollowTask extends DefaultTask implements PriorityTask {
      */
     @Override
     public void update() {
-        elapsedTime += getDeltaTime();
+        if (reachedFirstTarget) {
+            elapsedTime += getDeltaTime(); // Start counting only after the customer has arrived
+        }
         elapsedTime2 += getDeltaTime();
 
         // Check if it's time to move to the predefined position
-        if (!hasMovedToPredefined && elapsedTime >= WAIT_TIME) {
+        if (!hasMovedToPredefined && elapsedTime >= makingTime) {
             triggerMoveToPredefinedPosition();
             hasMovedToPredefined = true;
         }
+
+        if (!reachedFirstTarget && targetPos.epsilonEquals(owner.getEntity().getPosition(), 0.1f)) {
+            owner.getEntity().getEvents().trigger("customerArrived");
+            reachedFirstTarget = true;
+        }
+
         if(!hoverboxcheck && elapsedTime2 >= upgradeStart){
             owner.getEntity().getEvents().trigger("ready");
             elapsedTime2 = 0;
