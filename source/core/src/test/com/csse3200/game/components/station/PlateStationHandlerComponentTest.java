@@ -3,6 +3,7 @@ package com.csse3200.game.components.station;
 import com.csse3200.game.components.items.IngredientComponent;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.components.player.InventoryDisplay;
+import com.csse3200.game.components.items.PlateComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.entities.factories.ItemFactory;
@@ -49,7 +50,7 @@ class PlateStationHandlerComponentTest {
         // Set up the station and its components
         stationInventory = new InventoryComponent(1);
         //StationCollectionComponent mockCollectionComponent = mock(StationCollectionComponent.class);
-        handler = new PlateStationHandlerComponent("oven", "banana");
+        handler = new PlateStationHandlerComponent();
 
         Entity station = new Entity();
         station.addComponent(handler);
@@ -57,7 +58,7 @@ class PlateStationHandlerComponentTest {
         //station.addComponent(mockCollectionComponent);
         handler.setEntity(station);
         stationInventory.setEntity(station);
-        Entity mockCollectedItem = ItemFactory.createBaseItem("banana");
+        //Entity mockPlate = ItemFactory.createPlate();
 
         // Mock collection to return the correct item
         //when(mockCollectionComponent.collectItem(anyString()))
@@ -77,11 +78,11 @@ class PlateStationHandlerComponentTest {
 
         // Verify player received the item
         assertEquals(1, playerInventory.getSize());
-        assertEquals("banana", playerInventory.getItemAt(0).getItemName().toLowerCase());
+        assertEquals("plate", playerInventory.getItemAt(0).getItemName().toLowerCase());
 
         // Verify station is repopulated with a new item
         assertEquals(1, stationInventory.getSize());
-        assertEquals("banana", stationInventory.getItemAt(0).getItemName().toLowerCase());
+        assertEquals("plate", stationInventory.getItemAt(0).getItemName().toLowerCase());
 
         // Verify the player display was updated
         verify(playerInventoryDisplay, times(1)).update();
@@ -106,20 +107,20 @@ class PlateStationHandlerComponentTest {
     @Test
     void testStationRepopulatesAfterGivingItem() {
         // Add an item to the station's inventory
-        Entity cucumberItem = ItemFactory.createBaseItem("banana");
-        assert cucumberItem != null;
-        stationInventory.addItem(cucumberItem.getComponent(IngredientComponent.class));
+        Entity plate = ItemFactory.createPlate();
+        assert plate != null;
+        stationInventory.addItem(plate.getComponent(PlateComponent.class));
 
         // Simulate player interaction with the station
         handler.handleInteraction(playerInventory, playerInventoryDisplay, "default");
 
         // Verify that the item from the station was transferred to the player
         assertEquals(1, playerInventory.getSize());
-        assertEquals("banana", playerInventory.getItemAt(0).getItemName().toLowerCase());
+        assertEquals("plate", playerInventory.getItemAt(0).getItemName().toLowerCase());
 
         // Verify that the station was repopulated with a new banana item
         assertEquals(1, stationInventory.getSize());
-        assertEquals("banana", stationInventory.getItemAt(0).getItemName().toLowerCase());
+        assertEquals("plate", stationInventory.getItemAt(0).getItemName().toLowerCase());
     }
 
     @Test

@@ -16,7 +16,7 @@ public class PlateStationHandlerComponent extends Component {
      * String ingredient - storing the item type dispensed by this station
      * StationInventoryComponent inventory component - instance of inventory for this station
      */
-    protected final String type = "dishwasher"; 
+    protected final String type = "dishwasher";
     protected InventoryComponent inventoryComponent;
     private static final Logger logger = LoggerFactory.getLogger(PlateStationHandlerComponent.class);
 
@@ -32,7 +32,7 @@ public class PlateStationHandlerComponent extends Component {
     @Override
     public void create() {
         // initialise the inventory component
-        entity.getEvents().addListener("Dishwasher Interaction", this::handleInteraction);
+        entity.getEvents().addListener("Station Interaction", this::handleInteraction);
         this.inventoryComponent = entity.getComponent(InventoryComponent.class);
 
         // create and add a plate into the inventory
@@ -42,7 +42,8 @@ public class PlateStationHandlerComponent extends Component {
 
     /**
      * Gets the type of station
-     * @return station type
+     * 
+     * @return - station type
      */
     public String getType() {
         return this.type;
@@ -50,10 +51,11 @@ public class PlateStationHandlerComponent extends Component {
 
     /**
      * Handles any interaction with station, using current state of player and station
-     * inventory to determine intended interaction
-     * @param playerInventoryComponent reference to player inventory component
-     * @param inventoryDisplay reference to individual inventory display
-     * @param type the type of interaction attempt
+     * inventory to determine intended interaction.
+     * 
+     * @param playerInventoryComponent - reference to player inventory component
+     * @param inventoryDisplay - reference to individual inventory display
+     * @param type - the type of interaction attempt
      */
     public void handleInteraction(InventoryComponent playerInventoryComponent, InventoryDisplay inventoryDisplay, String type) {
         if (!type.equals("default")) { // Return if not default interaction
@@ -67,8 +69,10 @@ public class PlateStationHandlerComponent extends Component {
     }
 
     /**
-     Takes the item from the station, and returns the old item
-     @param playerInventoryComponent reference to player inventory
+     * Takes the item from the station, and returns the old item
+     *
+     * @param playerInventoryComponent - reference to player inventory
+     * @param inventoryDisplay - reference to the inventory display for the station
      */
     public void stationGiveItem(InventoryComponent playerInventoryComponent, InventoryDisplay inventoryDisplay) {
         ItemComponent item = this.inventoryComponent.getItemFirst();
