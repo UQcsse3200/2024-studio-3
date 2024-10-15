@@ -292,7 +292,7 @@ class MainGameOrderTicketDisplayTest {
 	}
 
 	/**
-	 * Tests if ESCAPE key toggles true of false paused values.
+	 * Tests if ESCAPE key toggles true or false paused values.
 	 */
 	@Test
 	void testTogglePause() {
