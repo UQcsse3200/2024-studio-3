@@ -465,7 +465,7 @@ public class ForestGameArea extends GameArea {
     Entity newPlayer;
     newPlayer = PlayerFactory.createPlayer();
     spawnEntityAt(newPlayer, PLAYER_SPAWN, true, true);
-    newPlayer.setPosition(PLAYER_SPAWN.x, 2.5f);
+    newPlayer.setPosition(PLAYER_SPAWN.x, 3.1f);
     return newPlayer;
   }
 
