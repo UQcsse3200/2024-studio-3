@@ -147,20 +147,27 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         ServiceLocator.getDocketService().getEvents().addListener("Dancing", ()->setPaused(true));
         ServiceLocator.getDocketService().getEvents().addListener("UnDancing", ()->setPaused(false));
 
-        //From team 2, I used your dispose method here when listening for a new day, so current dockets get removed
-        //when the end of day occurs
         ServiceLocator.getDocketService().getEvents().addListener("Dispose", this::dispose);
 
         stage.addListener(new InputListener() {
             @Override
             public boolean keyDown(InputEvent event, int keycode) {
-                if (keycode == com.badlogic.gdx.Input.Keys.ESCAPE) {
-                    setPaused(!isPaused);
-                    return true;
-                }
-                return false;
-            }
+                return handleKeyDown(keycode);
+            };
         });
+    }
+
+    /**
+     * Handles key press events. If the ESCAPE key is pressed, it toggles the paused state.
+     * @param keycode The key code of the key that was pressed.
+     * @return true if the ESCAPE key was pressed and the event was handled, false otherwise.
+     */
+    public boolean handleKeyDown(int keycode) {
+        if (keycode == com.badlogic.gdx.Input.Keys.ESCAPE) {
+            setPaused(!isPaused);
+            return true;
+        }
+        return false;
     }
 
     private void loadTextures() {
@@ -661,6 +668,31 @@ public class MainGameOrderTicketDisplay extends UIComponent {
      */
     public static List<Long> getRecipeTimeArrayList() {
         return recipeTimeArrayList;
+    }
+
+    /**
+     * Gets the True or False depending on if the game is paused or not respectively
+     * @return the boolean value of isPaused
+     */
+    public boolean isPaused() {
+        return isPaused;
+    }
+
+    /**
+     * Gets the start pause time
+     * @return the long value of pauseStartTime
+     */
+    public long getPauseStartTime() {
+        return pauseStartTime;
+    }
+
+    /**
+     * Gets the total pause duration time
+     * @return the long value of totalPausedDuration
+     */
+    public long getTotalPausedDuration() {
+        return totalPausedDuration;
+
     }
 
 }
