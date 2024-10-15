@@ -77,9 +77,6 @@ class MainGameOrderTicketDisplayTest {
 		when(ServiceLocator.getPlayerService().getEvents()).thenReturn(eventHandler2);
 
 		orderTicketDisplay = new MainGameOrderTicketDisplay(renderService, playerService);
-//		orderTicketDisplay = new MainGameOrderTicketDisplay();
-//        String[] recipeNames = {"acaiBowl", "salad", "fruitSalad", "steakMeal", "bananaSplit"};
-//        String randomRecipe = recipeNames[new Random().nextInt(recipeNames.length)];
 		orderTicketDisplay.setRecipe("acaiBowl");
 		Entity entity = new Entity();
 		entity.addComponent(orderTicketDisplay);
@@ -98,7 +95,7 @@ class MainGameOrderTicketDisplayTest {
 	 * Tests that create() are initializes UI components correctly
 	 */
 	@Test
-	public void testCreateInitializesComponents() {
+	void testCreateInitializesComponents() {
 		orderTicketDisplay.create();
 
 		Assertions.assertNotNull(
@@ -113,7 +110,7 @@ class MainGameOrderTicketDisplayTest {
 	 * test addActors() creates table
 	 */
 	@Test
-	public void testAddActorsAddsUIComponents() {
+	void testAddActorsAddsUIComponents() {
 		orderTicketDisplay.addActors();
 		verify(stage).addActor(any(Table.class));
 	}
@@ -133,7 +130,6 @@ class MainGameOrderTicketDisplayTest {
 
 		Label countdownLabel = MainGameOrderTicketDisplay.getCountdownLabelArrayList().getFirst();
 		Assertions.assertNotNull(countdownLabel);
-		// assertEquals("Timer: 30000", countdownLabel.getText().toString());
 	}
 
 	/**
@@ -153,12 +149,12 @@ class MainGameOrderTicketDisplayTest {
 	 * Test docket sizes are sized correctly
 	 */
 	@Test
-	public void testDocketSizesNormalAndEnlarged() {
+	void testDocketSizesNormalAndEnlarged() {
 		orderTicketDisplay.addActors();
 		orderTicketDisplay.addActors();
 		orderTicketDisplay.addActors();
 
-		assertEquals(3, orderTicketDisplay.getTableArrayList().size());
+		assertEquals(3, MainGameOrderTicketDisplay.getTableArrayList().size());
 
 		orderTicketDisplay.updateDocketSizes();
 
@@ -168,33 +164,16 @@ class MainGameOrderTicketDisplayTest {
 		float enlargedDocketWidth = 170f * (orderTicketDisplay.getViewportWidth() / 1920f);
 		float enlargedDocketHeight = 200f * (orderTicketDisplay.getViewportHeight() / 1080f);
 
-		for (int i = 0; i < orderTicketDisplay.getTableArrayList().size() - 1; i++) {
-			Table table = orderTicketDisplay.getTableArrayList().get(i);
+		for (int i = 0; i < MainGameOrderTicketDisplay.getTableArrayList().size() - 1; i++) {
+			Table table = MainGameOrderTicketDisplay.getTableArrayList().get(i);
 			assertEquals(normalDocketWidth, table.getWidth(), 0.1f);
 			assertEquals(normalDocketHeight, table.getHeight(), 0.1f);
 		}
 
-		Table lastTable = orderTicketDisplay.getTableArrayList().get(orderTicketDisplay.getTableArrayList().size() - 1);
+		Table lastTable = MainGameOrderTicketDisplay.getTableArrayList().getLast();
 		assertEquals(enlargedDocketWidth, lastTable.getWidth(), 0.1f);
 		assertEquals(enlargedDocketHeight, lastTable.getHeight(), 0.1f);
 	}
-
-	//TODO current build causes an error with this test and i'm not sure why, might want to compare code
-	/**
-	 * tests countdown decreases correctly
-
-	@Test
-	public void testUpdateCountdownDecreasesCorrectly() {
-		orderTicketDisplay.create();
-		orderTicketDisplay.addActors();
-		long startTime = MainGameOrderTicketDisplay.getStartTimeArrayList().get(0);
-		long elapsedTime = TimeUtils.timeSinceMillis(startTime);
-		orderTicketDisplay.update();
-		assertEquals(
-		  "Timer: " +
-			((orderTicketDisplay.getTimer() - elapsedTime)/1000),
-		  MainGameOrderTicketDisplay.getCountdownLabelArrayList().get(0).getText().toString(), "Timer should orderTicketDisplay correct countdown");
-	}*/
 
 	/**
 	 * Test should dispose the stage
@@ -221,8 +200,8 @@ class MainGameOrderTicketDisplayTest {
 		assertNotNull(MainGameOrderTicketDisplay.getBackgroundArrayList(), "Background ArrayList should not be null");
 		assertFalse(MainGameOrderTicketDisplay.getBackgroundArrayList().isEmpty(), "Background ArrayList should not be empty");
 
-		Table table = MainGameOrderTicketDisplay.getTableArrayList().get(0);
-		Docket background = MainGameOrderTicketDisplay.getBackgroundArrayList().get(0);
+		Table table = MainGameOrderTicketDisplay.getTableArrayList().getFirst();
+		Docket background = MainGameOrderTicketDisplay.getBackgroundArrayList().getFirst();
 
 		Assertions.assertNotNull(table, "Table should not be null");
 		Assertions.assertNotNull(background, "Background should not be null");
@@ -252,19 +231,23 @@ class MainGameOrderTicketDisplayTest {
 	 * Tests if only one docket is present, then checks if it has enlarged docket dimensions.
 	 */
 	@Test
-	public void testDocketEnlargement() {
+	void testDocketEnlargement() {
 		// Add a new docket
 		orderTicketDisplay.addActors();
 
 		orderTicketDisplay.updateDocketSizes();
 
-		Table lastDocketTable = MainGameOrderTicketDisplay.getTableArrayList().get(MainGameOrderTicketDisplay.getTableArrayList().size() - 1);
+		Table lastDocketTable = MainGameOrderTicketDisplay.getTableArrayList().getLast();
 
 		float lastDocketWidth = lastDocketTable.getWidth();
 		float lastDocketHeight = lastDocketTable.getHeight();
 
-		float expectedEnlargedWidth = 1280f * 0.08f * orderTicketDisplay.getScalingFactor(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()) * 1.7f;
-		float expectedEnlargedHeight = 800f * 0.25f * orderTicketDisplay.getScalingFactor(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()) * 1.7f;
+		float expectedEnlargedWidth = 1280f * 0.08f * MainGameOrderTicketDisplay.getScalingFactor(
+				Gdx.graphics.getWidth(),
+				Gdx.graphics.getHeight()) * 1.7f;
+		float expectedEnlargedHeight = 800f * 0.25f * MainGameOrderTicketDisplay.getScalingFactor(
+				Gdx.graphics.getWidth(),
+				Gdx.graphics.getHeight()) * 1.7f;
 
 		assertTrue(Math.abs(lastDocketWidth - expectedEnlargedWidth) < 1.0f, "Docket width is not as expected");
 		assertTrue(Math.abs(lastDocketHeight - expectedEnlargedHeight) < 1.0f, "Docket height is not as expected");
@@ -281,59 +264,39 @@ class MainGameOrderTicketDisplayTest {
 	}
 
 	/**
-	 * Tests that steak meal is displayed correctly.
+	 * Helper method to test if a meal is displayed correctly.
 	 */
+	private void testMealDisplay(String recipeName) {
+		orderTicketDisplay.setRecipe(recipeName);
+		orderTicketDisplay.create();
+		orderTicketDisplay.addActors();
+
+		Table table = MainGameOrderTicketDisplay.getTableArrayList().getFirst();
+		assertNotNull(table, "Table should not be null for " + recipeName);
+	}
+
 	@Test
 	void testSteakMeal() {
-		orderTicketDisplay.setRecipe("steakMeal");
-		orderTicketDisplay.create();
-		orderTicketDisplay.addActors();
-
-		Table table = MainGameOrderTicketDisplay.getTableArrayList().getFirst();
-		assertNotNull(table, "Table should not be null for steakMeal");
+		testMealDisplay("steakMeal");
 	}
 
-	/**
-	 * Tests that salad is displayed correctly.
-	 */
 	@Test
 	void testSalad() {
-		orderTicketDisplay.setRecipe("salad");
-		orderTicketDisplay.create();
-		orderTicketDisplay.addActors();
-
-		Table table = MainGameOrderTicketDisplay.getTableArrayList().getFirst();
-		assertNotNull(table, "Table should not be null for salad");
+		testMealDisplay("salad");
 	}
 
-	/**
-	 * Tests that fruit salad is displayed correctly.
-	 */
 	@Test
 	void testFruitSalad() {
-		orderTicketDisplay.setRecipe("fruitSalad");
-		orderTicketDisplay.create();
-		orderTicketDisplay.addActors();
-
-		Table table = MainGameOrderTicketDisplay.getTableArrayList().getFirst();
-		assertNotNull(table, "Table should not be null for fruitSalad");
+		testMealDisplay("fruitSalad");
 	}
 
-	/**
-	 * Tests that banana split is displayed correctly.
-	 */
 	@Test
 	void testBananaSplit() {
-		orderTicketDisplay.setRecipe("bananaSplit");
-		orderTicketDisplay.create();
-		orderTicketDisplay.addActors();
-
-		Table table = MainGameOrderTicketDisplay.getTableArrayList().getFirst();
-		assertNotNull(table, "Table should not be null for bananaSplit");
+		testMealDisplay("bananaSplit");
 	}
 
 	/**
-	 * Test shoulg get the Z index
+	 * Test should get the Z index
 	 */
 	@Test
 	void testGetZIndex() {
