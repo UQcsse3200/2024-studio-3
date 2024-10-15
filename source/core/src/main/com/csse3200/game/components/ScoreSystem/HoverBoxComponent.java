@@ -7,7 +7,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.csse3200.game.rendering.RenderComponent;
 import com.csse3200.game.services.ServiceLocator;
-import com.csse3200.game.components.npc.CustomerComponent;
 
 public class HoverBoxComponent extends RenderComponent {
     private Texture hoverImage;
@@ -29,14 +28,6 @@ public class HoverBoxComponent extends RenderComponent {
     public void create() {
         super.create();
         shapeRenderer = new ShapeRenderer();
-        /*
-        try {
-            hoverImage = new Texture("images/customer_faces/angry_face.png");
-        } catch (Exception e) {
-            System.err.println("Failed to load hover box image: " + e.getMessage());
-        }
-        */
-
         ServiceLocator.getRenderService().register(this);
     }
 
@@ -70,17 +61,6 @@ public class HoverBoxComponent extends RenderComponent {
 
     }
 
-    private String getEntityInfo() {
-        String entityId = entity.toString(); // This gives us "Entity{id=XXX}"
-        CustomerComponent customerComponent = entity.getComponent(CustomerComponent.class);
-        if (customerComponent != null) {
-            String name = customerComponent.getName();
-            return name != null && !name.isEmpty() ? entityId + " (Customer: " + name + ")"
-                    : entityId + " (Unnamed Customer)";
-        }
-        return entityId + " (Not a Customer)";
-    }
-
     @Override
     public void dispose() {
         super.dispose();
@@ -97,6 +77,6 @@ public class HoverBoxComponent extends RenderComponent {
 
     @Override
     public void setStage(Stage mock) {
-
+        // setStage is empty
     }
 }
