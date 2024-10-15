@@ -21,7 +21,7 @@ public class PlayerStatsDisplay extends UIComponent {
   private Image goldImage;
   private Label goldLabel;
   private static Label dayLabel;
-  private static int currentDay;
+  private static int currentDay = 1;
   private static Label timerLabel;
   private static long timer;
   private static PlayerStatsDisplay instance;
@@ -191,6 +191,9 @@ public class PlayerStatsDisplay extends UIComponent {
     long seconds = TimeUnit.MILLISECONDS.toSeconds(x) - TimeUnit.MINUTES.toSeconds(minutes);
     return String.format("%02d:%02d", minutes, seconds);
     
+}
+public static void reset() {
+  currentDay = 1; 
 }
 
 
