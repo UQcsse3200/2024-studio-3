@@ -6,13 +6,17 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Array;
 import com.csse3200.game.components.CombatStatsComponent;
+import com.csse3200.game.rendering.TextureRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
 
@@ -34,8 +38,11 @@ public class PlayerStatsDisplay extends UIComponent {
   public static long timer;
   private static String digitaltime;
   private static PlayerStatsDisplay instance;
-
-
+  private TextureAtlas textureAtlas;
+  private Sprite sprite;
+  private TextureRegion textureRegion;
+  private TextureRegionDrawable drawable;
+  private Image image;
 
   /**
    * Creates reusable ui styles and adds actors to the stage.
@@ -52,6 +59,14 @@ public class PlayerStatsDisplay extends UIComponent {
             updateDay();});
     ServiceLocator.getDayNightService().getEvents().addListener("Second", () -> {
       updateTime();});
+
+    textureAtlas = new TextureAtlas(Gdx.files.internal("images/DayNight_Spritesheets/sun_moon.atlas"));
+    textureRegion = textureAtlas.findRegion("1");
+    System.out.println("Texture Region is : "+textureRegion);
+    sprite = new Sprite(textureRegion);
+    drawable = new TextureRegionDrawable(sprite);
+    image=new Image(drawable);
+
   }
 
   public static PlayerStatsDisplay getInstance() {
@@ -67,6 +82,7 @@ public class PlayerStatsDisplay extends UIComponent {
     table.top().left();
     table.setFillParent(true);
     table.padTop(45f).padLeft(5f);
+    table.setZIndex(15);
 
     goldTable = new Table();
     goldTable.bottom().left();
@@ -93,6 +109,7 @@ public class PlayerStatsDisplay extends UIComponent {
     dayLabel = new Label(dayText, skin, "large");
 //    table.add(dayLabel).left();
     dayLabel.setFontScale(0.65f);
+    table.add(image).size(50,50).padLeft(20f).padTop(20f);
     table.add(dayLabel).padLeft(20).padTop(38);
     table.row();
 
@@ -163,7 +180,7 @@ public class PlayerStatsDisplay extends UIComponent {
   public static void updateTime() {
     // timer;
     timer -= 1000;
-    System.out.println(timer);
+//    System.out.println(timer);
     CharSequence TimerText = String.format("%s", convertDigital(timer));
     timerLabel.setText(TimerText);
     ServiceLocator.getDayNightService().getEvents().trigger("callpastsecond");

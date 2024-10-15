@@ -106,7 +106,10 @@ public class MainGameScreen extends ScreenAdapter {
 			"images/background_images/18.0.png",
 			"images/background_images/18.5.png",
 			"images/component_background.png",
-			"images/component_background_2.png"
+			"images/component_background_2.png",
+			"images/DayNight_Spritesheets/sun_moon.png",
+			"images/DayNight_Spritesheets/sun_moon2.png",
+			"images/DayNight_Spritesheets/sun_moon3.png",
 	};
 	// Modified the camera position to fix layout
 	private static final Vector2 CAMERA_POSITION = new Vector2(7f, 4.5f);
