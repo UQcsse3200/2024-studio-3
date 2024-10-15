@@ -4,11 +4,7 @@ import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.csse3200.game.GdxGame;
-import com.csse3200.game.areas.ForestGameArea;
-import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.components.maingame.*;
-import com.csse3200.game.components.ordersystem.MainGameOrderBtnDisplay;
-import com.csse3200.game.components.ordersystem.MainGameOrderTicketDisplay;
 import com.csse3200.game.components.ordersystem.OrderActions;
 import com.csse3200.game.components.upgrades.*;
 import com.csse3200.game.entities.Entity;
@@ -31,8 +27,6 @@ import com.csse3200.game.components.maingame.TextDisplay;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.csse3200.game.components.ordersystem.DocketLineDisplay;
-import com.csse3200.game.components.player.InventoryDisplay;
-import java.util.Arrays;
 
 /**
  * The game screen containing the tutorial.
