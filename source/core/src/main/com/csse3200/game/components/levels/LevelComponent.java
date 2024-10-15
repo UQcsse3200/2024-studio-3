@@ -100,9 +100,9 @@ public class LevelComponent extends Component {
             long elapsedTime = TimeUtils.timeSinceMillis(spawnStartTime);
             long elapsedTimeSecs = elapsedTime / 1000;
             initialiseCustomerNameArr();
-            // if more than 60 secs or no customers then spawn. keep track of limits on customer num size
+            // if more than 40 secs or no customers then spawn. keep track of limits on customer num size
             // this can certainly be changed I just put in an arbitrary time
-            if ((currentCustomersLinedUp == 0 || elapsedTimeSecs >= 60) && numbCustomersSpawned < levelSpawnCap && currentCustomersLinedUp < 5) {
+            if ((currentCustomersLinedUp == 0 || elapsedTimeSecs >= 40) && numbCustomersSpawned < levelSpawnCap && currentCustomersLinedUp < 3) {
                 setSpawnStartTime();
                 customerSpawned();
                 spawnCustomer();
