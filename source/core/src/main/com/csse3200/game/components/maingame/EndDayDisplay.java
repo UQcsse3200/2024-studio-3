@@ -99,10 +99,11 @@ public class EndDayDisplay extends UIComponent {
         ServiceLocator.getEntityService().getEvents().addListener("toggleEndDayScreen", this::toggleVisibility);
         ServiceLocator.getEntityService().getEvents().addListener("customerPassed", this::handlePassedCustomer);
 
-        ServiceLocator.getDayNightService().getEvents().addListener("endOfDay", () -> {
-            logger.info("it is listened in end day");
-            show();});
-    }
+            ServiceLocator.getDayNightService().getEvents().addListener("endOfDay", () -> {
+                logger.info("it is listened in end day");
+                ServiceLocator.getRandomComboService().deactivateUpgrade();
+                show();});
+        }
 
     /**
      * Sets up a white background for the display using a predefined image.
@@ -389,6 +390,7 @@ public class EndDayDisplay extends UIComponent {
      * the current game state. It is usually called in response to a game event.
      */
     public void show() {
+        // ServiceLocator.getRandomComboService().deactivateUpgrade();
         recalculateFailedCustomers();
         setVisible(true);
         getLayout().setVisible(true);

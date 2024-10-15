@@ -47,8 +47,9 @@ public class StationServingComponent extends Component {
     private static final Logger logger = LoggerFactory.getLogger(StationServingComponent.class);
     AnimationRenderComponent animator;
     TicketDetails bigTicket;
-    
+    private int goldMultiplier = 1;
     private static final String SALAD = "salad";
+    private boolean IsExtortion = false;
 
     /**
      * On creation a listener for Submit Meal will be added to the station.
@@ -59,6 +60,10 @@ public class StationServingComponent extends Component {
         animator = this.entity.getComponent(AnimationRenderComponent.class);
         animator.startAnimation("servery_idle");
         bigTicket = ServiceLocator.getTicketDetails();
+        ServiceLocator.getRandomComboService().getEvents().addListener("extortion active", ()->
+        {IsExtortion = true;});
+        ServiceLocator.getRandomComboService().getEvents().addListener("extortion unactive", ()->
+        {IsExtortion = false;});
     }
 
     public boolean canSubmitMeal(ItemComponent item) {
@@ -288,19 +293,27 @@ public class StationServingComponent extends Component {
     }
 
     /**
+     * Sets the gold multiplier
+     * @param multiplier the multiplier desired
+     */
+    public void setGoldMultiplier(int multiplier) {
+        goldMultiplier = multiplier;
+    }
+
+    /**
      * Function that is called to update the gold based on the meal price.
      *
      * @param currentGold - the current amount of gold the player has.
      * @param finalScore - the final score that is assigned to a meal.
      * @param mealPrice - the price of the meal.
-     */    
+     */
     private int updateGoldBasedOnScore(int currentGold, String finalScore, int mealPrice) {
         int gold = currentGold + mealPrice;
         switch (finalScore) {
-            case "Grin Face" -> gold += 10;
-            case "Smile Face" -> gold += 5;
-            case "Frown Face" -> gold -= 5;
-            case "Angry Face" -> gold -= 10;
+            case "Grin Face" -> gold += 10 * goldMultiplier;
+            case "Smile Face" -> gold += 5 * goldMultiplier;
+            case "Frown Face" -> gold -= 5 * goldMultiplier;
+            case "Angry Face" -> gold -= 10 * goldMultiplier;
             default -> gold += 0;
         }
         return gold;
@@ -315,7 +328,12 @@ public class StationServingComponent extends Component {
         private void updateGoldUI(int gold) {
         PlayerStatsDisplay playerStatsDisplay = PlayerStatsDisplay.getInstance();
         if (playerStatsDisplay != null) {
-            playerStatsDisplay.updatePlayerGoldUI(gold);
+            if(IsExtortion){
+                playerStatsDisplay.updatePlayerGoldUI(2*gold);
+            }
+            else{
+                playerStatsDisplay.updatePlayerGoldUI(gold);
+            }
         } else {
             logger.error("PlayerStatsDisplay instance is null");
         }

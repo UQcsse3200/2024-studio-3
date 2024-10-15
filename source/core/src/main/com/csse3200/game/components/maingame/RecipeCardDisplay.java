@@ -1,5 +1,10 @@
 package com.csse3200.game.components.maingame;
 
+import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Stack;
 import com.csse3200.game.GdxGame;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -56,7 +61,7 @@ public class RecipeCardDisplay extends UIComponent {
         stage.addListener(new InputListener() {
             @Override
             public boolean keyDown(InputEvent event, int keycode) {
-                if (keycode == com.badlogic.gdx.Input.Keys.ENTER) {
+                if (keycode == Input.Keys.NUM_0) {
                     toggleVisibility();
                     return true;
                 }

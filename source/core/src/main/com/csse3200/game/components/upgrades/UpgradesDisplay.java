@@ -2,9 +2,11 @@ package com.csse3200.game.components.upgrades;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -24,18 +26,19 @@ import java.util.List;
 public class UpgradesDisplay extends UIComponent {
     private final MainGameScreen game;
     private static final String[] upgradesMenuTexture = {"images/Upgrade_display.png"};
-    private static final Logger logger = LoggerFactory.getLogger(PauseMenuDisplay.class);
+    private static final Logger logger = LoggerFactory.getLogger(UpgradesDisplay.class);
 
     private Image upgradesMenuImage;
     public boolean isVisible = false;
-    private final List<Image> upgradeImages; // this is to store all the upgrades images
     private Table upgradesTable;
+    private List<Image> notEnoughGoldImages;
 
     private static final String[] upgradeTexturePaths = {
             "images/SpeedBoot.png",
             "images/Extortion1.png",
             "images/Loan1.png",
-        "images/notEnoughGold.png",
+            "images/notEnoughGold.png",
+            "images/Dance_party.png"
     };
 
     /**
@@ -44,8 +47,8 @@ public class UpgradesDisplay extends UIComponent {
      */
     public UpgradesDisplay(MainGameScreen game) {
         super();
+        notEnoughGoldImages = new ArrayList<>();
         this.game = game;
-        this.upgradeImages = new ArrayList<>();
     }
 
 
@@ -53,7 +56,7 @@ public class UpgradesDisplay extends UIComponent {
      * Create the upgrade menu to allow user to see which upgrade is generated
      * @return The upgrade menu background image
      */
-    private Image createUpgradesMenuDisplay() {
+    public Image createUpgradesMenuDisplay() {
         Texture pauseMenuTexture = ServiceLocator
                 .getResourceService().getAsset("images/Upgrade_display.png", Texture.class);
 
@@ -125,15 +128,13 @@ public class UpgradesDisplay extends UIComponent {
             case "Extortion" -> "images/Extortion1.png";
             case "Speed" -> "images/SpeedBoot.png";
             case "Loan" -> "images/Loan1.png";
+            case "Dance party" -> "images/Dance_party.png";
             default -> "";
         };
 
         Texture upgradeTexture = ServiceLocator.getResourceService().getAsset(texturePath, Texture.class);
         Image upImage = new Image(upgradeTexture);
-        upgradeImages.clear();
-        upgradeImages.add(upImage);
         upgradesTable.add(upImage).pad(10);
-
     }
 
 
@@ -141,7 +142,7 @@ public class UpgradesDisplay extends UIComponent {
      * Allowing user to decide whether the upgrade is needed or not by pressing YES or NO button
      * @return The table with buttons
      */
-    private Table createButtonsTable() {
+    public Table createButtonsTable() {
         Table buttonTable = new Table();
 
         TextButton yesButton = new TextButton("YES", skin);
@@ -189,6 +190,7 @@ public class UpgradesDisplay extends UIComponent {
         float yPosition = (stage.getHeight() - notEnoughGoldImage.getHeight()) / 2;
         notEnoughGoldImage.setPosition(xPosition, yPosition);
 
+        notEnoughGoldImages.add(notEnoughGoldImage);
         stage.addActor(notEnoughGoldImage);
 
         // Optionally, remove the image after some time or when clicked
@@ -220,6 +222,38 @@ public class UpgradesDisplay extends UIComponent {
         }
     }
 
+    public Button getYesButton() {
+        Table buttonTable = (Table) this.getUpgradesTable().getChildren().get(0);
+        return (TextButton) buttonTable.getChildren().get(0);
+    }
+
+    public Button getNoButton() {
+        Table buttonTable = (Table) this.getUpgradesTable().getChildren().get(0);
+        return (TextButton) buttonTable.getChildren().get(1);
+    }
+
+    public void simulateYesButtonClick() {
+        TextButton yesButton = (TextButton) this.getYesButton();
+        yesButton.getClickListener().clicked(null, 0, 0);
+
+        for (EventListener listener : yesButton.getListeners()) {
+            if (listener instanceof ClickListener) {
+                ((ClickListener) listener).clicked(null, 0, 0);
+            }
+        }
+    }
+
+    public void simulateNoButtonClick() {
+        TextButton noButton = (TextButton) this.getNoButton();
+        noButton.getClickListener().clicked(null, 0, 0);
+
+        for (EventListener listener : noButton.getListeners()) {
+            if (listener instanceof ClickListener) {
+                ((ClickListener) listener).clicked(null, 0, 0);
+            }
+        }
+    }
+
     @Override
     public void dispose() {
         super.dispose();
@@ -235,5 +269,33 @@ public class UpgradesDisplay extends UIComponent {
     @Override
     public void setStage(Stage stage) {
        this.stage = stage;
+    }
+
+    public void setUpgradesTable(Table upgradesTable) {
+        this.upgradesTable = upgradesTable;
+    }
+
+    public Table getUpgradesTable() {
+        return upgradesTable;
+    }
+
+    public boolean isVisible() {
+        return isVisible;
+    }
+
+    public Image getUpgradesMenuImage() {
+        return upgradesMenuImage;
+    }
+
+    public String[] getUpgradesMenuTexture() {
+        return upgradesMenuTexture;
+    }
+
+    public String[] getUpgradeTexturePaths() {
+        return upgradeTexturePaths;
+    }
+
+    public List<Image> getNotEnoughGoldImages() {
+        return notEnoughGoldImages;
     }
 }
