@@ -134,7 +134,7 @@ public class GdxGame extends Game {
 //        return new CutsceneScreen(this, CutsceneType.DAY_2);
 
       case CUTSCENE:
-        return new CutsceneScreen(this, CutsceneType.MORAL_3);
+        return new CutsceneScreen(this, CutsceneType.MORAL_1);
 
 //      case ENDDAY_1:
 //        return new CutsceneScreen(this, CutsceneType.MORAL_1);

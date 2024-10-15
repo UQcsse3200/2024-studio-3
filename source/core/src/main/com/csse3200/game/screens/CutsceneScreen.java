@@ -151,8 +151,14 @@ public class CutsceneScreen extends ScreenAdapter {
                 .addComponent(inputComponent)
                 .addComponent(new TerminalDisplay())
                 .addComponent(new CutsceneActions(this.game))
-                .addComponent(cutsceneScreenDisplay)
-                .addComponent(new TextDisplay(this, "cutscene"));
+                .addComponent(cutsceneScreenDisplay);
+
+
+        if (this.cutsceneVal == GdxGame.CutsceneType.MORAL_1){
+            ui.addComponent(new TextDisplay(this, "moralDecision"));
+        } else{
+            ui.addComponent(new TextDisplay(this, "cutscene"));
+        }
 
         // Register the UI entity with the entity service
         ServiceLocator.getEntityService().register(ui);
