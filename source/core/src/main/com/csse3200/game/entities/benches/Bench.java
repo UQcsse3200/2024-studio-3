@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
-import com.csse3200.game.components.station.StationItemHandlerComponent;
-import com.csse3200.game.components.station.StationMealComponent;
 import com.csse3200.game.areas.GameArea;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.physics.PhysicsLayer;
@@ -20,8 +18,6 @@ import com.csse3200.game.physics.components.InteractionComponent;
 import com.csse3200.game.components.TooltipsDisplay;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.components.station.*;
-import com.csse3200.game.components.player.InventoryDisplayHoverComponent;
-import com.csse3200.game.components.station.StationProgressDisplay;
 
 /**
  * This class is responsible for creating benches in the game.
@@ -52,7 +48,7 @@ public class Bench extends Entity{
         addComponent(new InteractionComponent(PhysicsLayer.INTERACTABLE));
         addComponent(new TooltipsDisplay());
         addComponent(new InventoryComponent(4));
-        addComponent(new InventoryDisplayHoverComponent());
+        addComponent(new MixingBenchHoverComponent());
         addComponent(new StationMealComponent("combining", new ArrayList<>()));
 
         getComponent(InteractionComponent.class).setAsBox(getScale());
