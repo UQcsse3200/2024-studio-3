@@ -47,7 +47,7 @@ public class MainGameOrderTicketDisplay extends UIComponent {
     private static final ArrayList<Docket> backgroundArrayList = new ArrayList<>();
     private static final ArrayList<Label> countdownLabelArrayList = new ArrayList<>();
     private static final ArrayList<Long> recipeTimeArrayList = new ArrayList<>();
-    private int orderNumb = 0;
+    private static int orderNumb = 0;
     private static final long DEFAULT_TIMER = 10000;
     private Recipe recipe;
     private Image mealImage;
@@ -595,7 +595,23 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         countdownLabelArrayList.clear();
         stringArrayList.clear();
         imageArrayList.clear();
+        resetOrderNumb();
+        //orderNumb = 0;
         super.dispose();
+    }
+
+    /**
+     * Resets order number to 0 for screen transition purposes.
+     */
+    public static void resetOrderNumb(){
+        orderNumb = 0;
+    }
+
+    /**
+     * Returns Order Number.
+     */
+    public static int getOrderNumb(){
+        return orderNumb;
     }
 
     /**
