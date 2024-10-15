@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.csse3200.game.components.mainmenu.MainMenuDisplay;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -29,6 +28,7 @@ public class DocketLineDisplay extends UIComponent {
 	public void create() {
 		super.create();
 		addActors();
+		logger.info("Just created the Docket line display");
 	}
 
 	/**
@@ -86,7 +86,7 @@ public class DocketLineDisplay extends UIComponent {
 	 */
 	@Override
 	public void setStage(Stage mock) {
-
+		//This is empty as it is not needed
 	}
 
 	/**
