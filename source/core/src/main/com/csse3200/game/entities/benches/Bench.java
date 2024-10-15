@@ -59,29 +59,12 @@ public class Bench extends Entity{
 
         setScale(1f, 1f);
         getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
-        PhysicsUtils.setScaledCollider(this, 1f, 0.75f);
+        PhysicsUtils.setScaledCollider(this, 1.0f, 0.75f);
 
         ServiceLocator.getInteractableService().registerEntity(this);
     }
 
-    /**
-     * initialiser with default single type
-     * @param x - x coordinate
-     * @param y - y coordinate
-     */
-    public Bench(int x, int y) {
-        this.type = "top_shadows"; //todo: replace with single_shadow
-        this.x = x;
-        this.y = y;
 
-        addComponent(new TextureRenderComponent("images/stations/benches/" + type + ".png"));
-        addComponent(new PhysicsComponent());
-        addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
-        addComponent(new StationItemHandlerComponent(type));
-        setScale(1f, 1f);
-        getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
-        PhysicsUtils.setScaledCollider(this, 1.05f, 0.75f);
-    }
 
     /**
      * Creates visible bench.
