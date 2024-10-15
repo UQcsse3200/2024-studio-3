@@ -93,6 +93,7 @@ import java.util.ArrayList;
 
             ServiceLocator.getDayNightService().getEvents().addListener("endOfDay", () -> {
                 logger.info("it is listened in end day");
+                ServiceLocator.getRandomComboService().deactivateUpgrade();
                 show();});
         }
 
@@ -301,7 +302,7 @@ import java.util.ArrayList;
          * the current game state. It is usually called in response to a game event.
          */
         public void show() {
-            ServiceLocator.getRandomComboService().deactivateUpgrade();
+            // ServiceLocator.getRandomComboService().deactivateUpgrade();
             setVisible(true);
             getLayout().setVisible(true);
             getBirdImage().setVisible(true);
