@@ -54,6 +54,7 @@ public class TutorialScreenDisplay extends UIComponent {
     @Override
     public void create() {
         super.create();
+        MainGameOrderTicketDisplay.resetOrderNumb();
 
         if (entity != null) {
             playerActions = entity.getComponent(PlayerActions.class);
@@ -209,7 +210,7 @@ public class TutorialScreenDisplay extends UIComponent {
                 }
                 break;
             case 4:
-                if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER) || Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
+                if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
                     startGame();
                 }
                 break;
@@ -236,6 +237,7 @@ public class TutorialScreenDisplay extends UIComponent {
         if (table != null) {
             table.clear();  // Safely clear the table
         }
+
         ServiceLocator.getLevelService().setCurrLevel(GdxGame.LevelType.LEVEL_1);
         game.setScreen(GdxGame.ScreenType.MAIN_GAME);  // Transition to the main game
     }

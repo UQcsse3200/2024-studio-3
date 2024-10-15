@@ -13,6 +13,7 @@ import com.csse3200.game.components.ordersystem.OrderActions;
 import com.csse3200.game.components.upgrades.*;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
+import com.csse3200.game.entities.factories.LevelFactory;
 import com.csse3200.game.entities.factories.RenderFactory;
 import com.csse3200.game.entities.factories.UIFactory;
 import com.csse3200.game.input.InputComponent;
@@ -56,6 +57,7 @@ public class TutorialScreen extends ScreenAdapter {
     private final PhysicsEngine physicsEngine;
     private boolean isPaused = false;
     private ResourceService resourceService;
+    private Entity player;
 
     public TutorialScreen(GdxGame game) {
         this.game = game;
@@ -93,9 +95,7 @@ public class TutorialScreen extends ScreenAdapter {
         createUI();  // Create the UI after loading the assets
 
         logger.debug("Initialising tutorial screen entities");
-//        TerrainFactory terrainFactory = new TerrainFactory(renderer.getCamera());
-//        ForestGameArea forestGameArea = new ForestGameArea(terrainFactory);
-//        forestGameArea.create();
+
     }
 
     @Override
@@ -165,7 +165,7 @@ public class TutorialScreen extends ScreenAdapter {
                 .addComponent(new InputDecorator(stage, 10))
                 .addComponent(new DocketLineDisplay())
                 .addComponent(new PerformanceDisplay())
-                .addComponent(new MainGameActions(this.game, UIFactory.createDocketUI()))
+                //.addComponent(new MainGameActions(this.game, UIFactory.createDocketUI()))
                 //.addComponent(new MainGameExitDisplay())
                 .addComponent(new Terminal())
                 .addComponent(inputComponent)

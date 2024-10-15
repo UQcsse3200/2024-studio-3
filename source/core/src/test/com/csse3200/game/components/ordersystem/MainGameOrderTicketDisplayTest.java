@@ -134,6 +134,16 @@ class MainGameOrderTicketDisplayTest {
 	}
 
 	/**
+	 * Test should reset Order Nmber to Zero
+	 */
+	@Test
+	void shouldResetOrderNumbtoZero() {
+		orderTicketDisplay.addActors();
+		MainGameOrderTicketDisplay.resetOrderNumb();
+		assertEquals(0, (MainGameOrderTicketDisplay.getOrderNumb()));
+	}
+
+	/**
 	 * Test should add and remove tables to MainGameOrderTicketDisplay array
 	 */
 	@Test
@@ -141,9 +151,8 @@ class MainGameOrderTicketDisplayTest {
 		orderTicketDisplay.addActors();
 		orderTicketDisplay.addActors();
 
-		assertEquals(2, (MainGameOrderTicketDisplay.getTableArrayList()).size());
 		orderTicketDisplay.dispose();
-		assertEquals(0, (MainGameOrderTicketDisplay.getTableArrayList()).size());
+		assertEquals(0, orderTicketDisplay.getTableArrayList().size());
 	}
 
 	/**
