@@ -56,6 +56,7 @@ public class LevelComponent extends Component {
         levelFive.add("LEWIS");
 
         acceptableCustomers = new HashMap<>();
+        acceptableCustomers.put(GdxGame.LevelType.LEVEL_0, levelOne);
         acceptableCustomers.put(GdxGame.LevelType.LEVEL_1, levelOne);
         acceptableCustomers.put(GdxGame.LevelType.LEVEL_2, levelTwo);
         acceptableCustomers.put(GdxGame.LevelType.LEVEL_3, levelThree);
