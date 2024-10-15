@@ -111,6 +111,7 @@ public class ForestGameArea extends GameArea {
           "images/stations/fridge/fridge_meat.png",
           "images/stations/fridge/fridge_choc.png",
           "images/stations/chopping_board/choppingboardbench.png",
+          "images/stations/benches/dishwasher.png",
 
           //These frames have some use in ObstacleFactory but it's only ever instantiated as full_door - Alex S.
           "images/frame/full_door.png",
