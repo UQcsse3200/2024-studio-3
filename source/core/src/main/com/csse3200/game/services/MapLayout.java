@@ -14,6 +14,9 @@ import org.slf4j.LoggerFactory;
 import java.io.*;
 import java.util.ArrayList;
 
+/**
+ * Class to load the map layout from a text file
+ */
 public class MapLayout {
     private EventHandler mapEventHandler;
     private static final String mapBase = "images/map/map_base.txt";
@@ -37,6 +40,9 @@ public class MapLayout {
     private static final Logger logger = LoggerFactory.getLogger(MapLayout.class);
 
 
+    /**
+     * Constructor for the MapLayout class
+     */
     public MapLayout() {
         mapEventHandler = new EventHandler();
         mapEventHandler.addListener("load", this::load);
@@ -46,7 +52,7 @@ public class MapLayout {
         return mapEventHandler;
     }
 
-    /**
+    /** Load the map layout from a text file
      * Yab -> spawn vertical bench starting at column `a` that is `b` cells long
      * Xab -> spawn horizontal bench starting at column `a` that is `b` cells long
      * []a  -> for any station, spawns a station based on [] at column `a`
@@ -168,6 +174,15 @@ public class MapLayout {
 
     }
 
+    /**
+        * Read a bench from the map file
+     * @param type - the type of bench
+     * @param startCol - the starting column
+     * @param size - the size of the bench
+     * @param row  - the row of the bench
+     * @return - an ArrayList of benches
+     */
+
     public ArrayList<Bench> readBench(String type, int startCol, int size, int row) {
         switch (type) {
             case "X":
@@ -192,6 +207,13 @@ public class MapLayout {
         }
     }
 
+    /**
+     * Read a station from the map file
+     * @param type - the type of station
+     * @param col - the column of the station
+     * @param row - the row of the station
+     * @return - an Entity object
+     */
     public Entity readStation(String type, int col, int row) {
         Entity station;
         switch (type) {
@@ -248,6 +270,11 @@ public class MapLayout {
         return station;
     }
 
+    /**
+     * Validate a station
+     * @param str - the station to validate
+     * @return - a boolean indicating if the station is valid
+     */
     public boolean validateStation(String str) {
         for (String station : validStations) {
             if (str.equals(station)) {
