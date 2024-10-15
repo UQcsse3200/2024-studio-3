@@ -271,7 +271,7 @@ public class PlayerStatsDisplay extends UIComponent {
    * Increases the size of the timer as it approaches zero.
    */
   private static void increaseTimerSize() {
-    float newFontScale = 1.5f;  // Make the timer 1.5x its original size
+    float newFontScale = 1.2f;  // Make the timer 1.2x its original size
     getTimerLabel().setFontScale(newFontScale);
   }
 
