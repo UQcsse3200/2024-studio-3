@@ -1,6 +1,7 @@
 package com.csse3200.game.components.ordersystem;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -260,7 +261,55 @@ class MainGameOrderTicketDisplayTest {
 	void testGetRecipeName() {
 		Recipe recipe = orderTicketDisplay.getRecipe();
 
+		assertNotNull(recipe, "Recipe should not be null");
 		assertEquals("acaiBowl", recipe.getName(), "The recipe name should be 'acaiBowl'");
+	}
+
+	/**
+	 * Tests getting the current recipe.
+	 */
+	@Test
+	void testGetCurrentRecipeName() {
+		String recipeName = orderTicketDisplay.getCurrentRecipeName();
+		assertEquals("acaiBowl", recipeName, "The current recipe name should be 'acaiBowl'");
+	}
+
+	/**
+	 * Tests set paused and its paused timers.
+	 */
+	@Test
+	void testSetPaused() {
+		assertFalse(orderTicketDisplay.isPaused());
+
+		orderTicketDisplay.setPaused(true);
+
+		assertTrue(orderTicketDisplay.isPaused());
+		assertTrue(orderTicketDisplay.getPauseStartTime() > 0);
+
+		orderTicketDisplay.setPaused(false);
+
+		assertFalse(orderTicketDisplay.isPaused());
+
+		long elapsedTime = System.currentTimeMillis() - orderTicketDisplay.getPauseStartTime(); // or use your time utility
+		assertTrue(orderTicketDisplay.getTotalPausedDuration() >= elapsedTime);
+	}
+
+	/**
+	 * Tests if ESCAPE key toggles true of false paused values.
+	 */
+	@Test
+	void testTogglePause() {
+		assertFalse(orderTicketDisplay.isPaused());
+
+		boolean result = orderTicketDisplay.handleKeyDown(Input.Keys.ESCAPE);
+
+		assertTrue(orderTicketDisplay.isPaused());
+		assertTrue(result);
+
+		result = orderTicketDisplay.handleKeyDown(Input.Keys.ESCAPE);
+
+		assertFalse(orderTicketDisplay.isPaused());
+		assertTrue(result);
 	}
 
 	/**
