@@ -1,7 +1,6 @@
 package com.csse3200.game.components.cutscenes;
 
 import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.components.cutscenes.scenes.Scene;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
@@ -187,16 +186,6 @@ public class BackstoryCutscene extends Cutscene {
                 "images/Cutscenes/new_beastly_bistro_pt2.png",
                 "images/Cutscenes/new_beastly_bistro.png",
                 "images/Cutscenes/resized_black_image.png"
-        };
-
-        // Load any additional images for the cutscene (if applicable)
-        String[] images = new String[] {
-                // Add any specific images here if needed, e.g. character sprites, etc.
-        };
-
-        // Load animations for the cutscene (if applicable)
-        String[] animations = new String[] {
-                // Add any animation atlases here if needed
         };
 
         // Get the resource service to load the assets
