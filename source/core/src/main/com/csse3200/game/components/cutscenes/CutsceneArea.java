@@ -4,6 +4,7 @@ import com.csse3200.game.GdxGame;
 import com.csse3200.game.areas.ForestGameArea;
 import com.csse3200.game.areas.GameArea;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.services.LevelService;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
@@ -15,9 +16,6 @@ import org.slf4j.LoggerFactory;
  */
 public class CutsceneArea extends GameArea {
     private static final Logger logger = LoggerFactory.getLogger(ForestGameArea.class);
-
-    // The current cutscene being played in the area
-    private Cutscene currentCutscene;
 
     // Index representing which cutscene to load (could be part of an enum in the future)
     private GdxGame.CutsceneType cutsceneValue;
@@ -31,6 +29,7 @@ public class CutsceneArea extends GameArea {
     public CutsceneArea(GdxGame.CutsceneType cutsceneValue) {
         super();
         ServiceLocator.registerGameArea(this);  // Register this cutscene area in the service locator
+        ServiceLocator.registerLevelService(new LevelService());
         this.cutsceneValue = cutsceneValue;
     }
 
@@ -39,6 +38,8 @@ public class CutsceneArea extends GameArea {
      */
     @Override
     public void create() {
+        // The current cutscene being played in the area
+        Cutscene currentCutscene;
         switch (cutsceneValue) {
             case GdxGame.CutsceneType.BACK_STORY:
                 logger.debug("Loading backstory cutscene");

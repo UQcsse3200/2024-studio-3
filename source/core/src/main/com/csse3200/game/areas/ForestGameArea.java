@@ -4,7 +4,6 @@ import com.csse3200.game.components.moral.Decision;
 import com.csse3200.game.components.npc.PersonalCustomerEnums;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.entities.benches.Bench;
-import com.csse3200.game.entities.configs.PlayerConfig;
 
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -19,8 +18,6 @@ import org.slf4j.LoggerFactory;
 
 import static com.badlogic.gdx.Gdx.app;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
@@ -46,103 +43,101 @@ import com.csse3200.game.utils.math.GridPoint2Utils;
 /** Forest area for the demo game with trees, a player, and some enemies. */
 public class ForestGameArea extends GameArea {
   private static final Logger logger = LoggerFactory.getLogger(ForestGameArea.class);
-  private static final int NUM_TREES = 7;
-  private static final int NUM_GHOSTS = 2;
-  private static final int NUM_CUSTOMERS_BASE = 1;
   private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(5, 2);
-  private static final float WALL_WIDTH = 0.1f;
   private static final String[] forestTextures = {
-    "images/special_NPCs/boss.png",
-    "images/special_NPCs/penguin2.png",
-    "images/meals/acai_bowl.png",
-    "images/meals/banana_split.png",
-    "images/meals/salad.png",
-    "images/meals/steak_meal.png",
-    "images/ingredients/raw_cucumber.png",
-    "images/ingredients/raw_acai.png",
-    "images/ingredients/raw_tomato.png",
-    "images/ingredients/raw_strawberry.png",
-    "images/ingredients/chopped_strawberry.png",
-    "images/ingredients/chopped_chocolate.png",
-    "images/ingredients/chopped_cucumber.png",
-    "images/ingredients/chopped_lettuce.png",
-    "images/ingredients/chopped_acai.png",
-    "images/ingredients/chopped_tomato.png",
-    "images/ingredients/raw_lettuce.png",
-    "images/ingredients/raw_chocolate.png",
-    "images/money.png",
-    "images/hourglass.png",
-    "images/meals/fruit_salad.png",
-    "images/ingredients/raw_banana.png",
-    "images/ingredients/chopped_banana.png",
-    "images/ingredients/raw_fish.png",
-    "images/ingredients/cooked_fish.png",
-    "images/ingredients/raw_beef.png",
-    "images/ingredients/cooked_beef.png",
-    "images/ingredients/burnt_beef.png",
-    "images/tiles/orange_tile.png",
-    "images/tiles/blue_tile.png",
-    "images/stations/oven.png",
-    "images/stations/stove.png",
-    "images/stations/bin.png",
-    "images/stations/apple_tree.png",
-    "images/stations/bench_middle.png",
-    "images/stations/bench_legs.png",
-    "images/stations/bench_top.png",
-    "images/stations/bench.png",
-    "images/stations/servery.png",
-    "images/stations/refrigerator.png",
-    "images/stations/baskets/basket_banana.png",
-    "images/stations/baskets/basket_cucumber.png",
-    "images/stations/baskets/basket_lettuce.png",
-    "images/stations/baskets/basket_strawberry.png",
-    "images/stations/baskets/basket_tomato.png",
-    "images/chef_player.png",
-    "images/frame/top_border.png",
-    "images/frame/left_border.png",
-    "images/frame/bottom_border.png",
-    "images/frame/right_door.png",
-    "images/frame/left_door.png",
-    "images/frame/door.png",
-    "images/frame/top_door_left_part.png",
-    "images/frame/top_door_right_part.png",
-    "images/frame/bottom_left_inv.png",
-    "images/frame/bottom_right_inv.png",
-    "images/frame/full_door.png",
-    "images/frame/bottom_border_wall.png",
-    "images/frame/border.png",
-    "images/tooltip_bg.png",
-    "images/fireExtinguisher/Fire_Extinguisher.png",
-    "images/stations/benches/single.png",
-    "images/stations/benches/middle.png",
-    "images/stations/benches/left_border.png",
-    "images/stations/benches/right_border.png",
-    "images/stations/benches/vertical.png",
-    "images/stations/benches/top.png",
-    "images/stations/benches/final.png",
-    "images/stations/benches/bottom_shadow.png",
-    "images/stations/benches/shadow_bottom_top.png",
-    "images/stations/benches/left_shadow.png",
+          //"images/special_NPCs/boss.png",
+          //"images/special_NPCs/penguin2.png",
+          "images/meals/acai_bowl.png",
+          "images/meals/banana_split.png",
+          "images/meals/salad.png",
+          "images/meals/steak_meal.png",
+          "images/meals/fruit_salad.png",
+          "images/ingredients/raw_cucumber.png",
+          "images/ingredients/raw_acai.png",
+          "images/ingredients/raw_tomato.png",
+          "images/ingredients/raw_strawberry.png",
+          "images/ingredients/chopped_strawberry.png",
+          "images/ingredients/chopped_chocolate.png",
+          "images/ingredients/chopped_cucumber.png",
+          "images/ingredients/chopped_lettuce.png",
+          "images/ingredients/chopped_acai.png",
+          "images/ingredients/chopped_tomato.png",
+          "images/ingredients/raw_lettuce.png",
+          "images/ingredients/raw_chocolate.png",
+          "images/ingredients/raw_banana.png",
+          "images/ingredients/chopped_banana.png",
+          //"images/ingredients/raw_fish.png",
+          "images/ingredients/cooked_fish.png",
+          "images/ingredients/raw_beef.png",
+          "images/ingredients/cooked_beef.png",
+          "images/ingredients/burnt_beef.png",
+          "images/money.png",
+          "images/hourglass.png",
+          "images/tooltip_bg.png",
+          //"images/chef_player.png",
+          "images/tiles/orange_tile.png",
+          "images/tiles/blue_tile.png",
+          "images/stations/oven.png",
+          "images/stations/stove.png",
+          "images/stations/apple_tree.png",
+          "images/stations/servery.png",
+          "images/stations/refrigerator.png",
+          "images/fireExtinguisher/Fire_Extinguisher.png",
+
+          "images/stations/bench_legs.png",
+          "images/stations/bench_top.png",
+          "images/stations/benches/left_border.png",
+          "images/stations/benches/right_border.png",
+          "images/stations/benches/vertical.png",
+          "images/stations/benches/top.png",
+          "images/stations/benches/bottom_shadow.png",
+          //"images/stations/bench_middle.png",
+          //"images/stations/bench.png",
+          //"images/stations/benches/single.png",
+          //"images/stations/benches/middle.png",
+          //"images/stations/benches/final.png",
+          //"images/stations/benches/shadow_bottom_top.png",
+          //"images/stations/benches/left_shadow.png",
+          "images/stations/benches/left_corner_shadow.png",
+          "images/stations/benches/right_corner_shadow.png",
+          "images/stations/benches/top_shadows.png",
           "images/stations/benches/garbage_bin.png",
           "images/stations/baskets/basket_acai.png",
+          "images/stations/baskets/basket_banana.png",
+          "images/stations/baskets/basket_cucumber.png",
+          "images/stations/baskets/basket_lettuce.png",
+          "images/stations/baskets/basket_strawberry.png",
+          "images/stations/baskets/basket_tomato.png",
           "images/stations/fridge/fridge_meat.png",
           "images/stations/fridge/fridge_choc.png",
           "images/stations/chopping_board/choppingboardbench.png",
-    "images/stations/benches/left_corner_shadow.png",
-    "images/stations/benches/right_corner_shadow.png",
-    "images/stations/benches/top_shadows.png",
-    "images/frame/vertical_border.png",
-    "images/frame/horizontal_border.png",
-    "images/frame/topleft_door.png",
-    "images/frame/topright_door.png",
-    "images/frame/bottomleft_door.png",
-    "images/frame/bottomright_door.png",
+
+          //These frames have some use in ObstacleFactory but it's only ever instantiated as full_door - Alex S.
+          "images/frame/full_door.png",
           "images/frame/border_test.png",
           "images/frame/side_border.png",
-    "images/frame/wall.png",
+          "images/frame/wall.png",
+          //"images/frame/bottom_border.png",
+          //"images/frame/right_door.png",
+          //"images/frame/left_door.png",
+          //"images/frame/door.png",
+          //"images/frame/top_door_left_part.png",
+          //"images/frame/top_door_right_part.png",
+          //"images/frame/bottom_left_inv.png",
+          //"images/frame/bottom_right_inv.png",
+          //"images/frame/top_border.png",
+          //"images/frame/left_border.png",
+          //"images/frame/bottom_border_wall.png",
+          //"images/frame/border.png",
+          //"images/frame/vertical_border.png",
+          //"images/frame/horizontal_border.png",
+          //"images/frame/topleft_door.png",
+          //"images/frame/topright_door.png",
+          //"images/frame/bottomleft_door.png",
+          //"images/frame/bottomright_door.png",
+
           "images/platecomponent/cleanplate.png",
           "images/platecomponent/dirtyplate.png",
-          "images/platecomponent/stackplate.png",
           "images/platecomponent/stackedplates/1plates.png",
           "images/platecomponent/stackedplates/2plates.png",
           "images/platecomponent/stackedplates/3plates.png",
@@ -153,60 +148,60 @@ public class ForestGameArea extends GameArea {
   };
   private static final String[] forestTextureAtlases = {
           "images/Cutscenes/cutscene_badEnd.atlas",
-    "images/terrain_iso_grass.atlas",
-    "images/ghost.atlas",
-    "images/ghostKing.atlas",
-    "images/animal_images/gorilla.atlas",
-    "images/animal_images/goose.atlas",
-    "images/animal_images/goat.atlas",
-    "images/animal_images/monkey.atlas",
-    "images/animal_images/snow_wolf.atlas",
-    "images/player.atlas",
-    "images/fireExtinguisher/atlas/flame.atlas",
-    "images/stations/oven/oven.atlas",
-    "images/terrain_iso_grass.atlas",
-    "images/ghost.atlas",
-    "images/ghostKing.atlas",
-    "images/animal_images/gorilla.atlas",
-    "images/animal_images/goose.atlas",
-    "images/animal_images/goat.atlas",
-    "images/animal_images/monkey.atlas",
-    "images/animal_images/snow_wolf.atlas",
-    "images/fireExtinguisher/atlas/flame.atlas",
-    "images/player/player.atlas",
-    "images/player/acaiBowl.atlas",
-    "images/player/bananaSplit.atlas",
-    "images/player/burntBeef.atlas",
-    "images/player/choppedAcai.atlas",
-    "images/player/choppedBanana.atlas",
-    "images/player/choppedChocolate.atlas",
-    "images/player/choppedCucumber.atlas",
-    "images/player/choppedLettuce.atlas",
-    "images/player/choppedStrawberry.atlas",
-    "images/player/choppedTomato.atlas",
-    "images/player/cookedBeef.atlas",
-    "images/player/cookedFish.atlas",
-    "images/player/fruitSalad.atlas",
-    "images/player/rawAcai.atlas",
-    "images/player/rawBanana.atlas",
-    "images/player/rawBeef.atlas",
-    "images/player/rawChocolate.atlas",
-    "images/player/rawCucumber.atlas",
-    "images/player/rawFish.atlas",
-    "images/player/rawLettuce.atlas",
-    "images/player/rawStrawberry.atlas",
-    "images/player/rawTomato.atlas",
-    "images/player/salad.atlas",
-    "images/player/steak.atlas",
-    "images/player/playerPlate.atlas",
-    "images/player/playerDirtyPlate.atlas",
+          "images/terrain_iso_grass.atlas",
+          "images/ghost.atlas",
+          "images/ghostKing.atlas",
+          "images/animal_images/gorilla.atlas",
+          "images/animal_images/goose.atlas",
+          "images/animal_images/goat.atlas",
+          "images/animal_images/monkey.atlas",
+          "images/animal_images/snow_wolf.atlas",
+          "images/player.atlas",
+          "images/fireExtinguisher/atlas/flame.atlas",
+          "images/stations/oven/oven.atlas",
+          "images/terrain_iso_grass.atlas",
+          "images/ghost.atlas",
+          "images/ghostKing.atlas",
+          "images/animal_images/gorilla.atlas",
+          "images/animal_images/goose.atlas",
+          "images/animal_images/goat.atlas",
+          "images/animal_images/monkey.atlas",
+          "images/animal_images/snow_wolf.atlas",
+          "images/fireExtinguisher/atlas/flame.atlas",
+          "images/player/player.atlas",
+          "images/player/acaiBowl.atlas",
+          "images/player/bananaSplit.atlas",
+          "images/player/burntBeef.atlas",
+          "images/player/choppedAcai.atlas",
+          "images/player/choppedBanana.atlas",
+          "images/player/choppedChocolate.atlas",
+          "images/player/choppedCucumber.atlas",
+          "images/player/choppedLettuce.atlas",
+          "images/player/choppedStrawberry.atlas",
+          "images/player/choppedTomato.atlas",
+          "images/player/cookedBeef.atlas",
+          "images/player/cookedFish.atlas",
+          "images/player/fruitSalad.atlas",
+          "images/player/rawAcai.atlas",
+          "images/player/rawBanana.atlas",
+          "images/player/rawBeef.atlas",
+          "images/player/rawChocolate.atlas",
+          "images/player/rawCucumber.atlas",
+          "images/player/rawFish.atlas",
+          "images/player/rawLettuce.atlas",
+          "images/player/rawStrawberry.atlas",
+          "images/player/rawTomato.atlas",
+          "images/player/salad.atlas",
+          "images/player/steak.atlas",
+          "images/player/playerPlate.atlas",
+          "images/player/playerDirtyPlate.atlas",
           "images/player/playerFireExtinguisher.atlas",
           "images/special_NPCs/boss.atlas", "images/stations/Servery_Animation/servery.atlas",
           "images/special_NPCs/penguin.atlas",
   };
   private static final String[] forestSounds = {"sounds/Impact4.ogg"};
-  private static final String backgroundMusic = "sounds/BB_BGM.mp3";
-  private static final String[] forestMusic = {backgroundMusic};
+  private static final String backgroundmusic = "sounds/BB_BGM.mp3";
+  private static final String[] forestMusic = {backgroundmusic};
   private static Entity customerSpawnController;
 
   private final TerrainFactory terrainFactory;
@@ -215,11 +210,6 @@ public class ForestGameArea extends GameArea {
 
   private Entity player;
   private CheckWinLoseComponent winLoseComponent;  // Reference to CheckWinLoseComponent
-
-
-  // Define the win/lose conditions
-  private int winAmount = 60;      // Example value for winning gold amount
-  private int loseThreshold = 50;   // Example value for losing threshold
 
   public enum personalCustomerEnums{
     HANK,
@@ -241,7 +231,6 @@ public class ForestGameArea extends GameArea {
     this.level = level;
     this.terrainFactory = terrainFactory;
     this.upgradesDisplay = upgradesDisplay;
-    //this.textDisplay = textDisplay;
 
     ServiceLocator.registerGameArea(this);
   }
@@ -268,28 +257,22 @@ public class ForestGameArea extends GameArea {
     }
     for (Entity station : result.getStations()) {
       spawnEntity(station);
-        //station.setPosition(station.getPosition().x, station.getPosition().y);
+
     }
 
 
-      //ServiceLocator.getMapLayout().getEvents().trigger("load", "level1");
 
-    new_border();
-    //ticketDetails();
+    newborder();
+
     spawnStations();
     customerSpawnController = spawnCustomerController();
     createMoralScreen();
     createMoralSystem();
-    //spawnplates
-    //spawnStackPlate(5); //testplate spawn
 
-      //spawnPlatewithMeal();
       player = spawnPlayer();
       ServiceLocator.getPlayerService().registerPlayer(player);
-      //ServiceLocator.getSaveLoadService().setCombatStatsComponent(player.getComponent(CombatStatsComponent.class));
       ServiceLocator.getSaveLoadService().load();
-      ServiceLocator.getDayNightService().getEvents().addListener("upgrade", () -> {
-          spawnPenguin(upgradesDisplay);});
+      ServiceLocator.getDayNightService().getEvents().addListener("upgrade", () -> spawnPenguin(upgradesDisplay));
 
     // Check and trigger win/loss state
     ServiceLocator.getDayNightService().getEvents().addListener("endGame", this::checkEndOfGameState);
@@ -338,8 +321,8 @@ public class ForestGameArea extends GameArea {
       }
 
       if (hasBadDecisions) {
-        createTextBox("You *oink* amazing critter! You're a master! " +
-                "Enjoy a 40c raise for your efforts!");
+        createTextBox("You *oink* bad critter! You're a failure! " +
+                "You will not get any raise");
         ServiceLocator.getEntityService().getEvents().trigger("badEnd");
       } else {
         createTextBox("You *oink* amazing critter! You're a master! " +
@@ -365,9 +348,7 @@ public class ForestGameArea extends GameArea {
     spawnEntity(new Entity().addComponent(terrain));
 
     // Terrain walls
-    float tileSize = terrain.getTileSize();
     GridPoint2 tileBounds = terrain.getMapBounds(0);
-    Vector2 worldBounds = new Vector2(tileBounds.x * tileSize, tileBounds.y * tileSize);
 
     // Left
     spawnEntityAt(
@@ -396,61 +377,59 @@ public class ForestGameArea extends GameArea {
    */
   private void spawnWall() {
     GridPoint2 coords;
-    Vector2 pos;
 
     for (int i=0;i<12;i++) {
       coords = new GridPoint2(i,7);
-      Entity top_wall = ObstacleFactory.wall();
-      spawnEntityAt(top_wall, coords, true, true);
-      top_wall.setPosition(i, 8f);
+      Entity topwall = ObstacleFactory.wall();
+      spawnEntityAt(topwall, coords, true, true);
+      topwall.setPosition(i, 8f);
     }
     coords = new GridPoint2(3,7);
-    Entity left_door = ObstacleFactory.door("full_door");
-    spawnEntityAt(left_door, coords, true, true);
-    left_door.setPosition(1f, 8f);
+    Entity leftdoor = ObstacleFactory.door("full_door");
+    spawnEntityAt(leftdoor, coords, true, true);
+    leftdoor.setPosition(1f, 8f);
 
 
   }
   /**
    * Spawns the border around the restaurant
    */
-  private void new_border(){
+  private void newborder(){
     GridPoint2 coords = new GridPoint2(0,0);
-    Vector2 pos;
 
     for (int i=0;i<14;i++) {
-        Entity top_border = ObstacleFactory.spawnBorderTile();
-        spawnEntityAt(top_border, coords, true, true);
-        top_border.setPosition(i, -0.08f);
+        Entity topborder = ObstacleFactory.spawnBorderTile();
+        spawnEntityAt(topborder, coords, true, true);
+        topborder.setPosition(i, -0.08f);
     }
 
     for (int i=0;i<14;i++) {
-      Entity top_border = ObstacleFactory.spawnBorderTile();
-      spawnEntityAt(top_border, coords, true, true);
-      top_border.setPosition(i, 8f);
+      Entity topborder = ObstacleFactory.spawnBorderTile();
+      spawnEntityAt(topborder, coords, true, true);
+      topborder.setPosition(i, 8f);
     }
     for (int i=0;i<14;i++) {
-      Entity top_border = ObstacleFactory.spawnBorderTile();
-      spawnEntityAt(top_border, coords, true, true);
-      top_border.setPosition(i, 9f);
+      Entity topborder = ObstacleFactory.spawnBorderTile();
+      spawnEntityAt(topborder, coords, true, true);
+      topborder.setPosition(i, 9f);
     }
 
     for (int y=0;y<9;y++) {
-      Entity left_border = ObstacleFactory.spawnBorderTileVertical();
-      spawnEntityAt(left_border, coords, true, true);
-       left_border.setPosition(0, y);
+      Entity leftborder = ObstacleFactory.spawnBorderTileVertical();
+      spawnEntityAt(leftborder, coords, true, true);
+       leftborder.setPosition(0, y);
     }
 
     for (int y=0;y<9;y++) {
-      Entity left_border = ObstacleFactory.spawnBorderTileVertical();
-      spawnEntityAt(left_border, coords, true, true);
-      left_border.setPosition(13.89f, y);
+      Entity leftborder = ObstacleFactory.spawnBorderTileVertical();
+      spawnEntityAt(leftborder, coords, true, true);
+      leftborder.setPosition(13.89f, y);
     }
 
     for (int y=0;y<9;y++) {
-      Entity left_border = ObstacleFactory.spawnBorderTileVertical();
-      spawnEntityAt(left_border, coords, true, true);
-      left_border.setPosition(4, y);
+      Entity leftborder = ObstacleFactory.spawnBorderTileVertical();
+      spawnEntityAt(leftborder, coords, true, true);
+      leftborder.setPosition(4, y);
     }
 
   }
@@ -461,7 +440,7 @@ public class ForestGameArea extends GameArea {
 
 
   private void spawnStations() {
-    int a = 0;
+
   }
 
   /**
@@ -490,7 +469,6 @@ public class ForestGameArea extends GameArea {
 
   private Entity spawnPlayer() {
     Entity newPlayer;
-    PlayerConfig playerConfig = new PlayerConfig();
     newPlayer = PlayerFactory.createPlayer();
     spawnEntityAt(newPlayer, PLAYER_SPAWN, true, true);
     newPlayer.setPosition(PLAYER_SPAWN.x, 2.5f);
@@ -662,26 +640,6 @@ public class ForestGameArea extends GameArea {
     spawnBasicCustomer("Basic Sheep");
   }
 
-//  private void spawnGhosts() {
-//    GridPoint2 minPos = new GridPoint2(0, 0);
-//    GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
-//
-//    for (int i = 0; i < NUM_GHOSTS; i++) {
-//      GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
-//      Entity ghost = NPCFactory.createGhost(player);
-//      spawnEntityAt(ghost, randomPos, true, true);
-//    }
-//  }
-//
-//  private void spawnGhostKing() {
-//    GridPoint2 minPos = new GridPoint2(0, 0);
-//    GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
-//
-//    GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
-//    Entity ghostKing = NPCFactory.createGhostKing(player);
-//    spawnEntityAt(ghostKing, randomPos, true, true);
-//  }
-
   /**
    * Spawn Stack Plate item.
    * @param quantity - amount of stack.
@@ -715,7 +673,7 @@ public class ForestGameArea extends GameArea {
    * Plays the background music
    */
   private void playMusic() {
-    Music music = ServiceLocator.getResourceService().getAsset(backgroundMusic, Music.class);
+    Music music = ServiceLocator.getResourceService().getAsset(backgroundmusic, Music.class);
     music.setLooping(true);
     music.setVolume(0.02f);
     music.play();
@@ -747,7 +705,7 @@ public class ForestGameArea extends GameArea {
   @Override
   public void dispose() {
     super.dispose();
-    ServiceLocator.getResourceService().getAsset(backgroundMusic, Music.class).stop();
+    ServiceLocator.getResourceService().getAsset(backgroundmusic, Music.class).stop();
     this.unloadAssets();
   }
 
