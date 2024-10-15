@@ -109,6 +109,7 @@ public class ExtortionUpgrade extends UIComponent implements Upgrade {
             this.actviateTime = gameTime.getTime();
             this.isActive = true;
             combatStatsComponent.addGold(-40);
+            ServiceLocator.getRandomComboService().getEvents().trigger("extortion active");
 
             // Display the meter
             activateTimeRemaining = upgradeDuration;
@@ -130,6 +131,7 @@ public class ExtortionUpgrade extends UIComponent implements Upgrade {
         // Remove meter
         isVisible = false;
         layout.setVisible(false);
+        ServiceLocator.getRandomComboService().getEvents().trigger("extortion unactive");
 
         // Ensure the text and meter are removed from the stage after time finish
         if (meter != null && meter.hasParent()) {
