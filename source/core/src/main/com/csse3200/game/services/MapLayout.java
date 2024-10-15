@@ -1,6 +1,7 @@
 package com.csse3200.game.services;
 
 
+import com.csse3200.game.GdxGame;
 import com.csse3200.game.areas.ForestGameArea;
 import com.csse3200.game.areas.GameArea;
 import com.csse3200.game.areas.map.BenchGenerator;
@@ -10,10 +11,12 @@ import com.csse3200.game.entities.benches.Bench;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.factories.StationFactory;
 import com.csse3200.game.events.EventHandler;
+import com.csse3200.game.services.InteractableService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.*;
+import java.security.Provider.Service;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -54,24 +57,16 @@ public class MapLayout {
      *
      * @param level - integer 1-5 corresponding to level
      */
-    public Map load(int level) {
+    public Map load(GdxGame.LevelType level) {
 
         String mapLevel = mapBase;
         BufferedReader reader = null;
-        if (level == 1) {
-            mapLevel = mapLevel1;
-        }
-        if (level == 2) {
-            mapLevel = mapLevel2;
-        }
-        if (level == 3) {
-            mapLevel = mapLevel3;
-        }
-        if (level == 4) {
-            mapLevel = mapLevel4;
-        }
-        if (level == 5) {
-            mapLevel = mapLevel5;
+        switch (level) {
+            case LEVEL_1 -> mapLevel = mapLevel1;
+            case LEVEL_2 -> mapLevel = mapLevel2;
+            case LEVEL_3 -> mapLevel = mapLevel3;
+            case LEVEL_4 -> mapLevel = mapLevel4;
+            case LEVEL_5 -> mapLevel = mapLevel5;
         }
 
         try {
@@ -93,7 +88,7 @@ public class MapLayout {
                     String square = parts[col];
 
                     // Log the current square being processed a
-                    logger.info("Checking square at row " + row + ", column " + col + ": " + square);
+//                    logger.info("Checking square at row " + row + ", column " + col + ": " + square);
 
                     // Spawn single bench row when 'X'
                     if (square.equals("X")) {
@@ -101,7 +96,7 @@ public class MapLayout {
                         strToNum2 = Integer.valueOf(parts[col + 2]);
                         benches.addAll(readBench("X", strToNum, strToNum2, row));
                         col += 3;
-                        logger.info("Spawning entity at row " + row + ", column " + col);
+//                        logger.info("Spawning entity at row " + row + ", column " + col);
                     }
                     // Spawn bench column when 'Y'
                     else if (square.equals("Y")) {
@@ -196,6 +191,9 @@ public class MapLayout {
                 break;
         }
         station.setPosition(col + 4, row - 4);
+
+        ServiceLocator.getInteractableService().registerEntity(station);
+
         return station;
     }
 

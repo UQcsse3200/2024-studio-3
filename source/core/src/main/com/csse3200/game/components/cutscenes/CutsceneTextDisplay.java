@@ -143,8 +143,4 @@ public class CutsceneTextDisplay extends UIComponent {
         return table;
     }
 
-    public void disable() {
-        visible = false;
-        table.setVisible(false);
-    }
 }

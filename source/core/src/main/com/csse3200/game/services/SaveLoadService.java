@@ -59,6 +59,7 @@ public class SaveLoadService {
             for (Decision decision: system.getListOfDecisions()) {
                 system.addDecision(decision);
             }
+            logger.info("Successfuly Loaded Game");
         }
 
     }

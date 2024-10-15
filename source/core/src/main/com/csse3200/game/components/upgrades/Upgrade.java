@@ -9,5 +9,5 @@ public interface Upgrade {
 
     /** Deactivate the activated upgrade once it reaches time limit */
     void deactivate();
-    //public void imposeCost();
+
 }
