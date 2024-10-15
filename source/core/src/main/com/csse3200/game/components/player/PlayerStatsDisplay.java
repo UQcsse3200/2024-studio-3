@@ -18,8 +18,7 @@ import com.csse3200.game.ui.UIComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.badlogic.gdx.utils.Timer;
-
-
+import com.badlogic.gdx.utils.Align;  // Import Align class
 
 /**
  * AN ui component for displaying player stats, e.g. health.
@@ -28,6 +27,7 @@ public class PlayerStatsDisplay extends UIComponent {
   Table table;
   Table goldTable;
   Table timerTable;
+  Table dayTable;
   private Image timerImage;
   private Image goldImage;
   private Label goldLabel;
@@ -111,12 +111,9 @@ public class PlayerStatsDisplay extends UIComponent {
     table = new Table();
     table.top().left();  // Position table to the top-left of the screen
     table.setFillParent(true);
-
     goldTable = new Table();
-    goldTable.left();  // Align goldTable to the left
-
     timerTable = new Table();
-    timerTable.center();  // Align timerTable to the center
+    dayTable = new Table();
 
     table.row();
 
@@ -130,46 +127,57 @@ public class PlayerStatsDisplay extends UIComponent {
     timerTable.add(getTimerLabel()).center();
 
     // Center the timer table in the middle of the screen
-    table.add(timerTable).expandX().center().padTop(10f);  // Ensure the timer is centered
-    table.row();  // New row for day and gold labels
+    table.add(timerTable).expandX().padTop(10f);  // Ensure the timer is centered
+    table.row();
 
     // Label for the Current Day
     CharSequence dayText = String.format("Day: %d", currentDay); // Start with Day 1
     setDayLabel(new Label(dayText, skin, LARGE_LABEL));
+    table.add(dayLabel).left().padLeft(30);
+
+    table.row();
 
     // Label for Current Gold
     goldImage = new Image(ServiceLocator.getResourceService().getAsset("images/money.png", Texture.class));
     int gold = entity.getComponent(CombatStatsComponent.class).getGold();
-    CharSequence goldText = String.format("Cash: %d", gold);
-    goldLabel = new Label(goldText, skin, LARGE_LABEL);
+    CharSequence goldText = String.format("%d", gold);
 
-    // Add gold and day labels to the table
-    table.add(getDayLabel()).left().padLeft(0f).padTop(10f);  // Align day label to the very left
-    table.row();
-    goldTable.add(goldLabel).left().padLeft(0f);  // Align gold label to the very left
-    goldTable.add(goldImage).size(20f).padLeft(5f);  // Pad image slightly to the right of the gold label
-    table.add(goldTable).left().padLeft(0f).padTop(10f);  // Align to the very left
+    // Create a container to hold the gold label
+    goldLabel = new Label(goldText, skin, LARGE_LABEL);
+    goldLabel.setColor(Color.GOLD);  // Make text color gold
+
+    // Wrap gold label in container for background
+    Container<Label> goldLabelContainer = new Container<>(goldLabel);
+
+    // Set background for container
+    TextureRegionDrawable background = new TextureRegionDrawable(
+        new TextureRegion(ServiceLocator.getResourceService().getAsset("images/box_background.png", Texture.class))
+    );
+    goldLabelContainer.setBackground(background);  // Set background drawable
+    // Add the gold label container and image to the goldTable
+
+    goldTable.add(goldLabelContainer).fillX().pad(5f);  // Add padding and fill width
+    goldTable.add(goldImage).size(50f);  // Pad image slightly to the right of the gold label
+    table.add(goldTable).left().width(300f).height(250);  // Align to the very left
 
     // Add the table to the stage
     stage.addActor(table);
 
-    // Progress bar settings
-    Texture whiteBgTexture = ServiceLocator
-        .getResourceService().getAsset("images/white_background.png", Texture.class);
-
-    ProgressBar.ProgressBarStyle style = new ProgressBar.ProgressBarStyle();
-    style.background = new TextureRegionDrawable(new TextureRegion(whiteBgTexture));
-    style.background.setMinHeight(15);
-    style.background.setMinWidth(10);
-
-    // Static white background ProgressBar
-    timeBar = new ProgressBar(0f, 100f, 1f, false, skin);
-    timeBar.setValue(100f);  // Start at full value (100%)
-    table.row();
-    table.add(timeBar).width(200f).height(300f).fill();
+//    // Progress bar settings
+//    Texture whiteBgTexture = ServiceLocator
+//        .getResourceService().getAsset("images/white_background.png", Texture.class);
+//
+//    ProgressBar.ProgressBarStyle style = new ProgressBar.ProgressBarStyle();
+//    style.background = new TextureRegionDrawable(new TextureRegion(whiteBgTexture));
+//    style.background.setMinHeight(15);
+//    style.background.setMinWidth(10);
+//
+//    // Static white background ProgressBar
+//    timeBar = new ProgressBar(0f, 100f, 1f, false, skin);
+//    timeBar.setValue(100f);  // Start at full value (100%)
+//    table.row();
+//    table.add(timeBar).width(200f).height(300f).fill();
   }
-
-
 
   @Override
   public void draw(SpriteBatch batch)  {
@@ -181,7 +189,7 @@ public class PlayerStatsDisplay extends UIComponent {
    * @param gold player gold
    */
   public void updatePlayerGoldUI(int gold) {
-    CharSequence text = String.format("Cash: %d", gold);
+    CharSequence text = String.format("%d", gold);
     goldLabel.setText(text);
   }
 
@@ -217,11 +225,11 @@ public class PlayerStatsDisplay extends UIComponent {
   public static void updateTime(long time) {
     timer = time;
 
-    // Calculate progress as a percentage of the time remaining
-    float progressPercentage = (float) timer / startTime * 100f;
-
-    // Update the progress bar value to reflect the remaining time
-    getInstance().timeBar.setValue(progressPercentage);
+//    // Calculate progress as a percentage of the time remaining
+//    float progressPercentage = (float) timer / startTime * 100f;
+//
+//    // Update the progress bar value to reflect the remaining time
+//    getInstance().timeBar.setValue(progressPercentage);
 
     // Update the timer color based on remaining time
     updateTimeColor();
