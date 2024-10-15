@@ -84,7 +84,7 @@ public class PlayerFactory {
     PhysicsUtils.setScaledCollider(player, 0.5f, 0.5f);
     player.getComponent(ColliderComponent.class).setDensity(1.5f);
     player.getComponent(HitboxComponent.class).setAsBox(player.getScale());
-    player.getComponent(ColliderComponent.class).setAsBox(new Vector2(0.03f, 0.03f), player.getCenterPosition().sub(new Vector2(0f, 0.32f)));
+    player.getComponent(ColliderComponent.class).setAsBox(new Vector2(0.3f, 0.3f), player.getCenterPosition().sub(new Vector2(0f, 0.32f)));
 
     ServiceLocator.getPlayerService().getEvents().trigger("playerCreated", player);
 
