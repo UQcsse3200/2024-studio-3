@@ -46,6 +46,7 @@ public class ExtortionUpgrade extends UIComponent implements Upgrade {
             this.combatStatsComponent = player.getComponent(CombatStatsComponent.class);
         });
         ServiceLocator.getRandomComboService().getEvents().addListener("Extortion", this::activate);
+        ServiceLocator.getRandomComboService().getEvents().addListener("Extortionoff", this::deactivate);
     }
 
     @Override

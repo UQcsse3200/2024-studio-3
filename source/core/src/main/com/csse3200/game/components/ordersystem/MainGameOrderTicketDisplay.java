@@ -610,7 +610,7 @@ public class MainGameOrderTicketDisplay extends UIComponent {
     public void dispose() {
         // Cleanup resources
         //from team 2, I reset the ordernumb back to 0, for each new day when dispose is called
-//        orderNumb = 0;
+        orderNumb = 0;
         for (Table table : tableArrayList) {
             table.clear();
             table.remove();
