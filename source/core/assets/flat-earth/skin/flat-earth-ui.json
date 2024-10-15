@@ -358,9 +358,9 @@ com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
 		font: font_large,
 		fontColor: white
 	}
-	timer: {
-		font: font_large,
-		fontColor: red
+	cash: {
+		font: font_small,
+		fontColor: white
 	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.List$ListStyle: {

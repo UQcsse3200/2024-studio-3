@@ -104,7 +104,7 @@ public class RageUpgrade extends UIComponent implements Upgrade {
 
         rageMeter = new ProgressBar(0f, 1f, 0.01f, false, style);
         rageMeter.setValue(1f); // Initially, the rage meter is full
-        rageMeter.setPosition(30, 450);
+        rageMeter.setPosition(30, 215);
         stage.addActor(rageMeter);
     }
 
