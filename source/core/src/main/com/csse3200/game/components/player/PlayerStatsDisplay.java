@@ -1,5 +1,7 @@
 package com.csse3200.game.components.player;
 
+import com.badlogic.gdx.Gdx;
+import com.csse3200.game.GdxGame;
 import java.util.concurrent.TimeUnit;
 
 import com.badlogic.gdx.graphics.Color;
@@ -13,6 +15,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
@@ -33,6 +37,9 @@ public class PlayerStatsDisplay extends UIComponent {
   private static PlayerStatsDisplay instance;
   private ProgressBar timeBar;
   private static final float MAX_TIME = 300f;
+  private float screenWidth = Gdx.graphics.getWidth();
+  private float screenHeight = Gdx.graphics.getHeight();
+  private static final Logger logger = LoggerFactory.getLogger(GdxGame.class);
 
 
 
@@ -99,20 +106,37 @@ public class PlayerStatsDisplay extends UIComponent {
    * @see Table for positioning options
    */
   private void addActors() {
+
     table = new Table();
     table.top().left();
     table.setFillParent(true);
-    table.padTop(80f).padLeft(20f);
+    //table.padTop(5f).padLeft(20f);
 
     goldTable = new Table();
     goldTable.left();
 
     timerTable = new Table();
-    timerTable.left().pad(10f);
+    timerTable.left();
+
+    table.row();
+
+    String LARGE_LABEL = "large";
+
+
+
+    //Timer image
+    //timerImage = new Image(ServiceLocator.getResourceService().getAsset("images/hourglass.png", Texture.class));
+
+    // Timer label for the remaining time in the day
+    CharSequence TimerText = String.format("%s", convertDigital(timer));
+    setTimerLabel(new Label(TimerText, skin, LARGE_LABEL));
+    // Position timer to be at top of screen
+    timerTable.add(timerImage).size(20f).left().padLeft(screenWidth/2 - 100);
+    timerTable.add(getTimerLabel()).center();
+    table.add(timerTable);
 
     //Label for the Current Day
     CharSequence dayText = String.format("Day: %d", currentDay); // Start with Day 1
-    String LARGE_LABEL = "large";
     setDayLabel(new Label(dayText, skin, LARGE_LABEL));
     table.add(getDayLabel()).left();
     table.row();
@@ -126,17 +150,6 @@ public class PlayerStatsDisplay extends UIComponent {
     goldTable.add(goldLabel).left();
     goldTable.add(goldImage).size(20f).padLeft(5f);
     table.add(goldTable);
-    table.row();
-
-    //Timer image
-    timerImage = new Image(ServiceLocator.getResourceService().getAsset("images/hourglass.png", Texture.class));
-
-    // Timer label for the remaining time in the day
-    CharSequence TimerText = String.format("%s", convertDigital(timer));
-    setTimerLabel(new Label(TimerText, skin, LARGE_LABEL));
-    timerTable.add(timerImage).size(20f).left().padRight(5f);
-    timerTable.add(getTimerLabel()).left();
-    table.add(timerTable).padTop(20f);
     stage.addActor(table);
 
     //Skin skin =// Add empty knob if missing
@@ -196,12 +209,6 @@ public class PlayerStatsDisplay extends UIComponent {
    */
 
   public static void updateTime(long time) {
-    /*
-    CharSequence timerText = String.format("Time Left: %n   %s", convertDigital(time));
-    getTimerLabel().setText(timerText);
-    ServiceLocator.getDayNightService().getEvents().trigger("callpastsecond");
-
-     */
     timer = time;
 
     // Calculate progress as a percentage of the time remaining
@@ -210,12 +217,19 @@ public class PlayerStatsDisplay extends UIComponent {
     // Update the progress bar value to reflect the remaining time
     getInstance().timeBar.setValue(progressPercentage);
 
-    // Trigger other events if necessary
+    // Check if the remaining time is less than 4 minutes (240 seconds)
+    if (timer < TimeUnit.MINUTES.toMillis(4)) {
+      getTimerLabel().setColor(Color.RED);  // Change color to red
+    } else {
+      getTimerLabel().setColor(Color.WHITE);  // Reset to the default color (white or original)
+    }
+
+    // Format and update the timer label with the remaining time
     CharSequence timerText = String.format("Time Left: %n   %s", convertDigital(time));
     getTimerLabel().setText(timerText);
 
+    // Trigger other events if necessary
     ServiceLocator.getDayNightService().getEvents().trigger("callpastsecond");
-
   }
 
 
