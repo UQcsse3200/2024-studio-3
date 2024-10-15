@@ -137,7 +137,7 @@ public class PlayerStatsDisplay extends UIComponent {
     // Label for the Current Day
     CharSequence dayText = String.format("Day: %d", currentDay); // Start with Day 1
     setDayLabel(new Label(dayText, skin, LARGE_LABEL));
-    table.add(dayLabel).left().padLeft(30);
+    table.add(dayLabel).left().padLeft(30).height(0);
     table.row();
 
     // Label for Current Gold
@@ -162,7 +162,7 @@ public class PlayerStatsDisplay extends UIComponent {
     goldContentsTable.add(goldLabelContainer);
     //goldContentsTable.add(goldImage).size(30).padLeft(10);
     goldTable.add(goldContentsTable);
-    table.add(goldTable).left().width(200f).height(200).padTop(0);  // Align to the very left
+    table.add(goldTable).left().width(200f).height(150).padTop(0);  // Align to the very left
 
     // Add the table to the stage
     stage.addActor(table);
