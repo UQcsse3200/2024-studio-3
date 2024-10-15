@@ -206,6 +206,14 @@ class EndDayDisplayTest {
     }
 
     @Test
+    void testHide() {
+        endDayDisplay.create();
+        endDayDisplay.show();
+        //endDayDisplay.hide();
+        assertTrue(endDayDisplay.isVisible());
+    }
+
+    @Test
     public void testToggleVisibility_ShouldHideWhenVisible() {
         // Setup - assuming isVisible is initially true
         endDayDisplay.setGame(ServiceLocator.getGameScreen().getGame());

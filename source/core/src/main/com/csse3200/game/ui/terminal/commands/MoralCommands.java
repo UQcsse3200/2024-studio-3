@@ -5,10 +5,8 @@ import com.csse3200.game.entities.Entity;
 import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import java.util.ArrayList;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+
 
 public class MoralCommands implements Command{
     private static final Logger logger = LoggerFactory.getLogger(MoralCommands.class);

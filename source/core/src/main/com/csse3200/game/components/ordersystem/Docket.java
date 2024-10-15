@@ -10,24 +10,24 @@ import com.badlogic.gdx.utils.TimeUtils;
 import com.csse3200.game.ui.UIComponent;
 
 /**
- * UI component class for displaying a docket and changing its appearance depending on time remaining.
+ * UI component class for displaying a docketImage and changing its appearance depending on time remaining.
  */
 public class Docket extends UIComponent {
     private Skin docketSkin;
-    private static String[] textureNameArray = {"fresh_docket", "mild_docket", "old_docket", "expired_docket"};
-    private Image docket;
+    private static final String[] textureNameArray = {"fresh_docket", "mild_docket", "old_docket", "expired_docket"};
+    private Image docketImage;
     private int cellHash;
-    private long startTime;
+    private final long startTime;
     long totalRecipeTime;
     private boolean isPaused = false;
 
     /**
-     * Constructs a docket component and initialises its skin.
+     * Constructs a docketImage component and initialises its skin.
      */
     public Docket(long totalRecipeTime) {
         // Initialize components here
         this.docketSkin = new Skin();
-        this.docket = new Image();
+        this.docketImage = new Image();
         this.startTime = TimeUtils.millis();
         this.totalRecipeTime = totalRecipeTime / 1000;
         setupSkin();
@@ -41,36 +41,41 @@ public class Docket extends UIComponent {
         if (Gdx.files != null) {
             TextureAtlas docketAtlas = new TextureAtlas(Gdx.files.internal("images/ordersystem/DocketStatusIndicator.atlas"));
             docketSkin.addRegions(docketAtlas);
-            docket.setDrawable(docketSkin.getDrawable(textureNameArray[0]));
+            docketImage.setDrawable(docketSkin.getDrawable(textureNameArray[0]));
         }
     }
 
     /**
-     * Creates the docket component.
-     */
-    @Override
-    public void create() {
-        super.create();
-    }
-
-    /**
-     * Sets the skin associated with this docket.
-     * @param skin the skin to be associated with this docket.
+     * Sets the skin associated with this docketImage.
+     * @param skin the skin to be associated with this docketImage.
      */
     public void setSkin(Skin skin) {
         this.docketSkin = skin;
     }
 
     /**
-     * Sets the image associated with this docket.
-     * @param docket the image to be associated with this docket.
+     * Gets the skin associated with this docket.
+     * @return: The skin associated with this docket
      */
-    public void setDocket(Image docket) {
-        this.docket = docket;
+    public Skin getSkin() { return docketSkin; }
+    /**
+     * Sets the image associated with this docketImage.
+     * @param docketImage the image to be associated with this docketImage.
+     */
+    public void setDocketImage(Image docketImage) {
+        this.docketImage = docketImage;
     }
 
     /**
-     * Sets the cell hash that uniquely identifies the cell this docket is associated with.
+     * Gets the image associated with this docket
+     * @return the image associated with this docket
+     */
+    public Image getDocketImage() {
+        return docketImage;
+    }
+
+    /**
+     * Sets the cell hash that uniquely identifies the cell this docketImage is associated with.
      * @param cellHash the unique hash for the cell
      */
 
@@ -79,7 +84,7 @@ public class Docket extends UIComponent {
     }
 
     /**
-     * Returns the cell hash associated with this docket.
+     * Returns the cell hash associated with this docketImage.
      * @return the cell hash
      */
     public int getCellHash() {
@@ -87,15 +92,15 @@ public class Docket extends UIComponent {
     }
 
     /**
-     * Returns the image representing the docket.
-     * @return the docket image
+     * Returns the image representing the docketImage.
+     * @return the docketImage image
      */
     public Image getImage() {
-        return docket;
+        return docketImage;
     }
 
     /**
-     * Returns the array of texture names corresponding to the different states of the docket.
+     * Returns the array of texture names corresponding to the different states of the docketImage.
      * @return an array of texture names
      */
     public String[] getTextureNameArray() {
@@ -103,15 +108,7 @@ public class Docket extends UIComponent {
     }
 
     /**
-     * Returns the skin object containing the docket textures.
-     * @return the docket skin
-     */
-    public Skin getDocketSkin() {
-        return docketSkin;
-    }
-
-    /**
-     * Returns the start time of when the docket was created.
+     * Returns the start time of when the docketImage was created.
      *
      * @return the start time in milliseconds
      */
@@ -128,9 +125,25 @@ public class Docket extends UIComponent {
     }
 
     /**
-     * Updates the texture of the docket based on the remaining time before it disposes.
+     * Gets the total recipe time
+     * @return the total recipe time
+     */
+    public long getTotalRecipeTime() {
+        return totalRecipeTime;
+    }
+
+    /**
+     * Sets the total recipe time
+     * @param totalRecipeTime: the total recipe time to be set
+     */
+    public void setTotalRecipeTime(long totalRecipeTime) {
+        this.totalRecipeTime = totalRecipeTime;
+    }
+
+    /**
+     * Updates the texture of the docketImage based on the remaining time before it disposes.
      * As the remaining time decreases, the texture changes to indicate the time state
-     * of the docket.
+     * of the docketImage.
      * @param remainingTimeSecs the remaining time in seconds
      */
     public void updateDocketTexture(double remainingTimeSecs) {
@@ -139,18 +152,18 @@ public class Docket extends UIComponent {
         }
 
         if (remainingTimeSecs >= this.totalRecipeTime * 0.6) {
-            docket.setDrawable(docketSkin.getDrawable(textureNameArray[0]));
+            docketImage.setDrawable(docketSkin.getDrawable(textureNameArray[0]));
         } else if (remainingTimeSecs >= this.totalRecipeTime * 0.3) {
-            docket.setDrawable(docketSkin.getDrawable(textureNameArray[1]));
+            docketImage.setDrawable(docketSkin.getDrawable(textureNameArray[1]));
         } else if (remainingTimeSecs > 0) {
-            docket.setDrawable(docketSkin.getDrawable(textureNameArray[2]));
+            docketImage.setDrawable(docketSkin.getDrawable(textureNameArray[2]));
         } else {
-            docket.setDrawable(docketSkin.getDrawable(textureNameArray[3]));
+            docketImage.setDrawable(docketSkin.getDrawable(textureNameArray[3]));
         }
     }
 
     /**
-     * Draws the docket component.
+     * Draws the docketImage component.
      * @param batch the SpriteBatch used for drawing
      */
     @Override
@@ -168,6 +181,6 @@ public class Docket extends UIComponent {
      * @return the name of the current texture, or "none" if no drawable is set
      */
     public String getCurrentTextureName() {
-        return docket.getDrawable() != null ? docket.getDrawable().toString() : "none";
+        return docketImage.getDrawable() != null ? docketImage.getDrawable().toString() : "none";
     }
 }
