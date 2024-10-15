@@ -98,6 +98,8 @@ public class MainGameOrderBtnDisplay extends UIComponent{
 		return pressed;
 	}
 
+	public void setState(boolean pressed) { this.pressed = pressed;}
+
 	/**
 	 * Removes the button
 	 */

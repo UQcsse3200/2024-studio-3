@@ -1,5 +1,6 @@
 package com.csse3200.game.components.ordersystem;
 
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.extensions.GameExtension;
@@ -62,5 +63,26 @@ class MainGameOrderBtnDisplayTest {
         assertTrue(createOrderBtn.getTable().hasChildren());
         createOrderBtn.dispose();
         assertFalse(createOrderBtn.getTable().hasChildren());
+    }
+
+    @Test
+    void dummyTestDraw() {
+        SpriteBatch batch = mock(SpriteBatch.class);
+        createOrderBtn.draw(batch);
+        //Don't do anything as the function doesn't do anything
+    }
+
+    @Test
+    void testGetZIndex() {
+        assertEquals(2f, createOrderBtn.getZIndex());
+    }
+
+    @Test
+    void testGetAndSetState() {
+        createOrderBtn.setState(true);
+        assertTrue(createOrderBtn.getState());
+
+        createOrderBtn.setState(false);
+        assertFalse(createOrderBtn.getState());
     }
 }
