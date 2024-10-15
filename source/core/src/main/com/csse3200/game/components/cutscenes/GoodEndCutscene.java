@@ -5,6 +5,8 @@ import com.csse3200.game.components.cutscenes.scenes.AnimatedScene;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
 
+import java.util.List;
+
 /**
  * The IntroCutscene class represents a specific cutscene that plays at the start of the game.
  * It defines the scenes, assets, and entities used during the intro cutscene.
@@ -68,6 +70,14 @@ public class GoodEndCutscene extends Cutscene {
     @Override
     public void createEntities() {
         // redundant doesn't do anything
+    }
+
+    /**
+     * Get the list of animated scenes
+     * @return List of animated scenes
+     */
+    public List<AnimatedScene> getAnimatedScenes() {
+        return animatedScenes;
     }
 
 }
