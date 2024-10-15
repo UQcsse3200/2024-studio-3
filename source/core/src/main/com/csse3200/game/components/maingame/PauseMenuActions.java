@@ -2,6 +2,7 @@ package com.csse3200.game.components.maingame;
 
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.components.Component;
+import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -38,6 +39,7 @@ public class PauseMenuActions extends Component {
      */
     private void onRestart() {
         logger.info("Start game");
+        ServiceLocator.getLevelService().setCurrLevel(GdxGame.LevelType.LEVEL_1);
         game.setScreen(GdxGame.ScreenType.MAIN_GAME);
     }
 
@@ -47,6 +49,7 @@ public class PauseMenuActions extends Component {
     private void onExit() {
         logger.info("Exit game");
         game.setScreen(GdxGame.ScreenType.MAIN_MENU);
+        ServiceLocator.getLevelService().setCurrLevel(GdxGame.LevelType.LEVEL_1);
     }
 
     /**
