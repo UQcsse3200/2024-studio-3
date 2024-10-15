@@ -91,6 +91,7 @@ loadScripts(document, 'script');</script>
 <hr>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">MapLayout</span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span></div>
+<div class="block">Class to load the map layout from a text file</div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -103,7 +104,9 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Constructor</div>
 <div class="table-header col-last">Description</div>
 <div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E()" class="member-name-link">MapLayout</a>()</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block">Constructor for the MapLayout class</div>
+</div>
 </div>
 </section>
 </li>
@@ -133,7 +136,8 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../areas/map/Map.html" title="class in com.csse3200.game.areas.map">Map</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#load(com.csse3200.game.GdxGame.LevelType)" class="member-name-link">load</a><wbr>(<a href="../GdxGame.LevelType.html" title="enum class in com.csse3200.game">GdxGame.LevelType</a>&nbsp;level)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Yab -&gt; spawn vertical bench starting at column `a` that is `b` cells long
+<div class="block">Load the map layout from a text file
+ Yab -&gt; spawn vertical bench starting at column `a` that is `b` cells long
  Xab -&gt; spawn horizontal bench starting at column `a` that is `b` cells long
  []a  -&gt; for any station, spawns a station based on [] at column `a`
  the row of the object depends on what line its on in the file.</div>
@@ -143,15 +147,21 @@ loadScripts(document, 'script');</script>
  int&nbsp;startCol,
  int&nbsp;size,
  int&nbsp;row)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Read a bench from the map file</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../entities/Entity.html" title="class in com.csse3200.game.entities">Entity</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#readStation(java.lang.String,int,int)" class="member-name-link">readStation</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;type,
  int&nbsp;col,
  int&nbsp;row)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Read a station from the map file</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#validateStation(java.lang.String)" class="member-name-link">validateStation</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;str)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Validate a station</div>
+</div>
 </div>
 </div>
 </div>
@@ -173,6 +183,7 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="&lt;init&gt;()">
 <h3>MapLayout</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">MapLayout</span>()</div>
+<div class="block">Constructor for the MapLayout class</div>
 </section>
 </li>
 </ul>
@@ -193,7 +204,8 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="load(com.csse3200.game.GdxGame.LevelType)">
 <h3>load</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../areas/map/Map.html" title="class in com.csse3200.game.areas.map">Map</a></span>&nbsp;<span class="element-name">load</span><wbr><span class="parameters">(<a href="../GdxGame.LevelType.html" title="enum class in com.csse3200.game">GdxGame.LevelType</a>&nbsp;level)</span></div>
-<div class="block">Yab -&gt; spawn vertical bench starting at column `a` that is `b` cells long
+<div class="block">Load the map layout from a text file
+ Yab -&gt; spawn vertical bench starting at column `a` that is `b` cells long
  Xab -&gt; spawn horizontal bench starting at column `a` that is `b` cells long
  []a  -&gt; for any station, spawns a station based on [] at column `a`
  the row of the object depends on what line its on in the file.</div>
@@ -210,6 +222,16 @@ loadScripts(document, 'script');</script>
  int&nbsp;startCol,
  int&nbsp;size,
  int&nbsp;row)</span></div>
+<div class="block">Read a bench from the map file</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>type</code> - - the type of bench</dd>
+<dd><code>startCol</code> - - the starting column</dd>
+<dd><code>size</code> - - the size of the bench</dd>
+<dd><code>row</code> - - the row of the bench</dd>
+<dt>Returns:</dt>
+<dd>- an ArrayList of benches</dd>
+</dl>
 </section>
 </li>
 <li>
@@ -218,12 +240,28 @@ loadScripts(document, 'script');</script>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../entities/Entity.html" title="class in com.csse3200.game.entities">Entity</a></span>&nbsp;<span class="element-name">readStation</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;type,
  int&nbsp;col,
  int&nbsp;row)</span></div>
+<div class="block">Read a station from the map file</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>type</code> - - the type of station</dd>
+<dd><code>col</code> - - the column of the station</dd>
+<dd><code>row</code> - - the row of the station</dd>
+<dt>Returns:</dt>
+<dd>- an Entity object</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="validateStation(java.lang.String)">
 <h3>validateStation</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">validateStation</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;str)</span></div>
+<div class="block">Validate a station</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>str</code> - - the station to validate</dd>
+<dt>Returns:</dt>
+<dd>- a boolean indicating if the station is valid</dd>
+</dl>
 </section>
 </li>
 <li>
