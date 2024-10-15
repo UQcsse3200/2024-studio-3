@@ -25,11 +25,9 @@ public class BenchGenerator {
         ArrayList<Bench> arr = new ArrayList<>();
         // add the bottom part of the bench and set collisions for whole column
         Bench b = new Bench("bottom_shadow", x, startY);
-//        b.addComponent(new ColliderComponent()
-//                .setAsBoxAligned(new Vector2(1f, endY - startY + 1),
-//                        PhysicsComponent.AlignX.LEFT, PhysicsComponent.AlignY.BOTTOM));
         b.addComponent(new ColliderComponent()
-                .setAsBox(new Vector2(1f, endY - startY + 1), new Vector2(0, 0)));
+                .setAsBoxAligned(new Vector2(1f, endY - startY + 1),
+                        PhysicsComponent.AlignX.LEFT, PhysicsComponent.AlignY.BOTTOM));
         arr.add(b);
 
         if (endY - startY > 0){ // the bench has 2 or more segments
