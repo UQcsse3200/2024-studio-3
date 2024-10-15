@@ -194,6 +194,10 @@ public class StationMealComponent extends Component {
         }
     }
 
+    public boolean hasMeal() {
+        return mealFactory.getRealRecipe(this.inventoryComponent.getItemNames()).isPresent();
+    }
+
     /**
      * Rotate the items in station inventory when input received from user
      */

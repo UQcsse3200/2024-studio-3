@@ -14,6 +14,8 @@ import com.csse3200.game.physics.PhysicsUtils;
 import com.csse3200.game.physics.components.ColliderComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.rendering.TextureRenderComponent;
+import com.csse3200.game.services.InteractableService;
+import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.physics.components.InteractionComponent;
 import com.csse3200.game.components.TooltipsDisplay;
 import com.csse3200.game.components.player.InventoryComponent;
@@ -43,8 +45,9 @@ public class Bench extends Entity{
         this.y = y;
 
         addComponent(new TextureRenderComponent("images/stations/benches/" + type + ".png"));
-        addComponent(new PhysicsComponent());
+        addComponent(new PhysicsComponent().setBodyType(BodyType.StaticBody));
         addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
+
 
         addComponent(new InteractionComponent(PhysicsLayer.INTERACTABLE));
         addComponent(new TooltipsDisplay());
@@ -58,6 +61,7 @@ public class Bench extends Entity{
         getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
         PhysicsUtils.setScaledCollider(this, 1f, 0.75f);
 
+        ServiceLocator.getInteractableService().registerEntity(this);
     }
 
     /**
@@ -97,6 +101,15 @@ public class Bench extends Entity{
         bench.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
         PhysicsUtils.setScaledCollider(bench, 1.5f, 0.75f);
         return bench;
+    }
+
+    // get x coordinate
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
     }
 
 

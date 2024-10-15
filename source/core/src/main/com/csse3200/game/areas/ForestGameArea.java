@@ -4,7 +4,6 @@ import com.csse3200.game.components.moral.Decision;
 import com.csse3200.game.components.npc.PersonalCustomerEnums;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.entities.benches.Bench;
-import com.csse3200.game.entities.configs.PlayerConfig;
 
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -12,11 +11,13 @@ import java.util.concurrent.Executors;
 
 import com.csse3200.game.components.moral.MoralDayFour;
 import com.csse3200.game.areas.map.Map;
+import com.csse3200.game.services.InteractableService;
 import com.csse3200.game.services.MapLayout;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import static com.badlogic.gdx.Gdx.app;
+
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
@@ -32,7 +33,6 @@ import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.factories.ItemFactory;
 import com.csse3200.game.entities.factories.NPCFactory;
 import com.csse3200.game.entities.factories.ObstacleFactory;
-import com.csse3200.game.entities.factories.PlateFactory;
 import com.csse3200.game.entities.factories.PlayerFactory;
 import com.csse3200.game.entities.factories.StationFactory;
 
@@ -43,11 +43,7 @@ import com.csse3200.game.utils.math.GridPoint2Utils;
 /** Forest area for the demo game with trees, a player, and some enemies. */
 public class ForestGameArea extends GameArea {
   private static final Logger logger = LoggerFactory.getLogger(ForestGameArea.class);
-  private static final int NUM_TREES = 7;
-  private static final int NUM_GHOSTS = 2;
-  private static final int NUM_CUSTOMERS_BASE = 1;
   private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(5, 2);
-  private static final float WALL_WIDTH = 0.1f;
   private static final String[] forestTextures = {
           //"images/special_NPCs/boss.png",
           //"images/special_NPCs/penguin2.png",
@@ -204,8 +200,8 @@ public class ForestGameArea extends GameArea {
           "images/special_NPCs/penguin.atlas",
   };
   private static final String[] forestSounds = {"sounds/Impact4.ogg"};
-  private static final String backgroundMusic = "sounds/BB_BGM.mp3";
-  private static final String[] forestMusic = {backgroundMusic};
+  private static final String backgroundmusic = "sounds/BB_BGM.mp3";
+  private static final String[] forestMusic = {backgroundmusic};
   private static Entity customerSpawnController;
 
   private final TerrainFactory terrainFactory;
@@ -214,11 +210,6 @@ public class ForestGameArea extends GameArea {
 
   private Entity player;
   private CheckWinLoseComponent winLoseComponent;  // Reference to CheckWinLoseComponent
-
-
-  // Define the win/lose conditions
-  private int winAmount = 60;      // Example value for winning gold amount
-  private int loseThreshold = 50;   // Example value for losing threshold
 
   public enum personalCustomerEnums{
     HANK,
@@ -240,7 +231,6 @@ public class ForestGameArea extends GameArea {
     this.level = level;
     this.terrainFactory = terrainFactory;
     this.upgradesDisplay = upgradesDisplay;
-    //this.textDisplay = textDisplay;
 
     ServiceLocator.registerGameArea(this);
   }
@@ -251,6 +241,10 @@ public class ForestGameArea extends GameArea {
     // call load function based on the level argument
     // return list of items to spawn based on the load function
     // Baaed on lsit of items to spawn, spawn the items
+    
+    // Create a new interactable service
+    ServiceLocator.registerInteractableService(new InteractableService());
+    
     loadAssets();
     displayUI();
     spawnTerrain();
@@ -263,33 +257,29 @@ public class ForestGameArea extends GameArea {
     }
     for (Entity station : result.getStations()) {
       spawnEntity(station);
-        //station.setPosition(station.getPosition().x, station.getPosition().y);
+
     }
 
-      //ServiceLocator.getMapLayout().getEvents().trigger("load", "level1");
 
-    new_border();
-    //ticketDetails();
+
+    newborder();
+
     spawnStations();
     customerSpawnController = spawnCustomerController();
     createMoralScreen();
     createMoralSystem();
-    //spawnplates
-      spawnStackPlate(5); //testplate spawn
 
-      //spawnPlatewithMeal();
       player = spawnPlayer();
       ServiceLocator.getPlayerService().registerPlayer(player);
-      //ServiceLocator.getSaveLoadService().setCombatStatsComponent(player.getComponent(CombatStatsComponent.class));
       ServiceLocator.getSaveLoadService().load();
-      ServiceLocator.getDayNightService().getEvents().addListener("upgrade", () -> {
-          spawnPenguin(upgradesDisplay);});
+      ServiceLocator.getDayNightService().getEvents().addListener("upgrade", () -> spawnPenguin(upgradesDisplay));
 
     // Check and trigger win/loss state
     ServiceLocator.getDayNightService().getEvents().addListener("endGame", this::checkEndOfGameState);
 
     createEndDayScreen();
     playMusic();
+
   }
 
   /**
@@ -331,8 +321,8 @@ public class ForestGameArea extends GameArea {
       }
 
       if (hasBadDecisions) {
-        createTextBox("You *oink* amazing critter! You're a master! " +
-                "Enjoy a 40c raise for your efforts!");
+        createTextBox("You *oink* bad critter! You're a failure! " +
+                "You will not get any raise");
         ServiceLocator.getEntityService().getEvents().trigger("badEnd");
       } else {
         createTextBox("You *oink* amazing critter! You're a master! " +
@@ -358,9 +348,7 @@ public class ForestGameArea extends GameArea {
     spawnEntity(new Entity().addComponent(terrain));
 
     // Terrain walls
-    float tileSize = terrain.getTileSize();
     GridPoint2 tileBounds = terrain.getMapBounds(0);
-    Vector2 worldBounds = new Vector2(tileBounds.x * tileSize, tileBounds.y * tileSize);
 
     // Left
     spawnEntityAt(
@@ -389,61 +377,59 @@ public class ForestGameArea extends GameArea {
    */
   private void spawnWall() {
     GridPoint2 coords;
-    Vector2 pos;
 
     for (int i=0;i<12;i++) {
       coords = new GridPoint2(i,7);
-      Entity top_wall = ObstacleFactory.wall();
-      spawnEntityAt(top_wall, coords, true, true);
-      top_wall.setPosition(i, 8f);
+      Entity topwall = ObstacleFactory.wall();
+      spawnEntityAt(topwall, coords, true, true);
+      topwall.setPosition(i, 8f);
     }
     coords = new GridPoint2(3,7);
-    Entity left_door = ObstacleFactory.door("full_door");
-    spawnEntityAt(left_door, coords, true, true);
-    left_door.setPosition(1f, 8f);
+    Entity leftdoor = ObstacleFactory.door("full_door");
+    spawnEntityAt(leftdoor, coords, true, true);
+    leftdoor.setPosition(1f, 8f);
 
 
   }
   /**
    * Spawns the border around the restaurant
    */
-  private void new_border(){
+  private void newborder(){
     GridPoint2 coords = new GridPoint2(0,0);
-    Vector2 pos;
 
     for (int i=0;i<14;i++) {
-        Entity top_border = ObstacleFactory.spawnBorderTile();
-        spawnEntityAt(top_border, coords, true, true);
-        top_border.setPosition(i, -0.08f);
+        Entity topborder = ObstacleFactory.spawnBorderTile();
+        spawnEntityAt(topborder, coords, true, true);
+        topborder.setPosition(i, -0.08f);
     }
 
     for (int i=0;i<14;i++) {
-      Entity top_border = ObstacleFactory.spawnBorderTile();
-      spawnEntityAt(top_border, coords, true, true);
-      top_border.setPosition(i, 8f);
+      Entity topborder = ObstacleFactory.spawnBorderTile();
+      spawnEntityAt(topborder, coords, true, true);
+      topborder.setPosition(i, 8f);
     }
     for (int i=0;i<14;i++) {
-      Entity top_border = ObstacleFactory.spawnBorderTile();
-      spawnEntityAt(top_border, coords, true, true);
-      top_border.setPosition(i, 9f);
+      Entity topborder = ObstacleFactory.spawnBorderTile();
+      spawnEntityAt(topborder, coords, true, true);
+      topborder.setPosition(i, 9f);
     }
 
     for (int y=0;y<9;y++) {
-      Entity left_border = ObstacleFactory.spawnBorderTileVertical();
-      spawnEntityAt(left_border, coords, true, true);
-       left_border.setPosition(0, y);
+      Entity leftborder = ObstacleFactory.spawnBorderTileVertical();
+      spawnEntityAt(leftborder, coords, true, true);
+       leftborder.setPosition(0, y);
     }
 
     for (int y=0;y<9;y++) {
-      Entity left_border = ObstacleFactory.spawnBorderTileVertical();
-      spawnEntityAt(left_border, coords, true, true);
-      left_border.setPosition(13.89f, y);
+      Entity leftborder = ObstacleFactory.spawnBorderTileVertical();
+      spawnEntityAt(leftborder, coords, true, true);
+      leftborder.setPosition(13.89f, y);
     }
 
     for (int y=0;y<9;y++) {
-      Entity left_border = ObstacleFactory.spawnBorderTileVertical();
-      spawnEntityAt(left_border, coords, true, true);
-      left_border.setPosition(4, y);
+      Entity leftborder = ObstacleFactory.spawnBorderTileVertical();
+      spawnEntityAt(leftborder, coords, true, true);
+      leftborder.setPosition(4, y);
     }
 
   }
@@ -454,7 +440,7 @@ public class ForestGameArea extends GameArea {
 
 
   private void spawnStations() {
-    int a = 0;
+
   }
 
   /**
@@ -483,7 +469,6 @@ public class ForestGameArea extends GameArea {
 
   private Entity spawnPlayer() {
     Entity newPlayer;
-    PlayerConfig playerConfig = new PlayerConfig();
     newPlayer = PlayerFactory.createPlayer();
     spawnEntityAt(newPlayer, PLAYER_SPAWN, true, true);
     newPlayer.setPosition(PLAYER_SPAWN.x, 2.5f);
@@ -655,31 +640,11 @@ public class ForestGameArea extends GameArea {
     spawnBasicCustomer("Basic Sheep");
   }
 
-//  private void spawnGhosts() {
-//    GridPoint2 minPos = new GridPoint2(0, 0);
-//    GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
-//
-//    for (int i = 0; i < NUM_GHOSTS; i++) {
-//      GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
-//      Entity ghost = NPCFactory.createGhost(player);
-//      spawnEntityAt(ghost, randomPos, true, true);
-//    }
-//  }
-//
-//  private void spawnGhostKing() {
-//    GridPoint2 minPos = new GridPoint2(0, 0);
-//    GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
-//
-//    GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
-//    Entity ghostKing = NPCFactory.createGhostKing(player);
-//    spawnEntityAt(ghostKing, randomPos, true, true);
-//  }
-
   /**
    * Spawn Stack Plate item.
    * @param quantity - amount of stack.
    * @return A newPlate entity.
-   */
+   
   private Entity spawnStackPlate(int quantity) {
     Entity newPlate = PlateFactory.spawnPlateStack(quantity);
     GridPoint2 platePosition = new GridPoint2(5, 3);
@@ -688,11 +653,12 @@ public class ForestGameArea extends GameArea {
     newPlate.setPosition(newPlate.getPosition().x - 6f , newPlate.getPosition().y + 0f);
     return newPlate;
   }
+    
 
   /**
    * Spawn Stack Plate item but with meals
    * @return A newPlate entity with meal
-   */
+   
   private Entity spawnPlatewithMeal() {
     Entity newPlate = PlateFactory.spawnMealOnPlate(1,"salad");
     GridPoint2 platePosition = new GridPoint2(6, 4);
@@ -701,12 +667,13 @@ public class ForestGameArea extends GameArea {
 
     return newPlate;
   }
+    */
 
   /**
    * Plays the background music
    */
   private void playMusic() {
-    Music music = ServiceLocator.getResourceService().getAsset(backgroundMusic, Music.class);
+    Music music = ServiceLocator.getResourceService().getAsset(backgroundmusic, Music.class);
     music.setLooping(true);
     music.setVolume(0.02f);
     music.play();
@@ -738,7 +705,7 @@ public class ForestGameArea extends GameArea {
   @Override
   public void dispose() {
     super.dispose();
-    ServiceLocator.getResourceService().getAsset(backgroundMusic, Music.class).stop();
+    ServiceLocator.getResourceService().getAsset(backgroundmusic, Music.class).stop();
     this.unloadAssets();
   }
 
@@ -851,6 +818,15 @@ public class ForestGameArea extends GameArea {
     endDayScreen
             .addComponent(new EndDayDisplay());
     ServiceLocator.getEntityService().registerEndDay(endDayScreen);
+  }
+
+  /**
+   * Returns the level the game is currently on.
+   *
+   * @return level - the level the player is currently on
+   */
+  public GdxGame.LevelType getLevel() {
+    return this.level;
   }
 }
 

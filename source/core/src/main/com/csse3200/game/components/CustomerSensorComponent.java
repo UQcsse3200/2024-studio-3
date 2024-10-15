@@ -2,7 +2,6 @@ package com.csse3200.game.components;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Fixture;
-import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.components.InteractionComponent;
 import com.csse3200.game.components.npc.CustomerComponent;
 import com.csse3200.game.physics.BodyUserData;
@@ -15,20 +14,17 @@ import java.util.Set;
  * Finds the closest customer entity within a range of the player.
  */
 public class CustomerSensorComponent extends Component {
-    private final short targetLayer;
     private final float sensorDistance;
     private InteractionComponent interactionComponent;
-    private Set<Fixture> collidingFixtures = new HashSet<>();
+    private final Set<Fixture> collidingFixtures = new HashSet<>();
     private Fixture closestFixture = null;
     private float closestDistance = -1f;
 
     /**
      * Create a component that senses customer entities when it collides with them.
-     * @param targetLayer The physics layer of the customer's collider
      * @param sensorDistance The range of the sensor (how far it can detect)
      */
-    public CustomerSensorComponent(short targetLayer, float sensorDistance) {
-        this.targetLayer = targetLayer;
+    public CustomerSensorComponent(float sensorDistance) {
         this.sensorDistance = sensorDistance;
     }
 
@@ -89,22 +85,18 @@ public class CustomerSensorComponent extends Component {
             closestFixture = null;
             closestDistance = -1f;
         }
-        if (closestFixture != null) {
-        } 
-        
+
     }
 
     private boolean isCustomer(Fixture fixture) {
         Entity entity = ((BodyUserData) fixture.getBody().getUserData()).entity;
-        boolean isCustomer = entity.getComponent(CustomerComponent.class) != null;
-        return isCustomer;
+        return entity.getComponent(CustomerComponent.class) != null;
     }
 
     private float getFixtureDistance(Fixture fixture) {
         Vector2 sensorPosition = interactionComponent.getFixture().getBody().getPosition();
         Vector2 fixturePosition = fixture.getBody().getPosition();
-        float distance = sensorPosition.dst(fixturePosition);
-        return distance;
+        return sensorPosition.dst(fixturePosition);
     }
 
     public boolean isWithinDistance(Fixture fixture, float distance) {

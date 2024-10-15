@@ -2,17 +2,7 @@ package com.csse3200.game.areas.map;
 
 import java.util.ArrayList;
 
-import com.badlogic.gdx.math.GridPoint2;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
-import com.csse3200.game.areas.GameArea;
-import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.benches.Bench;
-import com.csse3200.game.physics.PhysicsLayer;
-import com.csse3200.game.physics.PhysicsUtils;
-import com.csse3200.game.physics.components.ColliderComponent;
-import com.csse3200.game.physics.components.PhysicsComponent;
-import com.csse3200.game.rendering.TextureRenderComponent;
 
 import java.util.logging.Logger;
 import java.util.logging.Level;
@@ -29,9 +19,7 @@ public class BenchGenerator {
      * @return - returns an ArrayList of the benches created.
      */
     public static ArrayList<Bench> createBenchColumn(int x, int startY, int endY) {
-        ArrayList<Bench> arr = new ArrayList<Bench>();
-        // add the bottom part of the bench
-        arr.add(new Bench("bottom_shadow", x, startY));
+        ArrayList<Bench> arr = singleShadowBench(x, startY);
         if (endY - startY > 0){ // the bench has 2 or more segments
             // add the middle parts of the bench
             for (int i = startY+1; i < endY; i++) {
@@ -40,11 +28,11 @@ public class BenchGenerator {
             // add the top part of the bench
             arr.add(new Bench("top", x, endY));
         }
-        LOGGER.log(Level.INFO, "added column of " + arr.size() + " benches");
+        //  LOGGER.log(Level.INFO, "added column of " + arr.size() + " benches");
         return arr;
     }
     public static ArrayList<Bench> createBenchRow(int startX, int endX, int y) {
-        ArrayList<Bench> arr = new ArrayList<Bench>();
+        ArrayList<Bench> arr = new ArrayList<>();
         // add the left part of the bench
         arr.add(new Bench("left_corner_shadow", startX, y));
         if (endX - startX > 0){ // the bench has 2 or more segments
@@ -59,7 +47,7 @@ public class BenchGenerator {
         return arr;
     }
     public static ArrayList<Bench> createBenchRowFlat(int startX, int endX, int y) {
-        ArrayList<Bench> arr = new ArrayList<Bench>();
+        ArrayList<Bench> arr = new ArrayList<>();
         // add the left part of the bench
         arr.add(new Bench("left_border", startX, y));
         if (endX - startX > 1){ // the bench has 2 or more segments
@@ -71,6 +59,24 @@ public class BenchGenerator {
             arr.add(new Bench("right_border", endX, y));
         }
         LOGGER.log(Level.INFO, "added row of " + arr.size() + " flattened benches");
+        return arr;
+    }
+
+    public static ArrayList<Bench> singleBench(int x, int y) {
+        ArrayList<Bench> arr = new ArrayList<>();
+        arr.add(new Bench("vertical", x, y));
+        return arr;
+    }
+
+    public static ArrayList<Bench> singleShadowBench(int x, int y) {
+        ArrayList<Bench> arr = new ArrayList<>();
+        arr.add(new Bench("bottom_shadow", x, y));
+        return arr;
+    }
+
+    public static ArrayList<Bench> singleBlocker(int x, int y) {
+        ArrayList<Bench> arr = new ArrayList<>();
+        arr.add(new Bench("single", x, y));
         return arr;
     }
 }

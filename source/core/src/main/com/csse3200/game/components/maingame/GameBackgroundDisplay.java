@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.utils.TimeUtils;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
 import org.slf4j.Logger;
@@ -15,7 +14,7 @@ import org.slf4j.LoggerFactory;
 public class GameBackgroundDisplay extends UIComponent {
     private Table table;
     private static final Logger logger = LoggerFactory.getLogger(GameBackgroundDisplay.class);
-    protected float timePerFrame = 300/36f; //seconds spent on each frame (assuming
+    protected float timePerFrame = 300/40f; //seconds spent on each frame (assuming
     // 5min day)
     private boolean lastFrame;
     protected long timeSinceLastUpdate;
@@ -66,7 +65,7 @@ public class GameBackgroundDisplay extends UIComponent {
         this.lastFrame = false;
         this.currentImage = "images/background_images/1.0.png";
         this.currentImageIndex = 0;
-        this.timeSinceLastUpdate = TimeUtils.millis();
+        this.timeSinceLastUpdate = ServiceLocator.getTimeSource().getTime();
     }
 
     public String getCurrentImage() {
