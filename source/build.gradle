@@ -120,6 +120,10 @@ project(":core") {
 
         testLogging {
             events 'passed', 'skipped', 'failed'
+            exceptionFormat = 'full' // Shows the complete stack trace
+            showExceptions = true
+            showStackTraces = true
+            showCauses = true
         }
 
         finalizedBy(jacocoTestReport)
