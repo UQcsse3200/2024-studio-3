@@ -36,9 +36,9 @@ public class DancePartyUpgrade extends UIComponent implements Upgrade {
 
     private static final String[] greenTexture = {"images/green_fill.png"};
     private static final String[] whiteBgTexture = {"images/white_background.png"};
-    private Table layout;
-    private Label text; // the "Upgrade" text above the speedMeter
-    private ProgressBar meter; // the meter that show the remaining time
+    public Table layout;
+    public Label text; // the "Upgrade" text above the speedMeter
+    public ProgressBar meter; // the meter that show the remaining time
     private boolean isVisible;
     private Sound bgEffect;
     private boolean playSound = false;
@@ -48,6 +48,16 @@ public class DancePartyUpgrade extends UIComponent implements Upgrade {
         ServiceLocator.getPlayerService().getEvents().addListener("playerCreated", (Entity player) -> {
             this.combatStatsComponent = player.getComponent(CombatStatsComponent.class);
         });
+        this.orderManager = orderManager;
+        gameTime = ServiceLocator.getTimeSource();
+        this.isActive = false;
+
+        ServiceLocator.getRandomComboService().getEvents().addListener("Dance party", this::activate);
+        ServiceLocator.getRandomComboService().getEvents().addListener("Dance partyoff", this::deactivate);
+    }
+
+    public DancePartyUpgrade(CombatStatsComponent combatStatsComponent) {
+        this.combatStatsComponent = combatStatsComponent;
         this.orderManager = orderManager;
         gameTime = ServiceLocator.getTimeSource();
         this.isActive = false;
@@ -183,6 +193,6 @@ public class DancePartyUpgrade extends UIComponent implements Upgrade {
     }
     @Override
     public void setStage(Stage mock) {
-
+        this.stage = mock;
     }
 }
