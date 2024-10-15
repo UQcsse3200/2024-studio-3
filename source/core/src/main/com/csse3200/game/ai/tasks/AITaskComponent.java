@@ -80,7 +80,7 @@ public class AITaskComponent extends Component implements TaskRunner {
     }
   }
 
-  private PriorityTask getHighestPriorityTask() {
+  public PriorityTask getHighestPriorityTask() {
     try {
       return Collections.max(priorityTasks, Comparator.comparingInt(PriorityTask::getPriority));
     } catch (NoSuchElementException e) {
