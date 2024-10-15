@@ -145,6 +145,15 @@ public class ForestGameArea extends GameArea {
           "images/platecomponent/stackedplates/5plates.png",
           "images/inventory_ui/slot.png",
           "images/inventory_ui/null_image.png",
+          "images/inventory_ui/interact_key.png",
+          "images/inventory_ui/combine_key.png",
+          "images/inventory_ui/rotate_key.png",
+          "images/inventory_ui/chop_key.png",
+          "images/inventory_ui/place_key.png",
+          "images/inventory_ui/take_key.png",
+          "images/inventory_ui/submit_key.png",
+          "images/inventory_ui/dispose_key.png",
+          "images/inventory_ui/cook_key.png"
   };
   private static final String[] forestTextureAtlases = {
           "images/Cutscenes/cutscene_badEnd.atlas",

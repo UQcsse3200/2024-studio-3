@@ -4,6 +4,10 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.csse3200.game.components.items.PlateComponent;
 import com.csse3200.game.components.player.InventoryComponent;
 
+/**
+ * A component used to display interaction key tooltips for
+ * a dishwasher station component.
+ */
 public class DishwasherHoverComponent extends StationHoverComponent {
 
     private static final float FIRST_OFFSET = 0.7f;
@@ -22,7 +26,7 @@ public class DishwasherHoverComponent extends StationHoverComponent {
 
         if (hasItem && inventory.getSize() < inventory.getCapacity()) {
 
-            // Check if the item is cookable
+            // Check if the item is a plate
             if (currentItem != null && currentItem instanceof PlateComponent) {
                 PlateComponent plateComponent = (PlateComponent) currentItem;
 

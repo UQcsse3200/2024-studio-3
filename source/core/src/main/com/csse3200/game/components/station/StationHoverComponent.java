@@ -8,6 +8,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.csse3200.game.rendering.RenderComponent;
 import com.csse3200.game.services.ServiceLocator;
+import com.csse3200.game.services.ResourceService;
 
 import com.csse3200.game.components.items.ItemComponent;
 import com.csse3200.game.components.player.InventoryComponent;
@@ -66,16 +67,17 @@ public abstract class StationHoverComponent extends RenderComponent {
         backgroundImage = new Texture("images/inventory_ui/item_background.png");
         selectedBackgroundImage = new Texture("images/inventory_ui/item_background_selected.png");
 
+        ResourceService resources = ServiceLocator.getResourceService();
+
         // images used by subclasses
-        interactKeyImage = new Texture("images/inventory_ui/interact_key.png");
-        combineKeyImage = new Texture("images/inventory_ui/combine_key.png");
-        rotateKeyImage = new Texture("images/inventory_ui/rotate_key.png");
-        chopKeyImage = new Texture("images/inventory_ui/chop_key.png");
-        placeKeyImage = new Texture("images/inventory_ui/place_key.png");
-        takeKeyImage = new Texture("images/inventory_ui/take_key.png");
-        submitKeyImage = new Texture("images/inventory_ui/submit_key.png");
-        disposeKeyImage = new Texture("images/inventory_ui/dispose_key.png");
-        cookKeyImage = new Texture("images/inventory_ui/cook_key.png");
+        combineKeyImage = resources.getAsset("images/inventory_ui/combine_key.png", Texture.class);
+        rotateKeyImage = resources.getAsset("images/inventory_ui/rotate_key.png", Texture.class);
+        chopKeyImage = resources.getAsset("images/inventory_ui/chop_key.png", Texture.class);
+        placeKeyImage = resources.getAsset("images/inventory_ui/place_key.png", Texture.class);
+        takeKeyImage = resources.getAsset("images/inventory_ui/take_key.png", Texture.class);
+        submitKeyImage = resources.getAsset("images/inventory_ui/submit_key.png", Texture.class);
+        disposeKeyImage = resources.getAsset("images/inventory_ui/dispose_key.png", Texture.class);
+        cookKeyImage = resources.getAsset("images/inventory_ui/cook_key.png", Texture.class);
 
         ServiceLocator.getRenderService().register(this);
 
