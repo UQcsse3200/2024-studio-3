@@ -1,5 +1,6 @@
 package com.csse3200.game.components.maingame;
 
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -26,8 +27,6 @@ public class RecipeCardDisplay extends UIComponent {
     private static final Logger logger = LoggerFactory.getLogger(RecipeCardDisplay.class);
     private static final String[] recipeCardTexture = {"images/recipe_card.png"};
     private Image backgroundImage;
-
-    //TODO add esc key exit
 
     public RecipeCardDisplay(MainGameScreen game) {
         super();
@@ -62,7 +61,7 @@ public class RecipeCardDisplay extends UIComponent {
         stage.addListener(new InputListener() {
             @Override
             public boolean keyDown(InputEvent event, int keycode) {
-                if (keycode == com.badlogic.gdx.Input.Keys.ENTER) {
+                if (keycode == Input.Keys.NUM_0) {
                     toggleVisibility();
                     return true;
                 }
