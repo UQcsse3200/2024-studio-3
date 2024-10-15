@@ -46,7 +46,10 @@ public class EndDayDisplay extends UIComponent {
     private int currentGold;
     private Label goldLabel;
     public final java.util.List<String> customerNameArray;
-    private List<String> customerList;
+    public final java.util.List<String> passedCustomerArray;
+    public final java.util.List<String> failedCustomerArray;
+    private List<String> passedCustomerList;
+    private List<String> failedCustomerList;
     private static final int STARTING_GOLD = ServiceLocator.getLevelService().getCurrGold();
     private static final String POINT_IMAGE_PATH = "images/point.png";
     private static final String TINY_5 = "flat-earth/skin/fonts/Tiny5-Regular.ttf";
@@ -61,6 +64,10 @@ public class EndDayDisplay extends UIComponent {
         setVisible(false);
         this.currentGold = STARTING_GOLD;
         this.customerNameArray = new ArrayList<>();
+        this.passedCustomerArray = new ArrayList<>();
+        this.failedCustomerArray = new ArrayList<>();
+        passedCustomerList = new List<>(skin);
+        failedCustomerList = new List<>(skin);
     }
 
     /**
@@ -87,6 +94,7 @@ public class EndDayDisplay extends UIComponent {
         ServiceLocator.getLevelService().getEvents().addListener("endDayDisplay", this::show);
         ServiceLocator.getLevelService().getEvents().addListener("resetScreen", MainGameScreen::resetScreen);
         ServiceLocator.getEntityService().getEvents().addListener("toggleEndDayScreen", this::toggleVisibility);
+        ServiceLocator.getEntityService().getEvents().addListener("customerPassed", this::handlePassedCustomer);
 
         ServiceLocator.getDayNightService().getEvents().addListener("endOfDay", () -> {
             logger.info("it is listened in end day");
@@ -194,8 +202,6 @@ public class EndDayDisplay extends UIComponent {
      */
     public void setupCustomerLists() {
         // Customer lists
-        List<String> passedCustomers = new List<>(skin);
-        customerList = new List<>(skin);
         Table listTable = new Table();
 
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal(TINY_5));
@@ -214,9 +220,9 @@ public class EndDayDisplay extends UIComponent {
         failedLabel.setFontScale(1.2f);
         listTable.add(passedLabel).pad(10).center();
         listTable.add(failedLabel).pad(10).center().row();
-        ScrollPane passedScrollPane = new ScrollPane(passedCustomers, skin);
+        ScrollPane passedScrollPane = new ScrollPane(passedCustomerList, skin);
         passedScrollPane.setSmoothScrolling(true);
-        ScrollPane failedScrollPane = new ScrollPane(customerList, skin);
+        ScrollPane failedScrollPane = new ScrollPane(failedCustomerList, skin);
         failedScrollPane.setSmoothScrolling(true);
         listTable.add(passedScrollPane).pad(10).expand().width(400).fillY();
         listTable.add(failedScrollPane).pad(10).expand().width(400).fillY().row();
@@ -275,6 +281,12 @@ public class EndDayDisplay extends UIComponent {
         goldLabel.setText(currentGold);
     }
 
+    public void handlePassedCustomer(String customerName) {
+        passedCustomerArray.add(customerName.toUpperCase());
+        passedCustomerList.setItems(passedCustomerArray.toArray(new String[0]));
+        logger.info("Customer passed: {}", customerName);
+    }
+
     /**
      * Updates the customer feedback lists when new customer feedback is received.
      * This method is called whenever there is new data about customer interactions,
@@ -284,7 +296,17 @@ public class EndDayDisplay extends UIComponent {
      */
     public void updateCustomerList(String customerName) {
         customerNameArray.add(customerName);
-        customerList.setItems(customerNameArray.toArray(new String[0]));
+        logger.info("Updated customer list with: {}", customerNameArray);
+    }
+
+    private void recalculateFailedCustomers() {
+        failedCustomerArray.clear();
+        failedCustomerArray.addAll(customerNameArray);
+        for (String passedName : passedCustomerArray) {
+            failedCustomerArray.remove(passedName);
+        }
+        failedCustomerList.setItems(failedCustomerArray.toArray(new String[0]));
+        logger.info("Failed customers recalculated: {}", failedCustomerArray);
     }
 
     /**
@@ -293,6 +315,7 @@ public class EndDayDisplay extends UIComponent {
      * the current game state. It is usually called in response to a game event.
      */
     public void show() {
+        recalculateFailedCustomers();
         setVisible(true);
         getLayout().setVisible(true);
         getBirdImage().setVisible(true);
