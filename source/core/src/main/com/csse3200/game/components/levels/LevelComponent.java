@@ -113,6 +113,11 @@ public class LevelComponent extends Component {
                     toggleNowSpawning();
                 }
             }
+            // say they "left" the lineup if 40 secs have passed to trigger the next spawning
+            // NOTE: this does NOT change where the customer is or remove them, it just triggers the next spawning
+            if (elapsedTimeSecs >= 40) {
+                customerLeftLineUp();
+            }
         }
     }
 
@@ -136,6 +141,8 @@ public class LevelComponent extends Component {
         customerSpawnController.getEvents().trigger(customerNameArray.get(index));
         logger.info("Spawned {}", customerNameArray.get(index));
         ServiceLocator.getLevelService().getEvents().trigger("customerSpawned", customerNameArray.get(index));
+        // add to "line up" (not actually but for our purposes)
+        customerJoinedLineUp();
     }
 
     /**
