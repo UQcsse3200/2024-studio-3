@@ -635,6 +635,13 @@ public class MainGameOrderTicketDisplay extends UIComponent {
     }
 
     /**
+     * Returns Order Number.
+     */
+    public static int getOrderNumb(){
+        return orderNumb;
+    }
+
+    /**
      * Returns the viewportWidth.
      * @return the float value of viewportWidth.
      */
