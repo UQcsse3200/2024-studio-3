@@ -44,22 +44,16 @@ public class Bench extends Entity{
         this.x = x;
         this.y = y;
 
+        setScale(1f, 1f);
+
         addComponent(new TextureRenderComponent("images/stations/benches/" + type + ".png"));
         addComponent(new PhysicsComponent().setBodyType(BodyType.StaticBody));
-        addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
-
-
         addComponent(new InteractionComponent(PhysicsLayer.INTERACTABLE));
+
         addComponent(new TooltipsDisplay());
         addComponent(new InventoryComponent(4));
         addComponent(new InventoryDisplayHoverComponent());
         addComponent(new StationMealComponent("combining", new ArrayList<>()));
-
-        getComponent(InteractionComponent.class).setAsBox(getScale());
-
-        setScale(1f, 1f);
-        getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
-        PhysicsUtils.setScaledCollider(this, 1f, 0.75f);
 
         ServiceLocator.getInteractableService().registerEntity(this);
     }

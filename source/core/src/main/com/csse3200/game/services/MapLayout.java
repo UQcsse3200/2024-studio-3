@@ -101,22 +101,19 @@ public class MapLayout {
             // Read the file line by line
             while ((line = reader.readLine()) != null) {
                 long lineTime = ServiceLocator.getTimeSource().getTime();
-                // Log the entire line
-                //logger.info("Line " + row + ": " + line);
-
 
                 // Split the line into individual characters
                 String[] parts = line.split("");
 
                 for (int col = 0; col < parts.length; col+=4) {
-                    long colTime = ServiceLocator.getTimeSource().getTime();
+                    //long colTime = ServiceLocator.getTimeSource().getTime();
 
                     readBench(parts, row, col);
 
-                    logger.info("Col " + col + " (" + (ServiceLocator.getTimeSource().getTime() - colTime) + "ms)" + ": " + line);
+                    //logger.info("Col " + col + " (" + (ServiceLocator.getTimeSource().getTime() - colTime) + "ms)" + ": " + line);
                 }
                 // Log the entire line
-                //logger.info("Line " + row + " (" + (ServiceLocator.getTimeSource().getTime() - lineTime) + "ms)" + ": " + line);
+                logger.info("Line " + row + " (" + (ServiceLocator.getTimeSource().getTime() - lineTime) + "ms)" + ": " + line);
 
                 row++;
             }
@@ -133,6 +130,12 @@ public class MapLayout {
                 logger.warn("Failed to close the reader: " + ex.getMessage());
             }
         }
+        long initTime = ServiceLocator.getTimeSource().getTime();
+//        for (Bench b : benches) {
+//            b.init();
+//        }
+        logger.info("initialising benches (" + (ServiceLocator.getTimeSource().getTime() - initTime) + "ms)");
+
         return new Map(benches, stations);
 
     }
