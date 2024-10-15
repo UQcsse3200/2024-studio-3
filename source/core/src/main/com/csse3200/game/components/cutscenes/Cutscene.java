@@ -300,6 +300,7 @@ public abstract class Cutscene extends Component {
     /**
      * Disposes of the cutscene by unloading assets and disposing of entities.
      */
+    @Override
     public void dispose() {
         unloadAssets();
         disposeEntities();
