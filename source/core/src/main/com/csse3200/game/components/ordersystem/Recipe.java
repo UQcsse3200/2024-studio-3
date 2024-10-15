@@ -11,13 +11,13 @@ import java.util.List;
  * Get recipe data from any station
  */
 public class Recipe {
-	private String recipeName;
+	protected String recipeName;
 	private SingleStationRecipeConfig singleStationRecipe;
 	private MultiStationRecipeConfig multiStationRecipe;
 
 	/**
-	 * Constructs recipe data from the recipes name
-	 * @param recipeName name of the reci[e
+	 * Constructs recipe data from the recipe's name
+	 * @param recipeName name of the recipe
 	 */
 	public Recipe(String recipeName) {
 		this.recipeName = recipeName;
@@ -27,17 +27,16 @@ public class Recipe {
 	/**
 	 * Loads recipe data
 	 */
-	private void loadRecipeDetails() {
+	protected void loadRecipeDetails() {
 		if (DishFactory.recipeExists(recipeName)) {
 			singleStationRecipe = DishFactory.getSingleStationRecipe(recipeName);
 			multiStationRecipe = DishFactory.getMultiStationRecipe(recipeName);
 		}
 	}
 
-
-    public boolean isValid() {
-        return singleStationRecipe != null || multiStationRecipe != null;
-    }
+	public boolean isValid() {
+		return singleStationRecipe != null || multiStationRecipe != null;
+	}
 
 	/**
 	 * Gets recipe ingredients
@@ -97,5 +96,22 @@ public class Recipe {
 			}
 		}
 		return "CUTTING_BOARD";
+	}
+
+	// Getters for test coverage
+	public SingleStationRecipeConfig getSingleStationRecipe() {
+		return singleStationRecipe;
+	}
+
+	public MultiStationRecipeConfig getMultiStationRecipe() {
+		return multiStationRecipe;
+	}
+
+	public void setSingleStationRecipe(SingleStationRecipeConfig singleStationRecipe) {
+		this.singleStationRecipe = singleStationRecipe;
+	}
+
+	public void setMultiStationRecipe(MultiStationRecipeConfig multiStationRecipe) {
+		this.multiStationRecipe = multiStationRecipe;
 	}
 }
