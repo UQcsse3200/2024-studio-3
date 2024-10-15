@@ -23,7 +23,7 @@ public class PlateStationHandlerComponent extends Component {
     /**
      * General constructor
      */
-    public PlateStationHandlerComponent() {/* nothing to see here */}
+    public PlateStationHandlerComponent() {}
 
     /**
      *  Called on creation of the station to allow outside interaction within the station.
@@ -32,6 +32,7 @@ public class PlateStationHandlerComponent extends Component {
     @Override
     public void create() {
         // initialise the inventory component
+        entity.getEvents().addListener("Dishwasher Interaction", this::handleInteraction);
         this.inventoryComponent = entity.getComponent(InventoryComponent.class);
 
         // create and add a plate into the inventory
