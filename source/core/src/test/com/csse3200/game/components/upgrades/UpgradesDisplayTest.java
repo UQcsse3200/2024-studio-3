@@ -48,6 +48,7 @@ public class UpgradesDisplayTest {
 
     @BeforeEach
     void setUp() {
+        MockitoAnnotations.openMocks(this);
         ServiceLocator.clear();
 
         randomComboService = spy(new RandomComboService());
@@ -61,6 +62,7 @@ public class UpgradesDisplayTest {
         lenient().when(renderService.getStage()).thenReturn(stage);
         lenient().when(renderService.getStage().getViewport()).thenReturn(viewport);
         lenient().when(renderService.getStage().getViewport().getCamera()).thenReturn(camera);
+        lenient().when(randomComboService.getEvents()).thenReturn(eventHandler);
 
         upgradesDisplay = new UpgradesDisplay(mainGameScreen);
         upgradesDisplay.setUpgradesTable(upgradesTable);
@@ -135,6 +137,52 @@ public class UpgradesDisplayTest {
         verify(resourceService).getAsset(texturePath, Texture.class);
         assertEquals(2, upgradesDisplay.getUpgradesTable().getChildren().size);
         assertInstanceOf(Image.class, upgradesDisplay.getUpgradesTable().getChildren().get(1));
+    }
+
+    @Test
+    void testCreateButtonsTable() {
+        upgradesDisplay.create();
+
+        // Retrieve the buttons table
+        Table buttonsTable = (Table) upgradesDisplay.getUpgradesTable().getChildren().get(0);
+        assertNotNull(buttonsTable);
+        assertEquals(2, buttonsTable.getChildren().size);
+
+        // Check for YES button
+        TextButton yesButton = (TextButton) buttonsTable.getChildren().get(0);
+        assertNotNull(yesButton);
+        assertEquals("YES", yesButton.getText().toString());
+
+        // Check for NO button
+        TextButton noButton = (TextButton) buttonsTable.getChildren().get(1);
+        assertNotNull(noButton);
+        assertEquals("NO", noButton.getText().toString());
+    }
+
+    @Test
+    void testYesButtonClick() {
+        upgradesDisplay.create();
+        upgradesDisplay.toggleVisibility();
+
+        upgradesDisplay.simulateYesButtonClick();
+
+        verify(randomComboService).activateUpgrade();
+        verify(randomComboService.getEvents()).trigger("response");
+        assertFalse(upgradesDisplay.isVisible(), "Upgrades display should be hidden after clicking YES");
+    }
+
+    @Test
+    void testNoButtonClick() {
+        upgradesDisplay.create(); // Initialize the upgrades display
+        upgradesDisplay.toggleVisibility(); // Show the upgrades menu
+        Table buttonsTable = (Table) upgradesDisplay.getUpgradesTable().getChildren().get(0);
+
+
+        upgradesDisplay.simulateNoButtonClick();
+
+        verify(mainGameScreen, times(2)).resume();
+        verify(randomComboService.getEvents()).trigger("response");
+        assertFalse(upgradesDisplay.isVisible(), "Upgrades display should be hidden after clicking NO");
     }
 
     @Test
