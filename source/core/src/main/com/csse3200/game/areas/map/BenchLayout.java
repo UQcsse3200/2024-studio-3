@@ -2,7 +2,6 @@ package com.csse3200.game.areas.map;
 
 import java.util.ArrayList;
 
-
 import com.csse3200.game.entities.benches.Bench;
 
 import java.util.logging.Logger;
