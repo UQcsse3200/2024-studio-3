@@ -106,36 +106,13 @@ public class CutsceneScreenDisplay extends UIComponent {
         stage.addActor(table);
     }
 
-//    /**
-//     * Sets up the text display for the screen
-//     */
-//    public void setupTextDisplay() {
-//        textDisplay = new TextDisplay();
-//        stage.addActor(textDisplay.getTable());
-//    }
-public void setupTextDisplay() {
-    // Check if the current cutscene is the backstory
-    if (ServiceLocator.getGame().getCurrentCutscene() != null &&
-            ServiceLocator.getGame().getCurrentCutscene().getCutsceneType() == GdxGame.CutsceneType.BACK_STORY) {
-        logger.debug("Current cutscene type: " + ServiceLocator.getGame().getCurrentCutscene().getCutsceneType());
-
-        // Setup the backstory text display with specific properties
-        textDisplay = new TextDisplay(); // Initialize for backstory
-        textDisplay.setFontScale(2.0f);  // Set smaller font size for backstory
-        textDisplay.setTableScale(0.75f, 0.75f);  // Reduce the size of the text box for backstory
-        textDisplay.setPosition(Align.top, 50f, 0f, 0f);  // Align the text box to the top
-
-    } else {
-        // Setup default text display for other cutscenes
-        textDisplay = new TextDisplay();  // Initialize for other cutscenes
-        textDisplay.setFontScale(3.0f);  // Set default larger font size
-        textDisplay.setTableScale(1.0f, 1.0f);  // Default scale for the text box
-        textDisplay.setPosition(Align.bottom, 0f, 0f, 70f);  // Align the text box to the bottom
+    /**
+     * Sets up the text display for the screen
+     */
+    public void setupTextDisplay() {
+        textDisplay = new TextDisplay();
+        stage.addActor(textDisplay.getTable());
     }
-
-    // Add the text display to the stage
-    stage.addActor(textDisplay.getTable());
-}
 
     /**
      * Disposes of the cutscene screen display, clearing any UI elements.

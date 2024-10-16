@@ -76,10 +76,7 @@ public class TextDisplay extends UIComponent {
         this.visible = true;
         this.currentText = new StringBuilder();
         this.text = new ArrayList<>(); //N! to fix crashing when pressing Enter
-        // Add this condition to recognize backstory cutscenes
-        if (Objects.equals(screen, "backstory")) {
-            setUpBackstoryLayout();
-        }
+
 
     }
 
@@ -137,6 +134,11 @@ public class TextDisplay extends UIComponent {
 
         // Add the stack to the table with padding or alignment options
         table.add(stack).padBottom(70).padLeft(0).size((int)(Gdx.graphics.getWidth() * 0.5), (int)(Gdx.graphics.getHeight() * 0.2));
+
+        // Now call setUpBackstoryLayout() if this is a backstory cutscene
+        if (Objects.equals(this.screen, "backstory")) {
+            setUpBackstoryLayout();  // Safe to call after label is initialized
+        }
         setVisible(Objects.equals(this.screen, "cutscene") || Objects.equals(this.screen, "moralDecision"));
         setupInputListener();
         entity.getEvents().addListener("SetText", this::setText);
