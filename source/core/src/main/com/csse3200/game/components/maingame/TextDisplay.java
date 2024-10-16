@@ -272,6 +272,18 @@ public class TextDisplay extends UIComponent {
                         ServiceLocator.getDayNightService().getEvents().trigger("NoAtMoralDecision");
                     }
                     return true;
+                } else if (TextDisplay.this.screen.equals("backstory")) {
+                    // Handling for backstory cutscenes
+                    Cutscene currentCutscene = ServiceLocator.getCurrentCutscene();
+                    Boolean atEnd = currentCutscene.isAtEnd();
+                    if (keycode == com.badlogic.gdx.Input.Keys.ENTER || keycode == com.badlogic.gdx.Input.Keys.SPACE) {
+                        logger.info("at backstory in textDisplay");
+                        if (!atEnd) {
+                            logger.info("parsing through backstory");
+                            currentCutscene.setTextForScene(currentCutscene.currentScene);
+                            label.setText(currentCutscene.currentText);
+                        }
+                    }
                 }  else if (keycode == com.badlogic.gdx.Input.Keys.ENTER){
                     if (charIndex < TextDisplay.this.text.get(currentPart).length()) {
                         label.setText(text.get(currentPart));
@@ -312,7 +324,7 @@ public class TextDisplay extends UIComponent {
 
     private void setUpBackstoryLayout() {
         // Modify font size for backstory cutscene
-        label.setFontScale(2.0f);  // Make the font smaller
+        label.setFontScale(3.0f);  // Make the font smaller
 
         // Change the position to be higher on the screen
         table.center().top().padTop(50);  // Adjust the padding to move it higher
