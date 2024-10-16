@@ -4,16 +4,25 @@ import com.csse3200.game.components.cutscenes.scenes.AnimatedScene;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
 
+import java.util.List;
+
 /**
  * The BadEndCutscene class plays the bad end cutscene when triggered at the end of the game
  */
 public class BadEndCutscene extends Cutscene {
 
+    /**
+     * Constructor for the BadEndCutscene class.
+     */
     public BadEndCutscene() {
         super();
         this.IsAnimatedScenes = true;
     }
 
+    /**
+     * Sets up the scenes for the bad end cutscene, in particular,
+     * the animation images for each scene.
+     */
     @Override
     protected void setupScenes() {
         animatedScenes.add(new AnimatedScene(
@@ -50,6 +59,10 @@ public class BadEndCutscene extends Cutscene {
 
     }
 
+    /**
+     * Loads the assets needed for the cutscene, including textures for backgrounds
+     * and animations.
+     */
     @Override
     protected void loadAssets() {
         textures = new String[] {
@@ -68,5 +81,13 @@ public class BadEndCutscene extends Cutscene {
     @Override
     public void createEntities() {
         // redundant doesn't do anything
+    }
+
+    /**
+     * Get the list of animated scenes
+     * @return List of animated scenes
+     */
+    public List<AnimatedScene> getAnimatedScenes() {
+        return animatedScenes;
     }
 }

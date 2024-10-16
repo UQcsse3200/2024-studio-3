@@ -39,24 +39,24 @@ class LevelServiceTest {
     void shouldReturnEventHandler() {
         levelServiceSpy.getEvents();
         verify(levelServiceSpy).getEvents();
-        assertEquals(levelServiceSpy.getEvents().getClass(), EventHandler.class);
+        assertEquals(EventHandler.class, levelServiceSpy.getEvents().getClass());
     }
 
     @Test
     void shouldReturnDefaultLevelValueOfOneFromGetCurrLevel() {
-        assertEquals(levelServiceSpy.getCurrLevel(), GdxGame.LevelType.LEVEL_1);
+        assertEquals(GdxGame.LevelType.LEVEL_1, levelServiceSpy.getCurrLevel());
     }
 
     @Test
     void shouldIncrementLevelByOneIfTriggerIsTrue() {
         levelServiceSpy.togglePlayerFinishedLevel();
-        assertEquals(levelServiceSpy.getCurrLevel(), GdxGame.LevelType.LEVEL_2);
+        assertEquals(GdxGame.LevelType.LEVEL_2, levelServiceSpy.getCurrLevel());
     }
 
     @Test
     void shouldIncrementLevelByOne() {
         levelServiceSpy.incrementLevel();
-        assertEquals(levelServiceSpy.getCurrLevel(), GdxGame.LevelType.LEVEL_2);
+        assertEquals(GdxGame.LevelType.LEVEL_2, levelServiceSpy.getCurrLevel());
     }
 
     @Test
@@ -72,7 +72,7 @@ class LevelServiceTest {
     @Test
     void shouldManuallySetLevel() {
         levelServiceSpy.setCurrLevel(GdxGame.LevelType.LEVEL_5);
-        assertEquals(levelServiceSpy.getCurrLevel(), GdxGame.LevelType.LEVEL_5);
+        assertEquals(GdxGame.LevelType.LEVEL_5, levelServiceSpy.getCurrLevel());
     }
 
     @Test

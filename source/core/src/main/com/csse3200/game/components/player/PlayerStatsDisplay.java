@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.utils.BaseDrawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.services.ServiceLocator;
@@ -34,7 +35,6 @@ public class PlayerStatsDisplay extends UIComponent {
 
   private Label goldLabel;
   private static Label dayLabel;
-  private Label rageLabel;
   private static int currentDay = 1;
   private static Label timerLabel;
   private static long timer;
@@ -107,8 +107,10 @@ public class PlayerStatsDisplay extends UIComponent {
    */
   private void addActors() {
     table = new Table();
-    table.top().left();  // Position table to the top-left of the screen
+    table.top().left();
     table.setFillParent(true);
+    table.padTop(80f).padLeft(20f);
+
     goldTable = new Table();
     timerTable = new Table();
     dayTable = new Table();
@@ -138,7 +140,7 @@ public class PlayerStatsDisplay extends UIComponent {
     // --- Update: Day Label with Container ---
 
     // Label for the Current Day
-    CharSequence dayText = String.format("Day: %d", currentDay); // Start with Day 1
+    CharSequence dayText = String.format("Day: %d", ServiceLocator.getDayNightService().getDay()); // Start with Day 1
     dayLabel = new Label(dayText, skin, SMALL_LABEL);
     dayLabel.setColor(Color.GOLD);  // Set text color to white for contrast
 
@@ -215,7 +217,7 @@ public class PlayerStatsDisplay extends UIComponent {
    * Updates the displayed current day on the UI.
    */
   public static void updateDay() {
-    currentDay++;
+    int currentDay = ServiceLocator.getDayNightService().getDay();
     CharSequence dayText = String.format("Day: %d", currentDay);
     getDayLabel().setText(dayText);
   }
@@ -243,11 +245,10 @@ public class PlayerStatsDisplay extends UIComponent {
   public static void updateTime(long time) {
     timer = time;
 
-//    // Calculate progress as a percentage of the time remaining
-//    float progressPercentage = (float) timer / startTime * 100f;
-//
-//    // Update the progress bar value to reflect the remaining time
-//    getInstance().timeBar.setValue(progressPercentage);
+    // Calculate progress as a percentage of the time remaining
+    float progressPercentage = (float) time / ServiceLocator.getDayNightService().FIVE_MINUTES * 100f;
+
+    //float progressPercentage = (float) timer / startTime * 100f;
 
     // Update the timer color based on remaining time
     updateTimeColor();
@@ -322,10 +323,10 @@ public class PlayerStatsDisplay extends UIComponent {
     long minutes = TimeUnit.MILLISECONDS.toMinutes(x);
     long seconds = TimeUnit.MILLISECONDS.toSeconds(x) - TimeUnit.MINUTES.toSeconds(minutes);
     return String.format("%02d:%02d", minutes, seconds);
-    
+
 }
 public static void reset() {
-  currentDay = 1;
+    ServiceLocator.getDayNightService().setDay(1);
 }
 
 

@@ -126,7 +126,17 @@ public class GdxGame extends Game {
       case LOAD_GAME:
         return new LoadGameScreen(this);
       case CUTSCENE:
-        return new CutsceneScreen(this, CutsceneType.MORAL_1);
+        return new CutsceneScreen(this, CutsceneType.MORAL_2);
+
+//      case ENDDAY_1:
+//        return new CutsceneScreen(this, CutsceneType.MORAL_1);
+//      case ENDDAY_2:
+//        return new CutsceneScreen(this, CutsceneType.MORAL_2);
+//      case ENDDAY_3:
+//        return new CutsceneScreen(this, CutsceneType.MORAL_3);
+//      case ENDDAY_4:
+//        return new CutsceneScreen(this, CutsceneType.MORAL_4);
+
       case GOOD_END:
         return new CutsceneScreen(this, CutsceneType.GOOD_END);
       case BAD_END:
@@ -184,7 +194,7 @@ public class GdxGame extends Game {
 
 
   public enum ScreenType {
-    MAIN_MENU, MAIN_GAME, SETTINGS, LOAD_GAME, CUTSCENE, GOOD_END, BAD_END, LOSE_END, ENDDAY_1
+    MAIN_MENU, MAIN_GAME, SETTINGS, LOAD_GAME, CUTSCENE, GOOD_END, BAD_END, LOSE_END, ENDDAY_1, ENDDAY_2, ENDDAY_3, ENDDAY_4
   }
 
   public enum CutsceneType {

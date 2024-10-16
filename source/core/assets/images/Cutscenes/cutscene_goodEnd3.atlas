@@ -1,0 +1,82 @@
+goodEnd3.png
+size: 1760, 160
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+good_end3
+  rotate: false
+  xy: 0, 0
+  size: 160, 160
+  orig: 160, 160
+  offset: 0, 0
+  index: 0
+good_end3
+  rotate: false
+  xy: 160, 0
+  size: 160, 160
+  orig: 160, 160
+  offset: 0, 0
+  index: 1
+good_end3
+  rotate: false
+  xy: 320, 0
+  size: 160, 160
+  orig: 160, 160
+  offset: 0, 0
+  index: 2
+good_end3
+  rotate: false
+  xy: 480, 0
+  size: 160, 160
+  orig: 160, 160
+  offset: 0, 0
+  index: 3
+good_end3
+  rotate: false
+  xy: 640, 0
+  size: 160, 160
+  orig: 160, 160
+  offset: 0, 0
+  index: 4
+good_end3
+  rotate: false
+  xy: 800, 0
+  size: 160, 160
+  orig: 160, 160
+  offset: 0, 0
+  index: 5
+good_end3
+  rotate: false
+  xy: 960, 0
+  size: 160, 160
+  orig: 160, 160
+  offset: 0, 0
+  index: 6
+good_end3
+  rotate: false
+  xy: 1120, 0
+  size: 160, 160
+  orig: 160, 160
+  offset: 0, 0
+  index: 7
+good_end3
+  rotate: false
+  xy: 1280, 0
+  size: 160, 160
+  orig: 160, 160
+  offset: 0, 0
+  index: 8
+good_end3
+  rotate: false
+  xy: 1440, 0
+  size: 160, 160
+  orig: 160, 160
+  offset: 0, 0
+  index: 9
+good_end3
+  rotate: false
+  xy: 1600, 0
+  size: 160, 160
+  orig: 160, 160
+  offset: 0, 0
+  index: 10

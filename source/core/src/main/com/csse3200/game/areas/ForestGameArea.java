@@ -103,6 +103,7 @@ public class ForestGameArea extends GameArea {
           "images/stations/fridge/fridge_meat.png",
           "images/stations/fridge/fridge_choc.png",
           "images/stations/chopping_board/choppingboardbench.png",
+          "images/stations/benches/dishwasher.png",
 
           //These frames have some use in ObstacleFactory but it's only ever instantiated as full_door - Alex S.
           "images/frame/full_door.png",
@@ -301,6 +302,7 @@ public class ForestGameArea extends GameArea {
    */
   private void checkEndOfGameState() {
     String gameState = player.getComponent(CheckWinLoseComponent.class).checkGameState();
+
 
     if ("LOSE".equals(gameState)) {
       createTextBox("You *oink* two-legged moron! You're ruining my " +
@@ -672,7 +674,7 @@ public class ForestGameArea extends GameArea {
   private void playMusic() {
     Music music = ServiceLocator.getResourceService().getAsset(backgroundmusic, Music.class);
     music.setLooping(true);
-    music.setVolume(0.02f);
+    music.setVolume(0.04f);
     music.play();
   }
 

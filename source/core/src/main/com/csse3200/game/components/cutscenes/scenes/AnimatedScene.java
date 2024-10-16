@@ -1,14 +1,13 @@
 package com.csse3200.game.components.cutscenes.scenes;
 
-
 /**
  * AnimatedScene class represents one animated scene for a cutscene.
  * It contains atlas file for the scene and the length it needs to play for.
  */
 public class AnimatedScene {
     public String animName;
-    private String atlasFilePath; // the atlas file path
-    private float duration; // The duration of the animation
+    private final String atlasFilePath; // the atlas file path
+    private final float duration; // The duration of the animation
 
     /**
      * Constructor for an animatedScene
