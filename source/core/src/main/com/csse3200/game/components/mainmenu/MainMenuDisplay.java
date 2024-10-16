@@ -88,6 +88,10 @@ public class MainMenuDisplay extends UIComponent {
         return rand.nextInt(max - min + 1) + min;
     }
 
+    /**
+     * Create the background animation. This method will create a random number of animals and move them across
+     * the screen.
+     */
     public void background() {
         for (int x = 1; x <= animalOnScreen; x++) {
             int random = randomGenerator(0, 3);

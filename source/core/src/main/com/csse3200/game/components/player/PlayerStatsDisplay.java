@@ -35,12 +35,11 @@ public class PlayerStatsDisplay extends UIComponent {
 
   private Label goldLabel;
   private static Label dayLabel;
+  private static int currentDay = 1;
   private static Label timerLabel;
   private static long timer;
   private static long startTime;
   private static PlayerStatsDisplay instance;
-  private ProgressBar timeBar;
-  private static final float MAX_TIME = 300f;
 
 
 
@@ -192,30 +191,12 @@ public class PlayerStatsDisplay extends UIComponent {
     goldTable.add(goldContentsTable);
     table.add(goldTable).left().width(220f).height(170).padTop(0);  // Align to the very left
 
-//    table.row();
-//
-//    // Create a label for the rage meter
-//    rageLabel = new Label(rageText, skin, SMALL_LABEL);
-//    rageLabel.setColor(Color.RED); // Make text red
-//    table.add(rageLabel).left().padTop(110).padLeft(30);
+    table.row();
+
 
     // Add the table to the stage
     stage.addActor(table);
 
-//    // Progress bar settings
-//    Texture whiteBgTexture = ServiceLocator
-//        .getResourceService().getAsset("images/white_background.png", Texture.class);
-//
-//    ProgressBar.ProgressBarStyle style = new ProgressBar.ProgressBarStyle();
-//    style.background = new TextureRegionDrawable(new TextureRegion(whiteBgTexture));
-//    style.background.setMinHeight(15);
-//    style.background.setMinWidth(10);
-//
-//    // Static white background ProgressBar
-//    timeBar = new ProgressBar(0f, 100f, 1f, false, skin);
-//    timeBar.setValue(100f);  // Start at full value (100%)
-//    table.row();
-//    table.add(timeBar).width(200f).height(300f).fill();
   }
 
   @Override
