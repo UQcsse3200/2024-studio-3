@@ -64,6 +64,8 @@ public class MainGameOrderTicketDisplay extends UIComponent {
     private boolean isPaused = false;
     private long pauseStartTime = 0;
     private long totalPausedDuration = 0;
+    private boolean isDancing = false;
+
 
 //    private static ArrayList<TextureRegionDrawable> textureArrayList;
     private static ArrayList<Image> imageArrayList;
@@ -155,8 +157,15 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         ServiceLocator.getDocketService().getEvents().addListener("removeBigTicket", this::removeBigTicket);
 
         //From Team 2, these listeners are for our dance party upgrade to pause and unpause docket times
-        ServiceLocator.getDocketService().getEvents().addListener("Dancing", ()->{setPaused(true);});
-        ServiceLocator.getDocketService().getEvents().addListener("UnDancing", ()->{setPaused(false);});
+        ServiceLocator.getDocketService().getEvents().addListener("Dancing", () -> {
+            isDancing = true;
+            addTimeToDockets(300000); // 30 seconds in milliseconds
+        });
+        ServiceLocator.getDocketService().getEvents().addListener("UnDancing", () -> {
+            isDancing = false;
+        });
+        
+
 
         //From team 2, I used your dispose method here when listening for a new day, so current dockets get removed
         //when the end of day occurs
@@ -188,44 +197,56 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         logger.info("Adding actors");
         Table table = new Table();
         long startTime = TimeUtils.millis();
-
+        
         startTimeArrayList.add(startTime);
         tableArrayList.add(table);
-
+    
         table.setFillParent(false);
         table.setSize(viewportWidth * 3f / 32f, 5f / 27f * viewportHeight); // DEFAULT_HEIGHT
         float xVal = cntXval(250f, tableArrayList.size());
         float yVal = viewportHeight * viewPortHeightMultiplier;
         table.setPosition(xVal, yVal);
         table.padTop(25f);
+    
+        // Create a new docket for the background
         Docket background = new Docket(getTimer());
+    
+        // Add 30 seconds to the timer if `isDancing` is true
+        long ticketTime = getTimer();
+        if (isDancing) {
+            ticketTime += 300000;  // Add 30 seconds in milliseconds
+        }
+    
         backgroundArrayList.add(background);
         table.setBackground(background.getImage().getDrawable());
-
+    
         String orderNumStr = "Order" + " " + ++orderNumb;
         Label orderNumbLabel = new Label(orderNumStr, skin);
         table.add(orderNumbLabel).padLeft(10f).row();
-
+    
         Label recipeNameLabel = new Label(getRecipe().getName(), skin);
         table.add(recipeNameLabel).padLeft(10f).row();
-
-        String s=getRecipe().getName();
+    
+        String s = getRecipe().getName();
         stringArrayList.add(s);
-        Texture texture=texture_map.get(mealDisplay.getMealImage(s,"vertical"));
-        mealImage=new Image(new TextureRegionDrawable(texture));
+        Texture texture = texture_map.get(mealDisplay.getMealImage(s, "vertical"));
+        mealImage = new Image(new TextureRegionDrawable(texture));
         imageArrayList.add(mealImage);
         table.add(mealImage).row();
-
-        recipeTimeArrayList.add(getTimer());
-        Label countdownLabel = new Label("Timer: " + getTimer(), skin);
+    
+        // Store the calculated ticket time (either the original or extended time)
+        recipeTimeArrayList.add(ticketTime);
+    
+        Label countdownLabel = new Label("Timer: " + (ticketTime / 1000), skin);
         countdownLabelArrayList.add(countdownLabel);
         table.add(countdownLabel).padLeft(10f).row();
-
+    
         stage.addActor(table);
         updateDocketSizes();
-
-        table.setZIndex((int)getZIndex());
+    
+        table.setZIndex((int) getZIndex());
     }
+    
 
     /**
      * Calculates the x-position for an order ticket based on its index.
@@ -490,6 +511,9 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         }
 
         // No additional update logic needed here, shifting is handled by the OrderActions class
+        // if(isDancing){
+        //     addTimeToDockets(50);
+        // }
         for (int i = 0; i < tableArrayList.size(); i++) {
             Docket currBackground = backgroundArrayList.get(i);
             Table currTable = tableArrayList.get(i);
@@ -696,5 +720,12 @@ public class MainGameOrderTicketDisplay extends UIComponent {
     public static ArrayList<Long> getRecipeTimeArrayList() {
         return recipeTimeArrayList;
     }
+
+    private void addTimeToDockets(long additionalTime) {
+        for (int i = 0; i < recipeTimeArrayList.size(); i++) {
+            recipeTimeArrayList.set(i, recipeTimeArrayList.get(i) + additionalTime);
+        }
+    }
+    
 
 }

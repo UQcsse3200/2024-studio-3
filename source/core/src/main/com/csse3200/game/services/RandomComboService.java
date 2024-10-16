@@ -26,7 +26,7 @@ public class RandomComboService extends Component {
     private Random random;
     int randomChoice;
     private EventHandler eventHandler;
-    private int total_upgrades = 4;
+    private int total_upgrades = 1;
 
     public RandomComboService() {
         this(new EventHandler());
