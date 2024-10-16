@@ -1,6 +1,8 @@
 package com.csse3200.game.components.tutorial;
 
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
@@ -77,6 +79,7 @@ public class TutorialScreenDisplay extends UIComponent {
         textDisplay = new TextDisplay();
         textDisplay.setVisible(false);  // Initially hidden
         stage.addActor(textDisplay.getTable());  // Add it to the stage
+        entity.getEvents().addListener("TextComplete", this::onTextComplete);
 
         advanceTutorialStep();  // Ensure textDisplay is initialized before calling this method
 
@@ -123,13 +126,13 @@ public class TutorialScreenDisplay extends UIComponent {
                     showChoppingTutorial();
                     break;
                 case 6:
-                    completeTutorial();
+                    showRotationTutorial();
                     break;
                 case 7:
-                    showRotationTutorial();  // New rotation step
+                    showCombiningTutorial();
                     break;
                 case 8:
-                    showCombiningTutorial();  // New combining step
+                    completeTutorial();
                     break;
                 default:
                     logger.error("Unexpected tutorial step: " + tutorialStep);
@@ -144,7 +147,17 @@ public class TutorialScreenDisplay extends UIComponent {
      */
     private void clearTextBox() {
         if (textDisplay != null) {
+            // Initialize label if it is null
+            if (textDisplay.label == null) {
+                BitmapFont defaultFont = new BitmapFont();
+                Label.LabelStyle labelStyle = new Label.LabelStyle(defaultFont, Color.BLACK);
+                textDisplay.label = new Label("", labelStyle);
+            }
+
             textDisplay.setText("");  // Clear the text
+            textDisplay.currentText.setLength(0);  // Clear StringBuilder holding text
+            textDisplay.label.setText("");  // Clear the label text
+            textDisplay.setVisible(false);  // Hide the text box
         } else {
             logger.error("textDisplay is null during clearTextBox.");
         }
@@ -256,6 +269,19 @@ public class TutorialScreenDisplay extends UIComponent {
             createTextBox("Tutorial Complete!");
         } else {
             logger.error("textDisplay is null during completeTutorial.");
+        }
+    }
+
+    /**
+     * Called when the text block is completed in TextDisplay.
+     * Advances the tutorial to the next step.
+     */
+    private void onTextComplete(int currentPart) {
+        logger.info("Text part {} completed.", currentPart);
+
+        // If we're at the final text part for this step, advance the tutorial
+        if (currentPart >= textDisplay.getText().size() - 1) {
+            advanceTutorialStep();
         }
     }
 

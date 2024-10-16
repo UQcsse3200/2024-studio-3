@@ -39,7 +39,7 @@ public class TextDisplay extends UIComponent {
     private List<String> text;
     private int currentPart = 0;
     private int textLength = 0;
-    private StringBuilder currentText;
+    public StringBuilder currentText;
     private int textLimit = 60;
     private int charIndex = 0;
     private long lastUpdate = 0L;
@@ -47,7 +47,7 @@ public class TextDisplay extends UIComponent {
 
     // Displaying variables
     private boolean visible;
-    private Label label;
+    public Label label;
     private Table table;
     private final ScreenAdapter game;
     private String screen;
@@ -142,12 +142,24 @@ public class TextDisplay extends UIComponent {
      * @param text - a string which is the text to be displayed
      */
     public void setText(String text) {
+        if (this.label == null) {
+            BitmapFont defaultFont = new BitmapFont();
+            Label.LabelStyle labelStyle = new Label.LabelStyle(defaultFont, Color.BLACK);
+            this.label = new Label("", labelStyle);
+        }
+
+        // Clear all previous text before setting new text
+        currentText.setLength(0);  // Clear StringBuilder
+        label.setText("");  // Clear the Label text
+        charIndex = 0;  // Reset the character index
+        currentPart = 0;  // Reset the text part
+
         setVisible(true);
-        currentPart = 0;
         List<String> newText = new ArrayList<>();
         textLength = text.length();
         StringBuilder temp = new StringBuilder();
         StringBuilder current = new StringBuilder();
+
         for (int i = 0; i < textLength; i++) {
             // if word formed in temp
             if (text.charAt(i) == ' ') {
@@ -160,7 +172,7 @@ public class TextDisplay extends UIComponent {
                 newText.add(temp.toString());
                 temp = new StringBuilder();
             }
-            current.    append(text.charAt(i));
+            current.append(text.charAt(i));
         }
         temp.append(current).append(" (enter to continue)");
         newText.add(temp.toString());
@@ -210,6 +222,11 @@ public class TextDisplay extends UIComponent {
                 label.setText(currentText.toString());
                 charIndex++;
             }
+        }
+
+        // If the current part of the text is fully displayed, trigger a 'TextComplete' event
+        if (charIndex >= text.get(currentPart).length() && currentPart < text.size()) {
+            entity.getEvents().trigger("TextComplete", currentPart);
         }
     }
 
