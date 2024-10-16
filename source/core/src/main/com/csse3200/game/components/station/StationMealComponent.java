@@ -199,6 +199,8 @@ public class StationMealComponent extends Component {
             assert mealEntity != null;
             MealComponent meal = mealEntity.getComponent(MealComponent.class);
             this.inventoryComponent.addItemAt(meal, 0);
+        } else {
+            this.inventoryComponent.addItem(plate);
         }
     }
 
