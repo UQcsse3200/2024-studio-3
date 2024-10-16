@@ -180,8 +180,4 @@ public class CutsceneScreenDisplay extends UIComponent {
      */
     public void setTextDisplay(TextDisplay textDisplay) { this.textDisplay = textDisplay; }
 
-    /**
-     * Function that enables or disables the text box.
-     */
-
 }
