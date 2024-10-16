@@ -95,8 +95,7 @@ loadScripts(document, 'script');</script>
 <hr>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">GoodEndCutscene</span>
 <span class="extends-implements">extends <a href="Cutscene.html" title="class in com.csse3200.game.components.cutscenes">Cutscene</a></span></div>
-<div class="block">The IntroCutscene class represents a specific cutscene that plays at the start of the game.
- It defines the scenes, assets, and entities used during the intro cutscene.</div>
+<div class="block">The GoodEndCutscene class plays the good end cutscene when triggered at the end of the game.</div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -141,19 +140,24 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#createEntities()" class="member-name-link">createEntities</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Handles specific entity creation logic for the intro cutscene.</div>
+<div class="block">Abstract method to create entities for the cutscene.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#loadAssets()" class="member-name-link">loadAssets</a>()</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a><wbr>&lt;<a href="scenes/AnimatedScene.html" title="class in com.csse3200.game.components.cutscenes.scenes">AnimatedScene</a>&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getAnimatedScenes()" class="member-name-link">getAnimatedScenes</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Loads the assets needed for the intro cutscene, including textures for backgrounds
- and animations.</div>
+<div class="block">Get the list of animated scenes</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setupScenes()" class="member-name-link">setupScenes</a>()</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#loadAssets()" class="member-name-link">loadAssets</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Sets up the scenes for the intro cutscene, including background images,
- animation images, and the corresponding text for each scene.</div>
+<div class="block">Loads the assets needed for the cutscene, including textures for backgrounds
+ and animations.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setupScenes()" class="member-name-link">setupScenes</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Sets up the scenes for the good end cutscene, in particular,
+ the animation images for each scene.</div>
 </div>
 </div>
 </div>
@@ -197,8 +201,8 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="setupScenes()">
 <h3>setupScenes</h3>
 <div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setupScenes</span>()</div>
-<div class="block">Sets up the scenes for the intro cutscene, including background images,
- animation images, and the corresponding text for each scene.</div>
+<div class="block">Sets up the scenes for the good end cutscene, in particular,
+ the animation images for each scene.</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="Cutscene.html#setupScenes()">setupScenes</a></code>&nbsp;in class&nbsp;<code><a href="Cutscene.html" title="class in com.csse3200.game.components.cutscenes">Cutscene</a></code></dd>
@@ -209,7 +213,7 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="loadAssets()">
 <h3>loadAssets</h3>
 <div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">loadAssets</span>()</div>
-<div class="block">Loads the assets needed for the intro cutscene, including textures for backgrounds
+<div class="block">Loads the assets needed for the cutscene, including textures for backgrounds
  and animations.</div>
 <dl class="notes">
 <dt>Specified by:</dt>
@@ -221,11 +225,22 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="createEntities()">
 <h3>createEntities</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">createEntities</span>()</div>
-<div class="block">Handles specific entity creation logic for the intro cutscene.
- Currently, there is no specific logic for creating entities.</div>
+<div class="block"><span class="description-from-type-label">Description copied from class:&nbsp;<code><a href="Cutscene.html#createEntities()">Cutscene</a></code></span></div>
+<div class="block">Abstract method to create entities for the cutscene. This should be implemented by subclasses.</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="Cutscene.html#createEntities()">createEntities</a></code>&nbsp;in class&nbsp;<code><a href="Cutscene.html" title="class in com.csse3200.game.components.cutscenes">Cutscene</a></code></dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getAnimatedScenes()">
+<h3>getAnimatedScenes</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="scenes/AnimatedScene.html" title="class in com.csse3200.game.components.cutscenes.scenes">AnimatedScene</a>&gt;</span>&nbsp;<span class="element-name">getAnimatedScenes</span>()</div>
+<div class="block">Get the list of animated scenes</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>List of animated scenes</dd>
 </dl>
 </section>
 </li>

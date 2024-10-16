@@ -120,7 +120,9 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Constructor</div>
 <div class="table-header col-last">Description</div>
 <div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E()" class="member-name-link">BadEndCutscene</a>()</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block">Constructor for the BadEndCutscene class.</div>
+</div>
 </div>
 </section>
 </li>
@@ -140,15 +142,22 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Abstract method to create entities for the cutscene.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#loadAssets()" class="member-name-link">loadAssets</a>()</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a><wbr>&lt;<a href="scenes/AnimatedScene.html" title="class in com.csse3200.game.components.cutscenes.scenes">AnimatedScene</a>&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getAnimatedScenes()" class="member-name-link">getAnimatedScenes</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Abstract method to load the assets required for the cutscene.</div>
+<div class="block">Get the list of animated scenes</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setupScenes()" class="member-name-link">setupScenes</a>()</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#loadAssets()" class="member-name-link">loadAssets</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Abstract method to set up scenes for the cutscene.</div>
+<div class="block">Loads the assets needed for the cutscene, including textures for backgrounds
+ and animations.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setupScenes()" class="member-name-link">setupScenes</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Sets up the scenes for the bad end cutscene, in particular,
+ the animation images for each scene.</div>
 </div>
 </div>
 </div>
@@ -177,6 +186,7 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="&lt;init&gt;()">
 <h3>BadEndCutscene</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">BadEndCutscene</span>()</div>
+<div class="block">Constructor for the BadEndCutscene class.</div>
 </section>
 </li>
 </ul>
@@ -191,8 +201,8 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="setupScenes()">
 <h3>setupScenes</h3>
 <div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setupScenes</span>()</div>
-<div class="block"><span class="description-from-type-label">Description copied from class:&nbsp;<code><a href="Cutscene.html#setupScenes()">Cutscene</a></code></span></div>
-<div class="block">Abstract method to set up scenes for the cutscene. This should be implemented by subclasses.</div>
+<div class="block">Sets up the scenes for the bad end cutscene, in particular,
+ the animation images for each scene.</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="Cutscene.html#setupScenes()">setupScenes</a></code>&nbsp;in class&nbsp;<code><a href="Cutscene.html" title="class in com.csse3200.game.components.cutscenes">Cutscene</a></code></dd>
@@ -203,8 +213,8 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="loadAssets()">
 <h3>loadAssets</h3>
 <div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">loadAssets</span>()</div>
-<div class="block"><span class="description-from-type-label">Description copied from class:&nbsp;<code><a href="Cutscene.html#loadAssets()">Cutscene</a></code></span></div>
-<div class="block">Abstract method to load the assets required for the cutscene. This should be implemented by subclasses.</div>
+<div class="block">Loads the assets needed for the cutscene, including textures for backgrounds
+ and animations.</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="Cutscene.html#loadAssets()">loadAssets</a></code>&nbsp;in class&nbsp;<code><a href="Cutscene.html" title="class in com.csse3200.game.components.cutscenes">Cutscene</a></code></dd>
@@ -220,6 +230,17 @@ loadScripts(document, 'script');</script>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="Cutscene.html#createEntities()">createEntities</a></code>&nbsp;in class&nbsp;<code><a href="Cutscene.html" title="class in com.csse3200.game.components.cutscenes">Cutscene</a></code></dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getAnimatedScenes()">
+<h3>getAnimatedScenes</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="scenes/AnimatedScene.html" title="class in com.csse3200.game.components.cutscenes.scenes">AnimatedScene</a>&gt;</span>&nbsp;<span class="element-name">getAnimatedScenes</span>()</div>
+<div class="block">Get the list of animated scenes</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>List of animated scenes</dd>
 </dl>
 </section>
 </li>
