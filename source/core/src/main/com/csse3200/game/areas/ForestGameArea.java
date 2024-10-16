@@ -184,8 +184,8 @@ public class ForestGameArea extends GameArea {
           "images/special_NPCs/penguin.atlas",
   };
   private static final String[] forestSounds = {"sounds/Impact4.ogg"};
-  private static final String backgroundmusic = "sounds/BB_BGM.mp3";
-  private static final String[] forestMusic = {backgroundmusic};
+  private static final String backgroundMusic = "sounds/BB_BGM.mp3";
+  private static final String[] forestMusic = {backgroundMusic};
   private static Entity customerSpawnController;
 
   private final TerrainFactory terrainFactory;
@@ -671,7 +671,7 @@ public class ForestGameArea extends GameArea {
    * Plays the background music
    */
   private void playMusic() {
-    Music music = ServiceLocator.getResourceService().getAsset(backgroundmusic, Music.class);
+    Music music = ServiceLocator.getResourceService().getAsset(backgroundMusic, Music.class);
     music.setLooping(true);
     music.setVolume(0.04f);
     music.play();
@@ -703,7 +703,7 @@ public class ForestGameArea extends GameArea {
   @Override
   public void dispose() {
     super.dispose();
-    ServiceLocator.getResourceService().getAsset(backgroundmusic, Music.class).stop();
+    ServiceLocator.getResourceService().getAsset(backgroundMusic, Music.class).stop();
     this.unloadAssets();
   }
 
@@ -747,7 +747,7 @@ public class ForestGameArea extends GameArea {
         app.exit();
       } catch (InterruptedException e) {
         Thread.currentThread().interrupt();
-        System.out.println("Thread was interrupted");
+          logger.warn("Thread was interrupted");
       }
     });
     executor.shutdown();
@@ -768,7 +768,7 @@ public class ForestGameArea extends GameArea {
         app.exit();
       } catch (InterruptedException e) {
         Thread.currentThread().interrupt();
-        System.out.println("Thread was interrupted");
+          logger.warn("Thread was interrupted");
       }
     });
     executor.shutdown();
