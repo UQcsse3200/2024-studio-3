@@ -2,11 +2,8 @@ package com.csse3200.game.components.maingame;
 
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
-import com.csse3200.game.components.npc.CustomerManager;
-import com.csse3200.game.components.ordersystem.OrderManager;
 import com.csse3200.game.entities.configs.CustomerPersonalityConfig;
 import com.csse3200.game.entities.configs.NPCConfigs;
-import com.csse3200.game.entities.factories.NPCFactory;
 import com.csse3200.game.files.FileLoader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
