@@ -92,7 +92,7 @@ loadScripts(document, 'script');</script>
 <section class="class-description" id="class-description">
 <dl class="notes">
 <dt>Direct Known Subclasses:</dt>
-<dd><code><a href="BackstoryCutscene.html" title="class in com.csse3200.game.components.cutscenes">BackstoryCutscene</a></code>, <code><a href="BadEndCutscene.html" title="class in com.csse3200.game.components.cutscenes">BadEndCutscene</a></code>, <code><a href="Day2Cutscene.html" title="class in com.csse3200.game.components.cutscenes">Day2Cutscene</a></code>, <code><a href="Day3Cutscene.html" title="class in com.csse3200.game.components.cutscenes">Day3Cutscene</a></code>, <code><a href="Day4Cutscene.html" title="class in com.csse3200.game.components.cutscenes">Day4Cutscene</a></code>, <code><a href="GoodEndCutscene.html" title="class in com.csse3200.game.components.cutscenes">GoodEndCutscene</a></code>, <code><a href="IntroCutscene.html" title="class in com.csse3200.game.components.cutscenes">IntroCutscene</a></code>, <code><a href="LoseCutscene.html" title="class in com.csse3200.game.components.cutscenes">LoseCutscene</a></code>, <code><a href="MoralDay1Cutscene.html" title="class in com.csse3200.game.components.cutscenes">MoralDay1Cutscene</a></code></dd>
+<dd><code><a href="BackstoryCutscene.html" title="class in com.csse3200.game.components.cutscenes">BackstoryCutscene</a></code>, <code><a href="BadEndCutscene.html" title="class in com.csse3200.game.components.cutscenes">BadEndCutscene</a></code>, <code><a href="Day2Cutscene.html" title="class in com.csse3200.game.components.cutscenes">Day2Cutscene</a></code>, <code><a href="Day3Cutscene.html" title="class in com.csse3200.game.components.cutscenes">Day3Cutscene</a></code>, <code><a href="Day4Cutscene.html" title="class in com.csse3200.game.components.cutscenes">Day4Cutscene</a></code>, <code><a href="GoodEndCutscene.html" title="class in com.csse3200.game.components.cutscenes">GoodEndCutscene</a></code>, <code><a href="IntroCutscene.html" title="class in com.csse3200.game.components.cutscenes">IntroCutscene</a></code>, <code><a href="LoseCutscene.html" title="class in com.csse3200.game.components.cutscenes">LoseCutscene</a></code>, <code><a href="MoralDay1Cutscene.html" title="class in com.csse3200.game.components.cutscenes">MoralDay1Cutscene</a></code>, <code><a href="MoralDay2Cutscene.html" title="class in com.csse3200.game.components.cutscenes">MoralDay2Cutscene</a></code>, <code><a href="MoralDay3Cutscene.html" title="class in com.csse3200.game.components.cutscenes">MoralDay3Cutscene</a></code>, <code><a href="MoralDay4Cutscene.html" title="class in com.csse3200.game.components.cutscenes">MoralDay4Cutscene</a></code></dd>
 </dl>
 <hr>
 <div class="type-signature"><span class="modifiers">public abstract class </span><span class="element-name type-name-label">Cutscene</span>
@@ -221,57 +221,66 @@ loadScripts(document, 'script');</script>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Disposes of all entities in the current scene.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isCompleted()" class="member-name-link">isCompleted</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isAtEnd()" class="member-name-link">isAtEnd</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isCompleted()" class="member-name-link">isCompleted</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Checks if the cutscene has been completed.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>protected abstract void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#loadAssets()" class="member-name-link">loadAssets</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>protected abstract void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#loadAssets()" class="member-name-link">loadAssets</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Abstract method to load the assets required for the cutscene.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#loadAssetsForScene(com.csse3200.game.components.cutscenes.scenes.AnimatedScene)" class="member-name-link">loadAssetsForScene</a><wbr>(<a href="scenes/AnimatedScene.html" title="class in com.csse3200.game.components.cutscenes.scenes">AnimatedScene</a>&nbsp;scene)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Loads the assets needed for a specific scene, including textures and animations.</div>
-</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#loadAssetsForScene(com.csse3200.game.components.cutscenes.scenes.Scene)" class="member-name-link">loadAssetsForScene</a><wbr>(<a href="scenes/Scene.html" title="class in com.csse3200.game.components.cutscenes.scenes">Scene</a>&nbsp;scene)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#loadAssetsForScene(com.csse3200.game.components.cutscenes.scenes.AnimatedScene)" class="member-name-link">loadAssetsForScene</a><wbr>(<a href="scenes/AnimatedScene.html" title="class in com.csse3200.game.components.cutscenes.scenes">AnimatedScene</a>&nbsp;scene)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Loads the assets needed for a specific scene, including textures and animations.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#loadScene(int)" class="member-name-link">loadScene</a><wbr>(int&nbsp;sceneIndex)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#loadAssetsForScene(com.csse3200.game.components.cutscenes.scenes.Scene)" class="member-name-link">loadAssetsForScene</a><wbr>(<a href="scenes/Scene.html" title="class in com.csse3200.game.components.cutscenes.scenes">Scene</a>&nbsp;scene)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Loads the assets needed for a specific scene, including textures and animations.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#loadScene(int)" class="member-name-link">loadScene</a><wbr>(int&nbsp;sceneIndex)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Loads a scene by its index, initializing entities and assets for that scene.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#nextCutscene()" class="member-name-link">nextCutscene</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#nextCutscene()" class="member-name-link">nextCutscene</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Transitions to the next scene in the cutscene.</div>
 </div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#nextCutsceneMoral()" class="member-name-link">nextCutsceneMoral</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setTextForScene(com.csse3200.game.components.cutscenes.scenes.Scene)" class="member-name-link">setTextForScene</a><wbr>(<a href="scenes/Scene.html" title="class in com.csse3200.game.components.cutscenes.scenes">Scene</a>&nbsp;scene)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>protected abstract void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setupScenes()" class="member-name-link">setupScenes</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setTextForSceneMoral(com.csse3200.game.components.cutscenes.scenes.Scene)" class="member-name-link">setTextForSceneMoral</a><wbr>(<a href="scenes/Scene.html" title="class in com.csse3200.game.components.cutscenes.scenes">Scene</a>&nbsp;scene)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>protected abstract void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setupScenes()" class="member-name-link">setupScenes</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Abstract method to set up scenes for the cutscene.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#start()" class="member-name-link">start</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#start()" class="member-name-link">start</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Starts the cutscene by creating the necessary entities.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#unloadAssets()" class="member-name-link">unloadAssets</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#unloadAssets()" class="member-name-link">unloadAssets</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Unloads the assets used in the cutscene.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#update()" class="member-name-link">update</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#update()" class="member-name-link">update</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Updates the cutscene, transitioning to the next scene if the current scene's duration has passed.</div>
 </div>
 </div>
@@ -443,6 +452,12 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
+<section class="detail" id="nextCutsceneMoral()">
+<h3>nextCutsceneMoral</h3>
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">nextCutsceneMoral</span>()</div>
+</section>
+</li>
+<li>
 <section class="detail" id="loadScene(int)">
 <h3>loadScene</h3>
 <div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">loadScene</span><wbr><span class="parameters">(int&nbsp;sceneIndex)</span></div>
@@ -490,6 +505,18 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="setTextForScene(com.csse3200.game.components.cutscenes.scenes.Scene)">
 <h3>setTextForScene</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setTextForScene</span><wbr><span class="parameters">(<a href="scenes/Scene.html" title="class in com.csse3200.game.components.cutscenes.scenes">Scene</a>&nbsp;scene)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="setTextForSceneMoral(com.csse3200.game.components.cutscenes.scenes.Scene)">
+<h3>setTextForSceneMoral</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setTextForSceneMoral</span><wbr><span class="parameters">(<a href="scenes/Scene.html" title="class in com.csse3200.game.components.cutscenes.scenes">Scene</a>&nbsp;scene)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="isAtEnd()">
+<h3>isAtEnd</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a></span>&nbsp;<span class="element-name">isAtEnd</span>()</div>
 </section>
 </li>
 <li>
