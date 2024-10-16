@@ -187,6 +187,7 @@ public class DayNightService {
             }
         }
 
+        // transition to new day
         day += 1;
         logger.info("Next/new day is: " + day);
 
@@ -202,7 +203,6 @@ public class DayNightService {
         lastSecondCheck = gameTime.getTime(); // Reset lastCheckTime to the current time
         lastEndOfDayCheck = gameTime.getTime();
         gameTime.setTimeScale(1); // Resume game time
-
 
     }
 
