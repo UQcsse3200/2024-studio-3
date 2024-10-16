@@ -4,12 +4,8 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.csse3200.game.components.cutscenes.Cutscene;
-import com.csse3200.game.screens.CutsceneScreen;
+import com.csse3200.game.screens.*;
 import com.csse3200.game.files.UserSettings;
-import com.csse3200.game.screens.MainGameScreen;
-import com.csse3200.game.screens.MainMenuScreen;
-import com.csse3200.game.screens.SettingsScreen;
-import com.csse3200.game.screens.LoadGameScreen;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import org.slf4j.Logger;
@@ -129,6 +125,8 @@ public class GdxGame extends Game {
         return new SettingsScreen(this);
       case LOAD_GAME:
         return new LoadGameScreen(this);
+      case TUTORIAL:
+        return new TutorialScreen(this);
 
 //      case CUTSCENE:
 //        return new CutsceneScreen(this, CutsceneType.DAY_2);
@@ -196,7 +194,7 @@ public class GdxGame extends Game {
 
 
   public enum ScreenType {
-    MAIN_MENU, MAIN_GAME, SETTINGS, LOAD_GAME, CUTSCENE, GOOD_END, BAD_END, LOSE_END, ENDDAY_1
+    MAIN_MENU, MAIN_GAME, TUTORIAL, SETTINGS, LOAD_GAME, CUTSCENE, GOOD_END, BAD_END, LOSE_END, ENDDAY_1
   }
 
   public enum CutsceneType {
