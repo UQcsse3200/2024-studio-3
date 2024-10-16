@@ -44,6 +44,10 @@ public class DancePartyUpgrade extends UIComponent implements Upgrade {
     private boolean playSound = false;
 
 
+    /**
+     * Constructor for DancePartyUpgrade that initializes the upgrade and sets up event listeners.
+     * It listens for "playerCreated" and "Dance party" events.
+     */
     public DancePartyUpgrade() {
         ServiceLocator.getPlayerService().getEvents().addListener("playerCreated", (Entity player) -> {
             this.combatStatsComponent = player.getComponent(CombatStatsComponent.class);
@@ -56,6 +60,12 @@ public class DancePartyUpgrade extends UIComponent implements Upgrade {
         ServiceLocator.getRandomComboService().getEvents().addListener("Dance partyoff", this::deactivate);
     }
 
+    /**
+     * Constructor for DancePartyUpgrade with an explicit CombatStatsComponent.
+     * This initializes the upgrade and registers the same event listeners as the default constructor.
+     *
+     * @param combatStatsComponent the CombatStatsComponent for the player
+     */
     public DancePartyUpgrade(CombatStatsComponent combatStatsComponent) {
         this.combatStatsComponent = combatStatsComponent;
         this.orderManager = orderManager;
@@ -66,6 +76,11 @@ public class DancePartyUpgrade extends UIComponent implements Upgrade {
         ServiceLocator.getRandomComboService().getEvents().addListener("Dance partyoff", this::deactivate);
     }
 
+    /**
+     * Initializes the Dance Party upgrade by loading necessary assets,
+     * such as textures and sound effects, and setting up the UI components
+     * (progress meter and label). This method is called when the component is created.
+     */
     @Override
     public void create() {
         super.create();
@@ -149,11 +164,17 @@ public class DancePartyUpgrade extends UIComponent implements Upgrade {
         ServiceLocator.getDocketService().getEvents().trigger("UnDancing");
     }
 
-
+    /**
+     * Handles the cost of the Dance Party upgrade, deducting gold from the player's CombatStatsComponent.
+     */
     public void dancePartyCost() {
         combatStatsComponent.addGold(-20);
     }
 
+    /**
+     * Checks and updates the remaining time for the Dance Party upgrade, updating the progress bar meter.
+     * It also checks if the upgrade's time has run out and deactivates it accordingly.
+     */
     @Override
     public void update() {
         if (isActive) {
@@ -184,33 +205,69 @@ public class DancePartyUpgrade extends UIComponent implements Upgrade {
 //        }
     }
 
+    /**
+     * Disposes of assets and cleans up when the upgrade is no longer needed.
+     * Unloads the textures used by the upgrade.
+     */
     @Override
     public void dispose() {
         super.dispose();
         ServiceLocator.getResourceService().unloadAssets(whiteBgTexture);
         ServiceLocator.getResourceService().unloadAssets(greenTexture);
     }
+
+    /**
+     * Draw method required by the UIComponent class, but not used in this upgrade.
+     *
+     * @param batch the SpriteBatch used to draw
+     */
     @Override
     protected void draw(SpriteBatch batch) {
 
     }
+
+    /**
+     * Sets the stage for the UI components, such as the layout, meter, and text.
+     *
+     * @param mock the Stage to which the UI components belong
+     */
     @Override
     public void setStage(Stage mock) {
         this.stage = mock;
     }
 
+    /**
+     * Gets the current active state of the Dance Party upgrade.
+     *
+     * @return true if the upgrade is currently active, false otherwise
+     */
     public boolean isActive() {
         return isActive;
     }
 
+    /**
+     * Retrieves the remaining time for which the upgrade will stay active.
+     *
+     * @return the remaining active time in milliseconds
+     */
     public float getActiveTimeRemaining() {
         return activeTimeRemaining;
     }
 
+    /**
+     * Retrieves the total upgrade duration.
+     *
+     * @return the total duration of the upgrade in milliseconds
+     */
     public long getUpgradeDuration() {
         return UPGRADE_DURATION;
     }
 
+    /**
+     * Retrieves the current state of the playSound flag, which indicates whether the upgrade's sound has been played.
+     *
+     * @return true if the sound has been played, false otherwise
+     */
     public boolean getPlaySound() {
         return playSound;
     }
