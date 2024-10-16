@@ -41,6 +41,13 @@ public class BenchGenerator {
         //  LOGGER.log(Level.INFO, "added column of " + arr.size() + " benches");
         return arr;
     }
+    /**
+     * Creates a row of benches
+     * @param startX - start x coordinate
+     * @param endX - end x coordinate
+     * @param y - y coordinate
+     * @return - returns an ArrayList of the benches created.
+     */
     public static ArrayList<Bench> createBenchRow(int startX, int endX, int y) {
         ArrayList<Bench> arr = new ArrayList<>();
         // add the left part of the bench and set collisions for whole row
@@ -61,6 +68,7 @@ public class BenchGenerator {
         LOGGER.log(Level.INFO, "added row of " + arr.size() + " benches");
         return arr;
     }
+<<<<<<< HEAD
 
     public static ArrayList<Bench> createBenchRowFlat(int startX, int endX, int y) {
         ArrayList<Bench> arr = new ArrayList<>();
@@ -82,7 +90,15 @@ public class BenchGenerator {
         LOGGER.log(Level.INFO, "added row of " + arr.size() + " flattened benches");
         return arr;
     }
+=======
+>>>>>>> main
 
+    /**
+     * Creates a single bench
+     * @param x - x coordinate
+     * @param y - y coordinate
+     * @return - returns an ArrayList of the benches created.
+     */
     public static ArrayList<Bench> singleBench(int x, int y) {
         ArrayList<Bench> arr = new ArrayList<>();
         Bench b = new Bench("vertical", x, y);
@@ -93,6 +109,12 @@ public class BenchGenerator {
         return arr;
     }
 
+    /**
+     * Creates a single shadow bench
+     * @param x - x coordinate
+     * @param y - y coordinate
+     * @return - returns an ArrayList of the benches created.
+     */
     public static ArrayList<Bench> singleShadowBench(int x, int y) {
         ArrayList<Bench> arr = new ArrayList<>();
         Bench b = new Bench("bottom_shadow", x, y);
@@ -102,7 +124,12 @@ public class BenchGenerator {
         arr.add(b);
         return arr;
     }
-
+    /**
+     * Creates a single 'blocker' bench
+     * @param x - x coordinate
+     * @param y - y coordinate
+     * @return - returns an ArrayList of the benches created.
+     */
     public static ArrayList<Bench> singleBlocker(int x, int y) {
         ArrayList<Bench> arr = new ArrayList<>();
         Bench b = new Bench("single", x, y);

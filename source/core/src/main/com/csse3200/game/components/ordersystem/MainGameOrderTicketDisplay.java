@@ -47,7 +47,7 @@ public class MainGameOrderTicketDisplay extends UIComponent {
     private static final ArrayList<Docket> backgroundArrayList = new ArrayList<>();
     private static final ArrayList<Label> countdownLabelArrayList = new ArrayList<>();
     private static final ArrayList<Long> recipeTimeArrayList = new ArrayList<>();
-    private int orderNumb = 0;
+    private static int orderNumb = 0;
     private static final long DEFAULT_TIMER = 10000;
     private Recipe recipe;
     private Image mealImage;
@@ -154,13 +154,22 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         stage.addListener(new InputListener() {
             @Override
             public boolean keyDown(InputEvent event, int keycode) {
-                if (keycode == com.badlogic.gdx.Input.Keys.ESCAPE) {
-                    setPaused(!isPaused);
-                    return true;
-                }
-                return false;
-            }
+                return handleKeyDown(keycode);
+            };
         });
+    }
+
+    /**
+     * Handles key press events. If the ESCAPE key is pressed, it toggles the paused state.
+     * @param keycode The key code of the key that was pressed.
+     * @return true if the ESCAPE key was pressed and the event was handled, false otherwise.
+     */
+    public boolean handleKeyDown(int keycode) {
+        if (keycode == com.badlogic.gdx.Input.Keys.ESCAPE) {
+            setPaused(!isPaused);
+            return true;
+        }
+        return false;
     }
 
     private void loadTextures() {
@@ -578,6 +587,8 @@ public class MainGameOrderTicketDisplay extends UIComponent {
     @Override
     public void dispose() {
         // Cleanup resources
+        //from team 2, I reset the ordernumb back to 0, for each new day when dispose is called
+//        orderNumb = 0;
         for (Table table : tableArrayList) {
             table.clear();
             table.remove();
@@ -588,7 +599,23 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         countdownLabelArrayList.clear();
         stringArrayList.clear();
         imageArrayList.clear();
+        resetOrderNumb();
+        //orderNumb = 0;
         super.dispose();
+    }
+
+    /**
+     * Resets order number to 0 for screen transition purposes.
+     */
+    public static void resetOrderNumb(){
+        orderNumb = 0;
+    }
+
+    /**
+     * Returns Order Number.
+     */
+    public static int getOrderNumb(){
+        return orderNumb;
     }
 
     /**
@@ -661,6 +688,31 @@ public class MainGameOrderTicketDisplay extends UIComponent {
      */
     public static List<Long> getRecipeTimeArrayList() {
         return recipeTimeArrayList;
+    }
+
+    /**
+     * Gets the True or False depending on if the game is paused or not respectively
+     * @return the boolean value of isPaused
+     */
+    public boolean isPaused() {
+        return isPaused;
+    }
+
+    /**
+     * Gets the start pause time
+     * @return the long value of pauseStartTime
+     */
+    public long getPauseStartTime() {
+        return pauseStartTime;
+    }
+
+    /**
+     * Gets the total pause duration time
+     * @return the long value of totalPausedDuration
+     */
+    public long getTotalPausedDuration() {
+        return totalPausedDuration;
+
     }
 
 }

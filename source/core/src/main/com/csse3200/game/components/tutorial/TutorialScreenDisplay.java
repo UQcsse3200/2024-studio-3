@@ -1,7 +1,6 @@
 package com.csse3200.game.components.tutorial;
 
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
@@ -9,8 +8,6 @@ import com.csse3200.game.GdxGame;
 import com.csse3200.game.components.ordersystem.MainGameOrderBtnDisplay;
 import com.csse3200.game.components.player.PlayerActions;
 import com.csse3200.game.entities.Entity;
-import com.csse3200.game.rendering.RenderService;
-import com.csse3200.game.services.PlayerService;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
 import com.csse3200.game.components.ordersystem.MainGameOrderTicketDisplay;
@@ -26,21 +23,13 @@ import com.csse3200.game.components.maingame.TextDisplay;
 public class TutorialScreenDisplay extends UIComponent {
     private static final Logger logger = LoggerFactory.getLogger(TutorialScreenDisplay.class);
     private final GdxGame game;
-    private Skin skin;
-    private PlayerActions playerActions;
     private int tutorialStep = 0;
-    private MainGameOrderTicketDisplay orderTicketDisplay;
     private MainGameOrderBtnDisplay orderBtnDisplay;
     private boolean createOrderPressed = false;
     private boolean docketsShifted = false;
     private Table table;
     private TextDisplay textDisplay;
-    private boolean wPressedLastFrame = false;
-    private boolean aPressedLastFrame = false;
-    private boolean sPressedLastFrame = false;
-    private boolean dPressedLastFrame = false;
     private static final int MAX_TUTORIAL_STEP = 4;
-    int  i = 0;
 
 
     public TutorialScreenDisplay(GdxGame game) {
@@ -54,9 +43,10 @@ public class TutorialScreenDisplay extends UIComponent {
     @Override
     public void create() {
         super.create();
+        MainGameOrderTicketDisplay.resetOrderNumb();
 
         if (entity != null) {
-            playerActions = entity.getComponent(PlayerActions.class);
+            entity.getComponent(PlayerActions.class);
         } else {
             logger.error("Entity null");
         }
@@ -209,7 +199,7 @@ public class TutorialScreenDisplay extends UIComponent {
                 }
                 break;
             case 4:
-                if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER) || Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
+                if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
                     startGame();
                 }
                 break;
@@ -236,6 +226,7 @@ public class TutorialScreenDisplay extends UIComponent {
         if (table != null) {
             table.clear();  // Safely clear the table
         }
+
         ServiceLocator.getLevelService().setCurrLevel(GdxGame.LevelType.LEVEL_1);
         game.setScreen(GdxGame.ScreenType.MAIN_GAME);  // Transition to the main game
     }

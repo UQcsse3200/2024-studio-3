@@ -33,10 +33,6 @@ public class LoseCutscene extends Cutscene {
         // Add scenes with background images, animations, text, and duration
 
         Scene scene1 = new Scene("images/Cutscenes/Graveyard_Scene.png");
-        //scene1.setImages(
-        //     new String[]{"images/meals/acai_bowl.png"},
-        //    new Vector2[] {new Vector2(4, 2)}
-        //);
 
         scene1.setSceneText(cutsceneText);
         scene1.setDuration(3.0f);

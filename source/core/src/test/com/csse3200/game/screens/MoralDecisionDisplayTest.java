@@ -1,5 +1,5 @@
 package com.csse3200.game.screens;
-import com.csse3200.game.areas.ForestGameArea;
+
 import com.csse3200.game.areas.GameArea;
 import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.entities.Entity;
@@ -22,13 +22,7 @@ public class MoralDecisionDisplayTest {
     @Mock
     private Entity entity;
 
-    @Mock
-    private MainGameScreen mockGame;
 
-    private GameArea gameArea;
-
-//    @Mock
-//    private Stage mockStage;
     @BeforeEach
     void setUp() {
         TerrainFactory factory = mock(TerrainFactory.class);

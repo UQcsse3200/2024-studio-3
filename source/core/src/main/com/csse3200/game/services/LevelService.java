@@ -10,6 +10,7 @@ public class LevelService {
     private static final Logger logger = LoggerFactory.getLogger(LevelService.class);
     private EventHandler levelEventHandler;
     private GdxGame.LevelType currLevel;
+    private int baseGold = 50;
     private int currGold;
     private boolean playerFinishedLevel;
 
@@ -19,12 +20,19 @@ public class LevelService {
     public LevelService() {
         levelEventHandler = new EventHandler();
         currLevel = GdxGame.LevelType.LEVEL_1;
-        currGold = 50;
+
+        currGold = baseGold; 
         playerFinishedLevel = false;
         levelEventHandler.addListener("startLevel", this::levelControl);
        // levelEventHandler.addListener("mapLevel", this::loadMap);
         //levelEventHandler.addListener("createCustomer", ForestGameArea::spawnCustomer);
         //ServiceLocator.getLevelService().getEvents().addListener("spawnCustomer", this::spawnCustomer);
+    }
+    public void reset() {
+        currLevel = GdxGame.LevelType.LEVEL_1; 
+        setCurrGold(baseGold); 
+        playerFinishedLevel = false; 
+        ServiceLocator.getLevelService().getEvents().trigger("startLevel", currLevel);
     }
 
     public void togglePlayerFinishedLevel() {

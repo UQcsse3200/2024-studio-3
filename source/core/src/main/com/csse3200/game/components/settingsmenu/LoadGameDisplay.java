@@ -1,34 +1,20 @@
 package com.csse3200.game.components.settingsmenu;
 
-import com.badlogic.gdx.Gdx;
 import com.csse3200.game.files.GameState;
-import com.badlogic.gdx.Graphics.DisplayMode;
-import com.badlogic.gdx.Graphics.Monitor;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.Event;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import com.badlogic.gdx.utils.Array;
-import com.csse3200.game.GdxGame;
-import com.csse3200.game.GdxGame.ScreenType;
-import com.csse3200.game.files.UserSettings;
-import com.csse3200.game.files.UserSettings.DisplaySettings;
-import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
-import com.csse3200.game.utils.StringDecorator;
 import com.csse3200.game.files.FileLoader;
 import com.csse3200.game.files.FileLoader.Location;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.csse3200.game.files.GameState;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import java.util.HashSet;
 import java.io.File;
-import java.util.Set;
 
 public class LoadGameDisplay extends UIComponent {
     private static final Logger logger = LoggerFactory.getLogger(LoadGameDisplay.class);

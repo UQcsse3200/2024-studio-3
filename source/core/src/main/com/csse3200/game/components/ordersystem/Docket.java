@@ -55,7 +55,7 @@ public class Docket extends UIComponent {
 
     /**
      * Gets the skin associated with this docket.
-     * @return: The skin associated with this docket
+     * @return The skin associated with this docket
      */
     public Skin getSkin() { return docketSkin; }
     /**

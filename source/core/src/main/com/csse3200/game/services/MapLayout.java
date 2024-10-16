@@ -2,24 +2,21 @@ package com.csse3200.game.services;
 
 
 import com.csse3200.game.GdxGame;
-import com.csse3200.game.areas.ForestGameArea;
-import com.csse3200.game.areas.GameArea;
 import com.csse3200.game.areas.map.BenchGenerator;
-import com.csse3200.game.areas.map.BenchLayout;
 import com.csse3200.game.areas.map.Map;
 import com.csse3200.game.entities.benches.Bench;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.factories.StationFactory;
 import com.csse3200.game.events.EventHandler;
-import com.csse3200.game.services.InteractableService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.*;
-import java.security.Provider.Service;
 import java.util.ArrayList;
-import java.util.Objects;
 
+/**
+ * Class to load the map layout from a text file
+ */
 public class MapLayout {
     private EventHandler mapEventHandler;
     private static final String mapBase = "images/map/map_base.txt";
@@ -34,13 +31,15 @@ public class MapLayout {
     private int mapWidth;
     private int mapHeight;
     private String mapSeparator;
-    private Bench bench;
 
     private final String[] validStations = {"b", "s", "u", "t", "c", "a", "E", "O", "B", "C", "G", "N", "S", "F"};
 
     private static final Logger logger = LoggerFactory.getLogger(MapLayout.class);
 
 
+    /**
+     * Constructor for the MapLayout class
+     */
     public MapLayout() {
         mapEventHandler = new EventHandler();
         mapEventHandler.addListener("load", this::load);
@@ -50,7 +49,7 @@ public class MapLayout {
         return mapEventHandler;
     }
 
-    /**
+    /** Load the map layout from a text file
      * Yab -> spawn vertical bench starting at column `a` that is `b` cells long
      * Xab -> spawn horizontal bench starting at column `a` that is `b` cells long
      * []a  -> for any station, spawns a station based on [] at column `a`
@@ -130,11 +129,15 @@ public class MapLayout {
                 logger.warn("Failed to close the reader: " + ex.getMessage());
             }
         }
-
         return new Map(benches, stations);
-
     }
 
+    /**
+     * Read a bench from the map file
+     * @param parts - the string to parse
+     * @param row - the row of the line
+     * @param col - the column index
+     */
     public void readBench(String[] parts, int row, int col) {
         String type = parts[col];
 
@@ -168,6 +171,13 @@ public class MapLayout {
         }
     }
 
+    /**
+     * Read a station from the map file
+     * @param type - the type of station
+     * @param col - the column of the station
+     * @param row - the row of the station
+     * @return - an Entity object
+     */
     public Entity readStation(String type, int col, int row) {
         Entity station;
         switch (type) {
@@ -224,6 +234,11 @@ public class MapLayout {
         return station;
     }
 
+    /**
+     * Validate a station
+     * @param str - the station to validate
+     * @return - a boolean indicating if the station is valid
+     */
     public boolean validateStation(String str) {
         for (String station : validStations) {
             if (str.equals(station)) {

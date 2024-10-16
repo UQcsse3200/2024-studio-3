@@ -1,7 +1,6 @@
 package com.csse3200.game.areas.map;
 
-import com.csse3200.game.components.maingame.GameBackgroundDisplay;
-import com.csse3200.game.entities.Entity;
+
 import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.entities.benches.Bench;
 import com.csse3200.game.extensions.GameExtension;
@@ -60,6 +59,58 @@ public class BenchGeneratorTest {
             assertEquals(4, benches.size()); //both work - how long the bench column is
         }
          */
+
+    }
+
+    @Test
+    void testCreateBenchRow() {
+        try(MockedConstruction<Bench> mockBench =
+                    Mockito.mockConstruction(Bench.class)){
+
+            ArrayList<Bench> benches =  benchGenerator.createBenchRow(1, 4, 5);
+            assertEquals(4, mockBench.constructed().size()); //both work - how many times a bench
+            // was initalised
+            assertEquals(4, benches.size()); //both work - how long the bench row is
+        }
+
+    }
+
+    @Test
+    void testSingleBench() {
+        try(MockedConstruction<Bench> mockBench =
+                    Mockito.mockConstruction(Bench.class)){
+
+            ArrayList<Bench> benches =  benchGenerator.singleBench(1, 4);
+            assertEquals(1, mockBench.constructed().size()); //both work - how many times a bench
+            // was initalised
+            assertEquals(1, benches.size()); //both work - how long the bench row is
+        }
+
+    }
+
+    @Test
+    void testSingleShadowBench() {
+        try(MockedConstruction<Bench> mockBench =
+                    Mockito.mockConstruction(Bench.class)){
+
+            ArrayList<Bench> benches =  benchGenerator.singleShadowBench(1, 4);
+            assertEquals(1, mockBench.constructed().size()); //both work - how many times a bench
+            // was initalised
+            assertEquals(1, benches.size()); //both work - how long the bench row is
+        }
+
+    }
+
+    @Test
+    void testSingleBlocker() {
+        try(MockedConstruction<Bench> mockBench =
+                    Mockito.mockConstruction(Bench.class)){
+
+            ArrayList<Bench> benches =  benchGenerator.singleBlocker(1, 4);
+            assertEquals(1, mockBench.constructed().size()); //both work - how many times a bench
+            // was initalised
+            assertEquals(1, benches.size()); //both work - how long the bench row is
+        }
 
     }
 }

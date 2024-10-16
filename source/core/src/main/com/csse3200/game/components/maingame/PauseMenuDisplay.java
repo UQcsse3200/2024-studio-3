@@ -119,7 +119,6 @@ public class PauseMenuDisplay extends UIComponent {
         TextButton saveBtn = new TextButton("Save", skin);
         TextButton loadBtn = new TextButton("Load", skin);
         TextButton restartBtn = new TextButton("Restart", skin);
-        TextButton settingsBtn = new TextButton("Settings", skin);
         TextButton exitBtn = new TextButton("Main Menu", skin);
         TextButton quitBtn = new TextButton("Quit", skin);
 
@@ -153,14 +152,6 @@ public class PauseMenuDisplay extends UIComponent {
             }
         });
 
-        settingsBtn.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent changeEvent, Actor actor) {
-                logger.debug("Settings button clicked");
-                entity.getEvents().trigger("setting");
-            }
-        });
-
         exitBtn.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent changeEvent, Actor actor) {
@@ -185,7 +176,6 @@ public class PauseMenuDisplay extends UIComponent {
         buttonTable.row();
         buttonTable.add(restartBtn).minWidth(250).minHeight(53).padTop(10);
         buttonTable.row();
-        buttonTable.add(settingsBtn).minWidth(250).minHeight(53).padTop(10);
         buttonTable.row();
         buttonTable.add(exitBtn).minWidth(250).minHeight(53).padTop(10);
         buttonTable.row();
