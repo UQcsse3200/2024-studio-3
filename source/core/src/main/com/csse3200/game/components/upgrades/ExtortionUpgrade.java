@@ -90,7 +90,7 @@ public class ExtortionUpgrade extends UIComponent implements Upgrade {
         if (isActive) {
             meter = new ProgressBar(0f, 1f, 0.01f, false, style);
             meter.setValue(1f); // Initially, the meter is full
-            meter.setPosition(8, 500);
+            meter.setPosition(30, 2500);
 
             // Set up text
             text = new Label("Upgrade", skin);
