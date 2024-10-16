@@ -3,8 +3,6 @@ package com.csse3200.game.components.maingame;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.Gdx;
-import com.csse3200.game.areas.ForestGameArea;
-import com.csse3200.game.entities.EntityService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.badlogic.gdx.graphics.Color;
@@ -34,7 +32,6 @@ import com.csse3200.game.components.cutscenes.*;
  */
 
 public class TextDisplay extends UIComponent {
-    private static final Logger logger = LoggerFactory.getLogger(TextDisplay.class);
     //String building variables
     private List<String> text;
     private int currentPart = 0;
@@ -51,6 +48,8 @@ public class TextDisplay extends UIComponent {
     private Table table;
     private final ScreenAdapter game;
     private String screen;
+    private static final Logger logger = LoggerFactory.getLogger(TextDisplay.class);
+
     public TextDisplay() {
         super();
         this.game = null;
@@ -86,13 +85,6 @@ public class TextDisplay extends UIComponent {
         return delay;
     }
 
-    /***
-     * Sets the delay of each character printing on the screen
-     * @param delay - A long which is the time it takes
-     */
-    public void setDelay(long delay) {
-        this.delay = delay;
-    }
 
     /***
      * This function will
@@ -155,7 +147,7 @@ public class TextDisplay extends UIComponent {
 
         setVisible(true);
         List<String> newText = new ArrayList<>();
-        textLength = text.length();
+        int textLength = text.length();
         StringBuilder temp = new StringBuilder();
         StringBuilder current = new StringBuilder();
 
@@ -166,6 +158,7 @@ public class TextDisplay extends UIComponent {
                 current = new StringBuilder();
             }
 
+            int textLimit = 60;
             if (i != 0 && i % textLimit == 0) {
                 temp.append(" (enter to continue)");
                 newText.add(temp.toString());
@@ -178,22 +171,17 @@ public class TextDisplay extends UIComponent {
         this.text = newText;
     }
 
-    /** Alternative method to set text with no modificiation or spiliting up **/
-    public void setTextRaw(String text) {
-
-        label.setText(text);
-    }
 
     /***
      * Gets the text in the blocks allocated by the algorithm
-     * @return an array of strings which is the text
+     * @return a List of strings which is the text
      */
     public List<String> getText() {
         return text;
     }
 
     /***
-     * Set visiblility of the textbox
+     * Set visibility of the textbox
      * @param value - True or False if the textbox is visible
      */
     public void setVisible(boolean value) {
@@ -261,9 +249,16 @@ public class TextDisplay extends UIComponent {
                         }
                     } else if (keycode == Input.Keys.Y && atEnd){
                         logger.info("WE'RE ALMOST THERE");
+                        currentCutscene = ServiceLocator.getCurrentCutscene();
+                        currentCutscene.setTextForScene(currentCutscene.currentScene);
 
+                        ServiceLocator.getDayNightService().getEvents().trigger("YesAtMoralDecision");
                     } else if (keycode == Input.Keys.N && atEnd){
                         logger.info("WE'RE ALMOST THERE NO");
+                        currentCutscene = ServiceLocator.getCurrentCutscene();
+                        currentCutscene.setTextForScene(currentCutscene.currentScene);
+
+                        ServiceLocator.getDayNightService().getEvents().trigger("NoAtMoralDecision");
                     }
                     return true;
                 }  else if (keycode == com.badlogic.gdx.Input.Keys.ENTER){
@@ -297,10 +292,6 @@ public class TextDisplay extends UIComponent {
     }
     public Table getTable() {
         return table;
-    }
-    public void disable() {
-        visible = false;
-        table.setVisible(false);
     }
 
     public void setScreen(String screen){

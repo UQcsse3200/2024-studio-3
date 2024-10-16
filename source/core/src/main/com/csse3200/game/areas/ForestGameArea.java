@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import com.csse3200.game.components.moral.MoralDayFour;
 import com.csse3200.game.areas.map.Map;
 import com.csse3200.game.services.*;
 import com.csse3200.game.services.MapLayout;
@@ -467,17 +466,10 @@ public class ForestGameArea extends GameArea {
 
 
   private Entity spawnPlayer() {
-    if (ServiceLocator.getPlayerService().getPlayer() != null) {
-      logger.warn("Player exist");
-      return ServiceLocator.getPlayerService().getPlayer();
-    }
-
-    Entity newPlayer = PlayerFactory.createPlayer();
+    Entity newPlayer;
+    newPlayer = PlayerFactory.createPlayer();
     spawnEntityAt(newPlayer, PLAYER_SPAWN, true, true);
     newPlayer.setPosition(PLAYER_SPAWN.x, 3.1f);
-
-    ServiceLocator.getPlayerService().registerPlayer(newPlayer);
-
     return newPlayer;
   }
 
@@ -798,14 +790,6 @@ public class ForestGameArea extends GameArea {
    */
   private void createMoralScreen() {
     Entity moralScreen = new Entity();
-    moralScreen
-            //.addComponent(new MoralDecisionDisplay())
-            //.addComponent(new MoralDayOne());
-            //.addComponent(new MoralDayTwo());
-            //addComponent(new MoralDayThree());
-            .addComponent(new MoralDayFour());
-//            .addComponent(new MoralDecision());
-
     ServiceLocator.getEntityService().registerMoral(moralScreen);
   }
 

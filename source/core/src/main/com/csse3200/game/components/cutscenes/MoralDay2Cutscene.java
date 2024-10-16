@@ -6,6 +6,8 @@ import com.csse3200.game.components.cutscenes.scenes.Scene;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
 
+import java.util.List;
+
 public class MoralDay2Cutscene extends Cutscene {
     public MoralDay2Cutscene() {
         super();
@@ -53,7 +55,7 @@ public class MoralDay2Cutscene extends Cutscene {
 
     private void createScene2() {
         Array<String> sceneText = new Array<>();
-        sceneText.add("Press 'y' for yes and 'no' for no");
+        sceneText.add("Press 'y' for yes and 'n' for no");
 
         String mafiaImage = "images/Cutscenes/Character Artwork/rhino_sprite.png";
         Vector2 mafiaPosition = new Vector2(3, -1);

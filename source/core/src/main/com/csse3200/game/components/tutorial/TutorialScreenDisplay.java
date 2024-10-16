@@ -41,7 +41,10 @@ public class TutorialScreenDisplay extends UIComponent {
     int i = 0;
 
     public TutorialScreenDisplay(GdxGame game) {
+
         this.game = game;
+//        this.orderTicketDisplay = new MainGameOrderTicketDisplay(ServiceLocator.getRenderService(), ServiceLocator.getPlayerService());
+//        this.orderBtnDisplay = new MainGameOrderBtnDisplay();
 
         if (this.game == null) {
             logger.error("Game null");
@@ -320,8 +323,8 @@ public class TutorialScreenDisplay extends UIComponent {
                 textDisplay.setText("Now use [ and ] keys to switch dockets.");
 
                 if (Gdx.input.isKeyJustPressed(Input.Keys.LEFT_BRACKET) || Gdx.input.isKeyJustPressed(Input.Keys.RIGHT_BRACKET)) {
-                    docketsShifted = true;
-                    logger.debug("Dockets shifted");
+                        docketsShifted = true;
+                        logger.debug("Dockets shifted");
                 }
 
                 if (docketsShifted) {
@@ -390,6 +393,7 @@ public class TutorialScreenDisplay extends UIComponent {
         if (table != null) {
             table.clear();
         }
+
         ServiceLocator.getLevelService().setCurrLevel(GdxGame.LevelType.LEVEL_1);
         game.setScreen(GdxGame.ScreenType.MAIN_GAME);
     }

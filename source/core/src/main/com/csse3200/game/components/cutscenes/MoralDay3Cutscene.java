@@ -6,6 +6,8 @@ import com.csse3200.game.components.cutscenes.scenes.Scene;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
 
+import java.util.List;
+
 public class MoralDay3Cutscene extends Cutscene {
     public MoralDay3Cutscene() {
         super();
@@ -22,6 +24,7 @@ public class MoralDay3Cutscene extends Cutscene {
         sceneText.add("Mafia Boss > I don't like inspectors poking around my business.");
         sceneText.add("Mafia Boss > We'll get rid of him tomorrow.");
         sceneText.add("Mafia Boss > Poison his food, and the problem's solved.");
+        sceneText.add("Mafia Boss > Take care of this, and I'll lower your rent.");
         sceneText.add("Mafia Boss > You in?");
 
 
