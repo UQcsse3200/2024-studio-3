@@ -114,6 +114,13 @@ public class DancePartyUpgradeTest {
         assertEquals(0f, dancePartyUpgrade.meter.getValue());
     }
 
+    @Test
+    void testDispose() {
+        dancePartyUpgrade.dispose();
+        verify(resourceService).unloadAssets(SpeedBootsUpgrade.whiteBgTexture);
+        verify(resourceService).unloadAssets(SpeedBootsUpgrade.greenTexture);
+    }
+
     @AfterEach
     void tearDown() {
         ServiceLocator.clear();
