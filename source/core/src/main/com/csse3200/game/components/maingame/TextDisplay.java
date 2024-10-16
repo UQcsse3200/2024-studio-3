@@ -139,7 +139,11 @@ public class TextDisplay extends UIComponent {
         if (Objects.equals(this.screen, "backstory")) {
             setUpBackstoryLayout();  // Safe to call after label is initialized
         }
-        setVisible(Objects.equals(this.screen, "cutscene") || Objects.equals(this.screen, "moralDecision"));
+
+        setVisible(Objects.equals(this.screen, "cutscene")
+                || Objects.equals(this.screen, "moralDecision")
+                || Objects.equals(this.screen, "backstory"));
+
         setupInputListener();
         entity.getEvents().addListener("SetText", this::setText);
     }
