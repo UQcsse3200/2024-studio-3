@@ -4,10 +4,10 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class PersonalCustomerEnumsTest {
+class PersonalCustomerEnumsTest {
 
     @Test
-    public void testEnumValues() {
+    void testEnumValues() {
         // Verify the enum contains the correct values
         PersonalCustomerEnums[] expectedValues = {
             PersonalCustomerEnums.HANK,
@@ -23,7 +23,7 @@ public class PersonalCustomerEnumsTest {
     }
 
     @Test
-    public void testEnumValueOf() {
+    void testEnumValueOf() {
         // Verify that each enum constant can be retrieved using valueOf
         assertEquals(PersonalCustomerEnums.HANK, PersonalCustomerEnums.valueOf("HANK"), "Enum should return HANK");
         assertEquals(PersonalCustomerEnums.LEWIS, PersonalCustomerEnums.valueOf("LEWIS"), "Enum should return LEWIS");
