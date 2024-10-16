@@ -8,10 +8,6 @@ import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.events.EventHandler;
 import com.csse3200.game.files.FileLoader;
 import com.csse3200.game.files.GameState;
-import com.csse3200.game.services.DayNightService;
-import com.csse3200.game.services.PlayerService;
-import com.csse3200.game.services.ServiceLocator;
-
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

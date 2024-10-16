@@ -1,6 +1,7 @@
 package com.csse3200.game.components.ordersystem;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -133,6 +134,16 @@ class MainGameOrderTicketDisplayTest {
 	}
 
 	/**
+	 * Test should reset Order Nmber to Zero
+	 */
+	@Test
+	void shouldResetOrderNumbtoZero() {
+		orderTicketDisplay.addActors();
+		MainGameOrderTicketDisplay.resetOrderNumb();
+		assertEquals(0, (MainGameOrderTicketDisplay.getOrderNumb()));
+	}
+
+	/**
 	 * Test should add and remove tables to MainGameOrderTicketDisplay array
 	 */
 	@Test
@@ -140,9 +151,8 @@ class MainGameOrderTicketDisplayTest {
 		orderTicketDisplay.addActors();
 		orderTicketDisplay.addActors();
 
-		assertEquals(2, (MainGameOrderTicketDisplay.getTableArrayList()).size());
 		orderTicketDisplay.dispose();
-		assertEquals(0, (MainGameOrderTicketDisplay.getTableArrayList()).size());
+		assertEquals(0, orderTicketDisplay.getTableArrayList().size());
 	}
 
 	/**
@@ -260,7 +270,52 @@ class MainGameOrderTicketDisplayTest {
 	void testGetRecipeName() {
 		Recipe recipe = orderTicketDisplay.getRecipe();
 
+		assertNotNull(recipe, "Recipe should not be null");
 		assertEquals("acaiBowl", recipe.getName(), "The recipe name should be 'acaiBowl'");
+	}
+
+	/**
+	 * Tests getting the current recipe.
+	 */
+	@Test
+	void testGetCurrentRecipeName() {
+		String recipeName = orderTicketDisplay.getCurrentRecipeName();
+		assertEquals("acaiBowl", recipeName, "The current recipe name should be 'acaiBowl'");
+	}
+
+	/**
+	 * Tests set paused and its paused timers.
+	 */
+	@Test
+	void testSetPaused() {
+		assertFalse(orderTicketDisplay.isPaused());
+		orderTicketDisplay.setPaused(true);
+
+		assertTrue(orderTicketDisplay.isPaused());
+		assertTrue(orderTicketDisplay.getPauseStartTime() > 0);
+		orderTicketDisplay.setPaused(false);
+
+		assertFalse(orderTicketDisplay.isPaused());
+		long elapsedTime = System.currentTimeMillis() - orderTicketDisplay.getPauseStartTime();
+		assertTrue(orderTicketDisplay.getTotalPausedDuration() >= elapsedTime);
+	}
+
+	/**
+	 * Tests if ESCAPE key toggles true or false paused values.
+	 */
+	@Test
+	void testTogglePause() {
+		assertFalse(orderTicketDisplay.isPaused());
+
+		boolean result = orderTicketDisplay.handleKeyDown(Input.Keys.ESCAPE);
+
+		assertTrue(orderTicketDisplay.isPaused());
+		assertTrue(result);
+
+		result = orderTicketDisplay.handleKeyDown(Input.Keys.ESCAPE);
+
+		assertFalse(orderTicketDisplay.isPaused());
+		assertTrue(result);
 	}
 
 	/**

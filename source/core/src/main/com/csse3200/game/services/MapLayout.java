@@ -2,24 +2,21 @@ package com.csse3200.game.services;
 
 
 import com.csse3200.game.GdxGame;
-import com.csse3200.game.areas.ForestGameArea;
-import com.csse3200.game.areas.GameArea;
 import com.csse3200.game.areas.map.BenchGenerator;
-import com.csse3200.game.areas.map.BenchLayout;
 import com.csse3200.game.areas.map.Map;
 import com.csse3200.game.entities.benches.Bench;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.factories.StationFactory;
 import com.csse3200.game.events.EventHandler;
-import com.csse3200.game.services.InteractableService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.*;
-import java.security.Provider.Service;
 import java.util.ArrayList;
-import java.util.Objects;
 
+/**
+ * Class to load the map layout from a text file
+ */
 public class MapLayout {
     private EventHandler mapEventHandler;
     private static final String mapBase = "images/map/map_base.txt";
@@ -28,21 +25,21 @@ public class MapLayout {
     private static final String mapLevel3 = "images/map/map_three.txt";
     private static final String mapLevel4 = "images/map/map_four.txt";
     private static final String mapLevel5 = "images/map/map_five.txt";
-    private int strToNum;
-    private int strToNum2;
     private ArrayList<Bench> benches = new ArrayList<Bench>();
     private ArrayList<Entity> stations = new ArrayList<Entity>();
     private String mapName;
     private int mapWidth;
     private int mapHeight;
     private String mapSeparator;
-    private Bench bench;
 
     private final String[] validStations = {"b", "s", "u", "t", "c", "a", "E", "O", "B", "C", "G", "N", "S", "F"};
 
     private static final Logger logger = LoggerFactory.getLogger(MapLayout.class);
 
 
+    /**
+     * Constructor for the MapLayout class
+     */
     public MapLayout() {
         mapEventHandler = new EventHandler();
         mapEventHandler.addListener("load", this::load);
@@ -52,7 +49,7 @@ public class MapLayout {
         return mapEventHandler;
     }
 
-    /**
+    /** Load the map layout from a text file
      * Yab -> spawn vertical bench starting at column `a` that is `b` cells long
      * Xab -> spawn horizontal bench starting at column `a` that is `b` cells long
      * []a  -> for any station, spawns a station based on [] at column `a`
@@ -99,66 +96,28 @@ public class MapLayout {
             }
             int row = 4;
 
+            long time1 = ServiceLocator.getTimeSource().getTime();
             // Read the file line by line
             while ((line = reader.readLine()) != null) {
-                // Log the entire line
-                logger.info("Line " + row + ": " + line);
-
+                long lineTime = ServiceLocator.getTimeSource().getTime();
 
                 // Split the line into individual characters
                 String[] parts = line.split("");
 
-                for (int col = 0; col < parts.length; col++) {
-                    String square = parts[col];
+                for (int col = 0; col < parts.length; col+=4) {
+                    //long colTime = ServiceLocator.getTimeSource().getTime();
 
-                    // Log the current square being processed a
-//                    logger.info("Checking square at row " + row + ", column " + col + ": " + square);
+                    benches.addAll(parseLine(parts, row, col));
 
-                    // Spawn single bench row when 'X'
-                    if (square.equals("X")) {
-                        strToNum = Integer.valueOf(parts[col + 1]);
-                        if (parts.length == 4) {
-                            strToNum2 = Integer.valueOf(parts[col + 2]);
-                            strToNum2 = strToNum2 + Integer.valueOf(parts[col + 3]);
-                        } else {
-                            strToNum2 = 1;
-                        }
-                        strToNum2 = Integer.valueOf(parts[col + 2] );
-                        benches.addAll(readBench("X", strToNum, strToNum2, row));
-                        col += 3;
-//                        logger.info("Spawning entity at row " + row + ", column " + col);
-                    }
-                    // Spawn bench column when 'Y'
-                    else if (square.equals("Y")) {
-                        strToNum = Integer.valueOf(parts[col + 1]);
-                        strToNum2 = Integer.valueOf(parts[col + 2]);
-                        benches.addAll(readBench("Y", strToNum, strToNum2, row));
-                        col += 3;
-                        logger.info("Spawning entity at row " + row + ", column " + col);
-                    }
-                    else if (square.equals("Q")) {
-                        strToNum = Integer.valueOf(parts[col + 1]);
-
-                        benches.addAll(readBench("Q", strToNum, 1, row));
-                        col += 3;
-                        logger.info("Spawning entity at row " + row + ", column " + col);
-                    }
-                    else if (square.equals("P")) {
-                        strToNum = Integer.valueOf(parts[col + 1]);
-
-                        benches.addAll(readBench("P", strToNum, 1, row));
-                        col += 3;
-                        logger.info("Spawning entity at row " + row + ", column " + col);
-                    }
-                    // Spawn a station
-                    else if (validateStation(square)) {
-                        strToNum = Integer.valueOf(parts[col + 1]);
-                        stations.add(readStation(square, strToNum, row));
-                        col += 3;
-                    }
+                    //logger.info("Col " + col + " (" + (ServiceLocator.getTimeSource().getTime() - colTime) + "ms)" + ": " + line);
                 }
+                // Log the entire line
+                logger.info("Line " + row + " (" + (ServiceLocator.getTimeSource().getTime() - lineTime) + "ms)" + ": " + line);
+
                 row++;
             }
+            long time2 = ServiceLocator.getTimeSource().getTime();
+            logger.info("Map file read: {}ms", time2 - time1);
         } catch (IOException e) {
             logger.warn("An error occurred while reading the file: " + e.getMessage());
         } finally {
@@ -171,33 +130,58 @@ public class MapLayout {
             }
         }
         return new Map(benches, stations);
-
     }
 
-    public ArrayList<Bench> readBench(String type, int startCol, int size, int row) {
-        switch (type) {
-            case "X":
-                if (size == 1) {
-                    return BenchGenerator.singleBench(startCol + 4, row - 4);
-                }
-            case "Q":
-                if (size == 1) {
-                    return BenchGenerator.singleShadowBench(startCol + 4, row - 4);
-                }
-            case "P":
-                if (size == 1) {
-                    return BenchGenerator.singleBlocker(startCol + 4, row - 4);
-                }
+    /**
+     * parses a line from the map file
+     * @param parts - the string to parse
+     * @param row - the row of the line
+     * @param col - the column index
+     * @return the list of benches
+     */
+    public ArrayList<Bench> parseLine(String[] parts, int row, int col)
+    {
+        if (parts == null) return new ArrayList<Bench>();
+        String type = parts[col];
 
-                return BenchGenerator.createBenchRow(startCol + 4, startCol + size +4, row - 4);
-            case "Y":
-                return BenchGenerator.createBenchColumn(startCol + 4, row - 4, row + size - 4);
+        // Log the current square being processed a
+        // logger.info("Checking square at row " + row + ", column " + col + ": " + square);
 
-            default:
-                return new ArrayList<Bench>();
+        // Spawn single bench row when 'X'
+        if (type.equals("X")) {
+            int strToNum = Integer.valueOf(parts[col + 1]);
+            int strToNum2 = Integer.valueOf(parts[col + 2] );
+            return BenchGenerator.createBenchRow(strToNum + 4, strToNum + 3 + strToNum2, row - 4);
         }
+        // Spawn bench column when 'Y'
+        else if (type.equals("Y")) {
+            int strToNum = Integer.valueOf(parts[col + 1]);
+            int strToNum2 = Integer.valueOf(parts[col + 2]);
+            return BenchGenerator.createBenchColumn(strToNum + 4, row - 4, row + strToNum2 - 4);
+        }
+        else if (type.equals("Q")) {
+            int strToNum = Integer.valueOf(parts[col + 1]);
+            return BenchGenerator.singleShadowBench(strToNum + 4, row - 4);
+        }
+        else if (type.equals("P")) {
+            int strToNum = Integer.valueOf(parts[col + 1]);
+            return BenchGenerator.singleBlocker(strToNum + 4, row - 4);
+        }
+        // Spawn a station
+        else if (validateStation(type)) {
+            int strToNum = Integer.valueOf(parts[col + 1]);
+            stations.add(readStation(type, strToNum, row));
+        }
+        return new ArrayList<Bench>();
     }
 
+    /**
+     * Read a station from the map file
+     * @param type - the type of station
+     * @param col - the column of the station
+     * @param row - the row of the station
+     * @return - an Entity object
+     */
     public Entity readStation(String type, int col, int row) {
         Entity station;
         switch (type) {
@@ -254,6 +238,11 @@ public class MapLayout {
         return station;
     }
 
+    /**
+     * Validate a station
+     * @param str - the station to validate
+     * @return - a boolean indicating if the station is valid
+     */
     public boolean validateStation(String str) {
         for (String station : validStations) {
             if (str.equals(station)) {

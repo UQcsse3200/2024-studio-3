@@ -33,9 +33,7 @@ public class PlateComponent extends ItemComponent {
      * Creating the component. Sets up event listeners for plate
      */
     @Override
-    public void create() {
-        //entity.getEvents().addListener("interactWithPlate", this::interactWithPlate);
-    }
+    public void create() {}
 
     /**
      * Update plate, nothing to see here.

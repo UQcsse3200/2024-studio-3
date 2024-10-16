@@ -56,6 +56,7 @@ public class LevelComponent extends Component {
         levelFive.add("LEWIS");
 
         acceptableCustomers = new HashMap<>();
+        acceptableCustomers.put(GdxGame.LevelType.LEVEL_0, levelOne);
         acceptableCustomers.put(GdxGame.LevelType.LEVEL_1, levelOne);
         acceptableCustomers.put(GdxGame.LevelType.LEVEL_2, levelTwo);
         acceptableCustomers.put(GdxGame.LevelType.LEVEL_3, levelThree);
@@ -100,9 +101,9 @@ public class LevelComponent extends Component {
             long elapsedTime = TimeUtils.timeSinceMillis(spawnStartTime);
             long elapsedTimeSecs = elapsedTime / 1000;
             initialiseCustomerNameArr();
-            // if more than 60 secs or no customers then spawn. keep track of limits on customer num size
+            // if more than 40 secs or no customers then spawn. keep track of limits on customer num size
             // this can certainly be changed I just put in an arbitrary time
-            if ((currentCustomersLinedUp == 0 || elapsedTimeSecs >= 60) && numbCustomersSpawned < levelSpawnCap && currentCustomersLinedUp < 5) {
+            if ((currentCustomersLinedUp == 0 || elapsedTimeSecs >= 40) && numbCustomersSpawned < levelSpawnCap && currentCustomersLinedUp < 3) {
                 setSpawnStartTime();
                 customerSpawned();
                 spawnCustomer();
@@ -112,6 +113,11 @@ public class LevelComponent extends Component {
                     logger.info("Hit the spawn limit of {} with {}", getLevelSpawnCap(), getNumbCustomersSpawned());
                     toggleNowSpawning();
                 }
+            }
+            // say they "left" the lineup if 40 secs have passed to trigger the next spawning
+            // NOTE: this does NOT change where the customer is or remove them, it just triggers the next spawning
+            if (elapsedTimeSecs >= 40) {
+                customerLeftLineUp();
             }
         }
     }
@@ -136,6 +142,8 @@ public class LevelComponent extends Component {
         customerSpawnController.getEvents().trigger(customerNameArray.get(index));
         logger.info("Spawned {}", customerNameArray.get(index));
         ServiceLocator.getLevelService().getEvents().trigger("customerSpawned", customerNameArray.get(index));
+        // add to "line up" (not actually but for our purposes)
+        customerJoinedLineUp();
     }
 
     /**

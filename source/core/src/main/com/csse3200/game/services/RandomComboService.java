@@ -2,15 +2,10 @@ package com.csse3200.game.services;
 
 
 import com.csse3200.game.components.Component;
-import com.csse3200.game.components.maingame.PauseMenuDisplay;
 import com.csse3200.game.events.EventHandler;
-import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.ArrayList;
 import java.util.Random;
-import java.util.List;
 
 /**
  * The RandomComboService class is responsible for managing and activating random upgrades
@@ -21,12 +16,11 @@ import java.util.List;
  */
 
 public class RandomComboService extends Component {
-    private static final Logger logger = LoggerFactory.getLogger(RandomComboService.class);
-    // private List<Upgrade> upgrades;
+
     private Random random;
-    private int randomChoice;
+    int randomChoice;
     private EventHandler eventHandler;
-    private int total_upgrades = 3;
+    private int total_upgrades = 4;
 
     public RandomComboService() {
         this(new EventHandler());
@@ -55,6 +49,9 @@ public class RandomComboService extends Component {
             case 2:
                 upgrade = "Speed";
                 break;
+            case 3:
+                upgrade = "Dance party";
+                break;
             default:
                 upgrade = "";
         }
@@ -68,9 +65,13 @@ public class RandomComboService extends Component {
      * by pressing the "YES" button in the game's UI.
      */
     public void activateUpgrade() {
-        eventHandler.trigger(getSelectedUpgrade()); 
-        
+        eventHandler.trigger(getSelectedUpgrade());
     }
+
+    public void deactivateUpgrade() {
+        eventHandler.trigger(getSelectedUpgrade() + "off");
+    }
+
 
     public EventHandler getEvents() {
         return eventHandler;

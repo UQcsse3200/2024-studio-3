@@ -19,7 +19,7 @@ public class BenchLayout {
     public static ArrayList<Bench> levelOne() {
         ArrayList<Bench> benches = new ArrayList<>();
         // Bottom bench row
-        benches.addAll(BenchGenerator.createBenchRowFlat(4, 15, 0));
+        //benches.addAll(BenchGenerator.createBenchRowFlat(4, 15, 0));
         // Top shadow bench row
         benches.addAll(BenchGenerator.createBenchRow(4, 6, 6));
         // Left vertical bench column
@@ -27,7 +27,7 @@ public class BenchLayout {
         benches.addAll(BenchGenerator.createBenchColumn(4, 3, 6));
 
         // Random single bench
-        benches.add(new Bench(7, 6));
+        //benches.add(new Bench(7, 6));
         for (Bench bench : benches) {
             LOGGER.log(Level.INFO, "added bench: " + bench.type + ", " + bench.x + ", " + bench.y);
         }

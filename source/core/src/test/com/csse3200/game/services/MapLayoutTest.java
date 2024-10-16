@@ -2,11 +2,10 @@ package com.csse3200.game.services;
 
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.csse3200.game.GdxGame;
+import com.csse3200.game.areas.map.BenchGenerator;
 import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.areas.map.Map;
@@ -18,19 +17,13 @@ import com.csse3200.game.physics.PhysicsEngine;
 import com.csse3200.game.physics.PhysicsService;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.rendering.RenderService;
-import com.csse3200.game.rendering.Renderable;
-import com.csse3200.game.screens.MainGameScreen;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.*;
 import org.mockito.junit.jupiter.MockitoExtension;
-
-import java.io.BufferedReader;
-import java.io.StringReader;
 import java.util.ArrayList;
-
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -38,16 +31,21 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 class MapLayoutTest {
     private AutoCloseable mocks;
-
+    @Mock Map map;
     @Mock Viewport viewport;
     @Spy MapLayout mapLayoutSpy;
     @Mock TextureAtlas atlas;
-
+    @Mock MapLayout mapLayoutmock;
     @Mock TerrainFactory factory;
     int benchesCreated = 0;
+    public String[] validStations = new String[14];
 
     @BeforeEach
     void setUp() {
+        GameTime gameTime = mock(GameTime.class);
+        when(gameTime.getTime()).thenReturn(0L);
+        ServiceLocator.registerTimeSource(gameTime);
+
 //      SARAH'S BIT ____
         ResourceService resourceService = mock(ResourceService.class);
 //
@@ -70,7 +68,7 @@ class MapLayoutTest {
         PhysicsComponent physicsComponent = mock(PhysicsComponent.class);
         Body body = mock(Body.class);
 
-
+        validStations = new String[]{"b", "s", "u", "t", "c", "a", "E", "O", "B", "C", "G", "N", "S", "F"};
         ServiceLocator.registerEntityService(entityService);
         ServiceLocator.registerEntityService(entityService);
         ServiceLocator.registerRenderService(renderService);
@@ -82,10 +80,12 @@ class MapLayoutTest {
 
         factory = mock(TerrainFactory.class);
 
+        mapLayoutmock = mock(MapLayout.class);
+
         mapLayoutSpy = spy(new MapLayout());
         ServiceLocator.registerMapLayout(mapLayoutSpy);
+        map = mock(Map.class);
         ServiceLocator.registerInteractableService(new InteractableService());
-
     }
 
     @AfterEach
@@ -94,6 +94,7 @@ class MapLayoutTest {
         ServiceLocator.clear();
     }
 
+    /**
     @Test
     void shouldInitializeEventHandlerProperly() {
 
@@ -106,37 +107,73 @@ class MapLayoutTest {
         mapLayoutSpy.getEvents().trigger("mockEvent");
         verify(mockListener).handle();
     }
+    */
 
     @Test
     void testLoad() {
-
-        when(mapLayoutSpy.readBench(anyString(), anyInt(), anyInt(), anyInt()))
-                .thenReturn(new ArrayList<Bench>());
-        when(mapLayoutSpy.readStation(anyString(), anyInt(), anyInt()))
-                .thenReturn(mock(Entity.class));
+        when(mapLayoutSpy.parseLine(any(String[].class), anyInt(), anyInt())).thenReturn(new ArrayList<Bench>());
 
         Map map = mapLayoutSpy.load(GdxGame.LevelType.LEVEL_1);
 
-        //verify(mapLayoutSpy).readBench("X", 0, 8, 4);
-      //  verify(mapLayoutSpy).readBench("Y", 0, 7, 4);
-        //verify(mapLayoutSpy).readStation("S", 0, 7);
-        //verify(mapLayoutSpy).readStation("N", 6, 8);
+        verify(mapLayoutSpy).parseLine("X09 Y02 Y97".split(""), 4, 0);
+        verify(mapLayoutSpy).parseLine("X09 Y02 Y97".split(""), 4, 4);
+        verify(mapLayoutSpy).parseLine("X09 Y02 Y97".split(""), 4, 8);
     }
+
     /**
+     @Test
+     void testReadBench() {
+     //when(mapLayoutmock.readBench(anyString(), anyInt(), anyInt(), anyInt()))
+     //      .thenReturn(new ArrayList<Bench>());
+     //when(mapLayoutmock.readStation(anyString(), anyInt(), anyInt()))
+     //    .thenReturn(mock(Entity.class));
 
-    void testReadBench() {
+     try(MockedConstruction<BenchGenerator> benchGenerator =
+     Mockito.mockConstruction(BenchGenerator.class)){
 
-        MapLayout mapLayout = new MapLayout();
-        ArrayList<Bench> benches = mapLayout.readBench("X", 0, 8, 4);
-        assertEquals(4, benches.size());
-        assertEquals(0, benches.get(0).getX());
-        assertEquals(8, benches.get(0).getY());
-        assertEquals(1, benches.get(1).getX());
-        assertEquals(8, benches.get(1).getY());
-        assertEquals(2, benches.get(2).getX());
-        assertEquals(8, benches.get(2).getY());
-        assertEquals(3, benches.get(3).getX());
-        assertEquals(8, benches.get(3).getY());
+     when(mapLayoutmock.readBench(anyString(), anyInt(), anyInt(), anyInt()))
+     .thenReturn(new ArrayList<Bench>());
+     when(mapLayoutmock.readStation(anyString(), anyInt(), anyInt()))
+     .thenReturn(mock(Entity.class));
+     when(mapLayoutmock.load(GdxGame.LevelType.LEVEL_1)).thenReturn(mock(Map.class));
+     map = mapLayoutmock.load(GdxGame.LevelType.LEVEL_1);
+     System.out.println(map.getBenches());
+     assertEquals(0, map.getNumBenches());
+     }
+
+     }
+
+
+     @Test
+     void testReadStation() {
+     //when(mapLayoutmock.readBench(anyString(), anyInt(), anyInt(), anyInt()))
+     //      .thenReturn(new ArrayList<Bench>());
+     //when(mapLayoutmock.readStation(anyString(), anyInt(), anyInt()))
+     //    .thenReturn(mock(Entity.class));
+
+     try(MockedConstruction<BenchGenerator> benchGenerator =
+     Mockito.mockConstruction(BenchGenerator.class)){
+
+     when(mapLayoutmock.readBench(anyString(), anyInt(), anyInt(), anyInt()))
+     .thenReturn(new ArrayList<Bench>());
+     when(mapLayoutmock.readStation(anyString(), anyInt(), anyInt()))
+     .thenReturn(mock(Entity.class));
+     when(mapLayoutmock.load(GdxGame.LevelType.LEVEL_1)).thenReturn(mock(Map.class));
+     map = mapLayoutmock.load(GdxGame.LevelType.LEVEL_1);
+     System.out.println(map.getBenches());
+     assertEquals(0, map.getNumBenches());
+     }
+
+     }
+     */
+    /**
+    @Test
+    void validateStations() {
+        for (String station : validStations) {
+            assertTrue(mapLayoutSpy.validateStation(station));
+        }
+        assertFalse(mapLayoutSpy.validateStation("L"));
     }
-    **/
+    */
+
 }

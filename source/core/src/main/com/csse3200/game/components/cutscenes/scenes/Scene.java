@@ -125,8 +125,5 @@ public class Scene {
     public void setDuration(float duration) {
         this.duration = duration;
     }
-
-    public Array<String> getCutsceneText() {
-        return sceneText; // Make sure sceneText is defined as Array<String>
-    }
+    
 }
