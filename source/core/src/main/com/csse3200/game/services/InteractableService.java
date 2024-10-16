@@ -17,7 +17,7 @@ import java.util.HashMap;
 public class InteractableService {
 
     // This assumes the position of the entity is static in the world
-    private final Map<Entity, Vector2> interactables = new HashMap<Entity, Vector2>();
+    private final Map<Entity, Vector2> interactables = new HashMap<>();
     
     /**
      * Register an interactable enitity to the service

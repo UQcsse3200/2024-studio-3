@@ -1,0 +1,13 @@
+{
+day: 5
+money: 100
+ModTime: 15-10-2024_18-36-11
+decisions: [
+	{
+		statement: null
+		isGood: false
+		decisionMade: null
+		decisionPoints: 0
+	}
+]
+}

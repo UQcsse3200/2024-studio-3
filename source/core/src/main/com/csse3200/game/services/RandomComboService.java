@@ -3,8 +3,6 @@ package com.csse3200.game.services;
 
 import com.csse3200.game.components.Component;
 import com.csse3200.game.events.EventHandler;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import java.util.Random;
 
 /**
@@ -20,7 +18,7 @@ public class RandomComboService extends Component {
     private Random random;
     int randomChoice;
     private EventHandler eventHandler;
-    private int total_upgrades = 4;
+    private int totalUpgrades = 4;
 
     public RandomComboService() {
         this(new EventHandler());
@@ -29,7 +27,7 @@ public class RandomComboService extends Component {
         super();
         this.eventHandler = eventHandler;
         this.random = new Random();
-        randomChoice = random.nextInt(total_upgrades); 
+        randomChoice = random.nextInt(totalUpgrades);
     }
 
     /**
