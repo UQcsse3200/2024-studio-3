@@ -20,6 +20,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import java.util.Arrays;
 import java.util.List;
 
+//import javax.swing.text.html.parser.Entity;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -39,6 +41,7 @@ class StationMealComponentTest {
     protected GameTime mockTime;
     protected InventoryDisplay inventoryDisplay;
     protected List<String> acceptableItems;
+    protected Entity mockPlate;
 
     @BeforeEach
     void setUp() {
@@ -58,6 +61,7 @@ class StationMealComponentTest {
         mockEntity = mock(Entity.class);
         mockStation = mock(Entity.class);
         mockMealEntity = mock(Entity.class);
+        mockPlate = mock(Entity.class);
         mockStationEvents = mock(EventHandler.class);
         mockMealEventHandler = mock(EventHandler.class);
 
@@ -88,7 +92,7 @@ class StationMealComponentTest {
         // all acceptable items in the game (only ingredients might need to change)
         acceptableItems = Arrays.asList(
                 "fish", "banana", "beef", "acai", "lettuce",
-                "cucumber", "tomato", "strawberry", "chocolate"
+                "cucumber", "tomato", "strawberry", "chocolate", "plate"
         );
 
         // initialise the station meal component
@@ -180,9 +184,11 @@ class StationMealComponentTest {
         // acai banana
         ItemComponent acai = new IngredientComponent("acai", ItemType.ACAI, 1, 0, 0, "unknown");
         ItemComponent banana = new IngredientComponent("banana", ItemType.BANANA, 1, 0, 0, "unknown");
+        PlateComponent plate = new PlateComponent(0);
         // add items and mock keypress for combining
         stationInventory.addItem(acai);
         stationInventory.addItem(banana);
+        stationInventory.addItem(plate);
         mealHandler.handleInteraction(playerInventory, inventoryDisplay, "combine");
         // check if any component in inventory is of an açaí bowl meal type
         boolean found = false;
@@ -202,10 +208,12 @@ class StationMealComponentTest {
         ItemComponent strawberry = new IngredientComponent("strawberry", ItemType.STRAWBERRY, 1, 0, 0, "unknown");
         ItemComponent banana = new IngredientComponent("banana", ItemType.BANANA, 1, 0, 0, "unknown");
         ItemComponent chocolate = new IngredientComponent("chocolate", ItemType.ACAI, 1, 0, 0, "unknown");
+        PlateComponent plate = new PlateComponent(0);
         // add items and mock keypress for combining
         stationInventory.addItem(strawberry);
         stationInventory.addItem(banana);
         stationInventory.addItem(chocolate);
+        stationInventory.addItem(plate);
         mealHandler.handleInteraction(playerInventory, inventoryDisplay, "combine");
         // check if any component in inventory is of a banana split meal type
         boolean found = false;
@@ -224,9 +232,11 @@ class StationMealComponentTest {
         // banana strawberry
         ItemComponent strawberry = new IngredientComponent("strawberry", ItemType.STRAWBERRY, 1, 0, 0, "unknown");
         ItemComponent banana = new IngredientComponent("banana", ItemType.BANANA, 1, 0, 0, "unknown");
+        PlateComponent plate = new PlateComponent(0);
         // add items and mock keypress for combining
         stationInventory.addItem(strawberry);
         stationInventory.addItem(banana);
+        stationInventory.addItem(plate);
         mealHandler.handleInteraction(playerInventory, inventoryDisplay, "combine");
         // check if any component in inventory is of a fruit salad meal type
         boolean found = false;
@@ -246,10 +256,12 @@ class StationMealComponentTest {
         ItemComponent tomato = new IngredientComponent("tomato", ItemType.TOMATO, 1, 0, 0, "unknown");
         ItemComponent cucumber = new IngredientComponent("cucumber", ItemType.CUCUMBER, 1, 0, 0, "unknown");
         ItemComponent lettuce = new IngredientComponent("lettuce", ItemType.LETTUCE, 1, 0, 0, "unknown");
+        PlateComponent plate = new PlateComponent(0);
         // add items and mock keypress for combining
         stationInventory.addItem(tomato);
         stationInventory.addItem(cucumber);
         stationInventory.addItem(lettuce);
+        stationInventory.addItem(plate);
         mealHandler.handleInteraction(playerInventory, inventoryDisplay, "combine");
         // check if any component in inventory is of a salad meal type
         boolean found = false;
@@ -269,10 +281,12 @@ class StationMealComponentTest {
         ItemComponent tomato = new IngredientComponent("tomato", ItemType.TOMATO, 1, 0, 0, "unknown");
         ItemComponent cucumber = new IngredientComponent("cucumber", ItemType.CUCUMBER, 1, 0, 0, "unknown");
         ItemComponent beef = new IngredientComponent("beef", ItemType.BEEF, 1, 0, 0, "unknown");
+        PlateComponent plate = new PlateComponent(0);
         // add items and mock keypress for combining
         stationInventory.addItem(tomato);
         stationInventory.addItem(cucumber);
         stationInventory.addItem(beef);
+        stationInventory.addItem(plate);
         mealHandler.handleInteraction(playerInventory, inventoryDisplay, "combine");
         // check if any component in inventory is of a steak meal type
         boolean found = false;
@@ -393,10 +407,12 @@ class StationMealComponentTest {
     @Test
     void onlyMealShouldBeTransferredToPlayerWhenMealIsMade() {
         ItemComponent strawberry = new IngredientComponent("strawberry", ItemType.STRAWBERRY, 1, 0, 0, "unknown");
-        playerInventory.addItem(strawberry);
-
         ItemComponent banana = new IngredientComponent("banana", ItemType.BANANA, 1, 0, 0, "unknown");
+        PlateComponent plate = new PlateComponent(0);
+        
+        playerInventory.addItem(strawberry);
         stationInventory.addItem(banana);
+        stationInventory.addItem(plate);
 
         mealHandler.handleInteraction(playerInventory, inventoryDisplay, "receive");
         assertTrue(playerInventory.isEmpty());

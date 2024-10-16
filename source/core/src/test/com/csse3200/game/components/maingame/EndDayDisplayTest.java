@@ -71,6 +71,8 @@ class EndDayDisplayTest {
     DayNightService dayNightService;
     LevelService levelService;
     EndDayDisplay endDayDisplay;
+    @Mock
+    RandomComboService randomComboService;
 
     /**
      * Sets up the environment before each test by initializing services
@@ -90,6 +92,7 @@ class EndDayDisplayTest {
         ServiceLocator.registerResourceService(resourceService);
         ServiceLocator.registerLevelService(levelService);
         ServiceLocator.registerTimeSource(gameTime);
+        ServiceLocator.registerRandomComboService(randomComboService);
         dayNightService = new DayNightService();
         ServiceLocator.registerDayNightService(dayNightService);
         ServiceLocator.registerGameScreen(mainGameScreen);
