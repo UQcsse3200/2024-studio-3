@@ -199,6 +199,16 @@ class EndDayDisplayTest {
     }
 
     @Test
+    void testHandlePassedCustomer() {
+        String customerName = "Alice";
+
+        endDayDisplay.handlePassedCustomer(customerName);
+
+        // Check if the customer name is added correctly and converted to upper case
+        assertTrue(endDayDisplay.passedCustomerArray.contains(customerName.toUpperCase()));
+    }
+
+    @Test
     void testShow() {
         endDayDisplay.create();
         endDayDisplay.show();
