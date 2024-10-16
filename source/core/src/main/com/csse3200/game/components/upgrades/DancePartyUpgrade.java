@@ -175,13 +175,13 @@ public class DancePartyUpgrade extends UIComponent implements Upgrade {
             }
         }
 
-        if (Gdx.input.isKeyJustPressed(Input.Keys.V)) {
-            if (isActive) {
-                deactivate();
-            } else {
-                activate();
-            }
-        }
+//        if (Gdx.input.isKeyJustPressed(Input.Keys.V)) {
+//            if (isActive) {
+//                deactivate();
+//            } else {
+//                activate();
+//            }
+//        }
     }
 
     @Override
@@ -209,5 +209,9 @@ public class DancePartyUpgrade extends UIComponent implements Upgrade {
 
     public long getUpgradeDuration() {
         return UPGRADE_DURATION;
+    }
+
+    public boolean getPlaySound() {
+        return playSound;
     }
 }
