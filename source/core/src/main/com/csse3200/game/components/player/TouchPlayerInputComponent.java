@@ -1,16 +1,11 @@
 package com.csse3200.game.components.player;
 
-import com.badlogic.gdx.Gdx;
+
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
 import com.csse3200.game.input.InputComponent;
 import com.csse3200.game.utils.math.Vector2Utils;
 import com.badlogic.gdx.InputProcessor;
-import com.badlogic.gdx.graphics.Camera;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 
 /**
  * Input handler for the player for keyboard and touch (mouse) input.

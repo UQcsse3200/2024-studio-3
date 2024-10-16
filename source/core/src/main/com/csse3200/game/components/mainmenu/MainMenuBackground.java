@@ -12,7 +12,6 @@ import org.slf4j.LoggerFactory;
 public class MainMenuBackground extends UIComponent {
 
     private Table table;
-    private static final Logger logger = LoggerFactory.getLogger(MainMenuBackground.class); // Updated to use MainMenuBackground.class
     private static final String BACKGROUND_IMAGE_PATH = "images/Cutscenes/bg.png"; // Defined constant for repeated string
     private static final String[] backgroundTextures = {BACKGROUND_IMAGE_PATH};
 

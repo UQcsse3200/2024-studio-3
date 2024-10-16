@@ -1,18 +1,13 @@
 package com.csse3200.game.components.cutscenes;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import com.badlogic.gdx.utils.Align;
-import com.badlogic.gdx.utils.Scaling;
-import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,9 +22,6 @@ public class BackstoryCutsceneDisplay extends UIComponent {
     private Table table;
     private TextDisplay textDisplay;
     private Skin skin = null;
-    private Image backgroundImage;
-    private float viewportWidth;
-    private float viewportHeight;
 
     public BackstoryCutsceneDisplay(Skin skin) {
         super(skin);
@@ -51,17 +43,6 @@ public class BackstoryCutsceneDisplay extends UIComponent {
             table = new Table();  // Initialize table if it's not already
         }
 
-        // Initialize the background image
-        backgroundImage = new Image(ServiceLocator.getResourceService().getAsset("images/backstory_background.png", Texture.class));
-        backgroundImage.setScaling(Scaling.fill);
-
-        // Retrieve viewport dimensions for resizing
-        viewportWidth = Gdx.graphics.getWidth();
-        viewportHeight = Gdx.graphics.getHeight();
-
-        // Resize the background image to fit the screen
-        resizeBackgroundImage();
-
         setupUI();
     }
 
@@ -77,7 +58,7 @@ public class BackstoryCutsceneDisplay extends UIComponent {
         }
 
         // Positioning the table for the cutscene
-        table.top();  // Move it to the top-center of the screen
+        table.top().top();  // Move it to the top-center of the screen (modify if necessary)
         table.setFillParent(true);
 
         // Create "Skip" button with its functionality
@@ -102,63 +83,26 @@ public class BackstoryCutsceneDisplay extends UIComponent {
         });
         table.add(nextSceneBtn).padBottom(10f).padRight(10f);
 
-        // Add the table and background image to the stage
-        stage.addActor(backgroundImage);
+        // Add the table to the stage
         stage.addActor(table);
     }
 
     /**
-     * Resizes the background image based on the current viewport dimensions.
+     * Sets up the text display for the screen, adjusting its size and position.
      */
-    private void resizeBackgroundImage() {
-        float scaleFactor = getScalingFactor(viewportWidth, viewportHeight);
-        backgroundImage.setSize(viewportWidth * scaleFactor, viewportHeight * scaleFactor);
-        backgroundImage.setPosition((viewportWidth - backgroundImage.getWidth()) / 2, (viewportHeight - backgroundImage.getHeight()) / 2);
-    }
-
-    /**
-     * Calculates the scaling factor for resizing the background image to fit the viewport.
-     */
-    private float getScalingFactor(float viewportWidth, float viewportHeight) {
-        return Math.min(viewportWidth / 1280f, viewportHeight / 720f);
-    }
-
-//    public void setupTextDisplay() {
-//        textDisplay = new TextDisplay();  // Create an instance of TextDisplay
-//
-//        // Call the create method to initialize the TextDisplay
-//        textDisplay.create();
-//
-//        // Customize the text display size and position
-//        textDisplay.getTable().setScale(0.8f);  // Reduce the scale of the text display
-//        textDisplay.getTable().top().center();  // Position the text display at the top center of the screen
-//        textDisplay.getTable().padTop(100f);    // Adjust the padding to move it down from the top (if necessary)
-//
-//        // Add the text display to the stage
-//        stage.addActor(textDisplay.getTable());
-//
-//        // Optionally, set initial text for the display
-//        textDisplay.setText("Backstory text goes here...");
-//    }
 
     public void setupTextDisplay() {
-        textDisplay = new TextDisplay();  // Create an instance of TextDisplay
-        textDisplay.create();  // Initialize the TextDisplay with its default settings
+        textDisplay = new TextDisplay();
 
-        // Adjust the position of the text box to be higher on the screen
-        textDisplay.setPosition(Align.top, 250f, 0f, 0f);  // Align to the top of the screen with padding from the top
+        // Customize text display size and position
+        textDisplay.getTable().setScale(0.2f); // Make the text display smaller
 
-        // Adjust the scale to make the text box smaller
-        textDisplay.setTableScale(0.5f, 0.5f);  // Reduce the size (adjust values as necessary)
+        // Position the text display higher above the sprite's head
+        textDisplay.getTable().top().left(); // Align the text box at the top of the screen, left aligned
+        textDisplay.getTable().padTop(200f); // Adjust this padding to position it above the sprite’s head
 
-        // Optionally, adjust the font size to make the text smaller
-        textDisplay.setFontScale(1.5f);  // Set the font scale (smaller than the default 3.0f)
-
-        // Add the text display table to the stage after modifying it
+        // Add the customized text display to the stage
         stage.addActor(textDisplay.getTable());
-
-        // Optionally, set any initial text for the cutscene
-        textDisplay.setText("Backstory text goes here...");
     }
 
     /**
@@ -173,9 +117,6 @@ public class BackstoryCutsceneDisplay extends UIComponent {
         }
         if (textDisplay != null && textDisplay.getTable() != null) {
             textDisplay.getTable().clear();  // Clear the text display table
-        }
-        if (backgroundImage != null) {
-            backgroundImage.clear();
         }
     }
 

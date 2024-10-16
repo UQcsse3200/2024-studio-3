@@ -49,7 +49,6 @@ public class TutorialScreen extends ScreenAdapter {
     private final PhysicsEngine physicsEngine;
     private boolean isPaused = false;
     private ResourceService resourceService;
-    private Entity player;
 
     public TutorialScreen(GdxGame game) {
         this.game = game;

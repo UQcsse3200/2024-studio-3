@@ -21,11 +21,7 @@ import java.util.List;
  * and this class manages scene transitions, asset loading/unloading, and entity management for the cutscene.
  */
 public abstract class Cutscene extends Component {
-
     private static final Logger logger = LoggerFactory.getLogger(Cutscene.class);
-
-    // type of cutscene
-    protected GdxGame.CutsceneType cutsceneType;
 
     // List of scenes in the cutscene
     protected List<Scene> scenes = new ArrayList<>();
@@ -135,6 +131,19 @@ public abstract class Cutscene extends Component {
                 ServiceLocator.getLevelService().setCurrLevel(GdxGame.LevelType.LEVEL_1);
                 ServiceLocator.getCutsceneScreen().getCutsceneScreenDisplay().getEntity().getEvents().trigger("cutsceneEnded");
             }
+        }
+    }
+
+    protected void nextCutsceneMoral() {
+
+
+        currentSceneIndex++;
+        if (currentSceneIndex < scenes.size()) {
+            logger.info("Loading next scene: {}", currentSceneIndex);
+            disposeEntities();  // Dispose of current entities before moving to the next scene
+            loadScene(currentSceneIndex);
+        } else {
+            logger.info("Waiting For Moral Decision");
         }
     }
 
@@ -264,8 +273,24 @@ public abstract class Cutscene extends Component {
         }
     }
 
-    public GdxGame.CutsceneType getCutsceneType() {
-        return cutsceneType;
+    public void setTextForSceneMoral(Scene scene) {
+        Array<String> sceneText = scene.getSceneText();
+        if (sceneText.size > textIndex) {
+            currentText = sceneText.get(textIndex);
+            textIndex++;
+        }
+        else {
+            textIndex = 0;
+            if (currentSceneIndex < scenes.size()){
+                nextCutsceneMoral();
+            }
+
+            logger.info("Waiting For Moral Decision");
+        }
+    }
+
+    public Boolean isAtEnd(){
+        return currentSceneIndex + 1 == scenes.size();
     }
 
     /**
@@ -310,6 +335,7 @@ public abstract class Cutscene extends Component {
     /**
      * Disposes of the cutscene by unloading assets and disposing of entities.
      */
+    @Override
     public void dispose() {
         unloadAssets();
         disposeEntities();
