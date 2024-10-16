@@ -27,7 +27,6 @@ public class MainMenuTest {
     private MainMenuBackground mainMenuBackgroundDisplay;
     private GameTime gameTime;
     private Table table;
-    private Texture mockTexture;
     private ResourceService mockResourceService;
 
     @BeforeEach
@@ -41,7 +40,7 @@ public class MainMenuTest {
         Texture texture = mock(Texture.class);
         table = mock(Table.class);
 
-        mockTexture = mock(Texture.class);
+        mock(Texture.class);
         mockResourceService = mock(ResourceService.class);
 
 

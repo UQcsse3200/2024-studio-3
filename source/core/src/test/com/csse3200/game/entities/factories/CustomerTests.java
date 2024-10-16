@@ -18,8 +18,6 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 public class CustomerTests {
 
-    private Entity customer;
-
     private PhysicsService physicsService;
     private PhysicsComponent physicsComponent;
 

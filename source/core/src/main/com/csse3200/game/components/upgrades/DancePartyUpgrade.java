@@ -39,7 +39,6 @@ public class DancePartyUpgrade extends UIComponent implements Upgrade {
     public Table layout;
     public Label text; // the "Upgrade" text above the speedMeter
     public ProgressBar meter; // the meter that show the remaining time
-    private boolean isVisible;
     private Sound bgEffect;
     private boolean playSound = false;
 

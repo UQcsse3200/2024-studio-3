@@ -23,21 +23,13 @@ import com.csse3200.game.components.maingame.TextDisplay;
 public class TutorialScreenDisplay extends UIComponent {
     private static final Logger logger = LoggerFactory.getLogger(TutorialScreenDisplay.class);
     private final GdxGame game;
-    private Skin skin;
-    private PlayerActions playerActions;
     private int tutorialStep = 0;
-    private MainGameOrderTicketDisplay orderTicketDisplay;
     private MainGameOrderBtnDisplay orderBtnDisplay;
     private boolean createOrderPressed = false;
     private boolean docketsShifted = false;
     private Table table;
     private TextDisplay textDisplay;
-    private boolean wPressedLastFrame = false;
-    private boolean aPressedLastFrame = false;
-    private boolean sPressedLastFrame = false;
-    private boolean dPressedLastFrame = false;
     private static final int MAX_TUTORIAL_STEP = 4;
-    int  i = 0;
 
 
     public TutorialScreenDisplay(GdxGame game) {
@@ -54,7 +46,7 @@ public class TutorialScreenDisplay extends UIComponent {
         MainGameOrderTicketDisplay.resetOrderNumb();
 
         if (entity != null) {
-            playerActions = entity.getComponent(PlayerActions.class);
+            entity.getComponent(PlayerActions.class);
         } else {
             logger.error("Entity null");
         }

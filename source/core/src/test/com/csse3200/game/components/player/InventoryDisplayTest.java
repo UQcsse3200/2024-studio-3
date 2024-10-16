@@ -26,10 +26,7 @@ class InventoryDisplayTest {
     private Entity entity;
     private ItemComponent item1;
     private IngredientComponent item2;
-    private ItemComponent item3;
     private InventoryComponent inventory;
-
-    private EventHandler mockEventHandler;
     private RenderService renderService;
     private ResourceService resourceService;
     private InventoryDisplay display;
