@@ -97,6 +97,7 @@ public class ForestGameArea extends GameArea {
           //"images/stations/benches/final.png",
           //"images/stations/benches/shadow_bottom_top.png",
           //"images/stations/benches/left_shadow.png",
+          "images/stations/benches/single.png",
           "images/stations/benches/left_corner_shadow.png",
           "images/stations/benches/right_corner_shadow.png",
           "images/stations/benches/top_shadows.png",
