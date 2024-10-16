@@ -134,6 +134,19 @@ public abstract class Cutscene extends Component {
         }
     }
 
+    protected void nextCutsceneMoral() {
+
+
+        currentSceneIndex++;
+        if (currentSceneIndex < scenes.size()) {
+            logger.info("Loading next scene: {}", currentSceneIndex);
+            disposeEntities();  // Dispose of current entities before moving to the next scene
+            loadScene(currentSceneIndex);
+        } else {
+            logger.info("Waiting For Moral Decision");
+        }
+    }
+
     /**
      * Loads a scene by its index, initializing entities and assets for that scene.
      * @param sceneIndex Index of the scene to load
@@ -258,6 +271,26 @@ public abstract class Cutscene extends Component {
             textIndex = 0;
             nextCutscene();
         }
+    }
+
+    public void setTextForSceneMoral(Scene scene) {
+        Array<String> sceneText = scene.getSceneText();
+        if (sceneText.size > textIndex) {
+            currentText = sceneText.get(textIndex);
+            textIndex++;
+        }
+        else {
+            textIndex = 0;
+            if (currentSceneIndex < scenes.size()){
+                nextCutsceneMoral();
+            }
+
+            logger.info("Waiting For Moral Decision");
+        }
+    }
+
+    public Boolean isAtEnd(){
+        return currentSceneIndex + 1 == scenes.size();
     }
 
     /**

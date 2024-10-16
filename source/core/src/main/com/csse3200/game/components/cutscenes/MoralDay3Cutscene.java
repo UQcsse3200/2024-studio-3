@@ -3,12 +3,11 @@ package com.csse3200.game.components.cutscenes;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.csse3200.game.components.cutscenes.scenes.Scene;
-import com.csse3200.game.components.maingame.TextDisplay;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
 
-public class MoralDay1Cutscene extends Cutscene {
-    public MoralDay1Cutscene() {
+public class MoralDay3Cutscene extends Cutscene {
+    public MoralDay3Cutscene() {
         super();
     }
 
@@ -20,22 +19,19 @@ public class MoralDay1Cutscene extends Cutscene {
 
     private void createScene() {
         Array<String> sceneText = new Array<>();
-        sceneText.add("Mafia Boss > Not bad, human. You made enough to pay rent.");
-        sceneText.add("Mafia Boss > Maybe there's some hope for you.");
-        sceneText.add("Mafia Boss > Here's an offer.");
-        sceneText.add("Mafia Boss > You wash some of my dirty money through your restaurant");
-        sceneText.add("Mafia Boss > and tomorrow you won’t need to stress about the rent too much.");
-        sceneText.add("Mafia Boss > What do you say?");
+        sceneText.add("Mafia Boss > I don't like inspectors poking around my business.");
+        sceneText.add("Mafia Boss > We'll get rid of him tomorrow.");
+        sceneText.add("Mafia Boss > Poison his food, and the problem's solved.");
+        sceneText.add("Mafia Boss > You in?");
 
 
         String mafiaImage = "images/Cutscenes/Character Artwork/rhino_sprite.png";
         Vector2 mafiaPosition = new Vector2(3, -1);
         float mafiaScale = 4.0f;
 
-        String iconImage = "images/Cutscenes/moral_icons/laundering_ico.png";
+        String iconImage = "images/Cutscenes/moral_icons/kill_ico.png";
         Vector2 iconPosition = new Vector2(-8, -2);
         float iconScale = 7.0f;
-
 
         // Add scenes with background images, animations, text, and duration
         Scene scene = new Scene("images/Cutscenes/Day2_Scene.png");
@@ -59,7 +55,7 @@ public class MoralDay1Cutscene extends Cutscene {
         Vector2 mafiaPosition = new Vector2(3, -1);
         float mafiaScale = 4.0f;
 
-        String iconImage = "images/Cutscenes/moral_icons/laundering_ico.png";
+        String iconImage = "images/Cutscenes/moral_icons/kill_ico.png";
         Vector2 iconPosition = new Vector2(-8, -2);
         float iconScale = 7.0f;
 
@@ -96,7 +92,7 @@ public class MoralDay1Cutscene extends Cutscene {
 
         images = new String[] {
                 "images/Cutscenes/Character Artwork/rhino_sprite.png",
-                "images/Cutscenes/moral_icons/laundering_ico.png",
+                "images/Cutscenes/moral_icons/kill_ico.png",
                 "images/Cutscenes/moral_icons/yes_ico.png",
                 "images/Cutscenes/moral_icons/no_ico.png"
         };

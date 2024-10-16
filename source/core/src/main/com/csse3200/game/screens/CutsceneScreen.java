@@ -7,6 +7,7 @@ import com.csse3200.game.GdxGame;
 import com.csse3200.game.components.cutscenes.CutsceneActions;
 import com.csse3200.game.components.cutscenes.CutsceneArea;
 import com.csse3200.game.components.cutscenes.CutsceneScreenDisplay;
+import com.csse3200.game.components.maingame.TextDisplay;
 import com.csse3200.game.components.cutscenes.CutsceneTextDisplay;
 import com.csse3200.game.components.gamearea.PerformanceDisplay;
 import com.csse3200.game.entities.Entity;
@@ -23,6 +24,8 @@ import com.csse3200.game.ui.terminal.TerminalDisplay;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Arrays;
+
 /**
  * The CutsceneScreen class represents the screen used during cutscenes in the game.
  * It handles loading and displaying the cutscene, rendering the UI, and managing assets and services.
@@ -37,6 +40,9 @@ public class CutsceneScreen extends ScreenAdapter {
 
     private final GdxGame.CutsceneType cutsceneVal;
     private final Renderer renderer;
+
+    private final GdxGame.CutsceneType[] moralEnums = {GdxGame.CutsceneType.MORAL_1, GdxGame.CutsceneType.MORAL_2,
+                                            GdxGame.CutsceneType.MORAL_3, GdxGame.CutsceneType.MORAL_4};
 
     // Textures used for the cutscene screen
     private static final String[] cutsceneScreenTextures = {"images/textbox.png"};
@@ -155,9 +161,14 @@ public class CutsceneScreen extends ScreenAdapter {
                 .addComponent(inputComponent)
                 .addComponent(new TerminalDisplay())
                 .addComponent(new CutsceneActions(this.game))
-                .addComponent(cutsceneScreenDisplay)
-                .addComponent(new CutsceneTextDisplay(textBoxVisible));
+                .addComponent(cutsceneScreenDisplay);
 
+
+        if (Arrays.asList(moralEnums).contains(this.cutsceneVal)){
+            ui.addComponent(new TextDisplay(this, "moralDecision"));
+        } else{
+            ui.addComponent(new CutsceneTextDisplay(textBoxVisible));
+        }
 
         // Register the UI entity with the entity service
         ServiceLocator.getEntityService().register(ui);
