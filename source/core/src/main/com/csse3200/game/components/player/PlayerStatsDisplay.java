@@ -10,7 +10,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
-import com.badlogic.gdx.scenes.scene2d.utils.BaseDrawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.services.ServiceLocator;
@@ -18,8 +17,6 @@ import com.csse3200.game.ui.UIComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.badlogic.gdx.utils.Timer;
-import com.badlogic.gdx.utils.Align;  // Import Align class
-
 /**
  * AN ui component for displaying player stats, e.g. health.
  */
@@ -126,7 +123,6 @@ public class PlayerStatsDisplay extends UIComponent {
     table.row();
 
     String SMALL_LABEL = "cash";
-    String rageText = "Rage Meter";
 
 
     // Timer label for the remaining time in the day
