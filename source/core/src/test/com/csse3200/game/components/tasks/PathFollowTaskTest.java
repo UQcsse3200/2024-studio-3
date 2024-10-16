@@ -72,7 +72,7 @@ public class PathFollowTaskTest {
         when(taskRunner.getEntity()).thenReturn(entity);
         when(entity.getPosition()).thenReturn(new Vector2(0, 0));
         ServiceLocator.registerEntityService(mock(EntityService.class));
-        pathFollowTask = new PathFollowTask(new Vector2(10, 10), 1, 15);
+        pathFollowTask = new PathFollowTask(new Vector2(10, 10), 15);
         pathFollowTask.create(taskRunner);
     }
 
