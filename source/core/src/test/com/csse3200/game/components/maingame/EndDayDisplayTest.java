@@ -71,7 +71,7 @@ class EndDayDisplayTest {
     DayNightService dayNightService;
     LevelService levelService;
     EndDayDisplay endDayDisplay;
-    private EventHandler eventHandler;
+
     /**
      * Sets up the environment before each test by initializing services
      */
@@ -106,7 +106,7 @@ class EndDayDisplayTest {
 
     @Test
     void testAddListeners() {
-        eventHandler = new EventHandler();
+        EventHandler eventHandler = new EventHandler();
         endDayDisplay.addListeners();
 
         EventListener0 goldUpdated = mock(EventListener0.class);

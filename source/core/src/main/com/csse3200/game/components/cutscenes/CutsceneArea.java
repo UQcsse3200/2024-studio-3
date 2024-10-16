@@ -5,7 +5,6 @@ import com.csse3200.game.areas.ForestGameArea;
 import com.csse3200.game.areas.GameArea;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.services.LevelService;
-import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,14 +40,14 @@ public class CutsceneArea extends GameArea {
         // The current cutscene being played in the area
         Cutscene currentCutscene;
         switch (cutsceneValue) {
-            case GdxGame.CutsceneType.BACK_STORY:
+            case BACK_STORY:
                 logger.debug("Loading backstory cutscene");
                 currentCutscene = new BackstoryCutscene();  // Initialize the intro cutscene
                 ServiceLocator.setCurrentCutscene(currentCutscene);  // Set the current cutscene in the service locator
                 ServiceLocator.getLevelService().setCurrLevel(GdxGame.LevelType.LEVEL_1);
                 break;
 
-            case GdxGame.CutsceneType.MORAL_1:
+            case MORAL_1:
                 logger.debug("Loading Day 1 Moral cutscene");
                 currentCutscene = new MoralDay1Cutscene();  // Initialize the intro cutscene
                 ServiceLocator.setCurrentCutscene(currentCutscene);  // Set the current cutscene in the service locator
@@ -73,33 +72,34 @@ public class CutsceneArea extends GameArea {
                 break;
 
 
-            case GdxGame.CutsceneType.DAY_2:
+            case DAY_2:
                 logger.debug("Loading Day 2 cutscene");
                 currentCutscene = new Day2Cutscene();  // Initialize the intro cutscene
                 ServiceLocator.setCurrentCutscene(currentCutscene);  // Set the current cutscene in the service locator
                 break;
-            case GdxGame.CutsceneType.DAY_3:
+            case DAY_3:
                 logger.debug("Loading Day 4 cutscene");
                 currentCutscene = new Day3Cutscene();
                 ServiceLocator.setCurrentCutscene(currentCutscene);
                 break;
-            case GdxGame.CutsceneType.DAY_4:
+            case DAY_4:
                 logger.debug("Loading Day 3 cutscene");
                 currentCutscene = new Day4Cutscene();
                 ServiceLocator.setCurrentCutscene(currentCutscene);
                 break;
-            case GdxGame.CutsceneType.GOOD_END:
+            case GOOD_END:
                 logger.debug("Loading good end cutscene");
                 currentCutscene = new GoodEndCutscene();  // Initialize the good end cutscene
                 ServiceLocator.setCurrentCutscene(currentCutscene);  // Set the current cutscene in the service locator
                 break;
-            case GdxGame.CutsceneType.BAD_END:
+            case BAD_END:
+                //ServiceLocator.clear(Le);
                 logger.debug("Loading bad end cutscene");
                 currentCutscene = new BadEndCutscene();
                 ServiceLocator.setCurrentCutscene(currentCutscene);
 
                 break;
-            case GdxGame.CutsceneType.LOSE:
+            case LOSE:
                 logger.debug("Loading lose end cutscene");
                 currentCutscene = new LoseCutscene();
                 ServiceLocator.setCurrentCutscene(currentCutscene);

@@ -31,7 +31,6 @@ import com.csse3200.game.components.cutscenes.*;
  */
 
 public class TextDisplay extends UIComponent {
-    private static final Logger logger = LoggerFactory.getLogger(TextDisplay.class);
     //String building variables
     private List<String> text;
     private int currentPart = 0;

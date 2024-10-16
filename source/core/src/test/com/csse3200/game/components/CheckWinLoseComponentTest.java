@@ -1,6 +1,5 @@
 package com.csse3200.game.components;
 
-import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.maingame.CheckWinLoseComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.extensions.GameExtension;

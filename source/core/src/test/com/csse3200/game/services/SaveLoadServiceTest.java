@@ -8,10 +8,6 @@ import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.events.EventHandler;
 import com.csse3200.game.files.FileLoader;
 import com.csse3200.game.files.GameState;
-import com.csse3200.game.services.DayNightService;
-import com.csse3200.game.services.PlayerService;
-import com.csse3200.game.services.ServiceLocator;
-
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -29,7 +25,7 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
 
-public class SaveLoadServiceTest {
+class SaveLoadServiceTest {
 
     private SaveLoadService saveLoadService;
 
@@ -68,17 +64,17 @@ public class SaveLoadServiceTest {
     }
 
     @AfterEach
-    public void tearDown() {
+    void tearDown() {
         ServiceLocator.clear();
     }
 
     @Test
-    public void testConstructor() {
+    void testConstructor() {
         assertNotNull(saveLoadService.getEvents(), "EventHandler should be initialized");
     }
 
     @Test
-    public void testSave() {
+    void testSave() {
         // Mocking static methods of FileLoader
         try (MockedStatic<FileLoader> mockedFileLoader = Mockito.mockStatic(FileLoader.class)) {
 
@@ -108,7 +104,7 @@ public class SaveLoadServiceTest {
     }
 
     @Test
-    public void testSaveWithExistingSaveFile() {
+    void testSaveWithExistingSaveFile() {
         try (MockedStatic<FileLoader> mockedFileLoader = Mockito.mockStatic(FileLoader.class)) {
 
             // Set saveFile to an existing filename
@@ -133,7 +129,7 @@ public class SaveLoadServiceTest {
 
 
     @Test
-    public void testLoadWithNullGameState() {
+    void testLoadWithNullGameState() {
         // Mocking static methods of FileLoader
         try (MockedStatic<FileLoader> mockedFileLoader = Mockito.mockStatic(FileLoader.class)) {
 
@@ -154,14 +150,14 @@ public class SaveLoadServiceTest {
     }
 
     @Test
-    public void testGetAndSetSaveFile() {
+    void testGetAndSetSaveFile() {
         String filename = "test_save.json";
         saveLoadService.setSaveFile(filename);
         assertEquals(filename, saveLoadService.getSaveFile(), "Save file name should be set correctly");
     }
 
     @Test
-    public void testGetEvents() {
+    void testGetEvents() {
         assertNotNull(saveLoadService.getEvents(), "EventHandler should not be null");
     }
 }

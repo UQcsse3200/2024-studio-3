@@ -131,13 +131,13 @@ public class TerrainFactory {
     TiledMapTileLayer layer = new TiledMapTileLayer(MAP_SIZE.x, MAP_SIZE.y, tileSize.x , tileSize.y);
 
     // Size for blue tiles
-    GridPoint2 modified_size = new GridPoint2(MAP_SIZE.x/2 , MAP_SIZE.y);
+    GridPoint2 modifiedsize = new GridPoint2(MAP_SIZE.x/2 , MAP_SIZE.y);
 
     // Create base orange tiles
     fillTiles(layer, MAP_SIZE, floorTile);
     // Create blue tiles with modified map size
 
-    fillBlueTiles(layer, modified_size, customerTile, CUST_TILE_COUNT);
+    fillBlueTiles(layer, modifiedsize, customerTile, CUST_TILE_COUNT);
 
     tiledMap.getLayers().add(layer);
     tiledMap.getLayers().add(layer);
