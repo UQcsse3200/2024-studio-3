@@ -213,22 +213,21 @@ public class TextDisplay extends UIComponent {
     @Override
     public void update() {
         long time = ServiceLocator.getTimeSource().getTime();
-        if (this.text != null && currentPart < TextDisplay.this.text.size() && charIndex < this.text.get(currentPart).length()) {
-            if (time - lastUpdate >= delay) {
-                lastUpdate = time;
-                // Add a character and set the label to new text
-                this.currentText.append(text.get(currentPart).charAt(charIndex));
-                label.setText(currentText.toString());
-                charIndex++;
-            }
-        }
 
-        if (charIndex >= text.get(currentPart).length()) {
-            if (currentPart < text.size() - 1) {
-                entity.getEvents().trigger("TextComplete", currentPart);
-            } else {
+        if (this.text != null && currentPart < text.size()) {
+            if (charIndex < text.get(currentPart).length()) {
+                if (time - lastUpdate >= delay) {
+                    lastUpdate = time;
+                    this.currentText.append(text.get(currentPart).charAt(charIndex));
+                    label.setText(currentText.toString());
+                    charIndex++;
+                }
+            }
+            if (charIndex >= text.get(currentPart).length()) {
                 entity.getEvents().trigger("TextComplete", currentPart);
             }
+        } else {
+            //Nothing
         }
     }
 

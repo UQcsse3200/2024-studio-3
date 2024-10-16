@@ -46,7 +46,7 @@ public class TutorialScreenDisplay extends UIComponent {
         if (this.game == null) {
             logger.error("Game null");
         } else {
-            logger.info("Game object initialized successfully: " + this.game);
+            logger.info("Game not null");
         }
     }
 
@@ -136,8 +136,6 @@ public class TutorialScreenDisplay extends UIComponent {
                 default:
                     logger.error("Unexpected tutorial step: " + tutorialStep);
             }
-        } else {
-            logger.error("Tutorial step exceeded maximum value.");
         }
     }
 
@@ -252,13 +250,11 @@ public class TutorialScreenDisplay extends UIComponent {
      * Advances the tutorial to the next tut
      */
     private void onTextComplete(int currentPart) {
-        if (currentPart >= 0 && currentPart < textDisplay.getText().size()) {
+        if (currentPart >= 0 && currentPart <= textDisplay.getText().size()) {
             switch (tutorialStep) {
                 case 1:
-                    if (Gdx.input.isKeyJustPressed(Input.Keys.W) ||
-                            Gdx.input.isKeyJustPressed(Input.Keys.A) ||
-                            Gdx.input.isKeyJustPressed(Input.Keys.S) ||
-                            Gdx.input.isKeyJustPressed(Input.Keys.D)) {
+                    if (Gdx.input.isKeyJustPressed(Input.Keys.W) || Gdx.input.isKeyJustPressed(Input.Keys.A) ||
+                            Gdx.input.isKeyJustPressed(Input.Keys.S) || Gdx.input.isKeyJustPressed(Input.Keys.D)) {
                         advanceTutorialStep();
                     }
                     break;
@@ -268,8 +264,7 @@ public class TutorialScreenDisplay extends UIComponent {
                     }
                     break;
                 case 3:
-                    if (Gdx.input.isKeyJustPressed(Input.Keys.LEFT_BRACKET) ||
-                            Gdx.input.isKeyJustPressed(Input.Keys.RIGHT_BRACKET)) {
+                    if (Gdx.input.isKeyJustPressed(Input.Keys.LEFT_BRACKET) || Gdx.input.isKeyJustPressed(Input.Keys.RIGHT_BRACKET)) {
                         docketsShifted = true;
                         logger.debug("Dockets shifted!");
                         advanceTutorialStep();
