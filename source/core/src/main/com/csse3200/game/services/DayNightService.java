@@ -15,9 +15,9 @@ import java.util.Random;
  */
 public class DayNightService {
     private static final Logger logger = LoggerFactory.getLogger(DayNightService.class);
-    private static final long FIVE_MINUTES = 5L* 60 * 1000; // 5 minutes in milliseconds
-    private static final int MAX_DAYS = 5; // Maximum number of days
-    private static final long SEVENTY_FIVE_PERCENT = (long) (FIVE_MINUTES * 0.75);
+    public static final long FIVE_MINUTES = 5L* 60 * 1000; // 5 minutes in milliseconds
+    public static final int MAX_DAYS = 5; // Maximum number of days
+    public static final long SEVENTY_FIVE_PERCENT = (long) (FIVE_MINUTES * 0.75);
     private long lastSecondCheck;
     private long lastUpgradeCheck;
     private long lastEndOfDayCheck;
@@ -243,6 +243,10 @@ public class DayNightService {
      */
     public int getHighQualityMeals() {
         return highQualityMeals;
+    }
+
+    public long getTimeRemaining() {
+        return timeRemaining;
     }
 }
 

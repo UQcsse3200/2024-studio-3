@@ -13,27 +13,27 @@ import org.slf4j.LoggerFactory;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Class to load the map layout from a text file
  */
 public class MapLayout {
     private EventHandler mapEventHandler;
-    private static final String mapBase = "images/map/map_base.txt";
-    private static final String mapLevel1 = "images/map/map_one.txt";
-    private static final String mapLevel2 = "images/map/map_two.txt";
-    private static final String mapLevel3 = "images/map/map_three.txt";
-    private static final String mapLevel4 = "images/map/map_four.txt";
-    private static final String mapLevel5 = "images/map/map_five.txt";
+    private static final String MAPBASE = "images/map/map_base.txt";
+    private static final String MAPLEVEL1 = "images/map/map_one.txt";
+    private static final String MAPLEVEL2 = "images/map/map_two.txt";
+    private static final String MAPLEVEL3 = "images/map/map_three.txt";
+    private static final String MAPLEVEL4 = "images/map/map_four.txt";
+    private static final String MAPLEVEL5 = "images/map/map_five.txt";
+    private ArrayList<Bench> benches = new ArrayList<>();
+    private ArrayList<Entity> stations = new ArrayList<>();
     private int strToNum;
     private int strToNum2;
-    private ArrayList<Bench> benches = new ArrayList<Bench>();
-    private ArrayList<Entity> stations = new ArrayList<Entity>();
     private String mapName;
     private int mapWidth;
     private int mapHeight;
     private String mapSeparator;
-    private Bench bench;
 
     private final String[] validStations = {"b", "s", "u", "t", "c", "a", "E", "O", "B", "C", "G", "N", "S", "F"};
 
@@ -62,14 +62,14 @@ public class MapLayout {
      */
     public Map load(GdxGame.LevelType level) {
 
-        String mapLevel = mapBase;
+        String mapLevel = MAPBASE;
         BufferedReader reader = null;
         switch (level) {
-            case LEVEL_1 -> mapLevel = mapLevel1;
-            case LEVEL_2 -> mapLevel = mapLevel2;
-            case LEVEL_3 -> mapLevel = mapLevel3;
-            case LEVEL_4 -> mapLevel = mapLevel4;
-            case LEVEL_5 -> mapLevel = mapLevel5;
+            case LEVEL_1 -> mapLevel = MAPLEVEL1;
+            case LEVEL_2 -> mapLevel = MAPLEVEL2;
+            case LEVEL_3 -> mapLevel = MAPLEVEL3;
+            case LEVEL_4 -> mapLevel = MAPLEVEL4;
+            case LEVEL_5 -> mapLevel = MAPLEVEL5;
         }
 
         try {
@@ -85,24 +85,24 @@ public class MapLayout {
 
             if ((line = reader.readLine()) != null) {
                 mapWidth = Integer.parseInt(line); // 2nd line is the width
-                logger.info("Map Width: " + mapWidth);
+                logger.info("Map Width: {0}", mapWidth);
             }
 
             if ((line = reader.readLine()) != null) {
                 mapHeight = Integer.parseInt(line); // 3rd line is the height
-                logger.info("Map Height: " + mapHeight);
+                logger.info("Map Height: {0}", mapHeight);
             }
 
             if ((line = reader.readLine()) != null) {
                 mapSeparator = line; // 4th line is a separator (e.g., "===")
-                logger.info("Map Separator: " + mapSeparator);
+                logger.info("Map Separator: {0}", mapSeparator);
             }
             int row = 4;
 
             // Read the file line by line
             while ((line = reader.readLine()) != null) {
                 // Log the entire line
-                logger.info("Line " + row + ": " + line);
+                logger.info("Line {0} : {1}", row, line);
 
 
                 // Split the line into individual characters
@@ -126,7 +126,7 @@ public class MapLayout {
                         strToNum2 = Integer.valueOf(parts[col + 2] );
                         benches.addAll(readBench("X", strToNum, strToNum2, row));
                         col += 3;
-//                        logger.info("Spawning entity at row " + row + ", column " + col);
+                        logger.info("Spawning entity at row {0} column {1}", row, col);
                     }
                     // Spawn bench column when 'Y'
                     else if (square.equals("Y")) {
@@ -134,21 +134,21 @@ public class MapLayout {
                         strToNum2 = Integer.valueOf(parts[col + 2]);
                         benches.addAll(readBench("Y", strToNum, strToNum2, row));
                         col += 3;
-                        logger.info("Spawning entity at row " + row + ", column " + col);
+                        logger.info("Spawning entity at row {0} column {1}", row, col);
                     }
                     else if (square.equals("Q")) {
                         strToNum = Integer.valueOf(parts[col + 1]);
 
                         benches.addAll(readBench("Q", strToNum, 1, row));
                         col += 3;
-                        logger.info("Spawning entity at row " + row + ", column " + col);
+                        logger.info("Spawning entity at row {0} column {1}", row, col);
                     }
                     else if (square.equals("P")) {
                         strToNum = Integer.valueOf(parts[col + 1]);
 
                         benches.addAll(readBench("P", strToNum, 1, row));
                         col += 3;
-                        logger.info("Spawning entity at row " + row + ", column " + col);
+                        logger.info("Spawning entity at row {0} column {1}", row, col);
                     }
                     // Spawn a station
                     else if (validateStation(square)) {
@@ -160,18 +160,17 @@ public class MapLayout {
                 row++;
             }
         } catch (IOException e) {
-            logger.warn("An error occurred while reading the file: " + e.getMessage());
+            logger.warn("An error occurred while reading the file: {0}", e.getMessage());
         } finally {
             try {
                 if (reader != null) {
                     reader.close();
                 }
             } catch (IOException ex) {
-                logger.warn("Failed to close the reader: " + ex.getMessage());
+                logger.warn("Failed to close the reader: {0}", ex.getMessage());
             }
         }
         return new Map(benches, stations);
-
     }
 
     /**
@@ -197,11 +196,9 @@ public class MapLayout {
                 if (size == 1) {
                     return BenchGenerator.singleBlocker(startCol + 4, row - 4);
                 }
-
                 return BenchGenerator.createBenchRow(startCol + 4, startCol + size +4, row - 4);
             case "Y":
                 return BenchGenerator.createBenchColumn(startCol + 4, row - 4, row + size - 4);
-
             default:
                 return new ArrayList<Bench>();
         }

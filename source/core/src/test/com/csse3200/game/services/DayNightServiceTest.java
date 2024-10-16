@@ -69,7 +69,7 @@ public class DayNightServiceTest {
         long currentTime = 0L;
         long timeStep = 1000L; // 1 second
 
-        while (dayNightService.timeRemaining > 0) {
+        while (dayNightService.getTimeRemaining() > 0) {
             when(gameTime.getTime()).thenReturn(currentTime);
             dayNightService.update();
 
@@ -176,7 +176,7 @@ public class DayNightServiceTest {
         long timeStep = 1000L; // 1 second
 
         for (int expectedDay = 1; expectedDay <= 5; expectedDay++) {
-            while (dayNightService.timeRemaining > 0) {
+            while (dayNightService.getTimeRemaining() > 0) {
 
                 when(gameTime.getTime()).thenReturn(currentTime);
                 dayNightService.update();
@@ -194,7 +194,7 @@ public class DayNightServiceTest {
             Assertions.assertFalse(dayNightService.getEndOfDayTriggered(), "endOfDayTriggered was not reset for day " + (expectedDay + 1));
         }
 
-        while (dayNightService.timeRemaining > 0) {
+        while (dayNightService.getTimeRemaining() > 0) {
             when(gameTime.getTime()).thenReturn(currentTime);
             dayNightService.update();
 

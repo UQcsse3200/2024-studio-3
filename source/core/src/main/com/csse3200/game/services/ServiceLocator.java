@@ -231,9 +231,9 @@ public class ServiceLocator {
     orderActions = source;
   }
 
-  public static void registerGame(GdxGame new_game) {
+  public static void registerGame(GdxGame newGame) {
     logger.debug("Registering GdxGame");
-    game = new_game;
+    game = newGame;
   }
 
   public static GdxGame getGame() {

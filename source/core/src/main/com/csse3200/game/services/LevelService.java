@@ -77,7 +77,7 @@ public class LevelService {
             case LEVEL_3 -> currLevel = GdxGame.LevelType.LEVEL_4;
             case LEVEL_4 -> currLevel = GdxGame.LevelType.LEVEL_5;
             case LEVEL_5 -> currLevel = GdxGame.LevelType.DONE;
-            default -> currLevel = GdxGame.LevelType.LEVEL_1
+            default -> currLevel = GdxGame.LevelType.LEVEL_1;
         }
     }
 
