@@ -17,6 +17,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.csse3200.game.components.items.ChopIngredientComponent;
 import com.csse3200.game.components.items.CookIngredientComponent;
 import com.csse3200.game.components.items.ItemComponent;
@@ -419,90 +420,62 @@ public class StationProgressDisplayTest {
         // Verify that RenderService.unregister was called
         verify(renderService).unregister(progressDisplay);
     }
+
+    /**
+     * Tests that getLayer returns the correct layer value.
+     */
+    @Test
+    public void testGetLayer() {
+        // Act
+        int layer = progressDisplay.getLayer();
+
+        // Assert
+        assertEquals(3, layer, "getLayer should return 3");
+    }
+
+    /**
+     * Tests that setStage does not perform any actions.
+     */
+    @Test
+    public void testSetStage() {
+        // Arrange
+        Stage mockStage = mock(Stage.class);
+
+        // Act & Assert: No exception should be thrown
+        assertDoesNotThrow(() -> progressDisplay.setStage(mockStage));
+    }
+
+    /**
+     * Tests the update method when the item has neither ChopIngredientComponent nor CookIngredientComponent.
+     */
+    @Test
+    public void testUpdate_ItemWithoutRelevantComponents() throws NoSuchFieldException, IllegalAccessException {
+        // Arrange
+        ItemComponent item = mock(ItemComponent.class);
+        when(itemHandlerComponent.peek()).thenReturn(item);
+        Entity itemEntity = mock(Entity.class);
+        when(item.getEntity()).thenReturn(itemEntity);
+        when(itemEntity.getComponent(ChopIngredientComponent.class)).thenReturn(null);
+        when(itemEntity.getComponent(CookIngredientComponent.class)).thenReturn(null);
+
+        // Access private fields
+        Field barPercentageField = StationProgressDisplay.class.getDeclaredField("barPercentage");
+        Field displayBarField = StationProgressDisplay.class.getDeclaredField("displayBar");
+
+        barPercentageField.setAccessible(true);
+        displayBarField.setAccessible(true);
+
+        // Act
+        progressDisplay.update();
+
+        // Assert
+        float barPercentage = barPercentageField.getFloat(progressDisplay);
+        boolean displayBar = displayBarField.getBoolean(progressDisplay);
+
+        assertEquals(0.0f, barPercentage, "barPercentage should be reset to 0.0f");
+        assertFalse(displayBar, "displayBar should be false when item has no relevant components");
+
+        // Verify that updateInventory event is not triggered
+        verify(eventHandler, never()).trigger("updateInventory");
+    }
 }
-
-//     /**
-//      * Tests that getLayer returns the correct layer value.
-//      */
-//     @Test
-//     public void testGetLayer() {
-//         // Act
-//         int layer = progressDisplay.getLayer();
-
-//         // Assert
-//         assertEquals(3, layer, "getLayer should return 3");
-//     }
-
-//     /**
-//      * Tests that setStage does not perform any actions.
-//      */
-//     @Test
-//     public void testSetStage() {
-//         // Arrange
-//         Stage mockStage = mock(Stage.class);
-
-//         // Act & Assert: No exception should be thrown
-//         assertDoesNotThrow(() -> progressDisplay.setStage(mockStage));
-//     }
-
-//     /**
-//      * Tests the resetBar private method.
-//      */
-//     @Test
-//     public void testResetBar() throws NoSuchFieldException, IllegalAccessException {
-//         // Arrange: Set displayBar and barPercentage to non-default values
-//         Field displayBarField = StationProgressDisplay.class.getDeclaredField("displayBar");
-//         Field barPercentageField = StationProgressDisplay.class.getDeclaredField("barPercentage");
-
-//         displayBarField.setAccessible(true);
-//         barPercentageField.setAccessible(true);
-
-//         displayBarField.setBoolean(progressDisplay, true);
-//         barPercentageField.setFloat(progressDisplay, 0.75f);
-
-//         // Act: Call resetBar via reflection
-//         java.lang.reflect.Method resetBarMethod = StationProgressDisplay.class.getDeclaredMethod("resetBar");
-//         resetBarMethod.setAccessible(true);
-//         resetBarMethod.invoke(progressDisplay);
-
-//         // Assert
-//         boolean displayBar = displayBarField.getBoolean(progressDisplay);
-//         float barPercentage = barPercentageField.getFloat(progressDisplay);
-
-//         assertFalse(displayBar, "displayBar should be reset to false");
-//         assertEquals(0.0f, barPercentage, "barPercentage should be reset to 0.0f");
-//     }
-
-//     /**
-//      * Tests the update method when the item has neither ChopIngredientComponent nor CookIngredientComponent.
-//      */
-//     @Test
-//     public void testUpdate_ItemWithoutRelevantComponents() throws NoSuchFieldException, IllegalAccessException {
-//         // Arrange
-//         ItemComponent item = mock(ItemComponent.class);
-//         when(itemHandlerComponent.peek()).thenReturn(item);
-//         when(item.getEntity()).thenReturn(new Entity());
-//         when(item.getEntity().getComponent(ChopIngredientComponent.class)).thenReturn(null);
-//         when(item.getEntity().getComponent(CookIngredientComponent.class)).thenReturn(null);
-
-//         // Access private fields
-//         Field barPercentageField = StationProgressDisplay.class.getDeclaredField("barPercentage");
-//         Field displayBarField = StationProgressDisplay.class.getDeclaredField("displayBar");
-
-//         barPercentageField.setAccessible(true);
-//         displayBarField.setAccessible(true);
-
-//         // Act
-//         progressDisplay.update();
-
-//         // Assert
-//         float barPercentage = barPercentageField.getFloat(progressDisplay);
-//         boolean displayBar = displayBarField.getBoolean(progressDisplay);
-
-//         assertEquals(0.0f, barPercentage, "barPercentage should be reset to 0.0f");
-//         assertFalse(displayBar, "displayBar should be false when item has no relevant components");
-
-//         // Verify that updateInventory event is not triggered
-//         verify(entity.getEvents(), never()).trigger("updateInventory");
-//     }
-// }
