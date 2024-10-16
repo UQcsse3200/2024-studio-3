@@ -60,20 +60,19 @@ public class TerrainFactory {
             new TextureRegion(resourceService.getAsset("images/tiles/blue_tile.png", Texture.class));
         return createKitchenDemoTerrain(2f, orthoFloor, custTile);
 
-      // Testing with another level
-      case Level2:
-        new TextureRegion(resourceService.getAsset("images/tiles/orange_tile.png", Texture.class));
-        TextureRegion custom =
-                new TextureRegion(resourceService.getAsset("images/tiles/blue_tile.png", Texture.class));
-        // add bench tiles:
-        TextureRegion benchTile =
-                new TextureRegion(resourceService.getAsset("images/tiles/bench_tile.png", Texture.class));
-        return createBenchDemoTerrain(2f,benchTile, custom);
+
       default:
         return null;
     }
   }
 
+  /**
+   * Create a kitchen demo terrain
+   * @param tileWorldSize Size of the tiles in world units
+   * @param floor Floor tile
+   * @param customertiles Customer tile
+   * @return Terrain component for the kitchen demo
+   */
   private TerrainComponent createKitchenDemoTerrain(
       float tileWorldSize, TextureRegion floor, TextureRegion customertiles) {
     // Customer_tiles are the blue tiles where the customers/animals are going to be
@@ -83,14 +82,6 @@ public class TerrainFactory {
     return new TerrainComponent(camera, tiledMap, renderer, orientation, tileWorldSize);
   }
 
-  private TerrainComponent createBenchDemoTerrain(
-          float tileWorldSize, TextureRegion floor, TextureRegion customertiles) {
-    // Customer_tiles are the blue tiles where the customers/animals are going to be
-    GridPoint2 tilePixelSize = new GridPoint2(floor.getRegionWidth(), floor.getRegionHeight());
-    TiledMap tiledMap = createBenchTileLevels(tilePixelSize, floor, customertiles);
-    TiledMapRenderer renderer = createRenderer(tiledMap, tileWorldSize / tilePixelSize.x);
-    return new TerrainComponent(camera, tiledMap, renderer, orientation, tileWorldSize);
-  }
 
   private TiledMapRenderer createRenderer(TiledMap tiledMap, float tileScale) {
       if (Objects.requireNonNull(orientation) == TerrainOrientation.ORTHOGONAL) {
@@ -99,28 +90,14 @@ public class TerrainFactory {
       return null;
   }
 
-  private TiledMap createBenchTileLevels(
-          GridPoint2 tileSize,  TextureRegion bench, TextureRegion customertiles) {
-    TiledMap tiledMap = new TiledMap();
-    TerrainTile benchTile= new TerrainTile(bench);
-    TerrainTile customerTile = new TerrainTile(customertiles);
-    // Bench tile
-    TiledMapTileLayer layer = new TiledMapTileLayer(MAP_SIZE.x, MAP_SIZE.y, tileSize.x , tileSize.y);
 
-    // Size for blue tiles
-    GridPoint2 modifiedsize = new GridPoint2(MAP_SIZE.x , MAP_SIZE.y);
-
-    // Create base orange tiles
-    fillTiles(layer, MAP_SIZE, benchTile);
-    // Create blue tiles with modified map size
-
-    fillBlueTiles(layer, modifiedsize, customerTile, CUST_TILE_COUNT);
-
-    tiledMap.getLayers().add(layer);
-    tiledMap.getLayers().add(layer);
-    return tiledMap;
-  }
-
+  /**
+   * Create a tiled map for the kitchen demo
+   * @param tileSize Size of the tiles
+   * @param floor Floor tile
+   * @param customertiles Customer tile
+   * @return Tiled map for the kitchen demo
+   */
   private TiledMap createKitchenDemoTiles(
       GridPoint2 tileSize,  TextureRegion floor, TextureRegion customertiles) {
     TiledMap tiledMap = new TiledMap();
@@ -144,6 +121,13 @@ public class TerrainFactory {
     return tiledMap;
   }
 
+  /**
+   * Fill a layer with a single tile (customer area)
+   *
+   * @param layer Layer to fill
+   * @param map Size of the layer
+   * @param tile Tile to fill the layer with
+   */
   private static void fillBlueTiles(
       TiledMapTileLayer layer, GridPoint2 map, TerrainTile tile, int amount) {
     for (int x = 0; x < map.x-1 ; x++) {
@@ -155,6 +139,13 @@ public class TerrainFactory {
     }
   }
 
+  /**
+   * Fill a layer with a single tile (rest of the map)
+   *
+   * @param layer Layer to fill
+   * @param map Size of the layer
+   * @param tile Tile to fill the layer with
+   */
   private static void fillTiles(TiledMapTileLayer layer, GridPoint2 map, TerrainTile tile) {
     for (int x = 0; x < map.x; x++) {
       for (int y = 0; y < map.y; y++) {
@@ -165,28 +156,6 @@ public class TerrainFactory {
     }
   }
 
-  private static void createBenchGrid(TiledMapTileLayer layer, TerrainTile tile, GridPoint2 mapSize) {
-    for (int x = 0; x < mapSize.x; x++) {
-      for (int y = 0; y < mapSize.y; y++){
-        if (x == 0 || x == mapSize.x - 1 || y == 0 || y == mapSize.y - 1) {
-          Cell cell = new Cell();
-          cell.setTile(tile);
-          layer.setCell(x, y, cell);
-        }
-      }
-    }
-    for (int y=2; y < 4; y++){
-      Cell cell = new Cell();
-      cell.setTile(tile);
-      layer.setCell(2, y, cell);
-    }
-    Cell cell = new Cell();
-    cell.setTile(tile);
-    layer.setCell(4, 1, cell);
-
-    layer.setCell(4, 4,cell);
-
-  }
 
   /**
    * This enum should contain the different terrains in your game, e.g. Kitchen, cave, home, all with

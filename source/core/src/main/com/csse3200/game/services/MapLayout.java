@@ -224,14 +224,26 @@ public class MapLayout {
         return false;
     }
 
+    /**
+     * Get the map name
+     * @return - the map name
+     */
     public String getMapName() {
         return mapName;
     }
 
+    /**
+     * Get the map width
+     * @return - the map width
+     */
     public int getMapWidth() {
         return mapWidth;
     }
 
+    /**
+     * Get the map height
+     * @return - the map height
+     */
     public int getMapHeight() {
         return mapHeight;
     }
