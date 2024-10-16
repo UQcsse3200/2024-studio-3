@@ -1,6 +1,8 @@
 package com.csse3200.game.components.tutorial;
 
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
@@ -8,6 +10,7 @@ import com.csse3200.game.GdxGame;
 import com.csse3200.game.components.ordersystem.MainGameOrderBtnDisplay;
 import com.csse3200.game.components.player.PlayerActions;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.screens.MainGameScreen;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
 import com.csse3200.game.components.ordersystem.MainGameOrderTicketDisplay;
@@ -22,15 +25,20 @@ import com.csse3200.game.components.maingame.TextDisplay;
  */
 public class TutorialScreenDisplay extends UIComponent {
     private static final Logger logger = LoggerFactory.getLogger(TutorialScreenDisplay.class);
-    private final GdxGame game;
+    private GdxGame game;
     private int tutorialStep = 0;
     private MainGameOrderBtnDisplay orderBtnDisplay;
     private boolean createOrderPressed = false;
     private boolean docketsShifted = false;
     private Table table;
     private TextDisplay textDisplay;
-    private static final int MAX_TUTORIAL_STEP = 4;
-
+    private PlayerActions playerActions;
+    private boolean wPressedLastFrame = false;
+    private boolean aPressedLastFrame = false;
+    private boolean sPressedLastFrame = false;
+    private boolean dPressedLastFrame = false;
+    private static final int MAX_TUTORIAL_STEP = 8;  // Increased for combining step
+    int i = 0;
 
     public TutorialScreenDisplay(GdxGame game) {
 
@@ -38,6 +46,11 @@ public class TutorialScreenDisplay extends UIComponent {
 //        this.orderTicketDisplay = new MainGameOrderTicketDisplay(ServiceLocator.getRenderService(), ServiceLocator.getPlayerService());
 //        this.orderBtnDisplay = new MainGameOrderBtnDisplay();
 
+        if (this.game == null) {
+            logger.error("Game null");
+        } else {
+            logger.info("Game not null");
+        }
     }
 
     @Override
@@ -46,7 +59,13 @@ public class TutorialScreenDisplay extends UIComponent {
         MainGameOrderTicketDisplay.resetOrderNumb();
 
         if (entity != null) {
-            entity.getComponent(PlayerActions.class);
+            //playerActions = ServiceLocator.getPlayerService().getPlayer().getComponent(PlayerActions.class);
+            if (playerActions == null) {
+                logger.info("PlayerActions component not found.");
+            }else{
+                logger.info("PlayerActions component attatched");
+            }
+
         } else {
             logger.error("Entity null");
         }
@@ -54,17 +73,18 @@ public class TutorialScreenDisplay extends UIComponent {
         ServiceLocator.getLevelService().setCurrLevel(GdxGame.LevelType.LEVEL_0);
 
         if (table == null) {
-            table = new Table();  // Ensure table is initialised
+            table = new Table();
         }
 
         setupUI();
 
-        // Initialise the textDisplay before using it
         textDisplay = new TextDisplay();
         textDisplay.setVisible(false);  // Initially hidden
         stage.addActor(textDisplay.getTable());  // Add it to the stage
 
-        advanceTutorialStep();  // Ensure textDisplay is initialized before calling this method
+        entity.getEvents().addListener("TextComplete", this::onTextComplete);
+
+        advanceTutorialStep();
 
         // Add event listeners for create order
         //entity.getEvents().addListener("createOrder", this::onCreateOrderPressed);
@@ -88,6 +108,9 @@ public class TutorialScreenDisplay extends UIComponent {
     public void advanceTutorialStep() {
         if (tutorialStep < MAX_TUTORIAL_STEP) {
             tutorialStep++;
+
+            clearTextBox();
+
             switch (tutorialStep) {
                 case 1:
                     showMovementTutorial();
@@ -99,13 +122,23 @@ public class TutorialScreenDisplay extends UIComponent {
                     showOrderingTutorial();
                     break;
                 case 4:
+                    showRageModeTutorial();
+                    break;
+                case 5:
+                    showChoppingTutorial();
+                    break;
+                case 6:
+                    showRotationTutorial();
+                    break;
+                case 7:
+                    showCombiningTutorial();
+                    break;
+                case 8:
                     completeTutorial();
                     break;
                 default:
                     logger.error("Unexpected tutorial step: " + tutorialStep);
             }
-        } else {
-            logger.error("Tutorial step exceeded maximum value.");
         }
     }
 
@@ -141,16 +174,13 @@ public class TutorialScreenDisplay extends UIComponent {
         if (textDisplay != null) {
             textDisplay.setVisible(true);
 
-            // Combine both instructions into one
             createTextBox("Use [ and ] keys to switch dockets.");
 
-            // Check if both the order button is pressed and the dockets are shifted
             if ((Gdx.input.isKeyJustPressed(Input.Keys.LEFT_BRACKET) || Gdx.input.isKeyJustPressed(Input.Keys.RIGHT_BRACKET))) {
 
                 docketsShifted = true;
                 logger.debug("Dockets shifted!");
 
-                // Advance the tutorial as both conditions are now met
                 advanceTutorialStep();
             }
         } else {
@@ -158,6 +188,53 @@ public class TutorialScreenDisplay extends UIComponent {
         }
     }
 
+    /**
+     * Displays the Rage Mode tutorial. The player needs to press R to activate Rage Mode.
+     */
+    public void showRageModeTutorial() {
+        if (textDisplay != null) {
+            textDisplay.setVisible(true);
+            createTextBox("Press R to activate rage mode.");
+        } else {
+            logger.error("textDisplay is null during showRageModeTutorial.");
+        }
+    }
+
+    /**
+     * Displays the chopping tutorial. The player needs to press Q to chop an item.
+     */
+    public void showChoppingTutorial() {
+        if (textDisplay != null) {
+            textDisplay.setVisible(true);
+            createTextBox("Pick up an item and press Q to chop it.");
+        } else {
+            logger.error("textDisplay is null during showChoppingTutorial.");
+        }
+    }
+
+    /**
+     * Displays the rotation tutorial. The player needs to pick up 2 or more items and press K to rotate.
+     */
+    public void showRotationTutorial() {
+        if (textDisplay != null) {
+            textDisplay.setVisible(true);
+            createTextBox("Pick up 2 or more items and then press K to rotate them.");
+        } else {
+            logger.error("textDisplay is null during showRotationTutorial.");
+        }
+    }
+
+    /**
+     * Displays the combining tutorial. The player needs to pick up 2 or more items and press J to combine them into a meal.
+     */
+    public void showCombiningTutorial() {
+        if (textDisplay != null) {
+            textDisplay.setVisible(true);
+            createTextBox("Pick up 2 or more items and press J to combine them into a meal.");
+        } else {
+            logger.error("textDisplay is null during showCombiningTutorial.");
+        }
+    }
 
     /**
      * Completes the tutorial and informs the player that they can continue.
@@ -165,9 +242,66 @@ public class TutorialScreenDisplay extends UIComponent {
     private void completeTutorial() {
         if (textDisplay != null) {
             textDisplay.setVisible(true);
-            createTextBox("Tutorial Complete! Press `Space` to continue.");
+            createTextBox("Tutorial Complete!");
         } else {
             logger.error("textDisplay is null during completeTutorial.");
+        }
+    }
+
+    /**
+     * call when the text block is completed in TextDisplay.java
+     * Advances the tutorial to the next tut
+     */
+    private void onTextComplete(int currentPart) {
+        if (currentPart >= 0 && currentPart <= textDisplay.getText().size()) {
+            switch (tutorialStep) {
+                case 1:
+                    if (Gdx.input.isKeyJustPressed(Input.Keys.W) || Gdx.input.isKeyJustPressed(Input.Keys.A) ||
+                            Gdx.input.isKeyJustPressed(Input.Keys.S) || Gdx.input.isKeyJustPressed(Input.Keys.D)) {
+                        advanceTutorialStep();
+                    }
+                    break;
+                case 2:
+                    if (Gdx.input.isKeyJustPressed(Input.Keys.E)) {
+                        advanceTutorialStep();
+                    }
+                    break;
+                case 3:
+                    if (Gdx.input.isKeyJustPressed(Input.Keys.LEFT_BRACKET) || Gdx.input.isKeyJustPressed(Input.Keys.RIGHT_BRACKET)) {
+                        docketsShifted = true;
+                        logger.debug("Dockets shifted!");
+                        advanceTutorialStep();
+                    }
+                    break;
+                case 4:
+                    if (Gdx.input.isKeyJustPressed(Input.Keys.R)) {
+                        advanceTutorialStep();
+                    }
+                    break;
+                case 5:
+                    if (Gdx.input.isKeyJustPressed(Input.Keys.Q)) {
+                        advanceTutorialStep();
+                    }
+                    break;
+                case 6:
+                    if (Gdx.input.isKeyJustPressed(Input.Keys.K)) {
+                        advanceTutorialStep();
+                    }
+                    break;
+                case 7:
+                    if (Gdx.input.isKeyJustPressed(Input.Keys.J)) {
+                        advanceTutorialStep();
+                    }
+                    break;
+                case 8:
+                    if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
+                        startGame();
+                    }
+                    break;
+                default:
+                    logger.error("Unexpected tutorial step: " + tutorialStep);
+                    break;
+            }
         }
     }
 
@@ -194,12 +328,31 @@ public class TutorialScreenDisplay extends UIComponent {
                 }
 
                 if (docketsShifted) {
-                    logger.debug("Advancing tutorial after dockets shifted");
                     advanceTutorialStep();
                 }
                 break;
             case 4:
-                if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
+                if (Gdx.input.isKeyJustPressed(Input.Keys.R)) {
+                    advanceTutorialStep();
+                }
+                break;
+            case 5:
+                if (Gdx.input.isKeyJustPressed(Input.Keys.Q)) {
+                    advanceTutorialStep();
+                }
+                break;
+            case 6:
+                if (Gdx.input.isKeyJustPressed(Input.Keys.K)) {
+                    advanceTutorialStep();
+                }
+                break;
+            case 7:
+                if (Gdx.input.isKeyJustPressed(Input.Keys.J)) {
+                    advanceTutorialStep();
+                }
+                break;
+            case 8:
+                if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
                     startGame();
                 }
                 break;
@@ -220,15 +373,29 @@ public class TutorialScreenDisplay extends UIComponent {
     }
 
     /**
+     * Clears the tutorial text box.
+     */
+    private void clearTextBox() {
+        if (textDisplay != null && textDisplay.label != null) {
+            textDisplay.setText("");
+            textDisplay.currentText.setLength(0);
+            textDisplay.label.setText("");
+            textDisplay.setVisible(false);
+        } else {
+            logger.error("textDisplay or label is null during clearTextBox.");
+        }
+    }
+
+    /**
      * Starts the main game after the tutorial is complete.
      */
     private void startGame() {
         if (table != null) {
-            table.clear();  // Safely clear the table
+            table.clear();
         }
 
         ServiceLocator.getLevelService().setCurrLevel(GdxGame.LevelType.LEVEL_1);
-        game.setScreen(GdxGame.ScreenType.MAIN_GAME);  // Transition to the main game
+        game.setScreen(GdxGame.ScreenType.MAIN_GAME);
     }
 
     @Override
@@ -252,6 +419,7 @@ public class TutorialScreenDisplay extends UIComponent {
     public void draw(SpriteBatch batch) {
         // handled by stage
     }
+
     @Override
     public void setStage(Stage stage) {
         if (stage == null) {

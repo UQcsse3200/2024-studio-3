@@ -35,15 +35,17 @@ public class TextDisplay extends UIComponent {
     //String building variables
     private List<String> text;
     private int currentPart = 0;
-    private StringBuilder currentText;
+    private int textLength = 0;
+    public StringBuilder currentText;
+    private int textLimit = 60;
     private int charIndex = 0;
     private long lastUpdate = 0L;
     private long delay = 100L;
 
     // Displaying variables
     private boolean visible;
-    private Label label;
-    private final Table table;
+    public Label label;
+    private Table table;
     private final ScreenAdapter game;
     private String screen;
     private static final Logger logger = LoggerFactory.getLogger(TextDisplay.class);
@@ -132,12 +134,23 @@ public class TextDisplay extends UIComponent {
      * @param text - a string which is the text to be displayed
      */
     public void setText(String text) {
-        setVisible(true);
+        if (this.label == null) {
+            BitmapFont defaultFont = new BitmapFont();
+            Label.LabelStyle labelStyle = new Label.LabelStyle(defaultFont, Color.BLACK);
+            this.label = new Label("", labelStyle);
+        }
+
+        currentText.setLength(0);
+        label.setText("");
+        charIndex = 0;
         currentPart = 0;
+
+        setVisible(true);
         List<String> newText = new ArrayList<>();
         int textLength = text.length();
         StringBuilder temp = new StringBuilder();
         StringBuilder current = new StringBuilder();
+
         for (int i = 0; i < textLength; i++) {
             // if word formed in temp
             if (text.charAt(i) == ' ') {
@@ -151,7 +164,7 @@ public class TextDisplay extends UIComponent {
                 newText.add(temp.toString());
                 temp = new StringBuilder();
             }
-            current.    append(text.charAt(i));
+            current.append(text.charAt(i));
         }
         temp.append(current).append(" (enter to continue)");
         newText.add(temp.toString());
@@ -188,14 +201,21 @@ public class TextDisplay extends UIComponent {
     @Override
     public void update() {
         long time = ServiceLocator.getTimeSource().getTime();
-        if (this.text != null && currentPart < TextDisplay.this.text.size() && charIndex < this.text.get(currentPart).length()) {
-            if (time - lastUpdate >= delay) {
-                lastUpdate = time;
-                // Add a character and set the label to new text
-                this.currentText.append(text.get(currentPart).charAt(charIndex));
-                label.setText(currentText.toString());
-                charIndex++;
+
+        if (this.text != null && currentPart < text.size()) {
+            if (charIndex < text.get(currentPart).length()) {
+                if (time - lastUpdate >= delay) {
+                    lastUpdate = time;
+                    this.currentText.append(text.get(currentPart).charAt(charIndex));
+                    label.setText(currentText.toString());
+                    charIndex++;
+                }
             }
+            if (charIndex >= text.get(currentPart).length()) {
+                entity.getEvents().trigger("TextComplete", currentPart);
+            }
+        } else {
+            //Nothing
         }
     }
 
@@ -241,7 +261,7 @@ public class TextDisplay extends UIComponent {
                         ServiceLocator.getDayNightService().getEvents().trigger("NoAtMoralDecision");
                     }
                     return true;
-                }  else if (keycode == com.badlogic.gdx.Input.Keys.ENTER || keycode == com.badlogic.gdx.Input.Keys.SPACE){
+                }  else if (keycode == com.badlogic.gdx.Input.Keys.ENTER){
                     if (charIndex < TextDisplay.this.text.get(currentPart).length()) {
                         label.setText(text.get(currentPart));
                         charIndex = TextDisplay.this.text.get(currentPart).length();
