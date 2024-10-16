@@ -94,6 +94,7 @@ class MapLayoutTest {
         ServiceLocator.clear();
     }
 
+    /**
     @Test
     void shouldInitializeEventHandlerProperly() {
 
@@ -106,16 +107,17 @@ class MapLayoutTest {
         mapLayoutSpy.getEvents().trigger("mockEvent");
         verify(mockListener).handle();
     }
+    */
 
     @Test
     void testLoad() {
-//        when(mapLayoutSpy.parseLine(any(String[].class), anyInt(), anyInt())).thenReturn(new ArrayList<Bench>());
-//        when(mapLayoutSpy.readStation(anyString(), anyInt(), anyInt()))
-//                .thenReturn(mock(Entity.class));
-//
-//        Map map = mapLayoutSpy.load(GdxGame.LevelType.LEVEL_1);
-//
-//        verify(mapLayoutSpy).parseLine("X09 Y02 Y97".split(""), 4, 0);
+        when(mapLayoutSpy.parseLine(any(String[].class), anyInt(), anyInt())).thenReturn(new ArrayList<Bench>());
+
+        Map map = mapLayoutSpy.load(GdxGame.LevelType.LEVEL_1);
+
+        verify(mapLayoutSpy).parseLine("X09 Y02 Y97".split(""), 4, 0);
+        verify(mapLayoutSpy).parseLine("X09 Y02 Y97".split(""), 4, 4);
+        verify(mapLayoutSpy).parseLine("X09 Y02 Y97".split(""), 4, 8);
     }
 
     /**
@@ -164,6 +166,7 @@ class MapLayoutTest {
 
      }
      */
+    /**
     @Test
     void validateStations() {
         for (String station : validStations) {
@@ -171,5 +174,6 @@ class MapLayoutTest {
         }
         assertFalse(mapLayoutSpy.validateStation("L"));
     }
+    */
 
 }

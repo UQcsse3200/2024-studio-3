@@ -62,7 +62,7 @@ public class MapLayout {
         String mapLevel = mapBase;
         BufferedReader reader = null;
         switch (level) {
-            case LEVEL_1 -> mapLevel = mapLevel1;
+            case LEVEL_1 -> mapLevel = mapLevel5;
             case LEVEL_2 -> mapLevel = mapLevel2;
             case LEVEL_3 -> mapLevel = mapLevel3;
             case LEVEL_4 -> mapLevel = mapLevel4;
@@ -174,20 +174,6 @@ public class MapLayout {
         }
         return new ArrayList<Bench>();
     }
-
-//    private ArrayList<Bench>() readBench(String type, int a, int b, int c)
-//    {
-//        switch (type) {
-//            case "X":
-//                break;
-//            case "Y":
-//                break;
-//            case "Q":
-//                break;
-//            case "P":
-//                break;
-//        }
-//    }
 
     /**
      * Read a station from the map file
