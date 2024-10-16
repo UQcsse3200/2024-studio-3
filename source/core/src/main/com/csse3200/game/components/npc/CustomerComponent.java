@@ -44,7 +44,7 @@ public class CustomerComponent extends Component {
         this.patience = config.patience;
         this.countDown = config.countDown;
         this.preference = config.preference;
-        this.Customer_id = config.Customer_id;
+        this.Customer_id = config.customerId;
     }
 
     /**
@@ -58,7 +58,7 @@ public class CustomerComponent extends Component {
         this.countDown = config.countDown;
         this.reputation = config.reputation;
         this.preference = config.preference;
-        this.Customer_id = config.Customer_id;
+        this.Customer_id = config.customerId;
     }
 
     /**
