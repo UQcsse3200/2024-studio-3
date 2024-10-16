@@ -261,19 +261,31 @@ public class TextDisplay extends UIComponent {
     }
 
     public void setFontScale(float scale) {
-        label.setFontScale(scale);  // Adjust the font scale
+        if (label != null) {
+            label.setFontScale(scale);  // Adjust the font scale
+        } else {
+            logger.error("Label is null. Cannot set font scale.");
+        }
     }
 
     // Method to adjust the table's position by setting its alignment
     public void setPosition(int align, float padTop, float padLeft, float padBottom) {
-        table.align(align);  // Align the table (e.g., Align.topLeft)
-        table.padTop(padTop); // Set top padding
-        table.padLeft(padLeft); // Set left padding
-        table.padBottom(padBottom); // Set bottom padding
+        if (table != null) {
+            table.align(align);  // Align the table (e.g., Align.topLeft)
+            table.padTop(padTop); // Set top padding
+            table.padLeft(padLeft); // Set left padding
+            table.padBottom(padBottom); // Set bottom padding
+        } else {
+            logger.error("Table is null. Cannot set position.");
+        }
     }
 
     // Method to adjust the scale of the table (for resizing the display)
     public void setTableScale(float scaleX, float scaleY) {
-        table.setScale(scaleX, scaleY);  // Adjust the X and Y scale of the table
+        if (table != null) {
+            table.setScale(scaleX, scaleY);  // Adjust the X and Y scale of the table
+        } else {
+            logger.error("Table is null. Cannot set table scale.");
+        }
     }
 }

@@ -21,7 +21,11 @@ import java.util.List;
  * and this class manages scene transitions, asset loading/unloading, and entity management for the cutscene.
  */
 public abstract class Cutscene extends Component {
+
     private static final Logger logger = LoggerFactory.getLogger(Cutscene.class);
+
+    // type of cutscene
+    protected GdxGame.CutsceneType cutsceneType;
 
     // List of scenes in the cutscene
     protected List<Scene> scenes = new ArrayList<>();
@@ -258,6 +262,10 @@ public abstract class Cutscene extends Component {
             textIndex = 0;
             nextCutscene();
         }
+    }
+
+    public GdxGame.CutsceneType getCutsceneType() {
+        return cutsceneType;
     }
 
     /**
