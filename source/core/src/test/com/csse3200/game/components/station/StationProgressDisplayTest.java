@@ -42,6 +42,11 @@ import java.lang.reflect.Field;
 @ExtendWith(GameExtension.class)
 public class StationProgressDisplayTest {
 
+    private static final float TEST_X_OFFSET = 0.0f;
+    private static final float TEST_Y_OFFSET = 0.05f;
+    private static final float TEST_BAR_MAX_WIDTH = 1.0f;
+    private static final float TEST_BAR_HEIGHT = 0.2f;
+
     private RenderService renderService;
     private SpriteBatch spriteBatch;
     private StationProgressDisplay progressDisplay;
@@ -208,191 +213,213 @@ public class StationProgressDisplayTest {
         // Verify that the "updateInventory" event is NOT triggered since the process is not yet complete
         verify(eventHandler, never()).trigger(eq("updateInventory"));
     }
+
+    /**
+     * Tests the update method with an item that has a ChopIngredientComponent and is complete.
+     */
+    @Test
+    public void testUpdate_WithChopIngredientComponent_Complete() throws NoSuchFieldException, IllegalAccessException {
+        // Arrange
+        ItemComponent item = mock(ItemComponent.class);
+        ChopIngredientComponent chopComponent = mock(ChopIngredientComponent.class);
+        Entity itemEntity = mock(Entity.class);
+        when(itemHandlerComponent.peek()).thenReturn(item);
+        when(item.getEntity()).thenReturn(itemEntity);
+        when(itemEntity.getComponent(ChopIngredientComponent.class)).thenReturn(chopComponent);
+        when(chopComponent.getCompletionPercent()).thenReturn(100.0f);
+
+        // Access private fields
+        Field barPercentageField = StationProgressDisplay.class.getDeclaredField("barPercentage");
+        Field displayBarField = StationProgressDisplay.class.getDeclaredField("displayBar");
+
+        barPercentageField.setAccessible(true);
+        displayBarField.setAccessible(true);
+
+        // Act
+        progressDisplay.update();
+
+        // Assert
+        float barPercentage = barPercentageField.getFloat(progressDisplay);
+        boolean displayBar = displayBarField.getBoolean(progressDisplay);
+
+        assertEquals(1.0f, barPercentage, 0.001f, "barPercentage should be 1.0f");
+        assertFalse(displayBar, "displayBar should be false when processing is complete");
+
+        // Verify that the updateInventory event is triggered once
+        verify(eventHandler, times(1)).trigger(eq("updateInventory"));
+    }
+
+    /**
+     * Tests the update method with an item that has a CookIngredientComponent and is incomplete.
+     */
+    @Test
+    public void testUpdate_WithCookIngredientComponent_Incomplete() throws NoSuchFieldException, IllegalAccessException {
+        // Arrange
+        ItemComponent item = mock(ItemComponent.class);
+        CookIngredientComponent cookComponent = mock(CookIngredientComponent.class);
+        Entity itemEntity = mock(Entity.class);
+        when(itemHandlerComponent.peek()).thenReturn(item);
+        when(item.getEntity()).thenReturn(itemEntity);
+        when(itemEntity.getComponent(CookIngredientComponent.class)).thenReturn(cookComponent);
+        when(cookComponent.getCompletionPercent()).thenReturn(75.0f);
+
+        // Access private fields
+        Field barPercentageField = StationProgressDisplay.class.getDeclaredField("barPercentage");
+        Field displayBarField = StationProgressDisplay.class.getDeclaredField("displayBar");
+
+        barPercentageField.setAccessible(true);
+        displayBarField.setAccessible(true);
+
+        // Act
+        progressDisplay.update();
+
+        // Assert
+        float barPercentage = barPercentageField.getFloat(progressDisplay);
+        boolean displayBar = displayBarField.getBoolean(progressDisplay);
+
+        assertEquals(0.75f, barPercentage, 0.001f, "barPercentage should be 0.75f");
+        assertTrue(displayBar, "displayBar should be true when cooking is incomplete");
+
+        // Verify that the "updateInventory" event is NOT triggered since the process is not yet complete
+        verify(eventHandler, never()).trigger(eq("updateInventory"));
+    }
+
+    /**
+     * Tests the update method with an item that has a CookIngredientComponent and is complete but still cooking.
+     */
+    @Test
+    public void testUpdate_WithCookIngredientComponent_CompleteCooking() throws NoSuchFieldException, IllegalAccessException {
+        // Arrange
+        ItemComponent item = mock(ItemComponent.class);
+        CookIngredientComponent cookComponent = mock(CookIngredientComponent.class);
+        Entity itemEntity = mock(Entity.class);
+        when(itemHandlerComponent.peek()).thenReturn(item);
+        when(item.getEntity()).thenReturn(itemEntity);
+        when(itemEntity.getComponent(CookIngredientComponent.class)).thenReturn(cookComponent);
+        when(cookComponent.getCompletionPercent()).thenReturn(100.0f);
+        when(cookComponent.getIsCooking()).thenReturn(true);
+
+        // Access private fields
+        Field barPercentageField = StationProgressDisplay.class.getDeclaredField("barPercentage");
+        Field displayBarField = StationProgressDisplay.class.getDeclaredField("displayBar");
+
+        barPercentageField.setAccessible(true);
+        displayBarField.setAccessible(true);
+
+        // Act
+        progressDisplay.update();
+
+        // Assert
+        float barPercentage = barPercentageField.getFloat(progressDisplay);
+        boolean displayBar = displayBarField.getBoolean(progressDisplay);
+
+        assertEquals(1.0f, barPercentage, 0.001f, "barPercentage should be 1.0f");
+        assertTrue(displayBar, "displayBar should be true when cooking is complete but still cooking");
+
+        // Verify that updateInventory event is not triggered
+        verify(eventHandler, never()).trigger(eq("updateInventory"));
+    }
+
+    /**
+     * Tests the draw method when the progress bar should be displayed.
+     */
+    @Test
+    public void testDraw_DisplayBar() throws NoSuchFieldException, IllegalAccessException {
+        // Arrange: Mock the Textures and inject them into progressDisplay
+        Texture mockBarOutline = mock(Texture.class);
+        Texture mockBarFill = mock(Texture.class);
+
+        // Use reflection to access and set the private barOutline and barFill fields
+        Field barOutlineField = StationProgressDisplay.class.getDeclaredField("barOutline");
+        Field barFillField = StationProgressDisplay.class.getDeclaredField("barFill");
+
+        barOutlineField.setAccessible(true);
+        barFillField.setAccessible(true);
+
+        barOutlineField.set(progressDisplay, mockBarOutline);
+        barFillField.set(progressDisplay, mockBarFill);
+
+        // Arrange: Set displayBar to true and set barPercentage
+        Field displayBarField = StationProgressDisplay.class.getDeclaredField("displayBar");
+        Field barPercentageField = StationProgressDisplay.class.getDeclaredField("barPercentage");
+        Field positionField = StationProgressDisplay.class.getDeclaredField("position");
+        Field scaleField = StationProgressDisplay.class.getDeclaredField("scale");
+
+        displayBarField.setAccessible(true);
+        barPercentageField.setAccessible(true);
+        positionField.setAccessible(true);
+        scaleField.setAccessible(true);
+
+        displayBarField.setBoolean(progressDisplay, true);
+        barPercentageField.setFloat(progressDisplay, 0.5f);
+        positionField.set(progressDisplay, new Vector2(100, 200));
+        scaleField.set(progressDisplay, new Vector2(1, 1));
+
+        // Act
+        progressDisplay.draw(spriteBatch);
+
+        // Assert: Verify that SpriteBatch.draw was called with the correct parameters for barOutline and barFill
+        verify(spriteBatch).draw(eq(mockBarOutline),
+                eq(100.0f + TEST_X_OFFSET),
+                eq(200.0f + TEST_Y_OFFSET),
+                eq(TEST_BAR_MAX_WIDTH),
+                eq(TEST_BAR_HEIGHT));
+
+        verify(spriteBatch).draw(eq(mockBarFill),
+                eq(100.0f + TEST_X_OFFSET),
+                eq(200.0f + TEST_Y_OFFSET),
+                eq(TEST_BAR_MAX_WIDTH * 0.5f), // barPercentage = 0.5f
+                eq(TEST_BAR_HEIGHT));
+    }
+
+    /**
+     * Tests the draw method when the progress bar should not be displayed.
+     */
+    @Test
+    public void testDraw_NoDisplayBar() throws NoSuchFieldException, IllegalAccessException {
+        // Arrange: Set displayBar to false
+        Field displayBarField = StationProgressDisplay.class.getDeclaredField("displayBar");
+        displayBarField.setAccessible(true);
+        displayBarField.setBoolean(progressDisplay, false);
+
+        // Act
+        progressDisplay.draw(spriteBatch);
+
+        // Assert
+        // Verify that draw is never called since displayBar is false
+        verify(spriteBatch, never()).draw(any(Texture.class), anyFloat(), anyFloat(), anyFloat(), anyFloat());
+    }
+
+    /**
+     * Tests the dispose method to ensure textures are disposed and the component is unregistered.
+     */
+    @Test
+    public void testDispose() throws NoSuchFieldException, IllegalAccessException {
+        // Arrange: Ensure textures are loaded
+        Field barOutlineField = StationProgressDisplay.class.getDeclaredField("barOutline");
+        Field barFillField = StationProgressDisplay.class.getDeclaredField("barFill");
+
+        barOutlineField.setAccessible(true);
+        barFillField.setAccessible(true);
+
+        Texture barOutline = mock(Texture.class);
+        Texture barFill = mock(Texture.class);
+
+        barOutlineField.set(progressDisplay, barOutline);
+        barFillField.set(progressDisplay, barFill);
+
+        // Act
+        progressDisplay.dispose();
+
+        // Assert
+        // Verify that textures are disposed
+        verify(barOutline).dispose();
+        verify(barFill).dispose();
+
+        // Verify that RenderService.unregister was called
+        verify(renderService).unregister(progressDisplay);
+    }
 }
-
-//     /**
-//      * Tests the update method with an item that has a ChopIngredientComponent and is complete.
-//      */
-//     @Test
-//     public void testUpdate_WithChopIngredientComponent_Complete() throws NoSuchFieldException, IllegalAccessException {
-//         // Arrange
-//         ItemComponent item = mock(ItemComponent.class);
-//         ChopIngredientComponent chopComponent = mock(ChopIngredientComponent.class);
-//         when(itemHandlerComponent.peek()).thenReturn(item);
-//         when(item.getEntity()).thenReturn(new Entity());
-//         when(item.getEntity().getComponent(ChopIngredientComponent.class)).thenReturn(chopComponent);
-//         when(chopComponent.getCompletionPercent()).thenReturn(100.0f);
-
-//         // Access private fields
-//         Field barPercentageField = StationProgressDisplay.class.getDeclaredField("barPercentage");
-//         Field displayBarField = StationProgressDisplay.class.getDeclaredField("displayBar");
-
-//         barPercentageField.setAccessible(true);
-//         displayBarField.setAccessible(true);
-
-//         // Act
-//         progressDisplay.update();
-
-//         // Assert
-//         float barPercentage = barPercentageField.getFloat(progressDisplay);
-//         boolean displayBar = displayBarField.getBoolean(progressDisplay);
-
-//         assertEquals(1.0f, barPercentage, 0.001f, "barPercentage should be 1.0f");
-//         assertFalse(displayBar, "displayBar should be false when processing is complete");
-
-//         // Verify that updateInventory event is triggered
-//         verify(entity.getEvents()).trigger("updateInventory");
-//     }
-
-//     /**
-//      * Tests the update method with an item that has a CookIngredientComponent and is incomplete.
-//      */
-//     @Test
-//     public void testUpdate_WithCookIngredientComponent_Incomplete() throws NoSuchFieldException, IllegalAccessException {
-//         // Arrange
-//         ItemComponent item = mock(ItemComponent.class);
-//         CookIngredientComponent cookComponent = mock(CookIngredientComponent.class);
-//         when(itemHandlerComponent.peek()).thenReturn(item);
-//         when(item.getEntity()).thenReturn(new Entity());
-//         when(item.getEntity().getComponent(CookIngredientComponent.class)).thenReturn(cookComponent);
-//         when(cookComponent.getCompletionPercent()).thenReturn(75.0f);
-
-//         // Access private fields
-//         Field barPercentageField = StationProgressDisplay.class.getDeclaredField("barPercentage");
-//         Field displayBarField = StationProgressDisplay.class.getDeclaredField("displayBar");
-
-//         barPercentageField.setAccessible(true);
-//         displayBarField.setAccessible(true);
-
-//         // Act
-//         progressDisplay.update();
-
-//         // Assert
-//         float barPercentage = barPercentageField.getFloat(progressDisplay);
-//         boolean displayBar = displayBarField.getBoolean(progressDisplay);
-
-//         assertEquals(0.75f, barPercentage, 0.001f, "barPercentage should be 0.75f");
-//         assertTrue(displayBar, "displayBar should be true when cooking is incomplete");
-//     }
-
-//     /**
-//      * Tests the update method with an item that has a CookIngredientComponent and is complete but still cooking.
-//      */
-//     @Test
-//     public void testUpdate_WithCookIngredientComponent_CompleteCooking() throws NoSuchFieldException, IllegalAccessException {
-//         // Arrange
-//         ItemComponent item = mock(ItemComponent.class);
-//         CookIngredientComponent cookComponent = mock(CookIngredientComponent.class);
-//         when(itemHandlerComponent.peek()).thenReturn(item);
-//         when(item.getEntity()).thenReturn(new Entity());
-//         when(item.getEntity().getComponent(CookIngredientComponent.class)).thenReturn(cookComponent);
-//         when(cookComponent.getCompletionPercent()).thenReturn(100.0f);
-//         when(cookComponent.getIsCooking()).thenReturn(true);
-
-//         // Access private fields
-//         Field barPercentageField = StationProgressDisplay.class.getDeclaredField("barPercentage");
-//         Field displayBarField = StationProgressDisplay.class.getDeclaredField("displayBar");
-
-//         barPercentageField.setAccessible(true);
-//         displayBarField.setAccessible(true);
-
-//         // Act
-//         progressDisplay.update();
-
-//         // Assert
-//         float barPercentage = barPercentageField.getFloat(progressDisplay);
-//         boolean displayBar = displayBarField.getBoolean(progressDisplay);
-
-//         assertEquals(1.0f, barPercentage, 0.001f, "barPercentage should be 1.0f");
-//         assertTrue(displayBar, "displayBar should be true when cooking is complete but still cooking");
-//     }
-
-//     /**
-//      * Tests the draw method when the progress bar should be displayed.
-//      */
-//     @Test
-//     public void testDraw_DisplayBar() throws NoSuchFieldException, IllegalAccessException {
-//         // Arrange: Set displayBar to true and set barPercentage
-//         Field displayBarField = StationProgressDisplay.class.getDeclaredField("displayBar");
-//         Field barPercentageField = StationProgressDisplay.class.getDeclaredField("barPercentage");
-//         Field positionField = StationProgressDisplay.class.getDeclaredField("position");
-//         Field scaleField = StationProgressDisplay.class.getDeclaredField("scale");
-
-//         displayBarField.setAccessible(true);
-//         barPercentageField.setAccessible(true);
-//         positionField.setAccessible(true);
-//         scaleField.setAccessible(true);
-
-//         displayBarField.setBoolean(progressDisplay, true);
-//         barPercentageField.setFloat(progressDisplay, 0.5f);
-//         positionField.set(progressDisplay, new Vector2(100, 200));
-//         scaleField.set(progressDisplay, new Vector2(1, 1));
-
-//         // Act
-//         progressDisplay.draw(spriteBatch);
-
-//         // Assert
-//         // Capture the draw calls
-//         verify(spriteBatch).draw(eq(progressDisplay.barOutline),
-//                 eq(100.0f),
-//                 eq(200.05f),
-//                 eq(1.0f),
-//                 eq(0.2f));
-
-//         verify(spriteBatch).draw(eq(progressDisplay.barFill),
-//                 eq(100.0f),
-//                 eq(200.05f),
-//                 eq(0.5f),
-//                 eq(0.2f));
-//     }
-
-//     /**
-//      * Tests the draw method when the progress bar should not be displayed.
-//      */
-//     @Test
-//     public void testDraw_NoDisplayBar() throws NoSuchFieldException, IllegalAccessException {
-//         // Arrange: Set displayBar to false
-//         Field displayBarField = StationProgressDisplay.class.getDeclaredField("displayBar");
-//         displayBarField.setAccessible(true);
-//         displayBarField.setBoolean(progressDisplay, false);
-
-//         // Act
-//         progressDisplay.draw(spriteBatch);
-
-//         // Assert
-//         // Verify that draw is never called since displayBar is false
-//         verify(spriteBatch, never()).draw(any(Texture.class), anyFloat(), anyFloat(), anyFloat(), anyFloat());
-//     }
-
-//     /**
-//      * Tests the dispose method to ensure textures are disposed and the component is unregistered.
-//      */
-//     @Test
-//     public void testDispose() throws NoSuchFieldException, IllegalAccessException {
-//         // Arrange: Ensure textures are loaded
-//         Field barOutlineField = StationProgressDisplay.class.getDeclaredField("barOutline");
-//         Field barFillField = StationProgressDisplay.class.getDeclaredField("barFill");
-
-//         barOutlineField.setAccessible(true);
-//         barFillField.setAccessible(true);
-
-//         Texture barOutline = mock(Texture.class);
-//         Texture barFill = mock(Texture.class);
-
-//         barOutlineField.set(progressDisplay, barOutline);
-//         barFillField.set(progressDisplay, barFill);
-
-//         // Act
-//         progressDisplay.dispose();
-
-//         // Assert
-//         // Verify that textures are disposed
-//         verify(barOutline).dispose();
-//         verify(barFill).dispose();
-
-//         // Verify that RenderService.unregister was called
-//         verify(renderService).unregister(progressDisplay);
-//     }
 
 //     /**
 //      * Tests that getLayer returns the correct layer value.
