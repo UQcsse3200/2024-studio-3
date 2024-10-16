@@ -144,9 +144,13 @@ implements <a href="Upgrade.html" title="interface in com.csse3200.game.componen
 <div class="table-header col-first">Constructor</div>
 <div class="table-header col-last">Description</div>
 <div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E()" class="member-name-link">DancePartyUpgrade</a>()</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block">Constructor for DancePartyUpgrade that initializes the upgrade and sets up event listeners.</div>
+</div>
 <div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(com.csse3200.game.components.CombatStatsComponent)" class="member-name-link">DancePartyUpgrade</a><wbr>(<a href="../CombatStatsComponent.html" title="class in com.csse3200.game.components">CombatStatsComponent</a>&nbsp;combatStatsComponent)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-last odd-row-color">
+<div class="block">Constructor for DancePartyUpgrade with an explicit CombatStatsComponent.</div>
+</div>
 </div>
 </section>
 </li>
@@ -170,11 +174,15 @@ implements <a href="Upgrade.html" title="interface in com.csse3200.game.componen
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#create()" class="member-name-link">create</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Called when the entity is created and registered.</div>
+<div class="block">Initializes the Dance Party upgrade by loading necessary assets,
+ such as textures and sound effects, and setting up the UI components
+ (progress meter and label).</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#dancePartyCost()" class="member-name-link">dancePartyCost</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Handles the cost of the Dance Party upgrade, deducting gold from the player's CombatStatsComponent.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#deactivate()" class="member-name-link">deactivate</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
@@ -184,20 +192,42 @@ implements <a href="Upgrade.html" title="interface in com.csse3200.game.componen
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#dispose()" class="member-name-link">dispose</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Called when the component is disposed.</div>
+<div class="block">Disposes of assets and cleans up when the upgrade is no longer needed.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#draw(com.badlogic.gdx.graphics.g2d.SpriteBatch)" class="member-name-link">draw</a><wbr>(com.badlogic.gdx.graphics.g2d.SpriteBatch&nbsp;batch)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Draw the renderable.</div>
+<div class="block">Draw method required by the UIComponent class, but not used in this upgrade.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>float</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getActiveTimeRemaining()" class="member-name-link">getActiveTimeRemaining</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Retrieves the remaining time for which the upgrade will stay active.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getPlaySound()" class="member-name-link">getPlaySound</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Retrieves the current state of the playSound flag, which indicates whether the upgrade's sound has been played.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>long</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getUpgradeDuration()" class="member-name-link">getUpgradeDuration</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Retrieves the total upgrade duration.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isActive()" class="member-name-link">isActive</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Gets the current active state of the Dance Party upgrade.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setStage(com.badlogic.gdx.scenes.scene2d.Stage)" class="member-name-link">setStage</a><wbr>(com.badlogic.gdx.scenes.scene2d.Stage&nbsp;mock)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Sets the stage for the UI components, such as the layout, meter, and text.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#update()" class="member-name-link">update</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Called once per frame of the game, and should be used for most component logic.</div>
+<div class="block">Checks and updates the remaining time for the Dance Party upgrade, updating the progress bar meter.</div>
 </div>
 </div>
 </div>
@@ -261,12 +291,20 @@ implements <a href="Upgrade.html" title="interface in com.csse3200.game.componen
 <section class="detail" id="&lt;init&gt;()">
 <h3>DancePartyUpgrade</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">DancePartyUpgrade</span>()</div>
+<div class="block">Constructor for DancePartyUpgrade that initializes the upgrade and sets up event listeners.
+ It listens for "playerCreated" and "Dance party" events.</div>
 </section>
 </li>
 <li>
 <section class="detail" id="&lt;init&gt;(com.csse3200.game.components.CombatStatsComponent)">
 <h3>DancePartyUpgrade</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">DancePartyUpgrade</span><wbr><span class="parameters">(<a href="../CombatStatsComponent.html" title="class in com.csse3200.game.components">CombatStatsComponent</a>&nbsp;combatStatsComponent)</span></div>
+<div class="block">Constructor for DancePartyUpgrade with an explicit CombatStatsComponent.
+ This initializes the upgrade and registers the same event listeners as the default constructor.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>combatStatsComponent</code> - the CombatStatsComponent for the player</dd>
+</dl>
 </section>
 </li>
 </ul>
@@ -281,9 +319,9 @@ implements <a href="Upgrade.html" title="interface in com.csse3200.game.componen
 <section class="detail" id="create()">
 <h3>create</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">create</span>()</div>
-<div class="block"><span class="description-from-type-label">Description copied from class:&nbsp;<code><a href="../Component.html#create()">Component</a></code></span></div>
-<div class="block">Called when the entity is created and registered. Initial logic such as calls to GetComponent
- should be made here, not in the constructor which is called before an entity is finished.</div>
+<div class="block">Initializes the Dance Party upgrade by loading necessary assets,
+ such as textures and sound effects, and setting up the UI components
+ (progress meter and label). This method is called when the component is created.</div>
 <dl class="notes">
 <dt>Overrides:</dt>
 <dd><code><a href="../../ui/UIComponent.html#create()">create</a></code>&nbsp;in class&nbsp;<code><a href="../../ui/UIComponent.html" title="class in com.csse3200.game.ui">UIComponent</a></code></dd>
@@ -318,15 +356,15 @@ implements <a href="Upgrade.html" title="interface in com.csse3200.game.componen
 <section class="detail" id="dancePartyCost()">
 <h3>dancePartyCost</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">dancePartyCost</span>()</div>
+<div class="block">Handles the cost of the Dance Party upgrade, deducting gold from the player's CombatStatsComponent.</div>
 </section>
 </li>
 <li>
 <section class="detail" id="update()">
 <h3>update</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">update</span>()</div>
-<div class="block"><span class="description-from-type-label">Description copied from class:&nbsp;<code><a href="../Component.html#update()">Component</a></code></span></div>
-<div class="block">Called once per frame of the game, and should be used for most component logic. Not called if
- component is disabled.</div>
+<div class="block">Checks and updates the remaining time for the Dance Party upgrade, updating the progress bar meter.
+ It also checks if the upgrade's time has run out and deactivates it accordingly.</div>
 <dl class="notes">
 <dt>Overrides:</dt>
 <dd><code><a href="../Component.html#update()">update</a></code>&nbsp;in class&nbsp;<code><a href="../Component.html" title="class in com.csse3200.game.components">Component</a></code></dd>
@@ -337,8 +375,8 @@ implements <a href="Upgrade.html" title="interface in com.csse3200.game.componen
 <section class="detail" id="dispose()">
 <h3>dispose</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">dispose</span>()</div>
-<div class="block"><span class="description-from-type-label">Description copied from class:&nbsp;<code><a href="../Component.html#dispose()">Component</a></code></span></div>
-<div class="block">Called when the component is disposed. Dispose of any internal resources here.</div>
+<div class="block">Disposes of assets and cleans up when the upgrade is no longer needed.
+ Unloads the textures used by the upgrade.</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code>dispose</code>&nbsp;in interface&nbsp;<code>com.badlogic.gdx.utils.Disposable</code></dd>
@@ -351,13 +389,12 @@ implements <a href="Upgrade.html" title="interface in com.csse3200.game.componen
 <section class="detail" id="draw(com.badlogic.gdx.graphics.g2d.SpriteBatch)">
 <h3>draw</h3>
 <div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">draw</span><wbr><span class="parameters">(com.badlogic.gdx.graphics.g2d.SpriteBatch&nbsp;batch)</span></div>
-<div class="block"><span class="description-from-type-label">Description copied from class:&nbsp;<code><a href="../../rendering/RenderComponent.html#draw(com.badlogic.gdx.graphics.g2d.SpriteBatch)">RenderComponent</a></code></span></div>
-<div class="block">Draw the renderable. Should be called only by the renderer, not manually.</div>
+<div class="block">Draw method required by the UIComponent class, but not used in this upgrade.</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="../../rendering/RenderComponent.html#draw(com.badlogic.gdx.graphics.g2d.SpriteBatch)">draw</a></code>&nbsp;in class&nbsp;<code><a href="../../rendering/RenderComponent.html" title="class in com.csse3200.game.rendering">RenderComponent</a></code></dd>
 <dt>Parameters:</dt>
-<dd><code>batch</code> - Batch to render to.</dd>
+<dd><code>batch</code> - the SpriteBatch used to draw</dd>
 </dl>
 </section>
 </li>
@@ -365,9 +402,56 @@ implements <a href="Upgrade.html" title="interface in com.csse3200.game.componen
 <section class="detail" id="setStage(com.badlogic.gdx.scenes.scene2d.Stage)">
 <h3>setStage</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setStage</span><wbr><span class="parameters">(com.badlogic.gdx.scenes.scene2d.Stage&nbsp;mock)</span></div>
+<div class="block">Sets the stage for the UI components, such as the layout, meter, and text.</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="../../rendering/Renderable.html#setStage(com.badlogic.gdx.scenes.scene2d.Stage)">setStage</a></code>&nbsp;in interface&nbsp;<code><a href="../../rendering/Renderable.html" title="interface in com.csse3200.game.rendering">Renderable</a></code></dd>
+<dt>Parameters:</dt>
+<dd><code>mock</code> - the Stage to which the UI components belong</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="isActive()">
+<h3>isActive</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isActive</span>()</div>
+<div class="block">Gets the current active state of the Dance Party upgrade.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>true if the upgrade is currently active, false otherwise</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getActiveTimeRemaining()">
+<h3>getActiveTimeRemaining</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">float</span>&nbsp;<span class="element-name">getActiveTimeRemaining</span>()</div>
+<div class="block">Retrieves the remaining time for which the upgrade will stay active.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>the remaining active time in milliseconds</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getUpgradeDuration()">
+<h3>getUpgradeDuration</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name">getUpgradeDuration</span>()</div>
+<div class="block">Retrieves the total upgrade duration.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>the total duration of the upgrade in milliseconds</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getPlaySound()">
+<h3>getPlaySound</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">getPlaySound</span>()</div>
+<div class="block">Retrieves the current state of the playSound flag, which indicates whether the upgrade's sound has been played.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>true if the sound has been played, false otherwise</dd>
 </dl>
 </section>
 </li>
