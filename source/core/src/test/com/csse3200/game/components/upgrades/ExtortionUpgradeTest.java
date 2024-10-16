@@ -71,7 +71,7 @@ public class ExtortionUpgradeTest {
     }
 
     @Test
-    void testSpeedBootsActivates() {
+    void testExtortionUpgradeActivates() {
         assertNotNull(extortionUpgrade);
         when(combatStatsComponent.getGold()).thenReturn(100);
         extortionUpgrade.activate();
@@ -91,7 +91,7 @@ public class ExtortionUpgradeTest {
     }
 
     @Test
-    void testSpeedBootsDeactivates() {
+    void testExtortionUpgradeDeactivates() {
         extortionUpgrade.activate();
         lenient().when(mockSpeedMeter.hasParent()).thenReturn(true);
         extortionUpgrade.deactivate();
@@ -133,6 +133,28 @@ public class ExtortionUpgradeTest {
         assertFalse(extortionUpgrade.isActive());
         assertFalse(extortionUpgrade.isVisible());
         assertFalse(extortionUpgrade.layout.isVisible());
+    }
+
+    @Test
+    void testExtortionUpgradeFor30Seconds() {
+        ExtortionUpgrade spyExtortionUpgrade = spy(extortionUpgrade);
+        when(combatStatsComponent.getGold()).thenReturn(100);
+        spyExtortionUpgrade.activate();
+
+        when(gameTime.getDeltaTime()).thenReturn(1f);
+        for (int i = 0; i < 15; i++) {
+            spyExtortionUpgrade.update();
+        }
+
+        assertEquals(spyExtortionUpgrade.getActivateTimeRemaining() /
+                (float) spyExtortionUpgrade.getUpgradeDuration(), spyExtortionUpgrade.meter.getValue());
+
+        for (int i = 0; i < 15; i++) {
+            spyExtortionUpgrade.update();
+        }
+
+        verify(spyExtortionUpgrade).deactivate();
+        assertFalse(spyExtortionUpgrade.getPlaySound());
     }
 
     @Test

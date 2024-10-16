@@ -210,4 +210,8 @@ public class ExtortionUpgrade extends UIComponent implements Upgrade {
     public float getActivateTimeRemaining() {
         return activateTimeRemaining;
     }
+
+    public boolean getPlaySound() {
+        return playSound;
+    }
 }
