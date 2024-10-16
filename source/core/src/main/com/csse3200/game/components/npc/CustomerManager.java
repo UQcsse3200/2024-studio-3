@@ -34,4 +34,11 @@ public class CustomerManager {
     public static void removeCustomerByOrder(String orderNumber) {
         orderToCustomerMap.remove(orderNumber);
     }
+
+    /**
+     * Reset map
+     */
+    public static void reset() {
+        orderToCustomerMap.clear();
+    }
 }

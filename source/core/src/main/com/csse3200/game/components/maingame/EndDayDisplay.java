@@ -2,8 +2,11 @@ package com.csse3200.game.components.maingame;
 
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.csse3200.game.components.npc.CustomerManager;
+import com.csse3200.game.components.ordersystem.OrderManager;
 import com.csse3200.game.entities.configs.CustomerPersonalityConfig;
 import com.csse3200.game.entities.configs.NPCConfigs;
+import com.csse3200.game.entities.factories.NPCFactory;
 import com.csse3200.game.files.FileLoader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -99,10 +102,7 @@ public class EndDayDisplay extends UIComponent {
         ServiceLocator.getEntityService().getEvents().addListener("toggleEndDayScreen", this::toggleVisibility);
         ServiceLocator.getEntityService().getEvents().addListener("customerPassed", this::handlePassedCustomer);
 
-            ServiceLocator.getDayNightService().getEvents().addListener("endOfDay", () -> {
-                logger.info("it is listened in end day");
-                ServiceLocator.getRandomComboService().deactivateUpgrade();
-                show();});
+        ServiceLocator.getDayNightService().getEvents().addListener("endOfDay", this::show);
         }
 
     /**
@@ -208,9 +208,9 @@ public class EndDayDisplay extends UIComponent {
         // Customer lists
         Table listTable = new Table();
 
-        Label passedLabel = new Label("Passed Customers", skin);
+        Label passedLabel = new Label("Served Customers", skin);
         passedLabel.setFontScale(1.8f);
-        Label failedLabel = new Label("Failed Customers", skin);
+        Label failedLabel = new Label("Unserved Customers", skin);
         failedLabel.setFontScale(1.8f);
         listTable.add(passedLabel).pad(10).center();
         listTable.add(failedLabel).pad(10).center().row();
@@ -266,6 +266,12 @@ public class EndDayDisplay extends UIComponent {
         goldLabel.setText(currentGold);
     }
 
+    /**
+     * Handles the event when a customer has successfully completed their interaction, such as finishing an order.
+     * This method adds the customer's name in uppercase to the list of passed customers and logs the event.
+     *
+     * @param customerName The name of the customer who passed.
+     */
     public void handlePassedCustomer(String customerName) {
         passedCustomerArray.add(customerName.toUpperCase());
         logger.info("Customer passed: {}", customerName);
@@ -299,7 +305,6 @@ public class EndDayDisplay extends UIComponent {
         for (String failedName : failedCustomerArray) {
             assertCustomerTexture(failedName, failedCustomerTable);
         }
-        logger.info("Failed customers recalculated: {}", failedCustomerArray);
     }
 
     /**
@@ -328,19 +333,16 @@ public class EndDayDisplay extends UIComponent {
      */
     private void assertCustomerTexture(String customerName, Table customerTable) {
         CustomerPersonalityConfig config = getCustomerConfig(customerName);
-        try {
-            TextureAtlas atlas = ServiceLocator.getResourceService().getAsset(config.texture, TextureAtlas.class);
-            TextureRegion region = atlas.findRegion("default");
-            Image image = new Image(region);
-            Label label = new Label(customerName, skin);
-            label.setFontScale(1.5f);
 
-            customerTable.row().pad(10);
-            customerTable.add(image).size(70, 70);
-            customerTable.add(label);
-        } catch (Exception e) {
-            logger.error("Failed to load texture for customer {}", customerName, e);
-        }
+        TextureAtlas atlas = ServiceLocator.getResourceService().getAsset(config.texture, TextureAtlas.class);
+        TextureRegion region = atlas.findRegion("default");
+        Image image = new Image(region);
+        Label label = new Label(customerName, skin);
+        label.setFontScale(1.5f);
+
+        customerTable.row().pad(10);
+        customerTable.add(image).size(70, 70);
+        customerTable.add(label);
     }
 
     /**
@@ -390,7 +392,9 @@ public class EndDayDisplay extends UIComponent {
      * the current game state. It is usually called in response to a game event.
      */
     public void show() {
-        // ServiceLocator.getRandomComboService().deactivateUpgrade();
+        ServiceLocator.getRandomComboService().deactivateUpgrade();
+        NPCFactory.reset();
+        CustomerManager.reset();
         recalculateFailedCustomers();
         setVisible(true);
         getLayout().setVisible(true);
