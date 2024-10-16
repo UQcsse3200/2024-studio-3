@@ -208,7 +208,21 @@ public class StationMealComponent extends Component {
      * @return - true if there is a meal, false otherwise
      */
     public boolean hasMeal() {
-        return mealFactory.getRealRecipe(this.inventoryComponent.getItemNames()).isPresent();
+        InventoryComponent ingredients = new InventoryComponent(3);
+        boolean plateSeen = false;
+
+        for (int index = 0; index < this.inventoryComponent.getCapacity(); index++) {
+            if (this.inventoryComponent.getItemAt(index) == null) {
+                return false;
+            }
+            if (this.inventoryComponent.getItemAt(index).getClass() == IngredientComponent.class) {
+                ingredients.addItem(this.inventoryComponent.getItemAt(index));
+            } else if (this.inventoryComponent.getItemAt(index).getClass() == PlateComponent.class) {
+                plateSeen = true;
+            }
+        }
+
+        return mealFactory.getRealRecipe(ingredients.getItemNames()).isPresent() && plateSeen;
     }
 
     /**
