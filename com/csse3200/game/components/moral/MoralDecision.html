@@ -135,12 +135,12 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Adds an existing Decision object to the list of decisions.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#addQuestion(java.lang.String)" class="member-name-link">addQuestion</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;question)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Adds a new Question, assuming it is good and worth 10 points.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#addQuestion(java.lang.String,boolean,int)" class="member-name-link">addQuestion</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;question,
  boolean&nbsp;isGood,
  int&nbsp;effectMoney)</code></div>
@@ -197,8 +197,8 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Sets the current morality score.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setDecision(int,boolean)" class="member-name-link">setDecision</a><wbr>(int&nbsp;index,
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setDecision(int,boolean)" class="member-name-link">setDecision</a><wbr>(int&nbsp;ind,
  boolean&nbsp;decision)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Sets the decision result at the specified index and updates the morality score.</div>
@@ -240,20 +240,18 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="addQuestion(java.lang.String)">
 <h3>addQuestion</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">addQuestion</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;question)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">addQuestion</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;question)</span></div>
 <div class="block">Adds a new Question, assuming it is good and worth 10 points.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>question</code> - the question or statement of the decision</dd>
-<dt>Returns:</dt>
-<dd>true if the decision was added successfully</dd>
 </dl>
 </section>
 </li>
 <li>
 <section class="detail" id="addQuestion(java.lang.String,boolean,int)">
 <h3>addQuestion</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">addQuestion</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;question,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">addQuestion</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;question,
  boolean&nbsp;isGood,
  int&nbsp;effectMoney)</span></div>
 <div class="block">Adds a new Question with the specified question, goodness, and decision points.</div>
@@ -262,8 +260,6 @@ loadScripts(document, 'script');</script>
 <dd><code>question</code> - the question or statement of the decision</dd>
 <dd><code>isGood</code> - whether the effect is positive or negative</dd>
 <dd><code>effectMoney</code> - Money to be added or subtracted. Add/sub controlled by isGood</dd>
-<dt>Returns:</dt>
-<dd>true if the decision was added successfully</dd>
 </dl>
 </section>
 </li>
@@ -329,15 +325,13 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="setDecision(int,boolean)">
 <h3>setDecision</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">setDecision</span><wbr><span class="parameters">(int&nbsp;index,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setDecision</span><wbr><span class="parameters">(int&nbsp;ind,
  boolean&nbsp;decision)</span></div>
 <div class="block">Sets the decision result at the specified index and updates the morality score.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
-<dd><code>index</code> - the index of the decision</dd>
+<dd><code>ind</code> - the index of the decision</dd>
 <dd><code>decision</code> - the result of the decision</dd>
-<dt>Returns:</dt>
-<dd>true if the decision was set successfully</dd>
 </dl>
 </section>
 </li>

@@ -144,24 +144,27 @@ loadScripts(document, 'script');</script>
  - "LOSE" if the player's gold is below the loss threshold
  - "GAME_IN_PROGRESS" if the game is ongoing and no win/loss conditions have been met</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getAdjustedLossThreshold(int)" class="member-name-link">getAdjustedLossThreshold</a><wbr>(int&nbsp;currentDay)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#decreaseLoseThreshold()" class="member-name-link">decreaseLoseThreshold</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getAdjustedLossThreshold(int)" class="member-name-link">getAdjustedLossThreshold</a><wbr>(int&nbsp;currentDay)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Calculates the adjusted loss threshold based on the current day.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getAdjustedWinAmount(int)" class="member-name-link">getAdjustedWinAmount</a><wbr>(int&nbsp;currentDay)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getAdjustedWinAmount(int)" class="member-name-link">getAdjustedWinAmount</a><wbr>(int&nbsp;currentDay)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Calculates the adjusted win amount based on the current day.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#hasLost(int)" class="member-name-link">hasLost</a><wbr>(int&nbsp;adjustedLossThreshold)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#hasLost(int)" class="member-name-link">hasLost</a><wbr>(int&nbsp;adjustedLossThreshold)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Determines if the player has lost the game.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#hasWon(int)" class="member-name-link">hasWon</a><wbr>(int&nbsp;adjustedWinAmount)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#hasWon(int)" class="member-name-link">hasWon</a><wbr>(int&nbsp;adjustedWinAmount)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Determines if the player has won the game.</div>
 </div>
 </div>
@@ -274,6 +277,12 @@ loadScripts(document, 'script');</script>
 <dt>Returns:</dt>
 <dd>true if the player has equal or more gold than the win threshold, false otherwise</dd>
 </dl>
+</section>
+</li>
+<li>
+<section class="detail" id="decreaseLoseThreshold()">
+<h3>decreaseLoseThreshold</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">decreaseLoseThreshold</span>()</div>
 </section>
 </li>
 </ul>
