@@ -1,8 +1,6 @@
 package com.csse3200.game.services;
 
 import com.csse3200.game.events.EventHandler;
-import com.csse3200.game.services.ServiceLocator;
-import com.csse3200.game.services.RandomComboService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;

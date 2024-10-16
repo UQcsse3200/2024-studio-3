@@ -3,18 +3,12 @@ package com.csse3200.game.components.tutorial;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.components.cutscenes.BackstoryCutscene;
 import com.csse3200.game.screens.CutsceneScreen;
-import com.csse3200.game.screens.MainMenuScreen;
 import com.csse3200.game.screens.TutorialScreen;
-import com.csse3200.game.services.ResourceService;
-import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import static com.csse3200.game.areas.ForestGameArea.*;
 
 /**
  * Displays a confirmation dialog asking if the user wants to start the tutorial.

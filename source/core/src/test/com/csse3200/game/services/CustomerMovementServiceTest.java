@@ -1,14 +1,12 @@
 package com.csse3200.game.services;
 
 import com.badlogic.gdx.math.Vector2;
-import com.csse3200.game.events.EventHandler;
-import com.csse3200.game.services.CustomerMovementService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockitoAnnotations;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+
 
 class CustomerMovementServiceTest {
 

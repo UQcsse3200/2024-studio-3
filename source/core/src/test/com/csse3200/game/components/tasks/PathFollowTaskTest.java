@@ -52,15 +52,13 @@ class PathFollowTaskTest {
 package com.csse3200.game.components.tasks;
 
 import static org.mockito.Mockito.*;
-import static org.junit.jupiter.api.Assertions.*;
-
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.ai.tasks.TaskRunner;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.services.ServiceLocator;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+
 
 public class PathFollowTaskTest {
     private TaskRunner taskRunner;
