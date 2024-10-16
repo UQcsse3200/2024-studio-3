@@ -180,8 +180,8 @@ public class TextDisplay extends UIComponent {
 
     /** Alternative method to set text with no modificiation or spiliting up **/
     public void setTextRaw(String text) {
-
         label.setText(text);
+        setVisible(true);
     }
 
     /***
