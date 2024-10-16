@@ -1,8 +1,6 @@
 package com.csse3200.game.components.player;
 
 import com.csse3200.game.components.Component;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import com.csse3200.game.components.items.ItemComponent;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,20 +11,18 @@ import java.util.List;
  * for an entity
  */
 public class InventoryComponent extends Component {
-  private static final Logger logger = LoggerFactory.getLogger(InventoryComponent.class);
   private final ArrayList<ItemComponent> items;
   private int capacity; // maximum number of items that can be stored
   private int size;     // current number of items in the Inventory 
   private int selected; // index of currently selected item
-  private final String indexException = "Invalid index parameter. Must be non-negative and within the current size of the inventory.";
-    private static final String updateTrigger = "updateInventory";
+  private static final String INDEX_EXCEPTION = "Invalid index parameter. Must be non-negative and within the current size of the inventory.";
+  private static final String UPDATE_TRIGGER = "updateInventory";
 
   /**
    * Creates inventory component
    * @param capacity the players inventory size
    */
   public InventoryComponent(int capacity) {
-    //logger.info("Initialized Inventory Component");
     setCapacity(capacity);
     items = new ArrayList<>(capacity);
     for (int i = 0; i < capacity; i++) {        
@@ -68,7 +64,7 @@ public class InventoryComponent extends Component {
       }
       this.capacity = newCapacity;
       if (entity != null) {
-          entity.getEvents().trigger(updateTrigger);
+          entity.getEvents().trigger(UPDATE_TRIGGER);
       }
 
   }
@@ -81,11 +77,11 @@ public class InventoryComponent extends Component {
    */
   public void setSelected(int index) {
     if (index < 0 || index >= this.getCapacity()) {
-      throw new IllegalArgumentException(indexException);
+      throw new IllegalArgumentException(INDEX_EXCEPTION);
     }
     this.selected = index;
     if (entity != null) {
-      entity.getEvents().trigger(updateTrigger);
+      entity.getEvents().trigger(UPDATE_TRIGGER);
     }
   }
 
@@ -111,7 +107,7 @@ public class InventoryComponent extends Component {
      *
      * @return - an ArrayList containing items currently stored in the inventory.
      */
-    public ArrayList<ItemComponent> getItems() {
+    public List<ItemComponent> getItems() {
       return new ArrayList<>(items);
     }
 
@@ -143,7 +139,7 @@ public class InventoryComponent extends Component {
   public ItemComponent getItemAt(int index) {
     if (index < 0 || index > capacity) {
       // index out of bounds
-      throw new IllegalArgumentException(indexException);
+      throw new IllegalArgumentException(INDEX_EXCEPTION);
     } else {
       // item at index
       return items.get(index);
@@ -213,7 +209,7 @@ public class InventoryComponent extends Component {
       items.set(i, item);
       size++;
       if (entity != null) {
-        entity.getEvents().trigger(updateTrigger);
+        entity.getEvents().trigger(UPDATE_TRIGGER);
       }
     }
   }
@@ -230,7 +226,7 @@ public class InventoryComponent extends Component {
           items.set(i, null); // Remove the item
           size--;
           if (entity != null) {
-            entity.getEvents().trigger(updateTrigger);
+            entity.getEvents().trigger(UPDATE_TRIGGER);
           }
           return removedItem; // Return the removed item
         }
@@ -249,7 +245,7 @@ public class InventoryComponent extends Component {
   public void addItemAt(ItemComponent item, int index) {
     if (index > capacity || index < 0) {
       // index out of bounds
-      throw new IllegalArgumentException(indexException);
+      throw new IllegalArgumentException(INDEX_EXCEPTION);
     } else if (items.get(index) != null) {
         String itemException = "Index in Inventory already occupied by an Item.";
         throw new IllegalArgumentException(itemException);
@@ -259,7 +255,7 @@ public class InventoryComponent extends Component {
       items.set(index, item);
       size++;
       if (entity != null) {
-        entity.getEvents().trigger(updateTrigger);
+        entity.getEvents().trigger(UPDATE_TRIGGER);
       }
     }
 
@@ -274,7 +270,7 @@ public class InventoryComponent extends Component {
   public ItemComponent removeAt(int index) {
     if (index < 0 || index > capacity) {
       // index out of bounds
-      throw new IllegalArgumentException(indexException);
+      throw new IllegalArgumentException(INDEX_EXCEPTION);
     } else if (items.get(index) == null) {
         String nullException = "Index in Inventory does not contain an Item.";
         throw new IllegalArgumentException(nullException);
@@ -287,7 +283,7 @@ public class InventoryComponent extends Component {
       size--;
 
       if (entity != null) {
-        entity.getEvents().trigger(updateTrigger);
+        entity.getEvents().trigger(UPDATE_TRIGGER);
       }
       return item;
 
@@ -344,7 +340,7 @@ public class InventoryComponent extends Component {
       }
     }
     if (entity != null) {
-      entity.getEvents().trigger(updateTrigger);
+      entity.getEvents().trigger(UPDATE_TRIGGER);
     }
     return currentItem;
   }
