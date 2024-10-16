@@ -86,8 +86,7 @@ public class DancePartyUpgradeTest {
         });
         docketEventHandler.trigger("Dancing");
 
-        // Dance Party Issue: Can't verify meter value is 1f upon activation/setup. Needs to be setup properly.
-//        assertEquals(1f, dancePartyUpgrade.meter.getValue());
+        assertEquals(1f, dancePartyUpgrade.meter.getValue());
         assertTrue(isActive.get());
         assertTrue(dancePartyUpgrade.isActive());
         assertTrue(dancePartyUpgrade.layout.isVisible());
@@ -148,19 +147,16 @@ public class DancePartyUpgradeTest {
             spyDancePartyUpgrade.update();
         }
 
-//        assertEquals(spyDancePartyUpgrade.getActiveTimeRemaining() /
-//                (float) spyDancePartyUpgrade.getUpgradeDuration(), spyDancePartyUpgrade.meter.getValue());
+        assertEquals(spyDancePartyUpgrade.getActiveTimeRemaining() /
+                (float) spyDancePartyUpgrade.getUpgradeDuration(), spyDancePartyUpgrade.meter.getValue());
 
         for (int i = 0; i < 15; i++) {
             spyDancePartyUpgrade.update();
         }
+
         assertEquals(0, spyDancePartyUpgrade.getActiveTimeRemaining());
-
-        // can't verify deactivation after 30 seconds pass. Needs to be setup properly.
-//        verify(spyDancePartyUpgrade).deactivate();
-
-        // can't verify sound is played upon deactivation, if that even happens.
-//        assertFalse(spyDancePartyUpgrade.getPlaySound());
+        verify(spyDancePartyUpgrade).deactivate();
+        assertFalse(spyDancePartyUpgrade.getPlaySound());
     }
 
     @Test
