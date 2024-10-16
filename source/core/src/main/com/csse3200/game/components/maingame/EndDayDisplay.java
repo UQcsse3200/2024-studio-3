@@ -96,7 +96,7 @@ public class EndDayDisplay extends UIComponent {
         ServiceLocator.getLevelService().getEvents().addListener("customerSpawned", this::updateCustomerList);
         ServiceLocator.getLevelService().getEvents().addListener("endDayDisplay", this::show);
         ServiceLocator.getLevelService().getEvents().addListener("resetScreen", MainGameScreen::resetScreen);
-        ServiceLocator.getEntityService().getEvents().addListener("toggleEndDayScreen", this::toggleVisibility);
+        ServiceLocator.getEntityService().getEvents().addListener("toggleEndDayScreen", this::show);
         ServiceLocator.getEntityService().getEvents().addListener("customerPassed", this::handlePassedCustomer);
 
         ServiceLocator.getDayNightService().getEvents().addListener("endOfDay", this::show);
@@ -380,7 +380,7 @@ public class EndDayDisplay extends UIComponent {
      * the current game state. It is usually called in response to a game event.
      */
     public void show() {
-        // ServiceLocator.getRandomComboService().deactivateUpgrade();
+        ServiceLocator.getRandomComboService().deactivateUpgrade();
         recalculateFailedCustomers();
         setVisible(true);
         getLayout().setVisible(true);

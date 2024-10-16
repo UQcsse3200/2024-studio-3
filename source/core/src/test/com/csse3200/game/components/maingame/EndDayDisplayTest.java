@@ -76,6 +76,8 @@ class EndDayDisplayTest {
     DayNightService dayNightService;
     LevelService levelService;
     EndDayDisplay endDayDisplay;
+    @Mock
+    RandomComboService randomComboService;
 
     /**
      * Sets up the environment before each test by initializing services
@@ -98,6 +100,7 @@ class EndDayDisplayTest {
         dayNightService = new DayNightService();
         ServiceLocator.registerDayNightService(dayNightService);
         ServiceLocator.registerGameScreen(mainGameScreen);
+        ServiceLocator.registerRandomComboService(randomComboService);
 
         lenient().when(resourceService.getAsset(anyString(), eq(Texture.class))).thenReturn(textureMock);
         lenient().when(renderService.getStage()).thenReturn(stage);
