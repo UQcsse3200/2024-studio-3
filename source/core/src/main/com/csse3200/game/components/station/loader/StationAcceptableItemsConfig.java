@@ -1,6 +1,5 @@
 package com.csse3200.game.components.station.loader;
 
-import java.util.List;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -22,7 +21,7 @@ public class StationAcceptableItemsConfig {
      * Function to get the oven config
      * @return the items accepted into the over
      */
-    public List<String> getOvenConfig() {
+    public ArrayList<String> getOvenConfig() {
         return new ArrayList<>(Arrays.asList(oven));
     }
 
@@ -30,7 +29,7 @@ public class StationAcceptableItemsConfig {
      * Function to get the stove config
      * @return the items accepted into the stove
      */
-    public List<String> getStoveConfig() {
+    public ArrayList<String> getStoveConfig() {
         return new ArrayList<>(Arrays.asList(stove));
     }
 
@@ -38,7 +37,7 @@ public class StationAcceptableItemsConfig {
      * Function to get the cutting board config
      * @return the items accepted into the cutting board
      */
-    public List<String> getCuttingBoardConfig() {
+    public ArrayList<String> getCuttingBoardConfig() {
         return new ArrayList<>(Arrays.asList(cuttingBoard));
     }
 
@@ -46,7 +45,7 @@ public class StationAcceptableItemsConfig {
      * Function to get the blender config
      * @return the items accepted into the blender
      */
-    public List<String> getBlenderConfig() {
+    public ArrayList<String> getBlenderConfig() {
         return new ArrayList<>(Arrays.asList(blender));
     }
 
@@ -54,7 +53,7 @@ public class StationAcceptableItemsConfig {
      * Function to get the produce basket config
      * @return the items accepted into the provde basket
      */
-    public List<String> getProduceBasketConfig() {
+    public ArrayList<String> getProduceBasketConfig() {
         return new ArrayList<>(Arrays.asList(produceBasket));
     }
 
@@ -62,7 +61,7 @@ public class StationAcceptableItemsConfig {
      * Function to get the fridge config
      * @return the items accepted into the fridge
      */
-    public List<String> getFridgeConfig() {
+    public ArrayList<String> getFridgeConfig() {
         return new ArrayList<>(Arrays.asList(fridge));
     }
 }

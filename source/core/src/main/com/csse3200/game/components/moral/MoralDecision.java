@@ -2,7 +2,7 @@ package com.csse3200.game.components.moral;
 
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.Component;
-import com.csse3200.game.components.upgrades.SpeedBootsUpgrade;
+import com.csse3200.game.components.maingame.CheckWinLoseComponent;
 import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -109,7 +109,8 @@ public class MoralDecision extends Component {
      * @return true if the decision was set successfully
      */
     public boolean setDecision(int index, boolean decision) {
-        logger.debug("Setting decision for index: {} to {}", index, decision);
+        index = index - 1;
+        logger.info("Setting decision for index: {} to {}", index, decision);
         listOfDecisions.get(index).setDecision(decision);
 
         if (!decision){
@@ -117,7 +118,8 @@ public class MoralDecision extends Component {
             switch (index){
                 case 0 -> ServiceLocator.getPlayerService().getPlayer().getComponent(CombatStatsComponent.class).addGold(MORALGOLD_D1);
                 case 1 -> ServiceLocator.getPlayerService().getPlayer().getComponent(CombatStatsComponent.class).addGold(MORALGOLD_D2);
-                case 2 -> ServiceLocator.getPlayerService().getPlayer().getComponent(SpeedBootsUpgrade.class).activate();
+                case 2 -> ServiceLocator.getPlayerService().getPlayer().getComponent(CheckWinLoseComponent.class).decreaseLoseThreshold();
+                case 3 -> ServiceLocator.getRandomComboService().getEvents().trigger("Speed");
                 default -> logger.error("moral decision with unknown index");
             }
         } else {
