@@ -3,12 +3,9 @@ package com.csse3200.game.components.moral;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.maingame.CheckWinLoseComponent;
-import com.csse3200.game.components.upgrades.SpeedBootsUpgrade;
 import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import com.csse3200.game.services.*;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,7 +22,7 @@ public class MoralDecision extends Component {
 
     private static final Logger logger = LoggerFactory.getLogger(MoralDecision.class);
 
-    private final List<Decision> ListOfDecisions = new ArrayList<>();
+    private final List<Decision> listOfDecisions = new ArrayList<>();
     private Boolean currentMorality = true;
 
     /**
@@ -35,7 +32,7 @@ public class MoralDecision extends Component {
      * @return true if the decision was added successfully
      */
     public boolean addQuestion(String question) {
-        ListOfDecisions.add(new Decision(question, true, 10));
+        listOfDecisions.add(new Decision(question, true, 10));
         return true;
     }
 
@@ -48,7 +45,7 @@ public class MoralDecision extends Component {
      * @return true if the decision was added successfully
      */
     public boolean addQuestion(String question, boolean isGood, int effectMoney) {
-        ListOfDecisions.add(new Decision(question, isGood, effectMoney));
+        listOfDecisions.add(new Decision(question, isGood, effectMoney));
         return true;
     }
 
@@ -58,7 +55,7 @@ public class MoralDecision extends Component {
      * @param decision the Decision object to add
      */
     public void addDecision(Decision decision) {
-        ListOfDecisions.add(decision);
+        listOfDecisions.add(decision);
     }
 
     /**
@@ -68,7 +65,7 @@ public class MoralDecision extends Component {
      * @return the result of the decision, or false if the decision is not found
      */
     public boolean getDecision(int index) {
-        return ListOfDecisions.get(index).getDecision();
+        return listOfDecisions.get(index).getDecision();
     }
 
     /**
@@ -78,7 +75,7 @@ public class MoralDecision extends Component {
      * @return the result of the decision, or false if the decision is not found
      */
     public boolean getDecision(String question) {
-        for (Decision decision : ListOfDecisions) {
+        for (Decision decision : listOfDecisions) {
             if (decision.getStatement().equals(question)) {
                 return decision.getDecision();
             }
@@ -112,16 +109,16 @@ public class MoralDecision extends Component {
      * @return true if the decision was set successfully
      */
     public boolean setDecision(int index, boolean decision) {
-        logger.debug("Setting decision for index: {} to {}", index, decision);
-        ListOfDecisions.get(index).setDecision(decision);
+        index = index - 1;
+        logger.info("Setting decision for index: {} to {}", index, decision);
 
         if (!decision){
             setCurrentMorality(false);
             switch (index){
                 case 0 -> ServiceLocator.getPlayerService().getPlayer().getComponent(CombatStatsComponent.class).addGold(MORALGOLD_D1);
                 case 1 -> ServiceLocator.getPlayerService().getPlayer().getComponent(CombatStatsComponent.class).addGold(MORALGOLD_D2);
-                case 2 -> ServiceLocator.getPlayerService().getPlayer().getComponent(SpeedBootsUpgrade.class).activate();
-                //case 3 -> ServiceLocator.getPlayerService().getPlayer().getComponent(CheckWinLoseComponent.class).decreaseLoseThreshold();
+                case 2 -> ServiceLocator.getPlayerService().getPlayer().getComponent(CheckWinLoseComponent.class).decreaseLoseThreshold();
+                case 3 -> ServiceLocator.getRandomComboService().getEvents().trigger("Speed");
                 default -> logger.error("moral decision with unknown index");
             }
         } else {
@@ -138,7 +135,7 @@ public class MoralDecision extends Component {
      * @return the list of decisions
      */
     public List<Decision> getListOfDecisions() {
-        return ListOfDecisions;
+        return listOfDecisions;
     }
 
     /**
@@ -148,14 +145,14 @@ public class MoralDecision extends Component {
      * @return the statement of the decision
      */
     public String getDecisionQuestion(int index) {
-        return ListOfDecisions.get(index).getStatement();
+        return listOfDecisions.get(index).getStatement();
     }
 
     /**
      * Clears all decisions from the list.
      */
     public void clearDecisions() {
-        ListOfDecisions.clear();
+        listOfDecisions.clear();
         currentMorality = true;
     }
 
@@ -165,7 +162,7 @@ public class MoralDecision extends Component {
      * @param index the index of the decision to remove
      */
     public void removeDecision(int index) {
-        ListOfDecisions.remove(index);
+        listOfDecisions.remove(index);
     }
 
     /**
@@ -174,7 +171,7 @@ public class MoralDecision extends Component {
      * @param decision the Decision object to remove
      */
     public void removeDecision(Decision decision) {
-        ListOfDecisions.remove(decision);
+        listOfDecisions.remove(decision);
     }
 
     /**
@@ -183,9 +180,9 @@ public class MoralDecision extends Component {
      * @param question the question or statement of the decision to remove
      */
     public void removeDecision(String question) {
-        for (Decision decision : ListOfDecisions) {
+        for (Decision decision : listOfDecisions) {
             if (decision.getStatement().equals(question)) {
-                ListOfDecisions.remove(decision);
+                listOfDecisions.remove(decision);
                 return;
             }
         }

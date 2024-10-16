@@ -22,13 +22,11 @@ public class PathFollowTask extends DefaultTask implements PriorityTask {
     private Vector2 currentTarget;
     private MovementTask movementTask;
     private Task currentTask;
-    private final int Customer_id;
 
     private Vector2 predefinedTargetPos = new Vector2(1, 0);
     private float elapsedTime = 0f;
     boolean hasMovedToPredefined = false;
     private float elapsedTime2 = 0f;
-    private float upgradeDuration = 5f;
     private float upgradeStart = 3f;
     private boolean hoverboxcheck = false;
     private float makingTime; // Dynamic making time based on the recipe
@@ -38,12 +36,10 @@ public class PathFollowTask extends DefaultTask implements PriorityTask {
     /**
      * Task to make an entity follow a path to a target position.
      * @param targetPos The target position to move to
-     * @param customer_id The id of the customer
      * @param waitingTime The making time from the recipe, scaled by any time factor like DEFAULT_TIMER if needed.
      */
-    public PathFollowTask(Vector2 targetPos, int customer_id, float waitingTime) {
+    public PathFollowTask(Vector2 targetPos, float waitingTime) {
         this.targetPos = targetPos;
-        this.Customer_id = customer_id;
         this.makingTime = waitingTime;
     }
 
@@ -131,7 +127,6 @@ public class PathFollowTask extends DefaultTask implements PriorityTask {
         if (currentTask != null) {
             if (currentTask.getStatus() != Status.ACTIVE) {
                 if (currentTarget.epsilonEquals(targetPos)) {
-                    // owner.getEntity().getEvents().trigger("reachDestination");
                     currentTask.stop();
                     // Check if the entity reached the predefined position
                     if (targetPos.epsilonEquals(predefinedTargetPos, 0.1f)) {

@@ -3,8 +3,6 @@ package com.csse3200.game.components.ordersystem;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertNull;
-
 public class TicketDetailsTest {
 
     @Test

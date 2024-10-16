@@ -68,6 +68,10 @@ public class TextureRenderComponent extends RenderComponent {
     return texture.getWidth();
   }
 
+  public Texture getTexture() {
+    return this.texture;
+  }
+
   /**
    * Gets the height of the texture
    * @return the height of the texture

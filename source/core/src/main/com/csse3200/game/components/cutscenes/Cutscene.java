@@ -134,6 +134,19 @@ public abstract class Cutscene extends Component {
         }
     }
 
+    protected void nextCutsceneMoral() {
+
+
+        currentSceneIndex++;
+        if (currentSceneIndex < scenes.size()) {
+            logger.info("Loading next scene: {}", currentSceneIndex);
+            disposeEntities();  // Dispose of current entities before moving to the next scene
+            loadScene(currentSceneIndex);
+        } else {
+            logger.info("Waiting For Moral Decision 2");
+        }
+    }
+
     /**
      * Loads a scene by its index, initializing entities and assets for that scene.
      * @param sceneIndex Index of the scene to load
@@ -250,7 +263,7 @@ public abstract class Cutscene extends Component {
 
     public void setTextForScene(Scene scene) {
         Array<String> sceneText = scene.getSceneText();
-        if (sceneText.size > textIndex) {
+        if (sceneText != null && sceneText.size > textIndex) {
             currentText = sceneText.get(textIndex);
             textIndex++;
         }
@@ -258,6 +271,27 @@ public abstract class Cutscene extends Component {
             textIndex = 0;
             nextCutscene();
         }
+    }
+
+    public void setTextForSceneMoral(Scene scene) {
+        Array<String> sceneText = scene.getSceneText();
+        if (sceneText.size > textIndex) {
+            currentText = sceneText.get(textIndex);
+            textIndex++;
+        }
+        else {
+
+            textIndex = 0;
+            if (currentSceneIndex < scenes.size()){
+                nextCutsceneMoral();
+            }
+
+            logger.info("Waiting For Moral Decision 1 ");
+        }
+    }
+
+    public Boolean isAtEnd(){
+        return currentSceneIndex + 1== scenes.size();
     }
 
     /**
@@ -277,7 +311,9 @@ public abstract class Cutscene extends Component {
     protected void disposeEntities() {
         for (Entity entity : entities) {
             ServiceLocator.getEntityService().unregister(entity);
-            entity.dispose();
+            if (entity.getCreatedComponents() != null) {
+                entity.dispose();
+            }
         }
         entities.clear();  // Clear the list after disposing of all entities
     }
@@ -302,6 +338,7 @@ public abstract class Cutscene extends Component {
     /**
      * Disposes of the cutscene by unloading assets and disposing of entities.
      */
+    @Override
     public void dispose() {
         unloadAssets();
         disposeEntities();
@@ -328,4 +365,86 @@ public abstract class Cutscene extends Component {
      * Abstract method to create entities for the cutscene. This should be implemented by subclasses.
      */
     public abstract void createEntities();
+
+    /**
+     * Gets the start time for the animations
+     * @return the start time as a float.
+     */
+    public float getTimeStart() {
+        return timeStart;
+    }
+
+    /**
+     * Sets the start time
+     * @param timeStart: the time to be set
+     */
+    public void setTimeStart(float timeStart) {
+        this.timeStart = timeStart;
+    }
+
+    // Getters and Setters for testing
+
+    /**
+     * Gets the scenes
+     * @return the scenes being held
+     */
+    public List<Scene> getScenes() {
+        return scenes;
+    }
+
+    /**
+     * Sets the scenes to a given scene
+     * @param scenes: the scenes to be set to.
+     */
+    public void setScenes(List<Scene> scenes) {
+        this.scenes = scenes;
+    }
+
+    /**
+     * Gets the textures
+     * @return the textures being held
+     */
+    public String[] getTextures() {
+        return textures;
+    }
+
+    /**
+     * Sets the textures for the cutscene
+     * @param textures: the textures being held
+     */
+    public void setTextures(String[] textures) {
+        this.textures = textures;
+    }
+
+    /**
+     * Get the images being held by the cutscene
+     * @return the images being held by the cutscene
+     */
+    public String[] getImages() {
+        return images;
+    }
+
+    /**
+     * Sets the images being held by the cutscene
+     * @param images: the new images to be set
+     */
+    public void setImages(String[] images) {
+        this.images = images;
+    }
+
+    /**
+     * Gets the animations for the cutscene
+     * @return the animations for the cutscenes
+     */
+    public String[] getAnimations() {
+        return animations;
+    }
+
+    /**
+     * Sets the animations for the cutscenes
+     * @param animations: the animations being set
+     */
+    public void setAnimations(String[] animations) {
+        this.animations = animations;
+    }
 }

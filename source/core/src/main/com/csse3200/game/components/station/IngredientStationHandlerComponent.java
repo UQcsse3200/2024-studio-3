@@ -54,6 +54,12 @@ public class IngredientStationHandlerComponent extends Component {
     }
 
     /**
+     * Gets the ingredient stored at this station
+     * @return String of ingredient
+     */
+    public String getIngredientName() { return this.ingredient;}
+
+    /**
      * Handles any interaction with station, using current state of player and station
      * inventory to determine intended interaction
      * @param playerInventoryComponent reference to player inventory component

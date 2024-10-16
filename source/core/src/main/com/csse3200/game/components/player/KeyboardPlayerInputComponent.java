@@ -100,9 +100,10 @@ public class KeyboardPlayerInputComponent extends InputComponent {
           ServiceLocator.getEntityService().getMoralScreen().getEvents().trigger("triggerMoralScreen",day);
           return true;
         case Keys.P:
+          ServiceLocator.getRandomComboService().deactivateUpgrade();
           ServiceLocator.getEntityService().getEvents().trigger("toggleEndDayScreen");
           return true;
-          case Keys.L:
+          case Keys.B:
               ServiceLocator.getEntityService().getEvents().trigger("leaveEarly");
               return true;
       }

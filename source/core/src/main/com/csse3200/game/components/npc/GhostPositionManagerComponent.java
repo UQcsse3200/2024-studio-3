@@ -3,10 +3,8 @@ package com.csse3200.game.components.npc;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.entities.Entity;
-import com.csse3200.game.components.tasks.PathFollowTask;
 import java.util.LinkedList;
 import java.util.Queue;
-import com.csse3200.game.ai.tasks.AITaskComponent;
 
 /**
  * Component that manages the positions of ghosts and handles their movement to available spots.

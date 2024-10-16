@@ -11,6 +11,7 @@ import com.csse3200.game.areas.ForestGameArea;
 import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.components.maingame.*;
 import com.csse3200.game.components.maingame.MainGameActions;
+import com.csse3200.game.components.tutorial.KeybindsButtonDisplay;
 import com.csse3200.game.components.upgrades.*;
 import com.csse3200.game.components.ordersystem.*;
 import com.csse3200.game.components.ordersystem.MainGameOrderBtnDisplay;
@@ -19,6 +20,7 @@ import com.csse3200.game.components.ordersystem.TicketDetails;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.entities.factories.LevelFactory;
+import com.csse3200.game.entities.factories.NPCFactory;
 import com.csse3200.game.entities.factories.RenderFactory;
 import com.csse3200.game.entities.factories.UIFactory;
 import com.csse3200.game.input.InputComponent;
@@ -68,6 +70,7 @@ public class MainGameScreen extends ScreenAdapter {
 			"images/calendar.png",
 			"images/Upgrade_display.png",
 			"images/pause_menu2.png",
+			"images/pause_menu.png",
 			"images/recipe_card.png",
 			"images/textbox.png",
 			//background daylight cycle assets
@@ -111,12 +114,12 @@ public class MainGameScreen extends ScreenAdapter {
 	// Modified the camera position to fix layout
 	private static final Vector2 CAMERA_POSITION = new Vector2(7f, 4.5f);
 
-    private final GdxGame game;
-    private final Renderer renderer;
-    private final PhysicsEngine physicsEngine;
-    private boolean isPaused = false;
-    private DocketLineDisplay docketLineDisplay;
-    private MainGameOrderTicketDisplay orderTicketDisplay;
+	public final GdxGame game;
+	public Renderer renderer;
+	public final PhysicsEngine physicsEngine;
+	public boolean isPaused = false;
+	public DocketLineDisplay docketLineDisplay;
+	public MainGameOrderTicketDisplay orderTicketDisplay;
 
 	/**
 	 * Constructs the main game screen
@@ -135,15 +138,17 @@ public class MainGameScreen extends ScreenAdapter {
 
 		ServiceLocator.registerInputService(new InputService());
 		ServiceLocator.registerResourceService(new ResourceService());
+		ServiceLocator.registerPlayerService(new PlayerService());
 
 		ServiceLocator.registerEntityService(new EntityService());
 		ServiceLocator.registerRenderService(new RenderService());
 		ServiceLocator.registerDocketService(new DocketService());
+
 		ServiceLocator.registerDayNightService(new DayNightService());
 		ServiceLocator.registerRandomComboService(new RandomComboService());
 		ServiceLocator.registerLevelService(new LevelService());
 		ServiceLocator.registerMapLayout(new MapLayout());
-		ServiceLocator.registerPlayerService(new PlayerService());
+
 		logger.warn("Is SaveService null? " + (ServiceLocator.getSaveLoadService() == null));
 		//ServiceLocator.registerSaveLoadService(new SaveLoadService());
 		ServiceLocator.registerGameScreen(this);
@@ -265,6 +270,7 @@ public class MainGameScreen extends ScreenAdapter {
 	 * Reset screen UI
 	 */
 	public void resetScreen() {
+		NPCFactory.reset();
 		EntityService entityService = ServiceLocator.getEntityService();
 		entityService.dispose();
 		ServiceLocator.registerEntityService(new EntityService());
@@ -274,7 +280,7 @@ public class MainGameScreen extends ScreenAdapter {
 	/**
 	 * Loads assets to resourceService
 	 */
-	private void loadAssets() {
+	void loadAssets() {
 		logger.debug("Loading assets");
 		ResourceService resourceService = ServiceLocator.getResourceService();
 		resourceService.loadTextures(mainGameTextures);
@@ -285,7 +291,7 @@ public class MainGameScreen extends ScreenAdapter {
 	/**
 	 * Unloads the assets from resourceService
 	 */
-	private void unloadAssets() {
+	void unloadAssets() {
 		logger.debug("Unloading assets");
 		ResourceService resourceService = ServiceLocator.getResourceService();
 		resourceService.unloadAssets(mainGameTextures);
@@ -304,7 +310,7 @@ public class MainGameScreen extends ScreenAdapter {
 	 * Creates the main game's ui including components for rendering ui elements to the screen and
 	 * capturing and handling ui input.
 	 */
-	private void createUI() {
+	void createUI() {
 		logger.debug("Creating ui");
 		Stage stage = ServiceLocator.getRenderService().getStage();
 		InputComponent inputComponent =
@@ -312,28 +318,29 @@ public class MainGameScreen extends ScreenAdapter {
 
 		Entity ui = new Entity();
 		ui.addComponent(new GameBackgroundDisplay())
-			.addComponent(new InputDecorator(stage, 10))
-		  	.addComponent(docketLineDisplay = new DocketLineDisplay())
-		  	.addComponent(new DocketLineDisplay())
-			.addComponent(new PerformanceDisplay())
-			.addComponent(new MainGameActions(this.game, UIFactory.createDocketUI()))
-			.addComponent(new MainGameExitDisplay())
-			.addComponent(new Terminal())
-			.addComponent(inputComponent)
-			.addComponent(new TerminalDisplay())
-			.addComponent(new OrderActions())
-			.addComponent(new MainGameOrderBtnDisplay())
-			.addComponent(new PauseMenuActions(this.game))
-			.addComponent(new PauseMenuDisplay(this))
-			.addComponent(new RageUpgrade())
-			.addComponent(new LoanUpgrade())
+				.addComponent(new InputDecorator(stage, 10))
+				.addComponent(docketLineDisplay = new DocketLineDisplay())
+				.addComponent(new DocketLineDisplay())
+				.addComponent(new PerformanceDisplay())
+				.addComponent(new MainGameActions(this.game, UIFactory.createDocketUI()))
+				.addComponent(new MainGameExitDisplay())
+				.addComponent(new Terminal())
+				.addComponent(inputComponent)
+				.addComponent(new TerminalDisplay())
+				.addComponent(new KeybindsButtonDisplay())
+				.addComponent(new OrderActions())
+				.addComponent(new MainGameOrderBtnDisplay())
+				.addComponent(new PauseMenuActions(this.game))
+				.addComponent(new PauseMenuDisplay(this))
+				.addComponent(new RageUpgrade())
+				.addComponent(new LoanUpgrade())
 				.addComponent(new SpeedBootsUpgrade())
 				.addComponent(new ExtortionUpgrade())
 				.addComponent(new DancePartyUpgrade())
 				.addComponent(new PauseMenuActions(this.game))
 				.addComponent(new PauseMenuDisplay(this))
-						.addComponent(new UpgradesDisplay(this))
-								.addComponent(new RecipeCardDisplay(this));
+				.addComponent(new UpgradesDisplay(this))
+				.addComponent(new RecipeCardDisplay(this));
 
 		ServiceLocator.getEntityService().register(ui);
 	}
