@@ -26,7 +26,6 @@ public class PlayerStatsDisplay extends UIComponent {
   private Image goldImage;
   private Label goldLabel;
   private static Label dayLabel;
-  private static int currentDay;
   private static Label timerLabel;
   private static long timer;
   private static long startTime;
@@ -102,7 +101,7 @@ public class PlayerStatsDisplay extends UIComponent {
     table = new Table();
     table.top().left();
     table.setFillParent(true);
-    table.padTop(80f).padLeft(20f);
+    table.padTop(80f).padLeft(300f); // this should be 20 not 300 CHANGE THIS
 
     goldTable = new Table();
     goldTable.left();
@@ -111,7 +110,7 @@ public class PlayerStatsDisplay extends UIComponent {
     timerTable.left().pad(10f);
 
     //Label for the Current Day
-    CharSequence dayText = String.format("Day: %d", currentDay); // Start with Day 1
+    CharSequence dayText = String.format("Day: %d", ServiceLocator.getDayNightService().getDay()); // Start with Day 1
     String LARGE_LABEL = "large";
     setDayLabel(new Label(dayText, skin, LARGE_LABEL));
     table.add(getDayLabel()).left();
@@ -185,7 +184,7 @@ public class PlayerStatsDisplay extends UIComponent {
    * Updates the displayed current day on the UI.
    */
   public static void updateDay() {
-    currentDay++;
+    int currentDay = ServiceLocator.getDayNightService().getDay();
     CharSequence dayText = String.format("Day: %d", currentDay);
     getDayLabel().setText(dayText);
   }
@@ -205,13 +204,16 @@ public class PlayerStatsDisplay extends UIComponent {
     timer = time;
 
     // Calculate progress as a percentage of the time remaining
-    float progressPercentage = (float) timer / startTime * 100f;
+    float progressPercentage = (float) time / ServiceLocator.getDayNightService().FIVE_MINUTES * 100f;
+
+    //float progressPercentage = (float) timer / startTime * 100f;
 
     // Update the progress bar value to reflect the remaining time
     getInstance().timeBar.setValue(progressPercentage);
 
     // Trigger other events if necessary
-    CharSequence timerText = String.format("Time Left: %n   %s", convertDigital(time));
+    CharSequence timerText = String.format("%02d", TimeUnit.MILLISECONDS.toSeconds(time));
+    //CharSequence timerText = String.format("Time Left: %n   %s", convertDigital(time));
     getTimerLabel().setText(timerText);
 
     ServiceLocator.getDayNightService().getEvents().trigger("callpastsecond");
@@ -244,7 +246,7 @@ public class PlayerStatsDisplay extends UIComponent {
     long minutes = TimeUnit.MILLISECONDS.toMinutes(x);
     long seconds = TimeUnit.MILLISECONDS.toSeconds(x) - TimeUnit.MINUTES.toSeconds(minutes);
     return String.format("%02d:%02d", minutes, seconds);
-    
+
 }
 
 

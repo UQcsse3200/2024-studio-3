@@ -14,6 +14,7 @@ import java.util.Random;
  * or when a meal of high quality is made. It also manages bonuses given to the player for high-quality meals.
  */
 public class DayNightService {
+
     private static final Logger logger = LoggerFactory.getLogger(DayNightService.class);
     public long FIVE_MINUTES = 5L * 60 * 1000; // 5 minutes in milliseconds
     public static final int MAX_DAYS = 5; // Maximum number of days
@@ -30,7 +31,7 @@ public class DayNightService {
     private final EventHandler docketServiceEventHandler;
     private Random random;
     private int randomChoice;
-    private int day;
+    private static int day = 0;
     private int highQualityMeals = 0;
 
 
@@ -40,7 +41,6 @@ public class DayNightService {
      */
     public DayNightService() {
         this(new EventHandler());
-        day = 0;
     }
 
     /**
@@ -51,7 +51,6 @@ public class DayNightService {
      */
     public DayNightService(EventHandler enddayEventHandler) {
         this(enddayEventHandler, ServiceLocator.getDocketService().getEvents());
-        day = 0;
     }
 
     public DayNightService(EventHandler enddayEventHandler, EventHandler docketServiceEventHandler) {
@@ -64,7 +63,12 @@ public class DayNightService {
         this.timeRemaining = FIVE_MINUTES;
         this.random = new Random();
         randomChoice = random.nextInt((int) SEVENTY_FIVE_PERCENT);
-        day = 1;
+
+        // **Only set 'day' to 1 if it hasn't been initialized yet**
+        if (this.day == 0) {
+            this.day = 1;
+        }
+
         randomChoice = random.nextInt(10) * 1000;
 
         create();
@@ -77,7 +81,6 @@ public class DayNightService {
     public void create() {
         // ***Working version of Day cycle used "decisionDone"***
         enddayEventHandler.addListener("decisionDone", this::startNewDay);
-        // enddayEventHandler.addListener("animationDone", this::startNewDay);
 
         enddayEventHandler.addListener("callpastsecond", this::updatepastSecond);
 
@@ -139,7 +142,7 @@ public class DayNightService {
             // lastCheckTime3 = currentTime;
         }
 
-        if (this.timeRemaining == 0 && !endOfDayTriggered) {
+        if (this.timeRemaining <= 0 && !endOfDayTriggered) {
             endOfDayTriggered = true;
             gameTime.setTimeScale(0);
             this.timeRemaining = FIVE_MINUTES;
@@ -153,12 +156,14 @@ public class DayNightService {
      * This method is triggered after the end-of-day events are processed.
      */
     private void startNewDay() {
+        logger.info("new day starting!");
+        logger.info("current day is " + day);
 
         applyEndOfDayBonus(); // Apply the bonus before checking win/loss condition
 
         // Checking if the game should end (i.e. it's the 5th day)
-        if (day > MAX_DAYS) {
-            logger.info("Game is ending after days!");
+        if (day >= MAX_DAYS) { //had this as day > MAX_DAYS
+            logger.info("Game is ending after max number of days!");
             ServiceLocator.getDayNightService().getEvents().trigger("endGame");
             return;
 
@@ -184,16 +189,20 @@ public class DayNightService {
             }
         }
 
-        resetHighQualityMealCount(); // Reset count for next day
+        day += 1;
+        logger.info("Next/new day is: " + day);
 
-        logger.info("It's a new Day!");
+        resetHighQualityMealCount(); // Reset count for next day
         enddayEventHandler.trigger("newday");
+
+        // Reset the time for the new day
+        this.timeRemaining = FIVE_MINUTES;
+        endOfDayTriggered = false;
+        pastUpgrade = false;
+
         // // Resume the game time and reset the last check time
         lastSecondCheck = gameTime.getTime(); // Reset lastCheckTime to the current time
         lastEndOfDayCheck = gameTime.getTime();
-        endOfDayTriggered = false;
-        pastUpgrade = false;
-        day += 1;
         gameTime.setTimeScale(1); // Resume game time
 
 
