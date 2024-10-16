@@ -24,7 +24,7 @@ public class MoralDay1Cutscene extends Cutscene {
         sceneText.add("Mafia Boss > Maybe there's some hope for you.");
         sceneText.add("Mafia Boss > Here's an offer.");
         sceneText.add("Mafia Boss > You wash some of my dirty money through your restaurant");
-        sceneText.add("Mafia Boss > and tomorrow you won’t need to stress about the rent too much.");
+        sceneText.add("Mafia Boss > Because I'm sooo generous I'll even let you keep 40 coins.");
         sceneText.add("Mafia Boss > What do you say?");
 
 
@@ -53,7 +53,7 @@ public class MoralDay1Cutscene extends Cutscene {
 
     private void createScene2() {
         Array<String> sceneText = new Array<>();
-        sceneText.add("Press 'y' for yes and 'no' for no");
+        sceneText.add("Press 'y' for yes and 'n' for no");
 
         String mafiaImage = "images/Cutscenes/Character Artwork/rhino_sprite.png";
         Vector2 mafiaPosition = new Vector2(3, -1);
