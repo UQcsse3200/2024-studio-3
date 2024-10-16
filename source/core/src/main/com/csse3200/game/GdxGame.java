@@ -126,7 +126,7 @@ public class GdxGame extends Game {
       case LOAD_GAME:
         return new LoadGameScreen(this);
       case CUTSCENE:
-        return new CutsceneScreen(this, CutsceneType.MORAL_1);
+        return new CutsceneScreen(this, CutsceneType.MORAL_2);
 
 //      case ENDDAY_1:
 //        return new CutsceneScreen(this, CutsceneType.MORAL_1);
