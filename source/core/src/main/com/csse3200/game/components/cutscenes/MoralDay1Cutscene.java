@@ -140,7 +140,7 @@ public class MoralDay1Cutscene extends Cutscene {
 
     /**
      * Gets the textures
-     * @return: the textures being held
+     * @return the textures being held
      */
     public String[] getTextures() {
         return textures;
@@ -156,7 +156,7 @@ public class MoralDay1Cutscene extends Cutscene {
 
     /**
      * Get the images being held by the cutscene
-     * @return: the images being held by the cutscene
+     * @return the images being held by the cutscene
      */
     public String[] getImages() {
         return images;
@@ -172,7 +172,7 @@ public class MoralDay1Cutscene extends Cutscene {
 
     /**
      * Gets the animations for the cutscene
-     * @return: the animations for the cutscenes
+     * @return the animations for the cutscenes
      */
     public String[] getAnimations() {
         return animations;
