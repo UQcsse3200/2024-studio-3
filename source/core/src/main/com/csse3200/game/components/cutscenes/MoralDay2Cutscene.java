@@ -87,14 +87,14 @@ public class MoralDay2Cutscene extends Cutscene {
     protected void loadAssets() {
         // Load the background images for the cutscene
         textures = new String[] {
-                "DAY_2_SCENE_PATH",
+                DAY_2_SCENE_PATH,
         };
 
         animations = new String[] {};
 
         images = new String[] {
-                "MAFIA_IMAGE_PATH",
-                "ICON_IMAGE_PATH",
+                MAFIA_IMAGE_PATH,
+                ICON_IMAGE_PATH,
                 "images/Cutscenes/moral_icons/yes_ico.png",
                 "images/Cutscenes/moral_icons/no_ico.png"
         };
