@@ -81,66 +81,6 @@ public class MoralDayFour extends UIComponent {
         });
     }
 
-//    /**
-//     * Proceeds to the next tutorial step using a switch-case.
-//     */
-//    public void moralChoice() {
-//        moralStep++;
-//        switch (moralStep) {
-//            case 1:
-//                showMovementTutorial();
-//                break;
-//            case 2:
-//                showItemPickupTutorial();
-//                break;
-//            default:
-//                logger.error("Unexpected tutorial step: " + moralStep);
-//        }
-//    }
-//
-//    /**
-//     * Creates tutorial text box. Calls set text.
-//     * @param text being displayed into textbox.
-//     */
-//    private void createTextBox(String text) {
-//        Array<Entity> entities = ServiceLocator.getEntityService().getEntities();
-//
-//        for (int i = 0; i < entities.size; i++) {
-//            Entity entity = entities.get(i);
-//            entity.getEvents().trigger("SetText", text);
-//        }
-//    }
-//
-//
-//
-//    /**
-//     * Displays the movement tutorial. The player needs to use W/A/S/D to move.
-//     */
-//    private void showMovementTutorial() {
-//        textDisplay.setVisible(true);
-//        createTextBox("Not bad, human. You made enough to pay rent. Maybe there’s some hope for you.");
-//    }
-//
-//    /**
-//     * Displays the item pickup tutorial. The player needs to press E to pick up an item.
-//     */
-//    private void showItemPickupTutorial() {
-//        textDisplay.setVisible(true);
-//        createTextBox("Here’s an offer—you wash some of my dirty money through your restaurant, and tomorrow you " +
-//                "won’t need to stress about the budget. What do you say?");
-//    }
-
-
-
-    /**
-     * Initialise the User Interface
-     */
-    private void initialiseUI() {
-//        Label titleLabel = new Label("moral deiciosn", new Label.LabelStyle(new BitmapFont(), Color.PINK));
-//        layout.add(titleLabel).pad(10).row();
-    }
-
-
     /**
      * Sets the question to be displayed on the moral decision screen.
      * @param question the question to display
@@ -180,7 +120,6 @@ public class MoralDayFour extends UIComponent {
      */
     private void toggleVisibility(int day) {
         logger.debug(" Day - {}", day);
-//        this.update();
         if (isVisible) {
             hide();
         } else {
@@ -203,26 +142,7 @@ public class MoralDayFour extends UIComponent {
      */
     @Override
     public void update() {
-//        switch (moralStep) {
-//            case 1:
-//                if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
-//                    moralChoice();
-//                }
-//                break;
-//        }
     }
-
-//    @Override
-//    public void dispose() {
-//        super.dispose();
-//
-//        if (textDisplay != null) {
-//            textDisplay.setVisible(false);
-//            textDisplay.getTable().clear();
-//        }
-//    }
-
-
 
     @Override
     public void draw(SpriteBatch batch) {
@@ -231,5 +151,6 @@ public class MoralDayFour extends UIComponent {
 
     @Override
     public void setStage(Stage stage) {
+        // setStage is handled
     }
 }
