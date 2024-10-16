@@ -45,4 +45,8 @@ public class GoodEnd extends ForestGameArea {
         newBeef.setScale(0.5f,0.5f);
     }
 
+    public static String[] getForestTextures() {
+        return forestTextures;
+    }
+
 }
