@@ -40,7 +40,6 @@ public class PauseMenuDisplay extends UIComponent {
      * @return koalaImage
      */
     private Image createKoalaImage() {
-        table = new Table();
         table.bottom().left();
         table.setFillParent(true);
         Texture koalaTexture = ServiceLocator
@@ -119,7 +118,6 @@ public class PauseMenuDisplay extends UIComponent {
         TextButton saveBtn = new TextButton("Save", skin);
         TextButton loadBtn = new TextButton("Load", skin);
         TextButton restartBtn = new TextButton("Restart", skin);
-        TextButton settingsBtn = new TextButton("Settings", skin);
         TextButton exitBtn = new TextButton("Main Menu", skin);
         TextButton quitBtn = new TextButton("Quit", skin);
 
@@ -131,11 +129,12 @@ public class PauseMenuDisplay extends UIComponent {
         });
 
         saveBtn.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                ServiceLocator.getSaveLoadService().save();
-            }
-        });
+                                @Override
+                                public void clicked(InputEvent event, float x, float y) {
+                                    toggleVisibility();
+                                    entity.getEvents().trigger("saveGame");
+                                }
+                            });
 
         loadBtn.addListener(new ClickListener() {
             @Override
@@ -150,14 +149,6 @@ public class PauseMenuDisplay extends UIComponent {
             public void changed(ChangeEvent changeEvent, Actor actor) {
                 logger.debug("Restart button clicked");
                 entity.getEvents().trigger("restart");
-            }
-        });
-
-        settingsBtn.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent changeEvent, Actor actor) {
-                logger.debug("Settings button clicked");
-                entity.getEvents().trigger("setting");
             }
         });
 
@@ -185,7 +176,6 @@ public class PauseMenuDisplay extends UIComponent {
         buttonTable.row();
         buttonTable.add(restartBtn).minWidth(250).minHeight(53).padTop(10);
         buttonTable.row();
-        buttonTable.add(settingsBtn).minWidth(250).minHeight(53).padTop(10);
         buttonTable.row();
         buttonTable.add(exitBtn).minWidth(250).minHeight(53).padTop(10);
         buttonTable.row();
@@ -198,6 +188,7 @@ public class PauseMenuDisplay extends UIComponent {
      * Stack all the tables to the pause menu
      */
     private void stackPauseMenu() {
+
         table = new Table();
         table.setFillParent(true);
 

@@ -19,11 +19,10 @@ public class TooltipsDisplay extends UIComponent {
     private Table table;
     private Image tooltipBackground;
     private Label tooltipLabel;
-    private CameraComponent cameraComponent;
 
     public static class TooltipInfo {
-        public String text;
-        public Vector2 position;
+        public final String text;
+        public final Vector2 position;
 
         public TooltipInfo(String text, Vector2 position) {
             this.text = text;

@@ -7,9 +7,10 @@ import com.csse3200.game.events.EventHandler;
 import com.csse3200.game.extensions.GameExtension;
 import com.csse3200.game.services.ServiceLocator;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.junit.jupiter.params.ParameterizedTest;
 
 import static org.mockito.Mockito.*;
 
@@ -36,45 +37,21 @@ class OrderManagerDisplayTests {
         when(entityService.getEvents()).thenReturn(eventHandler);
     }
 
-    @Test
-    void displayOrderTest_Banana_Split(){
-        when(customerComponent.getPreference()).thenReturn("bananaSplit");
-        OrderManager.displayOrder(customer);
-        verify(eventHandler).trigger("createBananaDocket");
-    }
 
-    @Test
-    void displayOrderTest_Acai(){
-        when(customerComponent.getPreference()).thenReturn("acaiBowl");
+    @ParameterizedTest
+    @ValueSource(strings = {"bananaSplit", "acaiBowl", "salad", "fruitSalad", "steakMeal", "bananaSplit"})
+    void testRecipes(String candidate){
+        when(customerComponent.getPreference()).thenReturn(candidate);
         OrderManager.displayOrder(customer);
-        verify(eventHandler).trigger("createAcaiDocket");
-    }
+        String response = switch (candidate) {
+            case "bananaSplit" -> "createBananaDocket";
+            case "acaiBowl" -> "createAcaiDocket";
+            case "salad" -> "createSaladDocket";
+            case "fruitSalad" -> "createFruitSaladDocket";
+            case "steakMeal" -> "createSteakDocket";
+            default -> throw new IllegalStateException("Unexpected value: " + candidate);
+        };
+        verify(eventHandler).trigger(response);
 
-    @Test
-    void displayOrderTest_Salad(){
-        when(customerComponent.getPreference()).thenReturn("salad");
-        OrderManager.displayOrder(customer);
-        verify(eventHandler).trigger("createSaladDocket");
-    }
-
-    @Test
-    void displayOrderTest_fruitSalad(){
-        when(customerComponent.getPreference()).thenReturn("fruitSalad");
-        OrderManager.displayOrder(customer);
-        verify(eventHandler).trigger("createFruitSaladDocket");
-    }
-
-    @Test
-    void displayOrderTest_steakMeal(){
-        when(customerComponent.getPreference()).thenReturn("steakMeal");
-        OrderManager.displayOrder(customer);
-        verify(eventHandler).trigger("createSteakDocket");
-    }
-
-    @Test
-    void displayOrderTest_bananaSplit(){
-        when(customerComponent.getPreference()).thenReturn("bananaSplit");
-        OrderManager.displayOrder(customer);
-        verify(eventHandler).trigger("createBananaDocket");
     }
 }

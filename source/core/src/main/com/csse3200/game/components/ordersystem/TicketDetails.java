@@ -1,16 +1,9 @@
 package com.csse3200.game.components.ordersystem;
 
-import com.badlogic.gdx.Input.Keys;
-import com.csse3200.game.GdxGame;
-import com.csse3200.game.components.player.InventoryComponent;
-import com.csse3200.game.input.InputComponent;
-import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.csse3200.game.components.Component; // ?
-
-import java.security.Provider;
+import com.csse3200.game.components.Component;
 
 /**
  * This class listens to key presses to shift dockets left and right and handles
@@ -32,6 +25,7 @@ public class TicketDetails extends Component {
         this.currentMeal = null;
         this.currentTimeLeft = null;
         this.currentOrderNumber = null;
+        logger.info("Created ticket details");
     }
 
     /**
@@ -44,16 +38,6 @@ public class TicketDetails extends Component {
         this.currentOrderNumber = orderNumber;
         this.currentMeal = meal;
         this.currentTimeLeft = timeLeft;
-    }
-
-    /**
-     * Clears big ticket information
-     */
-    private void clearBigTicketInfo() {
-        this.currentOrderNumber = null;
-        this.currentMeal = null;
-        this.currentTimeLeft = null;
-        //logger.info("Big ticket information cleared");
     }
 
     /**

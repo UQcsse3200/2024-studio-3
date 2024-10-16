@@ -4,17 +4,12 @@ import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.csse3200.game.GdxGame;
-import com.csse3200.game.areas.ForestGameArea;
-import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.components.maingame.*;
-import com.csse3200.game.components.ordersystem.MainGameOrderBtnDisplay;
-import com.csse3200.game.components.ordersystem.MainGameOrderTicketDisplay;
 import com.csse3200.game.components.ordersystem.OrderActions;
 import com.csse3200.game.components.upgrades.*;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.entities.factories.RenderFactory;
-import com.csse3200.game.entities.factories.UIFactory;
 import com.csse3200.game.input.InputComponent;
 import com.csse3200.game.input.InputDecorator;
 import com.csse3200.game.input.InputService;
@@ -31,8 +26,6 @@ import com.csse3200.game.components.maingame.TextDisplay;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.csse3200.game.components.ordersystem.DocketLineDisplay;
-import com.csse3200.game.components.player.InventoryDisplay;
-import java.util.Arrays;
 
 /**
  * The game screen containing the tutorial.
@@ -93,9 +86,7 @@ public class TutorialScreen extends ScreenAdapter {
         createUI();  // Create the UI after loading the assets
 
         logger.debug("Initialising tutorial screen entities");
-//        TerrainFactory terrainFactory = new TerrainFactory(renderer.getCamera());
-//        ForestGameArea forestGameArea = new ForestGameArea(terrainFactory);
-//        forestGameArea.create();
+
     }
 
     @Override
@@ -165,20 +156,18 @@ public class TutorialScreen extends ScreenAdapter {
                 .addComponent(new InputDecorator(stage, 10))
                 .addComponent(new DocketLineDisplay())
                 .addComponent(new PerformanceDisplay())
-                .addComponent(new MainGameActions(this.game, UIFactory.createDocketUI()))
+                //.addComponent(new MainGameActions(this.game, UIFactory.createDocketUI()))
                 //.addComponent(new MainGameExitDisplay())
                 .addComponent(new Terminal())
                 .addComponent(inputComponent)
                 .addComponent(new TerminalDisplay())
-                .addComponent(new OrderActions(this.game))
+                .addComponent(new OrderActions())
                 .addComponent(new PauseMenuActions(this.game))
                 .addComponent(new RageUpgrade())
                 .addComponent(new LoanUpgrade())
                 .addComponent(new SpeedBootsUpgrade())
                 .addComponent(new ExtortionUpgrade())
                 .addComponent(new DancePartyUpgrade())
-                .addComponent(new PauseMenuActions(this.game))
-
                 .addComponent(new TutorialScreenDisplay(this.game))
                 .addComponent(new TextDisplay(this));
 

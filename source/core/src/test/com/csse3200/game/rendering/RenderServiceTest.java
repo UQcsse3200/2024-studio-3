@@ -2,11 +2,9 @@ package com.csse3200.game.rendering;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.csse3200.game.extensions.GameExtension;
 import org.junit.jupiter.api.Test;

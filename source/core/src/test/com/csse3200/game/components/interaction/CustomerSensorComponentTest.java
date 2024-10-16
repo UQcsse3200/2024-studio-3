@@ -23,12 +23,11 @@ import static org.junit.jupiter.api.Assertions.*;
 class CustomerSensorComponentTest {
 
     private CustomerSensorComponent customerSensorComponent;
-    private final short customerLayer = PhysicsLayer.NPC;
 
     @BeforeEach
     void beforeEach() {
         ServiceLocator.registerPhysicsService(new PhysicsService());
-        customerSensorComponent = new CustomerSensorComponent(customerLayer, 5f);
+        customerSensorComponent = new CustomerSensorComponent(5f);
         assertNotNull(customerSensorComponent, "CustomerSensorComponent should have been initialized");
     }
 

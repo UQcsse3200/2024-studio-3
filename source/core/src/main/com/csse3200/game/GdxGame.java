@@ -3,7 +3,6 @@ package com.csse3200.game;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.csse3200.game.components.cutscenes.BackstoryCutscene;
 import com.csse3200.game.components.cutscenes.Cutscene;
 import com.csse3200.game.screens.CutsceneScreen;
 import com.csse3200.game.files.UserSettings;
@@ -11,13 +10,9 @@ import com.csse3200.game.screens.MainGameScreen;
 import com.csse3200.game.screens.MainMenuScreen;
 import com.csse3200.game.screens.SettingsScreen;
 import com.csse3200.game.screens.LoadGameScreen;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.csse3200.game.services.*;
-
-import java.util.logging.Level;
 
 import static com.badlogic.gdx.Gdx.app;
 /**
@@ -29,8 +24,6 @@ public class GdxGame extends Game {
   private static final Logger logger = LoggerFactory.getLogger(GdxGame.class);
   private Screen previousScreen;
   private ScreenType currentScreenType;
-  private Texture backgroundTexture;
-  private SpriteBatch batch;
   private Cutscene currentCutscene;
 
 
@@ -74,7 +67,7 @@ public class GdxGame extends Game {
     }
     ServiceLocator.registerSaveLoadService(system); // I know this is probably bad practice but i need it to work
 
-    logger.warn("Is AWDAdwKA null? " + (ServiceLocator.getSaveLoadService() == null));
+    logger.warn("Is AWDAdwKA null? {} ",ServiceLocator.getSaveLoadService() == null);
 
     setScreen(newScreen(screenType));
   }
@@ -90,7 +83,7 @@ public class GdxGame extends Game {
     }
     ServiceLocator.registerSaveLoadService(system); // I know this is probably bad practice but i need it to work
 
-    logger.warn("Is AWDAdwKA null? " + (ServiceLocator.getSaveLoadService() == null));
+    logger.warn("Is AWDAdwKA null? {} ",ServiceLocator.getSaveLoadService() == null);
 
     setScreen(newScreen(screenType, cutsceneType));
   }
@@ -132,15 +125,17 @@ public class GdxGame extends Game {
         return new SettingsScreen(this);
       case LOAD_GAME:
         return new LoadGameScreen(this);
-
-//      case CUTSCENE:
-//        return new CutsceneScreen(this, CutsceneType.DAY_2);
-
       case CUTSCENE:
-        return new CutsceneScreen(this, CutsceneType.MORAL_1);
+        return new CutsceneScreen(this, CutsceneType.MORAL_2);
 
 //      case ENDDAY_1:
 //        return new CutsceneScreen(this, CutsceneType.MORAL_1);
+//      case ENDDAY_2:
+//        return new CutsceneScreen(this, CutsceneType.MORAL_2);
+//      case ENDDAY_3:
+//        return new CutsceneScreen(this, CutsceneType.MORAL_3);
+//      case ENDDAY_4:
+//        return new CutsceneScreen(this, CutsceneType.MORAL_4);
 
       case GOOD_END:
         return new CutsceneScreen(this, CutsceneType.GOOD_END);
@@ -199,7 +194,7 @@ public class GdxGame extends Game {
 
 
   public enum ScreenType {
-    MAIN_MENU, MAIN_GAME, SETTINGS, LOAD_GAME, CUTSCENE, GOOD_END, BAD_END, LOSE_END, ENDDAY_1
+    MAIN_MENU, MAIN_GAME, SETTINGS, LOAD_GAME, CUTSCENE, GOOD_END, BAD_END, LOSE_END, ENDDAY_1, ENDDAY_2, ENDDAY_3, ENDDAY_4
   }
 
   public enum CutsceneType {
@@ -207,7 +202,7 @@ public class GdxGame extends Game {
   }
 
   public enum LevelType {
-    LEVEL_1, LEVEL_2, LEVEL_3, LEVEL_4, LEVEL_5, DONE
+    LEVEL_0, LEVEL_1, LEVEL_2, LEVEL_3, LEVEL_4, LEVEL_5, DONE
   }
 
   /**
