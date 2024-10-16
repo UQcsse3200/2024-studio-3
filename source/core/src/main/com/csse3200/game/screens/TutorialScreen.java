@@ -10,6 +10,7 @@ import com.csse3200.game.components.maingame.*;
 import com.csse3200.game.components.ordersystem.MainGameOrderTicketDisplay;
 import com.csse3200.game.components.ordersystem.OrderActions;
 import com.csse3200.game.components.ordersystem.TicketDetails;
+import com.csse3200.game.components.tutorial.KeybindsButtonDisplay;
 import com.csse3200.game.components.upgrades.*;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
@@ -63,6 +64,7 @@ public class TutorialScreen extends MainGameScreen {
             "images/pause_menu2.png",
             "images/recipe_card.png",
             "images/textbox.png",
+            "images/pause_menu.png",
             //background daylight cycle assets
             "images/background_images/1.0.png",
             "images/background_images/1.5.png",
@@ -242,6 +244,8 @@ public class TutorialScreen extends MainGameScreen {
                 .addComponent(new DocketLineDisplay())
                 .addComponent(new PerformanceDisplay())
                 .addComponent(new MainGameActions(game, UIFactory.createDocketUI()))
+                .addComponent(new KeybindsButtonDisplay())
+                .addComponent(new MainGameExitDisplay())
                 //.addComponent(new MainGameExitDisplay())
                 .addComponent(new Terminal())
                 .addComponent(inputComponent)
