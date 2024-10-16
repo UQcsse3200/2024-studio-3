@@ -12,6 +12,7 @@ import com.csse3200.game.components.npc.CustomerComponent;
 import com.csse3200.game.components.npc.CustomerManager;
 import com.csse3200.game.components.ordersystem.OrderManager;
 import com.csse3200.game.components.ordersystem.Recipe;
+import com.csse3200.game.components.ordersystem.TicketDetails;
 import com.csse3200.game.components.player.TouchPlayerInputComponent;
 import com.csse3200.game.components.npc.GhostAnimationController;
 import com.csse3200.game.components.npc.SpecialNPCAnimationController;
@@ -30,6 +31,9 @@ import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.physics.components.PhysicsMovementComponent;
 import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
+
+import java.util.Arrays;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -159,14 +163,9 @@ public class NPCFactory {
         logger.info("waitingTime: {}", waitingTime);
         Entity customer = createBaseCustomer(newTargetPosition, waitingTime);
 
-        // orderID is to link a specific customer to a specific order ticket
-        String orderNumber = String.valueOf(orderID);
-        logger.info("Order number: {}", orderNumber);
         CustomerComponent customerComponent = new CustomerComponent(config);
-        customerComponent.setOrderNumber(orderNumber);
         customer.addComponent(customerComponent);
 
-        CustomerManager.addCustomer(orderNumber, customer);
 
         // gets the preference of the customer
         String preference = customer.getComponent(CustomerComponent.class).getPreference();
@@ -186,6 +185,17 @@ public class NPCFactory {
         // Display the order for the customer
         customer.getEvents().addListener("customerArrived", () -> {
             OrderManager.displayOrder(customer);
+
+            TicketDetails bigTicket = ServiceLocator.getTicketDetails();
+            String[] bigTicketInfo = bigTicket.getCurrentBigTicketInfo();
+            logger.info(Arrays.toString(bigTicketInfo));
+
+            // Set the order number using bigTicketInfo[0]
+            customerComponent.setOrderNumber(bigTicketInfo[0]);
+
+            // Update CustomerManager with the updated order number
+            CustomerManager.addCustomer(bigTicketInfo[0], customer);
+            CustomerManager.printMessage();
         });
 
         logger.debug("Created customer {} with initial position: {}", name, customer.getPosition());

@@ -147,6 +147,7 @@ public class StationServingComponent extends Component {
             }
 
             CustomerManager.removeCustomerByOrder(bigTicketInfo[0]);
+            CustomerManager.printMessage();
 
             // Call to team 1's function with the big ticket info
             // remove ticket
@@ -203,6 +204,7 @@ public class StationServingComponent extends Component {
 
         // Determines the final score based on the three previous scoring criteria
         String finalScore = ScoreSystem.getFinalScore(accuracyScore, timeScore, completionScore);
+        logger.info(finalScore);
 
         // Updating the gold amount and the HoverBox display based on the final score
         Entity customer = CustomerManager.getCustomerByOrder(orderNumber);

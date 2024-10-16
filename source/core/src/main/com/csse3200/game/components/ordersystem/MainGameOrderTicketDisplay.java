@@ -217,6 +217,14 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         countdownLabelArrayList.add(countdownLabel);
         table.add(countdownLabel).padLeft(10f).row();
 
+        // Update TicketDetails immediately
+        String orderNumber = orderNumStr.replace("Order ", ""); // Remove "Order " prefix
+        String mealName = getRecipe().getName();
+        String timeLeft = String.valueOf(getTimer() / 1000); // Convert milliseconds to seconds
+
+        // Call onUpdateBigTicket() to update TicketDetails
+        ServiceLocator.getTicketDetails().onUpdateBigTicket(orderNumber, mealName, timeLeft);
+
         stage.addActor(table);
         updateDocketSizes();
 
