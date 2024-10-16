@@ -16,6 +16,8 @@ import com.csse3200.game.extensions.GameExtension;
 import com.csse3200.game.rendering.RenderService;
 import com.csse3200.game.services.*;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.mockito.*;
 
 import org.junit.jupiter.api.AfterEach;
@@ -86,8 +88,7 @@ public class DancePartyUpgradeTest {
         });
         docketEventHandler.trigger("Dancing");
 
-        // Dance Party Issue: Can't verify meter value is 1f upon activation/setup. Needs to be setup properly.
-//        assertEquals(1f, dancePartyUpgrade.meter.getValue());
+        assertEquals(1f, dancePartyUpgrade.meter.getValue());
         assertTrue(isActive.get());
         assertTrue(dancePartyUpgrade.isActive());
         assertTrue(dancePartyUpgrade.layout.isVisible());
@@ -148,19 +149,32 @@ public class DancePartyUpgradeTest {
             spyDancePartyUpgrade.update();
         }
 
-//        assertEquals(spyDancePartyUpgrade.getActiveTimeRemaining() /
-//                (float) spyDancePartyUpgrade.getUpgradeDuration(), spyDancePartyUpgrade.meter.getValue());
+        assertEquals(spyDancePartyUpgrade.getActiveTimeRemaining() /
+                (float) spyDancePartyUpgrade.getUpgradeDuration(), spyDancePartyUpgrade.meter.getValue());
 
         for (int i = 0; i < 15; i++) {
             spyDancePartyUpgrade.update();
         }
+
         assertEquals(0, spyDancePartyUpgrade.getActiveTimeRemaining());
+        verify(spyDancePartyUpgrade).deactivate();
+        assertFalse(spyDancePartyUpgrade.getPlaySound());
+    }
 
-        // can't verify deactivation after 30 seconds pass. Needs to be setup properly.
-//        verify(spyDancePartyUpgrade).deactivate();
+    @ParameterizedTest
+    @ValueSource(ints = {5, 10, 15, 20, 25, 30})
+    void testMeterValueAtDifferentLevelsOfDepletion(int totalDepletedTime) {
+        DancePartyUpgrade spyDancePartyUpgrade = spy(dancePartyUpgrade);
+        when(combatStatsComponent.getGold()).thenReturn(100);
+        spyDancePartyUpgrade.activate();
 
-        // can't verify sound is played upon deactivation, if that even happens.
-//        assertFalse(spyDancePartyUpgrade.getPlaySound());
+        when(gameTime.getDeltaTime()).thenReturn(1f);
+        for (int i = 0; i < totalDepletedTime; i++) {
+            spyDancePartyUpgrade.update();
+        }
+
+        assertEquals(spyDancePartyUpgrade.getActiveTimeRemaining() /
+                (float) spyDancePartyUpgrade.getUpgradeDuration(), spyDancePartyUpgrade.meter.getValue(), 0.01);
     }
 
     @Test

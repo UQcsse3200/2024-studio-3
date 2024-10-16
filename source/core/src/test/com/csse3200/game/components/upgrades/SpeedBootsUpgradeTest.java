@@ -16,6 +16,8 @@ import com.csse3200.game.extensions.GameExtension;
 import com.csse3200.game.rendering.RenderService;
 import com.csse3200.game.services.*;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.mockito.*;
 
 import org.junit.jupiter.api.AfterEach;
@@ -150,6 +152,22 @@ public class SpeedBootsUpgradeTest {
 
         verify(spySpeedBootsUpgrade).deactivate();
         assertFalse(spySpeedBootsUpgrade.getPlaySound());
+    }
+
+    @ParameterizedTest
+    @ValueSource(ints = {5, 10, 15, 20, 25, 30})
+    void testMeterValueAtDifferentLevelsOfDepletion(int totalDepletedTime) {
+        SpeedBootsUpgrade spySpeedBootsUpgrade = spy(speedBootsUpgrade);
+        when(combatStatsComponent.getGold()).thenReturn(100);
+        spySpeedBootsUpgrade.activate();
+
+        when(gameTime.getDeltaTime()).thenReturn(1f);
+        for (int i = 0; i < totalDepletedTime; i++) {
+            spySpeedBootsUpgrade.update();
+        }
+
+        assertEquals(spySpeedBootsUpgrade.getActiveTimeRemaining() /
+                (float) spySpeedBootsUpgrade.getBoostDuration(), spySpeedBootsUpgrade.speedMeter.getValue(), 0.01);
     }
 
     @Test

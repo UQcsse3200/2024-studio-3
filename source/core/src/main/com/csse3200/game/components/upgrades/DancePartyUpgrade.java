@@ -37,7 +37,7 @@ public class DancePartyUpgrade extends UIComponent implements Upgrade {
     private static final String[] greenTexture = {"images/green_fill.png"};
     private static final String[] whiteBgTexture = {"images/white_background.png"};
     public Table layout;
-    public Label text; // the "Upgrade" text above the speedMeter
+    public Label text; // the "Upgrade" text above the meter
     public ProgressBar meter; // the meter that show the remaining time
     private boolean isVisible;
     private Sound bgEffect;
@@ -93,7 +93,7 @@ public class DancePartyUpgrade extends UIComponent implements Upgrade {
         layout = new Table();
         layout.setFillParent(true);
         layout.setVisible(false);
-        setupMeter();
+//        setupMeter();
     }
 
 
@@ -103,31 +103,37 @@ public class DancePartyUpgrade extends UIComponent implements Upgrade {
      * Also initializes the accompanying label.
      */
     private void setupMeter() {
-        if (meter == null) {
-            Texture whiteBgTexture = ServiceLocator.getResourceService().getAsset("images/white_background.png", Texture.class);
-            Texture fillTexture = ServiceLocator.getResourceService().getAsset("images/green_fill.png", Texture.class);
+        Texture whiteBgTexture = ServiceLocator
+                .getResourceService().getAsset("images/white_background.png", Texture.class);
+        Texture fillTexture = ServiceLocator
+                .getResourceService().getAsset("images/green_fill.png", Texture.class);
 
-            ProgressBar.ProgressBarStyle style = new ProgressBar.ProgressBarStyle();
-            style.background = new TextureRegionDrawable(new TextureRegion(whiteBgTexture));
-            style.knobBefore = new TextureRegionDrawable(new TextureRegion(fillTexture));
+        ProgressBar.ProgressBarStyle style = new ProgressBar.ProgressBarStyle();
 
-            style.background = new TextureRegionDrawable(new TextureRegion(whiteBgTexture));
-            style.background.setMinHeight(15);
-            style.background.setMinWidth(10);
+        // Setting white background
+        style.background = new TextureRegionDrawable(new TextureRegion(whiteBgTexture));
+        style.background.setMinHeight(15);
+        style.background.setMinWidth(10);
 
-            // Setting green fill color
-            style.knobBefore = new TextureRegionDrawable(new TextureRegion(fillTexture));
-            style.knobBefore.setMinHeight(15);
-            style.background.setMinWidth(10);
+        // Setting green fill color
+        style.knobBefore = new TextureRegionDrawable(new TextureRegion(fillTexture));
+        style.knobBefore.setMinHeight(15);
+        style.background.setMinWidth(10);
 
+
+        // Only show the speed meter if it is activated
+        if (isActive) {
             meter = new ProgressBar(0f, 1f, 0.01f, false, style);
-            meter.setValue(1f);
+            meter.setValue(1f); // Initially, the meter is full
             meter.setPosition(30, 250);
 
-            text = new Label("Upgrade", skin);
-            text.setPosition(meter.getX(), meter.getY() + meter.getHeight() + 8);
-            layout.add(text).row();
-            layout.add(meter);
+            // Set up text
+            text =  new Label("Upgrade", skin);
+            text.setPosition(meter.getX(), meter.getY() + meter.getHeight() + 8); // Placed above meter
+        }
+        else {
+            meter = null;
+            text = null;
         }
     }
 
@@ -142,6 +148,9 @@ public class DancePartyUpgrade extends UIComponent implements Upgrade {
              dancePartyCost();
              isActive = true;
              layout.setVisible(true);
+             setupMeter();
+             System.out.println("Dance party meter value on activate: " + meter.getValue());
+
              ServiceLocator.getDocketService().getEvents().trigger("Dancing");
          }
          else{
