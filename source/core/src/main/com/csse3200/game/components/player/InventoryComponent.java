@@ -338,7 +338,8 @@ public class InventoryComponent extends Component {
         currentItem = items.get(i);
 
         if (currentItem != null && currentItem.getItemName().equals(itemName)) {
-          this.items.set(i, null);
+          //this.items.set(i, null);
+          this.removeAt(i);
           break;
         }
       }
