@@ -393,8 +393,7 @@ public class EndDayDisplay extends UIComponent {
      */
     public void show() {
         ServiceLocator.getRandomComboService().deactivateUpgrade();
-        NPCFactory.reset();
-        CustomerManager.reset();
+
         recalculateFailedCustomers();
         setVisible(true);
         getLayout().setVisible(true);
