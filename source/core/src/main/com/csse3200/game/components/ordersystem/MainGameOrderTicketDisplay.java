@@ -167,7 +167,7 @@ public class MainGameOrderTicketDisplay extends UIComponent {
      * @return true if the ESCAPE key was pressed and the event was handled, false otherwise.
      */
     public boolean handleKeyDown(int keycode) {
-        if (keycode == com.badlogic.gdx.Input.Keys.ESCAPE) {
+        if (keycode == com.badlogic.gdx.Input.Keys.ESCAPE || keycode == Input.Keys.NUM_0)  {
             setPaused(!isPaused);
             return true;
         }
