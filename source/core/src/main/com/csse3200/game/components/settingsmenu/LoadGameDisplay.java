@@ -40,21 +40,26 @@ public class LoadGameDisplay extends UIComponent {
                 String save = saves[i-1].name().split("[.]")[0];
                 Table load = new Table();
                 load.add(new Label(save, skin)).row();
+
                 GameState state = FileLoader.readClass(GameState.class, "saves" + File.separator + save + ".json", Location.LOCAL);
-                load.add(new Label("Last Modified: " + state.getModTime(), skin)).row();
-                load.add(new Label("Day " + state.getDay(), skin));
-                load.add(new Label("| Money: " + state.getMoney(), skin)).row();
-                load.addListener(new InputListener() {
-                    @Override
-                    public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                        entity.getEvents().trigger("start", save + ".json");
-                        return true;
+                try {
+                    load.add(new Label("Last Modified: " + state.getModTime(), skin)).row();
+                    load.add(new Label("Day " + state.getDay(), skin));
+                    load.add(new Label("| Money: " + state.getMoney(), skin)).row();
+                    load.addListener(new InputListener() {
+                        @Override
+                        public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                            entity.getEvents().trigger("start", save + ".json");
+                            return true;
+                        }
+                    });
+                    savesTable.add(load).pad(100, 100, 100, 100);
+                    // Make sure every row has two save files
+                    if (i % 2 == 0) {
+                        savesTable.row();
                     }
-                });
-                savesTable.add(load).pad(100, 100, 100, 100);
-                // Make sure every row has two save files
-                if (i % 2 == 0) {
-                    savesTable.row();
+                } catch (Exception e) {
+                    logger.warn("Coudn't display {0}", save);
                 }
             }
         }

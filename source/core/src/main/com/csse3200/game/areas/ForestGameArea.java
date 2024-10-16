@@ -11,7 +11,7 @@ import java.util.concurrent.Executors;
 
 import com.csse3200.game.components.moral.MoralDayFour;
 import com.csse3200.game.areas.map.Map;
-import com.csse3200.game.services.InteractableService;
+import com.csse3200.game.services.*;
 import com.csse3200.game.services.MapLayout;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,8 +35,6 @@ import com.csse3200.game.entities.factories.ObstacleFactory;
 import com.csse3200.game.entities.factories.PlayerFactory;
 import com.csse3200.game.entities.factories.StationFactory;
 
-import com.csse3200.game.services.ResourceService;
-import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.utils.math.GridPoint2Utils;
 
 /** Forest area for the demo game with trees, a player, and some enemies. */
@@ -92,7 +90,7 @@ public class ForestGameArea extends GameArea {
           "images/stations/benches/bottom_shadow.png",
           //"images/stations/bench_middle.png",
           //"images/stations/bench.png",
-          //"images/stations/benches/single.png",
+          "images/stations/benches/single.png",
           //"images/stations/benches/middle.png",
           //"images/stations/benches/final.png",
           //"images/stations/benches/shadow_bottom_top.png",
@@ -252,21 +250,36 @@ public class ForestGameArea extends GameArea {
     
     // Create a new interactable service
     ServiceLocator.registerInteractableService(new InteractableService());
-    
+
+    long time1 = ServiceLocator.getTimeSource().getTime();
     loadAssets();
+    long time2 = ServiceLocator.getTimeSource().getTime();
+    logger.info("Assets loaded: {}ms", time2 - time1);
     displayUI();
+    long time3 = ServiceLocator.getTimeSource().getTime();
+    logger.info("UI displayed: {}ms", time3 - time2);
     spawnTerrain();
+    long time4 = ServiceLocator.getTimeSource().getTime();
+    logger.info("Terrain spawned: {}ms", time4 - time3);
     spawnWall();
+    long time5 = ServiceLocator.getTimeSource().getTime();
+    logger.info("Wall spawned: {}ms", time5 - time4);
+
+
     MapLayout mapLayout = new MapLayout();
     Map result = mapLayout.load(this.level);
+    long time6 = ServiceLocator.getTimeSource().getTime();
+    logger.info("Map loaded: {}ms", time6 - time5);
     for (Bench bench : result.getBenches()) {
       spawnEntity(bench);
       bench.setPosition(bench.x, bench.y);
     }
     for (Entity station : result.getStations()) {
       spawnEntity(station);
-
     }
+    long time7 = ServiceLocator.getTimeSource().getTime();
+    logger.info("Map created: {}ms", time7 - time6);
+
 
 
 
@@ -288,6 +301,9 @@ public class ForestGameArea extends GameArea {
     createEndDayScreen();
     playMusic();
 
+    long time8 = ServiceLocator.getTimeSource().getTime();
+    logger.info("Everything else: {}ms", time8 - time7);
+
   }
 
   /**
@@ -307,6 +323,7 @@ public class ForestGameArea extends GameArea {
    */
   private void checkEndOfGameState() {
     String gameState = player.getComponent(CheckWinLoseComponent.class).checkGameState();
+
 
     if ("LOSE".equals(gameState)) {
       createTextBox("You *oink* two-legged moron! You're ruining my " +
@@ -678,7 +695,7 @@ public class ForestGameArea extends GameArea {
   private void playMusic() {
     Music music = ServiceLocator.getResourceService().getAsset(backgroundmusic, Music.class);
     music.setLooping(true);
-    music.setVolume(0.02f);
+    music.setVolume(0.04f);
     music.play();
   }
 

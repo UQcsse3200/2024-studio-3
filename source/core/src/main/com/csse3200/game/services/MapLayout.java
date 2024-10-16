@@ -19,14 +19,12 @@ import java.util.ArrayList;
  */
 public class MapLayout {
     private EventHandler mapEventHandler;
-    private static final String mapBase = "images/map/map_base.txt";
-    private static final String mapLevel1 = "images/map/map_one.txt";
-    private static final String mapLevel2 = "images/map/map_two.txt";
-    private static final String mapLevel3 = "images/map/map_three.txt";
-    private static final String mapLevel4 = "images/map/map_four.txt";
-    private static final String mapLevel5 = "images/map/map_five.txt";
-    private int strToNum;
-    private int strToNum2;
+    private static final String MAPBASE = "images/map/map_base.txt";
+    private static final String MAPLEVEL1 = "images/map/map_one.txt";
+    private static final String MAPLEVEL2 = "images/map/map_two.txt";
+    private static final String MAPLEVEL3 = "images/map/map_three.txt";
+    private static final String MAPLEVEL4 = "images/map/map_four.txt";
+    private static final String MAPLEVEL5 = "images/map/map_five.txt";
     private ArrayList<Bench> benches = new ArrayList<Bench>();
     private ArrayList<Entity> stations = new ArrayList<Entity>();
     private String mapName;
@@ -61,14 +59,14 @@ public class MapLayout {
      */
     public Map load(GdxGame.LevelType level) {
 
-        String mapLevel = mapBase;
+        String mapLevel = MAPBASE;
         BufferedReader reader = null;
         switch (level) {
-            case LEVEL_1 -> mapLevel = mapLevel1;
-            case LEVEL_2 -> mapLevel = mapLevel2;
-            case LEVEL_3 -> mapLevel = mapLevel3;
-            case LEVEL_4 -> mapLevel = mapLevel4;
-            case LEVEL_5 -> mapLevel = mapLevel5;
+            case LEVEL_1 -> mapLevel = MAPLEVEL1;
+            case LEVEL_2 -> mapLevel = MAPLEVEL2;
+            case LEVEL_3 -> mapLevel = MAPLEVEL3;
+            case LEVEL_4 -> mapLevel = MAPLEVEL4;
+            case LEVEL_5 -> mapLevel = MAPLEVEL5;
         }
 
         try {
@@ -79,87 +77,47 @@ public class MapLayout {
             logger.info("Reading the grid...");
             if ((line = reader.readLine()) != null) {
                 mapName = line; // 1st line is the map name
-                logger.info("Map Name: " + mapName);
+                logger.info("Map Name: {0}", mapName);
             }
 
             if ((line = reader.readLine()) != null) {
                 mapWidth = Integer.parseInt(line); // 2nd line is the width
-                logger.info("Map Width: " + mapWidth);
+                logger.info("Map Width: {0}", mapWidth);
             }
 
             if ((line = reader.readLine()) != null) {
                 mapHeight = Integer.parseInt(line); // 3rd line is the height
-                logger.info("Map Height: " + mapHeight);
+                logger.info("Map Height: {0}", mapHeight);
             }
 
             if ((line = reader.readLine()) != null) {
                 mapSeparator = line; // 4th line is a separator (e.g., "===")
-                logger.info("Map Separator: " + mapSeparator);
+                logger.info("Map Separator: {0}", mapSeparator);
             }
             int row = 4;
 
+            long time1 = ServiceLocator.getTimeSource().getTime();
             // Read the file line by line
             while ((line = reader.readLine()) != null) {
-                // Log the entire line
-                logger.info("Line " + row + ": " + line);
-
+                long lineTime = ServiceLocator.getTimeSource().getTime();
 
                 // Split the line into individual characters
                 String[] parts = line.split("");
 
-                for (int col = 0; col < parts.length; col++) {
-                    String square = parts[col];
+                for (int col = 0; col < parts.length; col+=4) {
+                    //long colTime = ServiceLocator.getTimeSource().getTime();
 
-                    // Log the current square being processed a
-//                    logger.info("Checking square at row " + row + ", column " + col + ": " + square);
-
-                    // Spawn single bench row when 'X'
-                    if (square.equals("X")) {
-                        strToNum = Integer.valueOf(parts[col + 1]);
-                        if (parts.length == 4) {
-                            strToNum2 = Integer.valueOf(parts[col + 2]);
-                            strToNum2 = strToNum2 + Integer.valueOf(parts[col + 3]);
-                        } else {
-                            strToNum2 = 1;
-                        }
-                        strToNum2 = Integer.valueOf(parts[col + 2] );
-                        benches.addAll(readBench("X", strToNum, strToNum2, row));
-                        col += 3;
-//                        logger.info("Spawning entity at row " + row + ", column " + col);
-                    }
-                    // Spawn bench column when 'Y'
-                    else if (square.equals("Y")) {
-                        strToNum = Integer.valueOf(parts[col + 1]);
-                        strToNum2 = Integer.valueOf(parts[col + 2]);
-                        benches.addAll(readBench("Y", strToNum, strToNum2, row));
-                        col += 3;
-                        logger.info("Spawning entity at row " + row + ", column " + col);
-                    }
-                    else if (square.equals("Q")) {
-                        strToNum = Integer.valueOf(parts[col + 1]);
-
-                        benches.addAll(readBench("Q", strToNum, 1, row));
-                        col += 3;
-                        logger.info("Spawning entity at row " + row + ", column " + col);
-                    }
-                    else if (square.equals("P")) {
-                        strToNum = Integer.valueOf(parts[col + 1]);
-
-                        benches.addAll(readBench("P", strToNum, 1, row));
-                        col += 3;
-                        logger.info("Spawning entity at row " + row + ", column " + col);
-                    }
-                    // Spawn a station
-                    else if (validateStation(square)) {
-                        strToNum = Integer.valueOf(parts[col + 1]);
-                        stations.add(readStation(square, strToNum, row));
-                        col += 3;
-                    }
+                    benches.addAll(parseLine(parts, row, col));
                 }
+                // Log the entire line
+                logger.info("Line {0} ( {1} ms) : {2}", row, (ServiceLocator.getTimeSource().getTime() - lineTime),line);
+
                 row++;
             }
+            long time2 = ServiceLocator.getTimeSource().getTime();
+            logger.info("Map file read: {}ms", time2 - time1);
         } catch (IOException e) {
-            logger.warn("An error occurred while reading the file: " + e.getMessage());
+            logger.warn("An error occurred while reading the file: {0}", e.getMessage());
         } finally {
             try {
                 if (reader != null) {
@@ -170,40 +128,46 @@ public class MapLayout {
             }
         }
         return new Map(benches, stations);
-
     }
 
     /**
-        * Read a bench from the map file
-     * @param type - the type of bench
-     * @param startCol - the starting column
-     * @param size - the size of the bench
-     * @param row  - the row of the bench
-     * @return - an ArrayList of benches
+     * parses a line from the map file
+     * @param parts - the string to parse
+     * @param row - the row of the line
+     * @param col - the column index
+     * @return the list of benches
      */
+    public ArrayList<Bench> parseLine(String[] parts, int row, int col)
+    {
+        if (parts == null) return new ArrayList<Bench>();
+        String type = parts[col];
 
-    public ArrayList<Bench> readBench(String type, int startCol, int size, int row) {
-        switch (type) {
-            case "X":
-                if (size == 1) {
-                    return BenchGenerator.singleBench(startCol + 4, row - 4);
-                }
-            case "Q":
-                if (size == 1) {
-                    return BenchGenerator.singleShadowBench(startCol + 4, row - 4);
-                }
-            case "P":
-                if (size == 1) {
-                    return BenchGenerator.singleBlocker(startCol + 4, row - 4);
-                }
-
-                return BenchGenerator.createBenchRow(startCol + 4, startCol + size +4, row - 4);
-            case "Y":
-                return BenchGenerator.createBenchColumn(startCol + 4, row - 4, row + size - 4);
-
-            default:
-                return new ArrayList<Bench>();
+        // Spawn single bench row when 'X'
+        if (type.equals("X")) {
+            int strToNum = Integer.valueOf(parts[col + 1]);
+            int strToNum2 = Integer.valueOf(parts[col + 2] );
+            return BenchGenerator.createBenchRow(strToNum + 4, strToNum + 3 + strToNum2, row - 4);
         }
+        // Spawn bench column when 'Y'
+        else if (type.equals("Y")) {
+            int strToNum = Integer.valueOf(parts[col + 1]);
+            int strToNum2 = Integer.valueOf(parts[col + 2]);
+            return BenchGenerator.createBenchColumn(strToNum + 4, row - 4, row + strToNum2 - 4);
+        }
+        else if (type.equals("Q")) {
+            int strToNum = Integer.valueOf(parts[col + 1]);
+            return BenchGenerator.singleShadowBench(strToNum + 4, row - 4);
+        }
+        else if (type.equals("P")) {
+            int strToNum = Integer.valueOf(parts[col + 1]);
+            return BenchGenerator.singleBlocker(strToNum + 4, row - 4);
+        }
+        // Spawn a station
+        else if (validateStation(type)) {
+            int strToNum = Integer.valueOf(parts[col + 1]);
+            stations.add(readStation(type, strToNum, row));
+        }
+        return new ArrayList<Bench>();
     }
 
     /**

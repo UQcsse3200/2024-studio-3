@@ -2,8 +2,10 @@ package com.csse3200.game.entities.benches;
 
 import java.util.ArrayList;
 
-
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.csse3200.game.components.station.StationItemHandlerComponent;
+import com.csse3200.game.components.station.StationMealComponent;
+import com.csse3200.game.areas.GameArea;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.PhysicsUtils;
@@ -37,27 +39,19 @@ public class Bench extends Entity{
         this.x = x;
         this.y = y;
 
+        setScale(1f, 1f);
+
         addComponent(new TextureRenderComponent("images/stations/benches/" + type + ".png"));
         addComponent(new PhysicsComponent().setBodyType(BodyType.StaticBody));
-        addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
-
-
         addComponent(new InteractionComponent(PhysicsLayer.INTERACTABLE));
+
         addComponent(new TooltipsDisplay());
         addComponent(new InventoryComponent(4));
         addComponent(new MixingBenchHoverComponent());
         addComponent(new StationMealComponent("combining", new ArrayList<>()));
 
-        getComponent(InteractionComponent.class).setAsBox(getScale());
-
-        setScale(1f, 1f);
-        getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
-        PhysicsUtils.setScaledCollider(this, 1.0f, 0.75f);
-
         ServiceLocator.getInteractableService().registerEntity(this);
     }
-
-
 
     /**
      * Creates visible bench.

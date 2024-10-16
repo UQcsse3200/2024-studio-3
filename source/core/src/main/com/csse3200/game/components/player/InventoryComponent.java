@@ -26,7 +26,7 @@ public class InventoryComponent extends Component {
    * @param capacity the players inventory size
    */
   public InventoryComponent(int capacity) {
-    logger.info("Initialized Inventory Component");
+    //logger.info("Initialized Inventory Component");
     setCapacity(capacity);
     items = new ArrayList<>(capacity);
     for (int i = 0; i < capacity; i++) {        
