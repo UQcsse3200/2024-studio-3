@@ -72,7 +72,7 @@ public class NPCFactory {
     public static Entity createUpgradeNPC(Vector2 firstPosition, UpgradesDisplay upgradesDisplay) {
         Entity penguin = createStandard(firstPosition);
         AITaskComponent aiComponent = new AITaskComponent();
-        aiComponent.addTask(new PathFollowTask(firstPosition, 30, 15));
+        aiComponent.addTask(new PathFollowTask(firstPosition, 15));
 
         // Animation setup
         AnimationRenderComponent animator = new AnimationRenderComponent(
@@ -111,30 +111,6 @@ public class NPCFactory {
             }
         });
 
-        // penguin.getEvents().addListener("clicked", (a, b) -> {
-        //         if (a instanceof Float && b instanceof Float) {
-        //             float x = ((Float) a); // cast a to float
-        //             float y = ((Float) b); // cast b to float
-
-        //         //     if ((penguin.getPosition().x - 0.3 <= x && x <= penguin.getPosition().x + 0.3) &&
-        //         //         (penguin.getPosition().y - 0.5 <= y && y <= penguin.getPosition().y + 0.3)) {
-        //                 if ((penguin.getPosition().x - 1 <= x && x <= penguin.getPosition().x + 1) &&
-        //                 (penguin.getPosition().y - 1 <= y && y <= penguin.getPosition().y + 1)) {
-
-        //                 if (!isClicked[0] && isHoverBox[0]) {
-        //                     hoverBox.setEnabled(false);
-        //                     logger.info("Penguin clicked!");
-        //                     upgradesDisplay.create();
-        //                     upgradesDisplay.toggleVisibility();
-        //                     isClicked[0] = true;
-        //                 } else {
-        //                     logger.info("Penguin has already been clicked, ignoring.");
-        //                 }
-        //             }
-        //         }
-        //     });
-
-        //            System.out.println("getting disposed of penguin");
         ServiceLocator.getRandomComboService().getEvents().addListener("response", penguin::dispose);
         return penguin;
     }
@@ -182,9 +158,9 @@ public class NPCFactory {
         customer.getComponent(AnimationRenderComponent.class).scaleEntity();
 
         // Display the order for the customer
-        customer.getEvents().addListener("customerArrived", () -> {
-            OrderManager.displayOrder(customer);
-        });
+        customer.getEvents().addListener("customerArrived", () ->
+            OrderManager.displayOrder(customer)
+        );
 
         logger.debug("Created customer {} with initial position: {}", name, customer.getPosition());
 
@@ -247,7 +223,7 @@ public class NPCFactory {
     public static Entity createBaseCustomer(Vector2 targetPosition, float waitingTime) {
         AITaskComponent aiComponent = new AITaskComponent();
         aiComponent
-                .addTask(new PathFollowTask(targetPosition, 30, waitingTime));
+                .addTask(new PathFollowTask(targetPosition, waitingTime));
         Entity npc = new Entity()
                         .addComponent(new PhysicsComponent())
                         .addComponent(new PhysicsMovementComponent())
@@ -263,7 +239,7 @@ public class NPCFactory {
     public static Entity createBaseCharacter(Vector2 targetPosition) {
         AITaskComponent aiComponent = new AITaskComponent();
         aiComponent
-                        .addTask(new PathFollowTask(targetPosition, 30, 15)) // Default countdown
+                        .addTask(new PathFollowTask(targetPosition, 15)) // Default countdown
                         .addTask(new TurnTask(10, 0.01f, 10f));
         Entity npc = new Entity()
                         .addComponent(new PhysicsComponent())
@@ -280,15 +256,13 @@ public class NPCFactory {
     public static Entity createStandard(Vector2 targetPosition) {
         AITaskComponent aiComponent = new AITaskComponent();
         aiComponent
-                        .addTask(new PathFollowTask(targetPosition, 30, 15)); // Default countdown
-        //                 .addTask(new TurnTask(10, 0.01f, 10f));
+                        .addTask(new PathFollowTask(targetPosition, 15)); // Default countdown
         Entity npc = new Entity()
                         .addComponent(new PhysicsComponent())
                         .addComponent(new PhysicsMovementComponent())
                         .addComponent(new ColliderComponent())
                         .addComponent(new HitboxComponent().setLayer(PhysicsLayer.NPC))
                         .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 1.5f));
-                        // .addComponent(aiComponent);
         PhysicsUtils.setScaledCollider(npc, 0.9f, 0.4f);
         npc.getComponent(PhysicsComponent.class).getBody().setUserData("Customer");
         return npc;

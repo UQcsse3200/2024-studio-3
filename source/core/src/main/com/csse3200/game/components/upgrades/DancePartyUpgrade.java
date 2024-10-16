@@ -44,10 +44,7 @@ public class DancePartyUpgrade extends UIComponent implements Upgrade {
 
 
     public DancePartyUpgrade() {
-        ServiceLocator.getPlayerService().getEvents().addListener("playerCreated", (Entity player) -> {
-            this.combatStatsComponent = player.getComponent(CombatStatsComponent.class);
-        });
-        this.orderManager = orderManager;
+        ServiceLocator.getPlayerService().getEvents().addListener("playerCreated", (Entity player) -> this.combatStatsComponent = player.getComponent(CombatStatsComponent.class));
         gameTime = ServiceLocator.getTimeSource();
         this.isActive = false;
 

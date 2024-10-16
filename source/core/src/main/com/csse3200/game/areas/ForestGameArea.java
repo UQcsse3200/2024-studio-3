@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import com.csse3200.game.components.moral.MoralDayFour;
 import com.csse3200.game.areas.map.Map;
 import com.csse3200.game.services.*;
 import com.csse3200.game.services.MapLayout;
@@ -185,8 +184,8 @@ public class ForestGameArea extends GameArea {
           "images/special_NPCs/penguin.atlas",
   };
   private static final String[] forestSounds = {"sounds/Impact4.ogg"};
-  private static final String backgroundmusic = "sounds/BB_BGM.mp3";
-  private static final String[] forestMusic = {backgroundmusic};
+  private static final String BACKGROUND_MUSIC = "sounds/BB_BGM.mp3";
+  private static final String[] forestMusic = {BACKGROUND_MUSIC};
   private static Entity customerSpawnController;
 
   private final TerrainFactory terrainFactory;
@@ -467,10 +466,17 @@ public class ForestGameArea extends GameArea {
 
 
   private Entity spawnPlayer() {
-    Entity newPlayer;
-    newPlayer = PlayerFactory.createPlayer();
+    if (ServiceLocator.getPlayerService().getPlayer() != null) {
+      logger.warn("Player exist");
+      return ServiceLocator.getPlayerService().getPlayer();
+    }
+
+    Entity newPlayer = PlayerFactory.createPlayer();
     spawnEntityAt(newPlayer, PLAYER_SPAWN, true, true);
     newPlayer.setPosition(PLAYER_SPAWN.x, 3.1f);
+
+    ServiceLocator.getPlayerService().registerPlayer(newPlayer);
+
     return newPlayer;
   }
 
@@ -672,7 +678,7 @@ public class ForestGameArea extends GameArea {
    * Plays the background music
    */
   private void playMusic() {
-    Music music = ServiceLocator.getResourceService().getAsset(backgroundmusic, Music.class);
+    Music music = ServiceLocator.getResourceService().getAsset(BACKGROUND_MUSIC, Music.class);
     music.setLooping(true);
     music.setVolume(0.04f);
     music.play();
@@ -704,7 +710,7 @@ public class ForestGameArea extends GameArea {
   @Override
   public void dispose() {
     super.dispose();
-    ServiceLocator.getResourceService().getAsset(backgroundmusic, Music.class).stop();
+    ServiceLocator.getResourceService().getAsset(BACKGROUND_MUSIC, Music.class).stop();
     this.unloadAssets();
   }
 
@@ -748,7 +754,7 @@ public class ForestGameArea extends GameArea {
         app.exit();
       } catch (InterruptedException e) {
         Thread.currentThread().interrupt();
-        System.out.println("Thread was interrupted");
+          logger.warn("Thread was interrupted");
       }
     });
     executor.shutdown();
@@ -769,7 +775,7 @@ public class ForestGameArea extends GameArea {
         app.exit();
       } catch (InterruptedException e) {
         Thread.currentThread().interrupt();
-        System.out.println("Thread was interrupted");
+          logger.warn("Thread was interrupted");
       }
     });
     executor.shutdown();
@@ -791,14 +797,6 @@ public class ForestGameArea extends GameArea {
    */
   private void createMoralScreen() {
     Entity moralScreen = new Entity();
-    moralScreen
-            //.addComponent(new MoralDecisionDisplay())
-            //.addComponent(new MoralDayOne());
-            //.addComponent(new MoralDayTwo());
-            //addComponent(new MoralDayThree());
-            .addComponent(new MoralDayFour());
-//            .addComponent(new MoralDecision());
-
     ServiceLocator.getEntityService().registerMoral(moralScreen);
   }
 

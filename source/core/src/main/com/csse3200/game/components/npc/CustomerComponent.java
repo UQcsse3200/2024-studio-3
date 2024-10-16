@@ -13,7 +13,6 @@ public class CustomerComponent extends Component {
     private int reputation;
     private int patience;
     private int spawnTimer;
-    private int Customer_id;
     private String type;
     private String name;
     private String preference;
@@ -44,7 +43,6 @@ public class CustomerComponent extends Component {
         this.patience = config.patience;
         this.countDown = config.countDown;
         this.preference = config.preference;
-        this.Customer_id = config.Customer_id;
     }
 
     /**
@@ -58,7 +56,6 @@ public class CustomerComponent extends Component {
         this.countDown = config.countDown;
         this.reputation = config.reputation;
         this.preference = config.preference;
-        this.Customer_id = config.Customer_id;
     }
 
     /**
@@ -161,14 +158,6 @@ public class CustomerComponent extends Component {
      */
     public String getPreference() {
         return this.preference;
-    }
-
-    /**
-     * Get the customer id
-     * @return the customer id
-     */
-    public int getCustomer_id() {
-        return this.Customer_id;
     }
 
     /**
