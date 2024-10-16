@@ -4,15 +4,12 @@ import com.csse3200.game.entities.Entity;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.logging.Logger;
-
 import static org.junit.jupiter.api.Assertions.*;
 
-public class CustomerManagerTest {
+class CustomerManagerTest {
 
     private Entity testCustomer;
-    private String testOrderNumber = "12345";
-    private static final Logger logger = Logger.getLogger(CustomerManager.class.getName());
+    private final String testOrderNumber = "12345";
 
     @BeforeEach
     public void setUp() {
@@ -23,7 +20,7 @@ public class CustomerManagerTest {
     }
 
     @Test
-    public void testAddCustomer() {
+    void testAddCustomer() {
         // Add a customer to the manager
         CustomerManager.addCustomer(testOrderNumber, testCustomer);
         // Verify the customer was added
@@ -32,7 +29,7 @@ public class CustomerManagerTest {
     }
 
     @Test
-    public void testGetCustomerByOrder() {
+    void testGetCustomerByOrder() {
         // Add a customer and retrieve it
         CustomerManager.addCustomer(testOrderNumber, testCustomer);
         Entity retrievedCustomer = CustomerManager.getCustomerByOrder(testOrderNumber);
@@ -42,7 +39,7 @@ public class CustomerManagerTest {
     }
 
     @Test
-    public void testRemoveCustomerByOrder() {
+    void testRemoveCustomerByOrder() {
         // Add a customer and then remove it
         CustomerManager.addCustomer(testOrderNumber, testCustomer);
         CustomerManager.removeCustomerByOrder(testOrderNumber);
@@ -52,7 +49,7 @@ public class CustomerManagerTest {
     }
 
     @Test
-    public void testReset() {
+    void testReset() {
         // Add a customer, then reset the map
         CustomerManager.addCustomer(testOrderNumber, testCustomer);
         CustomerManager.reset();
@@ -62,10 +59,10 @@ public class CustomerManagerTest {
     }
 
     @Test
-    public void testPrintMessage() {
+    void testPrintMessage() {
         // Add a customer and verify that printMessage() runs without errors
         CustomerManager.addCustomer(testOrderNumber, testCustomer);
-        assertDoesNotThrow(() -> CustomerManager.printMessage(), 
+        assertDoesNotThrow(CustomerManager::printMessage,
                            "printMessage() should not throw an exception");
     }
 }

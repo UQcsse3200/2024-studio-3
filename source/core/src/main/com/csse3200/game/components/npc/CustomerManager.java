@@ -2,15 +2,19 @@ package com.csse3200.game.components.npc;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.csse3200.game.entities.Entity;
 
 // This class is used to link a specific customer to a specific ticket by a unique order number.
 public class CustomerManager {
-    private static Map<String, Entity> orderToCustomerMap = new HashMap<>();
+    private static final Map<String, Entity> orderToCustomerMap = new HashMap<>();
     private static final Logger logger = Logger.getLogger(CustomerManager.class.getName());
 
+    public CustomerManager() {
+        super();
+    }
     /**
      * Add a customer to a specific order number
      * @param orderNumber The order number
@@ -45,6 +49,7 @@ public class CustomerManager {
     }
 
     public static void printMessage() {
-        logger.info(orderToCustomerMap.toString());
+        if(logger.isLoggable(Level.INFO))
+            logger.info(orderToCustomerMap.toString());
     }
 }
