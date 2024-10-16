@@ -28,21 +28,24 @@ public class CutsceneFactory {
         // Create and add a texture component to the entity for rendering the background
         TextureRenderComponent textureComponent = new BackgroundRenderComponent(bgImgPath);
         background.addComponent(textureComponent);
-        textureComponent.scaleEntity();  // Scale the entity based on the texture size
+        if (textureComponent.getTexture() != null) {
+            textureComponent.scaleEntity();  // Scale the entity based on the texture size
+            // Calculate the aspect ratio of the image
+            float aspectRatio = textureComponent.getWidth() / textureComponent.getHeight();
 
-        // Calculate the aspect ratio of the image
-        float aspectRatio = textureComponent.getWidth() / textureComponent.getHeight();
+            // Calculate the scale factor needed to fit the screen height-wise, applying a scaling factor of 2.7
+            float screenToHeight = Gdx.graphics.getHeight() / textureComponent.getHeight() * 2.7f;
 
-        // Calculate the scale factor needed to fit the screen height-wise, applying a scaling factor of 2.7
-        float screenToHeight = Gdx.graphics.getHeight() / textureComponent.getHeight() * 2.7f;
+            // Set the entity's scale to maintain the image's aspect ratio and fit the screen height-wise
+            background.setScale(screenToHeight * aspectRatio, screenToHeight);
 
-        // Set the entity's scale to maintain the image's aspect ratio and fit the screen height-wise
-        background.setScale(screenToHeight * aspectRatio, screenToHeight);
+            // Center the background entity on the screen
+            float ypos = -screenToHeight / 2;
+            float xpos = -(screenToHeight * aspectRatio) / 2;
+            background.setPosition(new Vector2(xpos, ypos));
+        }
 
-        // Center the background entity on the screen
-        float ypos = -screenToHeight / 2;
-        float xpos = -(screenToHeight * aspectRatio) / 2;
-        background.setPosition(new Vector2(xpos, ypos));
+
 
         return background;
     }
@@ -106,27 +109,30 @@ public class CutsceneFactory {
         // Create and add a texture component to the entity for rendering the background
         TextureRenderComponent textureComponent = new BackgroundRenderComponent("images/Cutscenes/Beastly_Bistro_Background.png");
         animation.addComponent(textureComponent);
-        textureComponent.scaleEntity();  // Scale the entity based on the texture size
+        if (textureComponent.getTexture() != null) {
+            textureComponent.scaleEntity();  // Scale the entity based on the texture size
 
-        // Calculate the aspect ratio of the image
-        float aspectRatio = textureComponent.getWidth() / textureComponent.getHeight();
+            // Calculate the aspect ratio of the image
+            float aspectRatio = textureComponent.getWidth() / textureComponent.getHeight();
 
-        // Calculate the scale factor needed to fit the screen height-wise, applying a scaling factor of 2.7
-        float screenToHeight = Gdx.graphics.getHeight() / textureComponent.getHeight() * 2.7f;
+            // Calculate the scale factor needed to fit the screen height-wise, applying a scaling factor of 2.7
+            float screenToHeight = Gdx.graphics.getHeight() / textureComponent.getHeight() * 2.7f;
 
-        // Set the entity's scale to maintain the image's aspect ratio and fit the screen height-wise
-        animation.setScale(screenToHeight * aspectRatio, screenToHeight);
+            // Set the entity's scale to maintain the image's aspect ratio and fit the screen height-wise
+            animation.setScale(screenToHeight * aspectRatio, screenToHeight);
 
-        // Center the background entity on the screen
-        float ypos = -screenToHeight / 2;
-        float xpos = -(screenToHeight * aspectRatio) / 2;
-        animation.setPosition(new Vector2(xpos, ypos));
-
+            // Center the background entity on the screen
+            float ypos = -screenToHeight / 2;
+            float xpos = -(screenToHeight * aspectRatio) / 2;
+            animation.setPosition(new Vector2(xpos, ypos));
+        }
         // render the animation to be placed over the texture
         AnimationRenderComponent animator =
                 new AnimationRenderComponent(
                         ServiceLocator.getResourceService().getAsset(animationAtlasPath, TextureAtlas.class)); // images/stations/Servery_Animation/servery.atlas
-        animator.addAnimation(animName, 0.2f, Animation.PlayMode.NORMAL);
+        if (animator.getAtlas() != null) {
+            animator.addAnimation(animName, 0.2f, Animation.PlayMode.NORMAL);
+        }
         animation.addComponent(animator);
         animator.startAnimation(animName);
 
