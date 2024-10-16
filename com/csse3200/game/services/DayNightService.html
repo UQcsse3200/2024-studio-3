@@ -106,14 +106,26 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Field</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><code>static final long</code></div>
-<div class="col-second even-row-color"><code><a href="#FIVEMINUTES" class="member-name-link">FIVEMINUTES</a></code></div>
+<div class="col-first even-row-color"><code>long</code></div>
+<div class="col-second even-row-color"><code><a href="#FIVE_MINUTES" class="member-name-link">FIVE_MINUTES</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>static final int</code></div>
-<div class="col-second odd-row-color"><code><a href="#MAXDAYS" class="member-name-link">MAXDAYS</a></code></div>
+<div class="col-first odd-row-color"><code>long</code></div>
+<div class="col-second odd-row-color"><code><a href="#lastEndOfDayCheck" class="member-name-link">lastEndOfDayCheck</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>long</code></div>
-<div class="col-second even-row-color"><code><a href="#SEVENTYFIVEPERCENT" class="member-name-link">SEVENTYFIVEPERCENT</a></code></div>
+<div class="col-second even-row-color"><code><a href="#lastSecondCheck" class="member-name-link">lastSecondCheck</a></code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>long</code></div>
+<div class="col-second odd-row-color"><code><a href="#lastUpgradeCheck" class="member-name-link">lastUpgradeCheck</a></code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>static final int</code></div>
+<div class="col-second even-row-color"><code><a href="#MAX_DAYS" class="member-name-link">MAX_DAYS</a></code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>long</code></div>
+<div class="col-second odd-row-color"><code><a href="#SEVENTY_FIVE_PERCENT" class="member-name-link">SEVENTY_FIVE_PERCENT</a></code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>long</code></div>
+<div class="col-second even-row-color"><code><a href="#timeRemaining" class="member-name-link">timeRemaining</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 </div>
 </section>
@@ -176,28 +188,25 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Gets the number of high-quality meals served during the day.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>long</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getTimeRemaining()" class="member-name-link">getTimeRemaining</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#incrementHighQualityMealCount()" class="member-name-link">incrementHighQualityMealCount</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#incrementHighQualityMealCount()" class="member-name-link">incrementHighQualityMealCount</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Increments the count of high-quality meals served.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setDay(int)" class="member-name-link">setDay</a><wbr>(int&nbsp;day)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setDay(int)" class="member-name-link">setDay</a><wbr>(int&nbsp;day)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Sets the current day in the game.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#update()" class="member-name-link">update</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#update()" class="member-name-link">update</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Updates the game state, tracking elapsed time and checking whether it is time
  to trigger end-of-day events or other timed events such as upgrades.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#updatepastSecond()" class="member-name-link">updatepastSecond</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#updatepastSecond()" class="member-name-link">updatepastSecond</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Updates the state after a second passes, resetting the flag for tracking time.</div>
 </div>
 </div>
@@ -218,37 +227,53 @@ loadScripts(document, 'script');</script>
 <h2>Field Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="FIVEMINUTES">
-<h3>FIVEMINUTES</h3>
-<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name">FIVEMINUTES</span></div>
+<section class="detail" id="FIVE_MINUTES">
+<h3>FIVE_MINUTES</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name">FIVE_MINUTES</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="MAX_DAYS">
+<h3>MAX_DAYS</h3>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">MAX_DAYS</span></div>
 <dl class="notes">
 <dt>See Also:</dt>
 <dd>
 <ul class="tag-list">
-<li><a href="../../../../constant-values.html#com.csse3200.game.services.DayNightService.FIVEMINUTES">Constant Field Values</a></li>
+<li><a href="../../../../constant-values.html#com.csse3200.game.services.DayNightService.MAX_DAYS">Constant Field Values</a></li>
 </ul>
 </dd>
 </dl>
 </section>
 </li>
 <li>
-<section class="detail" id="MAXDAYS">
-<h3>MAXDAYS</h3>
-<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">MAXDAYS</span></div>
-<dl class="notes">
-<dt>See Also:</dt>
-<dd>
-<ul class="tag-list">
-<li><a href="../../../../constant-values.html#com.csse3200.game.services.DayNightService.MAXDAYS">Constant Field Values</a></li>
-</ul>
-</dd>
-</dl>
+<section class="detail" id="SEVENTY_FIVE_PERCENT">
+<h3>SEVENTY_FIVE_PERCENT</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name">SEVENTY_FIVE_PERCENT</span></div>
 </section>
 </li>
 <li>
-<section class="detail" id="SEVENTYFIVEPERCENT">
-<h3>SEVENTYFIVEPERCENT</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name">SEVENTYFIVEPERCENT</span></div>
+<section class="detail" id="lastSecondCheck">
+<h3>lastSecondCheck</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name">lastSecondCheck</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="lastUpgradeCheck">
+<h3>lastUpgradeCheck</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name">lastUpgradeCheck</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="lastEndOfDayCheck">
+<h3>lastEndOfDayCheck</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name">lastEndOfDayCheck</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="timeRemaining">
+<h3>timeRemaining</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name">timeRemaining</span></div>
 </section>
 </li>
 </ul>
@@ -378,12 +403,6 @@ loadScripts(document, 'script');</script>
 <dt>Returns:</dt>
 <dd>the number of high-quality meals</dd>
 </dl>
-</section>
-</li>
-<li>
-<section class="detail" id="getTimeRemaining()">
-<h3>getTimeRemaining</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name">getTimeRemaining</span>()</div>
 </section>
 </li>
 </ul>
