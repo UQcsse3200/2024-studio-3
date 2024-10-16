@@ -40,21 +40,26 @@ public class DancePartyUpgradeTest {
     @Mock Label mockText;
     @Mock CombatStatsComponent combatStatsComponent;
     @Mock KeyboardPlayerInputComponent keyboardPlayerInputComponent;
-    private EventHandler eventHandler;
+    private EventHandler randomComboEventHandler;
+    private EventHandler docketEventHandler;
     RandomComboService randomComboService;
+    DocketService docketService;
     private DancePartyUpgrade dancePartyUpgrade;
 
     @BeforeEach
     void setUp() {
         ServiceLocator.clear();
 
-        eventHandler = new EventHandler();
-        randomComboService = new RandomComboService(eventHandler);
+        randomComboEventHandler = new EventHandler();
+        docketEventHandler = new EventHandler();
+        randomComboService = new RandomComboService(randomComboEventHandler);
+        docketService = new DocketService(randomComboEventHandler);
 
         ServiceLocator.registerRandomComboService(randomComboService);
         ServiceLocator.registerRenderService(renderService);
         ServiceLocator.registerResourceService(resourceService);
         ServiceLocator.registerTimeSource(gameTime);
+        ServiceLocator.registerDocketService(docketService);
 
         lenient().when(resourceService.getAsset(anyString(), eq(Texture.class))).thenReturn(textureMock);
         lenient().when(renderService.getStage()).thenReturn(stage);
@@ -70,8 +75,22 @@ public class DancePartyUpgradeTest {
     }
 
     @Test
-    void testNotNull() {
+    void testDancePartyActivates() {
         assertNotNull(dancePartyUpgrade);
+        when(combatStatsComponent.getGold()).thenReturn(100);
+        dancePartyUpgrade.activate();
+
+        AtomicBoolean isActive = new AtomicBoolean(false);
+        docketEventHandler.addListener("Dancing", () -> {
+            isActive.set(true);
+        });
+        docketEventHandler.trigger("Dancing");
+
+        assertTrue(isActive.get());
+        assertTrue(dancePartyUpgrade.isActive());
+        assertTrue(dancePartyUpgrade.layout.isVisible());
+        assertEquals(dancePartyUpgrade.getActiveTimeRemaining(), dancePartyUpgrade.getUpgradeDuration());
+        verify(combatStatsComponent).addGold(-20);
     }
 
     @AfterEach

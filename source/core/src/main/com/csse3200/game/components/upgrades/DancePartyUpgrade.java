@@ -195,4 +195,16 @@ public class DancePartyUpgrade extends UIComponent implements Upgrade {
     public void setStage(Stage mock) {
         this.stage = mock;
     }
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public float getActiveTimeRemaining() {
+        return activeTimeRemaining;
+    }
+
+    public long getUpgradeDuration() {
+        return UPGRADE_DURATION;
+    }
 }
