@@ -68,30 +68,6 @@ public class BenchGenerator {
         LOGGER.log(Level.INFO, "added row of " + arr.size() + " benches");
         return arr;
     }
-<<<<<<< HEAD
-
-    public static ArrayList<Bench> createBenchRowFlat(int startX, int endX, int y) {
-        ArrayList<Bench> arr = new ArrayList<>();
-        // add the left part of the bench and set collisions for whole row
-        Bench b = new Bench("left_border", startX, y);
-        b.addComponent(new ColliderComponent()
-                .setAsBoxAligned(new Vector2(endX - startX + 1, 1f),
-                        PhysicsComponent.AlignX.LEFT, PhysicsComponent.AlignY.BOTTOM));
-        arr.add(b);
-
-        if (endX - startX > 1){ // the bench has 2 or more segments
-            // add the middle parts of the bench
-            for (int i = startX+1; i < endX; i++) {
-                arr.add(new Bench("middle", i, y));
-            }
-            // add the right part of the bench
-            arr.add(new Bench("right_border", endX, y));
-        }
-        LOGGER.log(Level.INFO, "added row of " + arr.size() + " flattened benches");
-        return arr;
-    }
-=======
->>>>>>> main
 
     /**
      * Creates a single bench
