@@ -72,7 +72,7 @@ public class NPCFactory {
     public static Entity createUpgradeNPC(Vector2 firstPosition, UpgradesDisplay upgradesDisplay) {
         Entity penguin = createStandard(firstPosition);
         AITaskComponent aiComponent = new AITaskComponent();
-        aiComponent.addTask(new PathFollowTask(firstPosition, 30, 15));
+        aiComponent.addTask(new PathFollowTask(firstPosition, 15));
 
         // Animation setup
         AnimationRenderComponent animator = new AnimationRenderComponent(
@@ -247,7 +247,7 @@ public class NPCFactory {
     public static Entity createBaseCustomer(Vector2 targetPosition, float waitingTime) {
         AITaskComponent aiComponent = new AITaskComponent();
         aiComponent
-                .addTask(new PathFollowTask(targetPosition, 30, waitingTime));
+                .addTask(new PathFollowTask(targetPosition, waitingTime));
         Entity npc = new Entity()
                         .addComponent(new PhysicsComponent())
                         .addComponent(new PhysicsMovementComponent())
@@ -263,7 +263,7 @@ public class NPCFactory {
     public static Entity createBaseCharacter(Vector2 targetPosition) {
         AITaskComponent aiComponent = new AITaskComponent();
         aiComponent
-                        .addTask(new PathFollowTask(targetPosition, 30, 15)) // Default countdown
+                        .addTask(new PathFollowTask(targetPosition, 15)) // Default countdown
                         .addTask(new TurnTask(10, 0.01f, 10f));
         Entity npc = new Entity()
                         .addComponent(new PhysicsComponent())
@@ -280,7 +280,7 @@ public class NPCFactory {
     public static Entity createStandard(Vector2 targetPosition) {
         AITaskComponent aiComponent = new AITaskComponent();
         aiComponent
-                        .addTask(new PathFollowTask(targetPosition, 30, 15)); // Default countdown
+                        .addTask(new PathFollowTask(targetPosition, 15)); // Default countdown
         //                 .addTask(new TurnTask(10, 0.01f, 10f));
         Entity npc = new Entity()
                         .addComponent(new PhysicsComponent())
