@@ -8,15 +8,21 @@ import com.csse3200.game.rendering.Renderable;
 import com.csse3200.game.services.ServiceLocator;
 
 /**
- * A generic component for rendering onto the ui.
+ * A generic component for rendering onto the UI.
  */
 public abstract class UIComponent extends RenderComponent implements Renderable {
   private static final int UI_LAYER = 3;
-  protected static Skin skin = new Skin(Gdx.files.internal("flat-earth/skin/flat-earth-ui.json"));
+  protected Skin skin;
   protected Stage stage;
 
+  /**
+   * Constructor that allows injecting the Skin object.
+   * If no Skin is provided, a default Skin is loaded.
+   *
+   * @param skin the Skin to use for the component, or null to use the default.
+   */
   public UIComponent(Skin skin) {
-    UIComponent.skin = skin != null ? skin : new Skin(Gdx.files.internal("flat-earth/skin/flat-earth-ui.json"));
+    this.skin = skin != null ? skin : new Skin(Gdx.files.internal("flat-earth/skin/flat-earth-ui.json"));
   }
 
   public UIComponent() {
@@ -38,5 +44,4 @@ public abstract class UIComponent extends RenderComponent implements Renderable 
   public float getZIndex() {
     return 1f;
   }
-
-    }
+}
