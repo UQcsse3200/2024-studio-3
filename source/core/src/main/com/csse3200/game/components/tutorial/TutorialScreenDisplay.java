@@ -252,8 +252,6 @@ public class TutorialScreenDisplay extends UIComponent {
      * Advances the tutorial to the next tut
      */
     private void onTextComplete(int currentPart) {
-        logger.info("Text part {} completed.", currentPart);
-
         if (currentPart >= 0 && currentPart < textDisplay.getText().size()) {
             switch (tutorialStep) {
                 case 1:
