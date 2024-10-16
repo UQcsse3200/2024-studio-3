@@ -9,52 +9,54 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import java.util.ArrayList;
+import java.util.List;
 
-public class MoralDay1CutsceneTest {
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.Mockito.mock;
+
+public class MoralDay2CutsceneTest {
 
     private static GameTime gameTime;
 
-    private MoralDay1Cutscene moralDay1Cutscene;
+    private MoralDay2Cutscene moralDay2Cutscene;
 
     @BeforeAll
     static void setUp() {
         ServiceLocator.clear();
         ResourceService mockResourceService = mock(ResourceService.class);
         ServiceLocator.registerResourceService(mockResourceService);
-        gameTime = new GameTime();
-        ServiceLocator.registerTimeSource(gameTime);
     }
 
     @BeforeEach
     void setUpEach() {
-        moralDay1Cutscene = new MoralDay1Cutscene();
+        moralDay2Cutscene = new MoralDay2Cutscene();
 
     }
 
     @Test
     void testSetupScenes() {
-        moralDay1Cutscene.setupScenes();
-        Array<Scene> scenes = moralDay1Cutscene.getScenes();
+        moralDay2Cutscene.setupScenes();
+        List<Scene> scenes = moralDay2Cutscene.getScenes();
 
         assertNotNull(scenes);
-        assertEquals(2, scenes.size); // Assuming 2 scenes are created
+        assertEquals(4, scenes.size());
     }
 
     @Test
     void testLoadAssets() {
-        moralDay1Cutscene.loadAssets();
+        moralDay2Cutscene.loadAssets();
 
-        assertNotNull(moralDay1Cutscene.getTextures());
-        assertNotNull(moralDay1Cutscene.getImages());
-        assertNotNull(moralDay1Cutscene.getAnimations());
+        assertNotNull(moralDay2Cutscene.getTextures());
+        assertNotNull(moralDay2Cutscene.getImages());
+        assertNotNull(moralDay2Cutscene.getAnimations());
     }
 
     @Test
     void testScenesAreCreatedCorrectly() {
-        moralDay1Cutscene.setupScenes();
-        Scene firstScene = moralDay1Cutscene.getScenes().get(0);
+        moralDay2Cutscene.setupScenes();
+        Scene firstScene = moralDay2Cutscene.getScenes().getFirst();
 
         assertEquals("images/Cutscenes/Day2_Scene.png", firstScene.getBackgroundImagePath());
         assertEquals(3.0f, firstScene.getDuration(), 0.01);
@@ -62,37 +64,37 @@ public class MoralDay1CutsceneTest {
     }
 
     @Test
+    void testCreateEntities() {
+        // Just used for code coverage
+        moralDay2Cutscene.createEntities();
+    }
+
+    @Test
     void testGetSetScenes() {
-        Array<Scene> scenes = new Array<>();
+        List<Scene> scenes = new ArrayList<>();
         scenes.add(new Scene("Background"));
-        moralDay1Cutscene.setScenes(scenes);
-        assertEquals(scenes, moralDay1Cutscene.getScenes());
+        moralDay2Cutscene.setScenes(scenes);
+        assertEquals(scenes, moralDay2Cutscene.getScenes());
     }
 
     @Test
     void testGetSetTextures() {
         String[] textures = new String[]{"example", "textures", "here"};
-        moralDay1Cutscene.setTextures(textures);
-        assertEquals(textures, moralDay1Cutscene.getTextures());
+        moralDay2Cutscene.setTextures(textures);
+        assertEquals(textures, moralDay2Cutscene.getTextures());
     }
 
     @Test
     void testGetSetImages() {
         String[] images = new String[]{"example", "images", "here"};
-        moralDay1Cutscene.setImages(images);
-        assertEquals(images, moralDay1Cutscene.getImages());
+        moralDay2Cutscene.setImages(images);
+        assertEquals(images, moralDay2Cutscene.getImages());
     }
 
     @Test
     void testGetSetAnimations() {
         String[] animations = new String[]{"example", "animations", "here"};
-        moralDay1Cutscene.setAnimations(animations);
-        assertEquals(animations, moralDay1Cutscene.getAnimations());
-    }
-
-    @Test
-    void testCreateEntities() {
-        // Just used for code coverage
-        moralDay1Cutscene.createEntities();
+        moralDay2Cutscene.setAnimations(animations);
+        assertEquals(animations, moralDay2Cutscene.getAnimations());
     }
 }
