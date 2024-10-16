@@ -141,6 +141,7 @@ public class DancePartyUpgradeTest {
     void testDancePartyFor30Seconds() {
         DancePartyUpgrade spyDancePartyUpgrade = spy(dancePartyUpgrade);
         when(combatStatsComponent.getGold()).thenReturn(100);
+        spyDancePartyUpgrade.activate();
 
         when(gameTime.getDeltaTime()).thenReturn(1f);
         for (int i = 0; i < 15; i++) {
