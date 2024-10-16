@@ -110,25 +110,6 @@ public class SpawnRecipeCommandsTest {
         verify(inventoryComponent, never()).addItem(any(ItemComponent.class));
     }
 
-    /*
-    @Test
-    void testRemoveExistingItemFromInventory() {
-        // Arrange
-        ArrayList<String> args = new ArrayList<>();
-        args.add("steakmeal");
-
-        // Mock inventory size to simulate that it's not empty
-        when(inventoryComponent.getSize()).thenReturn(1);
-        when(inventoryComponent.isEmpty()).thenReturn(false);
-
-        // Act
-        boolean result = spawnRecipeCommands.action(args);
-
-        // Assert
-        assertTrue(result);
-        verify(inventoryComponent).removeItem();
-    }
-*/
     @Test
     void testSpawnFruitSalad() {
         // Arrange the command arguments to simulate spawning a Fruit Salad
