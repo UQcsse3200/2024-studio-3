@@ -8,6 +8,7 @@ import com.csse3200.game.components.cutscenes.CutsceneActions;
 import com.csse3200.game.components.cutscenes.CutsceneArea;
 import com.csse3200.game.components.cutscenes.CutsceneScreenDisplay;
 import com.csse3200.game.components.maingame.TextDisplay;
+import com.csse3200.game.components.cutscenes.CutsceneTextDisplay;
 import com.csse3200.game.components.gamearea.PerformanceDisplay;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
@@ -37,7 +38,7 @@ public class CutsceneScreen extends ScreenAdapter {
 
     private final GdxGame game;
 
-    private GdxGame.CutsceneType cutsceneVal;
+    private final GdxGame.CutsceneType cutsceneVal;
     private final Renderer renderer;
 
     private final GdxGame.CutsceneType[] moralEnums = {GdxGame.CutsceneType.MORAL_1, GdxGame.CutsceneType.MORAL_2,
@@ -48,6 +49,8 @@ public class CutsceneScreen extends ScreenAdapter {
 
     private CutsceneScreenDisplay cutsceneScreenDisplay;
 
+    private boolean textBoxVisible = true;
+
     /**
      * Constructor for the CutsceneScreen.
      *
@@ -57,6 +60,9 @@ public class CutsceneScreen extends ScreenAdapter {
     public CutsceneScreen(GdxGame game, GdxGame.CutsceneType cutsceneVal) {
         this.game = game;
         this.cutsceneVal = cutsceneVal;
+        if (cutsceneVal == GdxGame.CutsceneType.BAD_END || cutsceneVal == GdxGame.CutsceneType.GOOD_END) {
+            textBoxVisible = false;
+        }
 
         logger.debug("Initialising main game screen services");
         // Register essential services for cutscene operation
@@ -161,7 +167,7 @@ public class CutsceneScreen extends ScreenAdapter {
         if (Arrays.asList(moralEnums).contains(this.cutsceneVal)){
             ui.addComponent(new TextDisplay(this, "moralDecision"));
         } else{
-            ui.addComponent(new TextDisplay(this, "cutscene"));
+            ui.addComponent(new CutsceneTextDisplay(textBoxVisible));
         }
 
         // Register the UI entity with the entity service
