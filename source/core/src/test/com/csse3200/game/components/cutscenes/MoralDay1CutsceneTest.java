@@ -34,7 +34,7 @@ public class MoralDay1CutsceneTest {
         List<Scene> scenes = moralDay1Cutscene.getScenes();
 
         assertNotNull(scenes);
-        assertEquals(2, scenes.size());
+        assertEquals(4, scenes.size());
     }
 
     @Test

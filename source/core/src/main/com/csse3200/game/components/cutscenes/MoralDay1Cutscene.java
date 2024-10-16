@@ -6,18 +6,9 @@ import com.csse3200.game.components.cutscenes.scenes.Scene;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class MoralDay1Cutscene extends Cutscene {
-    private List<Scene> scenes;
-    private String[] textures;
-    private String[] images;
-    private String[] animations;
-
     public MoralDay1Cutscene() {
         super();
-        this.scenes = new ArrayList<>();
     }
 
     @Override
@@ -53,9 +44,6 @@ public class MoralDay1Cutscene extends Cutscene {
         scene.setSceneText(sceneText);
         scene.setDuration(3.0f);
 
-        if (scenes == null) {
-            scenes = new ArrayList<>();
-        }
         scenes.add(scene);
     }
 
@@ -117,72 +105,5 @@ public class MoralDay1Cutscene extends Cutscene {
     @Override
     public void createEntities() {
         // Needed but not used
-    }
-
-    // Getters and Setters for testing
-
-    /**
-     * Gets the scenes
-     *
-     * @return the scenes being held
-     */
-    public List<Scene> getScenes() {
-        return scenes;
-    }
-
-    /**
-     * Sets the scenes to a given scene
-     * @param scenes: the scenes to be set to.
-     */
-    public void setScenes(List<Scene> scenes) {
-        this.scenes = scenes;
-    }
-
-    /**
-     * Gets the textures
-     * @return: the textures being held
-     */
-    public String[] getTextures() {
-        return textures;
-    }
-
-    /**
-     * Sets the textures for the cutscene
-     * @param textures: the textures being held
-     */
-    public void setTextures(String[] textures) {
-        this.textures = textures;
-    }
-
-    /**
-     * Get the images being held by the cutscene
-     * @return: the images being held by the cutscene
-     */
-    public String[] getImages() {
-        return images;
-    }
-
-    /**
-     * Sets the images being held by the cutscene
-     * @param images: the new images to be set
-     */
-    public void setImages(String[] images) {
-        this.images = images;
-    }
-
-    /**
-     * Gets the animations for the cutscene
-     * @return: the animations for the cutscenes
-     */
-    public String[] getAnimations() {
-        return animations;
-    }
-
-    /**
-     * Sets the animations for the cutscenes
-     * @param animations: the animations being set
-     */
-    public void setAnimations(String[] animations) {
-        this.animations = animations;
     }
 }
