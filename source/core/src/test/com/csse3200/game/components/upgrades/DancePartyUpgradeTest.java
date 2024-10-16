@@ -53,7 +53,7 @@ public class DancePartyUpgradeTest {
         randomComboEventHandler = new EventHandler();
         docketEventHandler = new EventHandler();
         randomComboService = new RandomComboService(randomComboEventHandler);
-        docketService = new DocketService(randomComboEventHandler);
+        docketService = spy(new DocketService(randomComboEventHandler));
 
         ServiceLocator.registerRandomComboService(randomComboService);
         ServiceLocator.registerRenderService(renderService);
@@ -91,6 +91,27 @@ public class DancePartyUpgradeTest {
         assertTrue(dancePartyUpgrade.layout.isVisible());
         assertEquals(dancePartyUpgrade.getActiveTimeRemaining(), dancePartyUpgrade.getUpgradeDuration());
         verify(combatStatsComponent).addGold(-20);
+    }
+
+    @Test
+    void testDancePartyDeactivates() {
+        dancePartyUpgrade.activate();
+        lenient().when(meter.hasParent()).thenReturn(true);
+        dancePartyUpgrade.deactivate();
+
+        AtomicBoolean isActive = new AtomicBoolean(false);
+        docketEventHandler.addListener("UnDancing", () -> {
+            isActive.set(true);
+        });
+        docketEventHandler.trigger("UnDancing");
+
+        assertTrue(isActive.get());
+        verify(dancePartyUpgrade.meter).remove();
+        verify(dancePartyUpgrade.text).remove();
+
+        assertFalse(dancePartyUpgrade.isActive());
+        assertFalse(dancePartyUpgrade.layout.isVisible());
+        assertEquals(0f, dancePartyUpgrade.meter.getValue());
     }
 
     @AfterEach
