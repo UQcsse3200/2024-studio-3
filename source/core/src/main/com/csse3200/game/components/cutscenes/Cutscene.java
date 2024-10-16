@@ -368,7 +368,7 @@ public abstract class Cutscene extends Component {
 
     /**
      * Gets the start time for the animations
-     * @return: the start time as a float.
+     * @return the start time as a float.
      */
     public float getTimeStart() {
         return timeStart;
