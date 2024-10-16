@@ -402,7 +402,7 @@ public abstract class Cutscene extends Component {
 
     /**
      * Gets the textures
-     * @return: the textures being held
+     * @return the textures being held
      */
     public String[] getTextures() {
         return textures;
@@ -418,7 +418,7 @@ public abstract class Cutscene extends Component {
 
     /**
      * Get the images being held by the cutscene
-     * @return: the images being held by the cutscene
+     * @return the images being held by the cutscene
      */
     public String[] getImages() {
         return images;
@@ -434,7 +434,7 @@ public abstract class Cutscene extends Component {
 
     /**
      * Gets the animations for the cutscene
-     * @return: the animations for the cutscenes
+     * @return the animations for the cutscenes
      */
     public String[] getAnimations() {
         return animations;
