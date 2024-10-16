@@ -11,6 +11,7 @@ import com.csse3200.game.areas.ForestGameArea;
 import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.components.maingame.*;
 import com.csse3200.game.components.maingame.MainGameActions;
+import com.csse3200.game.components.tutorial.KeybindsButtonDisplay;
 import com.csse3200.game.components.upgrades.*;
 import com.csse3200.game.components.ordersystem.*;
 import com.csse3200.game.components.ordersystem.MainGameOrderBtnDisplay;
@@ -323,6 +324,7 @@ public class MainGameScreen extends ScreenAdapter {
 			.addComponent(new Terminal())
 			.addComponent(inputComponent)
 			.addComponent(new TerminalDisplay())
+			.addComponent(new KeybindsButtonDisplay())
 			.addComponent(new OrderActions())
 			.addComponent(new MainGameOrderBtnDisplay())
 			.addComponent(new PauseMenuActions(this.game))
