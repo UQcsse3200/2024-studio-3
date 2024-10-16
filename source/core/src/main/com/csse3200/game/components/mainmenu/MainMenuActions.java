@@ -33,7 +33,6 @@ public class MainMenuActions extends Component {
     entity.getEvents().addListener("exit", this::onExit);
     entity.getEvents().addListener("settings", this::onSettings);
     entity.getEvents().addListener("tutorial", this::onTutorial);
-    entity.getEvents().addListener("cutscene", this::onCutscene);
   }
 
   /**
@@ -87,19 +86,6 @@ public class MainMenuActions extends Component {
 
     // Transition to the tutorial screen
     game.setScreen(new TutorialScreen(game));
-  }
-
-  /**
-   * Starts the cutscene
-   */
-  public void onCutscene() {
-    logger.info("Starting cutscene");
-
-    // Stop any background tasks
-    ServiceLocator.getMainMenuDisplay().stopBackgroundTasks();
-
-    // Now we can transition to the cutscene
-    game.setScreen(GdxGame.ScreenType.CUTSCENE);
   }
 
 }
