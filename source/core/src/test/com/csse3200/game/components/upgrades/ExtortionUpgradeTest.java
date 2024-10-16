@@ -113,6 +113,29 @@ public class ExtortionUpgradeTest {
     }
 
     @Test
+    void testLoseGoldOnPurchase() {
+        when(combatStatsComponent.getGold()).thenReturn(100);
+        extortionUpgrade.activate();
+        verify(combatStatsComponent).addGold(-40);
+    }
+
+    @Test
+    void testInsufficientGold() {
+        when(combatStatsComponent.getGold()).thenReturn(10);
+        AtomicBoolean notEnoughMoney = new AtomicBoolean(false);
+        eventHandler.addListener("notenoughmoney", () -> {
+            notEnoughMoney.set(true);
+        });
+
+        extortionUpgrade.activate();
+
+        assertTrue(notEnoughMoney.get());
+        assertFalse(extortionUpgrade.isActive());
+        assertFalse(extortionUpgrade.isVisible());
+        assertFalse(extortionUpgrade.layout.isVisible());
+    }
+
+    @Test
     void testDispose() {
         extortionUpgrade.dispose();
         verify(resourceService).unloadAssets(SpeedBootsUpgrade.whiteBgTexture);
