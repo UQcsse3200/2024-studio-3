@@ -40,12 +40,14 @@ public class TutorialScreenDisplay extends UIComponent {
     private boolean sPressedLastFrame = false;
     private boolean dPressedLastFrame = false;
     private static final int MAX_TUTORIAL_STEP = 4;
+
     int  i = 0;
 
 
     public TutorialScreenDisplay(GdxGame game) {
 
         this.game = game;
+
 //        this.orderTicketDisplay = new MainGameOrderTicketDisplay(ServiceLocator.getRenderService(), ServiceLocator.getPlayerService());
 //        this.orderBtnDisplay = new MainGameOrderBtnDisplay();
 
@@ -57,7 +59,12 @@ public class TutorialScreenDisplay extends UIComponent {
         MainGameOrderTicketDisplay.resetOrderNumb();
 
         if (entity != null) {
-            playerActions = entity.getComponent(PlayerActions.class);
+            playerActions = ServiceLocator.getPlayerService().getPlayer().getComponent(PlayerActions.class);
+            if (playerActions == null) {
+                logger.info("PlayerActions component not found.");
+            }else{
+                logger.info("PlayerActions component attatched");
+            }
         } else {
             logger.error("Entity null");
         }
