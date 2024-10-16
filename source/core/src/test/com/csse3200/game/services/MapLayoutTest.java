@@ -141,8 +141,9 @@ class MapLayoutTest {
          }
 
      }
+    */
 
-
+    /**
      @Test
      void testReadStation() {
      //when(mapLayoutmock.readBench(anyString(), anyInt(), anyInt(), anyInt()))
@@ -168,7 +169,7 @@ class MapLayoutTest {
 
      }
      */
-    /**
+
     @Test
     void validateStations() {
         for (String station : validStations) {
@@ -176,20 +177,17 @@ class MapLayoutTest {
         }
         assertFalse(mapLayoutSpy.validateStation("L"));
     }
-    */
 
     @Test
     void readSingleBench() {
-        /*
         try(MockedConstruction<Bench> ignored =
                     Mockito.mockConstruction(Bench.class)) {
-            ArrayList<Bench> bench = mapLayoutSpy.readBench("X", 0, 1, 4);
+            ArrayList<Bench> bench = mapLayoutSpy.parseLine("X41".split(""), 0, 0);
             ArrayList<Bench> expectedBench = BenchGenerator.singleBench(4,0);
             //checks coordinates -> can't compare benches directly as hash codes conflict
             assertEquals(bench.get(0).getX(), expectedBench.get(0).getX());
             assertEquals(bench.get(0).getY(), expectedBench.get(0).getY());
         }
-         */
     }
 
     @Test
