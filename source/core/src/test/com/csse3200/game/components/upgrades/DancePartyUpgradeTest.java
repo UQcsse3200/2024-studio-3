@@ -41,7 +41,6 @@ public class DancePartyUpgradeTest {
     @Mock ProgressBar meter;
     @Mock Label mockText;
     @Mock CombatStatsComponent combatStatsComponent;
-    @Mock KeyboardPlayerInputComponent keyboardPlayerInputComponent;
     private EventHandler randomComboEventHandler;
     private EventHandler docketEventHandler;
     RandomComboService randomComboService;

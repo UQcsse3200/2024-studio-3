@@ -1,52 +1,90 @@
 package com.csse3200.game.components.upgrades;
 
-import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
+
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.utils.viewport.Viewport;
 
 import com.csse3200.game.components.CombatStatsComponent;
-import com.csse3200.game.components.ordersystem.MainGameOrderTicketDisplay;
+import com.csse3200.game.components.player.KeyboardPlayerInputComponent;
 import com.csse3200.game.events.EventHandler;
-import com.csse3200.game.services.GameTime;
-import com.csse3200.game.services.PlayerService;
-import com.csse3200.game.services.ServiceLocator;
-import net.dermetfan.gdx.physics.box2d.PositionController;
+import com.csse3200.game.extensions.GameExtension;
+import com.csse3200.game.rendering.RenderService;
+import com.csse3200.game.services.*;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
+import org.mockito.*;
+
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.concurrent.atomic.AtomicBoolean;
+
+@ExtendWith(GameExtension.class)
+@ExtendWith(MockitoExtension.class)
 public class ExtortionUpgradeTest {
-    /**
-    private CombatStatsComponent combatStatsComponent;
+    @Mock RenderService renderService;
+    @Spy OrthographicCamera camera;
+    @Mock Stage stage;
+    @Mock Viewport viewport;
+    @Mock ResourceService resourceService;
+    @Mock GameTime gameTime;
+    @Mock Texture textureMock;
+    @Mock Table mockLayout;
+    @Mock ProgressBar mockSpeedMeter;
+    @Mock Label mockText;
+    @Mock CombatStatsComponent combatStatsComponent;
+    @Mock KeyboardPlayerInputComponent keyboardPlayerInputComponent;
+    private EventHandler eventHandler;
+    RandomComboService randomComboService;
     private ExtortionUpgrade extortionUpgrade;
-    private MainGameOrderTicketDisplay mainGameOrderTicketDisplay;
-
 
     @BeforeEach
-    void beforeEach() {
-        GameTime gameTime = mock(GameTime.class);
-        when(gameTime.getTime()).thenReturn(0L);
+    void setUp() {
+        ServiceLocator.clear();
+
+        eventHandler = new EventHandler();
+        randomComboService = new RandomComboService(eventHandler);
+
+        ServiceLocator.registerRandomComboService(randomComboService);
+        ServiceLocator.registerRenderService(renderService);
+        ServiceLocator.registerResourceService(resourceService);
         ServiceLocator.registerTimeSource(gameTime);
 
-        PlayerService playerService = new PlayerService();
-        ServiceLocator.registerPlayerService(playerService);
+        lenient().when(resourceService.getAsset(anyString(), eq(Texture.class))).thenReturn(textureMock);
+        lenient().when(renderService.getStage()).thenReturn(stage);
+        lenient().when(renderService.getStage().getViewport()).thenReturn(viewport);
+        lenient().when(renderService.getStage().getViewport().getCamera()).thenReturn(camera);
 
-        //To my knowledge you can't do when() on this, which is causing a lot of problems
-        //when(ServiceLocator.getPlayerService()).thenReturn(new PlayerService());
-
-        //extortionUpgrade = mock(new ExtortionUpgrade(10, gameTime));
-        extortionUpgrade = mock(ExtortionUpgrade.class);
-        mainGameOrderTicketDisplay = new MainGameOrderTicketDisplay();
-        when(extortionUpgrade.getTickets()).thenReturn(mainGameOrderTicketDisplay);
-
-        //TODO mock CombatStatsService
+        extortionUpgrade = new ExtortionUpgrade(combatStatsComponent);
+        extortionUpgrade.setStage(stage);
+        extortionUpgrade.layout = mockLayout;
+        extortionUpgrade.meter = mockSpeedMeter;
+        extortionUpgrade.text = mockText;
+        extortionUpgrade.create();
     }
 
     @Test
-    void shouldDoubleGold() {
-        int goldBefore = mainGameOrderTicketDisplay.getRecipeValue();
-        int goldAfter = mainGameOrderTicketDisplay.getRecipeValue();
-        assertEquals(goldBefore, goldAfter);
+    void testNotNull() {
+        assertNotNull(extortionUpgrade);
     }
-    */
+
+    @Test
+    void testDispose() {
+        extortionUpgrade.dispose();
+        verify(resourceService).unloadAssets(SpeedBootsUpgrade.whiteBgTexture);
+        verify(resourceService).unloadAssets(SpeedBootsUpgrade.greenTexture);
+    }
+
+    @AfterEach
+    void tearDown() {
+        ServiceLocator.clear();
+    }
 }
