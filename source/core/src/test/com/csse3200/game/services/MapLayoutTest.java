@@ -43,7 +43,7 @@ class MapLayoutTest {
     @BeforeEach
     void setUp() {
         GameTime gameTime = mock(GameTime.class);
-        when(gameTime.getTime()).thenReturn(0L);
+        //when(gameTime.getTime()).thenReturn(0L);
         ServiceLocator.registerTimeSource(gameTime);
 
 //      SARAH'S BIT ____
@@ -194,11 +194,11 @@ class MapLayoutTest {
 
     @Test
     void readBenchRow() {
-        /*
         try(MockedConstruction<Bench> ignored =
-                    Mockito.mockConstruction(Bench.class)) {
-            ArrayList<Bench> bench = mapLayoutSpy.readBench("X", 0, 3, 4);
-            ArrayList<Bench> expectedBench = BenchGenerator.createBenchRow(4, 6,0);
+                    Mockito.mockConstruction(Bench.class))
+        {
+            ArrayList<Bench> bench = mapLayoutSpy.parseLine("X43".split(""), 0, 0);
+            ArrayList<Bench> expectedBench = BenchGenerator.createBenchRow(4, 6, 0);
             //checks coordinates -> can't compare benches directly as hash codes conflict
 
             //coordinates of starting bench
@@ -210,7 +210,6 @@ class MapLayoutTest {
             assertEquals(bench.get(2).getX(), expectedBench.get(2).getX());
             assertEquals(bench.get(2).getY(), expectedBench.get(2).getY());
         }
-         */
     }
 
 //    FOR PARAMETRISED TESTING _____
