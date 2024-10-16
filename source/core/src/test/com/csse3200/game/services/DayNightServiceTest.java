@@ -14,7 +14,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(GameExtension.class)
-public class DayNightServiceTest {
+class DayNightServiceTest {
 
     private GameTime gameTime;
     private EventHandler enddayEventHandler;
@@ -58,7 +58,7 @@ public class DayNightServiceTest {
     }
 
     @Test
-    public void testUpdateTriggersEndOfDay() {
+    void testUpdateTriggersEndOfDay() {
         when(gameTime.getTime()).thenReturn(0L);
 
         AtomicBoolean disposeTriggered = new AtomicBoolean(false);
@@ -87,7 +87,7 @@ public class DayNightServiceTest {
     }
 
     @Test
-    public void testDecisionDone() {
+    void testDecisionDone() {
         AtomicBoolean isNewDay = new AtomicBoolean(false);
         enddayEventHandler.addListener("newday", () -> isNewDay.set(true));
         when(checkWinLoseComponent.checkGameState()).thenReturn("GAME_IN_PROGRESS");
@@ -101,7 +101,7 @@ public class DayNightServiceTest {
     }
 
     @Test
-    public void testApplyEndOfDayBonus() {
+    void testApplyEndOfDayBonus() {
         dayNightService.incrementHighQualityMealCount();
         dayNightService.incrementHighQualityMealCount();
         when(checkWinLoseComponent.checkGameState()).thenReturn("GAME_IN_PROGRESS");
@@ -112,7 +112,7 @@ public class DayNightServiceTest {
     }
 
     @Test
-    public void testResetHighQualityMealCount() {
+    void testResetHighQualityMealCount() {
         dayNightService.incrementHighQualityMealCount();
         dayNightService.incrementHighQualityMealCount();
         when(checkWinLoseComponent.checkGameState()).thenReturn("GAME_IN_PROGRESS");
@@ -123,7 +123,7 @@ public class DayNightServiceTest {
     }
 
     @Test
-    public void testGameEndsAfterMaxDays() {
+    void testGameEndsAfterMaxDays() {
         dayNightService.setDay(6);
         AtomicBoolean endGameTriggered = new AtomicBoolean(false);
         dayNightService.getEvents().addListener("endGame", () -> endGameTriggered.set(true));
@@ -134,7 +134,7 @@ public class DayNightServiceTest {
     }
 
     @Test
-    public void testStartNewDayWithLoseCondition() {
+    void testStartNewDayWithLoseCondition() {
         when(checkWinLoseComponent.checkGameState()).thenReturn("LOSE");
         AtomicBoolean endGameTriggered = new AtomicBoolean(false);
         dayNightService.getEvents().addListener("endGame", () -> endGameTriggered.set(true));
@@ -145,7 +145,7 @@ public class DayNightServiceTest {
     }
 
     @Test
-    public void testGetAndSetDay() {
+    void testGetAndSetDay() {
         Assertions.assertEquals(1, dayNightService.getDay(), "Initial day incorrect");
         dayNightService.setDay(3);
 
@@ -154,7 +154,7 @@ public class DayNightServiceTest {
     }
 
     @Test
-    public void testIncrementHighQualityMealCount() {
+    void testIncrementHighQualityMealCount() {
         Assertions.assertEquals(0, dayNightService.getHighQualityMeals(), "Initial highQualityMeals count incorrect");
 
         // Testing that highQualityMeals is incremented once
@@ -167,7 +167,7 @@ public class DayNightServiceTest {
     }
 
     @Test
-    public void testDaysIterateAndGameEndsAfterMaxDays() {
+    void testDaysIterateAndGameEndsAfterMaxDays() {
         AtomicBoolean endGameTriggered = new AtomicBoolean(false);
         dayNightService.getEvents().addListener("endGame", () -> endGameTriggered.set(true));
         when(checkWinLoseComponent.checkGameState()).thenReturn("GAME_IN_PROGRESS");

@@ -15,9 +15,9 @@ import java.util.Random;
  */
 public class DayNightService {
     private static final Logger logger = LoggerFactory.getLogger(DayNightService.class);
-    public static final long FIVE_MINUTES = 5L* 60 * 1000; // 5 minutes in milliseconds
-    public static final int MAX_DAYS = 5; // Maximum number of days
-    public static final long SEVENTY_FIVE_PERCENT = (long) (FIVE_MINUTES * 0.75);
+    public static final long FIVEMINUTES = 5L* 60 * 1000; // 5 minutes in milliseconds
+    public static final int MAXDAYS = 5; // Maximum number of days
+    public static final long SEVENTYFIVEPERCENT = (long) (FIVEMINUTES * 0.75);
     private long lastSecondCheck;
     private long lastUpgradeCheck;
     private long lastEndOfDayCheck;
@@ -61,9 +61,9 @@ public class DayNightService {
         this.lastSecondCheck = gameTime.getTime();
         this.lastUpgradeCheck = gameTime.getTime();
         this.lastEndOfDayCheck = gameTime.getTime();
-        this.timeRemaining = FIVE_MINUTES;
+        this.timeRemaining = FIVEMINUTES;
         this.random = new Random();
-        randomChoice = random.nextInt((int) SEVENTY_FIVE_PERCENT);
+        randomChoice = random.nextInt((int) SEVENTYFIVEPERCENT);
         day = 1;
         randomChoice = random.nextInt(10) * 1000;
 
@@ -140,7 +140,7 @@ public class DayNightService {
         if (this.timeRemaining == 0 && !endOfDayTriggered) {
             endOfDayTriggered = true;
             gameTime.setTimeScale(0);
-            this.timeRemaining = FIVE_MINUTES;
+            this.timeRemaining = FIVEMINUTES;
             docketServiceEventHandler.trigger("Dispose");
             enddayEventHandler.trigger("endOfDay"); // Trigger the end of the day event
         }
@@ -155,7 +155,7 @@ public class DayNightService {
         applyEndOfDayBonus(); // Apply the bonus before checking win/loss condition
 
         // Checking if the game should end (i.e. it's the 5th day)
-        if (day > MAX_DAYS) {
+        if (day > MAXDAYS) {
             logger.info("Game is ending after days!");
             ServiceLocator.getDayNightService().getEvents().trigger("endGame");
             return;

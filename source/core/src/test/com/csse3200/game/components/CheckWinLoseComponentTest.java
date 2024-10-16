@@ -48,9 +48,9 @@ public class CheckWinLoseComponentTest {
 
     @Test
     public void testCheckGameStateReturnsWinOnlyOnFinalDay() {
-        when(dayNightService.getDay()).thenReturn(DayNightService.MAX_DAYS);
+        when(dayNightService.getDay()).thenReturn(DayNightService.MAXDAYS);
 
-        int adjustedWinAmount = 55 + (DayNightService.MAX_DAYS * 10);
+        int adjustedWinAmount = 55 + (DayNightService.MAXDAYS * 10);
         int playerGold = adjustedWinAmount + 5;
         when(combatStatsComponent.getGold()).thenReturn(playerGold);
 
@@ -94,9 +94,9 @@ public class CheckWinLoseComponentTest {
 
     @Test
     public void testCheckGameStateReturnsGameInProgressWhenGoldAboveWinAmountBeforeFinalDay() {
-        when(dayNightService.getDay()).thenReturn(DayNightService.MAX_DAYS - 1);
+        when(dayNightService.getDay()).thenReturn(DayNightService.MAXDAYS - 1);
 
-        int adjustedWinAmount = 55 + ((DayNightService.MAX_DAYS - 1) * 10);
+        int adjustedWinAmount = 55 + ((DayNightService.MAXDAYS - 1) * 10);
         int playerGold = adjustedWinAmount + 10;
         when(combatStatsComponent.getGold()).thenReturn(playerGold);
 
@@ -156,9 +156,9 @@ public class CheckWinLoseComponentTest {
 
     @Test
     public void testCheckGameStateWhenGoldEqualsWinAmountOnFinalDay() {
-        when(dayNightService.getDay()).thenReturn(DayNightService.MAX_DAYS);
+        when(dayNightService.getDay()).thenReturn(DayNightService.MAXDAYS);
 
-        int adjustedWinAmount = 55 + (DayNightService.MAX_DAYS * 10);
+        int adjustedWinAmount = 55 + (DayNightService.MAXDAYS * 10);
         when(combatStatsComponent.getGold()).thenReturn(adjustedWinAmount);
 
         playerService.getEvents().trigger("playerCreated", playerEntity);
