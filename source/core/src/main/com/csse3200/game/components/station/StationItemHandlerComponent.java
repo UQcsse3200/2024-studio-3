@@ -1,6 +1,6 @@
 package com.csse3200.game.components.station;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.items.IngredientComponent;
@@ -17,7 +17,7 @@ public class StationItemHandlerComponent extends Component {
      */
     protected final String type;
     protected InventoryComponent inventoryComponent;
-    protected ArrayList<String> acceptableItems;
+    protected List<String> acceptableItems;
 
     /**
      * General constructor
