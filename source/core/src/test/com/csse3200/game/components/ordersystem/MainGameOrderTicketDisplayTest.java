@@ -27,10 +27,13 @@ import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.mockito.MockedStatic;
+import org.mockito.Mockito;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
 
 /**
@@ -51,6 +54,8 @@ class MainGameOrderTicketDisplayTest {
 	@Mock Texture textureMock;
 	MainGameOrderTicketDisplay orderTicketDisplay;
 	@Mock CombatStatsComponent combatStatsComponent;
+	@Mock TicketDetails ticketDetails; // Mocked TicketDetails
+    private MockedStatic<ServiceLocator> serviceLocatorMock;
 	private static final Logger logger = LoggerFactory.getLogger(MainGameOrderTicketDisplayTest.class);
 
 	/**
@@ -65,11 +70,18 @@ class MainGameOrderTicketDisplayTest {
 		ServiceLocator.registerResourceService(resourceService);
 		textureMock = mock(Texture.class);
 
-		lenient().when(resourceService.getAsset("images/ordersystem/acai_bowl_docket.png", Texture.class)).thenReturn(textureMock);
-		lenient().when(resourceService.getAsset("images/ordersystem/steak_meal_docket.png", Texture.class)).thenReturn(textureMock);
-		lenient().when(resourceService.getAsset("images/ordersystem/salad_docket.png", Texture.class)).thenReturn(textureMock);
-		lenient().when(resourceService.getAsset("images/ordersystem/fruit_salad_docket.png", Texture.class)).thenReturn(textureMock);
-		lenient().when(resourceService.getAsset("images/ordersystem/banana_split_docket.png", Texture.class)).thenReturn(textureMock);
+		serviceLocatorMock = Mockito.mockStatic(ServiceLocator.class);
+
+		serviceLocatorMock.when(ServiceLocator::getRenderService).thenReturn(renderService);
+        serviceLocatorMock.when(ServiceLocator::getDocketService).thenReturn(docketService);
+        serviceLocatorMock.when(ServiceLocator::getPlayerService).thenReturn(playerService);
+        serviceLocatorMock.when(ServiceLocator::getResourceService).thenReturn(resourceService);
+        serviceLocatorMock.when(ServiceLocator::getTicketDetails).thenReturn(ticketDetails);
+
+		resourceService = mock(ResourceService.class);
+        textureMock = mock(Texture.class);
+
+        lenient().when(resourceService.getAsset(anyString(), eq(Texture.class))).thenReturn(textureMock);
 
 		when(ServiceLocator.getRenderService().getStage()).thenReturn(stage);
 		when(ServiceLocator.getRenderService().getStage().getViewport()).thenReturn(viewport);
@@ -89,6 +101,7 @@ class MainGameOrderTicketDisplayTest {
 	 */
 	@AfterEach
 	void tearDown() {
+		serviceLocatorMock.close();
 		MainGameOrderTicketDisplay.getTableArrayList().clear();
 	}
 
