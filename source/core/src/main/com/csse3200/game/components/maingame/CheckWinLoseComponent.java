@@ -55,7 +55,7 @@ public class CheckWinLoseComponent extends Component {
 
         if (hasLost(adjustedLossThreshold)) {
             return "LOSE";
-        } else if (currentDay == DayNightService.MAXDAYS && hasWon(adjustedWinAmount)) {
+        } else if (currentDay == DayNightService.MAX_DAYS && hasWon(adjustedWinAmount)) {
             return "WIN";
         } else {
             return "GAME_IN_PROGRESS";
