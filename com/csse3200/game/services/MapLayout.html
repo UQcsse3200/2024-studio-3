@@ -143,12 +143,11 @@ loadScripts(document, 'script');</script>
  the row of the object depends on what line its on in the file.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/ArrayList.html" title="class or interface in java.util" class="external-link">ArrayList</a><wbr>&lt;<a href="../entities/benches/Bench.html" title="class in com.csse3200.game.entities.benches">Bench</a>&gt;</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#readBench(java.lang.String,int,int,int)" class="member-name-link">readBench</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;type,
- int&nbsp;startCol,
- int&nbsp;size,
- int&nbsp;row)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#parseLine(java.lang.String%5B%5D,int,int)" class="member-name-link">parseLine</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>[]&nbsp;parts,
+ int&nbsp;row,
+ int&nbsp;col)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Read a bench from the map file</div>
+<div class="block">parses a line from the map file</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../entities/Entity.html" title="class in com.csse3200.game.entities">Entity</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#readStation(java.lang.String,int,int)" class="member-name-link">readStation</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;type,
@@ -216,21 +215,19 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="readBench(java.lang.String,int,int,int)">
-<h3>readBench</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/ArrayList.html" title="class or interface in java.util" class="external-link">ArrayList</a>&lt;<a href="../entities/benches/Bench.html" title="class in com.csse3200.game.entities.benches">Bench</a>&gt;</span>&nbsp;<span class="element-name">readBench</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;type,
- int&nbsp;startCol,
- int&nbsp;size,
- int&nbsp;row)</span></div>
-<div class="block">Read a bench from the map file</div>
+<section class="detail" id="parseLine(java.lang.String[],int,int)">
+<h3>parseLine</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/ArrayList.html" title="class or interface in java.util" class="external-link">ArrayList</a>&lt;<a href="../entities/benches/Bench.html" title="class in com.csse3200.game.entities.benches">Bench</a>&gt;</span>&nbsp;<span class="element-name">parseLine</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>[]&nbsp;parts,
+ int&nbsp;row,
+ int&nbsp;col)</span></div>
+<div class="block">parses a line from the map file</div>
 <dl class="notes">
 <dt>Parameters:</dt>
-<dd><code>type</code> - - the type of bench</dd>
-<dd><code>startCol</code> - - the starting column</dd>
-<dd><code>size</code> - - the size of the bench</dd>
-<dd><code>row</code> - - the row of the bench</dd>
+<dd><code>parts</code> - - the string to parse</dd>
+<dd><code>row</code> - - the row of the line</dd>
+<dd><code>col</code> - - the column index</dd>
 <dt>Returns:</dt>
-<dd>- an ArrayList of benches</dd>
+<dd>the list of benches</dd>
 </dl>
 </section>
 </li>
