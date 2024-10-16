@@ -86,7 +86,7 @@ public class MainMenuActions extends Component {
     ServiceLocator.getMainMenuDisplay().stopBackgroundTasks();
 
     // Transition to the tutorial screen
-    game.setScreen(new TutorialScreen(game));
+    game.setScreen(GdxGame.ScreenType.TUTORIAL);
   }
 
   /**
