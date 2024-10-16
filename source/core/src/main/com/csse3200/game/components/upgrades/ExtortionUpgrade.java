@@ -144,8 +144,11 @@ public class ExtortionUpgrade extends UIComponent implements Upgrade {
         ServiceLocator.getRandomComboService().getEvents().trigger("extortion unactive");
 
 
-        meter.remove();
-        text.remove();
+        // Ensure the text and meter are removed from the stage after time finish
+        if (meter != null && meter.hasParent()) {
+            meter.remove();
+            text.remove();
+        }
     }
 
     /**
