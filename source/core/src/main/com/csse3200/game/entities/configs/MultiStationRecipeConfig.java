@@ -4,22 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MultiStationRecipeConfig extends SingleStationRecipeConfig {
-    public List<String> fryingPan = new ArrayList<>();
-    public List<String> oven = new ArrayList<>();
-    public List<String> blender = new ArrayList<>();
-    public int burnedTime = 0;
-
-    public List<String> ingredient;
-    public List<String> cuttingBoard;
-    public int makingTime;
-
-    public List<String> getIngredient() {
-        return ingredient;
-    }
-
-    public List<String> getCuttingBoard() {
-        return cuttingBoard;
-    }
+    public static final List<String> fryingPan = new ArrayList<>();
+    public static final List<String> oven = new ArrayList<>();
+    public static final List<String> blender = new ArrayList<>();
+    public static final int burnedTime = 0;
 
     public List<String> getFryingPan() {
         return fryingPan;
@@ -27,10 +15,6 @@ public class MultiStationRecipeConfig extends SingleStationRecipeConfig {
 
     public List<String> getOven() {
         return oven;
-    }
-
-    public int getMakingTime() {
-        return makingTime;
     }
 
     public Integer getBurnedTime() {
