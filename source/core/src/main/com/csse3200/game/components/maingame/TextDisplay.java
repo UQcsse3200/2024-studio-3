@@ -83,13 +83,6 @@ public class TextDisplay extends UIComponent {
         return delay;
     }
 
-    /***
-     * Sets the delay of each character printing on the screen
-     * @param delay - A long which is the time it takes
-     */
-    public void setDelay(long delay) {
-        this.delay = delay;
-    }
 
     /***
      * This function will
@@ -165,11 +158,6 @@ public class TextDisplay extends UIComponent {
         this.text = newText;
     }
 
-    /** Alternative method to set text with no modification or splitting up **/
-    public void setTextRaw(String text) {
-
-        label.setText(text);
-    }
 
     /***
      * Gets the text in the blocks allocated by the algorithm
@@ -284,10 +272,6 @@ public class TextDisplay extends UIComponent {
     }
     public Table getTable() {
         return table;
-    }
-    public void disable() {
-        visible = false;
-        table.setVisible(false);
     }
 
     public void setScreen(String screen){

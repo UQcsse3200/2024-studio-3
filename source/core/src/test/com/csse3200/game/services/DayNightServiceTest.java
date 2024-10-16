@@ -22,30 +22,19 @@ public class DayNightServiceTest {
     private EventHandler enddayEventHandler;
     private EventHandler docketServiceEventHandler;
     private EntityService entityService;
-    private PlayerService playerService;
-    private Entity playerEntity;
-    private CheckWinLoseComponent checkWinLoseComponent;
-    private CombatStatsComponent combatStatsComponent;
     private DayNightService dayNightService;
 
-    private Entity moralSystem;
-
-    private MoralDecision moralDecision;
-
-
-
-    private GdxGame gdxGame;
 
     @BeforeEach
     public void setUp() {
         gameTime = mock(GameTime.class);
         when(gameTime.getTime()).thenReturn(0L);
         ServiceLocator.registerTimeSource(gameTime);
-        gdxGame = mock(GdxGame.class);
+        GdxGame gdxGame = mock(GdxGame.class);
         ServiceLocator.registerGame(gdxGame);
 
-        moralDecision = mock(MoralDecision.class);
-        moralSystem = mock(Entity.class);
+        MoralDecision moralDecision = mock(MoralDecision.class);
+        Entity moralSystem = mock(Entity.class);
         moralSystem.addComponent(moralDecision);
 
         entityService = mock(EntityService.class);
@@ -53,10 +42,10 @@ public class DayNightServiceTest {
         ServiceLocator.registerEntityService(entityService);
         ServiceLocator.getEntityService().registerMoralSystem(moralSystem);
 
-        playerService = mock(PlayerService.class);
-        playerEntity = mock(Entity.class);
-        checkWinLoseComponent = mock(CheckWinLoseComponent.class);
-        combatStatsComponent = mock(CombatStatsComponent.class);
+        PlayerService playerService = mock(PlayerService.class);
+        Entity playerEntity = mock(Entity.class);
+        CheckWinLoseComponent checkWinLoseComponent = mock(CheckWinLoseComponent.class);
+        CombatStatsComponent combatStatsComponent = mock(CombatStatsComponent.class);
         when(playerEntity.getComponent(CheckWinLoseComponent.class)).thenReturn(checkWinLoseComponent);
         when(playerEntity.getComponent(CombatStatsComponent.class)).thenReturn(combatStatsComponent);
         when(playerService.getPlayer()).thenReturn(playerEntity);
