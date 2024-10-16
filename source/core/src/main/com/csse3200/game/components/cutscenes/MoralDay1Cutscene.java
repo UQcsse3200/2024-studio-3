@@ -3,19 +3,21 @@ package com.csse3200.game.components.cutscenes;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.csse3200.game.components.cutscenes.scenes.Scene;
-import com.csse3200.game.components.maingame.TextDisplay;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MoralDay1Cutscene extends Cutscene {
-    private Array<Scene> scenes;
+    private List<Scene> scenes;
     private String[] textures;
     private String[] images;
     private String[] animations;
 
     public MoralDay1Cutscene() {
         super();
-        this.scenes = new Array<>();
+        this.scenes = new ArrayList<>();
     }
 
     @Override
@@ -52,7 +54,7 @@ public class MoralDay1Cutscene extends Cutscene {
         scene.setDuration(3.0f);
 
         if (scenes == null) {
-            scenes = new Array<>();
+            scenes = new ArrayList<>();
         }
         scenes.add(scene);
     }
@@ -121,9 +123,10 @@ public class MoralDay1Cutscene extends Cutscene {
 
     /**
      * Gets the scenes
+     *
      * @return the scenes being held
      */
-    public Array<Scene> getScenes() {
+    public List<Scene> getScenes() {
         return scenes;
     }
 
@@ -131,7 +134,7 @@ public class MoralDay1Cutscene extends Cutscene {
      * Sets the scenes to a given scene
      * @param scenes: the scenes to be set to.
      */
-    public void setScenes(Array<Scene> scenes) {
+    public void setScenes(List<Scene> scenes) {
         this.scenes = scenes;
     }
 

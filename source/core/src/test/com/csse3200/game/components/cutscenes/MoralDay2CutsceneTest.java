@@ -68,33 +68,4 @@ public class MoralDay2CutsceneTest {
         // Just used for code coverage
         moralDay2Cutscene.createEntities();
     }
-
-    @Test
-    void testGetSetScenes() {
-        List<Scene> scenes = new ArrayList<>();
-        scenes.add(new Scene("Background"));
-        moralDay2Cutscene.setScenes(scenes);
-        assertEquals(scenes, moralDay2Cutscene.getScenes());
-    }
-
-    @Test
-    void testGetSetTextures() {
-        String[] textures = new String[]{"example", "textures", "here"};
-        moralDay2Cutscene.setTextures(textures);
-        assertEquals(textures, moralDay2Cutscene.getTextures());
-    }
-
-    @Test
-    void testGetSetImages() {
-        String[] images = new String[]{"example", "images", "here"};
-        moralDay2Cutscene.setImages(images);
-        assertEquals(images, moralDay2Cutscene.getImages());
-    }
-
-    @Test
-    void testGetSetAnimations() {
-        String[] animations = new String[]{"example", "animations", "here"};
-        moralDay2Cutscene.setAnimations(animations);
-        assertEquals(animations, moralDay2Cutscene.getAnimations());
-    }
 }

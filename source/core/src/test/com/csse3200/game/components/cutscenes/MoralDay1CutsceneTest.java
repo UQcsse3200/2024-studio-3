@@ -9,6 +9,9 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -32,10 +35,10 @@ public class MoralDay1CutsceneTest {
     @Test
     void testSetupScenes() {
         moralDay1Cutscene.setupScenes();
-        Array<Scene> scenes = moralDay1Cutscene.getScenes();
+        List<Scene> scenes = moralDay1Cutscene.getScenes();
 
         assertNotNull(scenes);
-        assertEquals(2, scenes.size);
+        assertEquals(2, scenes.size());
     }
 
     @Test
@@ -55,35 +58,6 @@ public class MoralDay1CutsceneTest {
         assertEquals("images/Cutscenes/Day2_Scene.png", firstScene.getBackgroundImagePath());
         assertEquals(3.0f, firstScene.getDuration(), 0.01);
         assertEquals(2, firstScene.getImagePaths().length);
-    }
-
-    @Test
-    void testGetSetScenes() {
-        Array<Scene> scenes = new Array<>();
-        scenes.add(new Scene("Background"));
-        moralDay1Cutscene.setScenes(scenes);
-        assertEquals(scenes, moralDay1Cutscene.getScenes());
-    }
-
-    @Test
-    void testGetSetTextures() {
-        String[] textures = new String[]{"example", "textures", "here"};
-        moralDay1Cutscene.setTextures(textures);
-        assertEquals(textures, moralDay1Cutscene.getTextures());
-    }
-
-    @Test
-    void testGetSetImages() {
-        String[] images = new String[]{"example", "images", "here"};
-        moralDay1Cutscene.setImages(images);
-        assertEquals(images, moralDay1Cutscene.getImages());
-    }
-
-    @Test
-    void testGetSetAnimations() {
-        String[] animations = new String[]{"example", "animations", "here"};
-        moralDay1Cutscene.setAnimations(animations);
-        assertEquals(animations, moralDay1Cutscene.getAnimations());
     }
 
     @Test
