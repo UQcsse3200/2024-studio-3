@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import com.csse3200.game.components.moral.MoralDayFour;
 import com.csse3200.game.areas.map.Map;
 import com.csse3200.game.services.*;
 import com.csse3200.game.services.MapLayout;
@@ -811,12 +810,12 @@ public class ForestGameArea extends GameArea {
    */
   private void createMoralScreen() {
     Entity moralScreen = new Entity();
-    moralScreen
+    //moralScreen
             //.addComponent(new MoralDecisionDisplay())
             //.addComponent(new MoralDayOne());
             //.addComponent(new MoralDayTwo());
             //addComponent(new MoralDayThree());
-            .addComponent(new MoralDayFour());
+            //.addComponent(new MoralDayFour());
 //            .addComponent(new MoralDecision());
 
     ServiceLocator.getEntityService().registerMoral(moralScreen);
