@@ -223,8 +223,12 @@ public class TextDisplay extends UIComponent {
             }
         }
 
-        if (charIndex >= text.get(currentPart).length() && currentPart < text.size()) {
-            entity.getEvents().trigger("TextComplete", currentPart);
+        if (charIndex >= text.get(currentPart).length()) {
+            if (currentPart < text.size() - 1) {
+                entity.getEvents().trigger("TextComplete", currentPart);
+            } else {
+                entity.getEvents().trigger("TextComplete", currentPart);
+            }
         }
     }
 

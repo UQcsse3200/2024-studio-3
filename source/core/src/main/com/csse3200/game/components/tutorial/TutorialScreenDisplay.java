@@ -142,26 +142,6 @@ public class TutorialScreenDisplay extends UIComponent {
     }
 
     /**
-     * Clears the tutorial text box.
-     */
-    private void clearTextBox() {
-        if (textDisplay != null) {
-            if (textDisplay.label == null) {
-                BitmapFont defaultFont = new BitmapFont();
-                Label.LabelStyle labelStyle = new Label.LabelStyle(defaultFont, Color.BLACK);
-                textDisplay.label = new Label("", labelStyle);
-            }
-
-            textDisplay.setText("");
-            textDisplay.currentText.setLength(0);
-            textDisplay.label.setText("");
-            textDisplay.setVisible(false);
-        } else {
-            logger.error("textDisplay is null during clearTextBox.");
-        }
-    }
-
-    /**
      * Displays the movement tutorial. The player needs to use W/A/S/D to move.
      */
     private void showMovementTutorial() {
@@ -268,14 +248,64 @@ public class TutorialScreenDisplay extends UIComponent {
     }
 
     /**
-     * Called when the text block is completed in TextDisplay.
-     * Advances the tutorial to the next step.
+     * call when the text block is completed in TextDisplay.java
+     * Advances the tutorial to the next tut
      */
     private void onTextComplete(int currentPart) {
         logger.info("Text part {} completed.", currentPart);
 
-        if (currentPart >= textDisplay.getText().size() - 1) {
-            advanceTutorialStep();
+        if (currentPart >= 0 && currentPart < textDisplay.getText().size()) {
+            switch (tutorialStep) {
+                case 1:
+                    if (Gdx.input.isKeyJustPressed(Input.Keys.W) ||
+                            Gdx.input.isKeyJustPressed(Input.Keys.A) ||
+                            Gdx.input.isKeyJustPressed(Input.Keys.S) ||
+                            Gdx.input.isKeyJustPressed(Input.Keys.D)) {
+                        advanceTutorialStep();
+                    }
+                    break;
+                case 2:
+                    if (Gdx.input.isKeyJustPressed(Input.Keys.E)) {
+                        advanceTutorialStep();
+                    }
+                    break;
+                case 3:
+                    if (Gdx.input.isKeyJustPressed(Input.Keys.LEFT_BRACKET) ||
+                            Gdx.input.isKeyJustPressed(Input.Keys.RIGHT_BRACKET)) {
+                        docketsShifted = true;
+                        logger.debug("Dockets shifted!");
+                        advanceTutorialStep();
+                    }
+                    break;
+                case 4:
+                    if (Gdx.input.isKeyJustPressed(Input.Keys.R)) {
+                        advanceTutorialStep();
+                    }
+                    break;
+                case 5:
+                    if (Gdx.input.isKeyJustPressed(Input.Keys.Q)) {
+                        advanceTutorialStep();
+                    }
+                    break;
+                case 6:
+                    if (Gdx.input.isKeyJustPressed(Input.Keys.K)) {
+                        advanceTutorialStep();
+                    }
+                    break;
+                case 7:
+                    if (Gdx.input.isKeyJustPressed(Input.Keys.J)) {
+                        advanceTutorialStep();
+                    }
+                    break;
+                case 8:
+                    if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
+                        startGame();
+                    }
+                    break;
+                default:
+                    logger.error("Unexpected tutorial step: " + tutorialStep);
+                    break;
+            }
         }
     }
 
@@ -326,7 +356,7 @@ public class TutorialScreenDisplay extends UIComponent {
                 }
                 break;
             case 8:
-                if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER) || Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
+                if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
                     startGame();
                 }
                 break;
@@ -343,6 +373,20 @@ public class TutorialScreenDisplay extends UIComponent {
         for (int i = 0; i < entities.size; i++) {
             Entity entity = entities.get(i);
             entity.getEvents().trigger("SetText", text);
+        }
+    }
+
+    /**
+     * Clears the tutorial text box.
+     */
+    private void clearTextBox() {
+        if (textDisplay != null && textDisplay.label != null) {
+            textDisplay.setText("");
+            textDisplay.currentText.setLength(0);
+            textDisplay.label.setText("");
+            textDisplay.setVisible(false);
+        } else {
+            logger.error("textDisplay or label is null during clearTextBox.");
         }
     }
 
