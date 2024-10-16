@@ -145,7 +145,7 @@ public class MainMenuDisplay extends UIComponent {
         ImageTextButton settingsBtn = new ImageTextButton("Settings", skin);
         ImageTextButton exitBtn = new ImageTextButton("Exit", skin);
         //ImageTextButton tutBtn = new ImageTextButton("Tutorial", skin);
-        ImageTextButton cutsceneBtn = new ImageTextButton("Cutscene Temp", skin);
+        //ImageTextButton cutsceneBtn = new ImageTextButton("Cutscene Temp", skin);
 
         startBtn.setTransform(true);
         startBtn.setScale(scaleOfButton);
@@ -155,8 +155,8 @@ public class MainMenuDisplay extends UIComponent {
         settingsBtn.setScale(scaleOfButton);
         exitBtn.setTransform(true);
         exitBtn.setScale(scaleOfButton);
-        cutsceneBtn.setTransform(true);
-        cutsceneBtn.setScale(scaleOfButton);
+        //cutsceneBtn.setTransform(true);
+        //cutsceneBtn.setScale(scaleOfButton);
 
         startBtn.addListener(
                 new ChangeListener() {
@@ -198,14 +198,14 @@ public class MainMenuDisplay extends UIComponent {
                     }
                 });
 
-        cutsceneBtn.addListener(
-                new ChangeListener() {
-                    @Override
-                    public void changed(ChangeEvent changeEvent, Actor actor) {
-                        logger.debug("Cutscene button clicked");
-                        entity.getEvents().trigger("cutscene");
-                    }
-                });
+//        cutsceneBtn.addListener(
+//                new ChangeListener() {
+//                    @Override
+//                    public void changed(ChangeEvent changeEvent, Actor actor) {
+//                        logger.debug("Cutscene button clicked");
+//                        entity.getEvents().trigger("cutscene");
+//                    }
+//                });
 
         logo.add(title).pad(0, 0, 250, 0);
 
@@ -214,7 +214,7 @@ public class MainMenuDisplay extends UIComponent {
         table.add(settingsBtn).pad(600, 90, 0, 0).height(60);
         table.add(exitBtn).pad(600, 120, 0, 0).height(60);
         //table.add(tutBtn).pad(600, 80, 0, 0).height(60);
-        table.add(cutsceneBtn).pad(800, 0, 0, 0).height(60);
+        //table.add(cutsceneBtn).pad(800, 0, 0, 0).height(60);
 
         table.center();
 
