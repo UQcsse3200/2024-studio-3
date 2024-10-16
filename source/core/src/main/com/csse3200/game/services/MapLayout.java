@@ -115,8 +115,6 @@ public class MapLayout {
 
                 row++;
             }
-            long time2 = ServiceLocator.getTimeSource().getTime();
-            logger.info("Map file read: {}ms", time2 - time1);
         } catch (IOException e) {
             logger.warn("An error occurred while reading the file: " + e.getMessage());
         } finally {
