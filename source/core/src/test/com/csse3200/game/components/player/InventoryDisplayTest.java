@@ -2,16 +2,11 @@ package com.csse3200.game.components.player;
 
 
 import static org.mockito.Mockito.*;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.mockito.MockedConstruction;
-import static org.junit.Assert.*;
 import com.badlogic.gdx.graphics.Texture;
 import com.csse3200.game.extensions.GameExtension;
-import org.junit.Before;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import com.csse3200.game.components.items.IngredientComponent;
 import com.csse3200.game.components.items.ItemType;
@@ -21,16 +16,7 @@ import com.csse3200.game.events.EventHandler;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.rendering.RenderService;
-import com.csse3200.game.rendering.Renderable;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import org.junit.Before;
-import org.mockito.Mockito;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import com.badlogic.gdx.scenes.scene2d.ui.Stack;
-import java.lang.reflect.Field;
 
 
 // the tests here are running into some issue with the renderer.

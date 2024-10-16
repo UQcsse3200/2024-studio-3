@@ -2,15 +2,10 @@ package com.csse3200.game.services;
 
 
 import com.csse3200.game.components.Component;
-import com.csse3200.game.components.maingame.PauseMenuDisplay;
 import com.csse3200.game.events.EventHandler;
-import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.ArrayList;
 import java.util.Random;
-import java.util.List;
 
 /**
  * The RandomComboService class is responsible for managing and activating random upgrades
