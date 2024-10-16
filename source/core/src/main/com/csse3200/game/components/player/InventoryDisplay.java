@@ -31,7 +31,7 @@ public class InventoryDisplay extends UIComponent {
      * Requires that the entity this component is being added to also have
      * an InventoryComponent.
      */
-public InventoryDisplay() {
+    public InventoryDisplay() {
         this.slotSize = 200;
     }
 

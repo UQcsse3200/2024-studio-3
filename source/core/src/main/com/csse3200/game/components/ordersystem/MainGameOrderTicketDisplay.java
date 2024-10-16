@@ -47,7 +47,7 @@ public class MainGameOrderTicketDisplay extends UIComponent {
     private static final ArrayList<Docket> backgroundArrayList = new ArrayList<>();
     private static final ArrayList<Label> countdownLabelArrayList = new ArrayList<>();
     private static final ArrayList<Long> recipeTimeArrayList = new ArrayList<>();
-    private int orderNumb = 0;
+    private static int orderNumb = 0;
     private static final long DEFAULT_TIMER = 10000;
     private Recipe recipe;
     private Image mealImage;
@@ -147,6 +147,8 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         ServiceLocator.getDocketService().getEvents().addListener("Dancing", ()->setPaused(true));
         ServiceLocator.getDocketService().getEvents().addListener("UnDancing", ()->setPaused(false));
 
+        //From team 2, I used your dispose method here when listening for a new day, so current dockets get removed
+        //when the end of day occurs
         ServiceLocator.getDocketService().getEvents().addListener("Dispose", this::dispose);
 
         stage.addListener(new InputListener() {
@@ -585,6 +587,8 @@ public class MainGameOrderTicketDisplay extends UIComponent {
     @Override
     public void dispose() {
         // Cleanup resources
+        //from team 2, I reset the ordernumb back to 0, for each new day when dispose is called
+//        orderNumb = 0;
         for (Table table : tableArrayList) {
             table.clear();
             table.remove();
@@ -595,7 +599,23 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         countdownLabelArrayList.clear();
         stringArrayList.clear();
         imageArrayList.clear();
+        resetOrderNumb();
+        //orderNumb = 0;
         super.dispose();
+    }
+
+    /**
+     * Resets order number to 0 for screen transition purposes.
+     */
+    public static void resetOrderNumb(){
+        orderNumb = 0;
+    }
+
+    /**
+     * Returns Order Number.
+     */
+    public static int getOrderNumb(){
+        return orderNumb;
     }
 
     /**

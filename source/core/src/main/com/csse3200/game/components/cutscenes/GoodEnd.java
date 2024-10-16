@@ -10,9 +10,6 @@ import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.components.upgrades.UpgradesDisplay;
 
 public class GoodEnd extends ForestGameArea {
-    private TerrainFactory terrainFactory;
-    private UpgradesDisplay upgradesDisplay;
-    private GdxGame.LevelType level;
 
 
     /**
@@ -23,9 +20,6 @@ public class GoodEnd extends ForestGameArea {
      */
     public GoodEnd(TerrainFactory terrainFactory, GdxGame.LevelType level, UpgradesDisplay upgradesDisplay) {
         super(terrainFactory,level, upgradesDisplay);
-        this.terrainFactory = terrainFactory;
-        this.level = level;
-        this.upgradesDisplay = upgradesDisplay; 
 
     }
 

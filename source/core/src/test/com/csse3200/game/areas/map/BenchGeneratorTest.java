@@ -1,11 +1,11 @@
 package com.csse3200.game.areas.map;
 
-import com.csse3200.game.components.maingame.GameBackgroundDisplay;
-import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.entities.benches.Bench;
 import com.csse3200.game.extensions.GameExtension;
+import com.csse3200.game.physics.PhysicsService;
 import com.csse3200.game.rendering.RenderService;
+import com.csse3200.game.services.InteractableService;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
 import org.junit.jupiter.api.AfterEach;
@@ -15,6 +15,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.MockedConstruction;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+import com.csse3200.game.physics.components.ColliderComponent;
 
 import java.util.ArrayList;
 
@@ -35,6 +36,9 @@ public class BenchGeneratorTest {
         ServiceLocator.registerRenderService(renderService);
         ServiceLocator.registerEntityService(entityService);
         ServiceLocator.registerResourceService(resourceService);
+
+        ServiceLocator.registerPhysicsService(new PhysicsService());
+        ServiceLocator.registerInteractableService(new InteractableService());
     }
 
     @AfterEach
@@ -53,7 +57,6 @@ public class BenchGeneratorTest {
             // was initalised
             assertEquals(4, benches.size()); //both work - how long the bench column is
         }
-
     }
 
     @Test
@@ -66,7 +69,6 @@ public class BenchGeneratorTest {
             // was initalised
             assertEquals(4, benches.size()); //both work - how long the bench row is
         }
-
     }
 
     @Test
@@ -79,7 +81,6 @@ public class BenchGeneratorTest {
             // was initalised
             assertEquals(1, benches.size()); //both work - how long the bench row is
         }
-
     }
 
     @Test
@@ -92,7 +93,6 @@ public class BenchGeneratorTest {
             // was initalised
             assertEquals(1, benches.size()); //both work - how long the bench row is
         }
-
     }
 
     @Test
@@ -105,6 +105,5 @@ public class BenchGeneratorTest {
             // was initalised
             assertEquals(1, benches.size()); //both work - how long the bench row is
         }
-
     }
 }

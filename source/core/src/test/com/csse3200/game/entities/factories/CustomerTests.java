@@ -1,17 +1,10 @@
 package com.csse3200.game.entities.factories;
 
-import com.badlogic.gdx.math.GridPoint2;
-import com.badlogic.gdx.math.Vector2;
-import com.csse3200.game.components.Component;
-import com.csse3200.game.components.npc.CustomerComponent;
 import com.csse3200.game.entities.Entity;
-import com.csse3200.game.entities.configs.CustomerPersonalityConfig;
-import com.csse3200.game.entities.configs.NPCConfigs;
 import com.csse3200.game.extensions.GameExtension;
 import com.csse3200.game.physics.PhysicsEngine;
 import com.csse3200.game.physics.PhysicsService;
 import com.csse3200.game.physics.components.PhysicsComponent;
-import com.csse3200.game.services.ServiceLocator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -24,8 +17,6 @@ import static org.mockito.Mockito.*;
 @ExtendWith(GameExtension.class)
 @ExtendWith(MockitoExtension.class)
 public class CustomerTests {
-
-    private Entity customer;
 
     private PhysicsService physicsService;
     private PhysicsComponent physicsComponent;

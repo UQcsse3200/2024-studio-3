@@ -23,7 +23,6 @@ import static org.junit.jupiter.api.Assertions.*;
 class CustomerSensorComponentTest {
 
     private CustomerSensorComponent customerSensorComponent;
-    private final short customerLayer = PhysicsLayer.NPC;
 
     @BeforeEach
     void beforeEach() {
