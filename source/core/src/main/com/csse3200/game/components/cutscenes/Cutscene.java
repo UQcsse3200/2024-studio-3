@@ -362,4 +362,20 @@ public abstract class Cutscene extends Component {
      * Abstract method to create entities for the cutscene. This should be implemented by subclasses.
      */
     public abstract void createEntities();
+
+    /**
+     * Gets the start time for the animations
+     * @return: the start time as a float.
+     */
+    public float getTimeStart() {
+        return timeStart;
+    }
+
+    /**
+     * Sets the start time
+     * @param timeStart: the time to be set
+     */
+    public void setTimeStart(float timeStart) {
+        this.timeStart = timeStart;
+    }
 }
