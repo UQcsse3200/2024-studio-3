@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(GameExtension.class)
 class GameStateTest {
-    private static final Logger logger = LoggerFactory.getLogger(GameStateTest.class);
+
     private GameState gameState;
 
     @BeforeEach

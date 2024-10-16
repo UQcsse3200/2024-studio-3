@@ -34,17 +34,11 @@ public class PlayerStatsDisplay extends UIComponent {
 
   private Label goldLabel;
   private static Label dayLabel;
-  private static Label rageLabel;
   private static int currentDay = 1;
   private static Label timerLabel;
   private static long timer;
   private static long startTime;
   private static PlayerStatsDisplay instance;
-  private ProgressBar timeBar;
-  private static final float MAX_TIME = 300f;
-  private float screenWidth = Gdx.graphics.getWidth();
-  private float screenHeight = Gdx.graphics.getHeight();
-  private static final Logger logger = LoggerFactory.getLogger(GdxGame.class);
 
 
 

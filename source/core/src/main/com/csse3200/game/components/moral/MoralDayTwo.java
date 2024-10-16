@@ -20,10 +20,8 @@ public class MoralDayTwo extends UIComponent {
     private static final Logger logger = LoggerFactory.getLogger(MoralDayTwo.class);
 
     private Table layout; // Layout manager
-    private int moralStep = 0;
     private boolean isVisible;
     private final MainGameScreen game;
-    private Image backgroundImage;
     private String question = "Set Question";
 
 //    private MoralTextDisplay textDisplay;

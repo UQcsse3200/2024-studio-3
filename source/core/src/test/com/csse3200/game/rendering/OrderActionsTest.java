@@ -1,24 +1,12 @@
 package com.csse3200.game.rendering;
 
-import com.csse3200.game.GdxGame;
-import com.csse3200.game.components.ordersystem.OrderActions;
-import com.csse3200.game.entities.Entity;
-import com.csse3200.game.entities.EntityService;
+
 import com.csse3200.game.extensions.GameExtension;
-import com.csse3200.game.input.InputService;
-import com.csse3200.game.services.DocketService;
-import com.csse3200.game.services.ServiceLocator;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.ArgumentCaptor;
-import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.slf4j.Logger;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.*;
+
 
 @ExtendWith(GameExtension.class)
 @ExtendWith(MockitoExtension.class)
