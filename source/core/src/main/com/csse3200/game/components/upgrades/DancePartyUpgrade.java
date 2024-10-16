@@ -162,8 +162,11 @@ public class DancePartyUpgrade extends UIComponent implements Upgrade {
     public void deactivate() {
         isActive = false;
         layout.setVisible(false);
-        meter.remove();
-        text.remove();
+        // Ensure the text and meter are removed from the stage after time finish
+        if (meter != null && meter.hasParent()) {
+            meter.remove();
+            text.remove();
+        }
 
         ServiceLocator.getDocketService().getEvents().trigger("UnDancing");
     }
