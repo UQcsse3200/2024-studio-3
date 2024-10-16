@@ -155,13 +155,13 @@ public class TextDisplay extends UIComponent {
             }
 
             if (i != 0 && i % textLimit == 0) {
-                temp.append(" (space to continue)");
+                temp.append(" (enter to continue)");
                 newText.add(temp.toString());
                 temp = new StringBuilder();
             }
             current.    append(text.charAt(i));
         }
-        temp.append(current).append(" (space to continue)");
+        temp.append(current).append(" (enter to continue)");
         newText.add(temp.toString());
         this.text = newText;
     }
