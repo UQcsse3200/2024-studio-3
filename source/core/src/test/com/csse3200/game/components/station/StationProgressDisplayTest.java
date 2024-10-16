@@ -22,6 +22,7 @@ import com.csse3200.game.components.items.CookIngredientComponent;
 import com.csse3200.game.components.items.ItemComponent;
 import com.csse3200.game.components.station.StationItemHandlerComponent;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.events.EventHandler;
 import com.csse3200.game.extensions.GameExtension;
 import com.csse3200.game.rendering.RenderService;
 import com.csse3200.game.services.ServiceLocator;
@@ -45,6 +46,7 @@ public class StationProgressDisplayTest {
     private SpriteBatch spriteBatch;
     private StationProgressDisplay progressDisplay;
     private Entity entity;
+    private EventHandler eventHandler;
     private PhysicsComponent physicsComponent;
     private StationItemHandlerComponent itemHandlerComponent;
 
@@ -80,8 +82,12 @@ public class StationProgressDisplayTest {
         // Mock SpriteBatch
         spriteBatch = mock(SpriteBatch.class);
 
+        // Mock EventHandler
+        eventHandler = mock(EventHandler.class);
+
         // Create a new Entity and add necessary components
-        entity = new Entity();
+        entity = spy(new Entity());
+        doReturn(eventHandler).when(entity).getEvents();
         physicsComponent = mock(PhysicsComponent.class);
         when(physicsComponent.getBody()).thenReturn(mock(Body.class));
         when(physicsComponent.getBody().getPosition()).thenReturn(new Vector2(100, 200));
@@ -138,37 +144,36 @@ public class StationProgressDisplayTest {
         assertEquals(0.0f, barPercentage, "Initial barPercentage should be 0.0f");
         assertFalse(displayBar, "Initial displayBar should be false");
     }
+
+    /**
+     * Tests the update method when there is no item in the station.
+     */
+    @Test
+    public void testUpdate_NoItem() throws NoSuchFieldException, IllegalAccessException {
+        // Arrange: No item in the station
+        when(itemHandlerComponent.peek()).thenReturn(null);
+
+        // Access private fields
+        Field barPercentageField = StationProgressDisplay.class.getDeclaredField("barPercentage");
+        Field displayBarField = StationProgressDisplay.class.getDeclaredField("displayBar");
+
+        barPercentageField.setAccessible(true);
+        displayBarField.setAccessible(true);
+
+        // Act
+        progressDisplay.update();
+
+        // Assert
+        float barPercentage = barPercentageField.getFloat(progressDisplay);
+        boolean displayBar = displayBarField.getBoolean(progressDisplay);
+
+        assertEquals(0.0f, barPercentage, "barPercentage should be reset to 0.0f");
+        assertFalse(displayBar, "displayBar should be false when there is no item");
+
+        // Verify that updateInventory event is not triggered
+        verify(eventHandler, never()).trigger(eq("updateInventory"));
+    }
 }
-
-//     /**
-//      * Tests the update method when there is no item in the station.
-//      */
-//     @Test
-//     public void testUpdate_NoItem() throws NoSuchFieldException, IllegalAccessException {
-//         // Arrange: No item in the station
-//         when(itemHandlerComponent.peek()).thenReturn(null);
-
-//         // Access private fields
-//         Field barPercentageField = StationProgressDisplay.class.getDeclaredField("barPercentage");
-//         Field displayBarField = StationProgressDisplay.class.getDeclaredField("displayBar");
-
-//         barPercentageField.setAccessible(true);
-//         displayBarField.setAccessible(true);
-
-//         // Act
-//         progressDisplay.update();
-
-//         // Assert
-//         float barPercentage = barPercentageField.getFloat(progressDisplay);
-//         boolean displayBar = displayBarField.getBoolean(progressDisplay);
-
-//         assertEquals(0.0f, barPercentage, "barPercentage should be reset to 0.0f");
-//         assertFalse(displayBar, "displayBar should be false when there is no item");
-
-//         // Verify that resetBar was called by ensuring updateInventory event is not triggered
-//         verify(entity).getEvents();
-//         verify(entity.getEvents(), never()).trigger("updateInventory");
-//     }
 
 //     /**
 //      * Tests the update method with an item that has a ChopIngredientComponent and is incomplete.
