@@ -7,6 +7,9 @@ import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
 
 public class MoralDay2Cutscene extends Cutscene {
+    private static final String MAFIA_IMAGE_PATH = "images/Cutscenes/Character Artwork/rhino_sprite.png";
+    private static final String ICON_IMAGE_PATH = "images/Cutscenes/moral_icons/gambling_ico.png";
+    private static final String DAY_2_SCENE_PATH = "images/Cutscenes/Day2_Scene.png";
     public MoralDay2Cutscene() {
         super();
     }
@@ -27,16 +30,16 @@ public class MoralDay2Cutscene extends Cutscene {
 
 
 
-        String mafiaImage = "images/Cutscenes/Character Artwork/rhino_sprite.png";
+        String mafiaImage = MAFIA_IMAGE_PATH;
         Vector2 mafiaPosition = new Vector2(3, -1);
         float mafiaScale = 4.0f;
 
-        String iconImage = "images/Cutscenes/moral_icons/gambling_ico.png";
+        String iconImage = ICON_IMAGE_PATH;
         Vector2 iconPosition = new Vector2(-8, -2);
         float iconScale = 7.0f;
 
         // Add scenes with background images, animations, text, and duration
-        Scene scene = new Scene("images/Cutscenes/Day2_Scene.png");
+        Scene scene = new Scene(DAY_2_SCENE_PATH);
         scene.setImages(
                 new String[]{mafiaImage, iconImage},
                 new Vector2[] {mafiaPosition, iconPosition},
@@ -55,11 +58,11 @@ public class MoralDay2Cutscene extends Cutscene {
         Array<String> sceneText = new Array<>();
         sceneText.add("Press 'y' for yes and 'n' for no");
 
-        String mafiaImage = "images/Cutscenes/Character Artwork/rhino_sprite.png";
+        String mafiaImage = MAFIA_IMAGE_PATH;
         Vector2 mafiaPosition = new Vector2(3, -1);
         float mafiaScale = 4.0f;
 
-        String iconImage = "images/Cutscenes/moral_icons/gambling_ico.png";
+        String iconImage = ICON_IMAGE_PATH;
         Vector2 iconPosition = new Vector2(-8, -2);
         float iconScale = 7.0f;
 
@@ -72,7 +75,7 @@ public class MoralDay2Cutscene extends Cutscene {
         float noScale = 11.0f;
 
         // Add scenes with background images, animations, text, and duration
-        Scene scene = new Scene("images/Cutscenes/Day2_Scene.png");
+        Scene scene = new Scene(DAY_2_SCENE_PATH);
         scene.setImages(
                 new String[]{mafiaImage, iconImage, yesImage, noImage},
                 new Vector2[] {mafiaPosition, iconPosition, yesPosition, noPosition},
@@ -89,14 +92,14 @@ public class MoralDay2Cutscene extends Cutscene {
     protected void loadAssets() {
         // Load the background images for the cutscene
         textures = new String[] {
-                "images/Cutscenes/Day2_Scene.png",
+                "DAY_2_SCENE_PATH",
         };
 
         animations = new String[] {};
 
         images = new String[] {
-                "images/Cutscenes/Character Artwork/rhino_sprite.png",
-                "images/Cutscenes/moral_icons/gambling_ico.png",
+                "MAFIA_IMAGE_PATH",
+                "ICON_IMAGE_PATH",
                 "images/Cutscenes/moral_icons/yes_ico.png",
                 "images/Cutscenes/moral_icons/no_ico.png"
         };
