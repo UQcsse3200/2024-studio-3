@@ -97,9 +97,6 @@ class SaveLoadServiceTest {
 
             // Verify that writeClass was called
             mockedFileLoader.verify(() -> FileLoader.writeClass(any(GameState.class), anyString(), eq(FileLoader.Location.LOCAL)), times(1));
-
-            // Verify that "togglePause" event was triggered
-            verify(ServiceLocator.getEntityService().getEvents(), times(1)).trigger("togglePause");
         }
     }
 

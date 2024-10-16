@@ -49,6 +49,10 @@ public class InventoryDisplay extends UIComponent {
         this.slotSize = slotSize;
     }
 
+    public int getSlotSize() {
+        return this.slotSize;
+    }
+
     @Override
     public void create() {
         super.create();
@@ -57,6 +61,7 @@ public class InventoryDisplay extends UIComponent {
             // listener for when the InventoryComponent attached to this entity is updated
             entity.getEvents().addListener("updateInventory", this::update);
         }
+
         addActors();
     }
 
