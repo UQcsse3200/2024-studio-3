@@ -104,7 +104,7 @@ loadScripts(document, 'script');</script>
 <h2>Field Summary</h2>
 <div class="inherited-list">
 <h3 id="fields-inherited-from-class-com.csse3200.game.components.cutscenes.Cutscene">Fields inherited from class&nbsp;com.csse3200.game.components.cutscenes.<a href="Cutscene.html" title="class in com.csse3200.game.components.cutscenes">Cutscene</a></h3>
-<code><a href="Cutscene.html#animatedScenes">animatedScenes</a>, <a href="Cutscene.html#animName">animName</a>, <a href="Cutscene.html#currentAnimatedScene">currentAnimatedScene</a>, <a href="Cutscene.html#currentScene">currentScene</a>, <a href="Cutscene.html#currentSceneIndex">currentSceneIndex</a>, <a href="Cutscene.html#currentText">currentText</a>, <a href="Cutscene.html#cutsceneText">cutsceneText</a>, <a href="Cutscene.html#entities">entities</a>, <a href="Cutscene.html#gameTime">gameTime</a>, <a href="Cutscene.html#IsAnimatedScenes">IsAnimatedScenes</a>, <a href="Cutscene.html#textIndex">textIndex</a>, <a href="Cutscene.html#timeStart">timeStart</a></code></div>
+<code><a href="Cutscene.html#animatedScenes">animatedScenes</a>, <a href="Cutscene.html#animations">animations</a>, <a href="Cutscene.html#animName">animName</a>, <a href="Cutscene.html#currentAnimatedScene">currentAnimatedScene</a>, <a href="Cutscene.html#currentScene">currentScene</a>, <a href="Cutscene.html#currentSceneIndex">currentSceneIndex</a>, <a href="Cutscene.html#currentText">currentText</a>, <a href="Cutscene.html#cutsceneText">cutsceneText</a>, <a href="Cutscene.html#entities">entities</a>, <a href="Cutscene.html#gameTime">gameTime</a>, <a href="Cutscene.html#images">images</a>, <a href="Cutscene.html#IsAnimatedScenes">IsAnimatedScenes</a>, <a href="Cutscene.html#scenes">scenes</a>, <a href="Cutscene.html#textIndex">textIndex</a>, <a href="Cutscene.html#textures">textures</a>, <a href="Cutscene.html#timeStart">timeStart</a></code></div>
 <div class="inherited-list">
 <h3 id="fields-inherited-from-class-com.csse3200.game.components.Component">Fields inherited from class&nbsp;com.csse3200.game.components.<a href="../Component.html" title="class in com.csse3200.game.components">Component</a></h3>
 <code><a href="../Component.html#enabled">enabled</a>, <a href="../Component.html#entity">entity</a></code></div>
@@ -139,50 +139,10 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Abstract method to create entities for the cutscene.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>[]</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getAnimations()" class="member-name-link">getAnimations</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Gets the animations for the cutscene</div>
-</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>[]</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getImages()" class="member-name-link">getImages</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Get the images being held by the cutscene</div>
-</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a><wbr>&lt;<a href="scenes/Scene.html" title="class in com.csse3200.game.components.cutscenes.scenes">Scene</a>&gt;</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getScenes()" class="member-name-link">getScenes</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Gets the scenes</div>
-</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>[]</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getTextures()" class="member-name-link">getTextures</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Gets the textures</div>
-</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#loadAssets()" class="member-name-link">loadAssets</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Abstract method to load the assets required for the cutscene.</div>
-</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setAnimations(java.lang.String%5B%5D)" class="member-name-link">setAnimations</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>[]&nbsp;animations)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Sets the animations for the cutscenes</div>
-</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setImages(java.lang.String%5B%5D)" class="member-name-link">setImages</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>[]&nbsp;images)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Sets the images being held by the cutscene</div>
-</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setScenes(java.util.List)" class="member-name-link">setScenes</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="scenes/Scene.html" title="class in com.csse3200.game.components.cutscenes.scenes">Scene</a>&gt;&nbsp;scenes)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Sets the scenes to a given scene</div>
-</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setTextures(java.lang.String%5B%5D)" class="member-name-link">setTextures</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>[]&nbsp;textures)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Sets the textures for the cutscene</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setupScenes()" class="member-name-link">setupScenes</a>()</code></div>
@@ -194,7 +154,7 @@ loadScripts(document, 'script');</script>
 </div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-com.csse3200.game.components.cutscenes.Cutscene">Methods inherited from class&nbsp;com.csse3200.game.components.cutscenes.<a href="Cutscene.html" title="class in com.csse3200.game.components.cutscenes">Cutscene</a></h3>
-<code><a href="Cutscene.html#create()">create</a>, <a href="Cutscene.html#createEntitiesForScene(com.csse3200.game.components.cutscenes.scenes.AnimatedScene)">createEntitiesForScene</a>, <a href="Cutscene.html#createEntitiesForScene(com.csse3200.game.components.cutscenes.scenes.Scene)">createEntitiesForScene</a>, <a href="Cutscene.html#dispose()">dispose</a>, <a href="Cutscene.html#disposeEntities()">disposeEntities</a>, <a href="Cutscene.html#getTimeStart()">getTimeStart</a>, <a href="Cutscene.html#isAtEnd()">isAtEnd</a>, <a href="Cutscene.html#isCompleted()">isCompleted</a>, <a href="Cutscene.html#loadAssetsForScene(com.csse3200.game.components.cutscenes.scenes.AnimatedScene)">loadAssetsForScene</a>, <a href="Cutscene.html#loadAssetsForScene(com.csse3200.game.components.cutscenes.scenes.Scene)">loadAssetsForScene</a>, <a href="Cutscene.html#loadScene(int)">loadScene</a>, <a href="Cutscene.html#nextCutscene()">nextCutscene</a>, <a href="Cutscene.html#nextCutsceneMoral()">nextCutsceneMoral</a>, <a href="Cutscene.html#setTextForScene(com.csse3200.game.components.cutscenes.scenes.Scene)">setTextForScene</a>, <a href="Cutscene.html#setTextForSceneMoral(com.csse3200.game.components.cutscenes.scenes.Scene)">setTextForSceneMoral</a>, <a href="Cutscene.html#setTimeStart(float)">setTimeStart</a>, <a href="Cutscene.html#start()">start</a>, <a href="Cutscene.html#unloadAssets()">unloadAssets</a>, <a href="Cutscene.html#update()">update</a></code></div>
+<code><a href="Cutscene.html#create()">create</a>, <a href="Cutscene.html#createEntitiesForScene(com.csse3200.game.components.cutscenes.scenes.AnimatedScene)">createEntitiesForScene</a>, <a href="Cutscene.html#createEntitiesForScene(com.csse3200.game.components.cutscenes.scenes.Scene)">createEntitiesForScene</a>, <a href="Cutscene.html#dispose()">dispose</a>, <a href="Cutscene.html#disposeEntities()">disposeEntities</a>, <a href="Cutscene.html#getAnimations()">getAnimations</a>, <a href="Cutscene.html#getImages()">getImages</a>, <a href="Cutscene.html#getScenes()">getScenes</a>, <a href="Cutscene.html#getTextures()">getTextures</a>, <a href="Cutscene.html#getTimeStart()">getTimeStart</a>, <a href="Cutscene.html#isAtEnd()">isAtEnd</a>, <a href="Cutscene.html#isCompleted()">isCompleted</a>, <a href="Cutscene.html#loadAssetsForScene(com.csse3200.game.components.cutscenes.scenes.AnimatedScene)">loadAssetsForScene</a>, <a href="Cutscene.html#loadAssetsForScene(com.csse3200.game.components.cutscenes.scenes.Scene)">loadAssetsForScene</a>, <a href="Cutscene.html#loadScene(int)">loadScene</a>, <a href="Cutscene.html#nextCutscene()">nextCutscene</a>, <a href="Cutscene.html#nextCutsceneMoral()">nextCutsceneMoral</a>, <a href="Cutscene.html#setAnimations(java.lang.String%5B%5D)">setAnimations</a>, <a href="Cutscene.html#setImages(java.lang.String%5B%5D)">setImages</a>, <a href="Cutscene.html#setScenes(java.util.List)">setScenes</a>, <a href="Cutscene.html#setTextForScene(com.csse3200.game.components.cutscenes.scenes.Scene)">setTextForScene</a>, <a href="Cutscene.html#setTextForSceneMoral(com.csse3200.game.components.cutscenes.scenes.Scene)">setTextForSceneMoral</a>, <a href="Cutscene.html#setTextures(java.lang.String%5B%5D)">setTextures</a>, <a href="Cutscene.html#setTimeStart(float)">setTimeStart</a>, <a href="Cutscene.html#start()">start</a>, <a href="Cutscene.html#unloadAssets()">unloadAssets</a>, <a href="Cutscene.html#update()">update</a></code></div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-com.csse3200.game.components.Component">Methods inherited from class&nbsp;com.csse3200.game.components.<a href="../Component.html" title="class in com.csse3200.game.components">Component</a></h3>
 <code><a href="../Component.html#earlyUpdate()">earlyUpdate</a>, <a href="../Component.html#getEntity()">getEntity</a>, <a href="../Component.html#setEnabled(boolean)">setEnabled</a>, <a href="../Component.html#setEntity(com.csse3200.game.entities.Entity)">setEntity</a>, <a href="../Component.html#toString()">toString</a>, <a href="../Component.html#triggerEarlyUpdate()">triggerEarlyUpdate</a>, <a href="../Component.html#triggerUpdate()">triggerUpdate</a></code></div>
@@ -259,110 +219,6 @@ loadScripts(document, 'script');</script>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="Cutscene.html#createEntities()">createEntities</a></code>&nbsp;in class&nbsp;<code><a href="Cutscene.html" title="class in com.csse3200.game.components.cutscenes">Cutscene</a></code></dd>
-</dl>
-</section>
-</li>
-<li>
-<section class="detail" id="getScenes()">
-<h3>getScenes</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="scenes/Scene.html" title="class in com.csse3200.game.components.cutscenes.scenes">Scene</a>&gt;</span>&nbsp;<span class="element-name">getScenes</span>()</div>
-<div class="block">Gets the scenes</div>
-<dl class="notes">
-<dt>Overrides:</dt>
-<dd><code><a href="Cutscene.html#getScenes()">getScenes</a></code>&nbsp;in class&nbsp;<code><a href="Cutscene.html" title="class in com.csse3200.game.components.cutscenes">Cutscene</a></code></dd>
-<dt>Returns:</dt>
-<dd>the scenes being held</dd>
-</dl>
-</section>
-</li>
-<li>
-<section class="detail" id="setScenes(java.util.List)">
-<h3>setScenes</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setScenes</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="scenes/Scene.html" title="class in com.csse3200.game.components.cutscenes.scenes">Scene</a>&gt;&nbsp;scenes)</span></div>
-<div class="block">Sets the scenes to a given scene</div>
-<dl class="notes">
-<dt>Overrides:</dt>
-<dd><code><a href="Cutscene.html#setScenes(java.util.List)">setScenes</a></code>&nbsp;in class&nbsp;<code><a href="Cutscene.html" title="class in com.csse3200.game.components.cutscenes">Cutscene</a></code></dd>
-<dt>Parameters:</dt>
-<dd><code>scenes</code> - : the scenes to be set to.</dd>
-</dl>
-</section>
-</li>
-<li>
-<section class="detail" id="getTextures()">
-<h3>getTextures</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>[]</span>&nbsp;<span class="element-name">getTextures</span>()</div>
-<div class="block">Gets the textures</div>
-<dl class="notes">
-<dt>Overrides:</dt>
-<dd><code><a href="Cutscene.html#getTextures()">getTextures</a></code>&nbsp;in class&nbsp;<code><a href="Cutscene.html" title="class in com.csse3200.game.components.cutscenes">Cutscene</a></code></dd>
-<dt>Returns:</dt>
-<dd>the textures being held</dd>
-</dl>
-</section>
-</li>
-<li>
-<section class="detail" id="setTextures(java.lang.String[])">
-<h3>setTextures</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setTextures</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>[]&nbsp;textures)</span></div>
-<div class="block">Sets the textures for the cutscene</div>
-<dl class="notes">
-<dt>Overrides:</dt>
-<dd><code><a href="Cutscene.html#setTextures(java.lang.String%5B%5D)">setTextures</a></code>&nbsp;in class&nbsp;<code><a href="Cutscene.html" title="class in com.csse3200.game.components.cutscenes">Cutscene</a></code></dd>
-<dt>Parameters:</dt>
-<dd><code>textures</code> - : the textures being held</dd>
-</dl>
-</section>
-</li>
-<li>
-<section class="detail" id="getImages()">
-<h3>getImages</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>[]</span>&nbsp;<span class="element-name">getImages</span>()</div>
-<div class="block">Get the images being held by the cutscene</div>
-<dl class="notes">
-<dt>Overrides:</dt>
-<dd><code><a href="Cutscene.html#getImages()">getImages</a></code>&nbsp;in class&nbsp;<code><a href="Cutscene.html" title="class in com.csse3200.game.components.cutscenes">Cutscene</a></code></dd>
-<dt>Returns:</dt>
-<dd>the images being held by the cutscene</dd>
-</dl>
-</section>
-</li>
-<li>
-<section class="detail" id="setImages(java.lang.String[])">
-<h3>setImages</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setImages</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>[]&nbsp;images)</span></div>
-<div class="block">Sets the images being held by the cutscene</div>
-<dl class="notes">
-<dt>Overrides:</dt>
-<dd><code><a href="Cutscene.html#setImages(java.lang.String%5B%5D)">setImages</a></code>&nbsp;in class&nbsp;<code><a href="Cutscene.html" title="class in com.csse3200.game.components.cutscenes">Cutscene</a></code></dd>
-<dt>Parameters:</dt>
-<dd><code>images</code> - : the new images to be set</dd>
-</dl>
-</section>
-</li>
-<li>
-<section class="detail" id="getAnimations()">
-<h3>getAnimations</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>[]</span>&nbsp;<span class="element-name">getAnimations</span>()</div>
-<div class="block">Gets the animations for the cutscene</div>
-<dl class="notes">
-<dt>Overrides:</dt>
-<dd><code><a href="Cutscene.html#getAnimations()">getAnimations</a></code>&nbsp;in class&nbsp;<code><a href="Cutscene.html" title="class in com.csse3200.game.components.cutscenes">Cutscene</a></code></dd>
-<dt>Returns:</dt>
-<dd>the animations for the cutscenes</dd>
-</dl>
-</section>
-</li>
-<li>
-<section class="detail" id="setAnimations(java.lang.String[])">
-<h3>setAnimations</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setAnimations</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>[]&nbsp;animations)</span></div>
-<div class="block">Sets the animations for the cutscenes</div>
-<dl class="notes">
-<dt>Overrides:</dt>
-<dd><code><a href="Cutscene.html#setAnimations(java.lang.String%5B%5D)">setAnimations</a></code>&nbsp;in class&nbsp;<code><a href="Cutscene.html" title="class in com.csse3200.game.components.cutscenes">Cutscene</a></code></dd>
-<dt>Parameters:</dt>
-<dd><code>animations</code> - : the animations being set</dd>
 </dl>
 </section>
 </li>
