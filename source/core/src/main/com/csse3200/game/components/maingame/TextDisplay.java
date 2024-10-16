@@ -148,11 +148,10 @@ public class TextDisplay extends UIComponent {
             this.label = new Label("", labelStyle);
         }
 
-        // Clear all previous text before setting new text
-        currentText.setLength(0);  // Clear StringBuilder
-        label.setText("");  // Clear the Label text
-        charIndex = 0;  // Reset the character index
-        currentPart = 0;  // Reset the text part
+        currentText.setLength(0);
+        label.setText("");
+        charIndex = 0;
+        currentPart = 0;
 
         setVisible(true);
         List<String> newText = new ArrayList<>();
@@ -224,7 +223,6 @@ public class TextDisplay extends UIComponent {
             }
         }
 
-        // If the current part of the text is fully displayed, trigger a 'TextComplete' event
         if (charIndex >= text.get(currentPart).length() && currentPart < text.size()) {
             entity.getEvents().trigger("TextComplete", currentPart);
         }
@@ -265,7 +263,7 @@ public class TextDisplay extends UIComponent {
                         logger.info("WE'RE ALMOST THERE NO");
                     }
                     return true;
-                }  else if (keycode == com.badlogic.gdx.Input.Keys.ENTER || keycode == com.badlogic.gdx.Input.Keys.SPACE){
+                }  else if (keycode == com.badlogic.gdx.Input.Keys.ENTER){
                     if (charIndex < TextDisplay.this.text.get(currentPart).length()) {
                         label.setText(text.get(currentPart));
                         charIndex = TextDisplay.this.text.get(currentPart).length();

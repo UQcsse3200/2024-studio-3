@@ -70,18 +70,18 @@ public class TutorialScreenDisplay extends UIComponent {
         ServiceLocator.getLevelService().setCurrLevel(GdxGame.LevelType.LEVEL_0);
 
         if (table == null) {
-            table = new Table();  // Ensure table is initialised
+            table = new Table();
         }
 
         setupUI();
 
-        // Initialise the textDisplay before using it
         textDisplay = new TextDisplay();
         textDisplay.setVisible(false);  // Initially hidden
         stage.addActor(textDisplay.getTable());  // Add it to the stage
+
         entity.getEvents().addListener("TextComplete", this::onTextComplete);
 
-        advanceTutorialStep();  // Ensure textDisplay is initialized before calling this method
+        advanceTutorialStep();
 
         // Add event listeners for create order
         //entity.getEvents().addListener("createOrder", this::onCreateOrderPressed);
@@ -106,7 +106,6 @@ public class TutorialScreenDisplay extends UIComponent {
         if (tutorialStep < MAX_TUTORIAL_STEP) {
             tutorialStep++;
 
-            // Clear the previous text before showing the next step's instructions
             clearTextBox();
 
             switch (tutorialStep) {
@@ -147,17 +146,16 @@ public class TutorialScreenDisplay extends UIComponent {
      */
     private void clearTextBox() {
         if (textDisplay != null) {
-            // Initialize label if it is null
             if (textDisplay.label == null) {
                 BitmapFont defaultFont = new BitmapFont();
                 Label.LabelStyle labelStyle = new Label.LabelStyle(defaultFont, Color.BLACK);
                 textDisplay.label = new Label("", labelStyle);
             }
 
-            textDisplay.setText("");  // Clear the text
-            textDisplay.currentText.setLength(0);  // Clear StringBuilder holding text
-            textDisplay.label.setText("");  // Clear the label text
-            textDisplay.setVisible(false);  // Hide the text box
+            textDisplay.setText("");
+            textDisplay.currentText.setLength(0);
+            textDisplay.label.setText("");
+            textDisplay.setVisible(false);
         } else {
             logger.error("textDisplay is null during clearTextBox.");
         }
@@ -195,16 +193,13 @@ public class TutorialScreenDisplay extends UIComponent {
         if (textDisplay != null) {
             textDisplay.setVisible(true);
 
-            // Combine both instructions into one
             createTextBox("Use [ and ] keys to switch dockets.");
 
-            // Check if both the order button is pressed and the dockets are shifted
             if ((Gdx.input.isKeyJustPressed(Input.Keys.LEFT_BRACKET) || Gdx.input.isKeyJustPressed(Input.Keys.RIGHT_BRACKET))) {
 
                 docketsShifted = true;
                 logger.debug("Dockets shifted!");
 
-                // Advance the tutorial as both conditions are now met
                 advanceTutorialStep();
             }
         } else {
@@ -279,7 +274,6 @@ public class TutorialScreenDisplay extends UIComponent {
     private void onTextComplete(int currentPart) {
         logger.info("Text part {} completed.", currentPart);
 
-        // If we're at the final text part for this step, advance the tutorial
         if (currentPart >= textDisplay.getText().size() - 1) {
             advanceTutorialStep();
         }
@@ -312,22 +306,22 @@ public class TutorialScreenDisplay extends UIComponent {
                 }
                 break;
             case 4:
-                if (Gdx.input.isKeyJustPressed(Input.Keys.R)) {  // Triggered by R key press
+                if (Gdx.input.isKeyJustPressed(Input.Keys.R)) {
                     advanceTutorialStep();
                 }
                 break;
             case 5:
-                if (Gdx.input.isKeyJustPressed(Input.Keys.Q)) {  // Triggered by Q key press for chopping
+                if (Gdx.input.isKeyJustPressed(Input.Keys.Q)) {
                     advanceTutorialStep();
                 }
                 break;
             case 6:
-                if (Gdx.input.isKeyJustPressed(Input.Keys.K)) {  // Triggered by K key press for rotation
+                if (Gdx.input.isKeyJustPressed(Input.Keys.K)) {
                     advanceTutorialStep();
                 }
                 break;
             case 7:
-                if (Gdx.input.isKeyJustPressed(Input.Keys.J)) {  // Triggered by J key press for combining
+                if (Gdx.input.isKeyJustPressed(Input.Keys.J)) {
                     advanceTutorialStep();
                 }
                 break;
@@ -357,7 +351,7 @@ public class TutorialScreenDisplay extends UIComponent {
      */
     private void startGame() {
         if (table != null) {
-            table.clear();  // Safely clear the table
+            table.clear();
         }
         ServiceLocator.getLevelService().setCurrLevel(GdxGame.LevelType.LEVEL_1);
         game.setScreen(GdxGame.ScreenType.MAIN_GAME);
