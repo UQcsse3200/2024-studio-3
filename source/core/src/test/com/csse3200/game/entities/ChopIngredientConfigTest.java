@@ -16,9 +16,9 @@ public class ChopIngredientConfigTest {
     public void setUp() {
         // Initialize a new ChopIngredientConfig instance and set up ingredientChopTimes
         chopIngredientConfig = new ChopIngredientConfig();
-        chopIngredientConfig.ingredientChopTimes = new HashMap<>();
-        chopIngredientConfig.ingredientChopTimes.put("Carrot", 5);
-        chopIngredientConfig.ingredientChopTimes.put("Potato", 3);
+        ChopIngredientConfig.ingredientChopTimes = new HashMap<>();
+        ChopIngredientConfig.ingredientChopTimes.put("Carrot", 5);
+        ChopIngredientConfig.ingredientChopTimes.put("Potato", 3);
     }
 
     @Test
