@@ -69,8 +69,6 @@ class MainGameOrderTicketDisplayTest {
 		textureMock = mock(Texture.class);
 		randomComboService = new RandomComboService(new EventHandler());
 
-		ServiceLocator.registerRandomComboService(randomComboService);
-
 		serviceLocatorMock = Mockito.mockStatic(ServiceLocator.class);
 
 		serviceLocatorMock.when(ServiceLocator::getRenderService).thenReturn(renderService);
@@ -78,6 +76,7 @@ class MainGameOrderTicketDisplayTest {
         serviceLocatorMock.when(ServiceLocator::getPlayerService).thenReturn(playerService);
         serviceLocatorMock.when(ServiceLocator::getResourceService).thenReturn(resourceService);
         serviceLocatorMock.when(ServiceLocator::getTicketDetails).thenReturn(ticketDetails);
+		serviceLocatorMock.when(ServiceLocator::getRandomComboService).thenReturn(randomComboService);
 
 		resourceService = mock(ResourceService.class);
         textureMock = mock(Texture.class);

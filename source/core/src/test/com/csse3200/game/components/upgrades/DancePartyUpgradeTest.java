@@ -25,6 +25,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.concurrent.atomic.AtomicBoolean;
+
 @ExtendWith(GameExtension.class)
 @ExtendWith(MockitoExtension.class)
 public class DancePartyUpgradeTest {
