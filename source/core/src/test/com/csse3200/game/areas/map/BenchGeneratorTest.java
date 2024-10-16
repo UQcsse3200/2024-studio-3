@@ -24,7 +24,6 @@ import static org.mockito.Mockito.*;
 @ExtendWith(GameExtension.class)
 public class BenchGeneratorTest {
     private AutoCloseable mocks;
-    private BenchGenerator benchGenerator;
 
     @BeforeEach
     void init() {
@@ -36,8 +35,6 @@ public class BenchGeneratorTest {
         ServiceLocator.registerRenderService(renderService);
         ServiceLocator.registerEntityService(entityService);
         ServiceLocator.registerResourceService(resourceService);
-
-        benchGenerator = spy(new BenchGenerator());
     }
 
     @AfterEach
@@ -51,7 +48,7 @@ public class BenchGeneratorTest {
         try(MockedConstruction<Bench> mockBench =
                     Mockito.mockConstruction(Bench.class)){
 
-            ArrayList<Bench> benches =  benchGenerator.createBenchColumn(5, 1, 4);
+            ArrayList<Bench> benches =  BenchGenerator.createBenchColumn(5, 1, 4);
             assertEquals(4, mockBench.constructed().size()); //both work - how many times a bench
             // was initalised
             assertEquals(4, benches.size()); //both work - how long the bench column is
@@ -64,7 +61,7 @@ public class BenchGeneratorTest {
         try(MockedConstruction<Bench> mockBench =
                     Mockito.mockConstruction(Bench.class)){
 
-            ArrayList<Bench> benches =  benchGenerator.createBenchRow(1, 4, 5);
+            ArrayList<Bench> benches =  BenchGenerator.createBenchRow(1, 4, 5);
             assertEquals(4, mockBench.constructed().size()); //both work - how many times a bench
             // was initalised
             assertEquals(4, benches.size()); //both work - how long the bench row is
@@ -77,7 +74,7 @@ public class BenchGeneratorTest {
         try(MockedConstruction<Bench> mockBench =
                     Mockito.mockConstruction(Bench.class)){
 
-            ArrayList<Bench> benches =  benchGenerator.singleBench(1, 4);
+            ArrayList<Bench> benches =  BenchGenerator.singleBench(1, 4);
             assertEquals(1, mockBench.constructed().size()); //both work - how many times a bench
             // was initalised
             assertEquals(1, benches.size()); //both work - how long the bench row is
@@ -90,7 +87,7 @@ public class BenchGeneratorTest {
         try(MockedConstruction<Bench> mockBench =
                     Mockito.mockConstruction(Bench.class)){
 
-            ArrayList<Bench> benches =  benchGenerator.singleShadowBench(1, 4);
+            ArrayList<Bench> benches =  BenchGenerator.singleShadowBench(1, 4);
             assertEquals(1, mockBench.constructed().size()); //both work - how many times a bench
             // was initalised
             assertEquals(1, benches.size()); //both work - how long the bench row is
@@ -103,7 +100,7 @@ public class BenchGeneratorTest {
         try(MockedConstruction<Bench> mockBench =
                     Mockito.mockConstruction(Bench.class)){
 
-            ArrayList<Bench> benches =  benchGenerator.singleBlocker(1, 4);
+            ArrayList<Bench> benches =  BenchGenerator.singleBlocker(1, 4);
             assertEquals(1, mockBench.constructed().size()); //both work - how many times a bench
             // was initalised
             assertEquals(1, benches.size()); //both work - how long the bench row is

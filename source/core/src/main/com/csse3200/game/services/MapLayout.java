@@ -196,7 +196,6 @@ public class MapLayout {
             case "P":
                 if (size == 1) {
                     return BenchGenerator.singleBlocker(startCol + 4, row - 4);
-                }
 
                 return BenchGenerator.createBenchRow(startCol + 4, startCol + size +4, row - 4);
             case "Y":

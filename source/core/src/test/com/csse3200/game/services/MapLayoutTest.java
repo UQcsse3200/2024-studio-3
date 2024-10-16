@@ -52,9 +52,9 @@ class MapLayoutTest {
     void setUp() {
 //      SARAH'S BIT ____
         ResourceService resourceService = mock(ResourceService.class);
-//
+
         TerrainFactory factory = mock(TerrainFactory.class);
-//
+
         ServiceLocator.registerRenderService(new RenderService());
         ServiceLocator.registerPhysicsService(new PhysicsService());
         ServiceLocator.registerEntityService(new EntityService());
@@ -127,30 +127,30 @@ class MapLayoutTest {
         verify(mapLayoutSpy).readStation("N", 2, 5);
         verify(mapLayoutSpy).readStation("S", 0, 7);
     }
+
     /**
      @Test
      void testReadBench() {
-     //when(mapLayoutmock.readBench(anyString(), anyInt(), anyInt(), anyInt()))
-     //      .thenReturn(new ArrayList<Bench>());
-     //when(mapLayoutmock.readStation(anyString(), anyInt(), anyInt()))
-     //    .thenReturn(mock(Entity.class));
+         try(MockedConstruction<BenchGenerator> benchGenerator =
+         Mockito.mockConstruction(BenchGenerator.class)){
 
-     try(MockedConstruction<BenchGenerator> benchGenerator =
-     Mockito.mockConstruction(BenchGenerator.class)){
+             when(mapLayoutmock.readBench(anyString(), anyInt(), anyInt(), anyInt()))
+             .thenReturn(new ArrayList<Bench>());
 
-     when(mapLayoutmock.readBench(anyString(), anyInt(), anyInt(), anyInt()))
-     .thenReturn(new ArrayList<Bench>());
-     when(mapLayoutmock.readStation(anyString(), anyInt(), anyInt()))
-     .thenReturn(mock(Entity.class));
-     when(mapLayoutmock.load(GdxGame.LevelType.LEVEL_1)).thenReturn(mock(Map.class));
-     map = mapLayoutmock.load(GdxGame.LevelType.LEVEL_1);
-     System.out.println(map.getBenches());
-     assertEquals(0, map.getNumBenches());
-     }
+             when(mapLayoutmock.readStation(anyString(), anyInt(), anyInt()))
+             .thenReturn(mock(Entity.class));
+
+             when(mapLayoutmock.load(GdxGame.LevelType.LEVEL_1)).thenReturn(mock(Map.class));
+
+             map = mapLayoutmock.load(GdxGame.LevelType.LEVEL_1);
+             System.out.println(map.getBenches());
+             assertEquals(0, map.getNumBenches());
+         }
 
      }
+     **/
 
-
+    /**
      @Test
      void testReadStation() {
      //when(mapLayoutmock.readBench(anyString(), anyInt(), anyInt(), anyInt()))
@@ -161,18 +161,22 @@ class MapLayoutTest {
      try(MockedConstruction<BenchGenerator> benchGenerator =
      Mockito.mockConstruction(BenchGenerator.class)){
 
-     when(mapLayoutmock.readBench(anyString(), anyInt(), anyInt(), anyInt()))
-     .thenReturn(new ArrayList<Bench>());
-     when(mapLayoutmock.readStation(anyString(), anyInt(), anyInt()))
-     .thenReturn(mock(Entity.class));
-     when(mapLayoutmock.load(GdxGame.LevelType.LEVEL_1)).thenReturn(mock(Map.class));
-     map = mapLayoutmock.load(GdxGame.LevelType.LEVEL_1);
-     System.out.println(map.getBenches());
-     assertEquals(0, map.getNumBenches());
-     }
+             when(mapLayoutmock.readBench(anyString(), anyInt(), anyInt(), anyInt()))
+             .thenReturn(new ArrayList<Bench>());
+
+             when(mapLayoutmock.readStation(anyString(), anyInt(), anyInt()))
+             .thenReturn(mock(Entity.class));
+
+             when(mapLayoutmock.load(GdxGame.LevelType.LEVEL_1)).thenReturn(mock(Map.class));
+
+             map = mapLayoutmock.load(GdxGame.LevelType.LEVEL_1);
+             System.out.println(map.getBenches());
+             assertEquals(0, map.getNumBenches());
+         }
 
      }
-     */
+     **/
+
     @Test
     void validateStations() {
         for (String station : validStations) {
@@ -180,5 +184,82 @@ class MapLayoutTest {
         }
         assertFalse(mapLayoutSpy.validateStation("L"));
     }
+
+    @Test
+    void readSingleBench() {
+        try(MockedConstruction<Bench> ignored =
+                    Mockito.mockConstruction(Bench.class)) {
+            ArrayList<Bench> bench = mapLayoutSpy.readBench("X", 0, 1, 4);
+            ArrayList<Bench> expectedBench = BenchGenerator.singleBench(4,0);
+            //checks coordinates -> can't compare benches directly as hash codes conflict
+            assertEquals(bench.get(0).getX(), expectedBench.get(0).getX());
+            assertEquals(bench.get(0).getY(), expectedBench.get(0).getY());
+
+        }
+    }
+
+    @Test
+    void readBenchRow() {
+        try(MockedConstruction<Bench> ignored =
+                    Mockito.mockConstruction(Bench.class)) {
+            ArrayList<Bench> bench = mapLayoutSpy.readBench("X", 0, 3, 4);
+            ArrayList<Bench> expectedBench = BenchGenerator.createBenchRow(4, 6,0);
+            //checks coordinates -> can't compare benches directly as hash codes conflict
+
+            //coordinates of starting bench
+            assertEquals(bench.get(0).getX(), expectedBench.get(0).getX());
+            assertEquals(bench.get(0).getY(), expectedBench.get(0).getY());
+
+            //coordinates of ending bench -> assumes bench row loads properly (tested in
+            // benchGenerator)
+            assertEquals(bench.get(2).getX(), expectedBench.get(2).getX());
+            assertEquals(bench.get(2).getY(), expectedBench.get(2).getY());
+
+        }
+    }
+
+//    FOR PARAMETRISED TESTING _____
+//
+//    void testReadBench(String type, int startCol, int size, int row) {
+//
+//        try(MockedConstruction<BenchGenerator> benchGenerator =
+//                    Mockito.mockConstruction(BenchGenerator.class)) {
+//
+//            ArrayList<Bench> bench = mapLayoutSpy.readBench(type, startCol, size, row);
+//
+//            // assert bench read is right
+//            if (size == 1) {
+//                switch (type) {
+//                    case "X":
+//                        verify(benchGenerator).singleBench(startCol + 4, row - 4);
+//                        break;
+//                    case "Q":
+//                        assertEquals(bench, benchGenerator.singleShadowBench(startCol + 4, row - 4));
+//                        break;
+//                    case "P":
+//                        assertEquals(bench, benchGenerator.singleBlocker(startCol + 4, row - 4));
+//                        break;
+//                    default:
+//                        assertTrue(true);
+//                }
+//            } else {
+//                switch (type) {
+//                    case "X":
+//                        assertEquals(bench, benchGenerator.createBenchRow(startCol + 4, startCol + size +4, row - 4));
+//                        break;
+//                    case "Y":
+//                        benchGenerator.createBenchColumn(startCol + 4, row - 4, row + size - 4);
+//                        break;
+//                    default:
+//                        assertTrue(true);
+//                }
+//            }
+//
+//
+//        }
+//
+//
+//
+//    }
 
 }
