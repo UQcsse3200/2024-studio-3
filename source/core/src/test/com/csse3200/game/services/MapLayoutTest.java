@@ -98,6 +98,10 @@ class MapLayoutTest {
 
         mapLayoutSpy.load(GdxGame.LevelType.LEVEL_1);
 
+        assertEquals("Level 1", mapLayoutSpy.getMapName());
+        assertEquals(7, mapLayoutSpy.getMapWidth());
+        assertEquals(4, mapLayoutSpy.getMapHeight());
+
         verify(mapLayoutSpy).parseLine("X09 Y02 Y97".split(""), 4, 0);
         verify(mapLayoutSpy).parseLine("X09 Y02 Y97".split(""), 4, 4);
         verify(mapLayoutSpy).parseLine("X09 Y02 Y97".split(""), 4, 8);
