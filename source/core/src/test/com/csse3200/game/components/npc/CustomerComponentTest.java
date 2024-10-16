@@ -27,11 +27,11 @@ public class CustomerComponentTest {
     @Test
     void testPersonalCustomerComponents(){
         CustomerPersonalityConfig mockConfigs = new CustomerPersonalityConfig();
-        mockConfigs.name = "Hank";
-        mockConfigs.type = "Gorilla";
-        mockConfigs.countDown = 20;
-        mockConfigs.preference = "bananaSplit";
-        mockConfigs.reputation = 100;
+        CustomerPersonalityConfig.name = "Hank";
+        BaseCustomerConfig.type = "Gorilla";
+        BaseCustomerConfig.countDown = 20;
+        BaseCustomerConfig.preference = "bananaSplit";
+        CustomerPersonalityConfig.reputation = 100;
 
         CustomerComponent components = new CustomerComponent(mockConfigs);
         assertEquals("Hank", components.getName());
@@ -44,9 +44,9 @@ public class CustomerComponentTest {
     @Test
     void testBasicCustomerComponents(){
         BaseCustomerConfig basicMockConfigs = new BaseCustomerConfig();
-        basicMockConfigs.type = "Chicken";
-        basicMockConfigs.countDown = 20;
-        basicMockConfigs.preference = "salad";
+        BaseCustomerConfig.type = "Chicken";
+        BaseCustomerConfig.countDown = 20;
+        BaseCustomerConfig.preference = "salad";
 
         CustomerComponent components = new CustomerComponent(basicMockConfigs);
         assertEquals(20, components.getCountDown());

@@ -5,12 +5,12 @@ public class BaseCustomerConfig {
     private static final int MIN = 100000;
     private static final int RANGE = MAX - MIN + 1;
 
-    public String type = "Consumer" + Math.random();
-    public int countDown = 30; // in seconds
-    public int patience = 100; // in seconds
+    public static String type = "Consumer" + Math.random();
+    public static int countDown = 30; // in seconds
+    public static final int patience = 100; // in seconds
 
-    public String texture;
-    public String preference = "placeholder"; //change to list of recipe or ingredients
+    public static String texture;
+    public static String preference = "placeholder"; //change to list of recipe or ingredients
 
-    public int Customer_id = (int)(Math.random() * RANGE) + MIN;
+    public static final int customerId = (int)(Math.random() * RANGE) + MIN;
 }

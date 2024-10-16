@@ -16,9 +16,9 @@ public class CookIngredientConfigTest {
     public void setUp() {
         // Initialize a new CookIngredientConfig instance and set up ingredientCookTimes
         cookIngredientConfig = new CookIngredientConfig();
-        cookIngredientConfig.ingredientCookTimes = new HashMap<>();
-        cookIngredientConfig.ingredientCookTimes.put("Steak", 10);
-        cookIngredientConfig.ingredientCookTimes.put("Chicken", 7);
+        CookIngredientConfig.ingredientCookTimes = new HashMap<>();
+        CookIngredientConfig.ingredientCookTimes.put("Steak", 10);
+        CookIngredientConfig.ingredientCookTimes.put("Chicken", 7);
     }
 
     @Test
