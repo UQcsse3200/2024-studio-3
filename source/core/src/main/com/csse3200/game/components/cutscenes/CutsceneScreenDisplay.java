@@ -8,7 +8,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import com.badlogic.gdx.utils.Align;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
@@ -75,19 +74,6 @@ public class CutsceneScreenDisplay extends UIComponent {
             }
         });
         table.add(skipBtn).padBottom(10f).padRight(30f);
-
-        // Create "Previous Scene" button with its functionality
-        TextButton previousSceneBtn = new TextButton("Previous Scene", skin);
-        previousSceneBtn.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent changeEvent, Actor actor) {
-                logger.info("Previous Scene button clicked");
-                entity.getEvents().trigger("previousCutscene");  // Trigger previous cutscene
-                logger.info("Previous Scene button clicked");
-            }
-        });
-        table.add(previousSceneBtn).padBottom(10f).padRight(10f);  // Add the button to the UI layout
-
 
         // Create "Next Scene" button with its functionality
         TextButton nextSceneBtn = new TextButton("Next Scene", skin);
@@ -193,9 +179,5 @@ public class CutsceneScreenDisplay extends UIComponent {
      * @param textDisplay the CutsceneTextDisplay to be set.
      */
     public void setTextDisplay(TextDisplay textDisplay) { this.textDisplay = textDisplay; }
-
-    /**
-     * Function that enables or disables the text box.
-     */
 
 }

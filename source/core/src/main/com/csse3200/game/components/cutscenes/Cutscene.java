@@ -83,7 +83,6 @@ public abstract class Cutscene extends Component {
     @Override
     public void create() {
         entity.getEvents().addListener("nextCutscene", this::nextCutscene);
-        entity.getEvents().addListener("previousCutscene", this::previousCutscene);
         loadScene(currentSceneIndex);
         textIndex--;
     }
@@ -496,19 +495,6 @@ public abstract class Cutscene extends Component {
         logger.info("Scene {} loaded successfully. Not triggering next scene.", currentSceneIndex);
     }
 
-    protected void previousCutscene() {
-        disposeEntities();  // Dispose of current entities before moving to the previous scene
-
-        // Decrement the scene index to load the previous scene
-        currentSceneIndex--;
-        if (currentSceneIndex >= 0) {  // Ensure we are not below the first scene
-            logger.info("Loading previous scene: {}", currentSceneIndex);
-            loadScene(currentSceneIndex);
-        } else {
-            currentSceneIndex = 0;  // If we're at the first scene, don't go back further
-            logger.info("Already at the first scene.");
-        }
-    }
 
 
 }

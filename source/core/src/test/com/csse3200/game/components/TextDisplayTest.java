@@ -55,4 +55,8 @@ public class TextDisplayTest {
         assertTrue(test.getText().get(0).endsWith("(enter to continue)"), "First line should end with 'enter to continue'");
     }
 
+
+
+
+
 }
