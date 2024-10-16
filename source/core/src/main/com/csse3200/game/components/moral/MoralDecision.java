@@ -22,7 +22,7 @@ public class MoralDecision extends Component {
 
     private static final Logger logger = LoggerFactory.getLogger(MoralDecision.class);
 
-    private final List<Decision> ListOfDecisions = new ArrayList<>();
+    private final List<Decision> listOfDecisions = new ArrayList<>();
     private Boolean currentMorality = true;
 
     /**
@@ -32,7 +32,7 @@ public class MoralDecision extends Component {
      * @return true if the decision was added successfully
      */
     public boolean addQuestion(String question) {
-        ListOfDecisions.add(new Decision(question, true, 10));
+        listOfDecisions.add(new Decision(question, true, 10));
         return true;
     }
 
@@ -45,7 +45,7 @@ public class MoralDecision extends Component {
      * @return true if the decision was added successfully
      */
     public boolean addQuestion(String question, boolean isGood, int effectMoney) {
-        ListOfDecisions.add(new Decision(question, isGood, effectMoney));
+        listOfDecisions.add(new Decision(question, isGood, effectMoney));
         return true;
     }
 
@@ -55,7 +55,7 @@ public class MoralDecision extends Component {
      * @param decision the Decision object to add
      */
     public void addDecision(Decision decision) {
-        ListOfDecisions.add(decision);
+        listOfDecisions.add(decision);
     }
 
     /**
@@ -65,7 +65,7 @@ public class MoralDecision extends Component {
      * @return the result of the decision, or false if the decision is not found
      */
     public boolean getDecision(int index) {
-        return ListOfDecisions.get(index).getDecision();
+        return listOfDecisions.get(index).getDecision();
     }
 
     /**
@@ -75,7 +75,7 @@ public class MoralDecision extends Component {
      * @return the result of the decision, or false if the decision is not found
      */
     public boolean getDecision(String question) {
-        for (Decision decision : ListOfDecisions) {
+        for (Decision decision : listOfDecisions) {
             if (decision.getStatement().equals(question)) {
                 return decision.getDecision();
             }
@@ -110,7 +110,7 @@ public class MoralDecision extends Component {
      */
     public boolean setDecision(int index, boolean decision) {
         logger.debug("Setting decision for index: {} to {}", index, decision);
-        ListOfDecisions.get(index).setDecision(decision);
+        listOfDecisions.get(index).setDecision(decision);
 
         if (!decision){
             setCurrentMorality(false);
@@ -135,7 +135,7 @@ public class MoralDecision extends Component {
      * @return the list of decisions
      */
     public List<Decision> getListOfDecisions() {
-        return ListOfDecisions;
+        return listOfDecisions;
     }
 
     /**
@@ -145,14 +145,14 @@ public class MoralDecision extends Component {
      * @return the statement of the decision
      */
     public String getDecisionQuestion(int index) {
-        return ListOfDecisions.get(index).getStatement();
+        return listOfDecisions.get(index).getStatement();
     }
 
     /**
      * Clears all decisions from the list.
      */
     public void clearDecisions() {
-        ListOfDecisions.clear();
+        listOfDecisions.clear();
         currentMorality = true;
     }
 
@@ -162,7 +162,7 @@ public class MoralDecision extends Component {
      * @param index the index of the decision to remove
      */
     public void removeDecision(int index) {
-        ListOfDecisions.remove(index);
+        listOfDecisions.remove(index);
     }
 
     /**
@@ -171,7 +171,7 @@ public class MoralDecision extends Component {
      * @param decision the Decision object to remove
      */
     public void removeDecision(Decision decision) {
-        ListOfDecisions.remove(decision);
+        listOfDecisions.remove(decision);
     }
 
     /**
@@ -180,9 +180,9 @@ public class MoralDecision extends Component {
      * @param question the question or statement of the decision to remove
      */
     public void removeDecision(String question) {
-        for (Decision decision : ListOfDecisions) {
+        for (Decision decision : listOfDecisions) {
             if (decision.getStatement().equals(question)) {
-                ListOfDecisions.remove(decision);
+                listOfDecisions.remove(decision);
                 return;
             }
         }
