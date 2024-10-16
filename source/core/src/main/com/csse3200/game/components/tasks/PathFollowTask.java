@@ -1,10 +1,13 @@
 package com.csse3200.game.components.tasks;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.ai.tasks.DefaultTask;
 import com.csse3200.game.ai.tasks.PriorityTask;
 import com.csse3200.game.ai.tasks.Task;
 import com.csse3200.game.ai.tasks.TaskRunner;
+import com.csse3200.game.components.ScoreSystem.HoverBoxComponent;
+import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.factories.NPCFactory;
 import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
@@ -91,6 +94,9 @@ public class PathFollowTask extends DefaultTask implements PriorityTask {
 
         // Check if it's time to move to the predefined position
         if (!hasMovedToPredefined && elapsedTime >= makingTime) {
+            Entity customer = owner.getEntity();
+            HoverBoxComponent hoverBox = customer.getComponent(HoverBoxComponent.class);
+            hoverBox.setTexture(new Texture("images/customer_faces/angry_face.png"));
             triggerMoveToPredefinedPosition();
             hasMovedToPredefined = true;
         }
