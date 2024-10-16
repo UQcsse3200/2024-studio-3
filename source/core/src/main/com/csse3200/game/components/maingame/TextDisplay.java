@@ -1,5 +1,6 @@
 package com.csse3200.game.components.maingame;
 
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.Gdx;
 import org.slf4j.Logger;
@@ -31,12 +32,11 @@ import com.csse3200.game.components.cutscenes.*;
  */
 
 public class TextDisplay extends UIComponent {
-    private static final Logger logger = LoggerFactory.getLogger(TextDisplay.class);
     //String building variables
     private List<String> text;
     private int currentPart = 0;
     private int textLength = 0;
-    private StringBuilder currentText;
+    public StringBuilder currentText;
     private int textLimit = 60;
     private int charIndex = 0;
     private long lastUpdate = 0L;
@@ -44,10 +44,12 @@ public class TextDisplay extends UIComponent {
 
     // Displaying variables
     private boolean visible;
-    private Label label;
+    public Label label;
     private Table table;
     private final ScreenAdapter game;
     private String screen;
+    private static final Logger logger = LoggerFactory.getLogger(TextDisplay.class);
+
     public TextDisplay() {
         super();
         this.game = null;
@@ -83,13 +85,6 @@ public class TextDisplay extends UIComponent {
         return delay;
     }
 
-    /***
-     * Sets the delay of each character printing on the screen
-     * @param delay - A long which is the time it takes
-     */
-    public void setDelay(long delay) {
-        this.delay = delay;
-    }
 
     /***
      * This function will
@@ -129,7 +124,7 @@ public class TextDisplay extends UIComponent {
 
         // Add the stack to the table with padding or alignment options
         table.add(stack).padBottom(70).padLeft(0).size((int)(Gdx.graphics.getWidth() * 0.5), (int)(Gdx.graphics.getHeight() * 0.2));
-        setVisible(Objects.equals(this.screen, "cutscene"));
+        setVisible(Objects.equals(this.screen, "cutscene") || Objects.equals(this.screen, "moralDecision"));
         setupInputListener();
         entity.getEvents().addListener("SetText", this::setText);
     }
@@ -139,12 +134,23 @@ public class TextDisplay extends UIComponent {
      * @param text - a string which is the text to be displayed
      */
     public void setText(String text) {
-        setVisible(true);
+        if (this.label == null) {
+            BitmapFont defaultFont = new BitmapFont();
+            Label.LabelStyle labelStyle = new Label.LabelStyle(defaultFont, Color.BLACK);
+            this.label = new Label("", labelStyle);
+        }
+
+        currentText.setLength(0);
+        label.setText("");
+        charIndex = 0;
         currentPart = 0;
+
+        setVisible(true);
         List<String> newText = new ArrayList<>();
-        textLength = text.length();
+        int textLength = text.length();
         StringBuilder temp = new StringBuilder();
         StringBuilder current = new StringBuilder();
+
         for (int i = 0; i < textLength; i++) {
             // if word formed in temp
             if (text.charAt(i) == ' ') {
@@ -152,34 +158,30 @@ public class TextDisplay extends UIComponent {
                 current = new StringBuilder();
             }
 
+            int textLimit = 60;
             if (i != 0 && i % textLimit == 0) {
                 temp.append(" (enter to continue)");
                 newText.add(temp.toString());
                 temp = new StringBuilder();
             }
-            current.    append(text.charAt(i));
+            current.append(text.charAt(i));
         }
         temp.append(current).append(" (enter to continue)");
         newText.add(temp.toString());
         this.text = newText;
     }
 
-    /** Alternative method to set text with no modificiation or spiliting up **/
-    public void setTextRaw(String text) {
-
-        label.setText(text);
-    }
 
     /***
      * Gets the text in the blocks allocated by the algorithm
-     * @return an array of strings which is the text
+     * @return a List of strings which is the text
      */
     public List<String> getText() {
         return text;
     }
 
     /***
-     * Set visiblility of the textbox
+     * Set visibility of the textbox
      * @param value - True or False if the textbox is visible
      */
     public void setVisible(boolean value) {
@@ -199,14 +201,21 @@ public class TextDisplay extends UIComponent {
     @Override
     public void update() {
         long time = ServiceLocator.getTimeSource().getTime();
-        if (this.text != null && currentPart < TextDisplay.this.text.size() && charIndex < this.text.get(currentPart).length()) {
-            if (time - lastUpdate >= delay) {
-                lastUpdate = time;
-                // Add a character and set the label to new text
-                this.currentText.append(text.get(currentPart).charAt(charIndex));
-                label.setText(currentText.toString());
-                charIndex++;
+
+        if (this.text != null && currentPart < text.size()) {
+            if (charIndex < text.get(currentPart).length()) {
+                if (time - lastUpdate >= delay) {
+                    lastUpdate = time;
+                    this.currentText.append(text.get(currentPart).charAt(charIndex));
+                    label.setText(currentText.toString());
+                    charIndex++;
+                }
             }
+            if (charIndex >= text.get(currentPart).length()) {
+                entity.getEvents().trigger("TextComplete", currentPart);
+            }
+        } else {
+            //Nothing
         }
     }
 
@@ -215,16 +224,45 @@ public class TextDisplay extends UIComponent {
      * of the text or clear the textbox from the screen
      */
     private void setupInputListener() {
+        logger.info(TextDisplay.this.screen);
         stage.addListener(new InputListener() {
             @Override
             public boolean keyDown(InputEvent event, int keycode) {
-                if (keycode == com.badlogic.gdx.Input.Keys.ENTER || keycode == com.badlogic.gdx.Input.Keys.SPACE) {
-                    // if the text hasn't been fully shown
-                    if (TextDisplay.this.screen.equals("cutscene")) {
+
+                if (TextDisplay.this.screen.equals("cutscene")) {
+                    if (keycode == com.badlogic.gdx.Input.Keys.ENTER || keycode == com.badlogic.gdx.Input.Keys.SPACE) {
+                        logger.info("we've pressed enter");
                         Cutscene currentCutscene = ServiceLocator.getCurrentCutscene();
                         currentCutscene.setTextForScene(currentCutscene.currentScene);
                         label.setText(currentCutscene.currentText);
-                    } else if (charIndex < TextDisplay.this.text.get(currentPart).length()) {
+                    }
+                    return true;
+                } else if (TextDisplay.this.screen.equals("moralDecision")){
+                    Cutscene currentCutscene = ServiceLocator.getCurrentCutscene();
+                    Boolean atEnd = currentCutscene.isAtEnd();
+                    if (keycode == com.badlogic.gdx.Input.Keys.ENTER || keycode == com.badlogic.gdx.Input.Keys.SPACE){
+                        logger.info("at moral in textDisplay");
+                        if (!atEnd) {
+                            logger.info("parsing through");
+                            currentCutscene.setTextForSceneMoral(currentCutscene.currentScene);
+                            label.setText(currentCutscene.currentText);
+                        }
+                    } else if (keycode == Input.Keys.Y && atEnd){
+                        logger.info("WE'RE ALMOST THERE");
+                        currentCutscene = ServiceLocator.getCurrentCutscene();
+                        currentCutscene.setTextForScene(currentCutscene.currentScene);
+
+                        ServiceLocator.getDayNightService().getEvents().trigger("YesAtMoralDecision");
+                    } else if (keycode == Input.Keys.N && atEnd){
+                        logger.info("WE'RE ALMOST THERE NO");
+                        currentCutscene = ServiceLocator.getCurrentCutscene();
+                        currentCutscene.setTextForScene(currentCutscene.currentScene);
+
+                        ServiceLocator.getDayNightService().getEvents().trigger("NoAtMoralDecision");
+                    }
+                    return true;
+                }  else if (keycode == com.badlogic.gdx.Input.Keys.ENTER){
+                    if (charIndex < TextDisplay.this.text.get(currentPart).length()) {
                         label.setText(text.get(currentPart));
                         charIndex = TextDisplay.this.text.get(currentPart).length();
                     } else {
@@ -255,8 +293,8 @@ public class TextDisplay extends UIComponent {
     public Table getTable() {
         return table;
     }
-    public void disable() {
-        visible = false;
-        table.setVisible(false);
+
+    public void setScreen(String screen){
+        this.screen = screen;
     }
 }

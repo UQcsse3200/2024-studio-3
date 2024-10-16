@@ -188,6 +188,7 @@ public class MoralDecisionDisplay extends UIComponent {
         isVisible = false;
         layout.setVisible(isVisible);
         game.resume(); // Resume the game when the display is hidden
+        logger.info("decisionDone about to be triggered");
         ServiceLocator.getDayNightService().getEvents().trigger("decisionDone");
 
     }

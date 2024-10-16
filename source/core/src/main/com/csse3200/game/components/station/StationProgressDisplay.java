@@ -43,7 +43,7 @@ public class StationProgressDisplay extends RenderComponent {
     @Override
     public void create() {
         super.create();
-        ServiceLocator.getRenderService().register(this);
+        //ServiceLocator.getRenderService().register(this);
         barOutline = new Texture("images/inventory_ui/station_progress_bar_outline.png");
         barFill = new Texture("images/inventory_ui/station_progress_bar_fill.png");
         barPercentage = 0.0f;
@@ -121,7 +121,13 @@ public class StationProgressDisplay extends RenderComponent {
     @Override
     public void dispose() {
         super.dispose();
-        ServiceLocator.getRenderService().unregister(this);
+        if (barOutline != null) {
+            barOutline.dispose();
+        }
+        if (barFill != null) {
+            barFill.dispose();
+        }
+        // ServiceLocator.getRenderService().unregister(this);
     }
 
     @Override

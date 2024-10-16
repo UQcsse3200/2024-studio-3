@@ -198,10 +198,10 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         logger.info("Adding actors");
         Table table = new Table();
         long startTime = TimeUtils.millis();
-    
+
         startTimeArrayList.add(startTime);
         tableArrayList.add(table);
-    
+
         table.setFillParent(false);
         table.setSize(viewportWidth * 3f / 32f, 5f / 27f * viewportHeight); // DEFAULT_HEIGHT
         float xVal = cntXval(250f, tableArrayList.size());
@@ -209,41 +209,50 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         table.setPosition(xVal, yVal);
         table.padTop(25f);
         Docket background = new Docket(getTimer());
-    
+
         // Check if Dancing is active, and add 60 seconds to the timer for new tickets
         long ticketTimer = getTimer();
         if (ServiceLocator.getRandomComboService().dancing()) {
             ticketTimer += 600000; // Add 60 seconds
         }
         recipeTimeArrayList.add(ticketTimer); // Add adjusted time to the list
-    
+
         backgroundArrayList.add(background);
         table.setBackground(background.getImage().getDrawable());
-    
+
         String orderNumStr = "Order" + " " + ++orderNumb;
         Label orderNumbLabel = new Label(orderNumStr, skin);
         table.add(orderNumbLabel).padLeft(10f).row();
-    
+
         Label recipeNameLabel = new Label(getRecipe().getName(), skin);
         table.add(recipeNameLabel).padLeft(10f).row();
-    
-        String s = getRecipe().getName();
+
+        String s=getRecipe().getName();
         stringArrayList.add(s);
-        Texture texture = textureMap.get(mealDisplay.getMealImage(s, "vertical"));
-        mealImage = new Image(new TextureRegionDrawable(texture));
+        Texture texture= textureMap.get(mealDisplay.getMealImage(s,"vertical"));
+        mealImage=new Image(new TextureRegionDrawable(texture));
         imageArrayList.add(mealImage);
         table.add(mealImage).row();
-    
-        Label countdownLabel = new Label(TIMER + ticketTimer, skin);
+
+        recipeTimeArrayList.add(getTimer());
+        Label countdownLabel = new Label(TIMER + getTimer(), skin);
         countdownLabelArrayList.add(countdownLabel);
         table.add(countdownLabel).padLeft(10f).row();
-    
+
+        // Update TicketDetails immediately
+        String orderNumber = orderNumStr.replace("Order ", ""); // Remove "Order " prefix
+        String mealName = getRecipe().getName();
+        String timeLeft = String.valueOf(getTimer() / 1000); // Convert milliseconds to seconds
+
+        // Call onUpdateBigTicket() to update TicketDetails
+        ServiceLocator.getTicketDetails().onUpdateBigTicket(orderNumber, mealName, timeLeft);
+
         stage.addActor(table);
         updateDocketSizes();
-    
-        table.setZIndex((int) getZIndex());
+
+        table.setZIndex((int)getZIndex());
     }
-    
+
     /**
      * Calculates the x-position for an order ticket based on its index.
      *
@@ -515,7 +524,6 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         }
         updateDocketPositions();
         updateDocketSizes();
-        
     }
 
     /**

@@ -52,15 +52,13 @@ class PathFollowTaskTest {
 package com.csse3200.game.components.tasks;
 
 import static org.mockito.Mockito.*;
-import static org.junit.jupiter.api.Assertions.*;
-
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.ai.tasks.TaskRunner;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.services.ServiceLocator;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+
 
 public class PathFollowTaskTest {
     private TaskRunner taskRunner;
@@ -74,7 +72,7 @@ public class PathFollowTaskTest {
         when(taskRunner.getEntity()).thenReturn(entity);
         when(entity.getPosition()).thenReturn(new Vector2(0, 0));
         ServiceLocator.registerEntityService(mock(EntityService.class));
-        pathFollowTask = new PathFollowTask(new Vector2(10, 10), 1, 15);
+        pathFollowTask = new PathFollowTask(new Vector2(10, 10), 15);
         pathFollowTask.create(taskRunner);
     }
 

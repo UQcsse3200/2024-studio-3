@@ -1,8 +1,6 @@
 package com.csse3200.game.entities.factories;
 
 import com.csse3200.game.components.ScoreSystem.HoverBoxComponent;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -12,6 +10,7 @@ import com.csse3200.game.components.npc.CustomerComponent;
 import com.csse3200.game.components.npc.CustomerManager;
 import com.csse3200.game.components.ordersystem.OrderManager;
 import com.csse3200.game.components.ordersystem.Recipe;
+import com.csse3200.game.components.ordersystem.TicketDetails;
 import com.csse3200.game.components.player.TouchPlayerInputComponent;
 import com.csse3200.game.components.npc.GhostAnimationController;
 import com.csse3200.game.components.npc.SpecialNPCAnimationController;
@@ -30,6 +29,9 @@ import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.physics.components.PhysicsMovementComponent;
 import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
+
+import java.util.Arrays;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -74,7 +76,7 @@ public class NPCFactory {
     public static Entity createUpgradeNPC(Vector2 firstPosition, UpgradesDisplay upgradesDisplay) {
         Entity penguin = createStandard(firstPosition);
         AITaskComponent aiComponent = new AITaskComponent();
-        aiComponent.addTask(new PathFollowTask(firstPosition, 30, 15));
+        aiComponent.addTask(new PathFollowTask(firstPosition, 15));
 
         // Animation setup
         AnimationRenderComponent animator = new AnimationRenderComponent(
@@ -138,14 +140,9 @@ public class NPCFactory {
         logger.info("waitingTime: {}", waitingTime);
         Entity customer = createBaseCustomer(newTargetPosition, waitingTime);
 
-        // orderID is to link a specific customer to a specific order ticket
-        String orderNumber = String.valueOf(orderID);
-        logger.info("Order number: {}", orderNumber);
         CustomerComponent customerComponent = new CustomerComponent(config);
-        customerComponent.setOrderNumber(orderNumber);
         customer.addComponent(customerComponent);
 
-        CustomerManager.addCustomer(orderNumber, customer);
 
         // gets the preference of the customer
         String preference = customer.getComponent(CustomerComponent.class).getPreference();
@@ -165,6 +162,17 @@ public class NPCFactory {
         // Display the order for the customer
         customer.getEvents().addListener("customerArrived", () -> {
             OrderManager.displayOrder(customer);
+
+            TicketDetails bigTicket = ServiceLocator.getTicketDetails();
+            String[] bigTicketInfo = bigTicket.getCurrentBigTicketInfo();
+            logger.info(Arrays.toString(bigTicketInfo));
+
+            // Set the order number using bigTicketInfo[0]
+            customerComponent.setOrderNumber(bigTicketInfo[0]);
+
+            // Update CustomerManager with the updated order number
+            CustomerManager.addCustomer(bigTicketInfo[0], customer);
+            CustomerManager.printMessage();
         });
 
         logger.debug("Created customer {} with initial position: {}", name, customer.getPosition());
@@ -228,7 +236,7 @@ public class NPCFactory {
     public static Entity createBaseCustomer(Vector2 targetPosition, float waitingTime) {
         AITaskComponent aiComponent = new AITaskComponent();
         aiComponent
-                .addTask(new PathFollowTask(targetPosition, 30, waitingTime));
+                .addTask(new PathFollowTask(targetPosition, waitingTime));
         Entity npc = new Entity()
                         .addComponent(new PhysicsComponent())
                         .addComponent(new PhysicsMovementComponent())
@@ -244,7 +252,7 @@ public class NPCFactory {
     public static Entity createBaseCharacter(Vector2 targetPosition) {
         AITaskComponent aiComponent = new AITaskComponent();
         aiComponent
-                        .addTask(new PathFollowTask(targetPosition, 30, 15)) // Default countdown
+                        .addTask(new PathFollowTask(targetPosition, 15)) // Default countdown
                         .addTask(new TurnTask(10, 0.01f, 10f));
         Entity npc = new Entity()
                         .addComponent(new PhysicsComponent())
@@ -261,15 +269,13 @@ public class NPCFactory {
     public static Entity createStandard(Vector2 targetPosition) {
         AITaskComponent aiComponent = new AITaskComponent();
         aiComponent
-                        .addTask(new PathFollowTask(targetPosition, 30, 15)); // Default countdown
-        //                 .addTask(new TurnTask(10, 0.01f, 10f));
+                        .addTask(new PathFollowTask(targetPosition, 15)); // Default countdown
         Entity npc = new Entity()
                         .addComponent(new PhysicsComponent())
                         .addComponent(new PhysicsMovementComponent())
                         .addComponent(new ColliderComponent())
                         .addComponent(new HitboxComponent().setLayer(PhysicsLayer.NPC))
                         .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 1.5f));
-                        // .addComponent(aiComponent);
         PhysicsUtils.setScaledCollider(npc, 0.9f, 0.4f);
         npc.getComponent(PhysicsComponent.class).getBody().setUserData("Customer");
         return npc;

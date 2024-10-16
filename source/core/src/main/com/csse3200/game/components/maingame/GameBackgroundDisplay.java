@@ -11,6 +11,9 @@ import com.csse3200.game.ui.UIComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * Displays the background for the main game area.
+ */
 public class GameBackgroundDisplay extends UIComponent {
     private Table table;
     private static final Logger logger = LoggerFactory.getLogger(GameBackgroundDisplay.class);
@@ -113,6 +116,9 @@ public class GameBackgroundDisplay extends UIComponent {
         // setStage is handled
     }
 
+    /**
+     * Updates the background image to the next frame in the cycle
+     */
     @Override
     public void update() {
         if (!lastFrame) {

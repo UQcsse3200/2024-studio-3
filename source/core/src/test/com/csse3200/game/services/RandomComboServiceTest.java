@@ -1,8 +1,6 @@
 package com.csse3200.game.services;
 
 import com.csse3200.game.events.EventHandler;
-import com.csse3200.game.services.ServiceLocator;
-import com.csse3200.game.services.RandomComboService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -10,7 +8,7 @@ import org.mockito.Mockito;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-public class RandomComboServiceTest {
+class RandomComboServiceTest {
     private RandomComboService randomComboService;
     private EventHandler mockEventHandler;
 
@@ -22,13 +20,13 @@ public class RandomComboServiceTest {
     }
 
     @Test
-    public void testDefaultConstructor() {
+    void testDefaultConstructor() {
         RandomComboService defaultService = new RandomComboService();
         assertNotNull(defaultService.getEvents());
     }
 
     @Test
-    public void testGetSelectedUpgrade() {
+    void testGetSelectedUpgrade() {
         String selectedUpgrade = randomComboService.getSelectedUpgrade();
         assertTrue(
                 selectedUpgrade.equals("Extortion") ||
@@ -38,7 +36,7 @@ public class RandomComboServiceTest {
     }
 
     @Test
-    public void testActivateUpgrade() {
+    void testActivateUpgrade() {
         randomComboService = new RandomComboService(mockEventHandler) {
             @Override
             public String getSelectedUpgrade() {
@@ -51,12 +49,12 @@ public class RandomComboServiceTest {
     }
 
     @Test
-    public void testGetEvents() {
+    void testGetEvents() {
         assertEquals(mockEventHandler, randomComboService.getEvents());
     }
 
     @Test
-    public void testActivateUpgradeForExtortion() {
+    void testActivateUpgradeForExtortion() {
         randomComboService = new RandomComboService(mockEventHandler) {
             @Override
             public String getSelectedUpgrade() {
@@ -68,7 +66,7 @@ public class RandomComboServiceTest {
     }
 
     @Test
-    public void testActivateUpgradeForLoan() {
+    void testActivateUpgradeForLoan() {
         randomComboService = new RandomComboService(mockEventHandler) {
             @Override
             public String getSelectedUpgrade() {
@@ -80,7 +78,7 @@ public class RandomComboServiceTest {
     }
 
     @Test
-    public void testActivateUpgradeForSpeed() {
+    void testActivateUpgradeForSpeed() {
         randomComboService = new RandomComboService(mockEventHandler) {
             @Override
             public String getSelectedUpgrade() {
@@ -92,7 +90,7 @@ public class RandomComboServiceTest {
     }
 
     @Test
-    public void testActivateUpgradeForDanceParty() {
+    void testActivateUpgradeForDanceParty() {
         randomComboService = new RandomComboService(mockEventHandler) {
             @Override
             public String getSelectedUpgrade() {
@@ -104,7 +102,7 @@ public class RandomComboServiceTest {
     }
 
     @Test
-    public void testInvalidRandomChoice() {
+    void testInvalidRandomChoice() {
         randomComboService = new RandomComboService(mockEventHandler) {
             @Override
             public String getSelectedUpgrade() {

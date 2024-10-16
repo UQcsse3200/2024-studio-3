@@ -33,7 +33,6 @@ public class MainMenuActions extends Component {
     entity.getEvents().addListener("exit", this::onExit);
     entity.getEvents().addListener("settings", this::onSettings);
     entity.getEvents().addListener("tutorial", this::onTutorial);
-    entity.getEvents().addListener("cutscene", this::onCutscene);
   }
 
   /**
@@ -48,7 +47,7 @@ public class MainMenuActions extends Component {
     LocalDateTime currentDateTime = LocalDateTime.now();
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy_HH-mm-ss");
     String formattedDateTime = currentDateTime.format(formatter);
-    ServiceLocator.getSaveLoadService().setSaveFile(formattedDateTime + ".json");
+    //game.setScreen(GdxGame.ScreenType.MAIN_GAME);
   }
 
   /**
@@ -87,19 +86,6 @@ public class MainMenuActions extends Component {
 
     // Transition to the tutorial screen
     game.setScreen(new TutorialScreen(game));
-  }
-
-  /**
-   * Starts the cutscene
-   */
-  public void onCutscene() {
-    logger.info("Starting cutscene");
-
-    // Stop any background tasks
-    ServiceLocator.getMainMenuDisplay().stopBackgroundTasks();
-
-    // Now we can transition to the cutscene
-    game.setScreen(GdxGame.ScreenType.CUTSCENE);
   }
 
 }

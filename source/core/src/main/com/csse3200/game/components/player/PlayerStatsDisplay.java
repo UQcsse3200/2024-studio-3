@@ -18,8 +18,6 @@ import com.csse3200.game.ui.UIComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.badlogic.gdx.utils.Timer;
-import com.badlogic.gdx.utils.Align;  // Import Align class
-
 /**
  * AN ui component for displaying player stats, e.g. health.
  */
@@ -37,17 +35,11 @@ public class PlayerStatsDisplay extends UIComponent {
 
   private Label goldLabel;
   private static Label dayLabel;
-  private static Label rageLabel;
   private static int currentDay = 1;
   private static Label timerLabel;
   private static long timer;
   private static long startTime;
   private static PlayerStatsDisplay instance;
-  private ProgressBar timeBar;
-  private static final float MAX_TIME = 300f;
-  private float screenWidth = Gdx.graphics.getWidth();
-  private float screenHeight = Gdx.graphics.getHeight();
-  private static final Logger logger = LoggerFactory.getLogger(GdxGame.class);
 
 
 
@@ -115,8 +107,10 @@ public class PlayerStatsDisplay extends UIComponent {
    */
   private void addActors() {
     table = new Table();
-    table.top().left();  // Position table to the top-left of the screen
+    table.top().left();
     table.setFillParent(true);
+    table.padTop(80f).padLeft(20f);
+
     goldTable = new Table();
     timerTable = new Table();
     dayTable = new Table();
@@ -126,7 +120,6 @@ public class PlayerStatsDisplay extends UIComponent {
     table.row();
 
     String SMALL_LABEL = "cash";
-    String rageText = "Rage Meter";
 
 
     // Timer label for the remaining time in the day
@@ -138,16 +131,16 @@ public class PlayerStatsDisplay extends UIComponent {
     timerTable.add(timerImage).size(50).padRight(5); // Add icon before the timer label
 
     // Add the timer label to the timerTable
-    timerTable.add(getTimerLabel()).center();
+    timerTable.add(getTimerLabel());
 
     // Center the timer table in the middle of the screen
-    table.add(timerTable).expandX().padTop(0f);  // Ensure the timer is centered
+    table.add(timerTable);  // Ensure the timer is centered
     table.row();
 
     // --- Update: Day Label with Container ---
 
     // Label for the Current Day
-    CharSequence dayText = String.format("Day: %d", currentDay); // Start with Day 1
+    CharSequence dayText = String.format("Day: %d", ServiceLocator.getDayNightService().getDay()); // Start with Day 1
     dayLabel = new Label(dayText, skin, SMALL_LABEL);
     dayLabel.setColor(Color.GOLD);  // Set text color to white for contrast
 
@@ -198,30 +191,12 @@ public class PlayerStatsDisplay extends UIComponent {
     goldTable.add(goldContentsTable);
     table.add(goldTable).left().width(220f).height(170).padTop(0);  // Align to the very left
 
-//    table.row();
-//
-//    // Create a label for the rage meter
-//    rageLabel = new Label(rageText, skin, SMALL_LABEL);
-//    rageLabel.setColor(Color.RED); // Make text red
-//    table.add(rageLabel).left().padTop(110).padLeft(30);
+    table.row();
+
 
     // Add the table to the stage
     stage.addActor(table);
 
-//    // Progress bar settings
-//    Texture whiteBgTexture = ServiceLocator
-//        .getResourceService().getAsset("images/white_background.png", Texture.class);
-//
-//    ProgressBar.ProgressBarStyle style = new ProgressBar.ProgressBarStyle();
-//    style.background = new TextureRegionDrawable(new TextureRegion(whiteBgTexture));
-//    style.background.setMinHeight(15);
-//    style.background.setMinWidth(10);
-//
-//    // Static white background ProgressBar
-//    timeBar = new ProgressBar(0f, 100f, 1f, false, skin);
-//    timeBar.setValue(100f);  // Start at full value (100%)
-//    table.row();
-//    table.add(timeBar).width(200f).height(300f).fill();
   }
 
   @Override
@@ -242,7 +217,7 @@ public class PlayerStatsDisplay extends UIComponent {
    * Updates the displayed current day on the UI.
    */
   public static void updateDay() {
-    currentDay++;
+    int currentDay = ServiceLocator.getDayNightService().getDay();
     CharSequence dayText = String.format("Day: %d", currentDay);
     getDayLabel().setText(dayText);
   }
@@ -270,11 +245,10 @@ public class PlayerStatsDisplay extends UIComponent {
   public static void updateTime(long time) {
     timer = time;
 
-//    // Calculate progress as a percentage of the time remaining
-//    float progressPercentage = (float) timer / startTime * 100f;
-//
-//    // Update the progress bar value to reflect the remaining time
-//    getInstance().timeBar.setValue(progressPercentage);
+    // Calculate progress as a percentage of the time remaining
+    float progressPercentage = (float) time / ServiceLocator.getDayNightService().FIVE_MINUTES * 100f;
+
+    //float progressPercentage = (float) timer / startTime * 100f;
 
     // Update the timer color based on remaining time
     updateTimeColor();
@@ -349,10 +323,10 @@ public class PlayerStatsDisplay extends UIComponent {
     long minutes = TimeUnit.MILLISECONDS.toMinutes(x);
     long seconds = TimeUnit.MILLISECONDS.toSeconds(x) - TimeUnit.MINUTES.toSeconds(minutes);
     return String.format("%02d:%02d", minutes, seconds);
-    
+
 }
 public static void reset() {
-  currentDay = 1;
+    ServiceLocator.getDayNightService().setDay(1);
 }
 
 

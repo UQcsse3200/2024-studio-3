@@ -39,7 +39,6 @@ public class DancePartyUpgrade extends UIComponent implements Upgrade {
     public Table layout;
     public Label text; // the "Upgrade" text above the meter
     public ProgressBar meter; // the meter that show the remaining time
-    private boolean isVisible;
     private Sound bgEffect;
     private boolean playSound = false;
 
@@ -49,10 +48,7 @@ public class DancePartyUpgrade extends UIComponent implements Upgrade {
      * It listens for "playerCreated" and "Dance party" events.
      */
     public DancePartyUpgrade() {
-        ServiceLocator.getPlayerService().getEvents().addListener("playerCreated", (Entity player) -> {
-            this.combatStatsComponent = player.getComponent(CombatStatsComponent.class);
-        });
-        this.orderManager = orderManager;
+        ServiceLocator.getPlayerService().getEvents().addListener("playerCreated", (Entity player) -> this.combatStatsComponent = player.getComponent(CombatStatsComponent.class));
         gameTime = ServiceLocator.getTimeSource();
         this.isActive = false;
 

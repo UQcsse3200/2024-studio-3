@@ -9,10 +9,12 @@ import com.csse3200.game.ui.UIComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * Background for the main menu.
+ */
 public class MainMenuBackground extends UIComponent {
 
     private Table table;
-    private static final Logger logger = LoggerFactory.getLogger(MainMenuBackground.class); // Updated to use MainMenuBackground.class
     private static final String BACKGROUND_IMAGE_PATH = "images/Cutscenes/bg.png"; // Defined constant for repeated string
     private static final String[] backgroundTextures = {BACKGROUND_IMAGE_PATH};
 
@@ -34,6 +36,9 @@ public class MainMenuBackground extends UIComponent {
         setupBackground();
     }
 
+    /**
+     * Set up the background image for the main menu.
+     */
     public void setupBackground() {
         Texture texture = ServiceLocator.getResourceService().getAsset(BACKGROUND_IMAGE_PATH, Texture.class); // Used constant for image path
         Image bgImage = new Image(texture); // Renamed local variable to avoid conflict with the field 'image'
@@ -42,6 +47,11 @@ public class MainMenuBackground extends UIComponent {
         table.add(bgImage);
     }
 
+    /**
+     * Draw the background image.
+     *
+     * @param batch SpriteBatch to draw the image
+     */
     @Override
     protected void draw(SpriteBatch batch) {
         // Method intentionally left empty (addressed empty method warning)
@@ -64,7 +74,4 @@ public class MainMenuBackground extends UIComponent {
         return this.image;
     }
 
-    public String getImage(Table table) {
-        return table.getChildren().get(0).toString();
-    }
 }

@@ -41,38 +41,10 @@ public class MoralDecisionTest {
     }
 
     @Test
-    void getDecision_shouldReturnCorrectDecision() {
-        testEntity.getComponent(MoralDecision.class).addQuestion("Is this a good decision?");
-        testEntity.getComponent(MoralDecision.class).setDecision(0, true);
-        Assertions.assertTrue(testEntity.getComponent(MoralDecision.class).getDecision(0));
-    }
-
-    @Test
-    void getDecision_withQuestion_shouldReturnCorrectDecision() {
-        testEntity.getComponent(MoralDecision.class).addQuestion("Is this a good decision?");
-        testEntity.getComponent(MoralDecision.class).setDecision(0, true);
-        Assertions.assertTrue(testEntity.getComponent(MoralDecision.class).getDecision("Is this a good decision?"));
-    }
-
-    @Test
     void getDecision_withNonExistentQuestion_shouldReturnFalse() {
         testEntity.getComponent(MoralDecision.class).addQuestion("Is this a good decision?");
         Assertions.assertFalse(testEntity.getComponent(MoralDecision.class).getDecision("Non-existent question"));
     }
-
-//    @Test
-//    void setDecision_shouldUpdateMoralityScore() {
-//        testEntity.getComponent(MoralDecision.class).addQuestion("Is this a good decision?", true, 10);
-//        testEntity.getComponent(MoralDecision.class).setDecision(0, true);
-//        Assertions.assertEquals(10, testEntity.getComponent(MoralDecision.class).getCurrentMorality());
-//    }
-
-//    @Test
-//    void setDecision_withNegativePoints_shouldUpdateMoralityScore() {
-//        testEntity.getComponent(MoralDecision.class).addQuestion("Is this a bad decision?", false, 5);
-//        testEntity.getComponent(MoralDecision.class).setDecision(0, false);
-//        Assertions.assertEquals(-5, testEntity.getComponent(MoralDecision.class).getCurrentMorality());
-//    }
 
     @Test
     void clearDecisions_shouldRemoveAllDecisions() {
@@ -101,6 +73,55 @@ public class MoralDecisionTest {
         testEntity.getComponent(MoralDecision.class).addQuestion("Is this a good decision?");
         testEntity.getComponent(MoralDecision.class).removeDecision("Is this a good decision?");
         Assertions.assertEquals(0, testEntity.getComponent(MoralDecision.class).getListOfDecisions().size());
+    }
+
+    @Test
+    void setDecision_shouldNotAllowMultipleDecisions() {
+        var testDecision = new Decision("Is this a good decision?", true, 10);
+        Assertions.assertTrue(testDecision.setDecision(true));
+        Assertions.assertFalse(testDecision.setDecision(false));
+    }
+
+    @Test
+    void setPoints_shouldNotAllowNegativePoints() {
+        var testDecision = new Decision("Is this a good decision?", true, 10);
+        Assertions.assertFalse(testDecision.setPoints(-5));
+    }
+
+    @Test
+    void getDecision_shouldReturnFalseIfNotMade() {
+        var testDecision = new Decision("Is this a good decision?", true, 10);
+        Assertions.assertFalse(testDecision.getDecision());
+    }
+
+    @Test
+    void getDecisionPoints_shouldReturnNegativeForBadDecision() {
+        var testDecision = new Decision("Is this a bad decision?", false, 10);
+        Assertions.assertEquals(-10, testDecision.getDecisionPoints());
+    }
+
+    @Test
+    void getDecisionPoints_shouldReturnPositiveForGoodDecision() {
+        var testDecision = new Decision("Is this a good decision?", true, 10);
+        Assertions.assertEquals(10, testDecision.getDecisionPoints());
+    }
+
+    @Test
+    void getStatement_shouldReturnCorrectStatement() {
+        var testDecision = new Decision("Is this a good decision?", true, 10);
+        Assertions.assertEquals("Is this a good decision?", testDecision.getStatement());
+    }
+
+    @Test
+    void isGood_shouldReturnTrueForGoodDecision() {
+        var testDecision = new Decision("Is this a good decision?", true, 10);
+        Assertions.assertTrue(testDecision.isGood());
+    }
+
+    @Test
+    void isGood_shouldReturnFalseForBadDecision() {
+        var testDecision = new Decision("Is this a bad decision?", false, 10);
+        Assertions.assertFalse(testDecision.isGood());
     }
 
 }
