@@ -33,7 +33,6 @@ public class MapLayout {
     private int mapWidth;
     private int mapHeight;
     private String mapSeparator;
-    private Bench bench;
 
     private final String[] validStations = {"b", "s", "u", "t", "c", "a", "E", "O", "B", "C", "G", "N", "S", "F"};
 

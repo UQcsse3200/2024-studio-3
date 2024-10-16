@@ -14,10 +14,7 @@ import com.csse3200.game.services.ServiceLocator;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.ArgumentCaptor;
-
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Objects;
 
 import static org.junit.Assert.assertArrayEquals;

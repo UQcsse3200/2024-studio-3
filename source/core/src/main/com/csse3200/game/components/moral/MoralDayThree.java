@@ -2,7 +2,6 @@ package com.csse3200.game.components.moral;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -16,17 +15,15 @@ import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import com.csse3200.game.components.maingame.TextDisplay;
+
 
 
 public class MoralDayThree extends UIComponent {
     private static final Logger logger = LoggerFactory.getLogger(MoralDayThree.class);
 
     private Table layout; // Layout manager
-    private int moralStep = 0;
     private boolean isVisible;
     private final MainGameScreen game;
-    private Image backgroundImage;
     private String question = "Set Question";
 
 //    private MoralTextDisplay textDisplay;

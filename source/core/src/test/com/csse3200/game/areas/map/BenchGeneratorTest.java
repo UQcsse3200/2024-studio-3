@@ -1,7 +1,6 @@
 package com.csse3200.game.areas.map;
 
-import com.csse3200.game.components.maingame.GameBackgroundDisplay;
-import com.csse3200.game.entities.Entity;
+
 import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.entities.benches.Bench;
 import com.csse3200.game.extensions.GameExtension;

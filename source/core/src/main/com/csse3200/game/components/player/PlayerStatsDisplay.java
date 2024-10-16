@@ -10,7 +10,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
-import com.badlogic.gdx.scenes.scene2d.utils.BaseDrawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.services.ServiceLocator;
@@ -18,8 +17,6 @@ import com.csse3200.game.ui.UIComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.badlogic.gdx.utils.Timer;
-import com.badlogic.gdx.utils.Align;  // Import Align class
-
 /**
  * AN ui component for displaying player stats, e.g. health.
  */
@@ -37,17 +34,11 @@ public class PlayerStatsDisplay extends UIComponent {
 
   private Label goldLabel;
   private static Label dayLabel;
-  private static Label rageLabel;
-  private static int currentDay;
+  private static int currentDay = 1;
   private static Label timerLabel;
   private static long timer;
   private static long startTime;
   private static PlayerStatsDisplay instance;
-  private ProgressBar timeBar;
-  private static final float MAX_TIME = 300f;
-  private float screenWidth = Gdx.graphics.getWidth();
-  private float screenHeight = Gdx.graphics.getHeight();
-  private static final Logger logger = LoggerFactory.getLogger(GdxGame.class);
 
 
 
@@ -126,7 +117,6 @@ public class PlayerStatsDisplay extends UIComponent {
     table.row();
 
     String SMALL_LABEL = "cash";
-    String rageText = "Rage Meter";
 
 
     // Timer label for the remaining time in the day
@@ -350,6 +340,9 @@ public class PlayerStatsDisplay extends UIComponent {
     long seconds = TimeUnit.MILLISECONDS.toSeconds(x) - TimeUnit.MINUTES.toSeconds(minutes);
     return String.format("%02d:%02d", minutes, seconds);
     
+}
+public static void reset() {
+  currentDay = 1;
 }
 
 

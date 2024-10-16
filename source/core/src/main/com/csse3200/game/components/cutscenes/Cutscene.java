@@ -2,6 +2,7 @@ package com.csse3200.game.components.cutscenes;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
+import com.csse3200.game.GdxGame;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.cutscenes.scenes.AnimatedScene;
 import com.csse3200.game.components.cutscenes.scenes.Scene;
@@ -127,6 +128,7 @@ public abstract class Cutscene extends Component {
                 loadScene(currentSceneIndex);
             } else {
                 logger.info("Cutscene finished. Triggering next event.");
+                ServiceLocator.getLevelService().setCurrLevel(GdxGame.LevelType.LEVEL_1);
                 ServiceLocator.getCutsceneScreen().getCutsceneScreenDisplay().getEntity().getEvents().trigger("cutsceneEnded");
             }
         }
@@ -333,6 +335,7 @@ public abstract class Cutscene extends Component {
     /**
      * Disposes of the cutscene by unloading assets and disposing of entities.
      */
+    @Override
     public void dispose() {
         unloadAssets();
         disposeEntities();
