@@ -32,6 +32,7 @@ import com.csse3200.game.components.cutscenes.*;
  */
 
 public class TextDisplay extends UIComponent {
+    private static final Logger logger = LoggerFactory.getLogger(TextDisplay.class);
     //String building variables
     private List<String> text;
     private int currentPart = 0;
@@ -47,7 +48,6 @@ public class TextDisplay extends UIComponent {
     private final ScreenAdapter game;
     private String screen;
     private static final Logger logger = LoggerFactory.getLogger(TextDisplay.class);
-
     public TextDisplay() {
         super();
         this.game = null;

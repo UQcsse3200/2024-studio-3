@@ -4,12 +4,10 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.csse3200.game.components.cutscenes.Cutscene;
-import com.csse3200.game.screens.CutsceneScreen;
+import com.csse3200.game.screens.*;
 import com.csse3200.game.files.UserSettings;
-import com.csse3200.game.screens.MainGameScreen;
-import com.csse3200.game.screens.MainMenuScreen;
-import com.csse3200.game.screens.SettingsScreen;
-import com.csse3200.game.screens.LoadGameScreen;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.csse3200.game.services.*;
@@ -24,6 +22,8 @@ public class GdxGame extends Game {
   private static final Logger logger = LoggerFactory.getLogger(GdxGame.class);
   private Screen previousScreen;
   private ScreenType currentScreenType;
+  private Texture backgroundTexture;
+  private SpriteBatch batch;
   private Cutscene currentCutscene;
 
 
@@ -67,7 +67,7 @@ public class GdxGame extends Game {
     }
     ServiceLocator.registerSaveLoadService(system); // I know this is probably bad practice but i need it to work
 
-    logger.warn("Is AWDAdwKA null? {} ",ServiceLocator.getSaveLoadService() == null);
+    logger.warn("Is AWDAdwKA null? " + (ServiceLocator.getSaveLoadService() == null));
 
     setScreen(newScreen(screenType));
   }
@@ -83,7 +83,7 @@ public class GdxGame extends Game {
     }
     ServiceLocator.registerSaveLoadService(system); // I know this is probably bad practice but i need it to work
 
-    logger.warn("Is AWDAdwKA null? {} ",ServiceLocator.getSaveLoadService() == null);
+    logger.warn("Is AWDAdwKA null? " + (ServiceLocator.getSaveLoadService() == null));
 
     setScreen(newScreen(screenType, cutsceneType));
   }
@@ -125,6 +125,12 @@ public class GdxGame extends Game {
         return new SettingsScreen(this);
       case LOAD_GAME:
         return new LoadGameScreen(this);
+      case TUTORIAL:
+        return new TutorialScreen(this);
+
+//      case CUTSCENE:
+//        return new CutsceneScreen(this, CutsceneType.DAY_2);
+
       case CUTSCENE:
         return new CutsceneScreen(this, CutsceneType.MORAL_2);
       case MORAL_SCENE_1:
@@ -194,6 +200,7 @@ public class GdxGame extends Game {
 
   public enum ScreenType {
     MAIN_MENU, MAIN_GAME, SETTINGS, LOAD_GAME, CUTSCENE, GOOD_END, BAD_END, LOSE_END, MORAL_SCENE_1, MORAL_SCENE_2, MORAL_SCENE_3, MORAL_SCENE_4
+
   }
 
   public enum CutsceneType {
