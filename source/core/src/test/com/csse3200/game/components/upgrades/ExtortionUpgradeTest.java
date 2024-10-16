@@ -91,6 +91,28 @@ public class ExtortionUpgradeTest {
     }
 
     @Test
+    void testSpeedBootsDeactivates() {
+        extortionUpgrade.activate();
+        lenient().when(mockSpeedMeter.hasParent()).thenReturn(true);
+        extortionUpgrade.deactivate();
+
+        AtomicBoolean isActive = new AtomicBoolean(false);
+        eventHandler.addListener("UnDancing", () -> {
+            isActive.set(true);
+        });
+        eventHandler.trigger("UnDancing");
+
+        assertTrue(isActive.get());
+        verify(extortionUpgrade.meter).remove();
+        verify(extortionUpgrade.text).remove();
+
+        assertFalse(extortionUpgrade.isActive());
+        assertFalse(extortionUpgrade.isVisible());
+        assertFalse(extortionUpgrade.layout.isVisible());
+        assertEquals(0f, extortionUpgrade.meter.getValue());
+    }
+
+    @Test
     void testDispose() {
         extortionUpgrade.dispose();
         verify(resourceService).unloadAssets(SpeedBootsUpgrade.whiteBgTexture);
