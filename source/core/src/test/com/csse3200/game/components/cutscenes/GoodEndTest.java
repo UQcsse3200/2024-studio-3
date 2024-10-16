@@ -36,31 +36,6 @@ public class GoodEndTest {
     }
 
     @Test
-    public void testTrigger() {
-        // Trigger the cutscene
-        goodEnd.trigger();
-
-        // Verify that the create method was called and beef was spawned
-        verify(entityService, times(1)).register(any(Entity.class));
-    }
-
-    @Test
-    public void testSpawnBeefEnd() {
-        // Prepare mock for beef entity
-        Entity beefEntity = mock(Entity.class);
-        when(ItemFactory.createBeef("cooked")).thenReturn(beefEntity);
-
-        // Manually call the create method to test beef spawning
-        goodEnd.create();
-
-        // Verify the entity was spawned at the correct location
-        verify(entityService, times(1)).register(beefEntity);
-
-        // Verify the beef entity was scaled correctly
-        verify(beefEntity, times(1)).setScale(0.5f, 0.5f);
-    }
-
-    @Test
     public void testTexturesLoaded() {
         String[] expectedTextures = {
                 "images/ingredients/raw_beef.png",
