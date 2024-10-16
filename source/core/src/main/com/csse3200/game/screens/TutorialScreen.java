@@ -7,12 +7,15 @@ import com.csse3200.game.GdxGame;
 import com.csse3200.game.areas.ForestGameArea;
 import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.components.maingame.*;
+import com.csse3200.game.components.ordersystem.MainGameOrderTicketDisplay;
 import com.csse3200.game.components.ordersystem.OrderActions;
+import com.csse3200.game.components.ordersystem.TicketDetails;
 import com.csse3200.game.components.upgrades.*;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.entities.factories.LevelFactory;
 import com.csse3200.game.entities.factories.RenderFactory;
+import com.csse3200.game.entities.factories.UIFactory;
 import com.csse3200.game.input.InputComponent;
 import com.csse3200.game.input.InputDecorator;
 import com.csse3200.game.input.InputService;
@@ -34,7 +37,7 @@ import com.csse3200.game.components.ordersystem.DocketLineDisplay;
  * The game screen containing the tutorial.
  *
  */
-public class TutorialScreen extends ScreenAdapter {
+public class TutorialScreen extends MainGameScreen {
     private static final Logger logger = LoggerFactory.getLogger(TutorialScreen.class);
     private static final String[] mainGameTextures = {
             "images/heart.png",
@@ -101,45 +104,49 @@ public class TutorialScreen extends ScreenAdapter {
 
     private static final Vector2 CAMERA_POSITION = new Vector2(7f, 4.5f);
 
-    private final GdxGame game;
-    private final Renderer renderer;
-    private final PhysicsEngine physicsEngine;
-    private boolean isPaused = false;
-    private ResourceService resourceService;
+    //private final GdxGame game;
+//    private final Renderer renderer;
+//    private final PhysicsEngine physicsEngine;
+//    private boolean isPaused = false;
+//    private ResourceService resourceService;
 
     public TutorialScreen(GdxGame game) {
-        //super(game);
-        this.game = game;
+        super(game);
+       // this.game = game;
 
-        // Register ResourceService before calling loadAssets
-        ServiceLocator.registerResourceService(new ResourceService());
-        this.resourceService = ServiceLocator.getResourceService(); // Now it's initialized
+//        if (this.game == null) {
+//            logger.error("TutGame null");
+//        } else {
+//            logger.info("TutGame object initialized successfully: " + this.game);
+//        }
 
-        loadAssets(); // You can now load the assets safely
+        MainGameOrderTicketDisplay.resetOrderNumb();
 
-        logger.debug("Initialising tutorial screen services");
+        logger.debug("Initialising main game screen services");
         ServiceLocator.registerTimeSource(new GameTime());
 
-        PhysicsService physicsService = new PhysicsService();
-        ServiceLocator.registerPhysicsService(physicsService);
-        physicsEngine = physicsService.getPhysics();
-
-        ServiceLocator.registerInputService(new InputService());
-        ServiceLocator.registerLevelService(new LevelService());
-        ServiceLocator.registerPlayerService(new PlayerService());
+//        PhysicsService physicsService = new PhysicsService();
+//        ServiceLocator.registerPhysicsService(physicsService);
+//        physicsEngine = physicsService.getPhysics();
 //
-        ServiceLocator.registerEntityService(new EntityService());
-        ServiceLocator.registerRenderService(new RenderService());
-        ServiceLocator.registerDocketService(new DocketService());
+        //ServiceLocator.registerInputService(new InputService());
+        //ServiceLocator.registerResourceService(new ResourceService());
+        //ServiceLocator.registerPlayerService(new PlayerService());
 //
-        ServiceLocator.registerDayNightService(new DayNightService());
-        ServiceLocator.registerRandomComboService(new RandomComboService());
-        ServiceLocator.registerLevelService(new LevelService());
-        ServiceLocator.registerMapLayout(new MapLayout());
+//        ServiceLocator.registerEntityService(new EntityService());
+//        ServiceLocator.registerRenderService(new RenderService());
+//        ServiceLocator.registerDocketService(new DocketService());
+//
+//        ServiceLocator.registerDayNightService(new DayNightService());
+//        ServiceLocator.registerRandomComboService(new RandomComboService());
+//        ServiceLocator.registerLevelService(new LevelService());
+//        ServiceLocator.registerMapLayout(new MapLayout());
 
-        ServiceLocator.registerGameScreen(new MainGameScreen(game));
+        logger.warn("Is SaveService null? " + (ServiceLocator.getSaveLoadService() == null));
+        //ServiceLocator.registerSaveLoadService(new SaveLoadService());
+        ServiceLocator.registerGameScreen(this);
 
-        //ServiceLocator.registerTutorialScreen(this);
+        //ServiceLocator.registerTicketDetails(new TicketDetails());
 
         renderer = RenderFactory.createRenderer();
         renderer.getCamera().getEntity().setPosition(CAMERA_POSITION);
@@ -148,12 +155,12 @@ public class TutorialScreen extends ScreenAdapter {
         loadAssets();
         createUI();
 
-        logger.debug("Initialising tutorial screen entities");
-
+        logger.debug("Initialising main game screen entities");
         TerrainFactory terrainFactory = new TerrainFactory(renderer.getCamera());
+        ServiceLocator.getLevelService().setCurrLevel(GdxGame.LevelType.LEVEL_1);
         GdxGame.LevelType currLevel = ServiceLocator.getLevelService().getCurrLevel();
-        //UpgradesDisplay upgradesDisplay = new UpgradesDisplay(this);
-        ForestGameArea forestGameArea = new ForestGameArea(terrainFactory, currLevel, null);
+        UpgradesDisplay upgradesDisplay = new UpgradesDisplay(this);
+        ForestGameArea forestGameArea = new ForestGameArea(terrainFactory, currLevel, upgradesDisplay);
         forestGameArea.create();
 
         Entity spawnControllerEntity = LevelFactory.createSpawnControllerEntity();
@@ -162,6 +169,7 @@ public class TutorialScreen extends ScreenAdapter {
 
         ServiceLocator.getLevelService().getEvents().trigger("setGameArea", forestGameArea);
         ServiceLocator.getLevelService().getEvents().trigger("startLevel", currLevel);
+
     }
 
     @Override
@@ -205,15 +213,16 @@ public class TutorialScreen extends ScreenAdapter {
         ServiceLocator.clear();
     }
 
-    private void loadAssets() {
+    void loadAssets() {
         logger.debug("Loading assets");
-
+        ResourceService resourceService = ServiceLocator.getResourceService();
         resourceService.loadTextures(mainGameTextures);
         resourceService.loadAll();
     }
 
-    private void unloadAssets() {
+    void unloadAssets() {
         logger.debug("Unloading assets");
+        ResourceService resourceService = ServiceLocator.getResourceService();
         resourceService.unloadAssets(mainGameTextures);
     }
 
@@ -221,7 +230,7 @@ public class TutorialScreen extends ScreenAdapter {
      * Creates the main game's UI, including components for rendering UI elements to the screen and
      * capturing and handling UI input.
      */
-    private void createUI() {
+    void createUI() {
         logger.debug("Creating UI");
         Stage stage = ServiceLocator.getRenderService().getStage();
         InputComponent inputComponent = ServiceLocator.getInputService().getInputFactory().createForTerminal();
@@ -229,21 +238,23 @@ public class TutorialScreen extends ScreenAdapter {
         Entity ui = new Entity();
         ui.addComponent(new GameBackgroundDisplay())
                 .addComponent(new InputDecorator(stage, 10))
+                .addComponent(docketLineDisplay = new DocketLineDisplay())
                 .addComponent(new DocketLineDisplay())
                 .addComponent(new PerformanceDisplay())
-                //.addComponent(new MainGameActions(this.game, UIFactory.createDocketUI()))
+                .addComponent(new MainGameActions(game, UIFactory.createDocketUI()))
                 //.addComponent(new MainGameExitDisplay())
                 .addComponent(new Terminal())
+                .addComponent(new OrderActions())
                 .addComponent(inputComponent)
                 .addComponent(new TerminalDisplay())
-                .addComponent(new OrderActions())
-                .addComponent(new PauseMenuActions(this.game))
-                .addComponent(new RageUpgrade())
-                .addComponent(new LoanUpgrade())
-                .addComponent(new SpeedBootsUpgrade())
-                .addComponent(new ExtortionUpgrade())
-                .addComponent(new DancePartyUpgrade())
-                .addComponent(new TutorialScreenDisplay(this.game))
+                //.addComponent(new OrderActions())
+//                .addComponent(new PauseMenuActions(this.game))
+//                .addComponent(new RageUpgrade())
+//                .addComponent(new LoanUpgrade())
+//                .addComponent(new SpeedBootsUpgrade())
+//                .addComponent(new ExtortionUpgrade())
+//                .addComponent(new DancePartyUpgrade())
+                .addComponent(new TutorialScreenDisplay(game))
                 .addComponent(new TextDisplay(this));
 
         ServiceLocator.getEntityService().register(ui);

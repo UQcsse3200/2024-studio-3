@@ -47,7 +47,7 @@ import com.csse3200.game.services.GameTime;
  */
 public class MainGameScreen extends ScreenAdapter {
 	private static final Logger logger = LoggerFactory.getLogger(MainGameScreen.class);
-	public static final String[] mainGameTextures = {
+	private static final String[] mainGameTextures = {
 			"images/heart.png",
 			"images/textbox.png",
 			// order system assets
@@ -112,12 +112,12 @@ public class MainGameScreen extends ScreenAdapter {
 	// Modified the camera position to fix layout
 	private static final Vector2 CAMERA_POSITION = new Vector2(7f, 4.5f);
 
-    protected final GdxGame game;
-    protected final Renderer renderer;
-    protected final PhysicsEngine physicsEngine;
-    private boolean isPaused = false;
-    private DocketLineDisplay docketLineDisplay;
-    private MainGameOrderTicketDisplay orderTicketDisplay;
+    public final GdxGame game;
+    public Renderer renderer;
+    public final PhysicsEngine physicsEngine;
+    public boolean isPaused = false;
+    public DocketLineDisplay docketLineDisplay;
+    public MainGameOrderTicketDisplay orderTicketDisplay;
 
 	/**
 	 * Constructs the main game screen
@@ -308,7 +308,7 @@ public class MainGameScreen extends ScreenAdapter {
 	 * Creates the main game's ui including components for rendering ui elements to the screen and
 	 * capturing and handling ui input.
 	 */
-    public void createUI() {
+    void createUI() {
 		logger.debug("Creating ui");
 		Stage stage = ServiceLocator.getRenderService().getStage();
 		InputComponent inputComponent =

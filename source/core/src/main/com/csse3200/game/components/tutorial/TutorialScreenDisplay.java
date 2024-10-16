@@ -8,6 +8,7 @@ import com.csse3200.game.GdxGame;
 import com.csse3200.game.components.ordersystem.MainGameOrderBtnDisplay;
 import com.csse3200.game.components.player.PlayerActions;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.screens.MainGameScreen;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
 import com.csse3200.game.components.ordersystem.MainGameOrderTicketDisplay;
@@ -22,7 +23,7 @@ import com.csse3200.game.components.maingame.TextDisplay;
  */
 public class TutorialScreenDisplay extends UIComponent {
     private static final Logger logger = LoggerFactory.getLogger(TutorialScreenDisplay.class);
-    private final GdxGame game;
+    private GdxGame game;
     private int tutorialStep = 0;
     private MainGameOrderBtnDisplay orderBtnDisplay;
     private boolean createOrderPressed = false;
@@ -34,12 +35,13 @@ public class TutorialScreenDisplay extends UIComponent {
 
 
     public TutorialScreenDisplay(GdxGame game) {
-
         this.game = game;
 
-//        this.orderTicketDisplay = new MainGameOrderTicketDisplay(ServiceLocator.getRenderService(), ServiceLocator.getPlayerService());
-//        this.orderBtnDisplay = new MainGameOrderBtnDisplay();
-
+        if (this.game == null) {
+            logger.error("Game null");
+        } else {
+            logger.info("Game object initialized successfully: " + this.game);
+        }
     }
 
     @Override
@@ -231,12 +233,12 @@ public class TutorialScreenDisplay extends UIComponent {
      * Starts the main game after the tutorial is complete.
      */
     private void startGame() {
+        logger.info("Game object in startGame(): " + this.game);
         if (table != null) {
             table.clear();  // Safely clear the table
         }
-
         ServiceLocator.getLevelService().setCurrLevel(GdxGame.LevelType.LEVEL_1);
-        game.setScreen(GdxGame.ScreenType.MAIN_GAME);  // Transition to the main game
+        game.setScreen(GdxGame.ScreenType.MAIN_GAME);
     }
 
     @Override

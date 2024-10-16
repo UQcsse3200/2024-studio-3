@@ -32,7 +32,8 @@ public class Confirmationpopup extends Dialog {
     protected void result(Object object) {
         int isTrue = (int) object;
         if (isTrue == 1) {
-            game.setScreen(new TutorialScreen(game));
+            TutorialScreen tutorialScreen = new TutorialScreen(game);
+            game.setScreen(tutorialScreen);
         } else if (isTrue == 2) {
 //            game.setScreen(GdxGame.ScreenType.MAIN_GAME);
             // User chose "No", transition to BackstoryCutscene
