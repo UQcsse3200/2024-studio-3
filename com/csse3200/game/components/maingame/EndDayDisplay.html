@@ -10,7 +10,7 @@
 <link rel="stylesheet" type="text/css" href="../../../../../stylesheet.css" title="Style">
 <link rel="stylesheet" type="text/css" href="../../../../../script-dir/jquery-ui.min.css" title="Style">
 <script type="text/javascript" src="../../../../../script.js"></script>
-<script type="text/javascript" src="../../../../../script-dir/jquery-3.6.1.min.js"></script>
+<script type="text/javascript" src="../../../../../script-dir/jquery-3.7.1.min.js"></script>
 <script type="text/javascript" src="../../../../../script-dir/jquery-ui.min.js"></script>
 </head>
 <body class="class-declaration-page">
@@ -164,7 +164,9 @@ loadScripts(document, 'script');</script>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#addListeners()" class="member-name-link">addListeners</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Registers event listeners relevant to the end-of-day display operations, such as gold updates and customer events.</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#addSpacer()" class="member-name-link">addSpacer</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
@@ -383,6 +385,7 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="addListeners()">
 <h3>addListeners</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">addListeners</span>()</div>
+<div class="block">Registers event listeners relevant to the end-of-day display operations, such as gold updates and customer events.</div>
 </section>
 </li>
 <li>
@@ -496,15 +499,6 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="show()">
-<h3>show</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">show</span>()</div>
-<div class="block">Shows the end-of-day display.
- This method makes the display visible and updates all dynamic content to reflect
- the current game state. It is usually called in response to a game event.</div>
-</section>
-</li>
-<li>
 <section class="detail" id="updateBirdPosition(float)">
 <h3>updateBirdPosition</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">updateBirdPosition</span><wbr><span class="parameters">(float&nbsp;delta)</span></div>
@@ -524,6 +518,15 @@ loadScripts(document, 'script');</script>
 <div class="block">Animates the change in gold displayed, making the transition smooth.
  This method gradually updates the displayed gold amount from the previous value
  to the current value, using a simple animation.</div>
+</section>
+</li>
+<li>
+<section class="detail" id="show()">
+<h3>show</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">show</span>()</div>
+<div class="block">Shows the end-of-day display.
+ This method makes the display visible and updates all dynamic content to reflect
+ the current game state. It is usually called in response to a game event.</div>
 </section>
 </li>
 <li>

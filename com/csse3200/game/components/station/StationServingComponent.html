@@ -10,7 +10,7 @@
 <link rel="stylesheet" type="text/css" href="../../../../../stylesheet.css" title="Style">
 <link rel="stylesheet" type="text/css" href="../../../../../script-dir/jquery-ui.min.css" title="Style">
 <script type="text/javascript" src="../../../../../script.js"></script>
-<script type="text/javascript" src="../../../../../script-dir/jquery-3.6.1.min.js"></script>
+<script type="text/javascript" src="../../../../../script-dir/jquery-3.7.1.min.js"></script>
 <script type="text/javascript" src="../../../../../script-dir/jquery-ui.min.js"></script>
 </head>
 <body class="class-declaration-page">
@@ -136,18 +136,26 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#create()" class="member-name-link">create</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#canSubmitMeal(com.csse3200.game.components.items.ItemComponent)" class="member-name-link">canSubmitMeal</a><wbr>(<a href="../items/ItemComponent.html" title="class in com.csse3200.game.components.items">ItemComponent</a>&nbsp;item)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#create()" class="member-name-link">create</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">On creation a listener for Submit Meal will be added to the station.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#handleInteraction(com.csse3200.game.components.player.InventoryComponent,com.csse3200.game.components.player.InventoryDisplay,java.lang.String)" class="member-name-link">handleInteraction</a><wbr>(<a href="../player/InventoryComponent.html" title="class in com.csse3200.game.components.player">InventoryComponent</a>&nbsp;playerInventoryComponent,
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#handleInteraction(com.csse3200.game.components.player.InventoryComponent,com.csse3200.game.components.player.InventoryDisplay,java.lang.String)" class="member-name-link">handleInteraction</a><wbr>(<a href="../player/InventoryComponent.html" title="class in com.csse3200.game.components.player">InventoryComponent</a>&nbsp;playerInventoryComponent,
  <a href="../player/InventoryDisplay.html" title="class in com.csse3200.game.components.player">InventoryDisplay</a>&nbsp;inventoryDisplay,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;type)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Handles any interaction with station, using current state of player and station
  inventory to determine intended interaction</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setGoldMultiplier(int)" class="member-name-link">setGoldMultiplier</a><wbr>(int&nbsp;multiplier)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Sets the gold multiplier</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#submitMeal(com.csse3200.game.components.items.ItemComponent)" class="member-name-link">submitMeal</a><wbr>(<a href="../items/ItemComponent.html" title="class in com.csse3200.game.components.items">ItemComponent</a>&nbsp;item)</code></div>
@@ -201,6 +209,12 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
+<section class="detail" id="canSubmitMeal(com.csse3200.game.components.items.ItemComponent)">
+<h3>canSubmitMeal</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">canSubmitMeal</span><wbr><span class="parameters">(<a href="../items/ItemComponent.html" title="class in com.csse3200.game.components.items">ItemComponent</a>&nbsp;item)</span></div>
+</section>
+</li>
+<li>
 <section class="detail" id="handleInteraction(com.csse3200.game.components.player.InventoryComponent,com.csse3200.game.components.player.InventoryDisplay,java.lang.String)">
 <h3>handleInteraction</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">handleInteraction</span><wbr><span class="parameters">(<a href="../player/InventoryComponent.html" title="class in com.csse3200.game.components.player">InventoryComponent</a>&nbsp;playerInventoryComponent,
@@ -225,6 +239,17 @@ loadScripts(document, 'script');</script>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>item</code> - reference to the item being submitted by the user</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="setGoldMultiplier(int)">
+<h3>setGoldMultiplier</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setGoldMultiplier</span><wbr><span class="parameters">(int&nbsp;multiplier)</span></div>
+<div class="block">Sets the gold multiplier</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>multiplier</code> - the multiplier desired</dd>
 </dl>
 </section>
 </li>
