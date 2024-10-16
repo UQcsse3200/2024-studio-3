@@ -131,10 +131,10 @@ public class PlayerStatsDisplay extends UIComponent {
     timerTable.add(timerImage).size(50).padRight(5); // Add icon before the timer label
 
     // Add the timer label to the timerTable
-    timerTable.add(getTimerLabel()).center();
+    timerTable.add(getTimerLabel());  // Align to the very left
 
     // Center the timer table in the middle of the screen
-    table.add(timerTable).expandX().padTop(0f);  // Ensure the timer is centered
+    table.add(timerTable); // Ensure the timer is centered
     table.row();
 
     // --- Update: Day Label with Container ---
