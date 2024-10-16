@@ -30,7 +30,7 @@ public class TutorialScreenDisplay extends UIComponent {
     private Table table;
     private TextDisplay textDisplay;
     private static final int MAX_TUTORIAL_STEP = 4;
-    //private entity playeractions;
+    private PlayerActions playerActions;
 
 
     public TutorialScreenDisplay(GdxGame game) {
@@ -48,7 +48,7 @@ public class TutorialScreenDisplay extends UIComponent {
         MainGameOrderTicketDisplay.resetOrderNumb();
 
         if (entity != null) {
-            PlayerActions playerActions = ServiceLocator.getPlayerService().getPlayer().getComponent(PlayerActions.class);
+            //playerActions = ServiceLocator.getPlayerService().getPlayer().getComponent(PlayerActions.class);
             if (playerActions == null) {
                 logger.info("PlayerActions component not found.");
             }else{

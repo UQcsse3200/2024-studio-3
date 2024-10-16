@@ -4,11 +4,14 @@ import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.csse3200.game.GdxGame;
+import com.csse3200.game.areas.ForestGameArea;
+import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.components.maingame.*;
 import com.csse3200.game.components.ordersystem.OrderActions;
 import com.csse3200.game.components.upgrades.*;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
+import com.csse3200.game.entities.factories.LevelFactory;
 import com.csse3200.game.entities.factories.RenderFactory;
 import com.csse3200.game.input.InputComponent;
 import com.csse3200.game.input.InputDecorator;
@@ -35,14 +38,68 @@ public class TutorialScreen extends ScreenAdapter {
     private static final Logger logger = LoggerFactory.getLogger(TutorialScreen.class);
     private static final String[] mainGameTextures = {
             "images/heart.png",
+            "images/textbox.png",
+            // order system assets
             "images/ordersystem/docket_background.png",
             "images/ordersystem/pin_line2.png",
+            "images/ordersystem/pin_line.png",
+            "images/endday.png",
             "images/bird.png",
+            "images/point.png",
+            "images/coin.png",
+            "images/finish.png",
+            "images/red_overlay.jpg",
+            "images/red_fill.png",
+            "images/white_background.png",
+            "images/box_background.png",
+            "images/box_background2.png",
+            "images/box_background3.png",
+            "images/box_background4.png",
+            "images/calendar.png",
+            "images/Upgrade_display.png",
+            "images/pause_menu2.png",
+            "images/recipe_card.png",
             "images/textbox.png",
-            "images/inventory_ui/slot.png",
+            //background daylight cycle assets
+            "images/background_images/1.0.png",
+            "images/background_images/1.5.png",
+            "images/background_images/2.0.png",
+            "images/background_images/2.5.png",
+            "images/background_images/3.0.png",
+            "images/background_images/3.5.png",
+            "images/background_images/4.0.png",
+            "images/background_images/4.5.png",
+            "images/background_images/5.0.png",
+            "images/background_images/5.5.png",
+            "images/background_images/6.0.png",
+            "images/background_images/6.5.png",
+            "images/background_images/7.0.png",
+            "images/background_images/7.5.png",
+            "images/background_images/8.0.png",
+            "images/background_images/8.5.png",
+            "images/background_images/9.0.png",
+            "images/background_images/9.5.png",
+            "images/background_images/10.0.png",
+            "images/background_images/10.5.png",
+            "images/background_images/11.0.png",
+            "images/background_images/11.5.png",
+            "images/background_images/12.0.png",
+            "images/background_images/12.5.png",
+            "images/background_images/13.0.png",
+            "images/background_images/13.5.png",
+            "images/background_images/14.0.png",
+            "images/background_images/14.5.png",
+            "images/background_images/15.0.png",
+            "images/background_images/15.5.png",
+            "images/background_images/16.0.png",
+            "images/background_images/16.5.png",
+            "images/background_images/17.0.png",
+            "images/background_images/17.5.png",
+            "images/background_images/18.0.png",
+            "images/background_images/18.5.png"
     };
 
-    private static final Vector2 CAMERA_POSITION = new Vector2(7.5f, 6.0f);
+    private static final Vector2 CAMERA_POSITION = new Vector2(7f, 4.5f);
 
     private final GdxGame game;
     private final Renderer renderer;
@@ -51,6 +108,7 @@ public class TutorialScreen extends ScreenAdapter {
     private ResourceService resourceService;
 
     public TutorialScreen(GdxGame game) {
+        //super(game);
         this.game = game;
 
         // Register ResourceService before calling loadAssets
@@ -69,24 +127,41 @@ public class TutorialScreen extends ScreenAdapter {
         ServiceLocator.registerInputService(new InputService());
         ServiceLocator.registerLevelService(new LevelService());
         ServiceLocator.registerPlayerService(new PlayerService());
-
+//
         ServiceLocator.registerEntityService(new EntityService());
         ServiceLocator.registerRenderService(new RenderService());
         ServiceLocator.registerDocketService(new DocketService());
-
+//
         ServiceLocator.registerDayNightService(new DayNightService());
+        ServiceLocator.registerRandomComboService(new RandomComboService());
+        ServiceLocator.registerLevelService(new LevelService());
+        ServiceLocator.registerMapLayout(new MapLayout());
 
-        MainGameScreen mainGameScreen = new MainGameScreen(game);
-        ServiceLocator.registerGameScreen(mainGameScreen);
+        ServiceLocator.registerGameScreen(new MainGameScreen(game));
+
+        //ServiceLocator.registerTutorialScreen(this);
 
         renderer = RenderFactory.createRenderer();
         renderer.getCamera().getEntity().setPosition(CAMERA_POSITION);
         renderer.getDebug().renderPhysicsWorld(physicsEngine.getWorld());
 
-        createUI();  // Create the UI after loading the assets
+        loadAssets();
+        createUI();
 
         logger.debug("Initialising tutorial screen entities");
 
+        TerrainFactory terrainFactory = new TerrainFactory(renderer.getCamera());
+        GdxGame.LevelType currLevel = ServiceLocator.getLevelService().getCurrLevel();
+        //UpgradesDisplay upgradesDisplay = new UpgradesDisplay(this);
+        ForestGameArea forestGameArea = new ForestGameArea(terrainFactory, currLevel, null);
+        forestGameArea.create();
+
+        Entity spawnControllerEntity = LevelFactory.createSpawnControllerEntity();
+        ServiceLocator.getEntityService().register(spawnControllerEntity);
+
+
+        ServiceLocator.getLevelService().getEvents().trigger("setGameArea", forestGameArea);
+        ServiceLocator.getLevelService().getEvents().trigger("startLevel", currLevel);
     }
 
     @Override
