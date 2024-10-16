@@ -4,7 +4,8 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.csse3200.game.components.cutscenes.Cutscene;
-import com.csse3200.game.screens.CutsceneScreen;
+import com.csse3200.game.entities.factories.NPCFactory;
+import com.csse3200.game.screens.*;
 import com.csse3200.game.files.UserSettings;
 import com.csse3200.game.screens.MainGameScreen;
 import com.csse3200.game.screens.MainMenuScreen;
@@ -56,6 +57,7 @@ public class GdxGame extends Game {
    * @param screenType screen type
    */
   public void setScreen(ScreenType screenType) {
+    NPCFactory.reset();
     logger.info("Setting game screen to {}", screenType);
     Screen currentScreen = getScreen();
     currentScreenType = screenType;
