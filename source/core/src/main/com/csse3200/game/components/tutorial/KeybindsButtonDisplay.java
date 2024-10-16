@@ -59,15 +59,12 @@ public class KeybindsButtonDisplay extends UIComponent {
         keybindsMenu = new Table();
         keybindsMenu.center();
         keybindsMenu.setFillParent(true);
-        keybindsMenu.padTop(40f);
         keybindsMenu.setVisible(false);
 
         keybindsMenuTexture = ServiceLocator
-                .getResourceService().getAsset("images/pause_menu2.png", Texture.class);
+                .getResourceService().getAsset("images/pause_menu.png", Texture.class);
         Image backgroundImage = new Image(keybindsMenuTexture);
-        backgroundImage.setSize(1000, 1000);
-
-        keybindsMenu.add(backgroundImage);
+        keybindsMenu.add(backgroundImage).width(500).height(550).expand().center();
         return keybindsMenu;
     }
 

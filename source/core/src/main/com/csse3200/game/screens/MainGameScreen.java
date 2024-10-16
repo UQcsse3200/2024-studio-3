@@ -70,6 +70,7 @@ public class MainGameScreen extends ScreenAdapter {
 			"images/calendar.png",
 			"images/Upgrade_display.png",
 			"images/pause_menu2.png",
+			"images/pause_menu.png",
 			"images/recipe_card.png",
 			"images/textbox.png",
 			//background daylight cycle assets
