@@ -5,11 +5,9 @@ import static org.mockito.Mockito.*;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.csse3200.game.entities.Entity;
 import com.csse3200.game.rendering.RenderService;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
@@ -17,10 +15,8 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 
-import java.util.List;
 
 public class KeybindsButtonDisplayTest {
     private KeybindsButtonDisplay keybindsButtonDisplay;
@@ -30,8 +26,7 @@ public class KeybindsButtonDisplayTest {
     private Table keybindButton;
     private Table keybindsMenu;
     private Table keybindsText;
-    private ResourceService mockResourceService;
-    private RenderService mockRenderService;
+
 
     @BeforeAll
     static void setUpClass() {
@@ -68,22 +63,31 @@ public class KeybindsButtonDisplayTest {
         keybindsButtonDisplay.setTextTable(keybindsText);
     }
 
+    /**
+     * Tests if batch is initialised.
+     */
     @Test
     void testBatchIsNotNull() {
-        assertNotNull(batch, "Batch should be initialized");
+        assertNotNull(batch, "Batch should be initialised");
     }
 
+    /**
+     * Checks if components are initialised.
+     */
     @Test
-    void testInitializeComponents() {
-        assertNotNull(keybindsButtonDisplay, "KeybindsButtonDisplay should be initialized");
+    void testInitialiseComponents() {
+        assertNotNull(keybindsButtonDisplay, "KeybindsButtonDisplay should be initialised");
         assertNotNull(keybindsButtonDisplay.getStage(), "Stage should be set");
         assertNotNull(keybindButton, "Keybinds button should be initialized");
-        assertNotNull(keybindsMenu, "Keybinds menu should be initialized");
-        assertNotNull(keybindsText, "Keybinds text should be initialized");
+        assertNotNull(keybindsMenu, "Keybinds menu should be initialised");
+        assertNotNull(keybindsText, "Keybinds text should be initialised");
     }
 
+    /**
+     * Tests if the menu is toggled when setVisible takes in Boolean values.
+     */
     @Test
-    void testButtonVisibilityToggling() {
+    void testButtonToggling() {
         assertFalse(keybindsMenu.isVisible(), "Keybinds menu should be initially hidden");
         assertFalse(keybindsText.isVisible(), "Keybinds text should be initially hidden");
 
@@ -96,6 +100,9 @@ public class KeybindsButtonDisplayTest {
         verify(keybindsText).setVisible(false);
     }
 
+    /**
+     * Tests dispose function.
+     */
     @Test
     void testDisposeClearsTables() {
         keybindsButtonDisplay.dispose();
