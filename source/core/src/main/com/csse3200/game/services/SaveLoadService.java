@@ -39,6 +39,7 @@ public class SaveLoadService {
         if (saveFile.equals("")) {
             setSaveFile(formattedDateTime + ".json");
         }
+
         FileLoader.writeClass(state, (ROOT_DIR + File.separator + saveFile), Location.LOCAL);
     }
 
