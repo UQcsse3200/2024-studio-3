@@ -16,8 +16,7 @@ import java.util.Random;
  */
 
 public class RandomComboService extends Component {
-    private static final Logger logger = LoggerFactory.getLogger(RandomComboService.class);
-    // private List<Upgrade> upgrades;
+
     private Random random;
     int randomChoice;
     private EventHandler eventHandler;

@@ -217,9 +217,9 @@ public class ForestGameArea extends GameArea {
   private final GdxGame.LevelType level;
 
   private Entity player;
-  private CheckWinLoseComponent winLoseComponent;  // Reference to CheckWinLoseComponent
+    // Reference to CheckWinLoseComponent
 
-  public enum personalCustomerEnums{
+    public enum personalCustomerEnums{
     HANK,
     LEWIS,
     SILVER,

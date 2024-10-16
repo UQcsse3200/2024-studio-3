@@ -22,13 +22,7 @@ public class MoralDecisionDisplayTest {
     @Mock
     private Entity entity;
 
-    @Mock
-    private MainGameScreen mockGame;
 
-    private GameArea gameArea;
-
-//    @Mock
-//    private Stage mockStage;
     @BeforeEach
     void setUp() {
         TerrainFactory factory = mock(TerrainFactory.class);

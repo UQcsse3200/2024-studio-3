@@ -7,14 +7,12 @@ import com.csse3200.game.GdxGame;
 import com.csse3200.game.components.cutscenes.BackstoryCutscene;
 import com.csse3200.game.screens.CutsceneScreen;
 import com.csse3200.game.screens.TutorialScreen;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
 
 /**
  * Displays a confirmation dialog asking if the user wants to start the tutorial.
  */
 public class Confirmationpopup extends Dialog {
-    private static final Logger logger = LoggerFactory.getLogger(Confirmationpopup.class);
     private final GdxGame game;
 
     public Confirmationpopup(String title, Skin skin, Stage stage, GdxGame game) {
