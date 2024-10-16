@@ -104,7 +104,8 @@ public class NPCFactory {
 
         // Add a click event listener for the penguin
         penguin.getEvents().addListener("penguinactivated", ()->{
-            if (!isClicked[0] && isHoverBox[0]) {
+            if (!isClicked[0] && isHoverBox[0] ) {
+                ServiceLocator.getDocketService().getEvents().trigger("paused");
                     hoverBox.setEnabled(false);
                     logger.info("Penguin clicked!");
                     upgradesDisplay.create();
@@ -115,7 +116,9 @@ public class NPCFactory {
             }
         });
 
-        ServiceLocator.getRandomComboService().getEvents().addListener("response", penguin::dispose);
+        ServiceLocator.getRandomComboService().getEvents().addListener("response", ()->{
+            ServiceLocator.getDocketService().getEvents().trigger("unpaused");
+            penguin.dispose();});
         return penguin;
     }
 

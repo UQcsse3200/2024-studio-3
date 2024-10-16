@@ -22,6 +22,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
+
 @ExtendWith(GameExtension.class)
 @ExtendWith(MockitoExtension.class)
 public class RageUpgradeTest {
@@ -115,11 +118,12 @@ public class RageUpgradeTest {
         assertFalse(spyRageUpgrade.isRageFilling());
     }
 
-    @Test
-    void testRageDeactivationBeforeDepletion() {
+    @ParameterizedTest
+    @ValueSource(floats = {0.25f, 0.5f, 0.75f})
+    void testRageDeactivationBeforeDepletion(float rageMeterValue) {
         // Wanted to do parameterised testing here but need to ask about how to modify build.gradle for
         // @ParamterizedTest annotation
-        rageUpgrade.rageMeter.setValue(0.5f);
+        rageUpgrade.rageMeter.setValue(rageMeterValue);
         rageUpgrade.deactivateRageMode();
 
         // 45 seconds

@@ -14,7 +14,11 @@ public class DocketService {
      * Initialises the EventHandler that will manage all docket-related events.
      */
     public DocketService() {
-        docketEventHandler = new EventHandler();
+        this(new EventHandler());
+    }
+
+    public DocketService(EventHandler docketEventHandler) {
+        this.docketEventHandler = docketEventHandler;
     }
 
 

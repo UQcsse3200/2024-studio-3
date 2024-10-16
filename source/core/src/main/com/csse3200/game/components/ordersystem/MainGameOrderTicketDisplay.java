@@ -1,6 +1,7 @@
 package com.csse3200.game.components.ordersystem;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -144,8 +145,19 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         ServiceLocator.getDocketService().getEvents().addListener("removeBigTicket", this::removeBigTicket);
 
         //From Team 2, these listeners are for our dance party upgrade to pause and unpause docket times
-        ServiceLocator.getDocketService().getEvents().addListener("Dancing", ()->setPaused(true));
-        ServiceLocator.getDocketService().getEvents().addListener("UnDancing", ()->setPaused(false));
+        // ServiceLocator.getDocketService().getEvents().addListener("Dancing", ()->{
+        //     addTimeToDockets(600000);
+        // });
+        ServiceLocator.getRandomComboService().getEvents().addListener("Dancing", ()->{
+            addTimeToDockets(600000);
+        });
+
+        ServiceLocator.getDocketService().getEvents().addListener("paused", ()->{
+            setPaused(true);
+        });
+        ServiceLocator.getDocketService().getEvents().addListener("unpaused", ()->{
+            setPaused(false);
+        });
 
         //From team 2, I used your dispose method here when listening for a new day, so current dockets get removed
         //when the end of day occurs
@@ -165,7 +177,7 @@ public class MainGameOrderTicketDisplay extends UIComponent {
      * @return true if the ESCAPE key was pressed and the event was handled, false otherwise.
      */
     public boolean handleKeyDown(int keycode) {
-        if (keycode == com.badlogic.gdx.Input.Keys.ESCAPE) {
+        if (keycode == com.badlogic.gdx.Input.Keys.ESCAPE || keycode == Input.Keys.NUM_0)  {
             setPaused(!isPaused);
             return true;
         }
@@ -197,6 +209,14 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         table.setPosition(xVal, yVal);
         table.padTop(25f);
         Docket background = new Docket(getTimer());
+
+        // Check if Dancing is active, and add 60 seconds to the timer for new tickets
+        long ticketTimer = getTimer();
+        if (ServiceLocator.getRandomComboService().dancing()) {
+            ticketTimer += 600000; // Add 60 seconds
+        }
+        recipeTimeArrayList.add(ticketTimer); // Add adjusted time to the list
+
         backgroundArrayList.add(background);
         table.setBackground(background.getImage().getDrawable());
 
@@ -721,6 +741,11 @@ public class MainGameOrderTicketDisplay extends UIComponent {
     public long getTotalPausedDuration() {
         return totalPausedDuration;
 
+    }
+    private void addTimeToDockets(long additionalTime) {
+        for (int i = 0; i < recipeTimeArrayList.size(); i++) {
+            recipeTimeArrayList.set(i, recipeTimeArrayList.get(i) + additionalTime);
+        }
     }
 
 }
