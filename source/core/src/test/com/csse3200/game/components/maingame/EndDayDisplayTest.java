@@ -227,7 +227,6 @@ class EndDayDisplayTest {
         // Verify that assertCustomerTexture was called correctly
         //verify(endDayDisplay, times(2)).assertCustomerTexture(anyString(), eq(passedCustomerTable));
         //verify(endDayDisplay).assertCustomerTexture(eq("Bob"), eq(failedCustomerTable));
-
         // Verify correct data state
         //assertFalse(endDayDisplay.getFailedCustomerArray().contains("Bob"));
         //assertFalse(endDayDisplay.getFailedCustomerArray().contains("Alice"));
