@@ -59,6 +59,7 @@ public class TextDisplay extends UIComponent {
         this.currentText = new StringBuilder();
         this.text = new ArrayList<>(); //N! to fix crashing when pressing Enter
     }
+
     public TextDisplay(ScreenAdapter game) {
         this.game = game;
         this.screen = "";
@@ -67,6 +68,7 @@ public class TextDisplay extends UIComponent {
         this.currentText = new StringBuilder();
         this.text = new ArrayList<>();
     }
+
     public TextDisplay(ScreenAdapter game, String screen) {
         super();
         this.game = game;
@@ -121,11 +123,11 @@ public class TextDisplay extends UIComponent {
 
         Table labelTable = new Table();
         labelTable.add(label).padLeft(140).padBottom(10).size(
-                (int)(Gdx.graphics.getWidth() * 0.5), (int)(Gdx.graphics.getHeight() * 0.2));
+                (int) (Gdx.graphics.getWidth() * 0.5), (int) (Gdx.graphics.getHeight() * 0.2));
         stack.add(labelTable);
 
         // Add the stack to the table with padding or alignment options
-        table.add(stack).padBottom(70).padLeft(0).size((int)(Gdx.graphics.getWidth() * 0.5), (int)(Gdx.graphics.getHeight() * 0.2));
+        table.add(stack).padBottom(70).padLeft(0).size((int) (Gdx.graphics.getWidth() * 0.5), (int) (Gdx.graphics.getHeight() * 0.2));
 
         // Now call setUpBackstoryLayout() if this is a backstory cutscene
         if (Objects.equals(this.screen, "backstory")) {
@@ -204,7 +206,9 @@ public class TextDisplay extends UIComponent {
      * Gets the visibility of the textbox on the screen
      * @return boolean which is the visibility of the status
      */
-    public boolean getVisible() {return this.visible;}
+    public boolean getVisible() {
+        return this.visible;
+    }
 
     /***
      * This function will add text after a certain amount of time given the delay constant
@@ -248,23 +252,23 @@ public class TextDisplay extends UIComponent {
                         label.setText(currentCutscene.currentText);
                     }
                     return true;
-                } else if (TextDisplay.this.screen.equals("moralDecision")){
+                } else if (TextDisplay.this.screen.equals("moralDecision")) {
                     Cutscene currentCutscene = ServiceLocator.getCurrentCutscene();
                     Boolean atEnd = currentCutscene.isAtEnd();
-                    if (keycode == com.badlogic.gdx.Input.Keys.ENTER || keycode == com.badlogic.gdx.Input.Keys.SPACE){
+                    if (keycode == com.badlogic.gdx.Input.Keys.ENTER || keycode == com.badlogic.gdx.Input.Keys.SPACE) {
                         logger.info("at moral in textDisplay");
                         if (!atEnd) {
                             logger.info("parsing through");
                             currentCutscene.setTextForSceneMoral(currentCutscene.currentScene);
                             label.setText(currentCutscene.currentText);
                         }
-                    } else if (keycode == Input.Keys.Y && atEnd){
+                    } else if (keycode == Input.Keys.Y && atEnd) {
                         logger.info("WE'RE ALMOST THERE");
                         currentCutscene = ServiceLocator.getCurrentCutscene();
                         currentCutscene.setTextForScene(currentCutscene.currentScene);
 
                         ServiceLocator.getDayNightService().getEvents().trigger("YesAtMoralDecision");
-                    } else if (keycode == Input.Keys.N && atEnd){
+                    } else if (keycode == Input.Keys.N && atEnd) {
                         logger.info("WE'RE ALMOST THERE NO");
                         currentCutscene = ServiceLocator.getCurrentCutscene();
                         currentCutscene.setTextForScene(currentCutscene.currentScene);
@@ -284,7 +288,7 @@ public class TextDisplay extends UIComponent {
                             label.setText(currentCutscene.currentText);
                         }
                     }
-                }  else if (keycode == com.badlogic.gdx.Input.Keys.ENTER){
+                } else if (keycode == com.badlogic.gdx.Input.Keys.ENTER) {
                     if (charIndex < TextDisplay.this.text.get(currentPart).length()) {
                         label.setText(text.get(currentPart));
                         charIndex = TextDisplay.this.text.get(currentPart).length();
@@ -306,25 +310,58 @@ public class TextDisplay extends UIComponent {
     }
 
 
+    /**
+     * Overrides the draw method from the Actor class.
+     * This method is responsible for rendering the component.
+     * However, the actual drawing is handled by the stage, so no rendering logic is needed here.
+     *
+     * @param batch The SpriteBatch used for drawing.
+     */
     @Override
     public void draw(SpriteBatch batch) {
         // draw is handled by the stage
     }
+
+    /**
+     * Sets the stage for this UI component.
+     * The stage is used to manage the layout and actors (UI elements) for this component.
+     *
+     * @param stage The Stage to be set for this component.
+     */
     @Override
     public void setStage(Stage stage) {
         this.stage = stage;
     }
+
+    /**
+     * Returns the table layout for the UI component.
+     * This method is useful for accessing and modifying the table layout externally.
+     *
+     * @return The Table used for the UI layout.
+     */
     public Table getTable() {
         return table;
     }
 
-    public void setScreen(String screen){
+    /**
+     * Sets the current screen for this component.
+     * This method allows you to assign a specific screen that the UI component belongs to.
+     *
+     * @param screen The name of the screen to be set.
+     */
+    public void setScreen(String screen) {
         this.screen = screen;
     }
 
+    /**
+     * Sets up the layout for the backstory cutscene.
+     * This method modifies the font size, positioning, and overall layout to suit
+     * the backstory cutscene UI. It uses a stack layout with a textbox image and a label.
+     * The font size is reduced and positioned higher on the screen to create a cleaner UI.
+     */
     private void setUpBackstoryLayout() {
         // Modify font size for backstory cutscene
-        label.setFontScale(3.0f);  // Make the font smaller
+        label.setFontScale(2.9f);  // Make the font smaller
 
         // Change the position to be higher on the screen
         table.center().top().padTop(50);  // Adjust the padding to move it higher
@@ -343,10 +380,11 @@ public class TextDisplay extends UIComponent {
         // Modify the label size and placement
         Table labelTable = new Table();
         labelTable.add(label).padLeft(100).padTop(10).size(
-                (int)(Gdx.graphics.getWidth() * 0.6), (int)(Gdx.graphics.getHeight() * 0.15));  // Adjust the label size
+                (int) (Gdx.graphics.getWidth() * 0.6), (int) (Gdx.graphics.getHeight() * 0.15));  // Adjust the label size
         stack.add(labelTable);
 
         // Add stack to the table
-        table.add(stack).padTop(100).size((int)(Gdx.graphics.getWidth() * 0.6), (int)(Gdx.graphics.getHeight() * 0.15));
+        table.add(stack).padTop(100).size((int) (Gdx.graphics.getWidth() * 0.6), (int) (Gdx.graphics.getHeight() * 0.15));
     }
 }
+
