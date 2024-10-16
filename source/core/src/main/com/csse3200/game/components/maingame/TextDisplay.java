@@ -214,57 +214,129 @@ public class TextDisplay extends UIComponent {
      * Sets up the key input listener for the ENTER keyword to either move to the next section
      * of the text or clear the textbox from the screen
      */
+//    private void setupInputListener() {
+//        logger.info(TextDisplay.this.screen);
+//        stage.addListener(new InputListener() {
+//            @Override
+//            public boolean keyDown(InputEvent event, int keycode) {
+//
+//                if (TextDisplay.this.screen.equals("cutscene")) {
+//                    if (keycode == com.badlogic.gdx.Input.Keys.ENTER || keycode == com.badlogic.gdx.Input.Keys.SPACE) {
+//                        logger.info("we've pressed enter");
+//                        Cutscene currentCutscene = ServiceLocator.getCurrentCutscene();
+//                        currentCutscene.setTextForScene(currentCutscene.currentScene);
+//                        label.setText(currentCutscene.currentText);
+//                    }
+//                    return true;
+//                } else if (TextDisplay.this.screen.equals("moralDecision")){
+//                    Cutscene currentCutscene = ServiceLocator.getCurrentCutscene();
+//                    Boolean atEnd = currentCutscene.isAtEnd();
+//                    if (keycode == com.badlogic.gdx.Input.Keys.ENTER || keycode == com.badlogic.gdx.Input.Keys.SPACE){
+//                        logger.info("at moral in textDisplay");
+//                        if (!atEnd) {
+//                            logger.info("parsing through");
+//                            currentCutscene.setTextForSceneMoral(currentCutscene.currentScene);
+//                            label.setText(currentCutscene.currentText);
+//                        }
+//                    } else if (keycode == Input.Keys.Y && atEnd){
+//                        logger.info("WE'RE ALMOST THERE");
+//                        currentCutscene = ServiceLocator.getCurrentCutscene();
+//                        currentCutscene.setTextForScene(currentCutscene.currentScene);
+//
+//                        ServiceLocator.getDayNightService().getEvents().trigger("YesAtMoralDecision");
+//                    } else if (keycode == Input.Keys.N && atEnd){
+//                        logger.info("WE'RE ALMOST THERE NO");
+//                        currentCutscene = ServiceLocator.getCurrentCutscene();
+//                        currentCutscene.setTextForScene(currentCutscene.currentScene);
+//
+//                        ServiceLocator.getDayNightService().getEvents().trigger("NoAtMoralDecision");
+//                    }
+//                    return true;
+//                }  else if (keycode == com.badlogic.gdx.Input.Keys.ENTER || keycode == com.badlogic.gdx.Input.Keys.SPACE){
+//                    if (charIndex < TextDisplay.this.text.get(currentPart).length()) {
+//                        label.setText(text.get(currentPart));
+//                        charIndex = TextDisplay.this.text.get(currentPart).length();
+//                    } else {
+//                        currentPart++;
+//                        charIndex = 0;
+//                        lastUpdate = 0;
+//                        TextDisplay.this.currentText = new StringBuilder();
+//                        // if no more text remaining
+//                        if (currentPart == TextDisplay.this.text.size()) {
+//                            setVisible(false);
+//                        }
+//                    }
+//                    return true;
+//                }
+//                return false;
+//            }
+//        });
+//    }
     private void setupInputListener() {
         logger.info(TextDisplay.this.screen);
         stage.addListener(new InputListener() {
             @Override
             public boolean keyDown(InputEvent event, int keycode) {
-
+                // Handle cutscene progression
                 if (TextDisplay.this.screen.equals("cutscene")) {
                     if (keycode == com.badlogic.gdx.Input.Keys.ENTER || keycode == com.badlogic.gdx.Input.Keys.SPACE) {
-                        logger.info("we've pressed enter");
+                        logger.info("ENTER key pressed in cutscene");
+
+                        // Move to the next scene
                         Cutscene currentCutscene = ServiceLocator.getCurrentCutscene();
-                        currentCutscene.setTextForScene(currentCutscene.currentScene);
-                        label.setText(currentCutscene.currentText);
+
+                        // Ensure the current cutscene isn't null and ready to progress
+                        if (currentCutscene != null) {
+                            logger.info("Advancing to the next scene in cutscene");
+                            currentCutscene.setTextForScene(currentCutscene.currentScene);
+                            label.setText(currentCutscene.currentText);
+
+                            // Trigger the event to move to the next scene
+                            entity.getEvents().trigger("nextCutscene");
+                        } else {
+                            logger.error("Current cutscene is null.");
+                        }
                     }
                     return true;
-                } else if (TextDisplay.this.screen.equals("moralDecision")){
+                } else if (TextDisplay.this.screen.equals("moralDecision")) {
+                    // Handle moral decision input
                     Cutscene currentCutscene = ServiceLocator.getCurrentCutscene();
                     Boolean atEnd = currentCutscene.isAtEnd();
-                    if (keycode == com.badlogic.gdx.Input.Keys.ENTER || keycode == com.badlogic.gdx.Input.Keys.SPACE){
-                        logger.info("at moral in textDisplay");
+                    if (keycode == com.badlogic.gdx.Input.Keys.ENTER || keycode == com.badlogic.gdx.Input.Keys.SPACE) {
                         if (!atEnd) {
-                            logger.info("parsing through");
+                            logger.info("Advancing in moral decision");
                             currentCutscene.setTextForSceneMoral(currentCutscene.currentScene);
                             label.setText(currentCutscene.currentText);
                         }
-                    } else if (keycode == Input.Keys.Y && atEnd){
-                        logger.info("WE'RE ALMOST THERE");
-                        currentCutscene = ServiceLocator.getCurrentCutscene();
-                        currentCutscene.setTextForScene(currentCutscene.currentScene);
-
+                    } else if (keycode == Input.Keys.Y && atEnd) {
+                        logger.info("YES selected in moral decision");
                         ServiceLocator.getDayNightService().getEvents().trigger("YesAtMoralDecision");
-                    } else if (keycode == Input.Keys.N && atEnd){
-                        logger.info("WE'RE ALMOST THERE NO");
-                        currentCutscene = ServiceLocator.getCurrentCutscene();
-                        currentCutscene.setTextForScene(currentCutscene.currentScene);
-
+                    } else if (keycode == Input.Keys.N && atEnd) {
+                        logger.info("NO selected in moral decision");
                         ServiceLocator.getDayNightService().getEvents().trigger("NoAtMoralDecision");
                     }
                     return true;
-                }  else if (keycode == com.badlogic.gdx.Input.Keys.ENTER || keycode == com.badlogic.gdx.Input.Keys.SPACE){
-                    if (charIndex < TextDisplay.this.text.get(currentPart).length()) {
-                        label.setText(text.get(currentPart));
-                        charIndex = TextDisplay.this.text.get(currentPart).length();
-                    } else {
-                        currentPart++;
-                        charIndex = 0;
-                        lastUpdate = 0;
-                        TextDisplay.this.currentText = new StringBuilder();
-                        // if no more text remaining
-                        if (currentPart == TextDisplay.this.text.size()) {
-                            setVisible(false);
+                } else if (keycode == com.badlogic.gdx.Input.Keys.ENTER || keycode == com.badlogic.gdx.Input.Keys.SPACE) {
+                    // Handle the text display in the case of regular cutscenes
+                    if (text != null && !text.isEmpty()) {
+                        if (charIndex < TextDisplay.this.text.get(currentPart).length()) {
+                            label.setText(text.get(currentPart));
+                            charIndex = TextDisplay.this.text.get(currentPart).length();
+                        } else {
+                            currentPart++;
+                            charIndex = 0;
+                            lastUpdate = 0;
+                            TextDisplay.this.currentText = new StringBuilder();
+
+                            // Move to the next cutscene if all text parts have been displayed
+                            if (currentPart == TextDisplay.this.text.size()) {
+                                setVisible(false);
+                                logger.info("All text displayed, advancing to next scene");
+                                entity.getEvents().trigger("nextCutscene");
+                            }
                         }
+                    } else {
+                        logger.error("Text list is empty. Cannot proceed with displaying the text.");
                     }
                     return true;
                 }
@@ -272,6 +344,7 @@ public class TextDisplay extends UIComponent {
             }
         });
     }
+
 
     @Override
     public void draw(SpriteBatch batch) {
