@@ -8,13 +8,12 @@ import com.csse3200.game.events.EventHandler;
 /**
  * Provides a global access point for entities to register themselves. This allows for iterating
  * over entities to perform updates each loop. All game entities should be registered here.
- *
- * Avoid adding additional state here! Global access is often the easy but incorrect answer to
+  * Avoid adding additional state here! Global access is often the easy but incorrect answer to
  * sharing data.
  */
 public class EntityService {
   private static final Logger logger = LoggerFactory.getLogger(EntityService.class);
-  private static final int INITIAL_CAPACITY = 16;
+  private static final int INITIAL_CAPACITY = 32;
 
   private final Array<Entity> entities = new Array<>(false, INITIAL_CAPACITY);
   private final EventHandler entityEventHandler;
@@ -29,6 +28,8 @@ public class EntityService {
     entityEventHandler = new EventHandler();
   }
 
+  public EntityService(EventHandler EventHandler) { this.entityEventHandler = EventHandler; }
+
 
   public Array<Entity> getEntities() { return entities; }
 
@@ -37,7 +38,7 @@ public class EntityService {
    * @param entity new entity.
    */
   public void register(Entity entity) {
-    logger.info("Registering {} in entity service", entity);
+//    logger.info("Registering {} in entity service", entity);
     entities.add(entity);
     entity.create();
   }

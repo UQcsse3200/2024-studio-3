@@ -10,8 +10,6 @@ import com.csse3200.game.components.FlameComponent;
 import com.csse3200.game.components.TooltipsDisplay;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.components.station.*;
-import com.csse3200.game.components.player.InventoryDisplayHoverComponent;
-import com.csse3200.game.components.station.StationProgressDisplay;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.PhysicsUtils;
@@ -23,6 +21,11 @@ import com.csse3200.game.rendering.TextureRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
 
 public class StationFactory {
+
+  private StationFactory() {
+    //Private instantiation.
+  }
+
     /**
    * Creates visible oven.
    * @return Oven entity with relavent behaviors 
@@ -30,7 +33,6 @@ public class StationFactory {
   public static Entity createOven() {
     AnimationRenderComponent animator =
             new AnimationRenderComponent(ServiceLocator.getResourceService().getAsset("images/stations/oven/oven.atlas", TextureAtlas.class));
-    System.out.println("Adding Oven animation");
     animator.addAnimation("Oven", 0.2f, Animation.PlayMode.LOOP);
     animator.addAnimation("OvenDefault", 0.2f, Animation.PlayMode.LOOP);
 
@@ -43,7 +45,7 @@ public class StationFactory {
         .addComponent(new StationCookingComponent())
         .addComponent(new StationItemHandlerComponent("oven"))
         .addComponent(new InventoryComponent(1))
-        .addComponent(new InventoryDisplayHoverComponent())
+        .addComponent(new CookingHoverComponent())
         .addComponent(new StationProgressDisplay());
 
 
@@ -56,7 +58,7 @@ public class StationFactory {
     // Add station reference
     PhysicsComponent physicsComponent = oven.getComponent(PhysicsComponent.class);
     Body body = physicsComponent.getBody();
-    
+
     body.setUserData(oven);
     oven.addComponent(animator);
     animator.startAnimation("OvenDefault");
@@ -68,34 +70,34 @@ public class StationFactory {
    * @return Stove entity with relavent behaviors
    */
   public static Entity createCuttingBoard() {
-    Entity cutting_board = new Entity()
+    Entity cuttingBoard = new Entity()
             .addComponent(new TextureRenderComponent("images/stations/chopping_board/choppingboardbench.png"))
             .addComponent(new PhysicsComponent())
             .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
             .addComponent(new InteractionComponent(PhysicsLayer.INTERACTABLE))
             .addComponent(new TooltipsDisplay())
             .addComponent(new InventoryComponent(1))
-            .addComponent(new InventoryDisplayHoverComponent())
+            .addComponent(new ChoppingBoardHoverComponent())
             .addComponent(new StationProgressDisplay())
             .addComponent(new StationChoppingComponent())
             .addComponent(new StationItemHandlerComponent("cutting board"));
 
-    cutting_board.getComponent(InteractionComponent.class).setAsBox(cutting_board.getScale());
-    cutting_board.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
-    cutting_board.getComponent(TextureRenderComponent.class).scaleEntity();
-    cutting_board.scaleHeight(1f);
+    cuttingBoard.getComponent(InteractionComponent.class).setAsBox(cuttingBoard.getScale());
+    cuttingBoard.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
+    cuttingBoard.getComponent(TextureRenderComponent.class).scaleEntity();
+    cuttingBoard.scaleHeight(1f);
 
-    PhysicsUtils.setScaledCollider(cutting_board, 1f, 1f);
+    PhysicsUtils.setScaledCollider(cuttingBoard, 1f, 1f);
     // Add station reference
-    PhysicsComponent physicsComponent = cutting_board.getComponent(PhysicsComponent.class);
+    PhysicsComponent physicsComponent = cuttingBoard.getComponent(PhysicsComponent.class);
     Body body = physicsComponent.getBody();
-    body.setUserData(cutting_board);
-    return cutting_board;
+    body.setUserData(cuttingBoard);
+    return cuttingBoard;
   }
 
     /**
    * Creates visible stove.
-   * @return Stove entity with relavent behaviors
+   * @return Stove entity with relevant behaviors
    */
   public static Entity createStove() {
     Entity stove = new Entity()
@@ -105,7 +107,7 @@ public class StationFactory {
         .addComponent(new InteractionComponent(PhysicsLayer.INTERACTABLE))
         .addComponent(new TooltipsDisplay())
         .addComponent(new InventoryComponent(1))
-        .addComponent(new InventoryDisplayHoverComponent())
+        .addComponent(new CookingHoverComponent())
         .addComponent(new StationCookingComponent())  
         .addComponent(new StationItemHandlerComponent("stove"))
         .addComponent(new StationProgressDisplay());
@@ -129,7 +131,8 @@ public class StationFactory {
         .addComponent(new PhysicsComponent())
         .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
         .addComponent(new InteractionComponent(PhysicsLayer.INTERACTABLE))
-        .addComponent(new StationBinComponent());
+        .addComponent(new StationBinComponent())
+        .addComponent(new BinHoverComponent());
 
     bin.getComponent(InteractionComponent.class).setAsBox(bin.getScale());
     bin.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
@@ -173,6 +176,7 @@ public class StationFactory {
             .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
             .addComponent(new InteractionComponent(PhysicsLayer.INTERACTABLE))
             .addComponent(new TooltipsDisplay())
+            .addComponent(new BasketHoverComponent())
             .addComponent(new StationCollectionComponent())
             .addComponent(new InventoryComponent(1))
             .addComponent(new IngredientStationHandlerComponent("bananaTree", "banana"));
@@ -201,6 +205,7 @@ public class StationFactory {
             .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
             .addComponent(new InteractionComponent(PhysicsLayer.INTERACTABLE))
             .addComponent(new TooltipsDisplay())
+            .addComponent(new BasketHoverComponent())
             .addComponent(new StationCollectionComponent())
             .addComponent(new InventoryComponent(1))
             .addComponent(new IngredientStationHandlerComponent("strawberriesStation", "strawberry"));
@@ -228,6 +233,7 @@ public class StationFactory {
             .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
             .addComponent(new InteractionComponent(PhysicsLayer.INTERACTABLE))
             .addComponent(new TooltipsDisplay())
+            .addComponent(new BasketHoverComponent())
             .addComponent(new StationCollectionComponent())
             .addComponent(new InventoryComponent(1))
             .addComponent(new IngredientStationHandlerComponent("acaiStation", "acai"));
@@ -255,6 +261,7 @@ public class StationFactory {
             .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
             .addComponent(new InteractionComponent(PhysicsLayer.INTERACTABLE))
             .addComponent(new TooltipsDisplay())
+            .addComponent(new BasketHoverComponent())
             .addComponent(new StationCollectionComponent())
             .addComponent(new InventoryComponent(1))
             .addComponent(new IngredientStationHandlerComponent("lettuceStation", "lettuce"));
@@ -283,6 +290,7 @@ public class StationFactory {
             .addComponent(new InteractionComponent(PhysicsLayer.INTERACTABLE))
             .addComponent(new TooltipsDisplay())
             .addComponent(new StationCollectionComponent())
+            .addComponent(new BasketHoverComponent())
             .addComponent(new InventoryComponent(1))
             .addComponent(new IngredientStationHandlerComponent("tomatoStation", "tomato"));
     // Physics components
@@ -311,6 +319,7 @@ public class StationFactory {
             .addComponent(new InteractionComponent(PhysicsLayer.INTERACTABLE))
             .addComponent(new TooltipsDisplay())
             .addComponent(new StationCollectionComponent())
+            .addComponent(new BasketHoverComponent())
             .addComponent(new InventoryComponent(1))
             .addComponent(new IngredientStationHandlerComponent("cucumberStation", "cucumber"));
     // Physics components
@@ -337,6 +346,7 @@ public class StationFactory {
             .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
             .addComponent(new InteractionComponent(PhysicsLayer.INTERACTABLE))
             .addComponent(new TooltipsDisplay())
+            .addComponent(new BasketHoverComponent())
             .addComponent(new StationCollectionComponent())
             .addComponent(new InventoryComponent(1))
             .addComponent(new IngredientStationHandlerComponent("beefStation", "beef"));
@@ -364,6 +374,7 @@ public class StationFactory {
             .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
             .addComponent(new InteractionComponent(PhysicsLayer.INTERACTABLE))
             .addComponent(new TooltipsDisplay())
+            .addComponent(new BasketHoverComponent())
             .addComponent(new StationCollectionComponent())
             .addComponent(new InventoryComponent(1))
             .addComponent(new IngredientStationHandlerComponent("beefStation", "chocolate"));
@@ -378,6 +389,35 @@ public class StationFactory {
     Body body = physicsComponent.getBody();
     body.setUserData(chocolate);
     return chocolate;
+  }
+
+  /**
+   * Creates an dishwasher, a type of item station which gives out clean plates. 
+   * @return Entity of type station with added components and references
+   */
+  public static Entity createDishwasher() {
+    Entity dishwasher = new Entity()
+            .addComponent(new TextureRenderComponent("images/stations/benches/dishwasher.png"))
+            .addComponent(new PhysicsComponent())
+            .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
+            .addComponent(new InteractionComponent(PhysicsLayer.INTERACTABLE))
+            .addComponent(new TooltipsDisplay())
+            .addComponent(new BasketHoverComponent())
+            .addComponent(new StationCollectionComponent())
+            .addComponent(new InventoryComponent(1))
+            .addComponent(new PlateStationHandlerComponent());
+    
+    // Physics components
+    dishwasher.getComponent(InteractionComponent.class).setAsBox(dishwasher.getScale());
+    dishwasher.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
+    dishwasher.getComponent(TextureRenderComponent.class).scaleEntity();
+    dishwasher.scaleHeight(1f);
+    PhysicsUtils.setScaledCollider(dishwasher, 1f, 1f);
+    // Add station reference
+    PhysicsComponent physicsComponent = dishwasher.getComponent(PhysicsComponent.class);
+    Body body = physicsComponent.getBody();
+    body.setUserData(dishwasher);
+    return dishwasher;
   }
 
   /**
@@ -415,7 +455,6 @@ public class StationFactory {
             // Change this handler to the combining one
             //.addComponent(new StationItemHandlerComponent("benchTop", new ArrayList<>()));
 
-    //benchTable.getComponent(InteractionComponent.class).setAsBox(benchTable.getScale());
     benchTable.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
     benchTable.getComponent(TextureRenderComponent.class).scaleEntity();
     benchTable.scaleHeight(1.5f);
@@ -440,7 +479,7 @@ public class StationFactory {
             .addComponent(new InteractionComponent(PhysicsLayer.INTERACTABLE))
             .addComponent(new TooltipsDisplay())
             .addComponent(new InventoryComponent(4))
-            .addComponent(new InventoryDisplayHoverComponent())
+            .addComponent(new MixingBenchHoverComponent())
             .addComponent(new StationMealComponent("combining", new ArrayList<>()));
             // Change this handler to the combining one
             //.addComponent(new StationItemHandlerComponent("benchMiddle", new ArrayList<>()));
@@ -464,19 +503,19 @@ public class StationFactory {
    */
   public static Entity createSubmissionWindow() {
 
-
     Entity submission = new Entity()
             .addComponent(new PhysicsComponent())
             .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
             .addComponent(new InteractionComponent(PhysicsLayer.INTERACTABLE))
             .addComponent(new TooltipsDisplay())
             .addComponent(new InventoryComponent(1))
+            .addComponent(new SubmitHoverComponent())
             .addComponent(new StationServingComponent());
-
 
     submission.getComponent(InteractionComponent.class).setAsBox(submission.getScale());
     submission.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
     PhysicsUtils.setScaledCollider(submission, 1f, 1f);
+    submission.scaleHeight(1f);
 
     AnimationRenderComponent animator =
             new AnimationRenderComponent(

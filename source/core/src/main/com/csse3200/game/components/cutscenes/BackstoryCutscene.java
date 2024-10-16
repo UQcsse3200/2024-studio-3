@@ -1,7 +1,6 @@
 package com.csse3200.game.components.cutscenes;
 
 import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.components.cutscenes.scenes.Scene;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
@@ -128,48 +127,11 @@ public class BackstoryCutscene extends Cutscene {
         scene12.setDuration(3.0f);
         scenes.add(scene12);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
     }
 
     /**
      * Loads the assets needed for the backstory cutscene, including textures for backgrounds.
      */
-//    @Override
-//    protected void loadAssets() {
-//        // Load the assets for the backstory cutscene
-//        for (Scene scene : scenes) {
-//            ServiceLocator.getResourceService().loadTextures(new String[]{scene.getBackgroundImagePath()});
-//        }
-//        ServiceLocator.getResourceService().loadAll();
-//    }
-//    @Override
-//    protected void loadAssets() {
-//        // Collect all textures into a list first
-//        Array<String> texturePaths = new Array<>();
-//
-//        // Load the assets for the backstory cutscene
-//        for (Scene scene : scenes) {
-//            texturePaths.add(scene.getBackgroundImagePath());
-//        }
-//
-//        // Now load all textures in a single call
-//        ServiceLocator.getResourceService().loadTextures(texturePaths.toArray(String.class));
-//
-//        // Finally, call loadAll to ensure all assets are loaded
-//        ServiceLocator.getResourceService().loadAll();
-//    }
 
     @Override
     protected void loadAssets() {
@@ -187,16 +149,6 @@ public class BackstoryCutscene extends Cutscene {
                 "images/Cutscenes/new_beastly_bistro_pt2.png",
                 "images/Cutscenes/new_beastly_bistro.png",
                 "images/Cutscenes/resized_black_image.png"
-        };
-
-        // Load any additional images for the cutscene (if applicable)
-        String[] images = new String[] {
-                // Add any specific images here if needed, e.g. character sprites, etc.
-        };
-
-        // Load animations for the cutscene (if applicable)
-        String[] animations = new String[] {
-                // Add any animation atlases here if needed
         };
 
         // Get the resource service to load the assets

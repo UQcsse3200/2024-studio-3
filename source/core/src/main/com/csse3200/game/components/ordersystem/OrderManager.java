@@ -1,6 +1,5 @@
 package com.csse3200.game.components.ordersystem;
 
-import com.csse3200.game.files.FileLoader;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.components.npc.CustomerComponent;
 import com.csse3200.game.services.ServiceLocator;
@@ -22,7 +21,11 @@ public class OrderManager {
         }
     }
 
-    static void loadRecipes() {
+    private OrderManager() {
+        super();
+    }
+
+    public static void loadRecipes() {
         // List of recipe names to load
         String[] recipeNames = {"acaiBowl", "salad", "fruitSalad", "steakMeal", "bananaSplit"};
 
@@ -31,11 +34,11 @@ public class OrderManager {
             if (recipe.isValid()) {
                 recipes.put(recipeName, recipe);
             } else {
-                logger.error("Failed to load recipe: " + recipeName);
+                logger.error("Failed to load recipe: {}", recipeName);
             }
         }
 
-        logger.info("Recipes loaded: " + recipes.keySet());
+        logger.info("Recipes loaded: {}", recipes.keySet());
     }
 
     public static Recipe getRecipe(String recipeName) {
@@ -62,9 +65,9 @@ public class OrderManager {
 
         Recipe recipe = getRecipe(preference);
         if (recipe != null) {
-            logger.info("Displaying order for preference: " + preference);
-            logger.info("Ingredients: " + recipe.getIngredients());
-            logger.info("Making Time: " + recipe.getMakingTime());
+            logger.info("Displaying order for preference: {}", preference);
+            logger.info("Ingredients: {}", recipe.getIngredients());
+            logger.info("Making Time: {}", recipe.getMakingTime());
         }
         switch (customerComponent.getPreference()){
             case "acaiBowl" -> ServiceLocator.getEntityService().getEvents().trigger("createAcaiDocket");
@@ -72,7 +75,7 @@ public class OrderManager {
             case "fruitSalad" -> ServiceLocator.getEntityService().getEvents().trigger("createFruitSaladDocket");
             case "steakMeal" -> ServiceLocator.getEntityService().getEvents().trigger("createSteakDocket");
             case "bananaSplit" -> ServiceLocator.getEntityService().getEvents().trigger("createBananaDocket");
-            default -> logger.error("No recipe found for preference: " + preference);
+            default -> logger.error("No recipe found for preference: {}", preference);
         }
     }
 }

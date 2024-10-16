@@ -13,7 +13,6 @@ import com.csse3200.game.services.GameTime;
 import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.w3c.dom.Text;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -181,7 +180,7 @@ public class AnimationRenderComponent extends RenderComponent {
 
   @Override
   public void dispose() {
-    atlas.dispose();
+    //atlas.dispose();
     super.dispose();
   }
 
@@ -196,6 +195,11 @@ public class AnimationRenderComponent extends RenderComponent {
    */
   public void updateAtlas(TextureAtlas atlasName) {
     this.atlas = atlasName;
+  }
+
+  @Override
+  public int getLayer() {
+    return 2;
   }
 
   public String getAtlasString() {

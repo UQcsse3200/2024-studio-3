@@ -2,6 +2,8 @@ package com.csse3200.game.components.maingame;
 
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.components.Component;
+import com.csse3200.game.components.player.PlayerStatsDisplay;
+import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.csse3200.game.services.ServiceLocator;
@@ -17,7 +19,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
  */
 public class PauseMenuActions extends Component {
     private static final Logger logger = LoggerFactory.getLogger(PauseMenuActions.class);
-    private GdxGame game;
+    private final GdxGame game;
 
     /**
      * Constructs a PauseMenuActions instance
@@ -53,6 +55,8 @@ public class PauseMenuActions extends Component {
      */
     private void onRestart() {
         logger.info("Start game");
+        ServiceLocator.getLevelService().reset(); 
+        PlayerStatsDisplay.reset(); 
         game.setScreen(GdxGame.ScreenType.MAIN_GAME);
     }
 
@@ -62,6 +66,7 @@ public class PauseMenuActions extends Component {
     private void onExit() {
         logger.info("Exit game");
         game.setScreen(GdxGame.ScreenType.MAIN_MENU);
+        ServiceLocator.getLevelService().setCurrLevel(GdxGame.LevelType.LEVEL_1);
     }
 
     /**

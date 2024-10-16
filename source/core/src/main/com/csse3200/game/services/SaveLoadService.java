@@ -1,6 +1,5 @@
 package com.csse3200.game.services;
 
-import com.badlogic.gdx.utils.Array;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.files.GameState;
 import com.csse3200.game.files.FileLoader.Location;
@@ -10,7 +9,6 @@ import com.csse3200.game.components.moral.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.io.File;
-import java.util.HashMap;
 import com.csse3200.game.events.EventHandler;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -38,6 +36,9 @@ public class SaveLoadService {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy_HH-mm-ss");
         String formattedDateTime = currentDateTime.format(formatter);
         state.setModTime(formattedDateTime);
+        if (saveFile.equals("")) {
+            setSaveFile(formattedDateTime + ".json");
+        }
         FileLoader.writeClass(state, (ROOT_DIR + File.separator + saveFile), Location.LOCAL);
     }
 
@@ -57,6 +58,7 @@ public class SaveLoadService {
             for (Decision decision : state.getDecisions()) {
                 system.addDecision(decision);
             }
+            logger.info("Successfuly Loaded Game");
         }
 
     }

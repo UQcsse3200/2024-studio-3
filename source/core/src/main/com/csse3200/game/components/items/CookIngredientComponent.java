@@ -39,11 +39,11 @@ public class CookIngredientComponent extends ItemTimerComponent {
 
         // Get the item so that it can be updated correctly and correct time gotten
         item = entity.getComponent(IngredientComponent.class);
-        setLength(item.getCookTime() * 1000); // More logic can be added here when required
+        setLength(item.getCookTime() * 1000L); // More logic can be added here when required
 
         // Log the info
         String s = String.format("The timer for item: %s, has been created", item.getItemName());
-        logger.info(s);
+        //logger.info(s);
     }
 
     @Override

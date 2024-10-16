@@ -1,6 +1,7 @@
 package com.csse3200.game.components.cutscenes;
 
 import com.badlogic.gdx.math.GridPoint2;
+import com.csse3200.game.GdxGame;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.factories.ItemFactory;
 import com.csse3200.game.areas.ForestGameArea;
@@ -9,8 +10,7 @@ import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.components.upgrades.UpgradesDisplay;
 
 public class GoodEnd extends ForestGameArea {
-    private TerrainFactory terrainFactory;
-    private UpgradesDisplay upgradesDisplay; 
+
 
     /**
      * Initialise this ForestGameArea to use the provided TerrainFactory.
@@ -18,10 +18,8 @@ public class GoodEnd extends ForestGameArea {
      * @param terrainFactory TerrainFactory used to create the terrain for the GameArea.
      * @requires terrainFactory != null
      */
-    public GoodEnd(TerrainFactory terrainFactory, UpgradesDisplay upgradesDisplay) {
-        super(terrainFactory, upgradesDisplay);
-        this.terrainFactory = terrainFactory;
-        this.upgradesDisplay = upgradesDisplay; 
+    public GoodEnd(TerrainFactory terrainFactory, GdxGame.LevelType level, UpgradesDisplay upgradesDisplay) {
+        super(terrainFactory,level, upgradesDisplay);
 
     }
 
@@ -38,10 +36,10 @@ public class GoodEnd extends ForestGameArea {
     @Override
     public void create() {
 
-        spawnBeef("cooked");
+        spawnBeefEnd("cooked");
     }
 
-    private void spawnBeef(String cookedLevel) {
+    private void spawnBeefEnd(String cookedLevel) {
         Entity newBeef = ItemFactory.createBeef(cookedLevel);
         spawnEntityAt(newBeef, new GridPoint2(3, 3), true, true);
         newBeef.setScale(0.5f,0.5f);

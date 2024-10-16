@@ -2,10 +2,9 @@ package com.csse3200.game.entities.benches;
 
 import java.util.ArrayList;
 
-import com.badlogic.gdx.math.GridPoint2;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.csse3200.game.components.station.StationItemHandlerComponent;
+import com.csse3200.game.components.station.StationMealComponent;
 import com.csse3200.game.areas.GameArea;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.physics.PhysicsLayer;
@@ -13,6 +12,11 @@ import com.csse3200.game.physics.PhysicsUtils;
 import com.csse3200.game.physics.components.ColliderComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.rendering.TextureRenderComponent;
+import com.csse3200.game.services.ServiceLocator;
+import com.csse3200.game.physics.components.InteractionComponent;
+import com.csse3200.game.components.TooltipsDisplay;
+import com.csse3200.game.components.player.InventoryComponent;
+import com.csse3200.game.components.station.*;
 
 /**
  * This class is responsible for creating benches in the game.
@@ -35,32 +39,18 @@ public class Bench extends Entity{
         this.x = x;
         this.y = y;
 
-        addComponent(new TextureRenderComponent("images/stations/benches/" + type + ".png"));
-        addComponent(new PhysicsComponent());
-        addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
-        addComponent(new StationItemHandlerComponent(type));
         setScale(1f, 1f);
-        getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
-        PhysicsUtils.setScaledCollider(this, 1.05f, 0.75f);
-    }
-
-    /**
-     * initialiser with default single type
-     * @param x - x coordinate
-     * @param y - y coordinate
-     */
-    public Bench(int x, int y) {
-        this.type = "top_shadows"; //todo: replace with single_shadow
-        this.x = x;
-        this.y = y;
 
         addComponent(new TextureRenderComponent("images/stations/benches/" + type + ".png"));
-        addComponent(new PhysicsComponent());
-        addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
-        addComponent(new StationItemHandlerComponent(type));
-        setScale(1f, 1f);
-        getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
-        PhysicsUtils.setScaledCollider(this, 1.05f, 0.75f);
+        addComponent(new PhysicsComponent().setBodyType(BodyType.StaticBody));
+        addComponent(new InteractionComponent(PhysicsLayer.INTERACTABLE));
+
+        addComponent(new TooltipsDisplay());
+        addComponent(new InventoryComponent(4));
+        addComponent(new MixingBenchHoverComponent());
+        addComponent(new StationMealComponent("combining", new ArrayList<>()));
+
+        ServiceLocator.getInteractableService().registerEntity(this);
     }
 
     /**
@@ -79,8 +69,17 @@ public class Bench extends Entity{
         float height = 1f;
         bench.setScale(width, height);
         bench.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
-        PhysicsUtils.setScaledCollider(bench, 1.05f, 0.75f);
+        PhysicsUtils.setScaledCollider(bench, 1.5f, 0.75f);
         return bench;
+    }
+
+    // get x coordinate
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
     }
 
 

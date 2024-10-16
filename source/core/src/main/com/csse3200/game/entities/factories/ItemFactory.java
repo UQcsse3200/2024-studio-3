@@ -11,6 +11,9 @@ import com.csse3200.game.services.ServiceLocator;
 import java.util.List;
 
 public class ItemFactory {
+    private ItemFactory() {
+        // No instantiation allowed
+    }
     public static Entity createTemplateItem() {
         return new Entity()
                 .addComponent(new PhysicsComponent())
@@ -25,11 +28,10 @@ public class ItemFactory {
      * @return - A fish entity.
      */
     public static Entity createFish(String cookedLevel) {
-        Entity fish = new Entity()
+        return new Entity()
                 .addComponent(new IngredientComponent("fish", ItemType.FISH, 2, 10,
                         0, cookedLevel))
                 .addComponent(new CookIngredientComponent());
-        return fish;
     }
 
     /**
@@ -39,11 +41,10 @@ public class ItemFactory {
      * @return - A beef entity.
      */
     public static Entity createBeef(String cookedLevel) {
-        Entity beef = new Entity()
+        return new Entity()
                 .addComponent(new IngredientComponent("beef", ItemType.BEEF, 2, 10,
                         0, cookedLevel))
                 .addComponent(new CookIngredientComponent());
-        return beef;
     }
 
     /**
@@ -53,12 +54,11 @@ public class ItemFactory {
      * @return - A banana entity.
      */
     public static Entity createBanana(String chopLevel) {
-        Entity banana = new Entity()
+
+        return new Entity()
                 .addComponent(new IngredientComponent("banana", ItemType.BANANA, 1, 3,
                         10, chopLevel))
                 .addComponent(new ChopIngredientComponent());
-
-        return banana;
     }
 
     /**
@@ -68,11 +68,10 @@ public class ItemFactory {
      * @return - A cucumber entity.
      */
     public static Entity createCucumber(String chopLevel) {
-        Entity cucumber = new Entity()
+        return new Entity()
                 .addComponent(new IngredientComponent("cucumber", ItemType.CUCUMBER, 1, 5,
                         10, chopLevel))
                 .addComponent(new ChopIngredientComponent());
-        return cucumber;
     }
 
     /**
@@ -82,11 +81,10 @@ public class ItemFactory {
      * @return - A tomato entity.
      */
     public static Entity createTomato(String chopLevel) {
-        Entity tomato = new Entity()
+        return new Entity()
                 .addComponent(new IngredientComponent("tomato", ItemType.TOMATO, 1, 6,
                         10, chopLevel))
                 .addComponent(new ChopIngredientComponent());
-        return tomato;
     }
 
     /**
@@ -96,11 +94,10 @@ public class ItemFactory {
      * @return - A strawberry entity.
      */
     public static Entity createStrawberry(String chopLevel) {
-        Entity strawberry = new Entity()//createTemplateItem()
+        return new Entity()//createTemplateItem()
                 .addComponent(new IngredientComponent("strawberry", ItemType.STRAWBERRY, 1, 3,
                         10, chopLevel))
                 .addComponent(new ChopIngredientComponent());
-        return strawberry;
     }
 
     /**
@@ -110,10 +107,9 @@ public class ItemFactory {
      * @return - A lettuce entity.
      */
     public static Entity createLettuce(String chopLevel) {
-        Entity lettuce = new Entity()
+        return new Entity()
                 .addComponent(new IngredientComponent("lettuce", ItemType.LETTUCE, 1, 10, 10, chopLevel))
                 .addComponent(new ChopIngredientComponent());
-        return lettuce;
     }
 
     /**
@@ -123,10 +119,9 @@ public class ItemFactory {
      * @return - A chocolate entity.
      */
     public static Entity createChocolate(String chopLevel) {
-        Entity chocolate = new Entity()
+        return new Entity()
                 .addComponent(new IngredientComponent("chocolate", ItemType.CHOCOLATE, 1, 10, 10, chopLevel))
                 .addComponent(new ChopIngredientComponent());
-        return chocolate;
     }
 
     /**
@@ -136,10 +131,9 @@ public class ItemFactory {
      * @return - An Açaí entity.
      */
     public static Entity createAcai(String chopLevel) {
-        Entity acai = new Entity()
+        return new Entity()
                 .addComponent(new IngredientComponent("acai", ItemType.ACAI, 1, 10, 10, chopLevel))
                 .addComponent(new ChopIngredientComponent());
-        return acai;
     }
 
     /**
@@ -148,9 +142,8 @@ public class ItemFactory {
      * @return - A fruitSalad entity.
      */
     public static Entity createFruitSalad(List<IngredientComponent> ingredients) {
-        Entity fruitSalad = new Entity()
+        return new Entity()
                 .addComponent(new MealComponent("fruit salad", ItemType.FRUITSALAD, 2, ingredients, 5));
-        return fruitSalad;
     }
 
     /**
@@ -159,9 +152,8 @@ public class ItemFactory {
      * @return - An Açaí bowl entity.
      */
     public static Entity createAcaiBowl(List<IngredientComponent> ingredients) {
-        Entity acaiBowl = new Entity()
+        return new Entity()
                 .addComponent(new MealComponent("acai bowl", ItemType.ACAIBOWL, 2, ingredients, 5));
-        return acaiBowl;
     }
 
     /**
@@ -170,9 +162,8 @@ public class ItemFactory {
      * @return - An salad entity.
      */
     public static Entity createSalad(List<IngredientComponent> ingredients) {
-        Entity salad = new Entity()
+        return new Entity()
                 .addComponent(new MealComponent("salad", ItemType.SALAD, 3, ingredients, 10));
-        return salad;
     }
 
     /**
@@ -181,9 +172,8 @@ public class ItemFactory {
      * @return - A steak meal entity.
      */
     public static Entity createSteakMeal(List<IngredientComponent> ingredients) {
-        Entity steakMeal = new Entity()
+        return new Entity()
                 .addComponent(new MealComponent("steak meal", ItemType.STEAKMEAL, 3, ingredients, 10));
-        return steakMeal;
     }
 
 
@@ -193,9 +183,8 @@ public class ItemFactory {
      * @return - A banana split entity.
      */
     public static Entity createBananaSplit(List<IngredientComponent> ingredients) {
-        Entity bananaSplit = new Entity()
+        return new Entity()
                 .addComponent(new MealComponent("banana split", ItemType.BANANASPLIT, 3, ingredients, 10));
-        return bananaSplit;
     }
 
     /**
@@ -249,7 +238,7 @@ public class ItemFactory {
         }
 
         // Unregister the ingredients as they have no need to be entities and
-        // recieve updates anymore
+        // receive updates anymore
         for (IngredientComponent ingredient : ingredients) {
                 ServiceLocator.getEntityService().unregister(ingredient.getEntity());
         }
@@ -257,5 +246,15 @@ public class ItemFactory {
         // Register the entity
         ServiceLocator.getEntityService().register(entity);
         return entity;
+    }
+
+    /**
+     * Create a plate item.
+     * 
+     * @return - A Plate item entity.
+     */
+    public static Entity createPlate() {
+        return new Entity()
+                .addComponent(new PlateComponent(0));
     }
 }

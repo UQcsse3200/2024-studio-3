@@ -27,19 +27,24 @@ public class CutsceneTextDisplay extends UIComponent {
     // UI components for displaying the text
     private Label label;
     private final Table table;
-    private boolean visible = true;
+    private boolean visible;
 
     /**
      * Default constructor that initializes without a specific cutscene.
      */
-    public CutsceneTextDisplay() {
+    public CutsceneTextDisplay(boolean visible) {
         super();
         this.table = new Table();
+        this.visible = visible;
+        System.out.print("###############################################################################\n");
+        System.out.print(this.visible);
+        System.out.print("\n###############################################################################");
     }
 
     public CutsceneTextDisplay(Skin skin) {
         super(skin);
         this.table = new Table();
+        this.table.setVisible(this.visible);
     }
 
     /**
@@ -48,10 +53,11 @@ public class CutsceneTextDisplay extends UIComponent {
     @Override
     public void create() {
         super.create();
-        setupUI();
-
-        // Setup input listener to handle user input
-        setupInputListener();
+        if (this.visible) {
+            setupUI();
+            // Setup input listener to handle user input
+            setupInputListener();
+        }
     }
 
     private void setupUI() {
@@ -86,6 +92,8 @@ public class CutsceneTextDisplay extends UIComponent {
 
         table.add(stack).padBottom(70).size(
                 (int) (Gdx.graphics.getWidth() * 0.5), (int) (Gdx.graphics.getHeight() * 0.2));
+
+        table.setVisible(visible);
     }
 
 
@@ -97,7 +105,7 @@ public class CutsceneTextDisplay extends UIComponent {
             @Override
             public boolean keyDown(InputEvent event, int keycode) {
                 // If ENTER is pressed, skip to displaying the full text
-                if (keycode == com.badlogic.gdx.Input.Keys.ENTER) {
+                if ((keycode == com.badlogic.gdx.Input.Keys.ENTER) && (visible)) {
                     logger.info("Space bar pressed. Moving to next piece of text");
                     Cutscene currentCutscene = ServiceLocator.getCurrentCutscene();
                     currentCutscene.setTextForScene(currentCutscene.currentScene);
@@ -140,8 +148,4 @@ public class CutsceneTextDisplay extends UIComponent {
         return table;
     }
 
-    public void disable() {
-        visible = false;
-        table.setVisible(false);
-    }
 }

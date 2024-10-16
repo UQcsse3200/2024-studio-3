@@ -1,9 +1,10 @@
 package com.csse3200.game.components.cutscenes;
 
+import com.csse3200.game.GdxGame;
 import com.csse3200.game.areas.ForestGameArea;
 import com.csse3200.game.areas.GameArea;
 import com.csse3200.game.entities.Entity;
-import com.csse3200.game.services.ResourceService;
+import com.csse3200.game.services.LevelService;
 import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,11 +16,8 @@ import org.slf4j.LoggerFactory;
 public class CutsceneArea extends GameArea {
     private static final Logger logger = LoggerFactory.getLogger(ForestGameArea.class);
 
-    // The current cutscene being played in the area
-    private Cutscene currentCutscene;
-
     // Index representing which cutscene to load (could be part of an enum in the future)
-    private int cutsceneValue;
+    private GdxGame.CutsceneType cutsceneValue;
 
     /**
      * Constructor for the CutsceneArea. It registers the game area as well as sets the value for the cutscene to
@@ -27,9 +25,10 @@ public class CutsceneArea extends GameArea {
      *
      * @param cutsceneValue An integer representing the specific cutscene to load.
      */
-    public CutsceneArea(int cutsceneValue) {
+    public CutsceneArea(GdxGame.CutsceneType cutsceneValue) {
         super();
         ServiceLocator.registerGameArea(this);  // Register this cutscene area in the service locator
+        ServiceLocator.registerLevelService(new LevelService());
         this.cutsceneValue = cutsceneValue;
     }
 
@@ -38,24 +37,51 @@ public class CutsceneArea extends GameArea {
      */
     @Override
     public void create() {
+        // The current cutscene being played in the area
+        Cutscene currentCutscene;
         switch (cutsceneValue) {
-            case 0:
+            case BACK_STORY:
                 logger.debug("Loading backstory cutscene");
                 currentCutscene = new BackstoryCutscene();  // Initialize the intro cutscene
                 ServiceLocator.setCurrentCutscene(currentCutscene);  // Set the current cutscene in the service locator
+                ServiceLocator.getLevelService().setCurrLevel(GdxGame.LevelType.LEVEL_1);
                 break;
-            case 1:
+
+            case MORAL_1:
+                logger.debug("Loading Day 1 Moral cutscene");
+                currentCutscene = new MoralDay1Cutscene();  // Initialize the intro cutscene
+                ServiceLocator.setCurrentCutscene(currentCutscene);  // Set the current cutscene in the service locator
+                break;
+
+
+            case DAY_2:
+                logger.debug("Loading Day 2 cutscene");
+                currentCutscene = new Day2Cutscene();  // Initialize the intro cutscene
+                ServiceLocator.setCurrentCutscene(currentCutscene);  // Set the current cutscene in the service locator
+                break;
+            case DAY_3:
+                logger.debug("Loading Day 4 cutscene");
+                currentCutscene = new Day3Cutscene();
+                ServiceLocator.setCurrentCutscene(currentCutscene);
+                break;
+            case DAY_4:
+                logger.debug("Loading Day 3 cutscene");
+                currentCutscene = new Day4Cutscene();
+                ServiceLocator.setCurrentCutscene(currentCutscene);
+                break;
+            case GOOD_END:
                 logger.debug("Loading good end cutscene");
                 currentCutscene = new GoodEndCutscene();  // Initialize the good end cutscene
                 ServiceLocator.setCurrentCutscene(currentCutscene);  // Set the current cutscene in the service locator
                 break;
-            case 2:
+            case BAD_END:
+                //ServiceLocator.clear(Le);
                 logger.debug("Loading bad end cutscene");
                 currentCutscene = new BadEndCutscene();
                 ServiceLocator.setCurrentCutscene(currentCutscene);
 
                 break;
-            case 3:
+            case LOSE:
                 logger.debug("Loading lose end cutscene");
                 currentCutscene = new LoseCutscene();
                 ServiceLocator.setCurrentCutscene(currentCutscene);
@@ -73,28 +99,6 @@ public class CutsceneArea extends GameArea {
 
 
         // Start the cutscene
-        //currentCutscene.start();
-    }
-
-    /**
-     * Updates the cutscene area each frame. Transitions the game once the cutscene is completed.
-     *
-     * @param delta Time since the last frame in seconds
-     */
-    public void update(float delta) {
-        // Check if the cutscene has completed
-        if (cutsceneCompleted()) {
-            logger.debug("Cutscene is done");  // Log that the cutscene is completed
-            // Additional logic to trigger the transition to the next gameplay area could be added here
-        }
-    }
-
-    /**
-     * Checks if the current cutscene has been completed.
-     *
-     * @return true if the cutscene is completed, false otherwise.
-     */
-    private boolean cutsceneCompleted() {
-        return currentCutscene != null && currentCutscene.isCompleted();
+        currentCutscene.start();
     }
 }

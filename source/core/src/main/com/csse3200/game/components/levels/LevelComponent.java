@@ -1,6 +1,7 @@
 package com.csse3200.game.components.levels;
 
 import com.badlogic.gdx.utils.TimeUtils;
+import com.csse3200.game.GdxGame;
 import com.csse3200.game.areas.ForestGameArea;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.npc.PersonalCustomerEnums;
@@ -11,6 +12,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.HashMap;
 
 public class LevelComponent extends Component {
     private static final Logger logger = LoggerFactory.getLogger(LevelComponent.class);
@@ -23,6 +25,59 @@ public class LevelComponent extends Component {
     private ForestGameArea gameArea;
     private Entity customerSpawnController;
     private ArrayList<String> customerNameArray;
+    private HashMap<GdxGame.LevelType , ArrayList<String>> acceptableCustomers;
+
+    /**
+     * Initialise the map of acceptable customers in each level
+     * key = game level i.e. LEVEL_1, value = array list of customers
+     */
+    public void initialiseAcceptableCustomers() {
+        ArrayList<String> levelOne = new ArrayList<>();
+        levelOne.add("JOHN");
+
+        ArrayList<String> levelTwo = new ArrayList<>();
+        levelTwo.add("JOHN");
+        levelTwo.add("HANK");
+
+        ArrayList<String> levelThree = new ArrayList<>();
+        levelThree.add("JOHN");
+        levelThree.add("SILVER");
+
+        ArrayList<String> levelFour = new ArrayList<>();
+        levelFour.add("HANK");
+        levelFour.add("MOONKI");
+        levelFour.add("LEWIS");
+
+        ArrayList<String> levelFive = new ArrayList<>();
+        levelFive.add("HANK");
+        levelFive.add("JOHN");
+        levelFive.add("SILVER");
+        levelFive.add("MOONKI");
+        levelFive.add("LEWIS");
+
+        acceptableCustomers = new HashMap<>();
+        acceptableCustomers.put(GdxGame.LevelType.LEVEL_0, levelOne);
+        acceptableCustomers.put(GdxGame.LevelType.LEVEL_1, levelOne);
+        acceptableCustomers.put(GdxGame.LevelType.LEVEL_2, levelTwo);
+        acceptableCustomers.put(GdxGame.LevelType.LEVEL_3, levelThree);
+        acceptableCustomers.put(GdxGame.LevelType.LEVEL_4, levelFour);
+        acceptableCustomers.put(GdxGame.LevelType.LEVEL_5, levelFive);
+    }
+
+    /**
+     * Initialise the customer name array which is dependent on which customers are acceptable in each level.
+     */
+    public void initialiseCustomerNameArr() {
+        customerNameArray = new ArrayList<>();
+        for (PersonalCustomerEnums customer: PersonalCustomerEnums.values()) {
+            String name = customer.name();
+            ArrayList<String> customersInLevel = acceptableCustomers.get(gameArea.getLevel());
+            // basic sheep & chicken was included in a previous commit, ive left it here
+            if (!name.equals("BASIC_SHEEP") && !name.equals("BASIC_CHICKEN") && customersInLevel.contains(name)) {
+                customerNameArray.add(customer.name());
+            }
+        }
+    }
 
     /**
      * Initialises the component to add necessary listeners to the LevelService and initialise an array with customer
@@ -32,13 +87,7 @@ public class LevelComponent extends Component {
         super.create();
         ServiceLocator.getLevelService().getEvents().addListener("startSpawning", this::initSpawning);
         ServiceLocator.getLevelService().getEvents().addListener("setGameArea", this::setGameArea);
-        customerNameArray = new ArrayList<>();
-        for (PersonalCustomerEnums customer: PersonalCustomerEnums.values()) {
-            String name = customer.name();
-            if (name != "BASIC_SHEEP" && name != "BASIC_CHICKEN") {
-                customerNameArray.add(customer.name());
-            }
-        }
+        initialiseAcceptableCustomers();
     }
 
     /**
@@ -51,9 +100,10 @@ public class LevelComponent extends Component {
         if (nowSpawning) {
             long elapsedTime = TimeUtils.timeSinceMillis(spawnStartTime);
             long elapsedTimeSecs = elapsedTime / 1000;
-            //If more than five seconds have passed, there are more customers to spawn
-            //AND if another customer can join the line
-            if (elapsedTimeSecs >= 3 && numbCustomersSpawned < levelSpawnCap && currentCustomersLinedUp < 5) {
+            initialiseCustomerNameArr();
+            // if more than 40 secs or no customers then spawn. keep track of limits on customer num size
+            // this can certainly be changed I just put in an arbitrary time
+            if ((currentCustomersLinedUp == 0 || elapsedTimeSecs >= 40) && numbCustomersSpawned < levelSpawnCap && currentCustomersLinedUp < 3) {
                 setSpawnStartTime();
                 customerSpawned();
                 spawnCustomer();
@@ -63,6 +113,11 @@ public class LevelComponent extends Component {
                     logger.info("Hit the spawn limit of {} with {}", getLevelSpawnCap(), getNumbCustomersSpawned());
                     toggleNowSpawning();
                 }
+            }
+            // say they "left" the lineup if 40 secs have passed to trigger the next spawning
+            // NOTE: this does NOT change where the customer is or remove them, it just triggers the next spawning
+            if (elapsedTimeSecs >= 40) {
+                customerLeftLineUp();
             }
         }
     }
@@ -87,6 +142,8 @@ public class LevelComponent extends Component {
         customerSpawnController.getEvents().trigger(customerNameArray.get(index));
         logger.info("Spawned {}", customerNameArray.get(index));
         ServiceLocator.getLevelService().getEvents().trigger("customerSpawned", customerNameArray.get(index));
+        // add to "line up" (not actually but for our purposes)
+        customerJoinedLineUp();
     }
 
     /**
@@ -124,7 +181,7 @@ public class LevelComponent extends Component {
     }
 
     /**
-     * Stores the new levels spawn capacity in the levelSpawnCap attribute
+     * Stores the new levels spawn capacity in  the levelSpawnCap attribute
      *
      * @param cap the number of customers that must be spawned
      */
@@ -153,7 +210,7 @@ public class LevelComponent extends Component {
     /**
      * Is the game spawning customers?
      *
-     * @return whether or not the game is spawning customers
+     * @return whether the game is spawning customers
      */
     public boolean getNowSpawning() {
         return nowSpawning;
@@ -178,7 +235,7 @@ public class LevelComponent extends Component {
     }
 
     /**
-     * Get the Entity that handles all of the customer spawning events
+     * Get the Entity that handles all the customer spawning events
      *
      * @return the Entity with all customer spawning events
      */

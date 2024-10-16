@@ -4,10 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.csse3200.game.components.TooltipsDisplay;
-import com.csse3200.game.components.player.InventoryComponent;
-import com.csse3200.game.components.station.StationServingComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.csse3200.game.rendering.TextureRenderComponent;
@@ -28,6 +24,7 @@ public class CutsceneFactory {
     public static Entity createBackground(String bgImgPath) {
         Entity background = new Entity();
 
+        
         // Create and add a texture component to the entity for rendering the background
         TextureRenderComponent textureComponent = new BackgroundRenderComponent(bgImgPath);
         background.addComponent(textureComponent);
@@ -43,9 +40,9 @@ public class CutsceneFactory {
         background.setScale(screenToHeight * aspectRatio, screenToHeight);
 
         // Center the background entity on the screen
-        float y_pos = -screenToHeight / 2;
-        float x_pos = -(screenToHeight * aspectRatio) / 2;
-        background.setPosition(new Vector2(x_pos, y_pos));
+        float ypos = -screenToHeight / 2;
+        float xpos = -(screenToHeight * aspectRatio) / 2;
+        background.setPosition(new Vector2(xpos, ypos));
 
         return background;
     }
@@ -81,7 +78,7 @@ public class CutsceneFactory {
      * @param imgPath The file path of the animation image to use.
      * @return A new animation entity.
      */
-    public static Entity createImage(String imgPath) {
+    public static Entity createImage(String imgPath, float imageScale) {
         Entity animation = new Entity();
 
         // Create and add a texture component to the entity for rendering the animation
@@ -90,6 +87,8 @@ public class CutsceneFactory {
 
         // Scale the entity based on the texture size
         textureComponent.scaleEntity();
+
+        animation.setScale(animation.getScale().x * imageScale, animation.getScale().y * imageScale);
 
         return animation;
     }
@@ -119,9 +118,9 @@ public class CutsceneFactory {
         animation.setScale(screenToHeight * aspectRatio, screenToHeight);
 
         // Center the background entity on the screen
-        float y_pos = -screenToHeight / 2;
-        float x_pos = -(screenToHeight * aspectRatio) / 2;
-        animation.setPosition(new Vector2(x_pos, y_pos));
+        float ypos = -screenToHeight / 2;
+        float xpos = -(screenToHeight * aspectRatio) / 2;
+        animation.setPosition(new Vector2(xpos, ypos));
 
         // render the animation to be placed over the texture
         AnimationRenderComponent animator =

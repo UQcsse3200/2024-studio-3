@@ -12,7 +12,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(GameExtension.class)
 class FileLoaderTest {
-    private static final Logger logger = LoggerFactory.getLogger(FileLoaderTest.class);
 
     @Test
     void loadFromValidFile() {
@@ -35,7 +34,7 @@ class FileLoaderTest {
     @Test
     void loadDirectory() {
         FileHandle[] files = FileLoader.getFiles("test/files/", Location.LOCAL);
-        assertEquals(9, files.length);
+        assertEquals(10, files.length);
     }
 
     @Test

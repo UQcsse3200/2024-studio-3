@@ -15,8 +15,8 @@ import com.csse3200.game.services.ServiceLocator;
 public class CheckWinLoseComponent extends Component {
 
     private CombatStatsComponent combatStatsComponent;
-    private int baseWinAmount;
-    private int baseLossThreshold;
+    private final int baseWinAmount;
+    private final int baseLossThreshold;
 
     /**
      * Constructs a new CheckWinLoseComponent with specified win and loss thresholds.
@@ -30,9 +30,7 @@ public class CheckWinLoseComponent extends Component {
         this.baseLossThreshold = baseLossThreshold;
 
         // Listen for player creation and retrieve the CombatStatsComponent
-        ServiceLocator.getPlayerService().getEvents().addListener("playerCreated", (Entity player) -> {
-            this.combatStatsComponent = player.getComponent(CombatStatsComponent.class);
-        });
+        ServiceLocator.getPlayerService().getEvents().addListener("playerCreated", (Entity player) ->   this.combatStatsComponent = player.getComponent(CombatStatsComponent.class));
     }
 
     /**
@@ -57,7 +55,7 @@ public class CheckWinLoseComponent extends Component {
 
         if (hasLost(adjustedLossThreshold)) {
             return "LOSE";
-        } else if (currentDay == DayNightService.MAX_DAYS && hasWon(adjustedWinAmount)) {
+        } else if (currentDay == DayNightService.MAXDAYS && hasWon(adjustedWinAmount)) {
             return "WIN";
         } else {
             return "GAME_IN_PROGRESS";

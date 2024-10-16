@@ -1,19 +1,5 @@
 package com.csse3200.game.components.upgrades;
 
-import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
-import com.csse3200.game.components.CombatStatsComponent;
-import com.csse3200.game.components.ordersystem.MainGameOrderTicketDisplay;
-import com.csse3200.game.events.EventHandler;
-import com.csse3200.game.services.GameTime;
-import com.csse3200.game.services.PlayerService;
-import com.csse3200.game.services.ServiceLocator;
-import net.dermetfan.gdx.physics.box2d.PositionController;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 
 public class ExtortionUpgradeTest {
     /**

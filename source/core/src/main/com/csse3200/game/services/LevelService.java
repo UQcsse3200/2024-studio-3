@@ -1,5 +1,6 @@
 package com.csse3200.game.services;
 
+import com.csse3200.game.GdxGame;
 import com.csse3200.game.events.EventHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -8,7 +9,8 @@ import org.slf4j.LoggerFactory;
 public class LevelService {
     private static final Logger logger = LoggerFactory.getLogger(LevelService.class);
     private EventHandler levelEventHandler;
-    private int currLevel;
+    private GdxGame.LevelType currLevel;
+    private int baseGold = 50;
     private int currGold;
     private boolean playerFinishedLevel;
 
@@ -17,12 +19,20 @@ public class LevelService {
      */
     public LevelService() {
         levelEventHandler = new EventHandler();
-        currLevel = 1;
-        currGold = 50;
+        currLevel = GdxGame.LevelType.LEVEL_1;
+
+        currGold = baseGold; 
         playerFinishedLevel = false;
         levelEventHandler.addListener("startLevel", this::levelControl);
+       // levelEventHandler.addListener("mapLevel", this::loadMap);
         //levelEventHandler.addListener("createCustomer", ForestGameArea::spawnCustomer);
         //ServiceLocator.getLevelService().getEvents().addListener("spawnCustomer", this::spawnCustomer);
+    }
+    public void reset() {
+        currLevel = GdxGame.LevelType.LEVEL_1; 
+        setCurrGold(baseGold); 
+        playerFinishedLevel = false; 
+        ServiceLocator.getLevelService().getEvents().trigger("startLevel", currLevel);
     }
 
     public void togglePlayerFinishedLevel() {
@@ -43,7 +53,7 @@ public class LevelService {
      *
      * @return  the current level number
      */
-    public int getCurrLevel() {
+    public GdxGame.LevelType getCurrLevel() {
         if (playerFinishedLevel) {
             incrementLevel();
             togglePlayerFinishedLevel();
@@ -64,7 +74,14 @@ public class LevelService {
      * Increases the integer representing the current level by one
      */
     public void incrementLevel() {
-        currLevel++;
+        switch (currLevel) {
+            case LEVEL_1 -> currLevel = GdxGame.LevelType.LEVEL_2;
+            case LEVEL_2 -> currLevel = GdxGame.LevelType.LEVEL_3;
+            case LEVEL_3 -> currLevel = GdxGame.LevelType.LEVEL_4;
+            case LEVEL_4 -> currLevel = GdxGame.LevelType.LEVEL_5;
+            case LEVEL_5 -> currLevel = GdxGame.LevelType.DONE;
+            default -> currLevel = GdxGame.LevelType.LEVEL_1;
+        }
     }
 
     /**
@@ -72,8 +89,8 @@ public class LevelService {
      *
      * @param newLevel the new level number
      */
-    public void setCurrLevel(int newLevel) {
-        currLevel = newLevel;
+    public void setCurrLevel(GdxGame.LevelType newLevel) {
+            currLevel = newLevel;
     }
 
     /**
@@ -83,43 +100,18 @@ public class LevelService {
      *
      * @param level the level number
      */
-    public void levelControl(int level) {
-        int spawnCap = 0;
-        switch (level) {
-            case 0:
-                spawnCap = 1;
-                break;
-            case 1:
-                spawnCap = 3;
-                break;
-            case 2:
-                spawnCap = 4;
-                break;
-            case 3:
-                spawnCap = 5;
-                break;
-            case 4:
-                spawnCap = 7;
-                break;
-            case 5:
-                spawnCap = 9;
-                break;
-            case 6:
-                spawnCap = 11;
-                break;
-            case 7:
-                spawnCap = 8;
-                break;
-            case 8:
-                spawnCap = 12;
-                break;
-            case 9:
-                spawnCap = 15;
-                break;
-            case 10:
-                spawnCap = 17;
-                break;
-        }
+    public void levelControl(GdxGame.LevelType level) {
+        int spawnCap = switch(level) {
+            case LEVEL_0 -> 1;
+            case LEVEL_1 -> 1;
+            case LEVEL_2 -> 3;
+            case LEVEL_3 -> 4;
+            case LEVEL_4 -> 5;
+            case LEVEL_5 -> 7;
+            case DONE -> 9;
+            default -> 1;
+        };
+
         levelEventHandler.trigger("startSpawning", spawnCap);
     }
 }

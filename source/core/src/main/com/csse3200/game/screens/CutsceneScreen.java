@@ -22,7 +22,6 @@ import com.csse3200.game.ui.terminal.Terminal;
 import com.csse3200.game.ui.terminal.TerminalDisplay;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.w3c.dom.Text;
 
 /**
  * The CutsceneScreen class represents the screen used during cutscenes in the game.
@@ -36,7 +35,7 @@ public class CutsceneScreen extends ScreenAdapter {
 
     private final GdxGame game;
 
-    private int cutsceneVal;
+    private final GdxGame.CutsceneType cutsceneVal;
     private final Renderer renderer;
 
     // Textures used for the cutscene screen
@@ -44,15 +43,20 @@ public class CutsceneScreen extends ScreenAdapter {
 
     private CutsceneScreenDisplay cutsceneScreenDisplay;
 
+    private boolean textBoxVisible = true;
+
     /**
      * Constructor for the CutsceneScreen.
      *
      * @param game       The main game instance.
      * @param cutsceneVal The cutscene value to determine which cutscene to load.
      */
-    public CutsceneScreen(GdxGame game, int cutsceneVal) {
+    public CutsceneScreen(GdxGame game, GdxGame.CutsceneType cutsceneVal) {
         this.game = game;
         this.cutsceneVal = cutsceneVal;
+        if (cutsceneVal == GdxGame.CutsceneType.BAD_END || cutsceneVal == GdxGame.CutsceneType.GOOD_END) {
+            textBoxVisible = false;
+        }
 
         logger.debug("Initialising main game screen services");
         // Register essential services for cutscene operation
@@ -152,7 +156,8 @@ public class CutsceneScreen extends ScreenAdapter {
                 .addComponent(new TerminalDisplay())
                 .addComponent(new CutsceneActions(this.game))
                 .addComponent(cutsceneScreenDisplay)
-                .addComponent(new CutsceneTextDisplay());
+                .addComponent(new CutsceneTextDisplay(textBoxVisible));
+
 
         // Register the UI entity with the entity service
         ServiceLocator.getEntityService().register(ui);
@@ -181,7 +186,7 @@ public class CutsceneScreen extends ScreenAdapter {
      *
      * @return The cutsceneVal value
      */
-    public int getVal() {
+    public GdxGame.CutsceneType getVal() {
         return cutsceneVal;
     }
 }

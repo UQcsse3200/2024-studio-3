@@ -1,7 +1,6 @@
 package com.csse3200.game.components.tutorial;
 
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
@@ -9,8 +8,6 @@ import com.csse3200.game.GdxGame;
 import com.csse3200.game.components.ordersystem.MainGameOrderBtnDisplay;
 import com.csse3200.game.components.player.PlayerActions;
 import com.csse3200.game.entities.Entity;
-import com.csse3200.game.rendering.RenderService;
-import com.csse3200.game.services.PlayerService;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
 import com.csse3200.game.components.ordersystem.MainGameOrderTicketDisplay;
@@ -18,7 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.Gdx;
-import com.csse3200.game.components.tutorial.TutorialTextDisplay;
+import com.csse3200.game.components.maingame.TextDisplay;
 
 /**
  * Displays tutorial-related UI components and manages tutorial flow using textDisplay.
@@ -26,21 +23,14 @@ import com.csse3200.game.components.tutorial.TutorialTextDisplay;
 public class TutorialScreenDisplay extends UIComponent {
     private static final Logger logger = LoggerFactory.getLogger(TutorialScreenDisplay.class);
     private final GdxGame game;
-    private Skin skin;
-    private PlayerActions playerActions;
     private int tutorialStep = 0;
-    private MainGameOrderTicketDisplay orderTicketDisplay;
     private MainGameOrderBtnDisplay orderBtnDisplay;
     private boolean createOrderPressed = false;
     private boolean docketsShifted = false;
     private Table table;
-    private TutorialTextDisplay textDisplay;
-    private boolean wPressedLastFrame = false;
-    private boolean aPressedLastFrame = false;
-    private boolean sPressedLastFrame = false;
-    private boolean dPressedLastFrame = false;
+    private TextDisplay textDisplay;
     private static final int MAX_TUTORIAL_STEP = 4;
-    int  i = 0;
+
 
     public TutorialScreenDisplay(GdxGame game) {
 
@@ -53,8 +43,15 @@ public class TutorialScreenDisplay extends UIComponent {
     @Override
     public void create() {
         super.create();
+        MainGameOrderTicketDisplay.resetOrderNumb();
 
-        playerActions = entity.getComponent(PlayerActions.class);
+        if (entity != null) {
+            entity.getComponent(PlayerActions.class);
+        } else {
+            logger.error("Entity null");
+        }
+
+        ServiceLocator.getLevelService().setCurrLevel(GdxGame.LevelType.LEVEL_0);
 
         if (table == null) {
             table = new Table();  // Ensure table is initialised
@@ -63,7 +60,7 @@ public class TutorialScreenDisplay extends UIComponent {
         setupUI();
 
         // Initialise the textDisplay before using it
-        textDisplay = new TutorialTextDisplay();
+        textDisplay = new TextDisplay();
         textDisplay.setVisible(false);  // Initially hidden
         stage.addActor(textDisplay.getTable());  // Add it to the stage
 
@@ -168,7 +165,7 @@ public class TutorialScreenDisplay extends UIComponent {
     private void completeTutorial() {
         if (textDisplay != null) {
             textDisplay.setVisible(true);
-            createTextBox("Tutorial Complete! Press ENTER to continue.");
+            createTextBox("Tutorial Complete! Press `Space` to continue.");
         } else {
             logger.error("textDisplay is null during completeTutorial.");
         }
@@ -202,7 +199,7 @@ public class TutorialScreenDisplay extends UIComponent {
                 }
                 break;
             case 4:
-                if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
+                if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
                     startGame();
                 }
                 break;
@@ -229,6 +226,8 @@ public class TutorialScreenDisplay extends UIComponent {
         if (table != null) {
             table.clear();  // Safely clear the table
         }
+
+        ServiceLocator.getLevelService().setCurrLevel(GdxGame.LevelType.LEVEL_1);
         game.setScreen(GdxGame.ScreenType.MAIN_GAME);  // Transition to the main game
     }
 

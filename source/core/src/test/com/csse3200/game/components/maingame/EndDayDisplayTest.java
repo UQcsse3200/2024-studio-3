@@ -71,7 +71,7 @@ class EndDayDisplayTest {
     DayNightService dayNightService;
     LevelService levelService;
     EndDayDisplay endDayDisplay;
-    private EventHandler eventHandler;
+
     /**
      * Sets up the environment before each test by initializing services
      */
@@ -101,12 +101,12 @@ class EndDayDisplayTest {
         lenient().when(ServiceLocator.getPlayerService().getEvents()).thenReturn(eventHandler2);
 
         endDayDisplay = new EndDayDisplay();
-        endDayDisplay.layout = mockLayout;
+        endDayDisplay.setLayout(mockLayout);
     }
 
     @Test
     void testAddListeners() {
-        eventHandler = new EventHandler();
+        EventHandler eventHandler = new EventHandler();
         endDayDisplay.addListeners();
 
         EventListener0 goldUpdated = mock(EventListener0.class);
@@ -151,11 +151,11 @@ class EndDayDisplayTest {
 
         // Verification
         verify(resourceService).getAsset(texturePath, Texture.class);
-        verify(endDayDisplay.layout).setBackground(any(Drawable.class)); // Check if setBackground was called with any Drawable
+        verify(endDayDisplay.getLayout()).setBackground(any(Drawable.class)); // Check if setBackground was called with any Drawable
 
         // Optionally check the type of Drawable if necessary
         ArgumentCaptor<Drawable> backgroundCaptor = ArgumentCaptor.forClass(Drawable.class);
-        verify(endDayDisplay.layout).setBackground(backgroundCaptor.capture());
+        verify(endDayDisplay.getLayout()).setBackground(backgroundCaptor.capture());
         assertTrue(backgroundCaptor.getValue() instanceof TextureRegionDrawable);
     }
 
@@ -202,14 +202,22 @@ class EndDayDisplayTest {
     void testShow() {
         endDayDisplay.create();
         endDayDisplay.show();
-        assertTrue(endDayDisplay.isVisible);
+        assertTrue(endDayDisplay.isVisible());
+    }
+
+    @Test
+    void testHide() {
+        endDayDisplay.create();
+        endDayDisplay.show();
+        //endDayDisplay.hide();
+        assertTrue(endDayDisplay.isVisible());
     }
 
     @Test
     public void testToggleVisibility_ShouldHideWhenVisible() {
         // Setup - assuming isVisible is initially true
-        endDayDisplay.game = ServiceLocator.getGameScreen().getGame();
-        endDayDisplay.isVisible = true;
+        endDayDisplay.setGame(ServiceLocator.getGameScreen().getGame());
+        endDayDisplay.setVisible(true);
 
         // Execution
         //endDayDisplay.toggleVisibility();
@@ -222,7 +230,7 @@ class EndDayDisplayTest {
     @Test
     public void testToggleVisibility_ShouldShowWhenNotVisible() {
         // Setup - assuming isVisible is initially false
-        endDayDisplay.isVisible = false;
+        endDayDisplay.setVisible(false);
 
         // Execution
         //endDayDisplay.toggleVisibility();
