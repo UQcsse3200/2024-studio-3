@@ -1,4 +1,3 @@
-
 package com.csse3200.game.components.cutscenes;
 
 import com.badlogic.gdx.math.Vector2;
@@ -7,12 +6,25 @@ import com.csse3200.game.components.cutscenes.scenes.Scene;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
 
+/**
+ * BackstoryCutscene manages the scenes that are part of the game's backstory cutscene sequence.
+ * It includes multiple scenes, each with its own text and background image, to narrate the player's
+ * journey through the backstory.
+ */
 public class BackstoryCutscene extends Cutscene {
 
+    /**
+     * Constructor for the BackstoryCutscene class.
+     * Initializes the cutscene by calling the superclass constructor.
+     */
     public BackstoryCutscene() {
         super();
     }
 
+    /**
+     * Sets up the individual scenes for the backstory cutscene.
+     * Each scene is created with its own background image and text, in sequence.
+     */
     @Override
     protected void setupScenes() {
         createScene1();
@@ -29,6 +41,10 @@ public class BackstoryCutscene extends Cutscene {
         createScene12();
     }
 
+    /**
+     * Creates the first scene of the backstory.
+     * This scene introduces the player's past as an esteemed chef at the Brooklyn Bistro.
+     */
     private void createScene1() {
         Array<String> sceneText = new Array<>();
         sceneText.add("You were once an esteemed chef at the Brooklyn Bistro, \n" +
@@ -38,6 +54,10 @@ public class BackstoryCutscene extends Cutscene {
         addSceneWithText(backgroundImage, sceneText, 5.0f);
     }
 
+    /**
+     * Creates the second scene of the backstory.
+     * This scene introduces how animals were once treated as resources in the meals humans enjoyed.
+     */
     private void createScene2() {
         Array<String> sceneText = new Array<>();
         sceneText.add("Animals were once just resources to be used \n" +
@@ -47,6 +67,8 @@ public class BackstoryCutscene extends Cutscene {
         addSceneWithText(backgroundImage, sceneText, 4.0f);
     }
 
+    // Additional scene creation methods follow the same pattern:
+    // createScene3, createScene4, createScene5, etc.
     private void createScene3() {
         Array<String> sceneText = new Array<>();
         sceneText.add("You built a reputation for your talent & expertise...");
@@ -130,12 +152,13 @@ public class BackstoryCutscene extends Cutscene {
         addSceneWithText(backgroundImage, sceneText, 3.0f);
     }
 
+
     /**
      * Helper method to add a scene with background and text.
      *
      * @param backgroundImage The background image for the scene.
      * @param sceneText       The text for the scene.
-     * @param duration        The duration of the scene.
+     * @param duration        The duration of the scene in seconds.
      */
     private void addSceneWithText(String backgroundImage, Array<String> sceneText, float duration) {
         Scene scene = new Scene(backgroundImage);
@@ -144,9 +167,11 @@ public class BackstoryCutscene extends Cutscene {
         scenes.add(scene);
     }
 
+    /**
+     * Loads the assets required for the backstory cutscene, such as background images.
+     */
     @Override
     protected void loadAssets() {
-        // Load the background images for the cutscene
         textures = new String[]{
                 "images/Cutscenes/Brooklyn_Bistro_Background.png",
                 "images/Cutscenes/Kitchen_Background.png",
@@ -166,6 +191,10 @@ public class BackstoryCutscene extends Cutscene {
         resourceService.loadAll();
     }
 
+    /**
+     * Creates entities specific to the backstory cutscene.
+     * This method can be used to define any special logic for entity creation during the cutscene.
+     */
     @Override
     public void createEntities() {
         // Any specific entity creation logic for the backstory cutscene
