@@ -11,6 +11,7 @@ import com.csse3200.game.areas.ForestGameArea;
 import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.components.maingame.*;
 import com.csse3200.game.components.maingame.MainGameActions;
+import com.csse3200.game.components.tutorial.KeybindsButtonDisplay;
 import com.csse3200.game.components.upgrades.*;
 import com.csse3200.game.components.ordersystem.*;
 import com.csse3200.game.components.ordersystem.MainGameOrderBtnDisplay;
@@ -69,6 +70,7 @@ public class MainGameScreen extends ScreenAdapter {
 			"images/calendar.png",
 			"images/Upgrade_display.png",
 			"images/pause_menu2.png",
+			"images/pause_menu.png",
 			"images/recipe_card.png",
 			"images/textbox.png",
 			//background daylight cycle assets
@@ -113,6 +115,7 @@ public class MainGameScreen extends ScreenAdapter {
 	private static final Vector2 CAMERA_POSITION = new Vector2(7f, 4.5f);
 
     private final GdxGame game;
+	private final DayNightService dayNightService;
     private final Renderer renderer;
     private final PhysicsEngine physicsEngine;
     private boolean isPaused = false;
@@ -140,7 +143,8 @@ public class MainGameScreen extends ScreenAdapter {
 		ServiceLocator.registerEntityService(new EntityService());
 		ServiceLocator.registerRenderService(new RenderService());
 		ServiceLocator.registerDocketService(new DocketService());
-		ServiceLocator.registerDayNightService(new DayNightService());
+		dayNightService = new DayNightService();
+		ServiceLocator.registerDayNightService(dayNightService);
 		ServiceLocator.registerRandomComboService(new RandomComboService());
 		ServiceLocator.registerLevelService(new LevelService());
 		ServiceLocator.registerMapLayout(new MapLayout());
@@ -302,6 +306,8 @@ public class MainGameScreen extends ScreenAdapter {
 		return game;
 	}
 
+	public  DayNightService getDayNightService(){return dayNightService;}
+
 	/**
 	 * Creates the main game's ui including components for rendering ui elements to the screen and
 	 * capturing and handling ui input.
@@ -323,6 +329,7 @@ public class MainGameScreen extends ScreenAdapter {
 			.addComponent(new Terminal())
 			.addComponent(inputComponent)
 			.addComponent(new TerminalDisplay())
+			.addComponent(new KeybindsButtonDisplay())
 			.addComponent(new OrderActions())
 			.addComponent(new MainGameOrderBtnDisplay())
 			.addComponent(new PauseMenuActions(this.game))
