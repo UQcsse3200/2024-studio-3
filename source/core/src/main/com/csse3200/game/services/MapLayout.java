@@ -32,7 +32,7 @@ public class MapLayout {
     private int mapHeight;
     private String mapSeparator;
 
-    private final String[] validStations = {"b", "s", "u", "t", "c", "a", "E", "O", "B", "C", "G", "N", "S", "F"};
+    private final String[] validStations = {"b", "s", "u", "t", "c", "a", "E", "O", "B", "C", "G", "N", "S", "F", "Z"};
 
     private static final Logger logger = LoggerFactory.getLogger(MapLayout.class);
 
@@ -221,6 +221,9 @@ public class MapLayout {
                 break;
             case "F":
                 station = StationFactory.createFireExtinguisher();
+                break;
+            case "Z":
+                station = StationFactory.createDishwasher();
                 break;
             default:
                 station = new Entity();
