@@ -6,15 +6,16 @@ import com.csse3200.game.services.ServiceLocator;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.mock;
 
-public class MoralDay2CutsceneTest {
+public class MoralDay4CutsceneTest {
 
-    private MoralDay2Cutscene moralDay2Cutscene;
+    private MoralDay4Cutscene moralDay4Cutscene;
 
     @BeforeAll
     static void setUp() {
@@ -25,14 +26,14 @@ public class MoralDay2CutsceneTest {
 
     @BeforeEach
     void setUpEach() {
-        moralDay2Cutscene = new MoralDay2Cutscene();
+        moralDay4Cutscene = new MoralDay4Cutscene();
 
     }
 
     @Test
     void testSetupScenes() {
-        moralDay2Cutscene.setupScenes();
-        List<Scene> scenes = moralDay2Cutscene.getScenes();
+        moralDay4Cutscene.setupScenes();
+        List<Scene> scenes = moralDay4Cutscene.getScenes();
 
         assertNotNull(scenes);
         assertEquals(4, scenes.size());
@@ -40,26 +41,28 @@ public class MoralDay2CutsceneTest {
 
     @Test
     void testLoadAssets() {
-        moralDay2Cutscene.loadAssets();
+        moralDay4Cutscene.loadAssets();
 
-        assertNotNull(moralDay2Cutscene.getTextures());
-        assertNotNull(moralDay2Cutscene.getImages());
-        assertNotNull(moralDay2Cutscene.getAnimations());
+        assertNotNull(moralDay4Cutscene.getTextures());
+        assertNotNull(moralDay4Cutscene.getImages());
+        assertNotNull(moralDay4Cutscene.getAnimations());
     }
 
     @Test
     void testScenesAreCreatedCorrectly() {
-        moralDay2Cutscene.setupScenes();
-        Scene firstScene = moralDay2Cutscene.getScenes().getFirst();
+        moralDay4Cutscene.setupScenes();
+        Scene firstScene = moralDay4Cutscene.getScenes().getFirst();
 
         assertEquals("images/Cutscenes/Day2_Scene.png", firstScene.getBackgroundImagePath());
         assertEquals(3.0f, firstScene.getDuration(), 0.01);
-        assertEquals(2, firstScene.getImagePaths().length);
+        assertEquals(3, firstScene.getImagePaths().length);
     }
 
     @Test
     void testCreateEntities() {
         // Just used for code coverage
-        moralDay2Cutscene.createEntities();
+        moralDay4Cutscene.createEntities();
     }
+
+
 }

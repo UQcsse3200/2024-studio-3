@@ -1,15 +1,11 @@
 package com.csse3200.game.components.cutscenes;
 
-import com.badlogic.gdx.utils.Array;
 import com.csse3200.game.components.cutscenes.scenes.Scene;
-import com.csse3200.game.services.GameTime;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -53,7 +49,7 @@ public class MoralDay1CutsceneTest {
     @Test
     void testScenesAreCreatedCorrectly() {
         moralDay1Cutscene.setupScenes();
-        Scene firstScene = moralDay1Cutscene.getScenes().get(0);
+        Scene firstScene = moralDay1Cutscene.getScenes().getFirst();
 
         assertEquals("images/Cutscenes/Day2_Scene.png", firstScene.getBackgroundImagePath());
         assertEquals(3.0f, firstScene.getDuration(), 0.01);

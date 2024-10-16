@@ -1,14 +1,12 @@
 package com.csse3200.game.components.cutscenes;
 
 import com.csse3200.game.components.cutscenes.scenes.Scene;
-import com.csse3200.game.services.GameTime;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -17,7 +15,6 @@ import static org.mockito.Mockito.mock;
 
 public class MoralDay3CutsceneTest {
 
-    private static GameTime gameTime;
 
     private MoralDay3Cutscene moralDay3Cutscene;
 
