@@ -209,23 +209,6 @@ class EndDayDisplayTest {
     }
 
     @Test
-    void testRecalculateFailedCustomers() {
-        endDayDisplay.addPassedCustomer("Bob");
-        endDayDisplay.addFailedCustomer("Bob");
-        endDayDisplay.addFailedCustomer("Alice");
-        endDayDisplay.addFailedCustomer("Charlie");
-        //endDayDisplay.recalculateFailedCustomers();
-
-        // Verify that assertCustomerTexture was called correctly
-        //verify(endDayDisplay, times(2)).assertCustomerTexture(anyString(), eq(passedCustomerTable));
-        //verify(endDayDisplay).assertCustomerTexture(eq("Bob"), eq(failedCustomerTable));
-        // Verify correct data state
-        //assertFalse(endDayDisplay.getFailedCustomerArray().contains("Bob"));
-        //assertFalse(endDayDisplay.getFailedCustomerArray().contains("Alice"));
-        //assertFalse(endDayDisplay.getFailedCustomerArray().contains("Charlie"));
-    }
-
-    @Test
     void testShow() {
         endDayDisplay.create();
         endDayDisplay.show();
