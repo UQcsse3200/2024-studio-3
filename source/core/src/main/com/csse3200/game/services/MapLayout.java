@@ -107,7 +107,7 @@ public class MapLayout {
                 for (int col = 0; col < parts.length; col+=4) {
                     //long colTime = ServiceLocator.getTimeSource().getTime();
 
-                    readBench(parts, row, col);
+                    benches.addAll(parseLine(parts, row, col));
 
                     //logger.info("Col " + col + " (" + (ServiceLocator.getTimeSource().getTime() - colTime) + "ms)" + ": " + line);
                 }
@@ -133,12 +133,15 @@ public class MapLayout {
     }
 
     /**
-     * Read a bench from the map file
+     * parses a line from the map file
      * @param parts - the string to parse
      * @param row - the row of the line
      * @param col - the column index
+     * @return the list of benches
      */
-    public void readBench(String[] parts, int row, int col) {
+    public ArrayList<Bench> parseLine(String[] parts, int row, int col)
+    {
+        if (parts == null) return new ArrayList<Bench>();
         String type = parts[col];
 
         // Log the current square being processed a
@@ -148,28 +151,43 @@ public class MapLayout {
         if (type.equals("X")) {
             int strToNum = Integer.valueOf(parts[col + 1]);
             int strToNum2 = Integer.valueOf(parts[col + 2] );
-            benches.addAll(BenchGenerator.createBenchRow(strToNum + 4, strToNum + 3 + strToNum2, row - 4));
+            return BenchGenerator.createBenchRow(strToNum + 4, strToNum + 3 + strToNum2, row - 4);
         }
         // Spawn bench column when 'Y'
         else if (type.equals("Y")) {
             int strToNum = Integer.valueOf(parts[col + 1]);
             int strToNum2 = Integer.valueOf(parts[col + 2]);
-            benches.addAll(BenchGenerator.createBenchColumn(strToNum + 4, row - 4, row + strToNum2 - 4));
+            return BenchGenerator.createBenchColumn(strToNum + 4, row - 4, row + strToNum2 - 4);
         }
         else if (type.equals("Q")) {
             int strToNum = Integer.valueOf(parts[col + 1]);
-            benches.addAll(BenchGenerator.singleShadowBench(strToNum + 4, row - 4));
+            return BenchGenerator.singleShadowBench(strToNum + 4, row - 4);
         }
         else if (type.equals("P")) {
             int strToNum = Integer.valueOf(parts[col + 1]);
-            benches.addAll(BenchGenerator.singleBlocker(strToNum + 4, row - 4));
+            return BenchGenerator.singleBlocker(strToNum + 4, row - 4);
         }
         // Spawn a station
         else if (validateStation(type)) {
             int strToNum = Integer.valueOf(parts[col + 1]);
             stations.add(readStation(type, strToNum, row));
         }
+        return new ArrayList<Bench>();
     }
+
+//    private ArrayList<Bench>() readBench(String type, int a, int b, int c)
+//    {
+//        switch (type) {
+//            case "X":
+//                break;
+//            case "Y":
+//                break;
+//            case "Q":
+//                break;
+//            case "P":
+//                break;
+//        }
+//    }
 
     /**
      * Read a station from the map file
