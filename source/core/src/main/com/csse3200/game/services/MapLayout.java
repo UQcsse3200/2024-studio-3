@@ -19,12 +19,12 @@ import java.util.ArrayList;
  */
 public class MapLayout {
     private EventHandler mapEventHandler;
-    private static final String mapBase = "images/map/map_base.txt";
-    private static final String mapLevel1 = "images/map/map_one.txt";
-    private static final String mapLevel2 = "images/map/map_two.txt";
-    private static final String mapLevel3 = "images/map/map_three.txt";
-    private static final String mapLevel4 = "images/map/map_four.txt";
-    private static final String mapLevel5 = "images/map/map_five.txt";
+    private static final String MAPBASE = "images/map/map_base.txt";
+    private static final String MAPLEVEL1 = "images/map/map_one.txt";
+    private static final String MAPLEVEL2 = "images/map/map_two.txt";
+    private static final String MAPLEVEL3 = "images/map/map_three.txt";
+    private static final String MAPLEVEL4 = "images/map/map_four.txt";
+    private static final String MAPLEVEL5 = "images/map/map_five.txt";
     private ArrayList<Bench> benches = new ArrayList<Bench>();
     private ArrayList<Entity> stations = new ArrayList<Entity>();
     private String mapName;
@@ -59,14 +59,14 @@ public class MapLayout {
      */
     public Map load(GdxGame.LevelType level) {
 
-        String mapLevel = mapBase;
+        String mapLevel = MAPBASE;
         BufferedReader reader = null;
         switch (level) {
-            case LEVEL_1 -> mapLevel = mapLevel1;
-            case LEVEL_2 -> mapLevel = mapLevel2;
-            case LEVEL_3 -> mapLevel = mapLevel3;
-            case LEVEL_4 -> mapLevel = mapLevel4;
-            case LEVEL_5 -> mapLevel = mapLevel5;
+            case LEVEL_1 -> mapLevel = MAPLEVEL1;
+            case LEVEL_2 -> mapLevel = MAPLEVEL2;
+            case LEVEL_3 -> mapLevel = MAPLEVEL3;
+            case LEVEL_4 -> mapLevel = MAPLEVEL4;
+            case LEVEL_5 -> mapLevel = MAPLEVEL5;
         }
 
         try {
@@ -77,22 +77,22 @@ public class MapLayout {
             logger.info("Reading the grid...");
             if ((line = reader.readLine()) != null) {
                 mapName = line; // 1st line is the map name
-                logger.info("Map Name: " + mapName);
+                logger.info("Map Name: {0}", mapName);
             }
 
             if ((line = reader.readLine()) != null) {
                 mapWidth = Integer.parseInt(line); // 2nd line is the width
-                logger.info("Map Width: " + mapWidth);
+                logger.info("Map Width: {0}", mapWidth);
             }
 
             if ((line = reader.readLine()) != null) {
                 mapHeight = Integer.parseInt(line); // 3rd line is the height
-                logger.info("Map Height: " + mapHeight);
+                logger.info("Map Height: {0}", mapHeight);
             }
 
             if ((line = reader.readLine()) != null) {
                 mapSeparator = line; // 4th line is a separator (e.g., "===")
-                logger.info("Map Separator: " + mapSeparator);
+                logger.info("Map Separator: {0}", mapSeparator);
             }
             int row = 4;
 
@@ -108,18 +108,16 @@ public class MapLayout {
                     //long colTime = ServiceLocator.getTimeSource().getTime();
 
                     benches.addAll(parseLine(parts, row, col));
-
-                    //logger.info("Col " + col + " (" + (ServiceLocator.getTimeSource().getTime() - colTime) + "ms)" + ": " + line);
                 }
                 // Log the entire line
-                logger.info("Line " + row + " (" + (ServiceLocator.getTimeSource().getTime() - lineTime) + "ms)" + ": " + line);
+                logger.info("Line {0} ( {1} ms) : {2}", row, (ServiceLocator.getTimeSource().getTime() - lineTime),line);
 
                 row++;
             }
             long time2 = ServiceLocator.getTimeSource().getTime();
             logger.info("Map file read: {}ms", time2 - time1);
         } catch (IOException e) {
-            logger.warn("An error occurred while reading the file: " + e.getMessage());
+            logger.warn("An error occurred while reading the file: {0}", e.getMessage());
         } finally {
             try {
                 if (reader != null) {
@@ -143,9 +141,6 @@ public class MapLayout {
     {
         if (parts == null) return new ArrayList<Bench>();
         String type = parts[col];
-
-        // Log the current square being processed a
-        // logger.info("Checking square at row " + row + ", column " + col + ": " + square);
 
         // Spawn single bench row when 'X'
         if (type.equals("X")) {

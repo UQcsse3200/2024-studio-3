@@ -50,7 +50,7 @@ public class PlayerStatsDisplay extends UIComponent {
     super.create();
     setPlayerStatsDisplay(this);
     addActors();
-    setTimer(ServiceLocator.getDayNightService().FIVE_MINUTES);
+    setTimer(ServiceLocator.getDayNightService().FIVEMINUTES);
 
 
     entity.getEvents().addListener("updateGold", this::updatePlayerGoldUI);

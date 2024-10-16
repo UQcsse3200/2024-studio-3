@@ -17,7 +17,7 @@ public class PlayerServiceTest {
     private Entity mockPlayer;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         // Initialize PlayerService and mock player entity
         playerService = new PlayerService();
         mockPlayer = mock(Entity.class);
@@ -31,14 +31,14 @@ public class PlayerServiceTest {
     }
 
     @Test
-    public void testRegisterPlayer() {
+    void testRegisterPlayer() {
         // Register a mock player entity and check if it's correctly stored
         playerService.registerPlayer(mockPlayer);
         assertEquals(mockPlayer, playerService.getPlayer(), "The registered player should match the retrieved player");
     }
 
     @Test
-    public void testGetPlayer() {
+    void testGetPlayer() {
         // Register a mock player entity and check if getPlayer returns the correct entity
         playerService.registerPlayer(mockPlayer);
         Entity player = playerService.getPlayer();
@@ -47,7 +47,7 @@ public class PlayerServiceTest {
     }
 
     @Test
-    public void testGetPlayerWhenNotRegistered() {
+    void testGetPlayerWhenNotRegistered() {
         // Test that getPlayer returns null if no player has been registered
         Entity player = playerService.getPlayer();
         assertNull(player, "The player should be null if no player is registered");
