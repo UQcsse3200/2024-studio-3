@@ -41,7 +41,6 @@ public class ExtortionUpgradeTest {
     @Mock ProgressBar mockSpeedMeter;
     @Mock Label mockText;
     @Mock CombatStatsComponent combatStatsComponent;
-    @Mock KeyboardPlayerInputComponent keyboardPlayerInputComponent;
     private EventHandler eventHandler;
     RandomComboService randomComboService;
     private ExtortionUpgrade extortionUpgrade;
@@ -72,8 +71,23 @@ public class ExtortionUpgradeTest {
     }
 
     @Test
-    void testNotNull() {
+    void testSpeedBootsActivates() {
         assertNotNull(extortionUpgrade);
+        when(combatStatsComponent.getGold()).thenReturn(100);
+        extortionUpgrade.activate();
+
+        AtomicBoolean isActive = new AtomicBoolean(false);
+        eventHandler.addListener("extortion active", () -> {
+            isActive.set(true);
+        });
+        eventHandler.trigger("extortion active");
+
+        assertTrue(isActive.get());
+        assertTrue(extortionUpgrade.isActive());
+        assertTrue(extortionUpgrade.isVisible());
+        assertTrue(extortionUpgrade.layout.isVisible());
+        assertEquals(extortionUpgrade.getUpgradeDuration(), extortionUpgrade.getActivateTimeRemaining());
+        assertEquals(1f, extortionUpgrade.meter.getValue());
     }
 
     @Test

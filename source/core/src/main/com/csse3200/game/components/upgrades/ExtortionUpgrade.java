@@ -148,10 +148,6 @@ public class ExtortionUpgrade extends UIComponent implements Upgrade {
         text.remove();
     }
 
-    public boolean isActive() {
-        return isActive;
-    }
-
     /**
      * checks to see if the duration of ugprade has ended and consequently deactivates
      */
@@ -196,6 +192,22 @@ public class ExtortionUpgrade extends UIComponent implements Upgrade {
 
     @Override
     public void setStage(Stage mock) {
+        this.stage = mock;
+    }
 
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public boolean isVisible() {
+        return isVisible;
+    }
+
+    public long getUpgradeDuration() {
+        return upgradeDuration;
+    }
+
+    public float getActivateTimeRemaining() {
+        return activateTimeRemaining;
     }
 }
