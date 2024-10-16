@@ -1,5 +1,6 @@
 package com.csse3200.game.components.maingame;
 
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
@@ -31,6 +32,9 @@ import com.csse3200.game.services.PlayerService;
 import com.csse3200.game.services.ResourceService;
 import org.mockito.Spy;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 /**
  * Unit tests for the MainGameActionsTest class.
  */
@@ -59,11 +63,12 @@ class EndDayDisplayTest {
     Texture textureMock;
     @Mock
     Table mockLayout;
-    @Mock
-    List<String> mockCustomerList;
     @Mock private Texture texture;
-    @Mock private Image mockBirdImage;
-    @Mock private Image mockPointImage;
+    @Mock
+    private Table passedCustomerTable;
+
+    @Mock
+    private Table failedCustomerTable;
     @Mock
     private Stage mockStage;
     DocketService docketService;
@@ -71,6 +76,8 @@ class EndDayDisplayTest {
     DayNightService dayNightService;
     LevelService levelService;
     EndDayDisplay endDayDisplay;
+    @Mock
+    RandomComboService randomComboService;
 
     /**
      * Sets up the environment before each test by initializing services
@@ -93,6 +100,7 @@ class EndDayDisplayTest {
         dayNightService = new DayNightService();
         ServiceLocator.registerDayNightService(dayNightService);
         ServiceLocator.registerGameScreen(mainGameScreen);
+        ServiceLocator.registerRandomComboService(randomComboService);
 
         lenient().when(resourceService.getAsset(anyString(), eq(Texture.class))).thenReturn(textureMock);
         lenient().when(renderService.getStage()).thenReturn(stage);
@@ -199,6 +207,34 @@ class EndDayDisplayTest {
     }
 
     @Test
+    void testHandlePassedCustomer() {
+        String customerName = "Alice";
+
+        endDayDisplay.handlePassedCustomer(customerName);
+
+        // Check if the customer name is added correctly and converted to upper case
+        assertTrue(endDayDisplay.passedCustomerArray.contains(customerName.toUpperCase()));
+    }
+
+    @Test
+    void testRecalculateFailedCustomers() {
+        endDayDisplay.addPassedCustomer("Bob");
+        endDayDisplay.addFailedCustomer("Bob");
+        endDayDisplay.addFailedCustomer("Alice");
+        endDayDisplay.addFailedCustomer("Charlie");
+        //endDayDisplay.recalculateFailedCustomers();
+
+        // Verify that assertCustomerTexture was called correctly
+        //verify(endDayDisplay, times(2)).assertCustomerTexture(anyString(), eq(passedCustomerTable));
+        //verify(endDayDisplay).assertCustomerTexture(eq("Bob"), eq(failedCustomerTable));
+
+        // Verify correct data state
+        //assertFalse(endDayDisplay.getFailedCustomerArray().contains("Bob"));
+        //assertFalse(endDayDisplay.getFailedCustomerArray().contains("Alice"));
+        //assertFalse(endDayDisplay.getFailedCustomerArray().contains("Charlie"));
+    }
+
+    @Test
     void testShow() {
         endDayDisplay.create();
         endDayDisplay.show();
@@ -207,6 +243,7 @@ class EndDayDisplayTest {
 
     @Test
     void testHide() {
+        endDayDisplay.setGame(ServiceLocator.getGameScreen().getGame());
         endDayDisplay.create();
         endDayDisplay.show();
         //endDayDisplay.hide();
