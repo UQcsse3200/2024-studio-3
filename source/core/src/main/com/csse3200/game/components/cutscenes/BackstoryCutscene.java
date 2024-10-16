@@ -127,48 +127,11 @@ public class BackstoryCutscene extends Cutscene {
         scene12.setDuration(3.0f);
         scenes.add(scene12);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
     }
 
     /**
      * Loads the assets needed for the backstory cutscene, including textures for backgrounds.
      */
-//    @Override
-//    protected void loadAssets() {
-//        // Load the assets for the backstory cutscene
-//        for (Scene scene : scenes) {
-//            ServiceLocator.getResourceService().loadTextures(new String[]{scene.getBackgroundImagePath()});
-//        }
-//        ServiceLocator.getResourceService().loadAll();
-//    }
-//    @Override
-//    protected void loadAssets() {
-//        // Collect all textures into a list first
-//        Array<String> texturePaths = new Array<>();
-//
-//        // Load the assets for the backstory cutscene
-//        for (Scene scene : scenes) {
-//            texturePaths.add(scene.getBackgroundImagePath());
-//        }
-//
-//        // Now load all textures in a single call
-//        ServiceLocator.getResourceService().loadTextures(texturePaths.toArray(String.class));
-//
-//        // Finally, call loadAll to ensure all assets are loaded
-//        ServiceLocator.getResourceService().loadAll();
-//    }
 
     @Override
     protected void loadAssets() {

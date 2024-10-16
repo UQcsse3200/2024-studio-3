@@ -36,7 +36,7 @@ public class SaveLoadService {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy_HH-mm-ss");
         String formattedDateTime = currentDateTime.format(formatter);
         state.setModTime(formattedDateTime);
-        if (saveFile == "") {
+        if (saveFile.equals("")) {
             setSaveFile(formattedDateTime + ".json");
         }
         FileLoader.writeClass(state, (ROOT_DIR + File.separator + saveFile), Location.LOCAL);

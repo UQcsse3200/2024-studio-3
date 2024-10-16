@@ -4,13 +4,11 @@ import com.csse3200.game.extensions.GameExtension;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-
 import static org.mockito.Mockito.*;
-
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.events.EventHandler;
 import com.badlogic.gdx.Input.Keys;
-import com.badlogic.gdx.math.Vector2;
+
 
 @ExtendWith(GameExtension.class)
 class KeyboardPlayerInputComponentTest {

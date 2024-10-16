@@ -1,7 +1,10 @@
 package com.csse3200.game.components.maingame;
 
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.Gdx;
+import com.csse3200.game.areas.ForestGameArea;
+import com.csse3200.game.entities.EntityService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.badlogic.gdx.graphics.Color;
@@ -34,14 +37,13 @@ public class TextDisplay extends UIComponent {
     private static final Logger logger = LoggerFactory.getLogger(TextDisplay.class);
     //String building variables
     private List<String> text;
-    public int currentPart = 0;
+    private int currentPart = 0;
     private int textLength = 0;
     private StringBuilder currentText;
     private int textLimit = 60;
     private int charIndex = 0;
     private long lastUpdate = 0L;
     private long delay = 100L;
-    private boolean progress = false;
 
     // Displaying variables
     private boolean visible;
@@ -130,7 +132,7 @@ public class TextDisplay extends UIComponent {
 
         // Add the stack to the table with padding or alignment options
         table.add(stack).padBottom(70).padLeft(0).size((int)(Gdx.graphics.getWidth() * 0.5), (int)(Gdx.graphics.getHeight() * 0.2));
-        setVisible(Objects.equals(this.screen, "cutscene"));
+        setVisible(Objects.equals(this.screen, "cutscene") || Objects.equals(this.screen, "moralDecision"));
         setupInputListener();
         entity.getEvents().addListener("SetText", this::setText);
     }
@@ -141,7 +143,6 @@ public class TextDisplay extends UIComponent {
      */
     public void setText(String text) {
         setVisible(true);
-        progress = true;
         currentPart = 0;
         List<String> newText = new ArrayList<>();
         textLength = text.length();
@@ -217,17 +218,38 @@ public class TextDisplay extends UIComponent {
      * of the text or clear the textbox from the screen
      */
     private void setupInputListener() {
+        logger.info(TextDisplay.this.screen);
         stage.addListener(new InputListener() {
             @Override
             public boolean keyDown(InputEvent event, int keycode) {
-                if (keycode == com.badlogic.gdx.Input.Keys.SPACE) {
-                    // if the text hasn't been fully shown
-                    if (TextDisplay.this.screen.equals("cutscene")) {
+
+                if (TextDisplay.this.screen.equals("cutscene")) {
+                    if (keycode == com.badlogic.gdx.Input.Keys.ENTER || keycode == com.badlogic.gdx.Input.Keys.SPACE) {
+                        logger.info("we've pressed enter");
                         Cutscene currentCutscene = ServiceLocator.getCurrentCutscene();
                         currentCutscene.setTextForScene(currentCutscene.currentScene);
                         label.setText(currentCutscene.currentText);
-                        progress = true;
-                    } else if (charIndex < TextDisplay.this.text.get(currentPart).length()) {
+                    }
+                    return true;
+                } else if (TextDisplay.this.screen.equals("moralDecision")){
+                    Cutscene currentCutscene = ServiceLocator.getCurrentCutscene();
+                    Boolean atEnd = currentCutscene.isAtEnd();
+                    if (keycode == com.badlogic.gdx.Input.Keys.ENTER || keycode == com.badlogic.gdx.Input.Keys.SPACE){
+                        logger.info("at moral in textDisplay");
+                        if (!atEnd) {
+                            logger.info("parsing through");
+                            currentCutscene.setTextForSceneMoral(currentCutscene.currentScene);
+                            label.setText(currentCutscene.currentText);
+                        }
+                    } else if (keycode == Input.Keys.Y && atEnd){
+                        logger.info("WE'RE ALMOST THERE");
+
+                    } else if (keycode == Input.Keys.N && atEnd){
+                        logger.info("WE'RE ALMOST THERE NO");
+                    }
+                    return true;
+                }  else if (keycode == com.badlogic.gdx.Input.Keys.ENTER || keycode == com.badlogic.gdx.Input.Keys.SPACE){
+                    if (charIndex < TextDisplay.this.text.get(currentPart).length()) {
                         label.setText(text.get(currentPart));
                         charIndex = TextDisplay.this.text.get(currentPart).length();
                     } else {
@@ -235,11 +257,9 @@ public class TextDisplay extends UIComponent {
                         charIndex = 0;
                         lastUpdate = 0;
                         TextDisplay.this.currentText = new StringBuilder();
-                        progress = true;
                         // if no more text remaining
                         if (currentPart == TextDisplay.this.text.size()) {
                             setVisible(false);
-                            progress = false;
                         }
                     }
                     return true;
@@ -247,10 +267,6 @@ public class TextDisplay extends UIComponent {
                 return false;
             }
         });
-    }
-
-    public boolean getProgress(){
-        return progress;
     }
 
     @Override
@@ -267,5 +283,9 @@ public class TextDisplay extends UIComponent {
     public void disable() {
         visible = false;
         table.setVisible(false);
+    }
+
+    public void setScreen(String screen){
+        this.screen = screen;
     }
 }

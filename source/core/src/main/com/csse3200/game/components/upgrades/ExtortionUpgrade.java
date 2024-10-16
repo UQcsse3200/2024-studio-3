@@ -5,39 +5,27 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.badlogic.gdx.utils.Array;
 import com.csse3200.game.components.CombatStatsComponent;
-import com.csse3200.game.components.Component;
-import com.csse3200.game.components.npc.CustomerComponent;
-import com.csse3200.game.components.ordersystem.MainGameOrderTicketDisplay;
-import com.csse3200.game.components.ordersystem.OrderManager;
-import com.csse3200.game.components.ordersystem.OrderActions;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.services.GameTime;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Manages the Extortion Upgrade component, allowing players to receive extra
  * gold per customer
  */
 public class ExtortionUpgrade extends UIComponent implements Upgrade {
-    //private static final Logger logger = LoggerFactory.getLogger(ExtortionUpgrade.class);
     private boolean isActive;
     private final long upgradeDuration = 30000;
     private final GameTime gameTime;
     private long actviateTime;
     private CombatStatsComponent combatStatsComponent;
-    //TODO will need to add whatever currency dependencies as well as morality and order stuff
 
     private static final String[] greenTexture = {"images/green_fill.png"};
     private static final String[] whiteBgTexture = {"images/white_background.png"};
@@ -57,7 +45,8 @@ public class ExtortionUpgrade extends UIComponent implements Upgrade {
         {
             this.combatStatsComponent = player.getComponent(CombatStatsComponent.class);
         });
-        ServiceLocator.getRandomComboService().getEvents().addListener("Extortion", this::activate); 
+        ServiceLocator.getRandomComboService().getEvents().addListener("Extortion", this::activate);
+        ServiceLocator.getRandomComboService().getEvents().addListener("Extortionoff", this::deactivate);
     }
 
     @Override
@@ -121,16 +110,15 @@ public class ExtortionUpgrade extends UIComponent implements Upgrade {
             this.actviateTime = gameTime.getTime();
             this.isActive = true;
             combatStatsComponent.addGold(-40);
+            ServiceLocator.getRandomComboService().getEvents().trigger("extortion active");
 
             // Display the meter
             activateTimeRemaining = upgradeDuration;
             isVisible = true;
             layout.setVisible(true);
             setupMeter();
-
-            ServiceLocator.getRandomComboService().getEvents().trigger("ExtortionActive", true);
-
-        } else {
+        }
+        else {
             ServiceLocator.getRandomComboService().getEvents().trigger("notenoughmoney");
         }
     }
@@ -140,11 +128,11 @@ public class ExtortionUpgrade extends UIComponent implements Upgrade {
      */
     public void deactivate() {
         this.isActive = false;
-        ServiceLocator.getRandomComboService().getEvents().trigger("ExtortionActive", false);
 
         // Remove meter
         isVisible = false;
         layout.setVisible(false);
+        ServiceLocator.getRandomComboService().getEvents().trigger("extortion unactive");
 
         // Ensure the text and meter are removed from the stage after time finish
         if (meter != null && meter.hasParent()) {
@@ -204,4 +192,3 @@ public class ExtortionUpgrade extends UIComponent implements Upgrade {
 
     }
 }
-
