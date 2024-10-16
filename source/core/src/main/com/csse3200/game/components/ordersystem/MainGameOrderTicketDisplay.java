@@ -58,7 +58,7 @@ public class MainGameOrderTicketDisplay extends UIComponent {
     private boolean isPaused = false;
     private long pauseStartTime = 0;
     private long totalPausedDuration = 0;
-    private boolean isDancing = false; 
+    private static boolean isDancing = false;
 
     private static final ArrayList<Image> imageArrayList = new ArrayList<>();
     private static final ArrayList<String> stringArrayList = new ArrayList<>();
