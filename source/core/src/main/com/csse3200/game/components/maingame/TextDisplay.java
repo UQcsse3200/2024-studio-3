@@ -35,17 +35,15 @@ public class TextDisplay extends UIComponent {
     //String building variables
     private List<String> text;
     private int currentPart = 0;
-    private int textLength = 0;
     public StringBuilder currentText;
-    private int textLimit = 60;
     private int charIndex = 0;
     private long lastUpdate = 0L;
-    private long delay = 100L;
+    private final long delay = 100L;
 
     // Displaying variables
     private boolean visible;
     public Label label;
-    private Table table;
+    private final Table table;
     private final ScreenAdapter game;
     private String screen;
     private static final Logger logger = LoggerFactory.getLogger(TextDisplay.class);
@@ -95,7 +93,7 @@ public class TextDisplay extends UIComponent {
      *     - create a table where the UI components will be placed on
      *     - render the textbox and stack text on top using the stack
      *     - position the table in the correct place
-     *     - add keyinput listeners and events
+     *     - add key input listeners and events
      */
     public void create() {
         super.create();
@@ -231,6 +229,7 @@ public class TextDisplay extends UIComponent {
             }
         } else {
             //Nothing
+            logger.info("Do nothing");
         }
     }
 
