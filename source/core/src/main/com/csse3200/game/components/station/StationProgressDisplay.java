@@ -121,7 +121,13 @@ public class StationProgressDisplay extends RenderComponent {
     @Override
     public void dispose() {
         super.dispose();
-        ServiceLocator.getRenderService().unregister(this);
+        if (barOutline != null) {
+            barOutline.dispose();
+        }
+        if (barFill != null) {
+            barFill.dispose();
+        }
+        // ServiceLocator.getRenderService().unregister(this);
     }
 
     @Override
