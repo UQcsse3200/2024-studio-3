@@ -34,13 +34,14 @@ public class TextDisplay extends UIComponent {
     private static final Logger logger = LoggerFactory.getLogger(TextDisplay.class);
     //String building variables
     private List<String> text;
-    private int currentPart = 0;
+    public int currentPart = 0;
     private int textLength = 0;
     private StringBuilder currentText;
     private int textLimit = 60;
     private int charIndex = 0;
     private long lastUpdate = 0L;
     private long delay = 100L;
+    private boolean progress = false;
 
     // Displaying variables
     private boolean visible;
@@ -140,6 +141,7 @@ public class TextDisplay extends UIComponent {
      */
     public void setText(String text) {
         setVisible(true);
+        progress = true;
         currentPart = 0;
         List<String> newText = new ArrayList<>();
         textLength = text.length();
@@ -153,13 +155,13 @@ public class TextDisplay extends UIComponent {
             }
 
             if (i != 0 && i % textLimit == 0) {
-                temp.append(" (enter to continue)");
+                temp.append(" (space to continue)");
                 newText.add(temp.toString());
                 temp = new StringBuilder();
             }
             current.    append(text.charAt(i));
         }
-        temp.append(current).append(" (enter to continue)");
+        temp.append(current).append(" (space to continue)");
         newText.add(temp.toString());
         this.text = newText;
     }
@@ -218,12 +220,13 @@ public class TextDisplay extends UIComponent {
         stage.addListener(new InputListener() {
             @Override
             public boolean keyDown(InputEvent event, int keycode) {
-                if (keycode == com.badlogic.gdx.Input.Keys.ENTER || keycode == com.badlogic.gdx.Input.Keys.SPACE) {
+                if (keycode == com.badlogic.gdx.Input.Keys.SPACE) {
                     // if the text hasn't been fully shown
                     if (TextDisplay.this.screen.equals("cutscene")) {
                         Cutscene currentCutscene = ServiceLocator.getCurrentCutscene();
                         currentCutscene.setTextForScene(currentCutscene.currentScene);
                         label.setText(currentCutscene.currentText);
+                        progress = true;
                     } else if (charIndex < TextDisplay.this.text.get(currentPart).length()) {
                         label.setText(text.get(currentPart));
                         charIndex = TextDisplay.this.text.get(currentPart).length();
@@ -232,9 +235,11 @@ public class TextDisplay extends UIComponent {
                         charIndex = 0;
                         lastUpdate = 0;
                         TextDisplay.this.currentText = new StringBuilder();
+                        progress = true;
                         // if no more text remaining
                         if (currentPart == TextDisplay.this.text.size()) {
                             setVisible(false);
+                            progress = false;
                         }
                     }
                     return true;
@@ -242,6 +247,10 @@ public class TextDisplay extends UIComponent {
                 return false;
             }
         });
+    }
+
+    public boolean getProgress(){
+        return progress;
     }
 
     @Override

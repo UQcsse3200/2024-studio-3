@@ -40,7 +40,6 @@ public class TutorialScreenDisplay extends UIComponent {
     private boolean sPressedLastFrame = false;
     private boolean dPressedLastFrame = false;
     private static final int MAX_TUTORIAL_STEP = 4;
-
     int  i = 0;
 
 
@@ -183,7 +182,7 @@ public class TutorialScreenDisplay extends UIComponent {
     private void completeTutorial() {
         if (textDisplay != null) {
             textDisplay.setVisible(true);
-            createTextBox("Tutorial Complete! Press `Space` to continue.");
+            createTextBox("Tutorial Complete!");
         } else {
             logger.error("textDisplay is null during completeTutorial.");
         }
@@ -207,8 +206,8 @@ public class TutorialScreenDisplay extends UIComponent {
                 textDisplay.setText("Now use [ and ] keys to switch dockets.");
 
                 if (Gdx.input.isKeyJustPressed(Input.Keys.LEFT_BRACKET) || Gdx.input.isKeyJustPressed(Input.Keys.RIGHT_BRACKET)) {
-                        docketsShifted = true;
-                        logger.debug("Dockets shifted");
+                    docketsShifted = true;
+                    logger.debug("Dockets shifted");
                 }
 
                 if (docketsShifted) {
