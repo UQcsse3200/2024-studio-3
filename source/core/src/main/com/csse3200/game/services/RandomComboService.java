@@ -27,6 +27,7 @@ public class RandomComboService extends Component {
     int randomChoice;
     private EventHandler eventHandler;
     private int total_upgrades = 4;
+    private boolean isDancing = false; 
 
     public RandomComboService() {
         this(new EventHandler());
@@ -36,6 +37,13 @@ public class RandomComboService extends Component {
         this.eventHandler = eventHandler;
         this.random = new Random();
         randomChoice = random.nextInt(total_upgrades); 
+
+        ServiceLocator.getDocketService().getEvents().addListener("Dancing", ()->{
+            isDancing = true;
+        });
+        ServiceLocator.getDocketService().getEvents().addListener("UnDancing", ()->{
+            isDancing = false; 
+        });
     }
 
     /**
@@ -82,6 +90,11 @@ public class RandomComboService extends Component {
     public EventHandler getEvents() {
         return eventHandler;
       }
+    
+    public boolean dancing(){
+        return isDancing; 
+
+    }
 }
     
     

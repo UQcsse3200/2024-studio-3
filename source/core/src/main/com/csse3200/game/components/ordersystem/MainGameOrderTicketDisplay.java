@@ -58,7 +58,6 @@ public class MainGameOrderTicketDisplay extends UIComponent {
     private boolean isPaused = false;
     private long pauseStartTime = 0;
     private long totalPausedDuration = 0;
-    private static boolean isDancing = false;
 
     private static final ArrayList<Image> imageArrayList = new ArrayList<>();
     private static final ArrayList<String> stringArrayList = new ArrayList<>();
@@ -147,11 +146,7 @@ public class MainGameOrderTicketDisplay extends UIComponent {
 
         //From Team 2, these listeners are for our dance party upgrade to pause and unpause docket times
         ServiceLocator.getDocketService().getEvents().addListener("Dancing", ()->{
-            isDancing = true; 
             addTimeToDockets(600000);
-        });
-        ServiceLocator.getDocketService().getEvents().addListener("UnDancing", ()->{
-            isDancing = false; 
         });
 
         //From team 2, I used your dispose method here when listening for a new day, so current dockets get removed
@@ -207,7 +202,7 @@ public class MainGameOrderTicketDisplay extends UIComponent {
     
         // Check if Dancing is active, and add 60 seconds to the timer for new tickets
         long ticketTimer = getTimer();
-        if (isDancing) {
+        if (ServiceLocator.getRandomComboService().dancing()) {
             ticketTimer += 600000; // Add 60 seconds
         }
         recipeTimeArrayList.add(ticketTimer); // Add adjusted time to the list

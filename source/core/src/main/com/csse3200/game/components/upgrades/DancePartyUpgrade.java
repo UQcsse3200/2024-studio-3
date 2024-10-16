@@ -142,7 +142,6 @@ public class DancePartyUpgrade extends UIComponent implements Upgrade {
              dancePartyCost();
              isActive = true;
              layout.setVisible(true);
-
              ServiceLocator.getDocketService().getEvents().trigger("Dancing");
          }
          else{
