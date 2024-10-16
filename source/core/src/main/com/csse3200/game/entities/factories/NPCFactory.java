@@ -1,8 +1,6 @@
 package com.csse3200.game.entities.factories;
 
 import com.csse3200.game.components.ScoreSystem.HoverBoxComponent;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -298,6 +296,10 @@ public class NPCFactory {
 
     public static void decreaseCustomerCount() {
         customerCount --;
+    }
+
+    public static void reset() {
+        customerCount = 0;
     }
 
     private NPCFactory() {

@@ -55,8 +55,8 @@ public class ItemTexturePathGetter {
         String item = ingredient.getItemName().toLowerCase();
         String state = ingredient.getItemState().toLowerCase();
         
-        logger.info("The texture of the item is:");
-        logger.info(String.format(ingredientFormat, state, item));
+        //logger.info("The texture of the item is:");
+        //logger.info(String.format(ingredientFormat, state, item));
 
         // Return a format string
         return String.format(ingredientFormat, state, item);
@@ -88,8 +88,8 @@ public class ItemTexturePathGetter {
             return null;
         }
 
-        logger.info("The texture of the item is:");
-        logger.info(String.format(mealFormat, imageName));
+        //logger.info("The texture of the item is:");
+        //logger.info(String.format(mealFormat, imageName));
 
         return String.format(mealFormat, imageName);
     }
@@ -101,8 +101,8 @@ public class ItemTexturePathGetter {
      */ 
     private static String getTexturePathPlate() {
 
-        logger.info("The texture of the item is:");
-        logger.info(plateFormat);
+        //logger.info("The texture of the item is:");
+        //logger.info(plateFormat);
 
         return plateFormat;
     }

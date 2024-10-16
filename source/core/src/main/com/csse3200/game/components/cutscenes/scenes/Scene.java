@@ -80,12 +80,6 @@ public class Scene {
     }
 
     /**
-     * Gets the image positions for the scene.
-     *
-     * @return Array of Vector2 positions for the images.
-     */
-
-    /**
      * Gets the image scales for the scene.
      *
      * @return Array of Vector2 positions for the images.
@@ -131,8 +125,5 @@ public class Scene {
     public void setDuration(float duration) {
         this.duration = duration;
     }
-
-    public Array<String> getCutsceneText() {
-        return sceneText; // Make sure sceneText is defined as Array<String>
-    }
+    
 }

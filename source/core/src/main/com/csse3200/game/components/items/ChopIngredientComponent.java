@@ -44,7 +44,7 @@ public class ChopIngredientComponent extends ItemTimerComponent {
 
         // Log the info
         String s = String.format("The timer for item: %s, has been created", item.getItemName());
-        logger.info(s);
+        //logger.info(s);
     }
 
     /**

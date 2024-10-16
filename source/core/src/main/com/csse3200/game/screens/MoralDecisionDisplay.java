@@ -4,22 +4,19 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.csse3200.game.GdxGame;
-import com.badlogic.gdx.utils.TimeUtils;
-import com.csse3200.game.components.Component;
-import com.csse3200.game.entities.Entity;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.utils.TimeUtils;
 
 
 public class MoralDecisionDisplay extends UIComponent {
@@ -28,15 +25,12 @@ public class MoralDecisionDisplay extends UIComponent {
     private Table layout; // Layout manager
     private boolean isVisible;
     private final MainGameScreen game;
-    private Image characterImage;
     private String question = "Set Question";
     private Label timerLabel; // Timer label
     private long startTime; // Track the start time
 
     private static final long DEFAULT_TIMER = 10000; // 10 seconds (in milliseconds)
     private long remainingTime; // Remaining time in milliseconds
-
-
 
 //    public MoralDecisionDisplay(MainGameScreen game) {
 //        super();
@@ -80,20 +74,20 @@ public class MoralDecisionDisplay extends UIComponent {
 
         // set up the label using table layout
 //        BitmapFont font = new BitmapFont();
-        Label titleLabel = new Label("Moral Decision",skin);
+        Label titleLabel = new Label("Moral Decision", skin);
         layout.add(titleLabel).pad(10).row();
 
-        // load and position the racoon image slightly to the left
+        // load and position the raccoon image slightly to the left
         Texture imgTexture = new Texture(Gdx.files.internal("images/racoon.png"));
         Drawable imgDrawable = new TextureRegionDrawable(imgTexture);
-        characterImage = new Image(imgDrawable);
+        Image characterImage = new Image(imgDrawable); // Declared as local variable to avoid unused field warning
 
-        // add racoon image to the table and shift it left by adjusting padding
+        // add raccoon image to the table and shift it left by adjusting padding
         layout.add(characterImage).left();
 
         // Add a secondary table to the left side of the view.
         Table questionSet = new Table();
-        Label questionLabel = new Label("Do you want to save the racoon?", skin);
+        Label questionLabel = new Label("Do you want to save the raccoon?", skin);
         questionSet.add(questionLabel).pad(10).row();
 
         Label testingLabel = new Label("TestinvfHQ ETAAHWRVFBJWGEE HAET NVBbwegvkjER AHT QTHJTRAJ RTJRTg", skin);
@@ -121,7 +115,6 @@ public class MoralDecisionDisplay extends UIComponent {
         // Timer label setup - Initialize with default timer
         timerLabel = new Label("Timer: " + (DEFAULT_TIMER / 1000) + "s", skin);
         layout.add(timerLabel).padLeft(10f).row(); // Add timer label to the layout
-
 
         entity.getEvents().addListener("triggerMoralScreen", this::toggleVisibility);
 
@@ -195,6 +188,7 @@ public class MoralDecisionDisplay extends UIComponent {
         isVisible = false;
         layout.setVisible(isVisible);
         game.resume(); // Resume the game when the display is hidden
+        logger.info("decisionDone about to be triggered");
         ServiceLocator.getDayNightService().getEvents().trigger("decisionDone");
 
     }
@@ -257,5 +251,6 @@ public class MoralDecisionDisplay extends UIComponent {
 
     @Override
     public void setStage(Stage stage) {
+        // Method intentionally left empty (to handle empty method warning)
     }
 }
