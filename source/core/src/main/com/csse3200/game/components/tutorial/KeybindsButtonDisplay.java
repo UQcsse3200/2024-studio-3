@@ -19,7 +19,7 @@ public class KeybindsButtonDisplay extends UIComponent {
     private boolean buttonPressed = false;
     private Texture keybindsMenuTexture;
     private String[] keybindsLabels = {"W - Move Up\nA - Move Left\nS - Move Down\nD - Move Right", "E - Pick Up",
-            "Q - Chop", "P - End Day Screen", "ESCAPE - Pause", "F1 - Debug Terminal", "[ - Move Docket Left",
+            "Q - Chop", "P - End Day Screen", "ESC - Pause", "F1 - Debug Terminal", "[ - Move Docket Left",
             "] - Move Docket Right", "L - Loan Upgrade", "Z - Dance Party Upgrade", "R - Rage Upgrade", "0 - Recipe Card"};
 
     public KeybindsButtonDisplay(Skin skin) {
