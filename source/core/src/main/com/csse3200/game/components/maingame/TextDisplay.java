@@ -76,6 +76,11 @@ public class TextDisplay extends UIComponent {
         this.visible = true;
         this.currentText = new StringBuilder();
         this.text = new ArrayList<>(); //N! to fix crashing when pressing Enter
+        // Add this condition to recognize backstory cutscenes
+        if (Objects.equals(screen, "backstory")) {
+            setUpBackstoryLayout();
+        }
+
     }
 
     /***
@@ -287,5 +292,33 @@ public class TextDisplay extends UIComponent {
 
     public void setScreen(String screen){
         this.screen = screen;
+    }
+
+    private void setUpBackstoryLayout() {
+        // Modify font size for backstory cutscene
+        label.setFontScale(2.0f);  // Make the font smaller
+
+        // Change the position to be higher on the screen
+        table.center().top().padTop(50);  // Adjust the padding to move it higher
+        table.clear();  // Clear previous layout
+
+        Stack stack = new Stack();
+
+        // Use the same textbox image
+        Texture textboxTexture = ServiceLocator.getResourceService()
+                .getAsset("images/textbox.png", Texture.class);
+        Drawable textboxDrawable = new TextureRegionDrawable(textboxTexture);
+        Image textboxImage = new Image(textboxDrawable);
+        textboxImage.setScale(1.0f);  // Keep the scale of the box smaller for a cleaner UI
+        stack.add(textboxImage);
+
+        // Modify the label size and placement
+        Table labelTable = new Table();
+        labelTable.add(label).padLeft(100).padTop(10).size(
+                (int)(Gdx.graphics.getWidth() * 0.6), (int)(Gdx.graphics.getHeight() * 0.15));  // Adjust the label size
+        stack.add(labelTable);
+
+        // Add stack to the table
+        table.add(stack).padTop(100).size((int)(Gdx.graphics.getWidth() * 0.6), (int)(Gdx.graphics.getHeight() * 0.15));
     }
 }
