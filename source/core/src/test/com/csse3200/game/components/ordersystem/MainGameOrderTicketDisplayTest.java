@@ -13,10 +13,7 @@ import com.csse3200.game.entities.Entity;
 import com.csse3200.game.events.EventHandler;
 import com.csse3200.game.extensions.GameExtension;
 import com.csse3200.game.rendering.RenderService;
-import com.csse3200.game.services.DocketService;
-import com.csse3200.game.services.PlayerService;
-import com.csse3200.game.services.ResourceService;
-import com.csse3200.game.services.ServiceLocator;
+import com.csse3200.game.services.*;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -51,6 +48,7 @@ class MainGameOrderTicketDisplayTest {
 	@Mock Texture textureMock;
 	MainGameOrderTicketDisplay orderTicketDisplay;
 	@Mock CombatStatsComponent combatStatsComponent;
+	RandomComboService randomComboService;
 	private static final Logger logger = LoggerFactory.getLogger(MainGameOrderTicketDisplayTest.class);
 
 	/**
@@ -64,6 +62,9 @@ class MainGameOrderTicketDisplayTest {
 		resourceService = mock(ResourceService.class);
 		ServiceLocator.registerResourceService(resourceService);
 		textureMock = mock(Texture.class);
+		randomComboService = new RandomComboService(new EventHandler());
+
+		ServiceLocator.registerRandomComboService(randomComboService);
 
 		lenient().when(resourceService.getAsset("images/ordersystem/acai_bowl_docket.png", Texture.class)).thenReturn(textureMock);
 		lenient().when(resourceService.getAsset("images/ordersystem/steak_meal_docket.png", Texture.class)).thenReturn(textureMock);
