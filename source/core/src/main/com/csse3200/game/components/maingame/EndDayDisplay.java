@@ -96,11 +96,14 @@ public class EndDayDisplay extends UIComponent {
         ServiceLocator.getLevelService().getEvents().addListener("customerSpawned", this::updateCustomerList);
         ServiceLocator.getLevelService().getEvents().addListener("endDayDisplay", this::show);
         ServiceLocator.getLevelService().getEvents().addListener("resetScreen", MainGameScreen::resetScreen);
-        ServiceLocator.getEntityService().getEvents().addListener("toggleEndDayScreen", this::show);
+        ServiceLocator.getEntityService().getEvents().addListener("toggleEndDayScreen", this::toggleVisibility);
         ServiceLocator.getEntityService().getEvents().addListener("customerPassed", this::handlePassedCustomer);
 
-        ServiceLocator.getDayNightService().getEvents().addListener("endOfDay", this::show);
-    }
+            ServiceLocator.getDayNightService().getEvents().addListener("endOfDay", () -> {
+                logger.info("it is listened in end day");
+                ServiceLocator.getRandomComboService().deactivateUpgrade();
+                show();});
+        }
 
     /**
      * Sets up a white background for the display using a predefined image.
@@ -205,9 +208,9 @@ public class EndDayDisplay extends UIComponent {
         // Customer lists
         Table listTable = new Table();
 
-        Label passedLabel = new Label("Served Customers", skin);
+        Label passedLabel = new Label("Passed Customers", skin);
         passedLabel.setFontScale(1.8f);
-        Label failedLabel = new Label("Unserved Customers", skin);
+        Label failedLabel = new Label("Failed Customers", skin);
         failedLabel.setFontScale(1.8f);
         listTable.add(passedLabel).pad(10).center();
         listTable.add(failedLabel).pad(10).center().row();
@@ -265,6 +268,7 @@ public class EndDayDisplay extends UIComponent {
 
     public void handlePassedCustomer(String customerName) {
         passedCustomerArray.add(customerName.toUpperCase());
+        logger.info("Customer passed: {}", customerName);
     }
 
     /**
@@ -276,12 +280,13 @@ public class EndDayDisplay extends UIComponent {
      */
     public void updateCustomerList(String customerName) {
         customerNameArray.add(customerName);
+        logger.info("Updated customer list with: {}", customerNameArray);
     }
 
     /**
      * Recalculates the failed customers list, updating UI elements accordingly.
      */
-    public void recalculateFailedCustomers() {
+    private void recalculateFailedCustomers() {
         failedCustomerTable.clearChildren();
         failedCustomerArray.clear();
         failedCustomerArray.addAll(customerNameArray);
@@ -294,6 +299,7 @@ public class EndDayDisplay extends UIComponent {
         for (String failedName : failedCustomerArray) {
             assertCustomerTexture(failedName, failedCustomerTable);
         }
+        logger.info("Failed customers recalculated: {}", failedCustomerArray);
     }
 
     /**
@@ -320,17 +326,21 @@ public class EndDayDisplay extends UIComponent {
      * @param customerName The name of the customer for whom the texture is to be loaded.
      * @param customerTable The table where the customer's image and name label are to be displayed.
      */
-    public void assertCustomerTexture(String customerName, Table customerTable) {
+    private void assertCustomerTexture(String customerName, Table customerTable) {
         CustomerPersonalityConfig config = getCustomerConfig(customerName);
-        TextureAtlas atlas = ServiceLocator.getResourceService().getAsset(config.texture, TextureAtlas.class);
-        TextureRegion region = atlas.findRegion("default");
-        Image image = new Image(region);
-        Label label = new Label(customerName, skin);
-        label.setFontScale(1.5f);
+        try {
+            TextureAtlas atlas = ServiceLocator.getResourceService().getAsset(config.texture, TextureAtlas.class);
+            TextureRegion region = atlas.findRegion("default");
+            Image image = new Image(region);
+            Label label = new Label(customerName, skin);
+            label.setFontScale(1.5f);
 
-        customerTable.row().pad(10);
-        customerTable.add(image).size(70, 70);
-        customerTable.add(label);
+            customerTable.row().pad(10);
+            customerTable.add(image).size(70, 70);
+            customerTable.add(label);
+        } catch (Exception e) {
+            logger.error("Failed to load texture for customer {}", customerName, e);
+        }
     }
 
     /**
@@ -380,7 +390,7 @@ public class EndDayDisplay extends UIComponent {
      * the current game state. It is usually called in response to a game event.
      */
     public void show() {
-        ServiceLocator.getRandomComboService().deactivateUpgrade();
+        // ServiceLocator.getRandomComboService().deactivateUpgrade();
         recalculateFailedCustomers();
         setVisible(true);
         getLayout().setVisible(true);
@@ -433,22 +443,6 @@ public class EndDayDisplay extends UIComponent {
     @Override
     public void setStage(Stage mock) {
         this.stage = mock;
-    }
-
-    public void addPassedCustomer(String name) {
-        this.passedCustomerArray.add(name);
-    }
-
-    public void addFailedCustomer(String name) {
-        this.failedCustomerArray.add(name);
-    }
-
-    public java.util.List<String> getPassedCustomerArray() {
-        return passedCustomerArray;
-    }
-
-    public java.util.List<String> getFailedCustomerArray() {
-        return failedCustomerArray;
     }
 
     public boolean isVisible() {
