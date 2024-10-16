@@ -111,7 +111,6 @@ public class MoralDecision extends Component {
     public boolean setDecision(int index, boolean decision) {
         index = index - 1;
         logger.info("Setting decision for index: {} to {}", index, decision);
-//        listOfDecisions.get(index).setDecision(decision);
 
         if (!decision){
             setCurrentMorality(false);
