@@ -24,9 +24,6 @@ public class LevelService {
         currGold = baseGold; 
         playerFinishedLevel = false;
         levelEventHandler.addListener("startLevel", this::levelControl);
-       // levelEventHandler.addListener("mapLevel", this::loadMap);
-        //levelEventHandler.addListener("createCustomer", ForestGameArea::spawnCustomer);
-        //ServiceLocator.getLevelService().getEvents().addListener("spawnCustomer", this::spawnCustomer);
     }
     public void reset() {
         currLevel = GdxGame.LevelType.LEVEL_1; 
@@ -80,6 +77,7 @@ public class LevelService {
             case LEVEL_3 -> currLevel = GdxGame.LevelType.LEVEL_4;
             case LEVEL_4 -> currLevel = GdxGame.LevelType.LEVEL_5;
             case LEVEL_5 -> currLevel = GdxGame.LevelType.DONE;
+            default -> currLevel = GdxGame.LevelType.LEVEL_1
         }
     }
 
@@ -90,7 +88,6 @@ public class LevelService {
      */
     public void setCurrLevel(GdxGame.LevelType newLevel) {
             currLevel = newLevel;
-//        currLevel = newLevel;
     }
 
     /**
@@ -101,43 +98,6 @@ public class LevelService {
      * @param level the level number
      */
     public void levelControl(GdxGame.LevelType level) {
-        //int spawnCap = 0;
-        /*switch (level) {
-            case 0:
-                spawnCap = 1;
-                break;
-            case 1:
-                spawnCap = 3;
-                break;
-            case 2:
-                spawnCap = 4;
-                break;
-            case 3:
-                spawnCap = 5;
-                break;
-            case 4:
-                spawnCap = 7;
-                break;
-            case 5:
-                spawnCap = 9;
-                break;
-            case 6:
-                spawnCap = 11;
-                break;
-            case 7:
-                spawnCap = 8;
-                break;
-            case 8:
-                spawnCap = 12;
-                break;
-            case 9:
-                spawnCap = 15;
-                break;
-            case 10:
-                spawnCap = 17;
-                break;
-        }*/
-
         int spawnCap = switch(level) {
             case LEVEL_0 -> 1;
             case LEVEL_1 -> 1;

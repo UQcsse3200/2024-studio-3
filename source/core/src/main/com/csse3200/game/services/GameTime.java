@@ -12,7 +12,6 @@ public class GameTime {
   private float timeScale = 1f;
   private boolean isPaused = false;
   private long pausedAt;
-  private long resumeAt;
   private long totalPauseTime;
 
   public GameTime() {
@@ -47,7 +46,7 @@ public class GameTime {
   public void resume() {
     if(isPaused) {
       logger.info("Time Resumed");
-      resumeAt = TimeUtils.millis();
+      long resumeAt = TimeUtils.millis();
       totalPauseTime += (resumeAt - pausedAt);
       isPaused = false;
     }
