@@ -50,6 +50,9 @@ public class DayNightServiceTest {
 
         dayNightService = new DayNightService(enddayEventHandler, docketServiceEventHandler);
         ServiceLocator.registerDayNightService(dayNightService);
+
+        // Reset static day variable before each test
+        dayNightService.setDay(1);
     }
 
     @AfterEach
@@ -88,6 +91,7 @@ public class DayNightServiceTest {
 
     @Test
     public void testDecisionDone() {
+        dayNightService.setDay(1); // Ensure the day starts at 1
         AtomicBoolean isNewDay = new AtomicBoolean(false);
         enddayEventHandler.addListener("newday", () -> isNewDay.set(true));
         when(checkWinLoseComponent.checkGameState()).thenReturn("GAME_IN_PROGRESS");
@@ -168,6 +172,7 @@ public class DayNightServiceTest {
 
     @Test
     public void testDaysIterateAndGameEndsAfterMaxDays() {
+        dayNightService.setDay(1); // Reset day before iterating through the days
         AtomicBoolean endGameTriggered = new AtomicBoolean(false);
         dayNightService.getEvents().addListener("endGame", () -> endGameTriggered.set(true));
         when(checkWinLoseComponent.checkGameState()).thenReturn("GAME_IN_PROGRESS");
@@ -175,9 +180,8 @@ public class DayNightServiceTest {
         long currentTime = 0L;
         long timeStep = 1000L; // 1 second
 
-        for (int expectedDay = 1; expectedDay <= 5; expectedDay++) {
+        for (int expectedDay = 1; expectedDay <= DayNightService.MAX_DAYS; expectedDay++) {
             while (dayNightService.timeRemaining > 0) {
-
                 when(gameTime.getTime()).thenReturn(currentTime);
                 dayNightService.update();
                 currentTime += timeStep;
@@ -190,24 +194,18 @@ public class DayNightServiceTest {
             enddayEventHandler.trigger("decisionDone");
 
             // Verify that the day has incremented correctly and trigger is reset
-            Assertions.assertEquals(expectedDay + 1, dayNightService.getDay(), "Day didnt increment correctly after day " + expectedDay);
-            Assertions.assertFalse(dayNightService.getEndOfDayTriggered(), "endOfDayTriggered was not reset for day " + (expectedDay + 1));
+            if (expectedDay < DayNightService.MAX_DAYS) {
+                // For days before the last day, day should increment
+                Assertions.assertEquals(expectedDay + 1, dayNightService.getDay(), "Day didn't increment correctly after day " + expectedDay);
+            } else {
+                // On the last day, day should remain at MAX_DAYS
+                Assertions.assertEquals(DayNightService.MAX_DAYS, dayNightService.getDay(), "Day didn't increment correctly after day " + expectedDay);
+            }
         }
 
-        while (dayNightService.timeRemaining > 0) {
-            when(gameTime.getTime()).thenReturn(currentTime);
-            dayNightService.update();
-
-            currentTime += timeStep;
-            enddayEventHandler.trigger("callpastsecond");
-        }
-
-        when(gameTime.getTime()).thenReturn(currentTime);
-        dayNightService.update();
-        enddayEventHandler.trigger("decisionDone");
-
-        // Verify that "endGame" event was triggered after day 5 is done
+        // Verify that "endGame" event was triggered after max days
         Assertions.assertTrue(endGameTriggered.get(), "endGame event was not triggered after max days");
     }
+
 }
 

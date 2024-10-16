@@ -1,7 +1,6 @@
 package com.csse3200.game.components.tutorial;
 
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
@@ -9,8 +8,7 @@ import com.csse3200.game.GdxGame;
 import com.csse3200.game.components.ordersystem.MainGameOrderBtnDisplay;
 import com.csse3200.game.components.player.PlayerActions;
 import com.csse3200.game.entities.Entity;
-import com.csse3200.game.rendering.RenderService;
-import com.csse3200.game.services.PlayerService;
+import com.csse3200.game.screens.MainGameScreen;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
 import com.csse3200.game.components.ordersystem.MainGameOrderTicketDisplay;
@@ -25,16 +23,14 @@ import com.csse3200.game.components.maingame.TextDisplay;
  */
 public class TutorialScreenDisplay extends UIComponent {
     private static final Logger logger = LoggerFactory.getLogger(TutorialScreenDisplay.class);
-    private final GdxGame game;
-    private Skin skin;
-    private PlayerActions playerActions;
+    private GdxGame game;
     private int tutorialStep = 0;
-    private MainGameOrderTicketDisplay orderTicketDisplay;
     private MainGameOrderBtnDisplay orderBtnDisplay;
     private boolean createOrderPressed = false;
     private boolean docketsShifted = false;
     private Table table;
     private TextDisplay textDisplay;
+    private PlayerActions playerActions;
     private boolean wPressedLastFrame = false;
     private boolean aPressedLastFrame = false;
     private boolean sPressedLastFrame = false;
@@ -44,14 +40,27 @@ public class TutorialScreenDisplay extends UIComponent {
 
     public TutorialScreenDisplay(GdxGame game) {
         this.game = game;
+
+        if (this.game == null) {
+            logger.error("Game null");
+        } else {
+            logger.info("Game object initialized successfully: " + this.game);
+        }
     }
 
     @Override
     public void create() {
         super.create();
+        MainGameOrderTicketDisplay.resetOrderNumb();
 
         if (entity != null) {
-            playerActions = entity.getComponent(PlayerActions.class);
+            //playerActions = ServiceLocator.getPlayerService().getPlayer().getComponent(PlayerActions.class);
+            if (playerActions == null) {
+                logger.info("PlayerActions component not found.");
+            }else{
+                logger.info("PlayerActions component attatched");
+            }
+
         } else {
             logger.error("Entity null");
         }
@@ -70,6 +79,12 @@ public class TutorialScreenDisplay extends UIComponent {
         stage.addActor(textDisplay.getTable());  // Add it to the stage
 
         advanceTutorialStep();  // Ensure textDisplay is initialized before calling this method
+
+        // Add event listeners for create order
+        //entity.getEvents().addListener("createOrder", this::onCreateOrderPressed);
+        //ServiceLocator.getInputService().getEvents().addListener("createOrder", this::onCreateOrderPressed);
+//        ServiceLocator.getInputService().getEvents().addListener("walked", this::onPlayerMoved);
+//        ServiceLocator.getInputService().getEvents().addListener("interact", this::onInteraction);// start the tutorial from the first step
 
         stage.addActor(table);
     }
@@ -162,15 +177,21 @@ public class TutorialScreenDisplay extends UIComponent {
     /**
      * Displays the ordering tutorial. The player needs to use [ and ] to switch dockets.
      */
+
     public void showOrderingTutorial() {
         if (textDisplay != null) {
             textDisplay.setVisible(true);
+
+            // Combine both instructions into one
             createTextBox("Use [ and ] keys to switch dockets.");
 
+            // Check if both the order button is pressed and the dockets are shifted
             if ((Gdx.input.isKeyJustPressed(Input.Keys.LEFT_BRACKET) || Gdx.input.isKeyJustPressed(Input.Keys.RIGHT_BRACKET))) {
+
                 docketsShifted = true;
                 logger.debug("Dockets shifted!");
 
+                // Advance the tutorial as both conditions are now met
                 advanceTutorialStep();
             }
         } else {
@@ -232,7 +253,7 @@ public class TutorialScreenDisplay extends UIComponent {
     private void completeTutorial() {
         if (textDisplay != null) {
             textDisplay.setVisible(true);
-            createTextBox("Tutorial Complete! Press `Space` to continue.");
+            createTextBox("Tutorial Complete!");
         } else {
             logger.error("textDisplay is null during completeTutorial.");
         }
@@ -313,7 +334,7 @@ public class TutorialScreenDisplay extends UIComponent {
             table.clear();  // Safely clear the table
         }
         ServiceLocator.getLevelService().setCurrLevel(GdxGame.LevelType.LEVEL_1);
-        game.setScreen(GdxGame.ScreenType.MAIN_GAME);  // Transition to the main game
+        game.setScreen(GdxGame.ScreenType.MAIN_GAME);
     }
 
     @Override

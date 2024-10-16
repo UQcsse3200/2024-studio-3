@@ -93,7 +93,7 @@ public class InventoryDisplayHoverComponent extends RenderComponent {
             scale = entity.getScale();
             updateImages();
         }
-        logger.info("Created InventoryDisplayHoverComponent");
+        //logger.info("Created InventoryDisplayHoverComponent");
     }
 
     /**

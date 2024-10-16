@@ -11,7 +11,7 @@ import java.util.concurrent.Executors;
 
 import com.csse3200.game.components.moral.MoralDayFour;
 import com.csse3200.game.areas.map.Map;
-import com.csse3200.game.services.InteractableService;
+import com.csse3200.game.services.*;
 import com.csse3200.game.services.MapLayout;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,7 +23,6 @@ import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.areas.terrain.TerrainFactory.TerrainType;
-import com.csse3200.game.areas.map.BenchLayout;
 import com.csse3200.game.components.gamearea.GameAreaDisplay;
 import com.csse3200.game.components.maingame.EndDayDisplay;
 import com.csse3200.game.components.moral.MoralDecision;
@@ -36,8 +35,6 @@ import com.csse3200.game.entities.factories.ObstacleFactory;
 import com.csse3200.game.entities.factories.PlayerFactory;
 import com.csse3200.game.entities.factories.StationFactory;
 
-import com.csse3200.game.services.ResourceService;
-import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.utils.math.GridPoint2Utils;
 
 /** Forest area for the demo game with trees, a player, and some enemies. */
@@ -91,13 +88,8 @@ public class ForestGameArea extends GameArea {
           "images/stations/benches/vertical.png",
           "images/stations/benches/top.png",
           "images/stations/benches/bottom_shadow.png",
-          //"images/stations/bench_middle.png",
-          //"images/stations/bench.png",
-          //"images/stations/benches/single.png",
-          //"images/stations/benches/middle.png",
-          //"images/stations/benches/final.png",
-          //"images/stations/benches/shadow_bottom_top.png",
-          //"images/stations/benches/left_shadow.png",
+          "images/stations/benches/single.png",
+          "images/stations/benches/single.png",
           "images/stations/benches/left_corner_shadow.png",
           "images/stations/benches/right_corner_shadow.png",
           "images/stations/benches/top_shadows.png",
@@ -111,30 +103,14 @@ public class ForestGameArea extends GameArea {
           "images/stations/fridge/fridge_meat.png",
           "images/stations/fridge/fridge_choc.png",
           "images/stations/chopping_board/choppingboardbench.png",
+          "images/stations/benches/dishwasher.png",
 
           //These frames have some use in ObstacleFactory but it's only ever instantiated as full_door - Alex S.
           "images/frame/full_door.png",
           "images/frame/border_test.png",
           "images/frame/side_border.png",
           "images/frame/wall.png",
-          //"images/frame/bottom_border.png",
-          //"images/frame/right_door.png",
-          //"images/frame/left_door.png",
-          //"images/frame/door.png",
-          //"images/frame/top_door_left_part.png",
-          //"images/frame/top_door_right_part.png",
-          //"images/frame/bottom_left_inv.png",
-          //"images/frame/bottom_right_inv.png",
-          //"images/frame/top_border.png",
-          //"images/frame/left_border.png",
-          //"images/frame/bottom_border_wall.png",
-          //"images/frame/border.png",
-          //"images/frame/vertical_border.png",
-          //"images/frame/horizontal_border.png",
-          //"images/frame/topleft_door.png",
-          //"images/frame/topright_door.png",
-          //"images/frame/bottomleft_door.png",
-          //"images/frame/bottomright_door.png",
+
 
           "images/platecomponent/cleanplate.png",
           "images/platecomponent/dirtyplate.png",
@@ -145,6 +121,15 @@ public class ForestGameArea extends GameArea {
           "images/platecomponent/stackedplates/5plates.png",
           "images/inventory_ui/slot.png",
           "images/inventory_ui/null_image.png",
+          "images/inventory_ui/interact_key.png",
+          "images/inventory_ui/combine_key.png",
+          "images/inventory_ui/rotate_key.png",
+          "images/inventory_ui/chop_key.png",
+          "images/inventory_ui/place_key.png",
+          "images/inventory_ui/take_key.png",
+          "images/inventory_ui/submit_key.png",
+          "images/inventory_ui/dispose_key.png",
+          "images/inventory_ui/cook_key.png"
   };
   private static final String[] forestTextureAtlases = {
           "images/Cutscenes/cutscene_badEnd.atlas",
@@ -209,9 +194,9 @@ public class ForestGameArea extends GameArea {
   private final GdxGame.LevelType level;
 
   private Entity player;
-  private CheckWinLoseComponent winLoseComponent;  // Reference to CheckWinLoseComponent
+    // Reference to CheckWinLoseComponent
 
-  public enum personalCustomerEnums{
+    public enum personalCustomerEnums{
     HANK,
     LEWIS,
     SILVER,
@@ -244,21 +229,36 @@ public class ForestGameArea extends GameArea {
     
     // Create a new interactable service
     ServiceLocator.registerInteractableService(new InteractableService());
-    
+
+    long time1 = ServiceLocator.getTimeSource().getTime();
     loadAssets();
+    long time2 = ServiceLocator.getTimeSource().getTime();
+    logger.info("Assets loaded: {}ms", time2 - time1);
     displayUI();
+    long time3 = ServiceLocator.getTimeSource().getTime();
+    logger.info("UI displayed: {}ms", time3 - time2);
     spawnTerrain();
+    long time4 = ServiceLocator.getTimeSource().getTime();
+    logger.info("Terrain spawned: {}ms", time4 - time3);
     spawnWall();
+    long time5 = ServiceLocator.getTimeSource().getTime();
+    logger.info("Wall spawned: {}ms", time5 - time4);
+
+
     MapLayout mapLayout = new MapLayout();
     Map result = mapLayout.load(this.level);
+    long time6 = ServiceLocator.getTimeSource().getTime();
+    logger.info("Map loaded: {}ms", time6 - time5);
     for (Bench bench : result.getBenches()) {
       spawnEntity(bench);
       bench.setPosition(bench.x, bench.y);
     }
     for (Entity station : result.getStations()) {
       spawnEntity(station);
-
     }
+    long time7 = ServiceLocator.getTimeSource().getTime();
+    logger.info("Map created: {}ms", time7 - time6);
+
 
 
 
@@ -280,6 +280,9 @@ public class ForestGameArea extends GameArea {
     createEndDayScreen();
     playMusic();
 
+    long time8 = ServiceLocator.getTimeSource().getTime();
+    logger.info("Everything else: {}ms", time8 - time7);
+
   }
 
   /**
@@ -299,6 +302,7 @@ public class ForestGameArea extends GameArea {
    */
   private void checkEndOfGameState() {
     String gameState = player.getComponent(CheckWinLoseComponent.class).checkGameState();
+
 
     if ("LOSE".equals(gameState)) {
       createTextBox("You *oink* two-legged moron! You're ruining my " +
@@ -460,18 +464,20 @@ public class ForestGameArea extends GameArea {
   /**
    * Spawns benches around the restaurant
    */
-  private void spawnBenches() {
-    for (Bench bench : BenchLayout.levelOne()) {
-      spawnEntity(bench);
-      bench.setPosition(bench.x, bench.y);
-    }
-  }
+
 
   private Entity spawnPlayer() {
-    Entity newPlayer;
-    newPlayer = PlayerFactory.createPlayer();
+    if (ServiceLocator.getPlayerService().getPlayer() != null) {
+      logger.warn("Player exist");
+      return ServiceLocator.getPlayerService().getPlayer();
+    }
+
+    Entity newPlayer = PlayerFactory.createPlayer();
     spawnEntityAt(newPlayer, PLAYER_SPAWN, true, true);
-    newPlayer.setPosition(PLAYER_SPAWN.x, 2.5f);
+    newPlayer.setPosition(PLAYER_SPAWN.x, 3.1f);
+
+    ServiceLocator.getPlayerService().registerPlayer(newPlayer);
+
     return newPlayer;
   }
 
@@ -675,7 +681,7 @@ public class ForestGameArea extends GameArea {
   private void playMusic() {
     Music music = ServiceLocator.getResourceService().getAsset(backgroundmusic, Music.class);
     music.setLooping(true);
-    music.setVolume(0.02f);
+    music.setVolume(0.04f);
     music.play();
   }
 

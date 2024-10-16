@@ -31,7 +31,7 @@ public class InventoryDisplay extends UIComponent {
      * Requires that the entity this component is being added to also have
      * an InventoryComponent.
      */
-public InventoryDisplay() {
+    public InventoryDisplay() {
         this.slotSize = 200;
     }
 
@@ -49,6 +49,10 @@ public InventoryDisplay() {
         this.slotSize = slotSize;
     }
 
+    public int getSlotSize() {
+        return this.slotSize;
+    }
+
     @Override
     public void create() {
         super.create();
@@ -57,6 +61,7 @@ public InventoryDisplay() {
             // listener for when the InventoryComponent attached to this entity is updated
             entity.getEvents().addListener("updateInventory", this::update);
         }
+
         addActors();
     }
 

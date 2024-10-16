@@ -37,12 +37,6 @@ public class MoralDecisionDisplay extends UIComponent {
 
 
 
-//    public MoralDecisionDisplay(MainGameScreen game) {
-//        super();
-//        this.game = game;
-//        isVisible = false;
-//    }
-
     /**
      * Constructor for the MoralDecisionDisplay class.
      * Initializes the display and sets its visibility to false.
@@ -94,9 +88,6 @@ public class MoralDecisionDisplay extends UIComponent {
         Table questionSet = new Table();
         Label questionLabel = new Label("Do you want to save the racoon?", skin);
         questionSet.add(questionLabel).pad(10).row();
-
-        Label testingLabel = new Label("TestinvfHQ ETAAHWRVFBJWGEE HAET NVBbwegvkjER AHT QTHJTRAJ RTJRTg", skin);
-//        layout.add(testingLabel).padRight(100).right().row();
 
         // add another table inside the existing table, in order to show the Decision question and buttons for yes/no
         Table decisionTable = new Table();

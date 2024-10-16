@@ -2,6 +2,7 @@ package com.csse3200.game.components.cutscenes;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
+import com.csse3200.game.GdxGame;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.cutscenes.scenes.AnimatedScene;
 import com.csse3200.game.components.cutscenes.scenes.Scene;
@@ -127,8 +128,22 @@ public abstract class Cutscene extends Component {
                 loadScene(currentSceneIndex);
             } else {
                 logger.info("Cutscene finished. Triggering next event.");
+                ServiceLocator.getLevelService().setCurrLevel(GdxGame.LevelType.LEVEL_1);
                 ServiceLocator.getCutsceneScreen().getCutsceneScreenDisplay().getEntity().getEvents().trigger("cutsceneEnded");
             }
+        }
+    }
+
+    protected void nextCutsceneMoral() {
+
+
+        currentSceneIndex++;
+        if (currentSceneIndex < scenes.size()) {
+            logger.info("Loading next scene: {}", currentSceneIndex);
+            disposeEntities();  // Dispose of current entities before moving to the next scene
+            loadScene(currentSceneIndex);
+        } else {
+            logger.info("Waiting For Moral Decision");
         }
     }
 
@@ -258,6 +273,26 @@ public abstract class Cutscene extends Component {
         }
     }
 
+    public void setTextForSceneMoral(Scene scene) {
+        Array<String> sceneText = scene.getSceneText();
+        if (sceneText.size > textIndex) {
+            currentText = sceneText.get(textIndex);
+            textIndex++;
+        }
+        else {
+            textIndex = 0;
+            if (currentSceneIndex < scenes.size()){
+                nextCutsceneMoral();
+            }
+
+            logger.info("Waiting For Moral Decision");
+        }
+    }
+
+    public Boolean isAtEnd(){
+        return currentSceneIndex + 1 == scenes.size();
+    }
+
     /**
      * Creates entities for the given scene, such as background and animation entities.
      * @param scene The scene for which to create entities
@@ -300,6 +335,7 @@ public abstract class Cutscene extends Component {
     /**
      * Disposes of the cutscene by unloading assets and disposing of entities.
      */
+    @Override
     public void dispose() {
         unloadAssets();
         disposeEntities();

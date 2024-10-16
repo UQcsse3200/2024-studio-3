@@ -1,25 +1,17 @@
 package com.csse3200.game.services;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.scenes.scene2d.Stage;
+
 import com.csse3200.game.GdxGame;
-import com.csse3200.game.components.tutorial.TutorialScreenDisplay;
 import com.csse3200.game.events.EventHandler;
 import com.csse3200.game.events.listeners.EventListener0;
 import com.csse3200.game.events.listeners.EventListener1;
 import com.csse3200.game.extensions.GameExtension;
-import com.csse3200.game.rendering.RenderService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
 import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
-
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.*;
-import static org.mockito.internal.verification.VerificationModeFactory.atMost;
 
 @ExtendWith(GameExtension.class)
 @ExtendWith(MockitoExtension.class)
@@ -47,24 +39,24 @@ class LevelServiceTest {
     void shouldReturnEventHandler() {
         levelServiceSpy.getEvents();
         verify(levelServiceSpy).getEvents();
-        assertEquals(levelServiceSpy.getEvents().getClass(), EventHandler.class);
+        assertEquals(EventHandler.class, levelServiceSpy.getEvents().getClass());
     }
 
     @Test
     void shouldReturnDefaultLevelValueOfOneFromGetCurrLevel() {
-        assertEquals(levelServiceSpy.getCurrLevel(), GdxGame.LevelType.LEVEL_1);
+        assertEquals(GdxGame.LevelType.LEVEL_1, levelServiceSpy.getCurrLevel());
     }
 
     @Test
     void shouldIncrementLevelByOneIfTriggerIsTrue() {
         levelServiceSpy.togglePlayerFinishedLevel();
-        assertEquals(levelServiceSpy.getCurrLevel(), GdxGame.LevelType.LEVEL_2);
+        assertEquals(GdxGame.LevelType.LEVEL_2, levelServiceSpy.getCurrLevel());
     }
 
     @Test
     void shouldIncrementLevelByOne() {
         levelServiceSpy.incrementLevel();
-        assertEquals(levelServiceSpy.getCurrLevel(), GdxGame.LevelType.LEVEL_2);
+        assertEquals(GdxGame.LevelType.LEVEL_2, levelServiceSpy.getCurrLevel());
     }
 
     @Test
@@ -80,7 +72,7 @@ class LevelServiceTest {
     @Test
     void shouldManuallySetLevel() {
         levelServiceSpy.setCurrLevel(GdxGame.LevelType.LEVEL_5);
-        assertEquals(levelServiceSpy.getCurrLevel(), GdxGame.LevelType.LEVEL_5);
+        assertEquals(GdxGame.LevelType.LEVEL_5, levelServiceSpy.getCurrLevel());
     }
 
     @Test

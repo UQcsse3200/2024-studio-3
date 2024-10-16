@@ -231,9 +231,9 @@ public class ServiceLocator {
     orderActions = source;
   }
 
-  public static void registerGame(GdxGame new_game) {
+  public static void registerGame(GdxGame newGame) {
     logger.debug("Registering GdxGame");
-    game = new_game;
+    game = newGame;
   }
 
   public static GdxGame getGame() {
@@ -242,7 +242,7 @@ public class ServiceLocator {
 
   public static void registerLevelService(LevelService source) {
     if (levelService == null) {
-      levelService = source;
+    levelService = source;
     } else {
       logger.warn("Level service is already assigned, ignoring register");
     }
@@ -283,12 +283,8 @@ public class ServiceLocator {
   }
 
   public static void registerCutsceneScreen(CutsceneScreen scene) {
-    if (cutsceneScreen != null) {
-      logger.warn("Game Screen is already registered!");
-    } else {
-      logger.debug("Registering cutscene screen");
+      logger.debug("Registering new cutscene screen");
       cutsceneScreen = scene;
-    }
   }
 
   // New register methods for additional services

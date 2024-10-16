@@ -68,7 +68,6 @@ public class GameBackgroundDisplayTest {
 
     @Test
     public void isInitialised() {
-        //assertTrue(true);
         entity.create();
         verify(gameBackgroundDisplay).create();
     }

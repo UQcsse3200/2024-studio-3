@@ -71,7 +71,9 @@ class EndDayDisplayTest {
     DayNightService dayNightService;
     LevelService levelService;
     EndDayDisplay endDayDisplay;
-    private EventHandler eventHandler;
+    @Mock
+    RandomComboService randomComboService;
+
     /**
      * Sets up the environment before each test by initializing services
      */
@@ -90,6 +92,7 @@ class EndDayDisplayTest {
         ServiceLocator.registerResourceService(resourceService);
         ServiceLocator.registerLevelService(levelService);
         ServiceLocator.registerTimeSource(gameTime);
+        ServiceLocator.registerRandomComboService(randomComboService);
         dayNightService = new DayNightService();
         ServiceLocator.registerDayNightService(dayNightService);
         ServiceLocator.registerGameScreen(mainGameScreen);
@@ -106,7 +109,7 @@ class EndDayDisplayTest {
 
     @Test
     void testAddListeners() {
-        eventHandler = new EventHandler();
+        EventHandler eventHandler = new EventHandler();
         endDayDisplay.addListeners();
 
         EventListener0 goldUpdated = mock(EventListener0.class);
@@ -196,6 +199,16 @@ class EndDayDisplayTest {
         endDayDisplay.create();
         String customerName = "TestCustomer";
         endDayDisplay.updateCustomerList(customerName);
+    }
+
+    @Test
+    void testHandlePassedCustomer() {
+        String customerName = "Alice";
+
+        endDayDisplay.handlePassedCustomer(customerName);
+
+        // Check if the customer name is added correctly and converted to upper case
+        assertTrue(endDayDisplay.passedCustomerArray.contains(customerName.toUpperCase()));
     }
 
     @Test

@@ -79,13 +79,13 @@ public class StationMealComponent extends Component {
         logger.info("BEFORE STATION ITEMS {}\nBEFORE PLAYER ITEMS {}", 
                 this.inventoryComponent.getItemNames(), 
                 playerInventoryComponent.getItemNames());
+        logger.info("Interaction type: {}", type);
 
         // Check if interaction was a chopping attempt
         switch (type) {
             case "chop", "stopChop" -> {
                 return; // Do nothing exit func
             }
-
 
             // Check if interaction was a combine attempt
             case "combine" -> {
@@ -98,7 +98,6 @@ public class StationMealComponent extends Component {
                         playerInventoryComponent.getItemNames());
                 return;
             }
-
 
             // Check if player is trying to rotate position of items for selection
             case "rotate" -> {
@@ -113,6 +112,7 @@ public class StationMealComponent extends Component {
             }
         }
 
+        // for the default interaction option
         if (playerInventoryComponent.isFull()) {
             // Input to station
             ItemComponent item = playerInventoryComponent.getItemFirst();
@@ -148,11 +148,12 @@ public class StationMealComponent extends Component {
      * @param playerInventoryComponent - reference to player inventory
      */
     public void stationReceiveItem(ItemComponent item, InventoryComponent playerInventoryComponent) {
+        logger.info("SIZE OF INVENTORY: {}", this.inventoryComponent.getCapacity());
         // add an item to the station inventory if there is room
         if (!this.inventoryComponent.isFull()) {
             this.inventoryComponent.addItem(item);
             playerInventoryComponent.removeAt(0);
-        }
+        } 
     }
 
     /**
@@ -170,6 +171,13 @@ public class StationMealComponent extends Component {
      * and return it to the station inventory.
      */
     private void processMeal() {
+        ItemComponent plate = this.inventoryComponent.removeItemName("Plate");
+        if (plate == null) {
+            // no plate component, invalid recipe
+            logger.info("Inventory is missing a plate, please add a Plate from the Dishwasher to the combining station");
+            return;
+        }
+
         Optional<String> possibleRecipe = mealFactory.getRealRecipe(this.inventoryComponent.getItemNames()); 
         
         if (possibleRecipe.isPresent()) {
@@ -191,11 +199,32 @@ public class StationMealComponent extends Component {
             assert mealEntity != null;
             MealComponent meal = mealEntity.getComponent(MealComponent.class);
             this.inventoryComponent.addItemAt(meal, 0);
+        } else {
+            this.inventoryComponent.addItem(plate);
         }
     }
 
+    /**
+     * Checks if there is a meal in the station inventory.
+     * 
+     * @return - true if there is a meal, false otherwise
+     */
     public boolean hasMeal() {
-        return mealFactory.getRealRecipe(this.inventoryComponent.getItemNames()).isPresent();
+        InventoryComponent ingredients = new InventoryComponent(3);
+        boolean plateSeen = false;
+
+        for (int index = 0; index < this.inventoryComponent.getCapacity(); index++) {
+            if (this.inventoryComponent.getItemAt(index) == null) {
+                return false;
+            }
+            if (this.inventoryComponent.getItemAt(index).getClass() == IngredientComponent.class) {
+                ingredients.addItem(this.inventoryComponent.getItemAt(index));
+            } else if (this.inventoryComponent.getItemAt(index).getClass() == PlateComponent.class) {
+                plateSeen = true;
+            }
+        }
+
+        return mealFactory.getRealRecipe(ingredients.getItemNames()).isPresent() && plateSeen;
     }
 
     /**

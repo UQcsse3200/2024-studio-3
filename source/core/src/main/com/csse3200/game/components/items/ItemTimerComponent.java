@@ -6,7 +6,6 @@ import com.csse3200.game.services.ServiceLocator;
 
 /**
  * TimerComponent.java
- * 
  * Timer component used for item cooking and chopping. Able to be set with a
  * time started, stopped, and paused etc. This will modify the current
  * impletmentation of item cooking

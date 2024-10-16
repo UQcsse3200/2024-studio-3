@@ -2,29 +2,25 @@ package com.csse3200.game.screens;
 
 
 import com.badlogic.gdx.Gdx;
-import com.csse3200.game.services.SaveLoadService;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.ai.tasks.AITaskComponent;
-import com.csse3200.game.ai.tasks.Task;
 import com.csse3200.game.areas.ForestGameArea;
 import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.components.maingame.*;
-import com.csse3200.game.components.levels.LevelComponent;
 import com.csse3200.game.components.maingame.MainGameActions;
+import com.csse3200.game.components.tutorial.KeybindsButtonDisplay;
 import com.csse3200.game.components.upgrades.*;
-import com.csse3200.game.components.mainmenu.MainMenuBackground;
-import com.csse3200.game.components.tasks.PathFollowTask;
 import com.csse3200.game.components.ordersystem.*;
-import com.csse3200.game.components.moral.MoralDecision;
 import com.csse3200.game.components.ordersystem.MainGameOrderBtnDisplay;
 import com.csse3200.game.components.ordersystem.OrderActions;
 import com.csse3200.game.components.ordersystem.TicketDetails;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.entities.factories.LevelFactory;
+import com.csse3200.game.entities.factories.NPCFactory;
 import com.csse3200.game.entities.factories.RenderFactory;
 import com.csse3200.game.entities.factories.UIFactory;
 import com.csse3200.game.input.InputComponent;
@@ -37,15 +33,13 @@ import com.csse3200.game.rendering.Renderer;
 import com.csse3200.game.services.*;
 import com.csse3200.game.ui.terminal.Terminal;
 import com.csse3200.game.ui.terminal.TerminalDisplay;
-import com.csse3200.game.components.maingame.EndDayDisplay;
 import com.csse3200.game.components.maingame.MainGameExitDisplay;
 import com.csse3200.game.components.gamearea.PerformanceDisplay;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.csse3200.game.components.ordersystem.DocketLineDisplay;
 import com.csse3200.game.services.GameTime;
-import com.csse3200.game.components.player.InventoryDisplay;
-import java.util.Arrays;
+
 
 /**
  * The game screen containing the main game.
@@ -69,8 +63,14 @@ public class MainGameScreen extends ScreenAdapter {
 			"images/red_overlay.jpg",
 			"images/red_fill.png",
 			"images/white_background.png",
+			"images/box_background.png",
+			"images/box_background2.png",
+			"images/box_background3.png",
+			"images/box_background4.png",
+			"images/calendar.png",
 			"images/Upgrade_display.png",
 			"images/pause_menu2.png",
+			"images/pause_menu.png",
 			"images/recipe_card.png",
 			"images/textbox.png",
 			//background daylight cycle assets
@@ -114,12 +114,12 @@ public class MainGameScreen extends ScreenAdapter {
 	// Modified the camera position to fix layout
 	private static final Vector2 CAMERA_POSITION = new Vector2(7f, 4.5f);
 
-    private final GdxGame game;
-    private final Renderer renderer;
-    private final PhysicsEngine physicsEngine;
-    private boolean isPaused = false;
-    private DocketLineDisplay docketLineDisplay;
-    private MainGameOrderTicketDisplay orderTicketDisplay;
+    public final GdxGame game;
+    public Renderer renderer;
+    public final PhysicsEngine physicsEngine;
+    public boolean isPaused = false;
+    public DocketLineDisplay docketLineDisplay;
+    public MainGameOrderTicketDisplay orderTicketDisplay;
 
 	/**
 	 * Constructs the main game screen
@@ -127,6 +127,7 @@ public class MainGameScreen extends ScreenAdapter {
 	 */
 	public MainGameScreen(GdxGame game) {
 		this.game = game;
+		MainGameOrderTicketDisplay.resetOrderNumb();
 
 		logger.debug("Initialising main game screen services");
 		ServiceLocator.registerTimeSource(new GameTime());
@@ -137,15 +138,17 @@ public class MainGameScreen extends ScreenAdapter {
 
 		ServiceLocator.registerInputService(new InputService());
 		ServiceLocator.registerResourceService(new ResourceService());
+		ServiceLocator.registerPlayerService(new PlayerService());
 
 		ServiceLocator.registerEntityService(new EntityService());
 		ServiceLocator.registerRenderService(new RenderService());
 		ServiceLocator.registerDocketService(new DocketService());
+
 		ServiceLocator.registerDayNightService(new DayNightService());
 		ServiceLocator.registerRandomComboService(new RandomComboService());
 		ServiceLocator.registerLevelService(new LevelService());
 		ServiceLocator.registerMapLayout(new MapLayout());
-		ServiceLocator.registerPlayerService(new PlayerService());
+
 		logger.warn("Is SaveService null? " + (ServiceLocator.getSaveLoadService() == null));
 		//ServiceLocator.registerSaveLoadService(new SaveLoadService());
 		ServiceLocator.registerGameScreen(this);
@@ -267,6 +270,7 @@ public class MainGameScreen extends ScreenAdapter {
 	 * Reset screen UI
 	 */
 	public void resetScreen() {
+		NPCFactory.reset();
 		EntityService entityService = ServiceLocator.getEntityService();
 		entityService.dispose();
 		ServiceLocator.registerEntityService(new EntityService());
@@ -276,7 +280,7 @@ public class MainGameScreen extends ScreenAdapter {
 	/**
 	 * Loads assets to resourceService
 	 */
-	private void loadAssets() {
+    void loadAssets() {
 		logger.debug("Loading assets");
 		ResourceService resourceService = ServiceLocator.getResourceService();
 		resourceService.loadTextures(mainGameTextures);
@@ -287,7 +291,7 @@ public class MainGameScreen extends ScreenAdapter {
 	/**
 	 * Unloads the assets from resourceService
 	 */
-	private void unloadAssets() {
+    void unloadAssets() {
 		logger.debug("Unloading assets");
 		ResourceService resourceService = ServiceLocator.getResourceService();
 		resourceService.unloadAssets(mainGameTextures);
@@ -306,7 +310,7 @@ public class MainGameScreen extends ScreenAdapter {
 	 * Creates the main game's ui including components for rendering ui elements to the screen and
 	 * capturing and handling ui input.
 	 */
-	private void createUI() {
+    void createUI() {
 		logger.debug("Creating ui");
 		Stage stage = ServiceLocator.getRenderService().getStage();
 		InputComponent inputComponent =
@@ -316,12 +320,14 @@ public class MainGameScreen extends ScreenAdapter {
 		ui.addComponent(new GameBackgroundDisplay())
 			.addComponent(new InputDecorator(stage, 10))
 		  	.addComponent(docketLineDisplay = new DocketLineDisplay())
+		  	.addComponent(new DocketLineDisplay())
 			.addComponent(new PerformanceDisplay())
 			.addComponent(new MainGameActions(this.game, UIFactory.createDocketUI()))
 			.addComponent(new MainGameExitDisplay())
 			.addComponent(new Terminal())
 			.addComponent(inputComponent)
 			.addComponent(new TerminalDisplay())
+			.addComponent(new KeybindsButtonDisplay())
 			.addComponent(new OrderActions())
 			.addComponent(new MainGameOrderBtnDisplay())
 			.addComponent(new PauseMenuActions(this.game))
@@ -331,6 +337,8 @@ public class MainGameScreen extends ScreenAdapter {
 				.addComponent(new SpeedBootsUpgrade())
 				.addComponent(new ExtortionUpgrade())
 				.addComponent(new DancePartyUpgrade())
+				.addComponent(new PauseMenuActions(this.game))
+				.addComponent(new PauseMenuDisplay(this))
 						.addComponent(new UpgradesDisplay(this))
 								.addComponent(new RecipeCardDisplay(this));
 

@@ -6,7 +6,6 @@ import org.slf4j.LoggerFactory;
 import com.csse3200.game.components.items.ItemComponent;
 import java.util.ArrayList;
 import java.util.List;
-import java.lang.IllegalArgumentException;
 
 
 /**
@@ -27,7 +26,7 @@ public class InventoryComponent extends Component {
    * @param capacity the players inventory size
    */
   public InventoryComponent(int capacity) {
-    logger.info("Initialized Inventory Component");
+    //logger.info("Initialized Inventory Component");
     setCapacity(capacity);
     items = new ArrayList<>(capacity);
     for (int i = 0; i < capacity; i++) {        
@@ -339,7 +338,7 @@ public class InventoryComponent extends Component {
         currentItem = items.get(i);
 
         if (currentItem != null && currentItem.getItemName().equals(itemName)) {
-          this.items.set(i, null);
+          this.removeAt(i);
           break;
         }
       }
