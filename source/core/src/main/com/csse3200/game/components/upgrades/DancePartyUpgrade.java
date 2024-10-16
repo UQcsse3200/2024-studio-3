@@ -36,9 +36,9 @@ public class DancePartyUpgrade extends UIComponent implements Upgrade {
 
     private static final String[] greenTexture = {"images/green_fill.png"};
     private static final String[] whiteBgTexture = {"images/white_background.png"};
-    private Table layout;
-    private Label text; // the "Upgrade" text above the speedMeter
-    private ProgressBar meter; // the meter that show the remaining time
+    public Table layout;
+    public Label text; // the "Upgrade" text above the speedMeter
+    public ProgressBar meter; // the meter that show the remaining time
     private boolean isVisible;
     private Sound bgEffect;
     private boolean playSound = false;
@@ -48,6 +48,16 @@ public class DancePartyUpgrade extends UIComponent implements Upgrade {
         ServiceLocator.getPlayerService().getEvents().addListener("playerCreated", (Entity player) -> {
             this.combatStatsComponent = player.getComponent(CombatStatsComponent.class);
         });
+        this.orderManager = orderManager;
+        gameTime = ServiceLocator.getTimeSource();
+        this.isActive = false;
+
+        ServiceLocator.getRandomComboService().getEvents().addListener("Dance party", this::activate);
+        ServiceLocator.getRandomComboService().getEvents().addListener("Dance partyoff", this::deactivate);
+    }
+
+    public DancePartyUpgrade(CombatStatsComponent combatStatsComponent) {
+        this.combatStatsComponent = combatStatsComponent;
         this.orderManager = orderManager;
         gameTime = ServiceLocator.getTimeSource();
         this.isActive = false;
@@ -97,7 +107,7 @@ public class DancePartyUpgrade extends UIComponent implements Upgrade {
 
             meter = new ProgressBar(0f, 1f, 0.01f, false, style);
             meter.setValue(1f);
-            meter.setPosition(8, 500);
+            meter.setPosition(30, 250);
 
             text = new Label("Upgrade", skin);
             text.setPosition(meter.getX(), meter.getY() + meter.getHeight() + 8);
@@ -119,6 +129,9 @@ public class DancePartyUpgrade extends UIComponent implements Upgrade {
              layout.setVisible(true);
 
              ServiceLocator.getDocketService().getEvents().trigger("Dancing");
+         }
+         else{
+             ServiceLocator.getRandomComboService().getEvents().trigger("notenoughmoney");
          }
      }
 
@@ -162,13 +175,13 @@ public class DancePartyUpgrade extends UIComponent implements Upgrade {
             }
         }
 
-        if (Gdx.input.isKeyJustPressed(Input.Keys.V)) {
-            if (isActive) {
-                deactivate();
-            } else {
-                activate();
-            }
-        }
+//        if (Gdx.input.isKeyJustPressed(Input.Keys.V)) {
+//            if (isActive) {
+//                deactivate();
+//            } else {
+//                activate();
+//            }
+//        }
     }
 
     @Override
@@ -183,6 +196,22 @@ public class DancePartyUpgrade extends UIComponent implements Upgrade {
     }
     @Override
     public void setStage(Stage mock) {
+        this.stage = mock;
+    }
 
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public float getActiveTimeRemaining() {
+        return activeTimeRemaining;
+    }
+
+    public long getUpgradeDuration() {
+        return UPGRADE_DURATION;
+    }
+
+    public boolean getPlaySound() {
+        return playSound;
     }
 }

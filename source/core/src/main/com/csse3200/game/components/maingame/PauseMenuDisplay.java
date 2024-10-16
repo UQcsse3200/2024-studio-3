@@ -148,6 +148,7 @@ public class PauseMenuDisplay extends UIComponent {
             @Override
             public void changed(ChangeEvent changeEvent, Actor actor) {
                 logger.debug("Restart button clicked");
+                game.resetScreen();
                 entity.getEvents().trigger("restart");
             }
         });

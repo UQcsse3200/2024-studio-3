@@ -46,16 +46,16 @@ public class RandomComboService extends Component {
         String upgrade;
         switch (randomChoice) {
 
+            // case 0:
+            //     upgrade = "Extortion";
+            //     break;
+            // case 1:
+            //     upgrade = "Loan";
+            //     break;
+            // case 2:
+            //     upgrade = "Speed";
+            //     break;
             case 0:
-                upgrade = "Extortion";
-                break;
-            case 1:
-                upgrade = "Loan";
-                break;
-            case 2:
-                upgrade = "Speed";
-                break;
-            case 3:
                 upgrade = "Dance party";
                 break;
             default:

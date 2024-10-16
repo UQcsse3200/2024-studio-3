@@ -89,7 +89,8 @@ public class LevelService {
      * @param newLevel the new level number
      */
     public void setCurrLevel(GdxGame.LevelType newLevel) {
-        currLevel = newLevel;
+            currLevel = newLevel;
+//        currLevel = newLevel;
     }
 
     /**
@@ -138,6 +139,7 @@ public class LevelService {
         }*/
 
         int spawnCap = switch(level) {
+            case LEVEL_0 -> 1;
             case LEVEL_1 -> 1;
             case LEVEL_2 -> 3;
             case LEVEL_3 -> 4;

@@ -1,6 +1,5 @@
 package com.csse3200.game.components.items;
 
-import com.csse3200.game.events.EventHandler;
 import com.csse3200.game.services.ServiceLocator;
 
 import java.util.List;

@@ -24,7 +24,7 @@ public class ItemFactory {
     /**
      * Create a fish item.
      * 
-     * @param cookedLevel - The level the fish is cooked at, can be "raw", "cooked" or "burnt".
+     * @param cookedgLevel - The level the fish is cooked at, can be "raw", "cooked" or "burnt".
      * @return - A fish entity.
      */
     public static Entity createFish(String cookedLevel) {
@@ -246,5 +246,15 @@ public class ItemFactory {
         // Register the entity
         ServiceLocator.getEntityService().register(entity);
         return entity;
+    }
+
+    /**
+     * Create a plate item.
+     * 
+     * @return - A Plate item entity.
+     */
+    public static Entity createPlate() {
+        return new Entity()
+                .addComponent(new PlateComponent(0));
     }
 }

@@ -168,20 +168,19 @@ public class UpgradesDisplayTest {
 
         verify(randomComboService).activateUpgrade();
         verify(randomComboService.getEvents()).trigger("response");
-        assertFalse(upgradesDisplay.isVisible(), "Upgrades display should be hidden after clicking YES");
+        assertFalse(upgradesDisplay.isVisible());
     }
 
     @Test
     void testNoButtonClick() {
-        upgradesDisplay.create(); // Initialize the upgrades display
-        upgradesDisplay.toggleVisibility(); // Show the upgrades menu
-        Table buttonsTable = (Table) upgradesDisplay.getUpgradesTable().getChildren().get(0);
+        upgradesDisplay.create();
+        upgradesDisplay.toggleVisibility();
 
         upgradesDisplay.simulateNoButtonClick();
 
         verify(mainGameScreen, times(2)).resume();
         verify(randomComboService.getEvents()).trigger("response");
-        assertFalse(upgradesDisplay.isVisible(), "Upgrades display should be hidden after clicking NO");
+        assertFalse(upgradesDisplay.isVisible());
     }
 
     @Test

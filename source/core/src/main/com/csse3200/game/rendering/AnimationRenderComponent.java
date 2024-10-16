@@ -181,7 +181,7 @@ public class AnimationRenderComponent extends RenderComponent {
 
   @Override
   public void dispose() {
-    atlas.dispose();
+    //atlas.dispose();
     super.dispose();
   }
 
@@ -196,6 +196,11 @@ public class AnimationRenderComponent extends RenderComponent {
    */
   public void updateAtlas(TextureAtlas atlasName) {
     this.atlas = atlasName;
+  }
+
+  @Override
+  public int getLayer() {
+    return 2;
   }
 
   public String getAtlasString() {

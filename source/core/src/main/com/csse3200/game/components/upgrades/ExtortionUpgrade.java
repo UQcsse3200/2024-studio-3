@@ -61,6 +61,7 @@ public class ExtortionUpgrade extends UIComponent implements Upgrade {
         layout = new Table();
         layout.setFillParent(true);
         layout.setVisible(isVisible);
+        setupMeter();
     }
 
     /**
@@ -68,37 +69,31 @@ public class ExtortionUpgrade extends UIComponent implements Upgrade {
      * Also initializes the accompanying label.
      */
     private void setupMeter() {
-        Texture whiteBgTexture = ServiceLocator
-                .getResourceService().getAsset("images/white_background.png", Texture.class);
-        Texture fillTexture = ServiceLocator
-                .getResourceService().getAsset("images/green_fill.png", Texture.class);
+        if (meter == null) {
+            Texture whiteBgTexture = ServiceLocator.getResourceService().getAsset("images/white_background.png", Texture.class);
+            Texture fillTexture = ServiceLocator.getResourceService().getAsset("images/green_fill.png", Texture.class);
 
-        ProgressBar.ProgressBarStyle style = new ProgressBar.ProgressBarStyle();
+            ProgressBar.ProgressBarStyle style = new ProgressBar.ProgressBarStyle();
+            style.background = new TextureRegionDrawable(new TextureRegion(whiteBgTexture));
+            style.knobBefore = new TextureRegionDrawable(new TextureRegion(fillTexture));
 
-        // Setting white background
-        style.background = new TextureRegionDrawable(new TextureRegion(whiteBgTexture));
-        style.background.setMinHeight(15);
-        style.background.setMinWidth(10);
+            style.background = new TextureRegionDrawable(new TextureRegion(whiteBgTexture));
+            style.background.setMinHeight(15);
+            style.background.setMinWidth(10);
 
-        // Setting green fill color
-        style.knobBefore = new TextureRegionDrawable(new TextureRegion(fillTexture));
-        style.knobBefore.setMinHeight(15);
-        style.background.setMinWidth(10);
+            // Setting green fill color
+            style.knobBefore = new TextureRegionDrawable(new TextureRegion(fillTexture));
+            style.knobBefore.setMinHeight(15);
+            style.background.setMinWidth(10);
 
-
-        // Only show the speed meter if it is activated
-        if (isActive) {
             meter = new ProgressBar(0f, 1f, 0.01f, false, style);
-            meter.setValue(1f); // Initially, the meter is full
-            meter.setPosition(8, 500);
+            meter.setValue(1f);
+            meter.setPosition(30, 250);
 
-            // Set up text
             text = new Label("Upgrade", skin);
-            text.setPosition(meter.getX(), meter.getY() + meter.getHeight() + 8); // Placed above meter
-        }
-        else {
-            meter = null;
-            text = null;
+            text.setPosition(meter.getX(), meter.getY() + meter.getHeight() + 8);
+            layout.add(text).row();
+            layout.add(meter);
         }
     }
 
@@ -116,7 +111,6 @@ public class ExtortionUpgrade extends UIComponent implements Upgrade {
             activateTimeRemaining = upgradeDuration;
             isVisible = true;
             layout.setVisible(true);
-            setupMeter();
         }
         else {
             ServiceLocator.getRandomComboService().getEvents().trigger("notenoughmoney");
@@ -134,11 +128,9 @@ public class ExtortionUpgrade extends UIComponent implements Upgrade {
         layout.setVisible(false);
         ServiceLocator.getRandomComboService().getEvents().trigger("extortion unactive");
 
-        // Ensure the text and meter are removed from the stage after time finish
-        if (meter != null && meter.hasParent()) {
-            meter.remove();
-            text.remove();
-        }
+
+        meter.remove();
+        text.remove();
     }
 
     public boolean isActive() {
