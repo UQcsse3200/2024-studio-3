@@ -188,6 +188,9 @@ public class MapLayout {
             case "X":
                 if (size == 1) {
                     return BenchGenerator.singleBench(startCol + 4, row - 4);
+                } else {
+                    return BenchGenerator.createBenchRow(startCol + 4, startCol + size + 4,
+                            row - 4);
                 }
             case "Q":
                 if (size == 1) {
@@ -196,8 +199,7 @@ public class MapLayout {
             case "P":
                 if (size == 1) {
                     return BenchGenerator.singleBlocker(startCol + 4, row - 4);
-
-                return BenchGenerator.createBenchRow(startCol + 4, startCol + size +4, row - 4);
+                }
             case "Y":
                 return BenchGenerator.createBenchColumn(startCol + 4, row - 4, row + size - 4);
 
