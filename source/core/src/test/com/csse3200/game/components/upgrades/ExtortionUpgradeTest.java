@@ -157,6 +157,22 @@ public class ExtortionUpgradeTest {
         assertFalse(spyExtortionUpgrade.getPlaySound());
     }
 
+    @ParameterizedTest
+    @ValueSource(ints = {5, 10, 15, 20, 25, 30})
+    void testMeterValueAtDifferentLevelsOfDepletion(int totalDepletedTime) {
+        ExtortionUpgrade spyExtortionUpgrade = spy(extortionUpgrade);
+        when(combatStatsComponent.getGold()).thenReturn(100);
+        spyExtortionUpgrade.activate();
+
+        when(gameTime.getDeltaTime()).thenReturn(1f);
+        for (int i = 0; i < totalDepletedTime; i++) {
+            spyExtortionUpgrade.update();
+        }
+
+        assertEquals(spyExtortionUpgrade.getActivateTimeRemaining() /
+                (float) spyExtortionUpgrade.getUpgradeDuration(), spyExtortionUpgrade.meter.getValue(), 0.01);
+    }
+
     @Test
     void testDispose() {
         extortionUpgrade.dispose();
