@@ -173,38 +173,42 @@ public class StationProgressDisplayTest {
         // Verify that updateInventory event is not triggered
         verify(eventHandler, never()).trigger(eq("updateInventory"));
     }
+
+    /**
+     * Tests the update method with an item that has a ChopIngredientComponent and is incomplete.
+     */
+    @Test
+    public void testUpdate_WithChopIngredientComponent_Incomplete() throws NoSuchFieldException, IllegalAccessException {
+        // Arrange
+        ItemComponent item = mock(ItemComponent.class);
+        ChopIngredientComponent chopComponent = mock(ChopIngredientComponent.class);
+        Entity itemEntity = mock(Entity.class);
+        when(itemHandlerComponent.peek()).thenReturn(item);
+        when(item.getEntity()).thenReturn(itemEntity);
+        when(itemEntity.getComponent(ChopIngredientComponent.class)).thenReturn(chopComponent);
+        when(chopComponent.getCompletionPercent()).thenReturn(50.0f);
+
+        // Access private fields
+        Field barPercentageField = StationProgressDisplay.class.getDeclaredField("barPercentage");
+        Field displayBarField = StationProgressDisplay.class.getDeclaredField("displayBar");
+
+        barPercentageField.setAccessible(true);
+        displayBarField.setAccessible(true);
+
+        // Act
+        progressDisplay.update();
+
+        // Assert
+        float barPercentage = barPercentageField.getFloat(progressDisplay);
+        boolean displayBar = displayBarField.getBoolean(progressDisplay);
+
+        assertEquals(0.5f, barPercentage, 0.001f, "barPercentage should be 0.5f");
+        assertTrue(displayBar, "displayBar should be true when processing is incomplete");
+
+        // Verify that the "updateInventory" event is NOT triggered since the process is not yet complete
+        verify(eventHandler, never()).trigger(eq("updateInventory"));
+    }
 }
-
-//     /**
-//      * Tests the update method with an item that has a ChopIngredientComponent and is incomplete.
-//      */
-//     @Test
-//     public void testUpdate_WithChopIngredientComponent_Incomplete() throws NoSuchFieldException, IllegalAccessException {
-//         // Arrange
-//         ItemComponent item = mock(ItemComponent.class);
-//         ChopIngredientComponent chopComponent = mock(ChopIngredientComponent.class);
-//         when(itemHandlerComponent.peek()).thenReturn(item);
-//         when(item.getEntity()).thenReturn(new Entity());
-//         when(item.getEntity().getComponent(ChopIngredientComponent.class)).thenReturn(chopComponent);
-//         when(chopComponent.getCompletionPercent()).thenReturn(50.0f);
-
-//         // Access private fields
-//         Field barPercentageField = StationProgressDisplay.class.getDeclaredField("barPercentage");
-//         Field displayBarField = StationProgressDisplay.class.getDeclaredField("displayBar");
-
-//         barPercentageField.setAccessible(true);
-//         displayBarField.setAccessible(true);
-
-//         // Act
-//         progressDisplay.update();
-
-//         // Assert
-//         float barPercentage = barPercentageField.getFloat(progressDisplay);
-//         boolean displayBar = displayBarField.getBoolean(progressDisplay);
-
-//         assertEquals(0.5f, barPercentage, 0.001f, "barPercentage should be 0.5f");
-//         assertTrue(displayBar, "displayBar should be true when processing is incomplete");
-//     }
 
 //     /**
 //      * Tests the update method with an item that has a ChopIngredientComponent and is complete.
