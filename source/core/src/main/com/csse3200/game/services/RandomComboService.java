@@ -38,12 +38,12 @@ public class RandomComboService extends Component {
         this.random = new Random();
         randomChoice = random.nextInt(total_upgrades); 
 
-        ServiceLocator.getDocketService().getEvents().addListener("Dancing", ()->{
-            isDancing = true;
-        });
-        ServiceLocator.getDocketService().getEvents().addListener("UnDancing", ()->{
-            isDancing = false; 
-        });
+        eventHandler.addListener("Dancing", ()->{isDancing = true;}); 
+        eventHandler.addListener("UnDancing", ()->{isDancing = true;}); 
+        
+        // ServiceLocator.getDocketService().getEvents().addListener("UnDancing", ()->{
+        //     isDancing = false; 
+        // });
     }
 
     /**
