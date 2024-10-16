@@ -145,8 +145,18 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         ServiceLocator.getDocketService().getEvents().addListener("removeBigTicket", this::removeBigTicket);
 
         //From Team 2, these listeners are for our dance party upgrade to pause and unpause docket times
-        ServiceLocator.getDocketService().getEvents().addListener("Dancing", ()->{
+        // ServiceLocator.getDocketService().getEvents().addListener("Dancing", ()->{
+        //     addTimeToDockets(600000);
+        // });
+        ServiceLocator.getRandomComboService().getEvents().addListener("Dancing", ()->{
             addTimeToDockets(600000);
+        });
+
+        ServiceLocator.getDocketService().getEvents().addListener("paused", ()->{
+            setPaused(true);
+        });
+        ServiceLocator.getDocketService().getEvents().addListener("unpaused", ()->{
+            setPaused(false);
         });
 
         //From team 2, I used your dispose method here when listening for a new day, so current dockets get removed

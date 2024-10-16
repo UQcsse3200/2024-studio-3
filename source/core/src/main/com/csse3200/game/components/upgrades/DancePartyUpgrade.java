@@ -151,7 +151,7 @@ public class DancePartyUpgrade extends UIComponent implements Upgrade {
              setupMeter();
              System.out.println("Dance party meter value on activate: " + meter.getValue());
 
-             ServiceLocator.getDocketService().getEvents().trigger("Dancing");
+             ServiceLocator.getRandomComboService().getEvents().trigger("Dancing");
          }
          else{
              ServiceLocator.getRandomComboService().getEvents().trigger("notenoughmoney");
