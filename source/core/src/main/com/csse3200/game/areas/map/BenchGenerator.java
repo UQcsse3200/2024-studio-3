@@ -57,7 +57,7 @@ public class BenchGenerator {
                         PhysicsComponent.AlignX.LEFT, PhysicsComponent.AlignY.BOTTOM));
         arr.add(b);
 
-        if (endX - startX > 1){ // the bench has 2 or more segments
+        if (endX - startX > 0){ // the bench has 2 or more segments
             // add the middle parts of the bench
             for (int i = startX+1; i < endX; i++) {
                 arr.add(new Bench("top_shadows", i, y));
