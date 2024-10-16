@@ -1,5 +1,7 @@
 package com.csse3200.game.services;
+import com.csse3200.game.GdxGame;
 import com.csse3200.game.components.CombatStatsComponent;
+import com.csse3200.game.components.cutscenes.Cutscene;
 import com.csse3200.game.components.maingame.CheckWinLoseComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,7 +27,7 @@ public class DayNightService {
     private final GameTime gameTime;
     private boolean endOfDayTriggered = false;
     private boolean pastSecond = false;
-    private boolean pastUpgrade = false; 
+    private boolean pastUpgrade = false;
     private final EventHandler enddayEventHandler;
     private final EventHandler docketServiceEventHandler;
     private Random random;
@@ -79,10 +81,9 @@ public class DayNightService {
      */
     public void create() {
         // ***Working version of Day cycle used "decisionDone"***
-        enddayEventHandler.addListener("decisionDone", this::startNewDay);
+        enddayEventHandler.addListener("TOMORAL", this::goMoral);
 
         enddayEventHandler.addListener("callpastsecond", this::updatepastSecond);
-
         // Listen for high-quality meal events
         ServiceLocator.getEntityService().getEvents().addListener("mealHighQuality", this::incrementHighQualityMealCount);
     }
@@ -119,7 +120,7 @@ public class DayNightService {
      * to trigger end-of-day events or other timed events such as upgrades.
      */
     public void update() {
-        if(gameTime.isPaused()){
+        if (gameTime.isPaused()) {
             logger.info("Paused at DayNightService");
             return;
         }
@@ -127,7 +128,7 @@ public class DayNightService {
         long currentTime = gameTime.getTime(); // Get the current game time
 
         // Check if it has been 1 second
-        if(currentTime - lastSecondCheck >= 1000 && !pastSecond){
+        if (currentTime - lastSecondCheck >= 1000 && !pastSecond) {
             pastSecond = true;
             this.timeRemaining -= 1000;
             enddayEventHandler.trigger("Second", this.timeRemaining);
@@ -211,14 +212,18 @@ public class DayNightService {
      *
      * @return the current day number
      */
-    public int getDay() { return day;}
+    public int getDay() {
+        return day;
+    }
 
     /**
      * Sets the current day in the game.
      *
      * @param day the day to set as the current day
      */
-    public void setDay(int day) { this.day = day;}
+    public void setDay(int day) {
+        this.day = day;
+    }
 
     /**
      * Gets the event handler for the end-of-day events.
@@ -227,7 +232,7 @@ public class DayNightService {
      */
     public EventHandler getEvents() {
         return enddayEventHandler;
-      }
+    }
 
     /**
      * Checks if the end-of-day event has been triggered.
@@ -252,6 +257,19 @@ public class DayNightService {
      */
     public int getHighQualityMeals() {
         return highQualityMeals;
+    }
+
+
+    private void goMoral() {
+        GdxGame.ScreenType screen;
+        switch (this.getDay()){
+            case 1 -> screen = GdxGame.ScreenType.MORAL_SCENE_1;
+            case 2 -> screen = GdxGame.ScreenType.MORAL_SCENE_2;
+            case 3 -> screen = GdxGame.ScreenType.MORAL_SCENE_3;
+            case 4 -> screen = GdxGame.ScreenType.MORAL_SCENE_4;
+            default -> throw new IllegalStateException("Unexpected value");
+        }
+        ServiceLocator.getGame().setScreen(screen);
     }
 }
 

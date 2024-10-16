@@ -243,9 +243,13 @@ public class TextDisplay extends UIComponent {
                         }
                     } else if (keycode == Input.Keys.Y && atEnd){
                         logger.info("WE'RE ALMOST THERE");
+                        currentCutscene = ServiceLocator.getCurrentCutscene();
+                        currentCutscene.setTextForScene(currentCutscene.currentScene);
 
                     } else if (keycode == Input.Keys.N && atEnd){
                         logger.info("WE'RE ALMOST THERE NO");
+                        currentCutscene = ServiceLocator.getCurrentCutscene();
+                        currentCutscene.setTextForScene(currentCutscene.currentScene);
                     }
                     return true;
                 }  else if (keycode == com.badlogic.gdx.Input.Keys.ENTER || keycode == com.badlogic.gdx.Input.Keys.SPACE){

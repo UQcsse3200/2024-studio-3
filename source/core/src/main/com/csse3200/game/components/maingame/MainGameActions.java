@@ -64,7 +64,7 @@ public class MainGameActions extends Component {
 
 
         // Now we can transition to the cutscene
-        game.setScreen(GdxGame.ScreenType.ENDDAY_1);
+        game.setScreen(GdxGame.ScreenType.MORAL_SCENE_1);
     }
     public void moral2(){
         logger.info("Starting end of day 1 moral decision cutscene");
@@ -73,7 +73,7 @@ public class MainGameActions extends Component {
         // ServiceLocator.getMainMenuDisplay().stopBackgroundTasks();
 
         // Now we can transition to the cutscene
-        game.setScreen(GdxGame.ScreenType.ENDDAY_2);
+        game.setScreen(GdxGame.ScreenType.MORAL_SCENE_2);
     }
     public void moral3(){
         logger.info("Starting end of day 1 moral decision cutscene");
@@ -82,7 +82,7 @@ public class MainGameActions extends Component {
         // ServiceLocator.getMainMenuDisplay().stopBackgroundTasks();
 
         // Now we can transition to the cutscene
-        game.setScreen(GdxGame.ScreenType.ENDDAY_3);
+        game.setScreen(GdxGame.ScreenType.MORAL_SCENE_3);
     }
     public void moral4(){
         logger.info("Starting end of day 1 moral decision cutscene");
@@ -91,7 +91,7 @@ public class MainGameActions extends Component {
         // ServiceLocator.getMainMenuDisplay().stopBackgroundTasks();
 
         // Now we can transition to the cutscene
-        game.setScreen(GdxGame.ScreenType.ENDDAY_4);
+        game.setScreen(GdxGame.ScreenType.MORAL_SCENE_4);
     }
 
 

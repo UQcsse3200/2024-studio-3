@@ -280,6 +280,7 @@ public abstract class Cutscene extends Component {
             textIndex++;
         }
         else {
+
             textIndex = 0;
             if (currentSceneIndex < scenes.size()){
                 nextCutsceneMoral();
@@ -290,7 +291,7 @@ public abstract class Cutscene extends Component {
     }
 
     public Boolean isAtEnd(){
-        return currentSceneIndex + 1 == scenes.size();
+        return currentSceneIndex + 1== scenes.size();
     }
 
     /**
