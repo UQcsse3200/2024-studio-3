@@ -7,6 +7,10 @@ import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
 
 public class MoralDay1Cutscene extends Cutscene {
+    private static final String MAFIA_IMAGE_PATH = "images/Cutscenes/Character Artwork/rhino_sprite.png";
+    private static final String ICON_IMAGE_PATH = "images/Cutscenes/moral_icons/laundering_ico.png";
+    private static final String DAY_2_SCENE_PATH = "images/Cutscenes/Day2_Scene.png";
+
     public MoralDay1Cutscene() {
         super();
     }
@@ -26,17 +30,15 @@ public class MoralDay1Cutscene extends Cutscene {
         sceneText.add("Mafia Boss > Because I'm sooo generous I'll even let you keep 40 coins.");
         sceneText.add("Mafia Boss > What do you say?");
 
-        String mafiaImage = "images/Cutscenes/Character Artwork/rhino_sprite.png";
         Vector2 mafiaPosition = new Vector2(3, -1);
         float mafiaScale = 4.0f;
 
-        String iconImage = "images/Cutscenes/moral_icons/laundering_ico.png";
         Vector2 iconPosition = new Vector2(-8, -2);
         float iconScale = 7.0f;
 
-        Scene scene = new Scene("images/Cutscenes/Day2_Scene.png");
+        Scene scene = new Scene(DAY_2_SCENE_PATH);
         scene.setImages(
-                new String[]{mafiaImage, iconImage},
+                new String[]{MAFIA_IMAGE_PATH, ICON_IMAGE_PATH},
                 new Vector2[]{mafiaPosition, iconPosition},
                 new float[]{mafiaScale, iconScale}
         );
@@ -51,11 +53,9 @@ public class MoralDay1Cutscene extends Cutscene {
         Array<String> sceneText = new Array<>();
         sceneText.add("Press 'y' for yes and 'n' for no");
 
-        String mafiaImage = "images/Cutscenes/Character Artwork/rhino_sprite.png";
         Vector2 mafiaPosition = new Vector2(3, -1);
         float mafiaScale = 4.0f;
 
-        String iconImage = "images/Cutscenes/moral_icons/laundering_ico.png";
         Vector2 iconPosition = new Vector2(-8, -2);
         float iconScale = 7.0f;
 
@@ -67,9 +67,9 @@ public class MoralDay1Cutscene extends Cutscene {
         Vector2 noPosition = new Vector2(-1, -4);
         float noScale = 11.0f;
 
-        Scene scene = new Scene("images/Cutscenes/Day2_Scene.png");
+        Scene scene = new Scene(DAY_2_SCENE_PATH);
         scene.setImages(
-                new String[]{mafiaImage, iconImage, yesImage, noImage},
+                new String[]{MAFIA_IMAGE_PATH, ICON_IMAGE_PATH, yesImage, noImage},
                 new Vector2[]{mafiaPosition, iconPosition, yesPosition, noPosition},
                 new float[]{mafiaScale, iconScale, yesScale, noScale}
         );
@@ -83,14 +83,14 @@ public class MoralDay1Cutscene extends Cutscene {
     @Override
     protected void loadAssets() {
         textures = new String[]{
-                "images/Cutscenes/Day2_Scene.png",
+                DAY_2_SCENE_PATH,
         };
 
         animations = new String[]{};
 
         images = new String[]{
-                "images/Cutscenes/Character Artwork/rhino_sprite.png",
-                "images/Cutscenes/moral_icons/laundering_ico.png",
+                MAFIA_IMAGE_PATH,
+                ICON_IMAGE_PATH,
                 "images/Cutscenes/moral_icons/yes_ico.png",
                 "images/Cutscenes/moral_icons/no_ico.png"
         };
