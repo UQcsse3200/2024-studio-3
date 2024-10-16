@@ -53,7 +53,7 @@ public class MoralDay1Cutscene extends Cutscene {
 
     private void createScene2() {
         Array<String> sceneText = new Array<>();
-        sceneText.add("Press 'y' for yes and 'no' for no");
+        sceneText.add("Press 'y' for yes and 'n' for no");
 
         String mafiaImage = "images/Cutscenes/Character Artwork/rhino_sprite.png";
         Vector2 mafiaPosition = new Vector2(3, -1);
