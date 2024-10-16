@@ -90,7 +90,6 @@ public class DancePartyUpgradeTest {
         assertTrue(dancePartyUpgrade.isActive());
         assertTrue(dancePartyUpgrade.layout.isVisible());
         assertEquals(dancePartyUpgrade.getActiveTimeRemaining(), dancePartyUpgrade.getUpgradeDuration());
-        verify(combatStatsComponent).addGold(-20);
     }
 
     @Test
@@ -113,6 +112,50 @@ public class DancePartyUpgradeTest {
         assertFalse(dancePartyUpgrade.layout.isVisible());
         assertEquals(0f, dancePartyUpgrade.meter.getValue());
     }
+
+    @Test
+    void testLoseGoldOnPurchase() {
+        when(combatStatsComponent.getGold()).thenReturn(100);
+        dancePartyUpgrade.activate();
+        verify(combatStatsComponent).addGold(-20);
+    }
+
+    @Test
+    void testInsufficientGold() {
+        when(combatStatsComponent.getGold()).thenReturn(10);
+        AtomicBoolean notEnoughMoney = new AtomicBoolean(false);
+        randomComboEventHandler.addListener("notenoughmoney", () -> {
+            notEnoughMoney.set(true);
+        });
+
+        dancePartyUpgrade.activate();
+
+        assertTrue(notEnoughMoney.get());
+        assertFalse(dancePartyUpgrade.isActive());
+        assertFalse(dancePartyUpgrade.layout.isVisible());
+    }
+
+/*    @Test
+    void testSpeedBootsFor30Seconds() {
+        DancePartyUpgrade spyDancePartyUpgrade = spy(dancePartyUpgrade);
+        when(combatStatsComponent.getGold()).thenReturn(100);
+        spyDancePartyUpgrade.activate();
+
+        when(gameTime.getDeltaTime()).thenReturn(1f);
+        for (int i = 0; i < 15; i++) {
+            spyDancePartyUpgrade.update();
+        }
+
+//        assertEquals(spyDancePartyUpgrade.getActiveTimeRemaining() /
+//                (float) spyDancePartyUpgrade.getBoostDuration(), spyDancePartyUpgrade.speedMeter.getValue());
+
+        for (int i = 0; i < 15; i++) {
+            spyDancePartyUpgrade.update();
+        }
+
+        verify(spyDancePartyUpgrade).deactivate();
+//        assertFalse(spyDancePartyUpgrade.getPlaySound());
+    }*/
 
     @Test
     void testDispose() {

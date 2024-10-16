@@ -130,6 +130,9 @@ public class DancePartyUpgrade extends UIComponent implements Upgrade {
 
              ServiceLocator.getDocketService().getEvents().trigger("Dancing");
          }
+         else{
+             ServiceLocator.getRandomComboService().getEvents().trigger("notenoughmoney");
+         }
      }
 
     /**
