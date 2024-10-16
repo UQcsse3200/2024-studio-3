@@ -8,7 +8,6 @@ import com.csse3200.game.GdxGame;
 import com.csse3200.game.components.ordersystem.MainGameOrderBtnDisplay;
 import com.csse3200.game.components.player.PlayerActions;
 import com.csse3200.game.entities.Entity;
-import com.csse3200.game.screens.MainGameScreen;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
 import com.csse3200.game.components.ordersystem.MainGameOrderTicketDisplay;
@@ -23,7 +22,7 @@ import com.csse3200.game.components.maingame.TextDisplay;
  */
 public class TutorialScreenDisplay extends UIComponent {
     private static final Logger logger = LoggerFactory.getLogger(TutorialScreenDisplay.class);
-    private GdxGame game;
+    private final GdxGame game;
     private int tutorialStep = 0;
     private MainGameOrderBtnDisplay orderBtnDisplay;
     private boolean createOrderPressed = false;
@@ -31,17 +30,14 @@ public class TutorialScreenDisplay extends UIComponent {
     private Table table;
     private TextDisplay textDisplay;
     private static final int MAX_TUTORIAL_STEP = 4;
-    private PlayerActions playerActions;
 
 
     public TutorialScreenDisplay(GdxGame game) {
-        this.game = game;
 
-        if (this.game == null) {
-            logger.error("Game null");
-        } else {
-            logger.info("Game object initialized successfully: " + this.game);
-        }
+        this.game = game;
+//        this.orderTicketDisplay = new MainGameOrderTicketDisplay(ServiceLocator.getRenderService(), ServiceLocator.getPlayerService());
+//        this.orderBtnDisplay = new MainGameOrderBtnDisplay();
+
     }
 
     @Override
@@ -50,13 +46,7 @@ public class TutorialScreenDisplay extends UIComponent {
         MainGameOrderTicketDisplay.resetOrderNumb();
 
         if (entity != null) {
-            //playerActions = ServiceLocator.getPlayerService().getPlayer().getComponent(PlayerActions.class);
-            if (playerActions == null) {
-                logger.info("PlayerActions component not found.");
-            }else{
-                logger.info("PlayerActions component attatched");
-            }
-
+            entity.getComponent(PlayerActions.class);
         } else {
             logger.error("Entity null");
         }
@@ -175,7 +165,7 @@ public class TutorialScreenDisplay extends UIComponent {
     private void completeTutorial() {
         if (textDisplay != null) {
             textDisplay.setVisible(true);
-            createTextBox("Tutorial Complete!");
+            createTextBox("Tutorial Complete! Press `Space` to continue.");
         } else {
             logger.error("textDisplay is null during completeTutorial.");
         }
@@ -199,8 +189,8 @@ public class TutorialScreenDisplay extends UIComponent {
                 textDisplay.setText("Now use [ and ] keys to switch dockets.");
 
                 if (Gdx.input.isKeyJustPressed(Input.Keys.LEFT_BRACKET) || Gdx.input.isKeyJustPressed(Input.Keys.RIGHT_BRACKET)) {
-                    docketsShifted = true;
-                    logger.debug("Dockets shifted");
+                        docketsShifted = true;
+                        logger.debug("Dockets shifted");
                 }
 
                 if (docketsShifted) {
@@ -233,12 +223,12 @@ public class TutorialScreenDisplay extends UIComponent {
      * Starts the main game after the tutorial is complete.
      */
     private void startGame() {
-        logger.info("Game object in startGame(): " + this.game);
         if (table != null) {
             table.clear();  // Safely clear the table
         }
+
         ServiceLocator.getLevelService().setCurrLevel(GdxGame.LevelType.LEVEL_1);
-        game.setScreen(GdxGame.ScreenType.MAIN_GAME);
+        game.setScreen(GdxGame.ScreenType.MAIN_GAME);  // Transition to the main game
     }
 
     @Override

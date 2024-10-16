@@ -1,6 +1,6 @@
 package com.csse3200.game.components.station.loader;
 
-import java.util.List;
+import java.util.ArrayList;
 
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.Json;
@@ -20,6 +20,7 @@ public class StationAcceptableItemsGetter {
             "configs/station.json";
 
     // For some reason the class loader isn't working so this is it for now
+    // TODO: Get the class loader working with this
     private static Json json = new Json();
     private static FileHandle handle = new FileHandle(filePath);
     private static StationAcceptableItemsConfig configs = json.fromJson(StationAcceptableItemsConfig.class, handle);
@@ -28,7 +29,7 @@ public class StationAcceptableItemsGetter {
      * Function to read the acceptable items file and calculate acceptable items
      * using that
      */
-    public static List<String> getAcceptableItems(String type) {
+    public static ArrayList<String> getAcceptableItems(String type) {
         return switch(type) {
             case "oven" -> configs.getOvenConfig();
             case "stove" -> configs.getStoveConfig();
@@ -38,9 +39,5 @@ public class StationAcceptableItemsGetter {
             case "fridge" -> configs.getFridgeConfig();
             default -> null;
         };
-    }
-
-    private StationAcceptableItemsGetter() {
-        throw new IllegalStateException("Instantiating static util class");
     }
 }

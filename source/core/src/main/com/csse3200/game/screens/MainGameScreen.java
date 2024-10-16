@@ -115,7 +115,7 @@ public class MainGameScreen extends ScreenAdapter {
 	private static final Vector2 CAMERA_POSITION = new Vector2(7f, 4.5f);
 
     private final GdxGame game;
-	  private final DayNightService dayNightService;
+	private final DayNightService dayNightService;
     private final Renderer renderer;
     private final PhysicsEngine physicsEngine;
     private boolean isPaused = false;
@@ -139,7 +139,6 @@ public class MainGameScreen extends ScreenAdapter {
 
 		ServiceLocator.registerInputService(new InputService());
 		ServiceLocator.registerResourceService(new ResourceService());
-		ServiceLocator.registerPlayerService(new PlayerService());
 
 		ServiceLocator.registerEntityService(new EntityService());
 		ServiceLocator.registerRenderService(new RenderService());
@@ -149,7 +148,7 @@ public class MainGameScreen extends ScreenAdapter {
 		ServiceLocator.registerRandomComboService(new RandomComboService());
 		ServiceLocator.registerLevelService(new LevelService());
 		ServiceLocator.registerMapLayout(new MapLayout());
-
+		ServiceLocator.registerPlayerService(new PlayerService());
 		logger.warn("Is SaveService null? " + (ServiceLocator.getSaveLoadService() == null));
 		//ServiceLocator.registerSaveLoadService(new SaveLoadService());
 		ServiceLocator.registerGameScreen(this);
@@ -281,7 +280,7 @@ public class MainGameScreen extends ScreenAdapter {
 	/**
 	 * Loads assets to resourceService
 	 */
-    void loadAssets() {
+	private void loadAssets() {
 		logger.debug("Loading assets");
 		ResourceService resourceService = ServiceLocator.getResourceService();
 		resourceService.loadTextures(mainGameTextures);
@@ -292,7 +291,7 @@ public class MainGameScreen extends ScreenAdapter {
 	/**
 	 * Unloads the assets from resourceService
 	 */
-    void unloadAssets() {
+	private void unloadAssets() {
 		logger.debug("Unloading assets");
 		ResourceService resourceService = ServiceLocator.getResourceService();
 		resourceService.unloadAssets(mainGameTextures);
@@ -313,7 +312,7 @@ public class MainGameScreen extends ScreenAdapter {
 	 * Creates the main game's ui including components for rendering ui elements to the screen and
 	 * capturing and handling ui input.
 	 */
-    void createUI() {
+	private void createUI() {
 		logger.debug("Creating ui");
 		Stage stage = ServiceLocator.getRenderService().getStage();
 		InputComponent inputComponent =

@@ -48,8 +48,7 @@ public class MainMenuActions extends Component {
     LocalDateTime currentDateTime = LocalDateTime.now();
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy_HH-mm-ss");
     String formattedDateTime = currentDateTime.format(formatter);
-    ServiceLocator.getSaveLoadService().setSaveFile(formattedDateTime + ".json");
-    //game.setScreen(GdxGame.ScreenType.MAIN_GAME);
+    game.setScreen(GdxGame.ScreenType.MAIN_GAME);
   }
 
   /**
@@ -87,7 +86,7 @@ public class MainMenuActions extends Component {
     ServiceLocator.getMainMenuDisplay().stopBackgroundTasks();
 
     // Transition to the tutorial screen
-    game.setScreen(GdxGame.ScreenType.TUTORIAL);
+    game.setScreen(new TutorialScreen(game));
   }
 
   /**

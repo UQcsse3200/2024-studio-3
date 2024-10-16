@@ -10,7 +10,7 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertFalse;
 
-import java.util.List;
+import java.util.ArrayList;
 
 @ExtendWith(GameExtension.class)
 public class StationAcceptableItemsGetterTest {
@@ -24,7 +24,7 @@ public class StationAcceptableItemsGetterTest {
 
     @Test
     public void TestLoadingOven() {
-        List<String> items = StationAcceptableItemsGetter.getAcceptableItems("oven");
+        ArrayList<String> items = StationAcceptableItemsGetter.getAcceptableItems("oven");
 
         assertNotNull(items);
 
@@ -37,7 +37,7 @@ public class StationAcceptableItemsGetterTest {
 
     @Test
     public void TestLoadingStove() {
-        List<String> items = StationAcceptableItemsGetter.getAcceptableItems("stove");
+        ArrayList<String> items = StationAcceptableItemsGetter.getAcceptableItems("stove");
 
         assertNotNull(items);
 
@@ -50,7 +50,7 @@ public class StationAcceptableItemsGetterTest {
 
     @Test
     public void TestLoadingCuttingBoard() {
-        List<String> items = StationAcceptableItemsGetter.getAcceptableItems("cutting board");
+        ArrayList<String> items = StationAcceptableItemsGetter.getAcceptableItems("cutting board");
 
         assertNotNull(items);
 
@@ -63,7 +63,7 @@ public class StationAcceptableItemsGetterTest {
 
     @Test
     public void TestLoadingBlender() {
-        List<String> items = StationAcceptableItemsGetter.getAcceptableItems("blender");
+        ArrayList<String> items = StationAcceptableItemsGetter.getAcceptableItems("blender");
 
         assertNotNull(items);
 
@@ -76,7 +76,7 @@ public class StationAcceptableItemsGetterTest {
 
     @Test
     public void TestLoadingProduceBasket() {
-        List<String> items = StationAcceptableItemsGetter.getAcceptableItems("produce basket");
+        ArrayList<String> items = StationAcceptableItemsGetter.getAcceptableItems("produce basket");
 
         assertNotNull(items);
 
@@ -89,7 +89,7 @@ public class StationAcceptableItemsGetterTest {
 
     @Test
     public void TestLoadingFridge() {
-        List<String> items = StationAcceptableItemsGetter.getAcceptableItems("fridge");
+        ArrayList<String> items = StationAcceptableItemsGetter.getAcceptableItems("fridge");
 
         assertNotNull(items);
 
@@ -102,7 +102,7 @@ public class StationAcceptableItemsGetterTest {
 
     @Test
     public void TestLoadingInvalid() {
-        List<String> items = StationAcceptableItemsGetter.getAcceptableItems("doesn't exist");
+        ArrayList<String> items = StationAcceptableItemsGetter.getAcceptableItems("doesn't exist");
 
         assertNull(items);
     }
