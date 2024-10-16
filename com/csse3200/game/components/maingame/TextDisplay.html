@@ -165,12 +165,12 @@ loadScripts(document, 'script');</script>
      - create a table where the UI components will be placed on
      - render the textbox and stack text on top using the stack
      - position the table in the correct place
-     - add keyinput listeners and events</div>
+     - add key input listeners and events</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#draw(com.badlogic.gdx.graphics.g2d.SpriteBatch)" class="member-name-link">draw</a><wbr>(com.badlogic.gdx.graphics.g2d.SpriteBatch&nbsp;batch)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Draw the renderable.</div>
+<div class="block">Overrides the draw method from the Actor class.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>long</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getDelay()" class="member-name-link">getDelay</a>()</code></div>
@@ -179,7 +179,9 @@ loadScripts(document, 'script');</script>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>com.badlogic.gdx.scenes.scene2d.ui.Table</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getTable()" class="member-name-link">getTable</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Returns the table layout for the UI component.</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a><wbr>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getText()" class="member-name-link">getText</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
@@ -192,10 +194,14 @@ loadScripts(document, 'script');</script>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setScreen(java.lang.String)" class="member-name-link">setScreen</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;screen)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Sets the current screen for this component.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setStage(com.badlogic.gdx.scenes.scene2d.Stage)" class="member-name-link">setStage</a><wbr>(com.badlogic.gdx.scenes.scene2d.Stage&nbsp;stage)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Sets the stage for this UI component.</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setText(java.lang.String)" class="member-name-link">setText</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;text)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
@@ -309,7 +315,7 @@ loadScripts(document, 'script');</script>
      - create a table where the UI components will be placed on
      - render the textbox and stack text on top using the stack
      - position the table in the correct place
-     - add keyinput listeners and events</div>
+     - add key input listeners and events</div>
 <dl class="notes">
 <dt>Overrides:</dt>
 <dd><code><a href="../../ui/UIComponent.html#create()">create</a></code>&nbsp;in class&nbsp;<code><a href="../../ui/UIComponent.html" title="class in com.csse3200.game.ui">UIComponent</a></code></dd>
@@ -375,13 +381,14 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="draw(com.badlogic.gdx.graphics.g2d.SpriteBatch)">
 <h3>draw</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">draw</span><wbr><span class="parameters">(com.badlogic.gdx.graphics.g2d.SpriteBatch&nbsp;batch)</span></div>
-<div class="block"><span class="description-from-type-label">Description copied from class:&nbsp;<code><a href="../../rendering/RenderComponent.html#draw(com.badlogic.gdx.graphics.g2d.SpriteBatch)">RenderComponent</a></code></span></div>
-<div class="block">Draw the renderable. Should be called only by the renderer, not manually.</div>
+<div class="block">Overrides the draw method from the Actor class.
+ This method is responsible for rendering the component.
+ However, the actual drawing is handled by the stage, so no rendering logic is needed here.</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="../../rendering/RenderComponent.html#draw(com.badlogic.gdx.graphics.g2d.SpriteBatch)">draw</a></code>&nbsp;in class&nbsp;<code><a href="../../rendering/RenderComponent.html" title="class in com.csse3200.game.rendering">RenderComponent</a></code></dd>
 <dt>Parameters:</dt>
-<dd><code>batch</code> - Batch to render to.</dd>
+<dd><code>batch</code> - The SpriteBatch used for drawing.</dd>
 </dl>
 </section>
 </li>
@@ -389,18 +396,36 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="setStage(com.badlogic.gdx.scenes.scene2d.Stage)">
 <h3>setStage</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setStage</span><wbr><span class="parameters">(com.badlogic.gdx.scenes.scene2d.Stage&nbsp;stage)</span></div>
+<div class="block">Sets the stage for this UI component.
+ The stage is used to manage the layout and actors (UI elements) for this component.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>stage</code> - The Stage to be set for this component.</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="getTable()">
 <h3>getTable</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">com.badlogic.gdx.scenes.scene2d.ui.Table</span>&nbsp;<span class="element-name">getTable</span>()</div>
+<div class="block">Returns the table layout for the UI component.
+ This method is useful for accessing and modifying the table layout externally.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>The Table used for the UI layout.</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="setScreen(java.lang.String)">
 <h3>setScreen</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setScreen</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;screen)</span></div>
+<div class="block">Sets the current screen for this component.
+ This method allows you to assign a specific screen that the UI component belongs to.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>screen</code> - The name of the screen to be set.</dd>
+</dl>
 </section>
 </li>
 </ul>
