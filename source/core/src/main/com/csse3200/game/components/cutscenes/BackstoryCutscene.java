@@ -47,7 +47,7 @@ public class BackstoryCutscene extends Cutscene {
      */
     private void createScene1() {
         Array<String> sceneText = new Array<>();
-        sceneText.add("You were once an esteemed chef at the Brooklyn Bistro, \n" +
+        sceneText.add("\n" +"You were once an esteemed chef at the Brooklyn Bistro, \n" +
                 "an establishment specialising in only the finest cuisine...");
 
         String backgroundImage = "images/Cutscenes/Brooklyn_Bistro_Background.png";
@@ -60,7 +60,7 @@ public class BackstoryCutscene extends Cutscene {
      */
     private void createScene2() {
         Array<String> sceneText = new Array<>();
-        sceneText.add("Animals were once just resources to be used \n" +
+        sceneText.add("\n" +"Animals were once just resources to be used \n" +
                 "in the meals we humans love so much...");
 
         String backgroundImage = "images/Cutscenes/Kitchen_Background.png";
@@ -71,7 +71,7 @@ public class BackstoryCutscene extends Cutscene {
     // createScene3, createScene4, createScene5, etc.
     private void createScene3() {
         Array<String> sceneText = new Array<>();
-        sceneText.add("You built a reputation for your talent & expertise...");
+        sceneText.add("\n" + "You built a reputation for your talent & expertise...");
 
         String backgroundImage = "images/Cutscenes/Food_Critic_Background.png";
         addSceneWithText(backgroundImage, sceneText, 3.0f);
@@ -79,7 +79,7 @@ public class BackstoryCutscene extends Cutscene {
 
     private void createScene4() {
         Array<String> sceneText = new Array<>();
-        sceneText.add("Then, the fall happened...");
+        sceneText.add("\n" +"Then, the fall happened...");
 
         String backgroundImage = "images/Cutscenes/Food_Critic_Background.png";
         addSceneWithText(backgroundImage, sceneText, 3.0f);
@@ -87,7 +87,7 @@ public class BackstoryCutscene extends Cutscene {
 
     private void createScene5() {
         Array<String> sceneText = new Array<>();
-        sceneText.add("It started small. Animals becoming more aware, more intelligent...");
+        sceneText.add("\n" +"It started small. Animals becoming more aware,\n" + "more intelligent...");
 
         String backgroundImage = "images/Cutscenes/Animals_in_Kitchen_Background.png";
         addSceneWithText(backgroundImage, sceneText, 3.0f);
@@ -95,7 +95,7 @@ public class BackstoryCutscene extends Cutscene {
 
     private void createScene6() {
         Array<String> sceneText = new Array<>();
-        sceneText.add("Farms were overrun, livestock freed themselves...");
+        sceneText.add("\n" +"Farms were overrun, livestock freed themselves...");
 
         String backgroundImage = "images/Cutscenes/Farm_Background.png";
         addSceneWithText(backgroundImage, sceneText, 3.0f);
@@ -103,7 +103,7 @@ public class BackstoryCutscene extends Cutscene {
 
     private void createScene7() {
         Array<String> sceneText = new Array<>();
-        sceneText.add("The uprising spread quickly, and society quickly \n" +
+        sceneText.add("\n" +"The uprising spread quickly, and society quickly \n" +
                 "crumbled under the weight of this unexpected revolt...");
 
         String backgroundImage = "images/Cutscenes/graveyard_mafia.png";
@@ -112,7 +112,7 @@ public class BackstoryCutscene extends Cutscene {
 
     private void createScene8() {
         Array<String> sceneText = new Array<>();
-        sceneText.add("You managed to survive the chaos but you lost everything - \n" +
+        sceneText.add("\n" +"You managed to survive the chaos but you lost everything - \n" +
                 "your reputation, your restaurant, the life you built...");
 
         String backgroundImage = "images/Cutscenes/deserted_city_opt1.png";
@@ -121,7 +121,7 @@ public class BackstoryCutscene extends Cutscene {
 
     private void createScene9() {
         Array<String> sceneText = new Array<>();
-        sceneText.add("You strike a deal with the local mafia, who wiped out most of the humans...");
+        sceneText.add("\n" +"You strike a deal with the local mafia, who wiped out most \n" + "of the humans...");
 
         String backgroundImage = "images/Cutscenes/graveyard_mafia_chef.png";
         addSceneWithText(backgroundImage, sceneText, 3.0f);
@@ -129,7 +129,7 @@ public class BackstoryCutscene extends Cutscene {
 
     private void createScene10() {
         Array<String> sceneText = new Array<>();
-        sceneText.add("They don't believe a human can run a restaurant in this world...");
+        sceneText.add("\n" +"They don't believe a human can run a restaurant in this world...");
 
         String backgroundImage = "images/Cutscenes/new_beastly_bistro_pt2.png";
         addSceneWithText(backgroundImage, sceneText, 3.0f);
@@ -137,7 +137,7 @@ public class BackstoryCutscene extends Cutscene {
 
     private void createScene11() {
         Array<String> sceneText = new Array<>();
-        sceneText.add("You have five days to prove yourself, \n" +
+        sceneText.add("\n" +"You have five days to prove yourself, \n" +
                 "and if you don't, you might suffer a similar fate...");
 
         String backgroundImage = "images/Cutscenes/new_beastly_bistro.png";
@@ -146,7 +146,7 @@ public class BackstoryCutscene extends Cutscene {
 
     private void createScene12() {
         Array<String> sceneText = new Array<>();
-        sceneText.add("Do you have what it takes to survive the Beastly Bistro?");
+        sceneText.add("\n" +"Do you have what it takes to survive the Beastly Bistro?");
 
         String backgroundImage = "images/Cutscenes/resized_black_image.png";
         addSceneWithText(backgroundImage, sceneText, 3.0f);

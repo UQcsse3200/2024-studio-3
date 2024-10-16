@@ -76,38 +76,17 @@ public class CutsceneScreenDisplay extends UIComponent {
         });
         table.add(skipBtn).padBottom(10f).padRight(30f);
 
-        // Assuming you get the cutscene from a service
-        Cutscene currentCutscene = ServiceLocator.getCurrentCutscene();
-
         // Create "Previous Scene" button with its functionality
         TextButton previousSceneBtn = new TextButton("Previous Scene", skin);
         previousSceneBtn.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent changeEvent, Actor actor) {
                 logger.info("Previous Scene button clicked");
-
-                Cutscene currentCutscene = ServiceLocator.getCurrentCutscene();
-                if (currentCutscene == null) {
-                    logger.error("Current cutscene is null. Cannot navigate to previous scene.");
-                    return;
-                }
-
-                int currentSceneIndex = currentCutscene.getCurrentSceneIndex();
-                logger.info("Current scene index before change: {}", currentSceneIndex);
-
-                if (currentSceneIndex > 0) {  // Ensure it's not already at the first scene
-                    currentSceneIndex--;  // Move to the previous scene
-                    currentCutscene.setCurrentScene(currentSceneIndex);
-                    logger.info("Switched to previous scene: {}", currentSceneIndex);
-                } else {
-                    logger.info("Already at the first scene.");
-                }
+                entity.getEvents().trigger("previousCutscene");  // Trigger previous cutscene
+                logger.info("Previous Scene button clicked");
             }
         });
-
-
-    // Add the button to the UI table or layout
-        table.add(previousSceneBtn).padBottom(10f).padRight(10f);
+        table.add(previousSceneBtn).padBottom(10f).padRight(10f);  // Add the button to the UI layout
 
 
         // Create "Next Scene" button with its functionality

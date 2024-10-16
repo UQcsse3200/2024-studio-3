@@ -95,6 +95,50 @@ public class TextDisplay extends UIComponent {
      *     - position the table in the correct place
      *     - add key input listeners and events
      */
+//    public void create() {
+//        super.create();
+//        // Create the table for layout control and stack for layering
+//        table.setFillParent(true);
+//        table.center().bottom();
+//        stage.addActor(table);
+//        Stack stack = new Stack();
+//
+//        // Create and add the textbox image
+//        Texture textboxTexture = ServiceLocator.getResourceService()
+//                .getAsset("images/textbox.png", Texture.class);
+//        Drawable textboxDrawable = new TextureRegionDrawable(textboxTexture);
+//        Image textboxImage = new Image(textboxDrawable);
+//        textboxImage.setScale(1.25f);
+//        stack.add(textboxImage);
+//
+//        // Create and add the label on top of the image in the stack
+//        BitmapFont defaultFont = new BitmapFont();
+//        Label.LabelStyle labelStyle = new Label.LabelStyle(defaultFont, Color.BLACK);
+//        label = new Label("", labelStyle);
+//        label.setFontScale(3.0f);
+//        label.setWrap(true);
+//        label.setAlignment(Align.top | Align.left);
+//
+//        Table labelTable = new Table();
+//        labelTable.add(label).padLeft(140).padBottom(10).size(
+//                (int) (Gdx.graphics.getWidth() * 0.5), (int) (Gdx.graphics.getHeight() * 0.2));
+//        stack.add(labelTable);
+//
+//        // Add the stack to the table with padding or alignment options
+//        table.add(stack).padBottom(70).padLeft(0).size((int) (Gdx.graphics.getWidth() * 0.5), (int) (Gdx.graphics.getHeight() * 0.2));
+//
+//        // Now call setUpBackstoryLayout() if this is a backstory cutscene
+//        if (Objects.equals(this.screen, "backstory")) {
+//            setUpBackstoryLayout();  // Safe to call after label is initialized
+//        }
+//
+//        setVisible(Objects.equals(this.screen, "cutscene")
+//                || Objects.equals(this.screen, "moralDecision")
+//                || Objects.equals(this.screen, "backstory"));
+//
+//        setupInputListener();
+//        entity.getEvents().addListener("SetText", this::setText);
+//    }
     public void create() {
         super.create();
         // Create the table for layout control and stack for layering
@@ -114,7 +158,7 @@ public class TextDisplay extends UIComponent {
         // Create and add the label on top of the image in the stack
         BitmapFont defaultFont = new BitmapFont();
         Label.LabelStyle labelStyle = new Label.LabelStyle(defaultFont, Color.BLACK);
-        label = new Label("", labelStyle);
+        label = new Label("\n" + "Press Enter to continue", labelStyle);  // Initializing with this text
         label.setFontScale(3.0f);
         label.setWrap(true);
         label.setAlignment(Align.top | Align.left);
@@ -136,15 +180,17 @@ public class TextDisplay extends UIComponent {
                 || Objects.equals(this.screen, "moralDecision")
                 || Objects.equals(this.screen, "backstory"));
 
-        setupInputListener();
+        setupInputListener();  // Set up listener for handling key presses
         entity.getEvents().addListener("SetText", this::setText);
     }
+
 
     /***
      * Sets the text in allocated blocks based on text limit
      * @param text - a string which is the text to be displayed
      */
     public void setText(String text) {
+
         if (this.label == null) {
             BitmapFont defaultFont = new BitmapFont();
             Label.LabelStyle labelStyle = new Label.LabelStyle(defaultFont, Color.BLACK);
@@ -279,14 +325,28 @@ public class TextDisplay extends UIComponent {
                     // Handling for backstory cutscenes
                     Cutscene currentCutscene = ServiceLocator.getCurrentCutscene();
                     Boolean atEnd = currentCutscene.isAtEnd();
-                    if (keycode == com.badlogic.gdx.Input.Keys.ENTER || keycode == com.badlogic.gdx.Input.Keys.SPACE) {
-                        logger.info("at backstory in textDisplay");
-                        if (!atEnd) {
-                            logger.info("parsing through backstory");
+
+                    // Check if the current text is "Press Enter to continue"
+                    if (label.getText().toString().equals("Press Enter to continue")) {
+                        if (keycode == com.badlogic.gdx.Input.Keys.ENTER || keycode == com.badlogic.gdx.Input.Keys.SPACE) {
+                            logger.info("Displaying backstory cutscene text");
+
+                            // Set the actual text for the backstory scene
                             currentCutscene.setTextForScene(currentCutscene.currentScene);
                             label.setText(currentCutscene.currentText);
                         }
+                    } else {
+                        // Continue through the backstory cutscene normally
+                        if (keycode == com.badlogic.gdx.Input.Keys.ENTER || keycode == com.badlogic.gdx.Input.Keys.SPACE) {
+                            logger.info("at backstory in textDisplay");
+                            if (!atEnd) {
+                                logger.info("parsing through backstory");
+                                currentCutscene.setTextForScene(currentCutscene.currentScene);
+                                label.setText(currentCutscene.currentText);
+                            }
+                        }
                     }
+                    return true;
                 } else if (keycode == com.badlogic.gdx.Input.Keys.ENTER) {
                     if (charIndex < TextDisplay.this.text.get(currentPart).length()) {
                         label.setText(text.get(currentPart));
@@ -360,7 +420,8 @@ public class TextDisplay extends UIComponent {
      */
     private void setUpBackstoryLayout() {
         // Modify font size for backstory cutscene
-        label.setFontScale(2.9f);  // Make the font smaller
+        label.setFontScale(2.7f);  // Make the font smaller
+
 
         // Change the position to be higher on the screen
         table.center().top().padTop(50);  // Adjust the padding to move it higher
