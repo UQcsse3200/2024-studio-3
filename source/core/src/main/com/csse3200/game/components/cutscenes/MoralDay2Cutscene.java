@@ -29,19 +29,16 @@ public class MoralDay2Cutscene extends Cutscene {
         sceneText.add("Mafia Boss > Think about it.");
 
 
-
-        String mafiaImage = MAFIA_IMAGE_PATH;
         Vector2 mafiaPosition = new Vector2(3, -1);
         float mafiaScale = 4.0f;
 
-        String iconImage = ICON_IMAGE_PATH;
         Vector2 iconPosition = new Vector2(-8, -2);
         float iconScale = 7.0f;
 
         // Add scenes with background images, animations, text, and duration
         Scene scene = new Scene(DAY_2_SCENE_PATH);
         scene.setImages(
-                new String[]{mafiaImage, iconImage},
+                new String[]{MAFIA_IMAGE_PATH, ICON_IMAGE_PATH},
                 new Vector2[] {mafiaPosition, iconPosition},
                 new float[] {mafiaScale, iconScale}
         );
@@ -58,11 +55,9 @@ public class MoralDay2Cutscene extends Cutscene {
         Array<String> sceneText = new Array<>();
         sceneText.add("Press 'y' for yes and 'n' for no");
 
-        String mafiaImage = MAFIA_IMAGE_PATH;
         Vector2 mafiaPosition = new Vector2(3, -1);
         float mafiaScale = 4.0f;
 
-        String iconImage = ICON_IMAGE_PATH;
         Vector2 iconPosition = new Vector2(-8, -2);
         float iconScale = 7.0f;
 
@@ -77,7 +72,7 @@ public class MoralDay2Cutscene extends Cutscene {
         // Add scenes with background images, animations, text, and duration
         Scene scene = new Scene(DAY_2_SCENE_PATH);
         scene.setImages(
-                new String[]{mafiaImage, iconImage, yesImage, noImage},
+                new String[]{MAFIA_IMAGE_PATH, ICON_IMAGE_PATH, yesImage, noImage},
                 new Vector2[] {mafiaPosition, iconPosition, yesPosition, noPosition},
                 new float[] {mafiaScale, iconScale, yesScale, noScale}
         );
