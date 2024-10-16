@@ -26,17 +26,19 @@ public class KeybindsButtonDisplayTest {
     private Table keybindButton;
     private Table keybindsMenu;
     private Table keybindsText;
-
+    private static RenderService mockRenderService;
+    private static ResourceService mockResourceService;
+    private static Texture mockTexture;
 
     @BeforeAll
     static void setUpClass() {
-        RenderService mockRenderService = mock(RenderService.class);
+        mockRenderService = mock(RenderService.class);
         ServiceLocator.registerRenderService(mockRenderService);
 
-        ResourceService mockResourceService = mock(ResourceService.class);
+        mockResourceService = mock(ResourceService.class);
         ServiceLocator.registerResourceService(mockResourceService);
 
-        Texture mockTexture = mock(Texture.class);
+        mockTexture = mock(Texture.class);
         when(mockResourceService.getAsset(anyString(), eq(Texture.class))).thenReturn(mockTexture);
 
     }
