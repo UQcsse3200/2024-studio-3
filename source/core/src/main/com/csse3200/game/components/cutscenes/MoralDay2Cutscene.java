@@ -6,8 +6,6 @@ import com.csse3200.game.components.cutscenes.scenes.Scene;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
 
-import java.util.List;
-
 public class MoralDay2Cutscene extends Cutscene {
     public MoralDay2Cutscene() {
         super();
