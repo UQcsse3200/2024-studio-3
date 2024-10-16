@@ -3,13 +3,21 @@ package com.csse3200.game.components.cutscenes;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.csse3200.game.components.cutscenes.scenes.Scene;
-import com.csse3200.game.components.maingame.TextDisplay;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MoralDay1Cutscene extends Cutscene {
+    private List<Scene> scenes;
+    private String[] textures;
+    private String[] images;
+    private String[] animations;
+
     public MoralDay1Cutscene() {
         super();
+        this.scenes = new ArrayList<>();
     }
 
     @Override
@@ -27,7 +35,6 @@ public class MoralDay1Cutscene extends Cutscene {
         sceneText.add("Mafia Boss > Because I'm sooo generous I'll even let you keep 40 coins.");
         sceneText.add("Mafia Boss > What do you say?");
 
-
         String mafiaImage = "images/Cutscenes/Character Artwork/rhino_sprite.png";
         Vector2 mafiaPosition = new Vector2(3, -1);
         float mafiaScale = 4.0f;
@@ -36,18 +43,19 @@ public class MoralDay1Cutscene extends Cutscene {
         Vector2 iconPosition = new Vector2(-8, -2);
         float iconScale = 7.0f;
 
-
-        // Add scenes with background images, animations, text, and duration
         Scene scene = new Scene("images/Cutscenes/Day2_Scene.png");
         scene.setImages(
                 new String[]{mafiaImage, iconImage},
-                new Vector2[] {mafiaPosition, iconPosition},
-                new float[] {mafiaScale, iconScale}
+                new Vector2[]{mafiaPosition, iconPosition},
+                new float[]{mafiaScale, iconScale}
         );
 
         scene.setSceneText(sceneText);
         scene.setDuration(3.0f);
 
+        if (scenes == null) {
+            scenes = new ArrayList<>();
+        }
         scenes.add(scene);
     }
 
@@ -71,12 +79,11 @@ public class MoralDay1Cutscene extends Cutscene {
         Vector2 noPosition = new Vector2(-1, -4);
         float noScale = 11.0f;
 
-        // Add scenes with background images, animations, text, and duration
         Scene scene = new Scene("images/Cutscenes/Day2_Scene.png");
         scene.setImages(
                 new String[]{mafiaImage, iconImage, yesImage, noImage},
-                new Vector2[] {mafiaPosition, iconPosition, yesPosition, noPosition},
-                new float[] {mafiaScale, iconScale, yesScale, noScale}
+                new Vector2[]{mafiaPosition, iconPosition, yesPosition, noPosition},
+                new float[]{mafiaScale, iconScale, yesScale, noScale}
         );
 
         scene.setSceneText(sceneText);
@@ -87,21 +94,19 @@ public class MoralDay1Cutscene extends Cutscene {
 
     @Override
     protected void loadAssets() {
-        // Load the background images for the cutscene
-        textures = new String[] {
+        textures = new String[]{
                 "images/Cutscenes/Day2_Scene.png",
         };
 
-        animations = new String[] {};
+        animations = new String[]{};
 
-        images = new String[] {
+        images = new String[]{
                 "images/Cutscenes/Character Artwork/rhino_sprite.png",
                 "images/Cutscenes/moral_icons/laundering_ico.png",
                 "images/Cutscenes/moral_icons/yes_ico.png",
                 "images/Cutscenes/moral_icons/no_ico.png"
         };
 
-        // Get the resource service to load assets
         ResourceService resourceService = ServiceLocator.getResourceService();
         resourceService.loadTextures(textures);
         resourceService.loadTextures(images);
@@ -111,6 +116,73 @@ public class MoralDay1Cutscene extends Cutscene {
 
     @Override
     public void createEntities() {
-        // Any specific entity creation logic for the intro cutscene
+        // Needed but not used
+    }
+
+    // Getters and Setters for testing
+
+    /**
+     * Gets the scenes
+     *
+     * @return the scenes being held
+     */
+    public List<Scene> getScenes() {
+        return scenes;
+    }
+
+    /**
+     * Sets the scenes to a given scene
+     * @param scenes: the scenes to be set to.
+     */
+    public void setScenes(List<Scene> scenes) {
+        this.scenes = scenes;
+    }
+
+    /**
+     * Gets the textures
+     * @return: the textures being held
+     */
+    public String[] getTextures() {
+        return textures;
+    }
+
+    /**
+     * Sets the textures for the cutscene
+     * @param textures: the textures being held
+     */
+    public void setTextures(String[] textures) {
+        this.textures = textures;
+    }
+
+    /**
+     * Get the images being held by the cutscene
+     * @return: the images being held by the cutscene
+     */
+    public String[] getImages() {
+        return images;
+    }
+
+    /**
+     * Sets the images being held by the cutscene
+     * @param images: the new images to be set
+     */
+    public void setImages(String[] images) {
+        this.images = images;
+    }
+
+    /**
+     * Gets the animations for the cutscene
+     * @return: the animations for the cutscenes
+     */
+    public String[] getAnimations() {
+        return animations;
+    }
+
+    /**
+     * Sets the animations for the cutscenes
+     * @param animations: the animations being set
+     */
+    public void setAnimations(String[] animations) {
+        this.animations = animations;
     }
 }
