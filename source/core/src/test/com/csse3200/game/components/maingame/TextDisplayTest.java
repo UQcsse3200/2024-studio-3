@@ -26,7 +26,7 @@ public class TextDisplayTest {
         assertEquals(test.getDelay(), 100L);
         test.setText("Testing the text string");
         assertEquals(test.getVisible(), true);
-        List<String> expectedText = Collections.singletonList("Testing the text string (space to continue)");
+        List<String> expectedText = Collections.singletonList("Testing the text string (enter to continue)");
         assertEquals(expectedText, test.getText());
     }
 
