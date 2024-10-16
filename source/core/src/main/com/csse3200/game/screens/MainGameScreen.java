@@ -113,6 +113,7 @@ public class MainGameScreen extends ScreenAdapter {
 	private static final Vector2 CAMERA_POSITION = new Vector2(7f, 4.5f);
 
     private final GdxGame game;
+	private final DayNightService dayNightService;
     private final Renderer renderer;
     private final PhysicsEngine physicsEngine;
     private boolean isPaused = false;
@@ -140,7 +141,8 @@ public class MainGameScreen extends ScreenAdapter {
 		ServiceLocator.registerEntityService(new EntityService());
 		ServiceLocator.registerRenderService(new RenderService());
 		ServiceLocator.registerDocketService(new DocketService());
-		ServiceLocator.registerDayNightService(new DayNightService());
+		dayNightService = new DayNightService();
+		ServiceLocator.registerDayNightService(dayNightService);
 		ServiceLocator.registerRandomComboService(new RandomComboService());
 		ServiceLocator.registerLevelService(new LevelService());
 		ServiceLocator.registerMapLayout(new MapLayout());
@@ -301,6 +303,8 @@ public class MainGameScreen extends ScreenAdapter {
 	public GdxGame getGame() {
 		return game;
 	}
+
+	public  DayNightService getDayNightService(){return dayNightService;}
 
 	/**
 	 * Creates the main game's ui including components for rendering ui elements to the screen and

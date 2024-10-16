@@ -15,8 +15,8 @@ import com.csse3200.game.services.ServiceLocator;
 public class CheckWinLoseComponent extends Component {
 
     private CombatStatsComponent combatStatsComponent;
-    private final int baseWinAmount;
-    private final int baseLossThreshold;
+    private int baseWinAmount;
+    private int baseLossThreshold;
 
     /**
      * Constructs a new CheckWinLoseComponent with specified win and loss thresholds.
@@ -104,5 +104,10 @@ public class CheckWinLoseComponent extends Component {
      */
     public boolean hasWon(int adjustedWinAmount) {
         return combatStatsComponent != null && combatStatsComponent.getGold() >= adjustedWinAmount;
+    }
+
+    public void decreaseLoseThreshold() {
+        this.baseLossThreshold -= 10;
+        this.baseWinAmount -= 10;
     }
 }

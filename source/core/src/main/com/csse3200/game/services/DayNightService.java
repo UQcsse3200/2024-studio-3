@@ -1,8 +1,8 @@
 package com.csse3200.game.services;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.components.CombatStatsComponent;
-import com.csse3200.game.components.cutscenes.Cutscene;
 import com.csse3200.game.components.maingame.CheckWinLoseComponent;
+import com.csse3200.game.components.moral.MoralDecision;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.csse3200.game.events.EventHandler; 
@@ -30,7 +30,7 @@ public class DayNightService {
     private boolean pastUpgrade = false;
     private final EventHandler enddayEventHandler;
     private final EventHandler docketServiceEventHandler;
-    private Random random;
+    private final Random random;
     private int randomChoice;
     private static int day = 0;
     private int highQualityMeals = 0;
@@ -66,8 +66,8 @@ public class DayNightService {
         randomChoice = random.nextInt((int) SEVENTY_FIVE_PERCENT);
 
         // **Only set 'day' to 1 if it hasn't been initialized yet**
-        if (this.day == 0) {
-            this.day = 1;
+        if (day == 0) {
+            day = 1;
         }
 
         randomChoice = random.nextInt(10) * 1000;
@@ -84,6 +84,8 @@ public class DayNightService {
         enddayEventHandler.addListener("TOMORAL", this::goMoral);
 
         enddayEventHandler.addListener("callpastsecond", this::updatepastSecond);
+        enddayEventHandler.addListener("YesAtMoralDecision", this::yesToMoral);
+        enddayEventHandler.addListener("NoAtMoralDecision", this::noToMoral);
         // Listen for high-quality meal events
         ServiceLocator.getEntityService().getEvents().addListener("mealHighQuality", this::incrementHighQualityMealCount);
     }
@@ -94,7 +96,7 @@ public class DayNightService {
      */
     public void incrementHighQualityMealCount() {
         highQualityMeals += 1;
-        logger.info("High-quality meal served! Total: {0}", highQualityMeals);
+        logger.info("High-quality meal served! Total: {0}" + highQualityMeals);
     }
 
     /**
@@ -102,9 +104,9 @@ public class DayNightService {
      * The bonus is added to the player's gold before win/loss conditions are evaluated.
      */
     private void applyEndOfDayBonus() {
-        int bonusGold = highQualityMeals * 1;
+        int bonusGold = highQualityMeals;
         ServiceLocator.getPlayerService().getPlayer().getComponent(CombatStatsComponent.class).addGold(bonusGold);
-        logger.info("Bonus gold added: {0}", bonusGold);
+        logger.info("Bonus gold added: {0}" + bonusGold);
     }
 
     /**
@@ -154,7 +156,14 @@ public class DayNightService {
      * Starts a new day, resetting the time and relevant counters such as high-quality meals.
      * This method is triggered after the end-of-day events are processed.
      */
-    private void startNewDay() {
+
+    private void yesToMoral() {
+        startNewDay(false);
+    }
+    private void noToMoral() {
+        startNewDay(true);
+    }
+    private void startNewDay(Boolean goodChoice) {
         logger.info("new day starting!");
         logger.info("current day is " + day);
 
@@ -186,6 +195,17 @@ public class DayNightService {
                 return;
 
             }
+
+            if (goodChoice){
+                logger.info("HE PICKED RIGHTEOUS");
+                ServiceLocator.getEntityService().getMoralSystem().getComponent(MoralDecision.class).setDecision(this.getDay(), true);
+            } else {
+                logger.info("THE SINNER NEVER FALTERS TILL THE FRUITS TURN ROTTEN");
+                ServiceLocator.getEntityService().getMoralSystem().getComponent(MoralDecision.class).setDecision(this.getDay(), false);
+            }
+
+
+
         }
 
         // transition to new day
@@ -267,6 +287,10 @@ public class DayNightService {
             case 2 -> screen = GdxGame.ScreenType.MORAL_SCENE_2;
             case 3 -> screen = GdxGame.ScreenType.MORAL_SCENE_3;
             case 4 -> screen = GdxGame.ScreenType.MORAL_SCENE_4;
+            case 5 -> {
+                startNewDay(true);
+                return;
+            }
             default -> throw new IllegalStateException("Unexpected value");
         }
         ServiceLocator.getGame().setScreen(screen);

@@ -143,7 +143,7 @@ public abstract class Cutscene extends Component {
             disposeEntities();  // Dispose of current entities before moving to the next scene
             loadScene(currentSceneIndex);
         } else {
-            logger.info("Waiting For Moral Decision");
+            logger.info("Waiting For Moral Decision 2");
         }
     }
 
@@ -286,7 +286,7 @@ public abstract class Cutscene extends Component {
                 nextCutsceneMoral();
             }
 
-            logger.info("Waiting For Moral Decision");
+            logger.info("Waiting For Moral Decision 1 ");
         }
     }
 

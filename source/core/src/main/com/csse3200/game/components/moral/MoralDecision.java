@@ -2,6 +2,7 @@ package com.csse3200.game.components.moral;
 
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.Component;
+import com.csse3200.game.components.maingame.CheckWinLoseComponent;
 import com.csse3200.game.components.upgrades.SpeedBootsUpgrade;
 import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
@@ -104,21 +105,22 @@ public class MoralDecision extends Component {
     /**
      * Sets the decision result at the specified index and updates the morality score.
      *
-     * @param index the index of the decision
+     * @param ind the index of the decision
      * @param decision the result of the decision
      * @return true if the decision was set successfully
      */
-    public boolean setDecision(int index, boolean decision) {
-        logger.debug("Setting decision for index: {} to {}", index, decision);
-        ListOfDecisions.get(index).setDecision(decision);
+    public boolean setDecision(int ind, boolean decision) {
+        int index = ind - 1;
+        logger.info("Setting decision for index: {} to {}", index, decision);
+        //ListOfDecisions.get(index).setDecision(decision);
 
         if (!decision){
             setCurrentMorality(false);
             switch (index){
                 case 0 -> ServiceLocator.getPlayerService().getPlayer().getComponent(CombatStatsComponent.class).addGold(MORALGOLD_D1);
                 case 1 -> ServiceLocator.getPlayerService().getPlayer().getComponent(CombatStatsComponent.class).addGold(MORALGOLD_D2);
-                case 2 -> ServiceLocator.getPlayerService().getPlayer().getComponent(SpeedBootsUpgrade.class).activate();
-                //case 3 -> ServiceLocator.getPlayerService().getPlayer().getComponent(CheckWinLoseComponent.class).decreaseLoseThreshold();
+                case 2 -> ServiceLocator.getPlayerService().getPlayer().getComponent(CheckWinLoseComponent.class).decreaseLoseThreshold();
+                case 3 -> ServiceLocator.getRandomComboService().getEvents().trigger("Speed");
                 default -> logger.error("moral decision with unknown index");
             }
         } else {
