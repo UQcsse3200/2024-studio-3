@@ -160,22 +160,27 @@ loadScripts(document, 'script');</script>
 <div class="block">Called on creation of the station to allow outside interaction within the station.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getType()" class="member-name-link">getType</a>()</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getIngredientName()" class="member-name-link">getIngredientName</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Gets the ingredient stored at this station</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getType()" class="member-name-link">getType</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Gets the type of station</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#handleInteraction(com.csse3200.game.components.player.InventoryComponent,com.csse3200.game.components.player.InventoryDisplay,java.lang.String)" class="member-name-link">handleInteraction</a><wbr>(<a href="../player/InventoryComponent.html" title="class in com.csse3200.game.components.player">InventoryComponent</a>&nbsp;playerInventoryComponent,
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#handleInteraction(com.csse3200.game.components.player.InventoryComponent,com.csse3200.game.components.player.InventoryDisplay,java.lang.String)" class="member-name-link">handleInteraction</a><wbr>(<a href="../player/InventoryComponent.html" title="class in com.csse3200.game.components.player">InventoryComponent</a>&nbsp;playerInventoryComponent,
  <a href="../player/InventoryDisplay.html" title="class in com.csse3200.game.components.player">InventoryDisplay</a>&nbsp;inventoryDisplay,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;type)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Handles any interaction with station, using current state of player and station
  inventory to determine intended interaction</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#stationGiveItem(com.csse3200.game.components.player.InventoryComponent,com.csse3200.game.components.player.InventoryDisplay)" class="member-name-link">stationGiveItem</a><wbr>(<a href="../player/InventoryComponent.html" title="class in com.csse3200.game.components.player">InventoryComponent</a>&nbsp;playerInventoryComponent,
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#stationGiveItem(com.csse3200.game.components.player.InventoryComponent,com.csse3200.game.components.player.InventoryDisplay)" class="member-name-link">stationGiveItem</a><wbr>(<a href="../player/InventoryComponent.html" title="class in com.csse3200.game.components.player">InventoryComponent</a>&nbsp;playerInventoryComponent,
  <a href="../player/InventoryDisplay.html" title="class in com.csse3200.game.components.player">InventoryDisplay</a>&nbsp;inventoryDisplay)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Takes the item from the station, and returns the old item</div>
 </div>
 </div>
@@ -273,6 +278,17 @@ loadScripts(document, 'script');</script>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>station type</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getIngredientName()">
+<h3>getIngredientName</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getIngredientName</span>()</div>
+<div class="block">Gets the ingredient stored at this station</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>String of ingredient</dd>
 </dl>
 </section>
 </li>
