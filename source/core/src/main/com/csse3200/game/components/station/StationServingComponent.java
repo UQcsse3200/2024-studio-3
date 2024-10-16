@@ -12,6 +12,7 @@ import com.csse3200.game.components.items.ItemComponent;
 import com.csse3200.game.components.items.ItemTimerComponent;
 import com.csse3200.game.components.items.MealComponent;
 import com.csse3200.game.components.npc.CustomerComponent;
+import com.csse3200.game.components.ordersystem.MainGameOrderTicketDisplay;
 import com.csse3200.game.components.ordersystem.OrderManager;
 import com.csse3200.game.components.ordersystem.Recipe;
 import com.csse3200.game.components.ordersystem.TicketDetails;
@@ -103,12 +104,24 @@ public class StationServingComponent extends Component {
                     logger.error("No recipe found for this item: {}", itemName);
                     return; // Exit the method
             }
+            if (!checkSubmit(item)) {
+                return;
+            }
             scoreMeal(playerMeal, item);
             playerInventoryComponent.removeAt(0);
             inventoryDisplay.update();
             submitMeal(item);
         }
     }
+
+    public Boolean checkSubmit(ItemComponent item) {
+        if (MainGameOrderTicketDisplay.getTableArrayList().isEmpty()) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
     /**
      * Function which calls to identify the current ticket info, as well as the item in the inventory
      * Calls another function which grades the submission

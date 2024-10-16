@@ -1,10 +1,15 @@
 package com.csse3200.game.components.tasks;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.ai.tasks.DefaultTask;
 import com.csse3200.game.ai.tasks.PriorityTask;
 import com.csse3200.game.ai.tasks.Task;
 import com.csse3200.game.ai.tasks.TaskRunner;
+import com.csse3200.game.components.ScoreSystem.HoverBoxComponent;
+import com.csse3200.game.components.npc.CustomerManager;
+import com.csse3200.game.components.ordersystem.TicketDetails;
+import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.factories.NPCFactory;
 import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
@@ -28,6 +33,7 @@ public class PathFollowTask extends DefaultTask implements PriorityTask {
     private boolean hoverboxcheck = false;
     private float makingTime; // Dynamic making time based on the recipe
     private boolean reachedFirstTarget = false;
+    TicketDetails bigTicket;
 
     /**
      * Task to make an entity follow a path to a target position.
@@ -81,6 +87,7 @@ public class PathFollowTask extends DefaultTask implements PriorityTask {
     public void create(TaskRunner taskRunner) {
         super.create(taskRunner);
         this.owner = taskRunner;
+        bigTicket = ServiceLocator.getTicketDetails();
     }
 
     /**
@@ -95,6 +102,11 @@ public class PathFollowTask extends DefaultTask implements PriorityTask {
 
         // Check if it's time to move to the predefined position
         if (!hasMovedToPredefined && elapsedTime >= makingTime) {
+            String[] bigTicketInfo = bigTicket.getCurrentBigTicketInfo();
+            String orderNumber = bigTicketInfo[0];
+            Entity customer = CustomerManager.getCustomerByOrder(orderNumber);
+            HoverBoxComponent hoverBox = customer.getComponent(HoverBoxComponent.class);
+            hoverBox.setTexture(new Texture("images/customer_faces/angry_face.png"));
             triggerMoveToPredefinedPosition();
             hasMovedToPredefined = true;
         }
