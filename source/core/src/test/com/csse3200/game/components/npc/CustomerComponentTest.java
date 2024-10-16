@@ -27,11 +27,11 @@ public class CustomerComponentTest {
     @Test
     void testPersonalCustomerComponents(){
         CustomerPersonalityConfig mockConfigs = new CustomerPersonalityConfig();
-        mockConfigs.name = "Hank";
+        CustomerPersonalityConfig.name = "Hank";
         BaseCustomerConfig.type = "Gorilla";
         BaseCustomerConfig.countDown = 20;
-        mockConfigs.preference = "bananaSplit";
-        mockConfigs.reputation = 100;
+        BaseCustomerConfig.preference = "bananaSplit";
+        CustomerPersonalityConfig.reputation = 100;
 
         CustomerComponent components = new CustomerComponent(mockConfigs);
         assertEquals("Hank", components.getName());
