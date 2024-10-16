@@ -15,13 +15,13 @@ import java.util.Random;
  */
 public class DayNightService {
     private static final Logger logger = LoggerFactory.getLogger(DayNightService.class);
-    public long FIVE_MINUTES = 5L* 60 * 1000; // 5 minutes in milliseconds
-    public static final int MAX_DAYS = 5; // Maximum number of days
-    public long SEVENTY_FIVE_PERCENT = (long) (FIVE_MINUTES * 0.75);
-    public long lastSecondCheck;
-    public long lastUpgradeCheck;
-    public long lastEndOfDayCheck;
-    public long timeRemaining;
+    private static final long FIVE_MINUTES = 5L* 60 * 1000; // 5 minutes in milliseconds
+    private static final int MAX_DAYS = 5; // Maximum number of days
+    private static final long SEVENTY_FIVE_PERCENT = (long) (FIVE_MINUTES * 0.75);
+    private long lastSecondCheck;
+    private long lastUpgradeCheck;
+    private long lastEndOfDayCheck;
+    private long timeRemaining;
     private final GameTime gameTime;
     private boolean endOfDayTriggered = false;
     private boolean pastSecond = false;
@@ -77,7 +77,6 @@ public class DayNightService {
     public void create() {
         // ***Working version of Day cycle used "decisionDone"***
         enddayEventHandler.addListener("decisionDone", this::startNewDay);
-        // enddayEventHandler.addListener("animationDone", this::startNewDay);
 
         enddayEventHandler.addListener("callpastsecond", this::updatepastSecond);
 
@@ -91,7 +90,7 @@ public class DayNightService {
      */
     public void incrementHighQualityMealCount() {
         highQualityMeals += 1;
-        logger.info("High-quality meal served! Total: " + highQualityMeals);
+        logger.info("High-quality meal served! Total: {0}", highQualityMeals);
     }
 
     /**
@@ -101,7 +100,7 @@ public class DayNightService {
     private void applyEndOfDayBonus() {
         int bonusGold = highQualityMeals * 1;
         ServiceLocator.getPlayerService().getPlayer().getComponent(CombatStatsComponent.class).addGold(bonusGold);
-        logger.info("Bonus gold added: " + bonusGold);
+        logger.info("Bonus gold added: {0}", bonusGold);
     }
 
     /**
@@ -136,7 +135,6 @@ public class DayNightService {
             pastUpgrade = true;
             enddayEventHandler.trigger("upgrade");
             randomChoice = random.nextInt(10) * 1000;
-            // lastCheckTime3 = currentTime;
         }
 
         if (this.timeRemaining == 0 && !endOfDayTriggered) {
