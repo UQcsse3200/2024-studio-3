@@ -47,13 +47,8 @@ public class PlayerItemSpriteManager extends Component {
         }
 
         switch (item.getItemType()) {
-            case ItemType.ACAI:
-            case ItemType.BANANA:
-            case ItemType.LETTUCE:
-            case ItemType.CUCUMBER:
-            case ItemType.TOMATO:
-            case ItemType.STRAWBERRY:
-            case ItemType.CHOCOLATE:
+            case ItemType.ACAI, ItemType.BANANA, ItemType.LETTUCE, ItemType.CUCUMBER, ItemType.TOMATO,
+                 ItemType.STRAWBERRY, ItemType.CHOCOLATE:
                 handleRawOrChoppedAnimation((IngredientComponent) item);
                 break;
             case ItemType.BEEF:

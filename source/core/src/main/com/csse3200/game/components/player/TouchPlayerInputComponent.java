@@ -89,7 +89,6 @@ public class TouchPlayerInputComponent extends InputComponent {
       float convertedx = (float) ((screenX * 0.013936) - 3.620833); 
       float convertedy = (float)((screenY * -0.01389) + 10.224049);
       entity.getEvents().trigger("clicked", convertedx, convertedy);
-      System.out.println(convertedx + convertedy);
     }
     return true;
   }

@@ -10,6 +10,7 @@ import com.csse3200.game.components.items.ItemType;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 @ExtendWith(GameExtension.class)
 class InventoryComponentTest {
@@ -97,7 +98,6 @@ class InventoryComponentTest {
   @Test
   void shouldRemoveLastItemWithNull() {
     ItemComponent chocolate = new ItemComponent("Chocolate", ItemType.CHOCOLATE, 1);
-    ItemComponent beef = new ItemComponent("Beef", ItemType.BEEF, 1);
     inventory.addItemAt(chocolate, 1);
 
     ItemComponent removed = inventory.removeItem();
@@ -232,7 +232,7 @@ class InventoryComponentTest {
 
   @Test
   void shouldGetEmptyItems() {
-    ArrayList<ItemComponent> items = inventory.getItems();
+    List<ItemComponent> items = inventory.getItems();
     assertNotNull(items);
     for (ItemComponent item : items) {
         assertNull(item);
@@ -257,7 +257,7 @@ class InventoryComponentTest {
     ItemComponent beef = new ItemComponent("Beef", ItemType.BEEF, 1);
     inventory.addItem(chocolate);
     inventory.addItem(beef);
-    ArrayList<ItemComponent> clone = inventory.getItems();
+    List<ItemComponent> clone = inventory.getItems();
     // modify the clone
     clone.remove(beef);
     assertNotEquals(clone, inventory.getItems());

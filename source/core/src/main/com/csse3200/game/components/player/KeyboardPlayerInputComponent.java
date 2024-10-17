@@ -15,7 +15,7 @@ import java.util.HashMap;
  */
 public class KeyboardPlayerInputComponent extends InputComponent {
   private Vector2 walkDirection = Vector2.Zero.cpy();
-  public static float walkSpeed = 1f;
+  public static float WALK_SPEED = 1f;
   private static final HashMap<Integer, Integer> keyFlags = new HashMap<>();
   private static final String WALK_STOP = "walkStop";
   private boolean isChopping = false;
@@ -103,9 +103,11 @@ public class KeyboardPlayerInputComponent extends InputComponent {
           ServiceLocator.getRandomComboService().deactivateUpgrade();
           ServiceLocator.getEntityService().getEvents().trigger("toggleEndDayScreen");
           return true;
-          case Keys.B:
-              ServiceLocator.getEntityService().getEvents().trigger("leaveEarly");
-              return true;
+        case Keys.B:
+            ServiceLocator.getEntityService().getEvents().trigger("leaveEarly");
+            return true;
+        default:
+          return false;
       }
     }
 
@@ -141,13 +143,13 @@ public class KeyboardPlayerInputComponent extends InputComponent {
   }
 
   public void setWalkSpeed(float speed) {
-    walkSpeed = speed;
+    WALK_SPEED = speed;
   }
 
   private void triggerWalkEvent() {
 
     Vector2 lastDir = this.walkDirection.cpy();
-    this.walkDirection = keysToVector().scl(walkSpeed);
+    this.walkDirection = keysToVector().scl(WALK_SPEED);
     Directions dir = keysToDirection();
     if(dir == Directions.NONE)
     {
@@ -186,7 +188,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
       yCom /= length;
     }
 
-    return new Vector2(xCom, yCom).scl(walkSpeed);
+    return new Vector2(xCom, yCom).scl(WALK_SPEED);
   }
 
   private boolean isPressed(int keycode) {

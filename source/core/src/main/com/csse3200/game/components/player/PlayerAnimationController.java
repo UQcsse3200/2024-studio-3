@@ -9,18 +9,18 @@ import com.csse3200.game.services.ServiceLocator;
 
 public class PlayerAnimationController extends Component {
     AnimationRenderComponent animator;
-    private final String CHARACTER_LEFT = "Character_Left";
-    private final String CHARACTER_RIGHT = "Character_Right";
-    private final String CHARACTER_UP = "Character_Up";
-    private final String CHARACTER_DOWN = "Character_Down";
-    private final String CHARACTER_UP_LEFT = "Character_UpLeft";
-    private final String CHARACTER_UP_RIGHT = "Character_UpRight";
-    private final String CHARACTER_DOWN_LEFT = "Character_DownLeft";
-    private final String CHARACTER_DOWN_RIGHT = "Character_DownRight";
-    private final String CHARACTER_STAND_LEFT = "Character_StandLeft";
-    private final String CHARACTER_STAND_RIGHT = "Character_StandRight";
-    private final String CHARACTER_STAND_DOWN = "Character_StandDown";
-    private final String CHARACTER_STAND_UP = "Character_StandUp";
+    private static final String CHARACTER_LEFT = "Character_Left";
+    private static final String CHARACTER_RIGHT = "Character_Right";
+    private static final String CHARACTER_UP = "Character_Up";
+    private static final String CHARACTER_DOWN = "Character_Down";
+    private static final String CHARACTER_UP_LEFT = "Character_UpLeft";
+    private static final String CHARACTER_UP_RIGHT = "Character_UpRight";
+    private static final String CHARACTER_DOWN_LEFT = "Character_DownLeft";
+    private static final String CHARACTER_DOWN_RIGHT = "Character_DownRight";
+    private static final String CHARACTER_STAND_LEFT = "Character_StandLeft";
+    private static final String CHARACTER_STAND_RIGHT = "Character_StandRight";
+    private static final String CHARACTER_STAND_DOWN = "Character_StandDown";
+    private static final String CHARACTER_STAND_UP = "Character_StandUp";
 
 
     /**
@@ -107,15 +107,15 @@ public class PlayerAnimationController extends Component {
     
     void animateDownRight() {animator.startAnimation(CHARACTER_DOWN_RIGHT);}
     
-    void animateStop(Vector2 last_direction)
+    void animateStop(Vector2 lastDirection)
     {
-        if (last_direction.x < -0.1) {
+        if (lastDirection.x < -0.1) {
             animator.startAnimation(CHARACTER_STAND_LEFT);
-        } else if (last_direction.x > 0.1 ){
+        } else if (lastDirection.x > 0.1 ){
             animator.startAnimation(CHARACTER_STAND_RIGHT);
-        } else if (last_direction.y < -0.1) {
+        } else if (lastDirection.y < -0.1) {
             animator.startAnimation(CHARACTER_STAND_DOWN);
-        } else if (last_direction.y > 0.1 ){
+        } else if (lastDirection.y > 0.1 ){
             animator.startAnimation(CHARACTER_STAND_UP);
         }
     }
