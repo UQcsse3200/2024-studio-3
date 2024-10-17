@@ -70,7 +70,7 @@ public class DayNightService {
             day = 1;
         }
 
-        randomChoice = random.nextInt(10) * 1000;
+        randomChoice = random.nextInt(60) * 1000;
 
         create();
     }
@@ -140,7 +140,8 @@ public class DayNightService {
         if (currentTime - lastUpgradeCheck >= randomChoice && !pastUpgrade) {
             pastUpgrade = true;
             enddayEventHandler.trigger("upgrade");
-            randomChoice = random.nextInt((int) SEVENTY_FIVE_PERCENT);
+            // randomChoice = random.nextInt((int) SEVENTY_FIVE_PERCENT);
+            randomChoice = random.nextInt(60) * 1000;
         }
 
         if (this.timeRemaining <= 0 && !endOfDayTriggered) {
