@@ -8,12 +8,12 @@ import com.csse3200.game.components.cutscenes.scenes.AnimatedScene;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
 
-public class GoodEndCutsceneTest {
+class GoodEndCutsceneTest {
 
     private GoodEndCutscene goodEndCutscene;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         // Mock the ServiceLocator's ResourceService
         ResourceService resourceService = Mockito.mock(ResourceService.class);
         ServiceLocator.registerResourceService(resourceService);
@@ -23,13 +23,13 @@ public class GoodEndCutsceneTest {
     }
 
     @Test
-    public void testConstructor() {
+    void testConstructor() {
         // Verify the initial state of the object
         assertTrue(goodEndCutscene.isAnimatedScenes);
     }
 
     @Test
-    public void testSetupScenes() {
+    void testSetupScenes() {
         // Act
         goodEndCutscene.setupScenes();
 
@@ -42,7 +42,7 @@ public class GoodEndCutsceneTest {
     }
 
     @Test
-    public void testCreateEntities() {
+    void testCreateEntities() {
         // Since this method is redundant, we simply call it to ensure no exception occurs
         assertDoesNotThrow(() -> goodEndCutscene.createEntities());
     }
