@@ -74,7 +74,7 @@ public class Day3CutsceneTest {
         verify(resourceService, times(2)).loadTextures(new String[]{
                 "images/Cutscenes/Day3_Scene.png"
         });
-        verify(resourceService, times(2)).loadTextures(new String[]{
+        verify(resourceService, times(1)).loadTextures(new String[]{
                 "images/Cutscenes/Character Artwork/rhino_sprite.png",
                 "images/Cutscenes/Character Artwork/panda_sprite.png",
                 "images/Cutscenes/Character Artwork/player_sprite_back_turned.png"

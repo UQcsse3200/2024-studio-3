@@ -88,8 +88,7 @@ public class BackstoryCutsceneTest {
         verify(resourceService, times(1)).loadTextures(new String[]{
                 "images/Cutscenes/Brooklyn_Bistro_Background.png",
                 "images/Cutscenes/Kitchen_Background.png",
-                "images/Cutscenes/Food_Critic_Background.png",
-                "images/Cutscenes/Food_Critic_Background.png",
+                null,
                 "images/Cutscenes/Animals_in_Kitchen_Background.png",
                 "images/Cutscenes/Farm_Background.png",
                 "images/Cutscenes/graveyard_mafia.png",
@@ -178,8 +177,7 @@ public class BackstoryCutsceneTest {
         verify(resourceService, times(1)).unloadAssets(new String[]{
                 "images/Cutscenes/Brooklyn_Bistro_Background.png",
                 "images/Cutscenes/Kitchen_Background.png",
-                "images/Cutscenes/Food_Critic_Background.png",
-                "images/Cutscenes/Food_Critic_Background.png",
+                null,
                 "images/Cutscenes/Animals_in_Kitchen_Background.png",
                 "images/Cutscenes/Farm_Background.png",
                 "images/Cutscenes/graveyard_mafia.png",

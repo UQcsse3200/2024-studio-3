@@ -50,13 +50,19 @@ public class CutsceneTest {
 
         cutscene = new Cutscene() {
             @Override
-            protected void setupScenes() {}
+            protected void setupScenes() {
+                // Empty for testing
+            }
 
             @Override
-            protected void loadAssets() {}
+            protected void loadAssets() {
+                // Empty for testing
+            }
 
             @Override
-            public void createEntities() {}
+            public void createEntities() {
+                // Empty for testing
+            }
 
             @Override
             protected void nextCutscene() {
