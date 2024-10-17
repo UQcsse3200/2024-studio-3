@@ -324,8 +324,6 @@ public class TextDisplay extends UIComponent {
                 } else if (TextDisplay.this.screen.equals("backstory")) {
                     // Handling for backstory cutscenes
                     Cutscene currentCutscene = ServiceLocator.getCurrentCutscene();
-                    Boolean atEnd = currentCutscene.isAtEnd();
-
                     // Check if the current text is "Press Enter to continue"
                     if (label.getText().toString().equals("Press Enter to continue")) {
                         if (keycode == com.badlogic.gdx.Input.Keys.ENTER || keycode == com.badlogic.gdx.Input.Keys.SPACE) {
@@ -338,12 +336,9 @@ public class TextDisplay extends UIComponent {
                     } else {
                         // Continue through the backstory cutscene normally
                         if (keycode == com.badlogic.gdx.Input.Keys.ENTER || keycode == com.badlogic.gdx.Input.Keys.SPACE) {
-                            logger.info("at backstory in textDisplay");
-                            if (!atEnd) {
-                                logger.info("parsing through backstory");
-                                currentCutscene.setTextForScene(currentCutscene.currentScene);
-                                label.setText(currentCutscene.currentText);
-                            }
+                            logger.info("parsing through backstory");
+                            currentCutscene.setTextForScene(currentCutscene.currentScene);
+                            label.setText(currentCutscene.currentText);
                         }
                     }
                     return true;
