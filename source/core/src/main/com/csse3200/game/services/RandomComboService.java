@@ -2,8 +2,15 @@ package com.csse3200.game.services;
 
 
 import com.csse3200.game.components.Component;
+import com.csse3200.game.components.maingame.PauseMenuDisplay;
 import com.csse3200.game.events.EventHandler;
+import com.csse3200.game.services.ServiceLocator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.ArrayList;
 import java.util.Random;
+import java.util.List;
 
 /**
  * The RandomComboService class is responsible for managing and activating random upgrades
@@ -14,11 +21,13 @@ import java.util.Random;
  */
 
 public class RandomComboService extends Component {
-
+    private static final Logger logger = LoggerFactory.getLogger(RandomComboService.class);
+    // private List<Upgrade> upgrades;
     private Random random;
     int randomChoice;
     private EventHandler eventHandler;
-    private int totalUpgrades = 4;
+    private int total_upgrades = 4;
+    private boolean isDancing = false; 
 
     public RandomComboService() {
         this(new EventHandler());
@@ -27,7 +36,14 @@ public class RandomComboService extends Component {
         super();
         this.eventHandler = eventHandler;
         this.random = new Random();
-        randomChoice = random.nextInt(totalUpgrades);
+        randomChoice = random.nextInt(total_upgrades); 
+
+        eventHandler.addListener("Dancing", ()->{isDancing = true;}); 
+        eventHandler.addListener("UnDancing", ()->{isDancing = true;}); 
+        
+        // ServiceLocator.getDocketService().getEvents().addListener("UnDancing", ()->{
+        //     isDancing = false; 
+        // });
     }
 
     /**
@@ -74,6 +90,11 @@ public class RandomComboService extends Component {
     public EventHandler getEvents() {
         return eventHandler;
       }
+    
+    public boolean dancing(){
+        return isDancing; 
+
+    }
 }
     
     

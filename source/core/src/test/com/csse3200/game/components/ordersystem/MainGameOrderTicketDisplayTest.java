@@ -13,10 +13,7 @@ import com.csse3200.game.entities.Entity;
 import com.csse3200.game.events.EventHandler;
 import com.csse3200.game.extensions.GameExtension;
 import com.csse3200.game.rendering.RenderService;
-import com.csse3200.game.services.DocketService;
-import com.csse3200.game.services.PlayerService;
-import com.csse3200.game.services.ResourceService;
-import com.csse3200.game.services.ServiceLocator;
+import com.csse3200.game.services.*;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -56,6 +53,7 @@ class MainGameOrderTicketDisplayTest {
 	@Mock CombatStatsComponent combatStatsComponent;
 	@Mock TicketDetails ticketDetails; // Mocked TicketDetails
     private MockedStatic<ServiceLocator> serviceLocatorMock;
+	RandomComboService randomComboService;
 	private static final Logger logger = LoggerFactory.getLogger(MainGameOrderTicketDisplayTest.class);
 
 	/**
@@ -69,6 +67,7 @@ class MainGameOrderTicketDisplayTest {
 		resourceService = mock(ResourceService.class);
 		ServiceLocator.registerResourceService(resourceService);
 		textureMock = mock(Texture.class);
+		randomComboService = new RandomComboService(new EventHandler());
 
 		serviceLocatorMock = Mockito.mockStatic(ServiceLocator.class);
 
@@ -77,6 +76,7 @@ class MainGameOrderTicketDisplayTest {
         serviceLocatorMock.when(ServiceLocator::getPlayerService).thenReturn(playerService);
         serviceLocatorMock.when(ServiceLocator::getResourceService).thenReturn(resourceService);
         serviceLocatorMock.when(ServiceLocator::getTicketDetails).thenReturn(ticketDetails);
+		serviceLocatorMock.when(ServiceLocator::getRandomComboService).thenReturn(randomComboService);
 
 		resourceService = mock(ResourceService.class);
         textureMock = mock(Texture.class);

@@ -29,9 +29,9 @@ public class ExtortionUpgrade extends UIComponent implements Upgrade {
 
     private static final String[] greenTexture = {"images/green_fill.png"};
     private static final String[] whiteBgTexture = {"images/white_background.png"};
-    private Table layout;
-    private Label text; // the "Upgrade" text above the speedMeter
-    private ProgressBar meter; // the meter that show the remaining time
+    public Table layout;
+    public Label text; // the "Upgrade" text above the meter
+    public ProgressBar meter; // the meter that show the remaining time
     private boolean isVisible;
     private Sound bgEffect;
     private boolean playSound = false;
@@ -49,6 +49,14 @@ public class ExtortionUpgrade extends UIComponent implements Upgrade {
         ServiceLocator.getRandomComboService().getEvents().addListener("Extortionoff", this::deactivate);
     }
 
+    public ExtortionUpgrade(CombatStatsComponent combatStatsComponent) {
+        this.isActive = false;
+        this.gameTime = ServiceLocator.getTimeSource();
+        this.combatStatsComponent = combatStatsComponent;
+        ServiceLocator.getRandomComboService().getEvents().addListener("Extortion", this::activate);
+        ServiceLocator.getRandomComboService().getEvents().addListener("Extortionoff", this::deactivate);
+    }
+
     @Override
     public void create() {
         super.create();
@@ -61,6 +69,7 @@ public class ExtortionUpgrade extends UIComponent implements Upgrade {
         layout = new Table();
         layout.setFillParent(true);
         layout.setVisible(isVisible);
+//        setupMeter();
     }
 
     /**
@@ -90,10 +99,10 @@ public class ExtortionUpgrade extends UIComponent implements Upgrade {
         if (isActive) {
             meter = new ProgressBar(0f, 1f, 0.01f, false, style);
             meter.setValue(1f); // Initially, the meter is full
-            meter.setPosition(8, 500);
+            meter.setPosition(30, 250);
 
             // Set up text
-            text = new Label("Upgrade", skin);
+            text =  new Label("Upgrade", skin);
             text.setPosition(meter.getX(), meter.getY() + meter.getHeight() + 8); // Placed above meter
         }
         else {
@@ -134,15 +143,12 @@ public class ExtortionUpgrade extends UIComponent implements Upgrade {
         layout.setVisible(false);
         ServiceLocator.getRandomComboService().getEvents().trigger("extortion unactive");
 
+
         // Ensure the text and meter are removed from the stage after time finish
         if (meter != null && meter.hasParent()) {
             meter.remove();
             text.remove();
         }
-    }
-
-    public boolean isActive() {
-        return isActive;
     }
 
     /**
@@ -189,6 +195,26 @@ public class ExtortionUpgrade extends UIComponent implements Upgrade {
 
     @Override
     public void setStage(Stage mock) {
+        this.stage = mock;
+    }
 
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public boolean isVisible() {
+        return isVisible;
+    }
+
+    public long getUpgradeDuration() {
+        return upgradeDuration;
+    }
+
+    public float getActivateTimeRemaining() {
+        return activateTimeRemaining;
+    }
+
+    public boolean getPlaySound() {
+        return playSound;
     }
 }

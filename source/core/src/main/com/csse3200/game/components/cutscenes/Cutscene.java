@@ -447,4 +447,54 @@ public abstract class Cutscene extends Component {
     public void setAnimations(String[] animations) {
         this.animations = animations;
     }
+
+    /**
+     * Gets the current scene index.
+     * This method returns the index of the scene that is currently being displayed
+     * in the cutscene. The index corresponds to the position of the scene in the
+     * list of scenes.
+     *
+     * @return the index of the current scene.
+     */
+    public int getCurrentSceneIndex() {
+        return currentSceneIndex;
+    }
+
+    /**
+     * Sets the current scene index and transitions to the specified scene.
+     * This method allows for manually setting the current scene index, which
+     * transitions the cutscene to the scene corresponding to the provided index.
+     * It first validates the scene index to ensure it's within the valid range.
+     * If the index is valid, it disposes of the entities in the current scene,
+     * updates the scene index, and loads the new scene.
+     *
+     * @param newSceneIndex the index of the scene to switch to.
+     *                      Must be a valid index within the list of scenes.
+     * @throws IllegalArgumentException if the provided index is outside the range
+     *                                  of available scenes.
+     */
+
+    public void setCurrentScene(int newSceneIndex) {
+        if (newSceneIndex < 0 || newSceneIndex >= scenes.size()) {
+            logger.error("Invalid scene index: {}. Scene index must be between 0 and {}.", newSceneIndex, scenes.size() - 1);
+            return;
+        }
+
+        // Dispose of the current entities
+        disposeEntities();
+
+        // Set the new scene index
+        currentSceneIndex = newSceneIndex;
+
+        logger.info("Setting current scene to index {}", currentSceneIndex);
+
+        // Load the new scene
+        loadScene(currentSceneIndex);
+
+        // Ensure no automatic progression occurs here
+        logger.info("Scene {} loaded successfully. Not triggering next scene.", currentSceneIndex);
+    }
+
+
+
 }

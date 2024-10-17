@@ -28,16 +28,11 @@ public class LoanUpgrade extends Component implements Upgrade {
      * at least 20 gold
      */
     public void activate() { 
-        if(combatStatsComponent.getGold() >= 20){
-            // https://pixabay.com/sound-effects/cha-ching-7053/
-            Sound moneySound = Gdx.audio.newSound(Gdx.files.internal("sounds/loan.mp3"));
-            long moneySoundId = moneySound.play();
-            moneySound.setVolume(moneySoundId, 0.2f);
-            combatStatsComponent.addGold(100);
-        }
-        else{
-        ServiceLocator.getRandomComboService().getEvents().trigger("notenoughmoney"); 
-        }
+        // https://pixabay.com/sound-effects/cha-ching-7053/
+        Sound moneySound = Gdx.audio.newSound(Gdx.files.internal("sounds/loan.mp3"));
+        long moneySoundId = moneySound.play();
+        moneySound.setVolume(moneySoundId, 0.2f);
+        combatStatsComponent.addGold(100);
     }
 
     /**
@@ -47,9 +42,6 @@ public class LoanUpgrade extends Component implements Upgrade {
 
     @Override
     public void update() {
-        // Check if the 'L' key is pressed in each frame
-        if (Gdx.input.isKeyJustPressed(Input.Keys.L)) {
-            activate();  // Add 100 gold when 'L' is pressed
-        }
+
     }
 }

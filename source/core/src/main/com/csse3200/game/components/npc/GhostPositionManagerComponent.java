@@ -27,7 +27,7 @@ public class GhostPositionManagerComponent extends Component {
     public void addGhost(Entity ghost) {
         int positionIndex = getNextAvailablePosition();
         if (positionIndex != -1) {
-            assignGhostToPosition(ghost, positionIndex);
+            assignGhostToPosition(positionIndex);
             ghostQueue.add(ghost);
         }
     }
@@ -41,28 +41,8 @@ public class GhostPositionManagerComponent extends Component {
         return -1;
     }
 
-    private void assignGhostToPosition(Entity ghost, int positionIdx) {
+    private void assignGhostToPosition(int positionIdx) {
         positionOccupied[positionIdx] = true;
-        // Assign the ghost to move to the position using PathFollowTask
-       /* ghost.getComponent(AITaskComponent.class)
-                .addTask(new PathFollowTask(ghostPositions[positionIdx]));*/
     }
 
-    public void freeGhostPosition(Entity ghost) {
-        ghostQueue.remove(ghost);
-        for (int i = 0; i < ghostPositions.length; i++) {
-            if (positionOccupied[i]) {
-                positionOccupied[i] = false;
-                break;
-            }
-        }
-
-        if (!ghostQueue.isEmpty()) {
-            Entity nextGhost = ghostQueue.peek();
-            int positionIndex = getNextAvailablePosition();
-            if (positionIndex != -1) {
-                assignGhostToPosition(nextGhost, positionIndex);
-            }
-        }
-    }
 }

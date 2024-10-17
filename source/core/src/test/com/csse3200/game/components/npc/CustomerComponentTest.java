@@ -5,23 +5,17 @@ import com.csse3200.game.entities.configs.BaseCustomerConfig;
 import com.csse3200.game.entities.configs.CustomerPersonalityConfig;
 import com.csse3200.game.physics.PhysicsService;
 import com.csse3200.game.rendering.RenderService;
-import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.mock;
 
-public class CustomerComponentTest {
+class CustomerComponentTest {
     @BeforeEach
     void setup(){
         ServiceLocator.registerPhysicsService(new PhysicsService());
         ServiceLocator.registerEntityService(new EntityService());
         ServiceLocator.registerRenderService(new RenderService());
-
-        ResourceService mockResourceService = mock(ResourceService.class);
-        CustomerPersonalityConfig mockCustomerPersonalityConfig = new CustomerPersonalityConfig();
-        BaseCustomerConfig mockBaseCustomerConfig = new BaseCustomerConfig();
     }
 
     @Test

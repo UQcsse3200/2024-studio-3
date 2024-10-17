@@ -57,32 +57,8 @@ public class LoanUpgradeTest {
 
     @Test
     public void activate_shouldAddGold_WhenGoldIsSufficient() {
-        when(combatStatsComponent.getGold()).thenReturn(20);
         loanUpgrade.activate();
         verify(combatStatsComponent).addGold(100);
-    }
-
-    @Test
-    public void activate_shouldTriggerNotEnoughMoneyEvent_WhenGoldIsInsufficient() {
-        when(combatStatsComponent.getGold()).thenReturn(10);
-        loanUpgrade.activate();
-        verify(randomComboServiceEvents).trigger("notenoughmoney");
-    }
-
-    @Test
-    public void update_shouldCallActivate_WhenLKeyIsPressed() throws Exception {
-        MockedStatic<Gdx> gdxMock = mockStatic(Gdx.class);
-        Input mockInput = mock(Input.class);
-
-        Field inputField = Gdx.class.getDeclaredField("input");
-        inputField.setAccessible(true);
-        inputField.set(null, mockInput);
-
-        when(mockInput.isKeyJustPressed(Input.Keys.L)).thenReturn(true);
-        LoanUpgrade loanUpgradeSpy = spy(loanUpgrade);
-        loanUpgradeSpy.update();
-        verify(loanUpgradeSpy).activate();
-        gdxMock.close();
     }
 
 }
