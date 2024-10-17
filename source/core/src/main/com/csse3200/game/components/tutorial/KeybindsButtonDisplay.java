@@ -20,7 +20,7 @@ public class KeybindsButtonDisplay extends UIComponent {
     private Texture keybindsMenuTexture;
     private String[] keybindsLabels = {"W - Move Up\nA - Move Left\nS - Move Down\nD - Move Right", "E - Pick Up",
             "Q - Chop", "P - End Day Screen", "ESC - Pause", "F1 - Debug Terminal", "[ - Move Docket Left",
-            "] - Move Docket Right", "L - Loan Upgrade", "Z - Dance Party Upgrade", "R - Rage Upgrade", "0 - Recipe Card"};
+            "] - Move Docket Right", "R - Rage Upgrade", "0 - Recipe Card"};
 
     public KeybindsButtonDisplay(Skin skin) {
         super(skin);
@@ -83,9 +83,9 @@ public class KeybindsButtonDisplay extends UIComponent {
      */
     public Table createButtonTable() {
         keybindButton = new Table();
-        keybindButton.left();
+        keybindButton.bottom().right();
         keybindButton.setFillParent(true);
-        keybindButton.padTop(270f).padLeft(20f);
+        keybindButton.padTop(270f).padLeft(10f);
 
         TextButton button = new TextButton("Keybindings", skin);
         button.addListener(new ChangeListener() {
