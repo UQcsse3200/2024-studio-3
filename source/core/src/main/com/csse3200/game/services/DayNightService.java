@@ -63,14 +63,14 @@ public class DayNightService {
         this.lastEndOfDayCheck = gameTime.getTime();
         this.timeRemaining = FIVE_MINUTES;
         this.random = new Random();
-        randomChoice = random.nextInt((int) SEVENTY_FIVE_PERCENT);
+        // randomChoice = random.nextInt((int) SEVENTY_FIVE_PERCENT);
 
         // **Only set 'day' to 1 if it hasn't been initialized yet**
         if (day == 0) {
             day = 1;
         }
 
-        // randomChoice = random.nextInt(10) * 1000;
+        randomChoice = random.nextInt(10) * 1000;
 
         create();
     }
