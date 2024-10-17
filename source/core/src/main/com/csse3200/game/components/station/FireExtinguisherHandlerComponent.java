@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Give the player a fire extinguisher when they interact with it
@@ -57,7 +58,7 @@ public class FireExtinguisherHandlerComponent extends Component {
         // Check to see if already holding a fire extinguisher
         boolean hasFireExtinguisher = false;
         int fireExtinguisherIndex = -1;
-        ArrayList<ItemComponent> items = inventory.getItems();
+        List<ItemComponent> items = inventory.getItems();
         for (int index = 0; index < inventory.getCapacity(); index++) {
             ItemComponent item = items.get(index);
             if (item != null && item.getItemType() == ItemType.FIREEXTINGUISHER) {
