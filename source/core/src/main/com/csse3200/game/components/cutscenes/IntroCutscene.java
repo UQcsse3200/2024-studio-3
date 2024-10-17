@@ -11,7 +11,7 @@ import com.csse3200.game.services.ServiceLocator;
  * It defines the scenes, assets, and entities used during the intro cutscene.
  */
 public class IntroCutscene extends Cutscene {
-
+    private final String acaiBowl = "images/meals/acai_bowl.png";
     /**
      * Constructor for the IntroCutscene class.
      */
@@ -34,7 +34,7 @@ public class IntroCutscene extends Cutscene {
 
         Scene scene1 = new Scene("images/Cutscenes/Beastly_Bistro_Background.png");
         scene1.setImages(
-                new String[]{"images/meals/acai_bowl.png"},
+                new String[]{acaiBowl},
                 new Vector2[] {new Vector2(4, 2)},
                 new float[] {1.0f}
         );
@@ -46,7 +46,7 @@ public class IntroCutscene extends Cutscene {
 
         Scene scene2 = new Scene("images/Cutscenes/Graveyard_Scene.png");
         scene2.setImages(
-                new String[]{"images/meals/acai_bowl.png"},
+                new String[]{acaiBowl},
                 new Vector2[] {new Vector2(2, 2)},
                 new float[] {4.0f}
         );
@@ -75,7 +75,7 @@ public class IntroCutscene extends Cutscene {
         // Load the animation images for the cutscene
         animations = new String[] {"images/player/Cook_Model32.png"};
 
-        images = new String[] {"images/meals/acai_bowl.png"};
+        images = new String[] {acaiBowl};
 
         // Get the resource service to load assets
         ResourceService resourceService = ServiceLocator.getResourceService();
