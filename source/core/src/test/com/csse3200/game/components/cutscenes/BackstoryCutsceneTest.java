@@ -17,7 +17,7 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.Objects;
 
-import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 
 public class BackstoryCutsceneTest {
@@ -60,6 +60,7 @@ public class BackstoryCutsceneTest {
 
         // Initialise the BackstoryCutscene with custom behavior for nextCutscene
         backstoryCutscene = new BackstoryCutscene() {
+            @Override
             protected void nextCutscene() {
                 disposeEntities();
 
@@ -109,10 +110,9 @@ public class BackstoryCutsceneTest {
      */
     @Test
     public void testSetupScenes() {
-        // Setup the scenes
 
         // Verify the number of scenes created
-        assert backstoryCutscene.scenes.size() == 12; // Should match the total number of scenes added
+        assertEquals(12, backstoryCutscene.scenes.size()); // Should match the total number of scenes added
 
         // Verify the first scene has the correct background, animation, and text
         Scene scene1 = backstoryCutscene.scenes.getFirst();
