@@ -2,15 +2,17 @@ package com.csse3200.game.components.maingame;
 
 
 import com.csse3200.game.extensions.GameExtension;
-
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+
 import static org.junit.jupiter.api.Assertions.*;
+
 import java.util.List;
 import java.util.Collections;
 
 @ExtendWith(GameExtension.class)
 public class TextDisplayTest {
+
     @Test
     public void testSetText() {
         TextDisplay test = new TextDisplay();
