@@ -40,8 +40,6 @@ public class TextDisplay extends UIComponent {
     private long lastUpdate = 0L;
     private final long delay = 100L;
 
-    private InputListener inputListener;
-
     // Displaying variables
     private boolean visible;
     public Label label;
@@ -286,9 +284,11 @@ public class TextDisplay extends UIComponent {
      * of the text or clear the textbox from the screen
      */
     private void setupInputListener() {
-        inputListener = new InputListener() {
+        logger.info(TextDisplay.this.screen);
+        stage.addListener(new InputListener() {
             @Override
             public boolean keyDown(InputEvent event, int keycode) {
+
                 if (TextDisplay.this.screen.equals("cutscene")) {
                     if (keycode == com.badlogic.gdx.Input.Keys.ENTER || keycode == com.badlogic.gdx.Input.Keys.SPACE) {
                         logger.info("we've pressed enter");
@@ -299,7 +299,7 @@ public class TextDisplay extends UIComponent {
                     return true;
                 } else if (TextDisplay.this.screen.equals("moralDecision")) {
                     Cutscene currentCutscene = ServiceLocator.getCurrentCutscene();
-                    boolean atEnd = currentCutscene.isAtEnd();
+                    Boolean atEnd = currentCutscene.isAtEnd();
                     if (keycode == com.badlogic.gdx.Input.Keys.ENTER || keycode == com.badlogic.gdx.Input.Keys.SPACE) {
                         logger.info("at moral in textDisplay");
                         if (!atEnd) {
@@ -308,11 +308,13 @@ public class TextDisplay extends UIComponent {
                             label.setText(currentCutscene.currentText);
                         }
                     } else if (keycode == Input.Keys.Y && atEnd) {
+                        logger.info("WE'RE ALMOST THERE");
                         currentCutscene = ServiceLocator.getCurrentCutscene();
                         currentCutscene.setTextForScene(currentCutscene.currentScene);
 
                         ServiceLocator.getDayNightService().getEvents().trigger("YesAtMoralDecision");
                     } else if (keycode == Input.Keys.N && atEnd) {
+                        logger.info("WE'RE ALMOST THERE NO");
                         currentCutscene = ServiceLocator.getCurrentCutscene();
                         currentCutscene.setTextForScene(currentCutscene.currentScene);
 
@@ -322,6 +324,7 @@ public class TextDisplay extends UIComponent {
                 } else if (TextDisplay.this.screen.equals("backstory")) {
                     // Handling for backstory cutscenes
                     Cutscene currentCutscene = ServiceLocator.getCurrentCutscene();
+                    Boolean atEnd = currentCutscene.isAtEnd();
 
                     // Check if the current text is "Press Enter to continue"
                     if (label.getText().toString().equals("Press Enter to continue")) {
@@ -336,9 +339,11 @@ public class TextDisplay extends UIComponent {
                         // Continue through the backstory cutscene normally
                         if (keycode == com.badlogic.gdx.Input.Keys.ENTER || keycode == com.badlogic.gdx.Input.Keys.SPACE) {
                             logger.info("at backstory in textDisplay");
-                            logger.info("parsing through backstory");
-                            currentCutscene.setTextForScene(currentCutscene.currentScene);
-                            label.setText(currentCutscene.currentText);
+                            if (!atEnd) {
+                                logger.info("parsing through backstory");
+                                currentCutscene.setTextForScene(currentCutscene.currentScene);
+                                label.setText(currentCutscene.currentText);
+                            }
                         }
                     }
                     return true;
@@ -362,13 +367,8 @@ public class TextDisplay extends UIComponent {
                 }
                 return false;
             }
-        };
-        stage.addListener(inputListener);
+        });
     }
-
-
-
-
 
 
     /**
@@ -447,17 +447,6 @@ public class TextDisplay extends UIComponent {
 
         // Add stack to the table
         table.add(stack).padTop(100).size((int) (Gdx.graphics.getWidth() * 0.6), (int) (Gdx.graphics.getHeight() * 0.15));
-    }
-
-    /**
-     * Class used in unit tests to simulate keypress
-     * @param keycode: keycode realting to the key pressed
-     * @return whether the key was pressed
-     */
-    public boolean simulateKeyPress(int keycode) {
-        InputEvent event = new InputEvent();  // Create a dummy InputEvent
-        event.setType(InputEvent.Type.keyDown);
-        return inputListener.keyDown(event, keycode);
     }
 }
 
