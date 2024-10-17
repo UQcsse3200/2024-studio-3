@@ -24,9 +24,8 @@ public class PlayerActions extends Component {
   private InventoryComponent playerInventory;
   private InventoryDisplay displayInventory;
   private Entity closestEntity = null;
-  private Entity oldClosestEntity = null;
 
-  @Override
+    @Override
   public void create() {
     physicsComponent = entity.getComponent(PhysicsComponent.class);
     sensor = entity.getComponent(SensorComponent.class);
@@ -68,12 +67,8 @@ public class PlayerActions extends Component {
    * the tooltip.
    * */
   private void updateInteraction() {
-    oldClosestEntity = closestEntity;
+    Entity oldClosestEntity = closestEntity;
     closestEntity = sensor.getClosestInteractable();
-
-    //if (oldClosestEntity == closestEntity) {
-    //    return;
-    //}
 
     if (oldClosestEntity != null) {
       oldClosestEntity.getEvents().trigger("hideToolTip");
