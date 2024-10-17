@@ -18,6 +18,7 @@ import org.junit.Test;
 
 import java.util.*;
 
+import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
@@ -63,6 +64,7 @@ public class IntroCutsceneTest {
 
         // Initialize the cutscene with it not calling the service locator and instead just triggering own event
         introCutscene = new IntroCutscene() {
+            @Override
             protected void nextCutscene() {
                 disposeEntities();
 
@@ -110,7 +112,7 @@ public class IntroCutsceneTest {
         // Verify the first scene has the correct background, animation, and text
         Scene scene1 = introCutscene.scenes.getFirst();
         assert scene1.getBackgroundImagePath().equals("images/Cutscenes/Beastly_Bistro_Background.png");
-        assert scene1.getSceneText().size == 3;  // Text contains three items
+        assertEquals(3, scene1.getSceneText().size);  // Text contains three items
     }
 
     /**
@@ -194,6 +196,6 @@ public class IntroCutsceneTest {
             introCutscene.loadScene(0);
             assert introCutscene.currentText.equals("Hello This is an Example Text");
 
-            assert introCutscene.textIndex == 1;
+            assertEquals(1, introCutscene.textIndex);
     }
 }

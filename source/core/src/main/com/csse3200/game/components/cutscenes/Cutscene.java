@@ -52,7 +52,7 @@ public abstract class Cutscene extends Component {
     protected String animName;
 
     // Whether the scenes are fully animated
-    public boolean IsAnimatedScenes = false;
+    public boolean isAnimatedScenes = false;
 
     // Game time service to keep track of time
     protected GameTime gameTime;
@@ -69,7 +69,7 @@ public abstract class Cutscene extends Component {
     /**
      * Constructor for the Cutscene class. Initializes the game time and loads assets and scenes.
      */
-    public Cutscene() {
+    protected Cutscene() {
         this.gameTime = ServiceLocator.getTimeSource();
         loadAssets();
         setupScenes();
@@ -94,7 +94,7 @@ public abstract class Cutscene extends Component {
     public void update() {
         float currentTime = gameTime.getTime();
         // Check if the current scene has finished
-        if (!IsAnimatedScenes) {
+        if (!isAnimatedScenes) {
             if ((currentScene != null) && (currentTime - timeStart) > currentScene.getDuration()) {
                 logger.info("Scene {} finished. Moving to next scene.", currentSceneIndex);
                 nextCutscene();
@@ -114,9 +114,9 @@ public abstract class Cutscene extends Component {
         disposeEntities();  // Dispose of current entities before moving to the next scene
 
         currentSceneIndex++;
-        if (!IsAnimatedScenes) {
+        if (!isAnimatedScenes) {
             if (currentSceneIndex < scenes.size()) {
-                logger.info("Loading next scene: {}", currentSceneIndex);
+                logger.info("Loading next animated scene: {}", currentSceneIndex);
                 loadScene(currentSceneIndex);
             } else {
                 logger.info("Cutscene finished. Triggering next event.");
@@ -124,7 +124,7 @@ public abstract class Cutscene extends Component {
             }
         } else {
             if (currentSceneIndex < animatedScenes.size()) {
-                logger.info("Loading next scene: {}", currentSceneIndex);
+                logger.info("Loading next non animated scene: {}", currentSceneIndex);
                 loadScene(currentSceneIndex);
             } else {
                 logger.info("Cutscene finished. Triggering next event.");
@@ -152,7 +152,7 @@ public abstract class Cutscene extends Component {
      * @param sceneIndex Index of the scene to load
      */
     protected void loadScene(int sceneIndex) {
-        if (!IsAnimatedScenes) {
+        if (!isAnimatedScenes) {
             if (sceneIndex >= scenes.size()) {
                 logger.error("No more scenes available.");
                 nextCutscene();

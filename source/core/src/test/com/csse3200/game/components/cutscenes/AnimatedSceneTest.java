@@ -3,10 +3,10 @@ import com.csse3200.game.components.cutscenes.scenes.AnimatedScene;
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 
-public class AnimatedSceneTest {
+class AnimatedSceneTest {
 
     @Test
-    public void testConstructorAndGetters() {
+    void testConstructorAndGetters() {
         // Arrange
         String atlasFilePath = "path/to/atlas";
         String animName = "TestAnimation";
@@ -22,7 +22,7 @@ public class AnimatedSceneTest {
     }
 
     @Test
-    public void testGetAtlasFilePath() {
+    void testGetAtlasFilePath() {
         // Arrange
         String atlasFilePath = "path/to/another/atlas";
         AnimatedScene scene = new AnimatedScene(atlasFilePath, "Anim", 3.0f);
@@ -35,7 +35,7 @@ public class AnimatedSceneTest {
     }
 
     @Test
-    public void testGetDuration() {
+    void testGetDuration() {
         // Arrange
         float duration = 7.5f;
         AnimatedScene scene = new AnimatedScene("path/to/atlas", "Anim", duration);
@@ -48,7 +48,7 @@ public class AnimatedSceneTest {
     }
 
     @Test
-    public void testGetAnimName() {
+    void testGetAnimName() {
         // Arrange
         String animName = "WalkCycle";
         AnimatedScene scene = new AnimatedScene("path/to/atlas", animName, 4.5f);

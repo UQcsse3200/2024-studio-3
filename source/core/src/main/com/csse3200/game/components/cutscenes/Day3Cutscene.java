@@ -8,6 +8,10 @@ import com.csse3200.game.services.ServiceLocator;
 
 public class Day3Cutscene extends Cutscene {
 
+    private final String backgroundImage = "images/Cutscenes/Day3_Scene.png";
+
+    String playerImage = "images/Cutscenes/Character Artwork/player_sprite_back_turned.png";
+
     public Day3Cutscene() {
         super();
     }
@@ -25,14 +29,12 @@ public class Day3Cutscene extends Cutscene {
         sceneText.add("Mafia Boss > If you mess up today, its five coins out of your pocket.");
         sceneText.add("Mafia Boss > Make those orders perfect or you'll be paying for it.");
 
-        String backgroundImage = "images/Cutscenes/Day3_Scene.png";
 
 
         String mafiaBossImage = "images/Cutscenes/Character Artwork/rhino_sprite.png";
         Vector2 mafiaBossPosition = new Vector2(-8, -7f);
         float mafiaBossScale = 5.0f;
 
-        String playerImage = "images/Cutscenes/Character Artwork/player_sprite_back_turned.png";
         Vector2 playerPosition = new Vector2(4, -7f);
         float playerScale = 5.0f;
 
@@ -62,11 +64,10 @@ public class Day3Cutscene extends Cutscene {
         Vector2 healthInspectorPosition = new Vector2(-8, -7);
         float healthInspectorScale = 5.0f;
 
-        String playerImage = "images/Cutscenes/Character Artwork/player_sprite_back_turned.png";
         Vector2 playerPosition = new Vector2(4, -7f);
         float playerScale = 5.0f;
 
-        Scene scene = new Scene("images/Cutscenes/Day3_Scene.png");
+        Scene scene = new Scene(backgroundImage);
         scene.setImages(
                 new String[]{healthInspectorImage, playerImage},
                 new Vector2[]{healthInspectorPosition, playerPosition},
@@ -83,7 +84,7 @@ public class Day3Cutscene extends Cutscene {
     protected void loadAssets() {
         // Load the background and character images for the cutscene
         textures = new String[] {
-                "images/Cutscenes/Day3_Scene.png",
+                backgroundImage,
         };
 
         animations = new String[] {};
@@ -91,7 +92,7 @@ public class Day3Cutscene extends Cutscene {
         images = new String[] {
                 "images/Cutscenes/Character Artwork/rhino_sprite.png",
                 "images/Cutscenes/Character Artwork/panda_sprite.png",
-                "images/Cutscenes/Character Artwork/player_sprite_back_turned.png"
+                playerImage
         };
 
         ResourceService resourceService = ServiceLocator.getResourceService();

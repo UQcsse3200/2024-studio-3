@@ -7,6 +7,9 @@ import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
 
 public class Day2Cutscene extends Cutscene{
+    private final String reporterImage = "images/Cutscenes/Character Artwork/reporter_sprite.png";
+    private final String playerImage = "images/Cutscenes/Character Artwork/player_sprite_back_turned.png";
+    private final String day2Background = "images/Cutscenes/Day2_Scene.png";
     /**
      * Constructor for the IntroCutscene class.
      */
@@ -33,11 +36,10 @@ public class Day2Cutscene extends Cutscene{
         sceneText.add("Reporter > They are all very curious");
         sceneText.add("Reporter > Dont be surprised if you see a few more animals than your first day");
         // Add scenes with background images, animations, text, and duration
-        String reporterImage = "images/Cutscenes/Character Artwork/reporter_sprite.png";
+
         Vector2 reporterPosition = new Vector2(-5, 1);
         float reporterScale = 4.0f;
 
-        String playerImage = "images/Cutscenes/Character Artwork/player_sprite_back_turned.png";
         Vector2 playerPosition = new Vector2(4, -5);
         float playerScale = 4.0f;
 
@@ -45,7 +47,7 @@ public class Day2Cutscene extends Cutscene{
         Vector2 exclamationPosition = new Vector2(5.5f, 2);
         float exclamationScale = 0.5f;
 
-        Scene scene = new Scene("images/Cutscenes/Day2_Scene.png");
+        Scene scene = new Scene(day2Background);
         scene.setImages(
                 new String[]{reporterImage, playerImage, exclamationMark},
                 new Vector2[] {reporterPosition, playerPosition, exclamationPosition},
@@ -64,16 +66,14 @@ public class Day2Cutscene extends Cutscene{
         sceneText.add("Reporter > The whole animal kingdom has heard about your reverse zoo of a restaurant.");
         sceneText.add("Reporter > A human running a restaurant? Its the story of the century.");
 
-        String reporterImage = "images/Cutscenes/Character Artwork/reporter_sprite.png";
         Vector2 reporterPosition = new Vector2(-5, 1);
         float reporterScale = 4.0f;
 
-        String playerImage = "images/Cutscenes/Character Artwork/player_sprite_back_turned.png";
         Vector2 playerPosition = new Vector2(4, -5);
         float playerScale = 4.0f;
 
         // Add scenes with background images, animations, text, and duration
-        Scene scene = new Scene("images/Cutscenes/Day2_Scene.png");
+        Scene scene = new Scene(day2Background);
         scene.setImages(
                 new String[]{reporterImage, playerImage},
                 new Vector2[] {reporterPosition, playerPosition},
@@ -100,7 +100,7 @@ public class Day2Cutscene extends Cutscene{
         animations = new String[] {};
 
         images = new String[] {
-                "images/Cutscenes/Character Artwork/reporter_sprite.png",
+                reporterImage,
                 "images/Cutscenes/Character Artwork/player_sprite_back_turned.png",
                 "images/Cutscenes/ExclamationMark.png"};
 
