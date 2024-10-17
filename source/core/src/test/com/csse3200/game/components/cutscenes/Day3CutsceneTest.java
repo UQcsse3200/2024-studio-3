@@ -15,6 +15,8 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import java.util.ArrayList;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
@@ -87,10 +89,10 @@ public class Day3CutsceneTest {
         day3Cutscene.setupScenes();  // Set up the scenes
 
         // Check that there are exactly 2 scenes created
-        assert day3Cutscene.scenes.size() == 4 : "Expected 2 scenes but got " + day3Cutscene.scenes.size();
+        assertEquals(4, day3Cutscene.scenes.size(), "Expected 2 scenes but got " + day3Cutscene.scenes.size());
 
         // Verify that the first scene has the correct background and text
-        Scene scene1 = day3Cutscene.scenes.get(0);
+        Scene scene1 = day3Cutscene.scenes.getFirst();
         assert scene1.getBackgroundImagePath().equals("images/Cutscenes/Day3_Scene.png");
         assert scene1.getSceneText().size == 3 : "Scene 1 text size mismatch";
 
@@ -154,6 +156,6 @@ public class Day3CutsceneTest {
         day3Cutscene.setupScenes();
         day3Cutscene.loadScene(0);
         assert day3Cutscene.currentText.equals("Mafia Boss > Heard the health inspector gave you a hard time. Typical.");
-        assert day3Cutscene.textIndex == 1;
+        assertEquals(1, day3Cutscene.textIndex);
     }
 }
