@@ -2,15 +2,17 @@ package com.csse3200.game.components.maingame;
 
 
 import com.csse3200.game.extensions.GameExtension;
-
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+
 import static org.junit.jupiter.api.Assertions.*;
+
 import java.util.List;
 import java.util.Collections;
 
 @ExtendWith(GameExtension.class)
 public class TextDisplayTest {
+
     @Test
     public void testSetText() {
         TextDisplay test = new TextDisplay();
@@ -22,10 +24,10 @@ public class TextDisplayTest {
     @Test
     public void testSettersAndGetters() {
         TextDisplay test = new TextDisplay();
-        assertEquals(test.getVisible(), false);
+        assertFalse(test.getVisible());
         assertEquals(test.getDelay(), 100L);
         test.setText("Testing the text string");
-        assertEquals(test.getVisible(), true);
+        assertTrue(test.getVisible());
         List<String> expectedText = Collections.singletonList("Testing the text string (enter to continue)");
         assertEquals(expectedText, test.getText());
     }
