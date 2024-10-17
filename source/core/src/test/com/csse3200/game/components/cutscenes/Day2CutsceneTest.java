@@ -1,4 +1,5 @@
-import com.csse3200.game.components.cutscenes.Day2Cutscene;
+package com.csse3200.game.components.cutscenes;
+
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.entities.Entity;
