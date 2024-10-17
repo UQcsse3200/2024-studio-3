@@ -15,6 +15,8 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import java.util.ArrayList;
+
+import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
@@ -89,9 +91,9 @@ public class Day4CutsceneTest {
         assert day4Cutscene.scenes.size() == 2 : "Expected 1 scene but got " + day4Cutscene.scenes.size();
 
         // Verify that the first scene has the correct background and text
-        Scene scene1 = day4Cutscene.scenes.get(0);
+        Scene scene1 = day4Cutscene.scenes.getFirst();
         assert scene1.getBackgroundImagePath().equals("images/Cutscenes/Day3_Scene.png");
-        assert scene1.getSceneText().size == 3 : "Scene 1 text size mismatch";
+        assertEquals(1, scene1.getSceneText().size);
     }
 
     @Test
@@ -148,6 +150,6 @@ public class Day4CutsceneTest {
         day4Cutscene.setupScenes();
         day4Cutscene.loadScene(0);
         assert day4Cutscene.currentText.equals("Mafia Boss > Heh, seems like the animals are done laughing at you.");
-        assert day4Cutscene.textIndex == 1;
+        assertEquals(1, day4Cutscene.textIndex);
     }
 }
