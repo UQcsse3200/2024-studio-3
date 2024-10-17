@@ -35,29 +35,37 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 
 @ExtendWith(GameExtension.class)
-public class InventoryDisplayTest {
+class InventoryDisplayTest {
 
     private ResourceService resourceService;
     private Stage stage;
     private RenderService renderService;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         // Headless configuration
         HeadlessApplicationConfiguration config = new HeadlessApplicationConfiguration();
         new HeadlessApplication(new ApplicationListener() {
             @Override
-            public void create() {}
+            public void create() {
+                //Used for testing
+            }
             @Override
             public void resize(int width, int height) {}
             @Override
-            public void render() {}
+            public void render() {
+                //Used for testing
+                }
             @Override
             public void pause() {}
             @Override
-            public void resume() {}
+            public void resume() {
+                //Used for testing
+            }
             @Override
-            public void dispose() {}
+            public void dispose() {
+                //Used for testing
+            }
         }, config);
 
         // Initialize Gdx application with mocked objects
@@ -77,9 +85,6 @@ public class InventoryDisplayTest {
         // Mock getAsset to return a mock Texture
         when(resourceService.getAsset(anyString(), eq(Texture.class))).thenReturn(mock(Texture.class));
 
-        // SpriteBatch mockSpriteBatch = mock(SpriteBatch.class);
-        // ScreenViewport viewport = new ScreenViewport();
-
         // Create a mock Stage
         stage = mock(Stage.class);
 
@@ -88,31 +93,31 @@ public class InventoryDisplayTest {
     }
 
     @AfterEach
-    public void tearDown() {
+    void tearDown() {
         // Clean up
         ServiceLocator.clear();
     }
 
     @Test
-    public void testDefaultConstructor() {
+    void testDefaultConstructor() {
         InventoryDisplay display = new InventoryDisplay();
         assertEquals(200, display.getSlotSize());
     }
 
     @Test
-    public void testCustomConstructor() {
+    void testCustomConstructor() {
         InventoryDisplay display = new InventoryDisplay(100);
         assertEquals(100, display.getSlotSize());
     }
 
     @Test
-    public void testInvalidSlotSize() {
+    void testInvalidSlotSize() {
         assertThrows(IllegalArgumentException.class, () -> new InventoryDisplay(0));
         assertThrows(IllegalArgumentException.class, () -> new InventoryDisplay(-5));
     }
 
     @Test
-    public void testCreateWithEmptyInventory() throws NoSuchFieldException, IllegalAccessException {
+    void testCreateWithEmptyInventory() throws NoSuchFieldException, IllegalAccessException {
         // Arrange
         int inventoryCapacity = 5;
         Entity entity = new Entity();
@@ -150,7 +155,7 @@ public class InventoryDisplayTest {
     }
 
     @Test
-    public void testCreateWithItems() throws NoSuchFieldException, IllegalAccessException {
+    void testCreateWithItems() throws NoSuchFieldException, IllegalAccessException {
         // Arrange
         int inventoryCapacity = 3;
         Entity entity = new Entity();
@@ -209,7 +214,7 @@ public class InventoryDisplayTest {
     }
 
     @Test
-    public void testUpdateInventory() throws NoSuchFieldException, IllegalAccessException {
+    void testUpdateInventory() throws NoSuchFieldException, IllegalAccessException {
         // Arrange
         int inventoryCapacity = 2;
         Entity entity = new Entity();
@@ -285,7 +290,7 @@ public class InventoryDisplayTest {
     }
     
     @Test
-    public void testDispose() throws NoSuchFieldException, IllegalAccessException {
+    void testDispose() throws NoSuchFieldException, IllegalAccessException {
         // Arrange
         int inventoryCapacity = 2;
         Entity entity = new Entity();
