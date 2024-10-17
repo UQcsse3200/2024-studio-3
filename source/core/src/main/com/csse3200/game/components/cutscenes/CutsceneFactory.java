@@ -13,6 +13,9 @@ import com.csse3200.game.services.ServiceLocator;
  * A factory class for creating entities used in cutscenes, such as backgrounds and animations.
  */
 public class CutsceneFactory {
+    private CutsceneFactory() {
+        //This does nothing
+    }
 
     /**
      * Creates a background entity with the specified image path. The background
