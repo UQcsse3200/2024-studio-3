@@ -270,13 +270,13 @@ public class TutorialScreenDisplay extends UIComponent {
 
     private void handleMovementKeys() {
         if (Gdx.input.isKeyJustPressed(Input.Keys.W) || Gdx.input.isKeyJustPressed(Input.Keys.A) ||
-                Gdx.input.isKeyJustPressed(Input.Keys.S) || Gdx.input.isKeyJustPressed(Input.Keys.D)) {
+                Gdx.input.isKeyJustPressed(Input.Keys.S) || Gdx.input.isKeyJustPressed(Input.Keys.D) || Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
             advanceTutorialStep();
         }
     }
 
     private void handleInteractionKey() {
-        if (Gdx.input.isKeyJustPressed(Input.Keys.E)) {
+        if (Gdx.input.isKeyJustPressed(Input.Keys.E) || Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
             advanceTutorialStep();
         }
     }
@@ -284,7 +284,7 @@ public class TutorialScreenDisplay extends UIComponent {
     private void handleDocketSwitch() {
         textDisplay.setText("Now use [ and ] keys to switch dockets.");
 
-        if (Gdx.input.isKeyJustPressed(Input.Keys.LEFT_BRACKET) || Gdx.input.isKeyJustPressed(Input.Keys.RIGHT_BRACKET)) {
+        if (Gdx.input.isKeyJustPressed(Input.Keys.LEFT_BRACKET) || Gdx.input.isKeyJustPressed(Input.Keys.RIGHT_BRACKET) || Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
             docketsShifted = true;
             logger.debug("Dockets shifted");
         }
@@ -295,25 +295,25 @@ public class TutorialScreenDisplay extends UIComponent {
     }
 
     private void handleReloadKey() {
-        if (Gdx.input.isKeyJustPressed(Input.Keys.R)) {
+        if (Gdx.input.isKeyJustPressed(Input.Keys.R) || Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
             advanceTutorialStep();
         }
     }
 
     private void handleWeaponChangeKey() {
-        if (Gdx.input.isKeyJustPressed(Input.Keys.Q)) {
+        if (Gdx.input.isKeyJustPressed(Input.Keys.Q) || Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
             advanceTutorialStep();
         }
     }
 
     private void handleSpecialActionKey() {
-        if (Gdx.input.isKeyJustPressed(Input.Keys.K)) {
+        if (Gdx.input.isKeyJustPressed(Input.Keys.K) || Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
             advanceTutorialStep();
         }
     }
 
     private void handleSecondaryActionKey() {
-        if (Gdx.input.isKeyJustPressed(Input.Keys.J)) {
+        if (Gdx.input.isKeyJustPressed(Input.Keys.J) || Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
             advanceTutorialStep();
         }
     }

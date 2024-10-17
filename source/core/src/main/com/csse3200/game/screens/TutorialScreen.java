@@ -106,49 +106,16 @@ public class TutorialScreen extends MainGameScreen {
 
     private static final Vector2 CAMERA_POSITION = new Vector2(7f, 4.5f);
 
-    //private final GdxGame game;
-//    private final Renderer renderer;
-//    private final PhysicsEngine physicsEngine;
-//    private boolean isPaused = false;
-//    private ResourceService resourceService;
-
     public TutorialScreen(GdxGame game) {
         super(game);
-        // this.game = game;
-
-//        if (this.game == null) {
-//            logger.error("TutGame null");
-//        } else {
-//            logger.info("TutGame object initialized successfully: " + this.game);
-//        }
 
         MainGameOrderTicketDisplay.resetOrderNumb();
 
         logger.debug("Initialising main game screen services");
         ServiceLocator.registerTimeSource(new GameTime());
 
-//        PhysicsService physicsService = new PhysicsService();
-//        ServiceLocator.registerPhysicsService(physicsService);
-//        physicsEngine = physicsService.getPhysics();
-//
-        //ServiceLocator.registerInputService(new InputService());
-        //ServiceLocator.registerResourceService(new ResourceService());
-        //ServiceLocator.registerPlayerService(new PlayerService());
-//
-//        ServiceLocator.registerEntityService(new EntityService());
-//        ServiceLocator.registerRenderService(new RenderService());
-//        ServiceLocator.registerDocketService(new DocketService());
-//
-//        ServiceLocator.registerDayNightService(new DayNightService());
-//        ServiceLocator.registerRandomComboService(new RandomComboService());
-//        ServiceLocator.registerLevelService(new LevelService());
-//        ServiceLocator.registerMapLayout(new MapLayout());
-
         logger.warn("Is SaveService null? " + (ServiceLocator.getSaveLoadService() == null));
-        //ServiceLocator.registerSaveLoadService(new SaveLoadService());
         ServiceLocator.registerGameScreen(this);
-
-        //ServiceLocator.registerTicketDetails(new TicketDetails());
 
         renderer = RenderFactory.createRenderer();
         renderer.getCamera().getEntity().setPosition(CAMERA_POSITION);
@@ -241,25 +208,16 @@ public class TutorialScreen extends MainGameScreen {
         ui.addComponent(new GameBackgroundDisplay())
                 .addComponent(new InputDecorator(stage, 10))
                 .addComponent(docketLineDisplay = new DocketLineDisplay())
-                .addComponent(new DocketLineDisplay())
                 .addComponent(new PerformanceDisplay())
                 .addComponent(new MainGameActions(game, UIFactory.createDocketUI()))
                 .addComponent(new KeybindsButtonDisplay())
                 .addComponent(new MainGameExitDisplay())
-                //.addComponent(new MainGameExitDisplay())
                 .addComponent(new Terminal())
                 .addComponent(inputComponent)
                 .addComponent(new TerminalDisplay())
                 .addComponent(new OrderActions())
-                //.addComponent(inputComponent)
-//                .addComponent(new TerminalDisplay())
-                //.addComponent(new OrderActions())
-//                .addComponent(new PauseMenuActions(this.game))
+                .addComponent(new OrderActions())
                 .addComponent(new RageUpgrade())
-//                .addComponent(new LoanUpgrade())
-//                .addComponent(new SpeedBootsUpgrade())
-//                .addComponent(new ExtortionUpgrade())
-//                .addComponent(new DancePartyUpgrade())
                 .addComponent(new TutorialScreenDisplay(game))
                 .addComponent(new TextDisplay(this));
 
