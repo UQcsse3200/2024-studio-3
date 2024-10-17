@@ -36,9 +36,6 @@ public class CutsceneTextDisplay extends UIComponent {
         super();
         this.table = new Table();
         this.visible = visible;
-        System.out.print("###############################################################################\n");
-        System.out.print(this.visible);
-        System.out.print("\n###############################################################################");
     }
 
     public CutsceneTextDisplay(Skin skin) {

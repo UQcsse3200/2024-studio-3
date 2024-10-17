@@ -164,11 +164,23 @@ public class CutsceneScreen extends ScreenAdapter {
                 .addComponent(cutsceneScreenDisplay);
 
 
-        if (Arrays.asList(moralEnums).contains(this.cutsceneVal)){
+//        if (Arrays.asList(moralEnums).contains(this.cutsceneVal)){
+//            ui.addComponent(new TextDisplay(this, "moralDecision"));
+//        } else{
+//            ui.addComponent(new CutsceneTextDisplay(textBoxVisible));
+//        }
+        // Here is where you add the appropriate TextDisplay or CutsceneTextDisplay component
+        if (cutsceneVal == GdxGame.CutsceneType.BACK_STORY) {
+            // Add the TextDisplay component for the backstory cutscene
+            ui.addComponent(new TextDisplay(this, "backstory"));
+        } else if (Arrays.asList(moralEnums).contains(this.cutsceneVal)) {
+            // Add the TextDisplay component for the moral cutscene
             ui.addComponent(new TextDisplay(this, "moralDecision"));
-        } else{
+        } else {
+            // Default case for other cutscenes (non-moral or backstory)
             ui.addComponent(new CutsceneTextDisplay(textBoxVisible));
         }
+
 
         // Register the UI entity with the entity service
         ServiceLocator.getEntityService().register(ui);

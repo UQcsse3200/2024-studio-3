@@ -16,7 +16,7 @@ public class BadEndCutscene extends Cutscene {
      */
     public BadEndCutscene() {
         super();
-        this.IsAnimatedScenes = true;
+        this.isAnimatedScenes = true;
     }
 
     /**

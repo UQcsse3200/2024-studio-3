@@ -23,7 +23,6 @@ public class CutsceneScreenDisplay extends UIComponent {
     private static final Logger logger = LoggerFactory.getLogger(CutsceneScreenDisplay.class);
     private Table table;
     private TextDisplay textDisplay;
-    private Skin skin = null;
 
     public CutsceneScreenDisplay(Skin skin) {
         super(skin);
@@ -87,8 +86,8 @@ public class CutsceneScreenDisplay extends UIComponent {
         table.add(nextSceneBtn).padBottom(10f).padRight(10f);
 
         // Create "Exit" button to transition back to the main menu
-        TextButton Exitbutton = new TextButton("Exit", skin);
-        Exitbutton.addListener(new ChangeListener() {
+        TextButton exitButton = new TextButton("Exit", skin);
+        exitButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent changeEvent, Actor actor) {
                 logger.debug("Main Menu button clicked");
@@ -100,7 +99,7 @@ public class CutsceneScreenDisplay extends UIComponent {
         Table topRightTable = new Table();
         topRightTable.setFillParent(true);
         topRightTable.top().right();
-        topRightTable.add(Exitbutton).padTop(20f).padRight(20f);
+        topRightTable.add(exitButton).padTop(20f).padRight(20f);
         stage.addActor(topRightTable);
         stage.addActor(table);
     }
@@ -179,9 +178,5 @@ public class CutsceneScreenDisplay extends UIComponent {
      * @param textDisplay the CutsceneTextDisplay to be set.
      */
     public void setTextDisplay(TextDisplay textDisplay) { this.textDisplay = textDisplay; }
-
-    /**
-     * Function that enables or disables the text box.
-     */
 
 }

@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
  * and disposal of cutscenes, and ensures that transitions occur once cutscenes are completed.
  */
 public class CutsceneArea extends GameArea {
-    private static final Logger logger = LoggerFactory.getLogger(ForestGameArea.class);
+    private static final Logger logger = LoggerFactory.getLogger(CutsceneArea.class);
 
     // Index representing which cutscene to load (could be part of an enum in the future)
     private GdxGame.CutsceneType cutsceneValue;
@@ -93,7 +93,6 @@ public class CutsceneArea extends GameArea {
                 ServiceLocator.setCurrentCutscene(currentCutscene);  // Set the current cutscene in the service locator
                 break;
             case BAD_END:
-                //ServiceLocator.clear(Le);
                 logger.debug("Loading bad end cutscene");
                 currentCutscene = new BadEndCutscene();
                 ServiceLocator.setCurrentCutscene(currentCutscene);
@@ -113,8 +112,6 @@ public class CutsceneArea extends GameArea {
         Entity cutsceneEntity = new Entity();
         cutsceneEntity.addComponent(currentCutscene);
         ServiceLocator.getEntityService().register(cutsceneEntity);
-
-
 
         // Start the cutscene
         currentCutscene.start();

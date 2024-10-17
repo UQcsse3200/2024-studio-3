@@ -16,7 +16,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 
 @ExtendWith(GameExtension.class)
-public class PlayerAnimationTest {
+class PlayerAnimationTest {
     private AutoCloseable mocks;
     private Entity entity;
     private PlayerAnimationController pac;
@@ -40,13 +40,13 @@ public class PlayerAnimationTest {
     }
 
     @Test
-    public void shouldCreate() {
+    void shouldCreate() {
         pac.create();
         verify(pac).create();
     }
 
     @Test
-    public void shouldStandTurn() {
+    void shouldStandTurn() {
         pac.create();
 
         pac.animateStandLeft();
@@ -62,7 +62,7 @@ public class PlayerAnimationTest {
         verify(animator).startAnimation("Character_StandUp");
     }
     @Test
-    public void shouldAnimateDirections() {
+    void shouldAnimateDirections() {
         pac.create();
 
         pac.animateLeft();
@@ -99,7 +99,7 @@ public class PlayerAnimationTest {
     }
 
     @Test
-    public void shouldAnimateStop() {
+    void shouldAnimateStop() {
         pac.create();
 
         // stand left

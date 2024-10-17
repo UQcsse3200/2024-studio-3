@@ -52,7 +52,7 @@ public abstract class Cutscene extends Component {
     protected String animName;
 
     // Whether the scenes are fully animated
-    public boolean IsAnimatedScenes = false;
+    public boolean isAnimatedScenes = false;
 
     // Game time service to keep track of time
     protected GameTime gameTime;
@@ -69,7 +69,7 @@ public abstract class Cutscene extends Component {
     /**
      * Constructor for the Cutscene class. Initializes the game time and loads assets and scenes.
      */
-    public Cutscene() {
+    protected Cutscene() {
         this.gameTime = ServiceLocator.getTimeSource();
         loadAssets();
         setupScenes();
@@ -94,7 +94,7 @@ public abstract class Cutscene extends Component {
     public void update() {
         float currentTime = gameTime.getTime();
         // Check if the current scene has finished
-        if (!IsAnimatedScenes) {
+        if (!isAnimatedScenes) {
             if ((currentScene != null) && (currentTime - timeStart) > currentScene.getDuration()) {
                 logger.info("Scene {} finished. Moving to next scene.", currentSceneIndex);
                 nextCutscene();
@@ -114,9 +114,9 @@ public abstract class Cutscene extends Component {
         disposeEntities();  // Dispose of current entities before moving to the next scene
 
         currentSceneIndex++;
-        if (!IsAnimatedScenes) {
+        if (!isAnimatedScenes) {
             if (currentSceneIndex < scenes.size()) {
-                logger.info("Loading next scene: {}", currentSceneIndex);
+                logger.info("Loading next animated scene: {}", currentSceneIndex);
                 loadScene(currentSceneIndex);
             } else {
                 logger.info("Cutscene finished. Triggering next event.");
@@ -124,7 +124,7 @@ public abstract class Cutscene extends Component {
             }
         } else {
             if (currentSceneIndex < animatedScenes.size()) {
-                logger.info("Loading next scene: {}", currentSceneIndex);
+                logger.info("Loading next non animated scene: {}", currentSceneIndex);
                 loadScene(currentSceneIndex);
             } else {
                 logger.info("Cutscene finished. Triggering next event.");
@@ -152,7 +152,7 @@ public abstract class Cutscene extends Component {
      * @param sceneIndex Index of the scene to load
      */
     protected void loadScene(int sceneIndex) {
-        if (!IsAnimatedScenes) {
+        if (!isAnimatedScenes) {
             if (sceneIndex >= scenes.size()) {
                 logger.error("No more scenes available.");
                 nextCutscene();
@@ -447,4 +447,54 @@ public abstract class Cutscene extends Component {
     public void setAnimations(String[] animations) {
         this.animations = animations;
     }
+
+    /**
+     * Gets the current scene index.
+     * This method returns the index of the scene that is currently being displayed
+     * in the cutscene. The index corresponds to the position of the scene in the
+     * list of scenes.
+     *
+     * @return the index of the current scene.
+     */
+    public int getCurrentSceneIndex() {
+        return currentSceneIndex;
+    }
+
+    /**
+     * Sets the current scene index and transitions to the specified scene.
+     * This method allows for manually setting the current scene index, which
+     * transitions the cutscene to the scene corresponding to the provided index.
+     * It first validates the scene index to ensure it's within the valid range.
+     * If the index is valid, it disposes of the entities in the current scene,
+     * updates the scene index, and loads the new scene.
+     *
+     * @param newSceneIndex the index of the scene to switch to.
+     *                      Must be a valid index within the list of scenes.
+     * @throws IllegalArgumentException if the provided index is outside the range
+     *                                  of available scenes.
+     */
+
+    public void setCurrentScene(int newSceneIndex) {
+        if (newSceneIndex < 0 || newSceneIndex >= scenes.size()) {
+            logger.error("Invalid scene index: {}. Scene index must be between 0 and {}.", newSceneIndex, scenes.size() - 1);
+            return;
+        }
+
+        // Dispose of the current entities
+        disposeEntities();
+
+        // Set the new scene index
+        currentSceneIndex = newSceneIndex;
+
+        logger.info("Setting current scene to index {}", currentSceneIndex);
+
+        // Load the new scene
+        loadScene(currentSceneIndex);
+
+        // Ensure no automatic progression occurs here
+        logger.info("Scene {} loaded successfully. Not triggering next scene.", currentSceneIndex);
+    }
+
+
+
 }

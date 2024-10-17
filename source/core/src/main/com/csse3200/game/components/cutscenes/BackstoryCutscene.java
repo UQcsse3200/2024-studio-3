@@ -9,6 +9,7 @@ import com.csse3200.game.services.ServiceLocator;
  * Specific cutscene class handling the backstory of the game.
  */
 public class BackstoryCutscene extends Cutscene {
+    private String foodCriticBackground = "images/Cutscenes/Food_Critic_Background.png";
 
     /**
      * Constructor for BackstoryCutscene.
@@ -77,12 +78,13 @@ public class BackstoryCutscene extends Cutscene {
         scene2.setDuration(4.0f);
         scenes.add(scene2);
 
-        Scene scene3 = new Scene("images/Cutscenes/Food_Critic_Background.png");
+
+        Scene scene3 = new Scene(foodCriticBackground);
         scene3.setSceneText(scene3Text);
         scene3.setDuration(3.0f);
         scenes.add(scene3);
 
-        Scene scene4 = new Scene("images/Cutscenes/Food_Critic_Background.png");
+        Scene scene4 = new Scene(foodCriticBackground);
         scene4.setSceneText(scene4Text);
         scene4.setDuration(3.0f);
         scenes.add(scene4);
@@ -139,8 +141,7 @@ public class BackstoryCutscene extends Cutscene {
          textures = new String[] {
                 "images/Cutscenes/Brooklyn_Bistro_Background.png",
                 "images/Cutscenes/Kitchen_Background.png",
-                "images/Cutscenes/Food_Critic_Background.png",
-                "images/Cutscenes/Food_Critic_Background.png",
+                foodCriticBackground,
                 "images/Cutscenes/Animals_in_Kitchen_Background.png",
                 "images/Cutscenes/Farm_Background.png",
                 "images/Cutscenes/graveyard_mafia.png",

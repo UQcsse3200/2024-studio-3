@@ -50,13 +50,19 @@ public class CutsceneTest {
 
         cutscene = new Cutscene() {
             @Override
-            protected void setupScenes() {}
+            protected void setupScenes() {
+                // Empty for testing
+            }
 
             @Override
-            protected void loadAssets() {}
+            protected void loadAssets() {
+                // Empty for testing
+            }
 
             @Override
-            public void createEntities() {}
+            public void createEntities() {
+                // Empty for testing
+            }
 
             @Override
             protected void nextCutscene() {
@@ -143,7 +149,7 @@ public class CutsceneTest {
         scenes.add(scene2);
 
         Texture mockTexture = mock(Texture.class);
-        when(resourceService.getAsset(eq("images/Cutscene/Day2_Scene.png"), eq(Texture.class)))
+        when(resourceService.getAsset("images/Cutscene/Day2_Scene.png", Texture.class))
                 .thenReturn(mockTexture);
 
         cutscene.setScenes(scenes);
@@ -193,7 +199,7 @@ public class CutsceneTest {
 
     @Test
     public void testAnimatedSceneLoadsCorrectly() {
-        cutscene.IsAnimatedScenes = true;
+        cutscene.isAnimatedScenes = true;
         AnimatedScene animatedScene = mock(AnimatedScene.class);
         when(animatedScene.getDuration()).thenReturn(5.0f);
         when(animatedScene.getAtlasFilePath()).thenReturn("atlas.atlas");

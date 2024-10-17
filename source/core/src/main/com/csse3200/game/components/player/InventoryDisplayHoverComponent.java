@@ -34,7 +34,6 @@ import com.csse3200.game.physics.components.PhysicsComponent;
  * The main use for this component is to show the inventories of the stations to the player.
  */
 public class InventoryDisplayHoverComponent extends RenderComponent {
-    private static final Logger logger = LoggerFactory.getLogger(InventoryDisplayHoverComponent.class);
     private ArrayList<Texture> itemImages;
     private Texture backgroundImage;
     private Texture selectedBackgroundImage;
@@ -93,7 +92,6 @@ public class InventoryDisplayHoverComponent extends RenderComponent {
             scale = entity.getScale();
             updateImages();
         }
-        //logger.info("Created InventoryDisplayHoverComponent");
     }
 
     /**
@@ -104,8 +102,8 @@ public class InventoryDisplayHoverComponent extends RenderComponent {
         itemImages = new ArrayList<>();
 
         if (entity != null) {
-            InventoryComponent inventory = entity.getComponent(InventoryComponent.class);
-            for (ItemComponent item : inventory.getItems()) {
+            InventoryComponent inventoryComponent = entity.getComponent(InventoryComponent.class);
+            for (ItemComponent item : inventoryComponent.getItems()) {
                 if (item != null ) {
                     String itemTexturePath = item.getTexturePath();
                     Texture itemTexture;
@@ -149,16 +147,11 @@ public class InventoryDisplayHoverComponent extends RenderComponent {
         ItemComponent item = inventory.getItems().get(0);
 
         // Check if the item is still choppable
-        if (item == null || !(item instanceof IngredientComponent)) {
+        if (!(item instanceof IngredientComponent ingredientComponent)) {
             return false;
         }
 
-        IngredientComponent ingredientComponent = (IngredientComponent) item;
-        if (!ingredientComponent.getItemState().equals("raw")) {
-            return false;
-        }
-
-        return true;
+        return ingredientComponent.getItemState().equals("raw");
     }
 
     private boolean showRotateKey() {
@@ -167,45 +160,28 @@ public class InventoryDisplayHoverComponent extends RenderComponent {
         }
 
         inventory = entity.getComponent(InventoryComponent.class);
-        if (inventory.getSize() < 2) {
-            return false;
-        }
-
-        return true;
+        return inventory.getSize() >= 2;
     }
 
     private boolean showInteractKey() {
         // If were chopping we want to show the interact key if
         // 1. the player doesn't have an item but we do
-        // 2. the player has an item but we dont
+        // 2. the player has an item but we don't
 
         // If were a mixing station we show interaction key if
         // 1. the player has an item but we aren't full
         // 2. the player doesn't have an item but we do
 
         // If were a collection station we show interaction key if
-        // 1. the player doesn't have an item 
+        // 1. the player doesn't have an item
 
         if (isChoppingStation || isCookingStation) {
             boolean isFull = (inventory.getSize() == 1);
-            StationItemHandlerComponent itemHandler = entity.getComponent(StationItemHandlerComponent.class);           
-            if (!hasItem) {
-                return isFull;
-            } else {
-                return !isFull && itemHandler.isItemAccepted(currentItem);
-            }
+            return (!hasItem && isFull) || (hasItem && !isFull && entity.getComponent(StationItemHandlerComponent.class).isItemAccepted(currentItem));
         }
 
-        if (isMixingStation) {            
-            if (hasItem && inventory.getSize() >= inventory.getCapacity()) {
-                return false;
-            } else if (hasItem && inventory.getSize() < inventory.getCapacity()) {
-                return true;
-            } else if (!hasItem && inventory.getSize() > 0) {
-                return true;
-            } else {
-                return false;
-            }
+        if (isMixingStation) {
+            return (hasItem && inventory.getSize() < inventory.getCapacity()) || (!hasItem && inventory.getSize() > 0);
         }
 
         if (isCollectionStation) {
@@ -214,6 +190,7 @@ public class InventoryDisplayHoverComponent extends RenderComponent {
 
         return false;
     }
+
 
     private boolean showCombineKey() {
         if (!isMixingStation || hasItem) {

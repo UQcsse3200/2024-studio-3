@@ -11,8 +11,8 @@ import com.csse3200.game.services.ServiceLocator;
 public class HoverBoxComponent extends RenderComponent {
     private Texture hoverImage;
     private ShapeRenderer shapeRenderer;
-    private Vector2 position;
-    private Vector2 scale;
+    Vector2 position;
+    Vector2 scale;
     private static final float X_OFFSET = 0.45f;
     private static final float Y_OFFSET = 1.0F;
 
@@ -78,5 +78,10 @@ public class HoverBoxComponent extends RenderComponent {
     @Override
     public void setStage(Stage mock) {
         // setStage is empty
+    }
+
+    public Object getTexture() {
+        // TODO Auto-generated method stub
+        return hoverImage;
     }
 }
