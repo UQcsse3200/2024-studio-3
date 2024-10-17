@@ -98,7 +98,6 @@ class InventoryComponentTest {
   @Test
   void shouldRemoveLastItemWithNull() {
     ItemComponent chocolate = new ItemComponent("Chocolate", ItemType.CHOCOLATE, 1);
-    ItemComponent beef = new ItemComponent("Beef", ItemType.BEEF, 1);
     inventory.addItemAt(chocolate, 1);
 
     ItemComponent removed = inventory.removeItem();
