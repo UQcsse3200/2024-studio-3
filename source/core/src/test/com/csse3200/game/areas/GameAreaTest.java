@@ -18,8 +18,10 @@ class GameAreaTest {
 
     GameArea gameArea =
         new GameArea() {
-          @Override
-          public void create() {}
+            @Override
+            public void create() {
+                // Default create assignment
+            }
         };
 
     ServiceLocator.registerEntityService(new EntityService());
