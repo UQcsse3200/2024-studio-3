@@ -18,6 +18,7 @@ import org.junit.Test;
 
 import java.util.*;
 
+import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
@@ -63,6 +64,7 @@ public class LoseEndTest {
 
         // Initialize the cutscene with it not calling the service locator and instead just triggering own event
         loseCutscene = new LoseCutscene() {
+            @Override
             protected void nextCutscene() {
                 disposeEntities();
 
@@ -110,7 +112,7 @@ public class LoseEndTest {
         // Verify the first scene has the correct background, animation, and text
         Scene scene1 = loseCutscene.scenes.getFirst();
         assert scene1.getBackgroundImagePath().equals("images/Cutscenes/Graveyard_Scene.png");
-        assert scene1.getSceneText().size == 2;  // Text contains two items
+        assertEquals(2, scene1.getSceneText().size);  // Text contains two items
     }
 
     /**
@@ -194,7 +196,7 @@ public class LoseEndTest {
         loseCutscene.loadScene(0);
         assert loseCutscene.currentText.equals("\"Its quite a shame...\"");
 
-        assert loseCutscene.textIndex == 1;
+        assertEquals(1, loseCutscene.textIndex);
     }
 
 }
