@@ -79,12 +79,12 @@ public class BackstoryCutscene extends Cutscene {
         scenes.add(scene2);
 
 
-        Scene scene3 = new Scene(foodCriticBackground);
+        Scene scene3 = new Scene("images/Cutscenes/Food_Critic_Background.png");
         scene3.setSceneText(scene3Text);
         scene3.setDuration(3.0f);
         scenes.add(scene3);
 
-        Scene scene4 = new Scene(foodCriticBackground);
+        Scene scene4 = new Scene("images/Cutscenes/Food_Critic_Background.png");
         scene4.setSceneText(scene4Text);
         scene4.setDuration(3.0f);
         scenes.add(scene4);
@@ -141,7 +141,7 @@ public class BackstoryCutscene extends Cutscene {
          textures = new String[] {
                 "images/Cutscenes/Brooklyn_Bistro_Background.png",
                 "images/Cutscenes/Kitchen_Background.png",
-                foodCriticBackground,
+                "images/Cutscenes/Food_Critic_Background.png",
                 "images/Cutscenes/Animals_in_Kitchen_Background.png",
                 "images/Cutscenes/Farm_Background.png",
                 "images/Cutscenes/graveyard_mafia.png",

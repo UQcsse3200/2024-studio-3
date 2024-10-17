@@ -195,20 +195,10 @@ public class ForestGameArea extends GameArea {
   private Entity player;
     // Reference to CheckWinLoseComponent
 
-    public enum personalCustomerEnums{
-    HANK,
-    LEWIS,
-    SILVER,
-    JOHN,
-    MOONKI,
-    BASIC_CHICKEN,
-    BASIC_SHEEP
-  }
-
   /**
    * Initialise this ForestGameArea to use the provided TerrainFactory.
    * @param terrainFactory TerrainFactory used to create the terrain for the GameArea.
-   * @requires terrainFactory != null
+   * requires terrainFactory != null
    */
   public ForestGameArea(TerrainFactory terrainFactory, GdxGame.LevelType level, UpgradesDisplay upgradesDisplay) {
     super();
@@ -288,7 +278,6 @@ public class ForestGameArea extends GameArea {
    * Checks the player's game state using the CheckWinLoseComponent and determines whether
    * to trigger a win or loss cutscene. If the player has won, it further checks the moral
    * decisions to determine whether to trigger the "good" or "bad" ending.
-   *
    * The function performs the following:
    * 1. If the player has lost (gameState is "LOSE"), it triggers the "loseEnd" event and
    *    displays a losing message to the player.
@@ -447,20 +436,6 @@ public class ForestGameArea extends GameArea {
   }
 
   /**
-   * spawn a bench
-   *         note: coordinates begin at bottom left of screen
-   */
-  private void spawnBench() {
-    //Spawn a flame, this is temporary and for testing purposes
-    GridPoint2 flamePos = new GridPoint2(1,1);
-    Entity flame = StationFactory.createFlame();
-    spawnEntityAt(flame, flamePos, false, false);
-
-    GridPoint2 fireExtinguisherPos = new GridPoint2(3, 1);
-    Entity fireExtinguisher = StationFactory.createFireExtinguisher();
-    spawnEntityAt(fireExtinguisher, fireExtinguisherPos, false, false);
-  }
-  /**
    * Spawns benches around the restaurant
    */
 
@@ -478,118 +453,6 @@ public class ForestGameArea extends GameArea {
     ServiceLocator.getPlayerService().registerPlayer(newPlayer);
 
     return newPlayer;
-  }
-
-
-  /**
-   * Spawn a fish item.
-   * @param cookedLevel - The level the fish is cooked at, can be "raw", "cooked" or "burnt".
-   * @return A fish entity.
-   */
-  private Entity spawnFish(String cookedLevel) {
-    Entity newFish = ItemFactory.createFish(cookedLevel);
-    spawnEntityAt(newFish, new GridPoint2(15, 15), true, true);
-    return newFish;
-  }
-
-  /**
-   * Spawn a beef item.
-   * @param cookedLevel - The level the beef is cooked at, can be "raw", "cooked" or "burnt".
-   * @return A beef entity.
-   */
-  private Entity spawnBeef(String cookedLevel) {
-    Entity newBeef = ItemFactory.createBeef(cookedLevel);
-    spawnEntityAt(newBeef, new GridPoint2(4, 4), true, true);
-    newBeef.setScale(0.5f,0.5f);
-    newBeef.setPosition(9.2f, 8);
-    return newBeef;
-  }
-
-  /**
-   * Spawn a banana item.
-   * @param choppedLevel - The level the banana is chopped at, can be "raw" or "chopped".
-   * @return A banana entity.
-   */
-  private Entity spawnBanana(String choppedLevel) {
-    Entity newBanana = ItemFactory.createBanana(choppedLevel);
-    spawnEntityAt(newBanana, new GridPoint2(3, 3), true, true);
-    newBanana.setScale(0.5f,0.5f);
-    return newBanana;
-  }
-
-  /**
-   * Spawn a tomato item.
-   * @param choppedLevel - The level the tomato is chopped at, can be "raw" or "chopped".
-   * @return A tomato entity.
-   */
-  private Entity spawnTomato(String choppedLevel) {
-    Entity newTomato = ItemFactory.createTomato(choppedLevel);
-    spawnEntityAt(newTomato, new GridPoint2(8, 8), true, true);
-    newTomato.setScale(0.5f,0.5f);
-    return newTomato;
-  }
-
-  /**
-   * Spawn a cucumber item.
-   * @param choppedLevel - The level the cucumber is chopped at, can be "raw" or "chopped".
-   * @return A cucumber entity.
-   */
-  private Entity spawnCucumber(String choppedLevel) {
-    Entity newCucumber = ItemFactory.createCucumber(choppedLevel);
-    spawnEntityAt(newCucumber, new GridPoint2(9, 9), true, true);
-    newCucumber.setScale(0.5f,0.5f);
-    return newCucumber;
-  }
-
-  /**
-   * Spawn a strawberry item.
-   * @param choppedLevel - The level the strawberry is chopped at, can be "raw" or "chopped".
-   * @return A strawberry entity.
-   */
-  private Entity spawnStrawberry(String choppedLevel) {
-    Entity newStrawberry = ItemFactory.createStrawberry(choppedLevel);
-    spawnEntityAt(newStrawberry, new GridPoint2(6, 5), false, true);
-    newStrawberry.setScale(0.5f,0.5f);
-    newStrawberry.setPosition(7.3f, 5f);
-
-    return newStrawberry;
-  }
-
-  /**
-   * Spawn a lettuce item.
-   * @param choppedLevel - The level the lettuce is chopped at, can be "raw" or "chopped".
-   * @return A lettuce entity.
-   */
-  private Entity spawnLettuce(String choppedLevel) {
-    Entity newLettuce = ItemFactory.createLettuce(choppedLevel);
-    spawnEntityAt(newLettuce, new GridPoint2(5, 4), true, true);
-    newLettuce.setScale(0.5f,0.5f);
-    newLettuce.setPosition(9 + 0.2f, 9);
-    return newLettuce;
-  }
-
-  /**
-   * Spawn a chocolate item.
-   * @param choppedLevel - The level the chocolate is chopped at, can be "raw" or "chopped".
-   * @return A chocolate entity.
-   */
-  private Entity spawnChocolate(String choppedLevel) {
-    Entity newChocolate = ItemFactory.createChocolate(choppedLevel);
-    spawnEntityAt(newChocolate, new GridPoint2(4, 8), true, true);
-    newChocolate.setScale(0.5f,0.5f);
-    return newChocolate;
-  }
-
-  /**
-   * Spawn an Açaí item.
-   * @param choppedLevel - The level the Açaí is chopped at, can be "raw" or "chopped".
-   * @return A chocolate entity.
-   */
-  private Entity spawnAcai(String choppedLevel) {
-    Entity newAcai = ItemFactory.createAcai(choppedLevel);
-    spawnEntityAt(newAcai, new GridPoint2(4, 8), true, true);
-    newAcai.setScale(0.65f,0.65f);
-    return newAcai;
   }
 
   private Entity spawnCustomerController() {
@@ -644,35 +507,6 @@ public class ForestGameArea extends GameArea {
   private void spawnBasicSheep() {
     spawnBasicCustomer("Basic Sheep");
   }
-
-  /**
-   * Spawn Stack Plate item.
-   * @param quantity - amount of stack.
-   * @return A newPlate entity.
-   
-  private Entity spawnStackPlate(int quantity) {
-    Entity newPlate = PlateFactory.spawnPlateStack(quantity);
-    GridPoint2 platePosition = new GridPoint2(5, 3);
-    spawnEntityAt(newPlate, platePosition, true, false);
-    newPlate.setScale(1.0f, 1.0f);
-    newPlate.setPosition(newPlate.getPosition().x - 6f , newPlate.getPosition().y + 0f);
-    return newPlate;
-  }
-    
-
-  /**
-   * Spawn Stack Plate item but with meals
-   * @return A newPlate entity with meal
-   
-  private Entity spawnPlatewithMeal() {
-    Entity newPlate = PlateFactory.spawnMealOnPlate(1,"salad");
-    GridPoint2 platePosition = new GridPoint2(6, 4);
-    spawnEntityAt(newPlate, platePosition, true, false);
-    newPlate.setScale(0.8f, 0.8f);
-
-    return newPlate;
-  }
-    */
 
   /**
    * Plays the background music

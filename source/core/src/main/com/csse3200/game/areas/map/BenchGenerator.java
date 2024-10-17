@@ -13,7 +13,7 @@ import java.util.logging.Level;
  * Utility class for creating benches
  */
 public class BenchGenerator {
-    static final Logger LOGGER = Logger.getLogger(BenchGenerator.class.getPackage().getName());
+    static private final Logger LOGGER = Logger.getLogger(BenchGenerator.class.getPackage().getName());
     /**
      * Creates a column of benches
      * @param x - x coordinate

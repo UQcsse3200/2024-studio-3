@@ -48,7 +48,7 @@ public abstract class GameArea implements Disposable {
   static int staticX = 1;
   static int staticY = 3;
 
-  protected void spawnFlame(String type) {
+  protected void spawnFlame() {
     GridPoint2 flamePos = new GridPoint2(staticX,staticY + 1);
     Entity flame = StationFactory.createFlame();
     spawnEntityAt(flame, flamePos, false, false);

@@ -31,18 +31,18 @@ public class Confirmationpopup extends Dialog {
     @Override
     protected void result(Object object) {
         int isTrue = (int) object;
-        if (isTrue == 1) {
-            game.setScreen(new TutorialScreen(game));
-        } else if (isTrue == 2) {
-//            game.setScreen(GdxGame.ScreenType.MAIN_GAME);
-            // User chose "No", transition to BackstoryCutscene
-            BackstoryCutscene backstoryCutscene = new BackstoryCutscene();
-            game.setCurrentCutscene(backstoryCutscene); // Set the backstory cutscene as current
-            game.setScreen(new CutsceneScreen(game, GdxGame.CutsceneType.BACK_STORY)); // Start the cutscene screen the backstory
-        } else {
-            game.setScreen(GdxGame.ScreenType.MAIN_GAME);
+        switch (isTrue) {
+            case 1 -> {
+                game.setScreen(new TutorialScreen(game));
+            }
+            case 2 -> {
+                BackstoryCutscene backstoryCutscene = new BackstoryCutscene();
+                game.setCurrentCutscene(backstoryCutscene);
+                game.setScreen(new CutsceneScreen(game, GdxGame.CutsceneType.BACK_STORY));
+            }
+            default -> game.setScreen(GdxGame.ScreenType.MAIN_GAME);
         }
-
     }
+
 
 }
