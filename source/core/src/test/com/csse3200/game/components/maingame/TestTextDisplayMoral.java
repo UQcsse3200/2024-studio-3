@@ -26,13 +26,9 @@ public class TestTextDisplayMoral {
     @Mock
     private Cutscene cutscene;
 
-    @Mock
-    private DayNightService dayNightService;
 
     private TextDisplay textDisplay;
 
-    @Mock
-    InputEvent inputEvent;
 
     @BeforeEach
     void setUp() {
@@ -85,10 +81,4 @@ public class TestTextDisplayMoral {
         assertTrue(textDisplay.getVisible());
     }
 
-    @Test
-    void testKeyDown_ShouldTriggerYesEventAtEnd() {
-        textDisplay.setScreen("moralDecision");
-
-        Cutscene cutscene;
-    }
 }
