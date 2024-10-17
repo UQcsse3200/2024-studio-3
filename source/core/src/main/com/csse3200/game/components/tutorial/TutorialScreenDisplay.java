@@ -1,16 +1,11 @@
 package com.csse3200.game.components.tutorial;
 
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
 import com.csse3200.game.GdxGame;
-import com.csse3200.game.components.ordersystem.MainGameOrderBtnDisplay;
-import com.csse3200.game.components.player.PlayerActions;
 import com.csse3200.game.entities.Entity;
-import com.csse3200.game.screens.MainGameScreen;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
 import com.csse3200.game.components.ordersystem.MainGameOrderTicketDisplay;
@@ -25,26 +20,16 @@ import com.csse3200.game.components.maingame.TextDisplay;
  */
 public class TutorialScreenDisplay extends UIComponent {
     private static final Logger logger = LoggerFactory.getLogger(TutorialScreenDisplay.class);
-    private GdxGame game;
+    private final GdxGame game;
     private int tutorialStep = 0;
-    private MainGameOrderBtnDisplay orderBtnDisplay;
-    private boolean createOrderPressed = false;
     private boolean docketsShifted = false;
     private Table table;
     private TextDisplay textDisplay;
-    private PlayerActions playerActions;
-    private boolean wPressedLastFrame = false;
-    private boolean aPressedLastFrame = false;
-    private boolean sPressedLastFrame = false;
-    private boolean dPressedLastFrame = false;
     private static final int MAX_TUTORIAL_STEP = 8;  // Increased for combining step
-    int i = 0;
 
     public TutorialScreenDisplay(GdxGame game) {
 
         this.game = game;
-//        this.orderTicketDisplay = new MainGameOrderTicketDisplay(ServiceLocator.getRenderService(), ServiceLocator.getPlayerService());
-//        this.orderBtnDisplay = new MainGameOrderBtnDisplay();
 
         if (this.game == null) {
             logger.error("Game null");
@@ -59,12 +44,7 @@ public class TutorialScreenDisplay extends UIComponent {
         MainGameOrderTicketDisplay.resetOrderNumb();
 
         if (entity != null) {
-            //playerActions = ServiceLocator.getPlayerService().getPlayer().getComponent(PlayerActions.class);
-            if (playerActions == null) {
-                logger.info("PlayerActions component not found.");
-            }else{
-                logger.info("PlayerActions component attatched");
-            }
+            logger.info("PlayerActions component attatched");
 
         } else {
             logger.error("Entity null");
@@ -85,12 +65,6 @@ public class TutorialScreenDisplay extends UIComponent {
         entity.getEvents().addListener("TextComplete", this::onTextComplete);
 
         advanceTutorialStep();
-
-        // Add event listeners for create order
-        //entity.getEvents().addListener("createOrder", this::onCreateOrderPressed);
-        //ServiceLocator.getInputService().getEvents().addListener("createOrder", this::onCreateOrderPressed);
-//        ServiceLocator.getInputService().getEvents().addListener("walked", this::onPlayerMoved);
-//        ServiceLocator.getInputService().getEvents().addListener("interact", this::onInteraction);// start the tutorial from the first step
 
         stage.addActor(table);
     }
@@ -253,109 +227,100 @@ public class TutorialScreenDisplay extends UIComponent {
      * Advances the tutorial to the next tut
      */
     private void onTextComplete(int currentPart) {
-        if (currentPart >= 0 && currentPart <= textDisplay.getText().size()) {
-            switch (tutorialStep) {
-                case 1:
-                    if (Gdx.input.isKeyJustPressed(Input.Keys.W) || Gdx.input.isKeyJustPressed(Input.Keys.A) ||
-                            Gdx.input.isKeyJustPressed(Input.Keys.S) || Gdx.input.isKeyJustPressed(Input.Keys.D) || Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
-                        advanceTutorialStep();
-                    }
-                    break;
-                case 2:
-                    if (Gdx.input.isKeyJustPressed(Input.Keys.E) || Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
-                        advanceTutorialStep();
-                    }
-                    break;
-                case 3:
-                    if (Gdx.input.isKeyJustPressed(Input.Keys.LEFT_BRACKET) || Gdx.input.isKeyJustPressed(Input.Keys.RIGHT_BRACKET) || Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
-                        docketsShifted = true;
-                        logger.debug("Dockets shifted!");
-                        advanceTutorialStep();
-                    }
-                    break;
-                case 4:
-                    if (Gdx.input.isKeyJustPressed(Input.Keys.R) || Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
-                        advanceTutorialStep();
-                    }
-                    break;
-                case 5:
-                    if (Gdx.input.isKeyJustPressed(Input.Keys.Q) || Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
-                        advanceTutorialStep();
-                    }
-                    break;
-                case 6:
-                    if (Gdx.input.isKeyJustPressed(Input.Keys.K) || Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
-                        advanceTutorialStep();
-                    }
-                    break;
-                case 7:
-                    if (Gdx.input.isKeyJustPressed(Input.Keys.J) || Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
-                        advanceTutorialStep();
-                    }
-                    break;
-                case 8:
-                    if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
-                        startGame();
-                    }
-                    break;
-                default:
-                    logger.error("Unexpected tutorial step: " + tutorialStep);
-                    break;
-            }
+        if (currentPart < 0 || currentPart > textDisplay.getText().size()) {
+            return;
+        }
+
+        handleTutorialStep();
+    }
+
+    /**
+     * breaks out tutorial handling
+     */
+    private void handleTutorialStep() {
+        switch (tutorialStep) {
+            case 1 -> handleMovementKeys();
+            case 2 -> handleInteractionKey();
+            case 3 -> handleDocketSwitch();
+            case 4 -> handleReloadKey();
+            case 5 -> handleWeaponChangeKey();
+            case 6 -> handleSpecialActionKey();
+            case 7 -> handleSecondaryActionKey();
+            case 8 -> handleStartGame();
+            default -> logger.error("Unexpected tutorial step: " + tutorialStep);
         }
     }
 
     @Override
     public void update() {
         switch (tutorialStep) {
-            case 1:
-                if (Gdx.input.isKeyJustPressed(Input.Keys.W) || Gdx.input.isKeyJustPressed(Input.Keys.A) ||
-                        Gdx.input.isKeyJustPressed(Input.Keys.S) || Gdx.input.isKeyJustPressed(Input.Keys.D)) {
-                    advanceTutorialStep();
-                }
-                break;
-            case 2:
-                if (Gdx.input.isKeyJustPressed(Input.Keys.E)) {
-                    advanceTutorialStep();
-                }
-                break;
-            case 3:
-                textDisplay.setText("Now use [ and ] keys to switch dockets.");
+            case 1 -> handleMovementKeys();
+            case 2 -> handleInteractionKey();
+            case 3 -> handleDocketSwitch();
+            case 4 -> handleReloadKey();
+            case 5 -> handleWeaponChangeKey();
+            case 6 -> handleSpecialActionKey();
+            case 7 -> handleSecondaryActionKey();
+            case 8 -> handleStartGame();
+            default -> {
+                // Invalid case or no operation
+            }
+        }
+    }
 
-                if (Gdx.input.isKeyJustPressed(Input.Keys.LEFT_BRACKET) || Gdx.input.isKeyJustPressed(Input.Keys.RIGHT_BRACKET)) {
-                        docketsShifted = true;
-                        logger.debug("Dockets shifted");
-                }
+    private void handleMovementKeys() {
+        if (Gdx.input.isKeyJustPressed(Input.Keys.W) || Gdx.input.isKeyJustPressed(Input.Keys.A) ||
+                Gdx.input.isKeyJustPressed(Input.Keys.S) || Gdx.input.isKeyJustPressed(Input.Keys.D)) {
+            advanceTutorialStep();
+        }
+    }
 
-                if (docketsShifted) {
-                    advanceTutorialStep();
-                }
-                break;
-            case 4:
-                if (Gdx.input.isKeyJustPressed(Input.Keys.R)) {
-                    advanceTutorialStep();
-                }
-                break;
-            case 5:
-                if (Gdx.input.isKeyJustPressed(Input.Keys.Q)) {
-                    advanceTutorialStep();
-                }
-                break;
-            case 6:
-                if (Gdx.input.isKeyJustPressed(Input.Keys.K)) {
-                    advanceTutorialStep();
-                }
-                break;
-            case 7:
-                if (Gdx.input.isKeyJustPressed(Input.Keys.J)) {
-                    advanceTutorialStep();
-                }
-                break;
-            case 8:
-                if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
-                    startGame();
-                }
-                break;
+    private void handleInteractionKey() {
+        if (Gdx.input.isKeyJustPressed(Input.Keys.E)) {
+            advanceTutorialStep();
+        }
+    }
+
+    private void handleDocketSwitch() {
+        textDisplay.setText("Now use [ and ] keys to switch dockets.");
+
+        if (Gdx.input.isKeyJustPressed(Input.Keys.LEFT_BRACKET) || Gdx.input.isKeyJustPressed(Input.Keys.RIGHT_BRACKET)) {
+            docketsShifted = true;
+            logger.debug("Dockets shifted");
+        }
+
+        if (docketsShifted) {
+            advanceTutorialStep();
+        }
+    }
+
+    private void handleReloadKey() {
+        if (Gdx.input.isKeyJustPressed(Input.Keys.R)) {
+            advanceTutorialStep();
+        }
+    }
+
+    private void handleWeaponChangeKey() {
+        if (Gdx.input.isKeyJustPressed(Input.Keys.Q)) {
+            advanceTutorialStep();
+        }
+    }
+
+    private void handleSpecialActionKey() {
+        if (Gdx.input.isKeyJustPressed(Input.Keys.K)) {
+            advanceTutorialStep();
+        }
+    }
+
+    private void handleSecondaryActionKey() {
+        if (Gdx.input.isKeyJustPressed(Input.Keys.J)) {
+            advanceTutorialStep();
+        }
+    }
+
+    private void handleStartGame() {
+        if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
+            startGame();
         }
     }
 
@@ -406,10 +371,6 @@ public class TutorialScreenDisplay extends UIComponent {
             table.clear();
         }
 
-        if (orderBtnDisplay != null) {
-            orderBtnDisplay.dispose();
-        }
-
         if (textDisplay != null) {
             textDisplay.setVisible(false);
             textDisplay.getTable().clear();
@@ -429,15 +390,4 @@ public class TutorialScreenDisplay extends UIComponent {
         this.stage = stage;
     }
 
-    public int getTutorialStep() {
-        return tutorialStep;
-    }
-
-    public void setTutorialStep(int i) {
-        this.tutorialStep = i;
-    }
-
-    public boolean isCreateOrderPressed() {
-        return createOrderPressed;
-    }
 }

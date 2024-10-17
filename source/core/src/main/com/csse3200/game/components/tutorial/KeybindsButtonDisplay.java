@@ -73,7 +73,6 @@ public class KeybindsButtonDisplay extends UIComponent {
      * @param isPressed keybinds button is pressed
      */
     public void showKeybinds(boolean isPressed) {
-        System.out.println("showKeybinds called with isPressed: " + isPressed);
         keybindsMenu.setVisible(isPressed);
         keybindsText.setVisible(isPressed);
     }
@@ -84,9 +83,9 @@ public class KeybindsButtonDisplay extends UIComponent {
      */
     public Table createButtonTable() {
         keybindButton = new Table();
-        keybindButton.bottom().right();
+        keybindButton.left();
         keybindButton.setFillParent(true);
-        keybindButton.padRight(20f);
+        keybindButton.padTop(270f).padLeft(20f);
 
         TextButton button = new TextButton("Keybindings", skin);
         button.addListener(new ChangeListener() {
