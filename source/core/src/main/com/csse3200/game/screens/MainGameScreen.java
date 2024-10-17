@@ -329,7 +329,6 @@ public class MainGameScreen extends ScreenAdapter {
 				.addComponent(new TerminalDisplay())
 				.addComponent(new KeybindsButtonDisplay())
 				.addComponent(new OrderActions())
-				.addComponent(new MainGameOrderBtnDisplay())
 				.addComponent(new PauseMenuActions(this.game))
 				.addComponent(new PauseMenuDisplay(this))
 				.addComponent(new RageUpgrade())

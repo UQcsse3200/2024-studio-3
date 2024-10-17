@@ -84,9 +84,9 @@ public class KeybindsButtonDisplay extends UIComponent {
      */
     public Table createButtonTable() {
         keybindButton = new Table();
-        keybindButton.left();
+        keybindButton.bottom().right();
         keybindButton.setFillParent(true);
-        keybindButton.padTop(270f).padLeft(20f);
+        keybindButton.padRight(20f);
 
         TextButton button = new TextButton("Keybindings", skin);
         button.addListener(new ChangeListener() {
