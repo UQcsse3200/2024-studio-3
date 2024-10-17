@@ -18,7 +18,7 @@ public class Day2CutsceneTest {
     private Entity entity;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         resourceService = mock(ResourceService.class);
         entity = mock(Entity.class);
 
