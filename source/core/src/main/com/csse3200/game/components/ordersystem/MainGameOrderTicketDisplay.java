@@ -251,6 +251,14 @@ public class MainGameOrderTicketDisplay extends UIComponent {
         updateDocketSizes();
 
         table.setZIndex((int)getZIndex());
+        printOrderList();
+    }
+
+    private void printOrderList() {
+        logger.info("Current List of Orders:");
+        for (int i = 0; i < stringArrayList.size(); i++) {
+            logger.info("Order {}: {}", i + 1, stringArrayList.get(i));
+        }
     }
 
     /**
