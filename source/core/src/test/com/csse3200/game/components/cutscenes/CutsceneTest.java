@@ -193,7 +193,7 @@ public class CutsceneTest {
 
     @Test
     public void testAnimatedSceneLoadsCorrectly() {
-        cutscene.IsAnimatedScenes = true;
+        cutscene.isAnimatedScenes = true;
         AnimatedScene animatedScene = mock(AnimatedScene.class);
         when(animatedScene.getDuration()).thenReturn(5.0f);
         when(animatedScene.getAtlasFilePath()).thenReturn("atlas.atlas");

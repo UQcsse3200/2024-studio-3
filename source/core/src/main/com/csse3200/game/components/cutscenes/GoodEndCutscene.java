@@ -16,7 +16,7 @@ public class GoodEndCutscene extends Cutscene {
      */
     public GoodEndCutscene() {
         super();
-        this.IsAnimatedScenes = true;
+        this.isAnimatedScenes = true;
     }
 
     /**

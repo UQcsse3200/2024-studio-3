@@ -26,7 +26,7 @@ public class BadEndCutsceneTest {
     @Test
     public void testConstructor() {
         // Verify the initial state of the object
-        assertTrue(badEndCutscene.IsAnimatedScenes);
+        assertTrue(badEndCutscene.isAnimatedScenes);
     }
 
     @Test
