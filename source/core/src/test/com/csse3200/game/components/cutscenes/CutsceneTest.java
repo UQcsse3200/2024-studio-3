@@ -149,7 +149,7 @@ public class CutsceneTest {
         scenes.add(scene2);
 
         Texture mockTexture = mock(Texture.class);
-        when(resourceService.getAsset(eq("images/Cutscene/Day2_Scene.png"), eq(Texture.class)))
+        when(resourceService.getAsset("images/Cutscene/Day2_Scene.png", Texture.class))
                 .thenReturn(mockTexture);
 
         cutscene.setScenes(scenes);
