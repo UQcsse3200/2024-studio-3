@@ -93,7 +93,7 @@ public class Day4CutsceneTest {
         // Verify that the first scene has the correct background and text
         Scene scene1 = day4Cutscene.scenes.getFirst();
         assert scene1.getBackgroundImagePath().equals("images/Cutscenes/Day3_Scene.png");
-        assertEquals(1, scene1.getSceneText().size);
+        assertEquals(3, scene1.getSceneText().size);
     }
 
     @Test
