@@ -248,9 +248,6 @@ class InventoryDisplayTest {
         when(item2.getTexturePath()).thenReturn("images/items/item2.png");
         inventory.addItem(item2);
 
-        // Trigger the updateInventory event
-        // entity.getEvents().trigger("updateInventory");
-
         // Assert: Verify that the second slot is updated with the new item
         verify(resourceService).getAsset("images/items/item2.png", Texture.class);
 
@@ -263,9 +260,6 @@ class InventoryDisplayTest {
 
         // Act: Remove the first item
         inventory.removeAt(0);
-
-        // Trigger the updateInventory event
-        // entity.getEvents().trigger("updateInventory");
 
         // Verify that getAsset for slot.png was called again 'inventoryCapacity' times during update
         verify(resourceService, times(inventoryCapacity * 3)).getAsset("images/inventory_ui/slot.png", Texture.class);
