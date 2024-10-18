@@ -47,7 +47,7 @@ public class PlayerStatsDisplay extends UIComponent {
 
 
     entity.getEvents().addListener("updateGold", this::updatePlayerGoldUI);
-    ServiceLocator.getDayNightService().getEvents().addListener("newday", PlayerStatsDisplay::updateDay);
+    ServiceLocator.getDayNightService().getEvents().addListener("newday", this::updateDay);
     ServiceLocator.getDayNightService().getEvents().addListener("Second", PlayerStatsDisplay::updateTime);
   }
 
